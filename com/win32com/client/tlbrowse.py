@@ -133,7 +133,7 @@ class TypeBrowseDialog(TypeBrowseDialog_Parent):
 			
 		info = self.tlb.GetTypeInfo(pos)
 		attr = info.GetTypeAttr()
-		infos.append(('Attributes', repr(attr)))
+		infos.append(('Attributes', str(attr)))
 			
 		for j in range(attr[8]):
 			flags = info.GetImplTypeFlags(j)
@@ -160,13 +160,13 @@ class TypeBrowseDialog(TypeBrowseDialog_Parent):
 		if isMethod:
 			funcDesc = self.typeinfo.GetFuncDesc(realPos)
 			id = funcDesc[0]
-			ret.append("Func Desc", str(funcDesc))
+			ret.append(("Func Desc", str(funcDesc)))
 		else:
 			id = self.typeinfo.GetVarDesc(realPos)[0]
 		
 		docinfo = self.typeinfo.GetDocumentation(id)
-		ret.append('Help String', docinfo[1])
-		ret.append('Help Context', str(docinfo[2]))
+		ret.append(('Help String', docinfo[1]))
+		ret.append(('Help Context', str(docinfo[2])))
 		return ret
 
 	def CmdTypeListbox(self, id, code):

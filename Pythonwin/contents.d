@@ -7,6 +7,9 @@ Documentation File for Pythonwin
 binding mechanism. Bindings (and even code) can be defined in a
 configuration file, stored in the pywin directory. 
 
+<nl>Many bindings are still builtin to Python using Window's accelerators -
+see the Pythonwin menus for the specific keyboard shortcuts.
+
 <nl>The default configuration file is named default.cfg. You can view
 this file with a text editor (eg, Pythonwin) This file has extensive
 comments, including how to create your own configuration based on the
@@ -25,6 +28,8 @@ would be likely to result assuming the code has an "import string"
 statement.  Pressing the key again expands to the next match.
 @flag .|Auto expand the attribute.  Eg, typing "string." will display a listbox with the contents of the string module.
 @flag Alt+I|Toggle focus to/from the interactive window.
+@flag Ctrl+Keypad+Plus|Zoom-in for the current window (builtin to Scintilla)
+@flag Ctrl+Keypad+Minus|Zoom-out for the current window (builtin to Scintilla)
 
 @flagh Editor Specific Keystrokes|Description
 @flag F2|Move to the next bookmark.
@@ -35,14 +40,22 @@ statement.  Pressing the key again expands to the next match.
 @flag Shift+Alt+3|Uncomment the selected region.
 @flag Alt+4|Uncomment the selected region (IDLE default keystroke)
 @flag Alt+5|Tabify the selected region.
+<nl>
 @flag Alt+6|Untabify the selected region.
 @flag BackSpace|Remove one indent to the left.
 @flag Ctrl+T|Toggle the use of tabs for the current file (after confirmation)
 @flag Alt+U|Change the indent width for the current file.
 @flag Enter|Insert a newline and indent.
-@flag Tab|Insert an indent, or perform a block indent is a selection
+@flag Tab|Insert an indent, or perform a block indent if a selection
 exists.
 @flag Shift-Tab|Block dedent the selection
+<nl>
+@flag Keypad-Plus|If the current line is a collapsed fold, expand it (see <t Folding>)
+@flag Alt-Keypad-Plus|Expand all folds in the current file (see <t Folding>)
+@flag Keypad-Minus|If the current line is an expanded fold, collapse it (see <t Folding>)
+@flag Alt-Keypad-Minus|Collapse all folds in the current file. regardless of how deep the fold becomes. (see <t Folding>)
+@flag Keypad-Multiply|Expand or collapse all top-level folds in the current file.  No second level or deeper folds are changed.
+If the first fold in the file is collapsed, all top-level folds are opened.  Otherwise, all top-level folds are collapsed (see <t Folding>)
 
 @flagh Debugger Keystrokes|Description
 @flag F9|Toggle breakpoint
@@ -55,6 +68,53 @@ exists.
 @flagh Interactive Window Specific Keystrokes|Description
 @flag Ctrl+Up|Recall the previous command in the history list.
 @flag Ctrl+Down|Recall the next command in the history list.
+
+@topic Folding|
+Thanks to Scintilla (http://www.scintilla.org), Pythonwin supports
+source code folding.  Folding is the ability to collapse sections of
+your source-code into a single line, making it easier to navigate
+around large files.  Any Python statement which introduces a new block
+can be folded either by clicking on the indicator in the folding
+margin (if enabled via the View-\>Options-\>Editor dialog), by
+selecting one of the folding keystrokes (see <t Keyboard Bindings>, or
+by using View->Folding menu.)  <nl>
+
+All find/replace or 'goto linenumber' functions work correctly when
+code is folded - the code is simply unfolded if necessary before the
+relevant operation.  <nl>
+
+You may configure Pythonwin so that all files have their top-levels
+folded when opened.  Only the first level folds are collapsed using
+this function, so expanding the top-level fold reveals the entire
+class/method that was folded.  Alternatively, you can use the
+Keypad-Multiply key to toggle the first level folds for the entire
+file at any time.  <nl>
+
+@topic Tabs|
+The use of tabs and the meanings of the tab defaults is not completely
+clear.  Unfortunately, this is very hard to fix without losing the smart
+indentation (eg, when indenting lists or function parameters).
+<nl>
+The defaults for tab settings are only used when a new file is created.
+If smart-tabs are enabled and an existing file is opened, it's first 
+block is located, and the indentation
+it uses overrides the default.  Thus, regardless of your preferences, if the first 
+indent in the file is a tab, Pythonwin uses tabs for the entire file (and
+similarly, uses spaces if the first block is indented with spaces)
+<nl>
+Things can appear to get wierd when editing a file with mixed tabs and spaces.
+Although mixed tabs and spaces in the same indent is evil, there are a number
+of source files that have certain classes/functions indented with spaces, and others
+that use tabs.  The editor will not correctly adjust to the current block - whatever
+was used for the first block is used for the entire file.
+<nl>
+Another common scenario where things go wrong is when pasting code into a new file.
+You create a new file (which sets the tabs to your defaults), then
+paste in a huge chunk of code that is indented differently.  The editor is still using
+the defaults, which dont reflect the code that now exists in the buffer.
+<nl>
+The "tab-timmy" shows up these problems very quickly, and you can quickly toggle the
+current tab settings by pressing Ctrl+T, or change the indent width by pressing Ctrl+U.
 
 @topic Source Safe Integration|
 Note you will need to restart Pythonwin for this option to take effect.

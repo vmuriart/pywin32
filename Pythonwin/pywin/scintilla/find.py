@@ -89,6 +89,8 @@ def _FindIt(control, searchParams):
 	lastSearch = SearchParams(searchParams)
 	if posFind >= 0:
 		rc = FOUND_NORMAL
+		lineno = control.LineFromChar(posFind)
+		control.SCIEnsureVisible(lineno)
 		control.SetSel(foundSel)
 		control.SetFocus()
 		win32ui.SetStatusText(win32ui.LoadString(afxres.AFX_IDS_IDLEMESSAGE))
@@ -127,6 +129,7 @@ def _FindIt(control, searchParams):
 		# Loop around this control - attempt to find from the start of the control.
 		posFind, foundSel = control.FindText(flags, (0, sel[0]-1), searchParams.findText)
 		if posFind >= 0:
+			control.SCIEnsureVisible(control.LineFromChar(foundSel))
 			control.SetSel(foundSel)
 			control.SetFocus()
 			win32ui.SetStatusText("Not found! Searching from the top of the file.")
@@ -273,9 +276,9 @@ class ReplaceDialog(FindReplaceDialog):
 	def OnReplaceAll(self, id, code):
 		control = _GetControl(None)
 		control.SetSel(0)
+		num = 0
 		if self.DoFindNext() == FOUND_NORMAL:
 			lastSearch.replaceText = self.editReplaceText.GetWindowText()
-			num = 0
 			while _ReplaceIt(control) == FOUND_NORMAL:
 				num = num + 1
 

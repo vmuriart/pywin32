@@ -7,6 +7,12 @@ is nothing more than the command line handler and public interface.
 The makepy command line etc handling is also getting large enough in its own right!
 """
 
+# NOTE - now supports a "demand" mechanism - the top-level is a package, and
+# each class etc can be made individually.
+# This should eventually become the default.
+# Then the old non-package technique should be removed.
+# There should be no b/w compat issues, and will just help clean the code.
+# This will be done once the new "demand" mechanism gets a good workout.
 import os
 import sys
 import string
@@ -17,29 +23,33 @@ import pythoncom
 import build
 
 error = "makepy.error"
-makepy_version = "0.3.1" # Written to generated file.
+makepy_version = "0.3.3" # Written to generated file.
+
+GEN_FULL="full"
+GEN_DEMAND_BASE = "demand(base)"
+GEN_DEMAND_CHILD = "demand(child)"
 
 # This map is used purely for the users benefit -it shows the
 # raw, underlying type of Alias/Enums, etc.  The COM implementation
 # does not use this map at runtime - all Alias/Enum have already
 # been translated.
 mapVTToTypeString = {
-	pythoncom.VT_I2: 'types.IntType',
-	pythoncom.VT_I4: 'types.IntType',
-	pythoncom.VT_R4: 'types.FloatType',
-	pythoncom.VT_R8: 'types.FloatType',
-	pythoncom.VT_BSTR: 'types.StringType',
-	pythoncom.VT_BOOL: 'types.IntType',
-	pythoncom.VT_VARIANT: 'types.TypeType',
-	pythoncom.VT_I1: 'types.IntType',
-	pythoncom.VT_UI1: 'types.IntType',
-	pythoncom.VT_UI2: 'types.IntType',
-	pythoncom.VT_UI4: 'types.IntType',
-	pythoncom.VT_I8: 'types.LongType',
-	pythoncom.VT_UI8: 'types.LongType',
-	pythoncom.VT_INT: 'types.IntType',
-	pythoncom.VT_DATE: 'pythoncom.PyTimeType',
-	pythoncom.VT_UINT: 'types.IntType',
+    pythoncom.VT_I2: 'types.IntType',
+    pythoncom.VT_I4: 'types.IntType',
+    pythoncom.VT_R4: 'types.FloatType',
+    pythoncom.VT_R8: 'types.FloatType',
+    pythoncom.VT_BSTR: 'types.StringType',
+    pythoncom.VT_BOOL: 'types.IntType',
+    pythoncom.VT_VARIANT: 'types.TypeType',
+    pythoncom.VT_I1: 'types.IntType',
+    pythoncom.VT_UI1: 'types.IntType',
+    pythoncom.VT_UI2: 'types.IntType',
+    pythoncom.VT_UI4: 'types.IntType',
+    pythoncom.VT_I8: 'types.LongType',
+    pythoncom.VT_UI8: 'types.LongType',
+    pythoncom.VT_INT: 'types.IntType',
+    pythoncom.VT_DATE: 'pythoncom.PyTimeType',
+    pythoncom.VT_UINT: 'types.IntType',
 }
 
 # Given a propget function's arg desc, return the default paramaters for all
@@ -49,46 +59,46 @@ mapVTToTypeString = {
 # multiple args, and the rest have default values, this allows
 # Python to correctly pass those defaults.
 def MakeDefaultArgsForPropertyPut(argsDesc):
-	ret = []
-	for desc in argsDesc[1:]:
-		default = build.MakeDefaultArgRepr(desc)
-		if default is None:
-			break
-		ret.append(default)
-	return tuple(ret)
-							
+    ret = []
+    for desc in argsDesc[1:]:
+        default = build.MakeDefaultArgRepr(desc)
+        if default is None:
+            break
+        ret.append(default)
+    return tuple(ret)
+                            
 
 def MakeMapLineEntry(dispid, wFlags, retType, argTypes, user, resultCLSID):
-	# Strip the default value
-	argTypes = tuple(map(lambda what: what[:2], argTypes))
-	return '(%s, %d, %s, %s, "%s", %s)' % \
-		(dispid, wFlags, retType[:2], argTypes, user, resultCLSID)
+    # Strip the default value
+    argTypes = tuple(map(lambda what: what[:2], argTypes))
+    return '(%s, %d, %s, %s, "%s", %s)' % \
+        (dispid, wFlags, retType[:2], argTypes, user, resultCLSID)
 
 def MakeEventMethodName(eventName):
-	if eventName[:2]=="On":
-		return eventName
-	else:
-		return "On"+eventName
+    if eventName[:2]=="On":
+        return eventName
+    else:
+        return "On"+eventName
 
 def WriteSinkEventMap(obj):
-	print '\t_dispid_to_func_ = {'
-	for name, entry in obj.propMapGet.items() + obj.propMapPut.items() + obj.mapFuncs.items():
-		fdesc = entry.desc
-		id = fdesc[0]
-		print '\t\t%9d : "%s",' % (entry.desc[0], MakeEventMethodName(entry.names[0]))
-	print '\t\t}'
-	
+    print '\t_dispid_to_func_ = {'
+    for name, entry in obj.propMapGet.items() + obj.propMapPut.items() + obj.mapFuncs.items():
+        fdesc = entry.desc
+        id = fdesc[0]
+        print '\t\t%9d : "%s",' % (entry.desc[0], MakeEventMethodName(entry.names[0]))
+    print '\t\t}'
+    
 
 # MI is used to join my writable helpers, and the OLE
 # classes.
 class WritableItem:
-	def __cmp__(self, other):
-		"Compare for sorting"	
-		ret = cmp(self.order, other.order)
-		if ret==0 and self.doc: ret = cmp(self.doc[0], other.doc[0])
-		return ret
-	def __repr__(self):
-		return "OleItem: doc=%s, order=%d" % (`self.doc`, self.order)
+    def __cmp__(self, other):
+        "Compare for sorting"   
+        ret = cmp(self.order, other.order)
+        if ret==0 and self.doc: ret = cmp(self.doc[0], other.doc[0])
+        return ret
+    def __repr__(self):
+        return "OleItem: doc=%s, order=%d" % (`self.doc`, self.order)
 
 
 class RecordItem(build.OleItem, WritableItem):
@@ -96,7 +106,15 @@ class RecordItem(build.OleItem, WritableItem):
   typename = "RECORD"
 
   def __init__(self, typeInfo, typeAttr, doc=None, bForUser=1):
+##    sys.stderr.write("Record %s: size %s\n" % (doc,typeAttr.cbSizeInstance))
+##    sys.stderr.write(" cVars = %s\n" % (typeAttr.cVars,))
+##    for i in range(typeAttr.cVars):
+##        vdesc = typeInfo.GetVarDesc(i)
+##        sys.stderr.write(" Var %d has value %s, type %d, desc=%s\n" % (i, vdesc.value, vdesc.varkind, vdesc.elemdescVar))
+##        sys.stderr.write(" Doc is %s\n" % (typeInfo.GetDocumentation(vdesc.memid),))
+
     build.OleItem.__init__(self, doc)
+    self.clsid = typeAttr[0]
 
   def WriteClass(self, generator):
     pass
@@ -176,10 +194,10 @@ class EnumerationItem(build.OleItem, WritableItem):
       name = typeinfo.GetNames(vdesc[0])[0]
       self.mapVars[name] = build.MapEntry(vdesc)
 
-  def WriteEnumerationHeaders(self, aliasItems):
-    enumName = self.doc[0]
-    print "%s=constants # Compatibility with previous versions." % (enumName)
-    WriteAliasesForItem(self, aliasItems)
+##  def WriteEnumerationHeaders(self, aliasItems):
+##    enumName = self.doc[0]
+##    print "%s=constants # Compatibility with previous versions." % (enumName)
+##    WriteAliasesForItem(self, aliasItems)
     
   def WriteEnumerationItems(self):
     enumName = self.doc[0]
@@ -200,249 +218,250 @@ class EnumerationItem(build.OleItem, WritableItem):
         print "\t%-30s=%-10s # from enum %s" % (build.MakePublicAttributeName(name), use, enumName)
 
 class DispatchItem(build.DispatchItem, WritableItem):
-	order = 3
+    order = 3
 
-	def __init__(self, typeinfo, attr, doc=None):
-		build.DispatchItem.__init__(self, typeinfo, attr, doc)
+    def __init__(self, typeinfo, attr, doc=None):
+        build.DispatchItem.__init__(self, typeinfo, attr, doc)
 
-		self.bIsSink = 0
+        self.bIsSink = 0
 
-	def WriteClass(self, generator):
-		if self.bIsSink:
-			self.WriteEventSinkClassHeader(generator)
-			self.WriteCallbackClassBody(generator)
-		else:
-			self.WriteClassHeader(generator)
-			self.WriteClassBody(generator)
+    def WriteClass(self, generator):
+        if self.bIsSink:
+            self.WriteEventSinkClassHeader(generator)
+            self.WriteCallbackClassBody(generator)
+        else:
+            self.WriteClassHeader(generator)
+            self.WriteClassBody(generator)
 
-	def WriteClassHeader(self, generator):
-		generator.checkWriteDispatchBaseClass()
-		doc = self.doc
-		className = build.MakePublicAttributeName(doc[0])
-		print 'class ' + className + '(DispatchBaseClass):'
-		if doc[1]: print '\t"""' + doc[1] + '"""'
-		try:
-			progId = pythoncom.ProgIDFromCLSID(self.clsid)
-			print "\t# This class is creatable by the name '%s'" % (progId)
-		except pythoncom.com_error:
-			pass
-		clsidStr = str(self.clsid)
-		print "\tCLSID = pythoncom.MakeIID('" + clsidStr + "')"
-		print
-		self.bWritten = 1
+    def WriteClassHeader(self, generator):
+        generator.checkWriteDispatchBaseClass()
+        doc = self.doc
+        print 'class ' + self.python_name + '(DispatchBaseClass):'
+        if doc[1]: print '\t"""' + doc[1] + '"""'
+        try:
+            progId = pythoncom.ProgIDFromCLSID(self.clsid)
+            print "\t# This class is creatable by the name '%s'" % (progId)
+        except pythoncom.com_error:
+            pass
+        clsidStr = str(self.clsid)
+        print "\tCLSID = pythoncom.MakeIID('" + clsidStr + "')"
+        print
+        self.bWritten = 1
 
-	def WriteEventSinkClassHeader(self, generator):
-		generator.checkWriteEventBaseClass()
-		doc = self.doc
-		className = build.MakePublicAttributeName(doc[0])
-		print 'class ' + className + ':'
-		if doc[1]: print '\t\"' + doc[1] + '\"'
-		try:
-			progId = pythoncom.ProgIDFromCLSID(self.clsid)
-			print "\t# This class is creatable by the name '%s'" % (progId)
-		except pythoncom.com_error:
-			pass
-		clsidStr = str(self.clsid)
-		print '\tCLSID = CLSID_Sink = pythoncom.MakeIID(\'' + clsidStr + '\')'
-		print '\t_public_methods_ = [] # For COM Server support'
-		print "\t_arg_transformer_ = arg_transformer"
-		WriteSinkEventMap(self)
-		print
-		print '\tdef __init__(self, oobj = None):'
-		print "\t\tif oobj is None:"
-		print "\t\t\tself._olecp = None"
-		print "\t\telse:"
-		print '\t\t\timport win32com.server.util'
-		print '\t\t\tcpc=oobj._oleobj_.QueryInterface(pythoncom.IID_IConnectionPointContainer)'
-		print '\t\t\tcp=cpc.FindConnectionPoint(self.CLSID_Sink)'
-		print '\t\t\tcookie=cp.Advise(win32com.server.util.wrap(self))'
-		print '\t\t\tself._olecp,self._olecp_cookie = cp,cookie'
-		print '\tdef __del__(self):'
-		print '\t\ttry:'
-		print '\t\t\tself.close()'
-		print '\t\texcept pythoncom.com_error:'
-		print '\t\t\tpass'
-		print '\tdef close(self):'
-		print '\t\tif self._olecp is not None:'
-		print '\t\t\tcp,cookie,self._olecp,self._olecp_cookie = self._olecp,self._olecp_cookie,None,None'
-		print '\t\t\tcp.Unadvise(cookie)'
-		print '\tdef _query_interface_(self, iid):'
-		print '\t\timport win32com.server.util'
-		print '\t\tif iid==self.CLSID_Sink: return win32com.server.util.wrap(self)'
-		print
-		self.bWritten = 1
+    def WriteEventSinkClassHeader(self, generator):
+        generator.checkWriteEventBaseClass()
+        doc = self.doc
+        print 'class ' + self.python_name + ':'
+        if doc[1]: print '\t\"' + doc[1] + '\"'
+        try:
+            progId = pythoncom.ProgIDFromCLSID(self.clsid)
+            print "\t# This class is creatable by the name '%s'" % (progId)
+        except pythoncom.com_error:
+            pass
+        clsidStr = str(self.clsid)
+        print '\tCLSID = CLSID_Sink = pythoncom.MakeIID(\'' + clsidStr + '\')'
+        print '\t_public_methods_ = [] # For COM Server support'
+        print "\t_arg_transformer_ = arg_transformer"
+        WriteSinkEventMap(self)
+        print
+        print '\tdef __init__(self, oobj = None):'
+        print "\t\tif oobj is None:"
+        print "\t\t\tself._olecp = None"
+        print "\t\telse:"
+        print '\t\t\timport win32com.server.util'
+        print '\t\t\tcpc=oobj._oleobj_.QueryInterface(pythoncom.IID_IConnectionPointContainer)'
+        print '\t\t\tcp=cpc.FindConnectionPoint(self.CLSID_Sink)'
+        print '\t\t\tcookie=cp.Advise(win32com.server.util.wrap(self))'
+        print '\t\t\tself._olecp,self._olecp_cookie = cp,cookie'
+        print '\tdef __del__(self):'
+        print '\t\ttry:'
+        print '\t\t\tself.close()'
+        print '\t\texcept pythoncom.com_error:'
+        print '\t\t\tpass'
+        print '\tdef close(self):'
+        print '\t\tif self._olecp is not None:'
+        print '\t\t\tcp,cookie,self._olecp,self._olecp_cookie = self._olecp,self._olecp_cookie,None,None'
+        print '\t\t\tcp.Unadvise(cookie)'
+        print '\tdef _query_interface_(self, iid):'
+        print '\t\timport win32com.server.util'
+        print '\t\tif iid==self.CLSID_Sink: return win32com.server.util.wrap(self)'
+        print
+        self.bWritten = 1
 
-	def WriteCallbackClassBody(self, generator):
-		print "\t# Handlers for the control"
-		print "\t# If you create handlers, they should have the following prototypes:"
-		for name, entry in self.propMapGet.items() + self.propMapPut.items() + self.mapFuncs.items():
-			fdesc = entry.desc
-			id = fdesc[0]
-			methName = MakeEventMethodName(entry.names[0])
-			print '#\tdef ' + methName + '(self' + build.BuildCallList(fdesc, entry.names, "defaultNamedOptArg", "defaultNamedNotOptArg","defaultUnnamedArg") + '):'
-			if entry.doc and entry.doc[1]: print '#\t\t"' + entry.doc[1] + '"'
-		print
-		self.bWritten = 1
+    def WriteCallbackClassBody(self, generator):
+        print "\t# Handlers for the control"
+        print "\t# If you create handlers, they should have the following prototypes:"
+        for name, entry in self.propMapGet.items() + self.propMapPut.items() + self.mapFuncs.items():
+            fdesc = entry.desc
+            id = fdesc[0]
+            methName = MakeEventMethodName(entry.names[0])
+            print '#\tdef ' + methName + '(self' + build.BuildCallList(fdesc, entry.names, "defaultNamedOptArg", "defaultNamedNotOptArg","defaultUnnamedArg") + '):'
+            if entry.doc and entry.doc[1]: print '#\t\t"' + entry.doc[1] + '"'
+        print
+        self.bWritten = 1
 
-	def WriteClassBody(self, generator):
-		doc = self.doc
-		# Write in alpha order.
-		names = self.mapFuncs.keys()
-		names.sort()
-		specialItems = {"count":None, "item":None,"value":None,"_newenum":None} # If found, will end up with (entry, invoke_tupe)
-		itemCount = None
-		for name in names:
-			entry=self.mapFuncs[name]
-			if entry.desc[0]==pythoncom.DISPID_VALUE:
-				lkey = "value"
-			elif entry.desc[0]==pythoncom.DISPID_NEWENUM:
-				specialItems["_newenum"] = (entry, entry.desc[4], None)
-				continue # Dont build this one now!
-			else:
-				lkey = string.lower(name)
-			if specialItems.has_key(lkey) and specialItems[lkey] is None: # remember if a special one.
-				specialItems[lkey] = (entry, entry.desc[4], None)
-			if generator.bBuildHidden or not entry.hidden:
-				if entry.GetResultName():
-					print '\t# Result is of type ' + entry.GetResultName()
-				if entry.wasProperty:
-					print '\t# The method %s is actually a property, but must be used as a method to correctly pass the arguments' % name
-				ret = self.MakeFuncMethod(entry,build.MakePublicAttributeName(name))
-				for line in ret:
-					print line
-		print "\t_prop_map_get_ = {"
-		names = self.propMap.keys(); names.sort()
-		for key in names:
-			entry = self.propMap[key]
-			resultName = entry.GetResultName()
-			if resultName:
-				print "\t\t# Property '%s' is an object of type '%s'" % (key, resultName)
-			lkey = string.lower(key)
-			details = entry.desc
-			resultDesc = details[2]
-			argDesc = ()
-			mapEntry = MakeMapLineEntry(details[0], pythoncom.DISPATCH_PROPERTYGET, resultDesc, argDesc, key, entry.GetResultCLSIDStr())
-			
-			if entry.desc[0]==pythoncom.DISPID_VALUE:
-				lkey = "value"
-			elif entry.desc[0]==pythoncom.DISPID_NEWENUM:
-				# XXX - should DISPATCH_METHOD in the next line use the invtype?
-				specialItems["_newenum"] = (entry, pythoncom.DISPATCH_METHOD, mapEntry)
-				continue # Dont build this one now!
-			else:
-				lkey = string.lower(key)
-			if specialItems.has_key(lkey) and specialItems[lkey] is None: # remember if a special one.
-				specialItems[lkey] = (entry, pythoncom.DISPATCH_PROPERTYGET, mapEntry)
+    def WriteClassBody(self, generator):
+        doc = self.doc
+        # Write in alpha order.
+        names = self.mapFuncs.keys()
+        names.sort()
+        specialItems = {"count":None, "item":None,"value":None,"_newenum":None} # If found, will end up with (entry, invoke_tupe)
+        itemCount = None
+        for name in names:
+            entry=self.mapFuncs[name]
+            if entry.desc[0]==pythoncom.DISPID_VALUE:
+                lkey = "value"
+            elif entry.desc[0]==pythoncom.DISPID_NEWENUM:
+                specialItems["_newenum"] = (entry, entry.desc[4], None)
+                continue # Dont build this one now!
+            else:
+                lkey = string.lower(name)
+            if specialItems.has_key(lkey) and specialItems[lkey] is None: # remember if a special one.
+                specialItems[lkey] = (entry, entry.desc[4], None)
+            if generator.bBuildHidden or not entry.hidden:
+                if entry.GetResultName():
+                    print '\t# Result is of type ' + entry.GetResultName()
+                if entry.wasProperty:
+                    print '\t# The method %s is actually a property, but must be used as a method to correctly pass the arguments' % name
+                ret = self.MakeFuncMethod(entry,build.MakePublicAttributeName(name))
+                for line in ret:
+                    print line
+        print "\t_prop_map_get_ = {"
+        names = self.propMap.keys(); names.sort()
+        for key in names:
+            entry = self.propMap[key]
+            resultName = entry.GetResultName()
+            if resultName:
+                print "\t\t# Property '%s' is an object of type '%s'" % (key, resultName)
+            lkey = string.lower(key)
+            details = entry.desc
+            resultDesc = details[2]
+            argDesc = ()
+            mapEntry = MakeMapLineEntry(details[0], pythoncom.DISPATCH_PROPERTYGET, resultDesc, argDesc, key, entry.GetResultCLSIDStr())
+            
+            if entry.desc[0]==pythoncom.DISPID_VALUE:
+                lkey = "value"
+            elif entry.desc[0]==pythoncom.DISPID_NEWENUM:
+                # XXX - should DISPATCH_METHOD in the next line use the invtype?
+                specialItems["_newenum"] = (entry, pythoncom.DISPATCH_METHOD, mapEntry)
+                continue # Dont build this one now!
+            else:
+                lkey = string.lower(key)
+            if specialItems.has_key(lkey) and specialItems[lkey] is None: # remember if a special one.
+                specialItems[lkey] = (entry, pythoncom.DISPATCH_PROPERTYGET, mapEntry)
 
-			print '\t\t"%s": %s,' % (key, mapEntry)
+            print '\t\t"%s": %s,' % (key, mapEntry)
 
-		names = self.propMapGet.keys(); names.sort()
-		for key in names:
-			entry = self.propMapGet[key]
-			if entry.GetResultName():
-				print "\t\t# Method '%s' returns object of type '%s'" % (key, entry.GetResultName())
-			details = entry.desc
-			lkey = string.lower(key)
-			argDesc = details[2]
-			resultDesc = details[8]
-			mapEntry = MakeMapLineEntry(details[0], pythoncom.DISPATCH_PROPERTYGET, resultDesc, argDesc, key, entry.GetResultCLSIDStr())
-			if entry.desc[0]==pythoncom.DISPID_VALUE:
-				lkey = "value"
-			elif entry.desc[0]==pythoncom.DISPID_NEWENUM:
-				specialItems["_newenum"] = (entry, pythoncom.DISPATCH_METHOD, mapEntry)
-				continue # Dont build this one now!
-			else:
-				lkey = string.lower(key)
-			if specialItems.has_key(lkey) and specialItems[lkey] is None: # remember if a special one.
-				specialItems[lkey]=(entry, pythoncom.DISPATCH_PROPERTYGET, mapEntry)
-			print '\t\t"%s": %s,' % (key, mapEntry)
+        names = self.propMapGet.keys(); names.sort()
+        for key in names:
+            entry = self.propMapGet[key]
+            if entry.GetResultName():
+                print "\t\t# Method '%s' returns object of type '%s'" % (key, entry.GetResultName())
+            details = entry.desc
+            lkey = string.lower(key)
+            argDesc = details[2]
+            resultDesc = details[8]
+            mapEntry = MakeMapLineEntry(details[0], pythoncom.DISPATCH_PROPERTYGET, resultDesc, argDesc, key, entry.GetResultCLSIDStr())
+            if entry.desc[0]==pythoncom.DISPID_VALUE:
+                lkey = "value"
+            elif entry.desc[0]==pythoncom.DISPID_NEWENUM:
+                specialItems["_newenum"] = (entry, pythoncom.DISPATCH_METHOD, mapEntry)
+                continue # Dont build this one now!
+            else:
+                lkey = string.lower(key)
+            if specialItems.has_key(lkey) and specialItems[lkey] is None: # remember if a special one.
+                specialItems[lkey]=(entry, pythoncom.DISPATCH_PROPERTYGET, mapEntry)
+            print '\t\t"%s": %s,' % (key, mapEntry)
 
-		print "\t}"
+        print "\t}"
 
-		print "\t_prop_map_put_ = {"
-		# These are "Invoke" args
-		names = self.propMap.keys(); names.sort()
-		for key in names:
-			entry = self.propMap[key]
-			lkey=string.lower(key)
-			details = entry.desc
-#			if specialItems.has_key(lkey):
-#				specialItems[lkey] = (entry, details[4], 0)
-			# If default arg is None, write an empty tuple
-			defArgDesc = build.MakeDefaultArgRepr(details[2])
-			if defArgDesc is None:
-				defArgDesc = ""
-			else:
-				defArgDesc = defArgDesc + ","
-			print '\t\t"%s" : ((%s, LCID, %d, 0),(%s)),' % (key, details[0], pythoncom.DISPATCH_PROPERTYPUT, defArgDesc)
+        print "\t_prop_map_put_ = {"
+        # These are "Invoke" args
+        names = self.propMap.keys(); names.sort()
+        for key in names:
+            entry = self.propMap[key]
+            lkey=string.lower(key)
+            details = entry.desc
+#           if specialItems.has_key(lkey):
+#               specialItems[lkey] = (entry, details[4], 0)
+            # If default arg is None, write an empty tuple
+            defArgDesc = build.MakeDefaultArgRepr(details[2])
+            if defArgDesc is None:
+                defArgDesc = ""
+            else:
+                defArgDesc = defArgDesc + ","
+            print '\t\t"%s" : ((%s, LCID, %d, 0),(%s)),' % (key, details[0], pythoncom.DISPATCH_PROPERTYPUT, defArgDesc)
 
-		names = self.propMapPut.keys(); names.sort()
-		for key in names:
-			entry = self.propMapPut[key]
-			details = entry.desc
-			defArgDesc = MakeDefaultArgsForPropertyPut(details[2])
-			print '\t\t"%s": ((%s, LCID, %d, 0),%s),' % (key, details[0], details[4], defArgDesc)
-		print "\t}"
-		
-		if specialItems["value"]:
-			entry, invoketype, propArgs = specialItems["value"]
-			if propArgs is None:
-				typename = "method"
-				ret = self.MakeFuncMethod(entry,'__call__')
-			else:
-				typename = "property"
-				ret = [ "\tdef __call__(self):\n\t\treturn apply(self._ApplyTypes_, %s )" % propArgs]
-			print "\t# Default %s for this class is '%s'" % (typename, entry.names[0])
-			for line in ret:
-				print line
-			print "\t# str(ob) and int(ob) will use __call__"
-			print "\tdef __str__(self, *args):"
-			print "\t\treturn str(apply( self.__call__, args))"
-			print "\tdef __int__(self, *args):"
-			print "\t\treturn int(apply( self.__call__, args))"
-			
+        names = self.propMapPut.keys(); names.sort()
+        for key in names:
+            entry = self.propMapPut[key]
+            details = entry.desc
+            defArgDesc = MakeDefaultArgsForPropertyPut(details[2])
+            print '\t\t"%s": ((%s, LCID, %d, 0),%s),' % (key, details[0], details[4], defArgDesc)
+        print "\t}"
+        
+        if specialItems["value"]:
+            entry, invoketype, propArgs = specialItems["value"]
+            if propArgs is None:
+                typename = "method"
+                ret = self.MakeFuncMethod(entry,'__call__')
+            else:
+                typename = "property"
+                ret = [ "\tdef __call__(self):\n\t\treturn apply(self._ApplyTypes_, %s )" % propArgs]
+            print "\t# Default %s for this class is '%s'" % (typename, entry.names[0])
+            for line in ret:
+                print line
+            print "\t# str(ob) and int(ob) will use __call__"
+            print "\tdef __str__(self, *args):"
+            print "\t\ttry:"
+            print "\t\t\treturn str(apply( self.__call__, args))"
+            print "\t\texcept pythoncom.com_error:"
+            print "\t\t\treturn repr(self)"
+            print "\tdef __int__(self, *args):"
+            print "\t\treturn int(apply( self.__call__, args))"
+            
 
-		if specialItems["_newenum"]:
-			enumEntry, invoketype, propArgs = specialItems["_newenum"]
-			# If we have a default entry, assume enumerator is of same type
-#			if defEntry:
-#				resultCLSID = defEntry.GetResultCLSIDStr()
-#			else:
-#				resultCLSID = "None"
-			resultCLSID = enumEntry.GetResultCLSIDStr()
-			print '\tdef _NewEnum(self):'
-			print '\t\t"Create an enumerator from this object"'
-			print '\t\treturn win32com.client.util.WrapEnum(self._oleobj_.InvokeTypes(%d,LCID,%d,(13, 10),()),%s)' % (pythoncom.DISPID_NEWENUM, enumEntry.desc[4], resultCLSID)
-			print '\tdef __getitem__(self, index):'
-			print '\t\t"Allow this class to be accessed as a collection"'
-			print "\t\tif not self.__dict__.has_key('_enum_'):"
-			print "\t\t\timport win32com.client.util"
-			print "\t\t\tself.__dict__['_enum_'] = self._NewEnum()"
-			print "\t\treturn self._enum_.__getitem__(index)"
-		else: # Not an Enumerator, but may be an "Item/Count" based collection
-			if specialItems["item"]:
-				entry, invoketype, propArgs = specialItems["item"]
-				print '\t#This class has Item property/method which may take args - allow indexed access'
-				print '\tdef __getitem__(self, item):'
-				print '\t\treturn self._get_good_object_(apply(self._oleobj_.Invoke, (0x%x, LCID, %d, 1, item)), "Item")' % (entry.desc[0], invoketype)
-		if specialItems["count"]:
-			entry, invoketype, propArgs = specialItems["count"]
-			if propArgs is None:
-				typename = "method"
-				ret = self.MakeFuncMethod(entry,'__len__')
-			else:
-				typename = "property"
-				ret = [ "\tdef __len__(self):\n\t\treturn apply(self._ApplyTypes_, %s )" % propArgs]
-			print "\t#This class has Count() %s - allow len(ob) to provide this" % (typename)
-			for line in ret:
-				print line
-			# Also include a __nonzero__
-			print "\t#This class has a __len__ - this is needed so 'if object:' always returns TRUE."
-			print "\tdef __nonzero__(self):"
-			print "\t\treturn 1"
-	
-		print
-		self.bWritten = 1
+        if specialItems["_newenum"]:
+            enumEntry, invoketype, propArgs = specialItems["_newenum"]
+            # If we have a default entry, assume enumerator is of same type
+#           if defEntry:
+#               resultCLSID = defEntry.GetResultCLSIDStr()
+#           else:
+#               resultCLSID = "None"
+            resultCLSID = enumEntry.GetResultCLSIDStr()
+            print '\tdef _NewEnum(self):'
+            print '\t\t"Create an enumerator from this object"'
+            print '\t\treturn win32com.client.util.WrapEnum(self._oleobj_.InvokeTypes(%d,LCID,%d,(13, 10),()),%s)' % (pythoncom.DISPID_NEWENUM, enumEntry.desc[4], resultCLSID)
+            print '\tdef __getitem__(self, index):'
+            print '\t\t"Allow this class to be accessed as a collection"'
+            print "\t\tif not self.__dict__.has_key('_enum_'):"
+            print "\t\t\timport win32com.client.util"
+            print "\t\t\tself.__dict__['_enum_'] = self._NewEnum()"
+            print "\t\treturn self._enum_.__getitem__(index)"
+        else: # Not an Enumerator, but may be an "Item/Count" based collection
+            if specialItems["item"]:
+                entry, invoketype, propArgs = specialItems["item"]
+                print '\t#This class has Item property/method which may take args - allow indexed access'
+                print '\tdef __getitem__(self, item):'
+                print '\t\treturn self._get_good_object_(apply(self._oleobj_.Invoke, (0x%x, LCID, %d, 1, item)), "Item")' % (entry.desc[0], invoketype)
+        if specialItems["count"]:
+            entry, invoketype, propArgs = specialItems["count"]
+            if propArgs is None:
+                typename = "method"
+                ret = self.MakeFuncMethod(entry,'__len__')
+            else:
+                typename = "property"
+                ret = [ "\tdef __len__(self):\n\t\treturn apply(self._ApplyTypes_, %s )" % propArgs]
+            print "\t#This class has Count() %s - allow len(ob) to provide this" % (typename)
+            for line in ret:
+                print line
+            # Also include a __nonzero__
+            print "\t#This class has a __len__ - this is needed so 'if object:' always returns TRUE."
+            print "\tdef __nonzero__(self):"
+            print "\t\treturn 1"
+    
+        print
+        self.bWritten = 1
 
 
 class CoClassItem(build.OleItem, WritableItem):
@@ -458,13 +477,23 @@ class CoClassItem(build.OleItem, WritableItem):
   def WriteClass(self, generator):
     generator.checkWriteCoClassBaseClass()
     doc = self.doc
-    className = build.MakePublicAttributeName(doc[0])
+    if generator.generate_type == GEN_DEMAND_CHILD:
+      # Some special imports we must setup.
+      referenced_items = []
+      for ref, flag, dual in self.sources:
+        referenced_items.append(ref)
+      for ref, flag, dual in self.interfaces:
+        referenced_items.append(ref)
+      print "import sys"
+      for ref in referenced_items:
+        print "__import__('%s.%s')" % (generator.base_mod_name, ref.python_name)
+        print "%s = sys.modules['%s.%s'].%s" % (ref.python_name, generator.base_mod_name, ref.python_name, ref.python_name)
     try:
       progId = pythoncom.ProgIDFromCLSID(self.clsid)
       print "# This CoClass is known by the name '%s'" % (progId)
     except pythoncom.com_error:
       pass
-    print 'class %s(CoClassBaseClass): # A CoClass' % (className)
+    print 'class %s(CoClassBaseClass): # A CoClass' % (self.python_name)
     if doc and doc[1]: print '\t# ' + doc[1]
     clsidStr = str(self.clsid)
     print '\tCLSID = pythoncom.MakeIID("%s")' % (clsidStr)
@@ -473,50 +502,50 @@ class CoClassItem(build.OleItem, WritableItem):
     for source, flag, dual in self.sources:
       if flag & pythoncom.IMPLTYPEFLAG_FDEFAULT:
         defItem = source
-      print '\t\t%s,' % (build.MakePublicAttributeName(source.doc[0]))
+      print '\t\t%s,' % (source.python_name)
     print '\t]'
     if defItem:
-      print '\tdefault_source = %s' % (build.MakePublicAttributeName(defItem.doc[0]))
+      print '\tdefault_source = %s' % (defItem.python_name)
     print '\tcoclass_interfaces = ['
     defItem = None
     for interface, flag, dual in self.interfaces:
       if flag & pythoncom.IMPLTYPEFLAG_FDEFAULT: # and dual:
         defItem = interface
-      print '\t\t%s,' % (build.MakePublicAttributeName(interface.doc[0]))
+      print '\t\t%s,' % (interface.python_name,)
     print '\t]'
     if defItem:
-      print '\tdefault_interface = %s' % (build.MakePublicAttributeName(defItem.doc[0]))
+      print '\tdefault_interface = %s' % (defItem.python_name,)
     self.bWritten = 1
     print
 
 class GeneratorProgress:
-	def __init__(self):
-		pass
-	def Starting(self, tlb_desc):
-		"""Called when the process starts.
-		"""
-		self.tlb_desc = tlb_desc
-	def Finished(self):
-		"""Called when the process is complete.
-		"""
-	def SetDescription(self, desc, maxticks = None):
-		"""We are entering a major step.  If maxticks, then this
-		is how many ticks we expect to make until finished
-		"""
-	def Tick(self, desc = None):
-		"""Minor progress step.  Can provide new description if necessary
-		"""
-	def VerboseProgress(self, desc):
-		"""Verbose/Debugging output.
-		"""
-	def LogWarning(self, desc):
-		"""If a warning is generated
-		"""
-	def LogBeginGenerate(self, filename):
-		pass
-	def Close(self):
-		pass
-			
+    def __init__(self):
+        pass
+    def Starting(self, tlb_desc):
+        """Called when the process starts.
+        """
+        self.tlb_desc = tlb_desc
+    def Finished(self):
+        """Called when the process is complete.
+        """
+    def SetDescription(self, desc, maxticks = None):
+        """We are entering a major step.  If maxticks, then this
+        is how many ticks we expect to make until finished
+        """
+    def Tick(self, desc = None):
+        """Minor progress step.  Can provide new description if necessary
+        """
+    def VerboseProgress(self, desc):
+        """Verbose/Debugging output.
+        """
+    def LogWarning(self, desc):
+        """If a warning is generated
+        """
+    def LogBeginGenerate(self, filename):
+        pass
+    def Close(self):
+        pass
+            
 class Generator:
   def __init__(self, typelib, sourceFilename, progressObject, bBuildHidden=0, bUnicodeToString=0):
     self.bHaveWrittenDispatchBaseClass = 0
@@ -531,10 +560,10 @@ class Generator:
     # These 2 are later additions and most of the code still 'print's...
     self.file = None
 
-  def BuildOleItemsFromType(self):
+  def BuildOleItemsFromType(self, look_name = None):
     oleItems = {}
     enumItems = {}
-    aliasItems = {}
+    recordItems = {}
     for i in xrange(self.typelib.GetTypeInfoCount()):
       info = self.typelib.GetTypeInfo(i)
       infotype = self.typelib.GetTypeInfoType(i)
@@ -542,6 +571,7 @@ class Generator:
       attr = info.GetTypeAttr()
       itemClass = None
       if infotype == pythoncom.TKIND_ENUM or infotype == pythoncom.TKIND_MODULE:
+        if look_name is not None: continue
         newItem = EnumerationItem(info, attr, doc)
         enumItems[newItem.doc[0]] = newItem
       elif infotype in [pythoncom.TKIND_DISPATCH, pythoncom.TKIND_INTERFACE]:
@@ -560,16 +590,19 @@ class Generator:
           else:
             self.progress.VerboseProgress("Dispatch interface: %s" % doc[0])
         # Get to work.
+        if look_name is not None and doc[0]!=look_name:
+          continue
         if oleItems.has_key(attr[0]):
           continue # already built by CoClass processing.
         newItem = DispatchItem(info, attr, doc)
         oleItems[newItem.clsid] = newItem
       elif infotype == pythoncom.TKIND_RECORD or infotype == pythoncom.TKIND_UNION:
+        if look_name is not None: continue
         newItem = RecordItem(info, attr, doc)
-        ### where to put the newItem ??
+        recordItems[newItem.clsid] = newItem
       elif infotype == pythoncom.TKIND_ALIAS:
-        newItem = AliasItem(info, attr, doc)
-        aliasItems[newItem.doc[0]] = newItem
+        # We dont care about alias' - handled intrinsicly.
+        continue
       elif infotype == pythoncom.TKIND_COCLASS:
         # try to find the source and dispinterfaces for the coclass
         # We no longer generate specific OCX support for the CoClass, as there
@@ -577,6 +610,7 @@ class Generator:
         # predict much in this scenario, so we move the responsibility to
         # the Python programmer.
         # (It also keeps win32ui(ole) out of the core generated import dependencies.
+        if look_name is not None and look_name != doc[0]: continue
         sources = []
         interfaces = []
         for j in range(attr[8]):
@@ -592,18 +626,22 @@ class Generator:
             oleItems[dispItem.clsid] = dispItem
           if flags & pythoncom.IMPLTYPEFLAG_FSOURCE:
             dispItem.bIsSink = 1
-            sources.append(dispItem, flags, dual)
+            sources.append((dispItem, flags, dual))
           else:
-            interfaces.append(dispItem, flags, dual)
+            interfaces.append((dispItem, flags, dual))
 
         newItem = CoClassItem(info, attr, doc, sources, interfaces)
         oleItems[newItem.clsid] = newItem
       else:
         self.progress.LogWarning("Unknown TKIND found: %d" % infotype)
   
-    return oleItems, enumItems, aliasItems
-  
-  def generate(self, file):
+    return oleItems, enumItems, recordItems
+
+  def generate(self, file, is_for_demand = 0):
+    if is_for_demand:
+      self.generate_type = GEN_DEMAND_BASE
+    else:
+      self.generate_type = GEN_FULL
     self.file = file
     oldOut = sys.stdout
     sys.stdout = file
@@ -614,32 +652,25 @@ class Generator:
       self.file = None
       self.progress.Finished()
 
-  def do_generate(self):
+  def do_gen_file_header(self):
+    la = self.typelib.GetLibAttr()
     moduleDoc = self.typelib.GetDocumentation(-1)
     docDesc = ""
     if moduleDoc[1]:
       docDesc = moduleDoc[1]
-    self.progress.Starting(docDesc)
-    self.progress.SetDescription("Building definitions from type library...")
-    oleItems, enumItems, aliasItems = self.BuildOleItemsFromType()
-    la = self.typelib.GetLibAttr()
 
-    print '# Created by makepy.py version %s from %s' % (makepy_version,os.path.split(self.sourceFilename)[1])
-    print '# On date: %s' % time.ctime(time.time())
+    print '# Created by makepy.py version %s' % (makepy_version,)
+    if self.sourceFilename:
+        print "# From type library '%s'" % (os.path.split(self.sourceFilename)[1],)
+    print '# On %s' % time.ctime(time.time())
 #    print '#\n# Command line used:', string.join(sys.argv[1:]," ")
 
-    self.progress.SetDescription("Generating...", len(oleItems.values())+len(enumItems.values()))
 
-    try:
-      print '"' + moduleDoc[1] + '"'
-    except:
-      pass
+    print '"""' + docDesc + '"""'
+
     print 'makepy_version =', `makepy_version`
     print
     print 'import win32com.client.CLSIDToClass, pythoncom'
-    print 'from types import TupleType'
-    if self.bUnicodeToString:
-    	print 'from pywintypes import UnicodeType'
     print
     print '# The following 3 lines may need tweaking for the particular server'
     print '# Candidates are pythoncom.Missing and pythoncom.Empty'
@@ -654,95 +685,110 @@ class Generator:
     print 'LCID = ' + hex(la[1])
     print
 
+  def do_generate(self):
+    moduleDoc = self.typelib.GetDocumentation(-1)
+    docDesc = ""
+    if moduleDoc[1]:
+      docDesc = moduleDoc[1]
+    self.progress.Starting(docDesc)
+    self.progress.SetDescription("Building definitions from type library...")
+
+    self.do_gen_file_header()
+
+    oleItems, enumItems, recordItems = self.BuildOleItemsFromType()
+
+    self.progress.SetDescription("Generating...", len(oleItems.values())+len(enumItems.values()))
+
     # Generate the constants and their support.
     if enumItems:
-	    print "class constants:"
-	    list = enumItems.values()
-	    list.sort()
-	    for oleitem in list:
-	        oleitem.WriteEnumerationItems()
-	    print
-	    print    
-	    for oleitem in list:
-	      self.progress.Tick()
-	      oleitem.WriteEnumerationHeaders(aliasItems)
+        print "class constants:"
+        list = enumItems.values()
+        list.sort()
+        for oleitem in list:
+            oleitem.WriteEnumerationItems()
+            self.progress.Tick()
+        print
 
-    list = oleItems.values()
-    list.sort()
-    for oleitem in list:
-      self.progress.Tick()
-      oleitem.WriteClass(self)
+    if self.generate_type == GEN_FULL:
+      list = oleItems.values()
+      list.sort()
+      for oleitem in list:
+        self.progress.Tick()
+        oleitem.WriteClass(self)
 
-#    list = aliasItems.values()
-#    if list:
-#      print "# The following Aliases have been generated for informational purposes only"
-#      for oleitem in list:
-#        oleitem.WriteAliasCode(aliasItems)
+    print 'RecordMap = {'
+    list = recordItems.values()
+    for record in list:
+        print "\t%s: %s," % (`record.doc[0]`, `str(record.clsid)`)
+    print "}"
+    print
 
     # Write out _all_ my generated CLSID's in the map
-    print 'CLSIDToClassMap = {'
-    for item in oleItems.values():
-      if item.bWritten:
-        print "\t'%s' : %s," % (str(item.clsid), build.MakePublicAttributeName(item.doc[0]))
-    print '}'
-    print
-    print 'win32com.client.CLSIDToClass.RegisterCLSIDsFromDict( CLSIDToClassMap )'
+    if self.generate_type == GEN_FULL:
+      print 'CLSIDToClassMap = {'
+      for item in oleItems.values():
+        if item.bWritten:
+          print "\t'%s' : %s," % (str(item.clsid), item.python_name)
+      print '}'
+      print 'CLSIDToPackageMap = {}'
+      print
+      print 'win32com.client.CLSIDToClass.RegisterCLSIDsFromDict( CLSIDToClassMap )'
+    else:
+      print 'CLSIDToClassMap = {}'
+      print 'CLSIDToPackageMap = {'
+      for item in oleItems.values():
+        print "\t'%s' : %s," % (str(item.clsid), `item.python_name`)
+      print '}'
+
     if enumItems:
       print 'win32com.client.constants.__dicts__.append(constants.__dict__)'
     print
 
+  def generate_child(self, child, dir):
+    "Generate a single child.  May force a few children to be built as we generate deps"
+    self.generate_type = GEN_DEMAND_CHILD
+    oldOut = sys.stdout
+
+    la = self.typelib.GetLibAttr()
+    lcid = la[1]
+    clsid = la[0]
+    major=la[3]
+    minor=la[4]
+    self.base_mod_name = "win32com.gen_py." + str(clsid)[1:-1] + "x%sx%sx%s" % (lcid, major, minor)
+    try:
+      oleItems, enumItems, recordItems = self.BuildOleItemsFromType(child)
+      assert len(enumItems)==0 and len(recordItems)==0, "Not expecting anything other than oleitems"
+      assert len(oleItems)>0, "Could not find the name '%s'" % (child,)
+      list = oleItems.values()
+      self.progress.SetDescription("Generating...", len(oleItems.values()))
+      for oleitem in list:
+        self.file = open(os.path.join(dir, oleitem.python_name) + ".py", "w")
+        sys.stdout = self.file
+        try:
+          self.do_gen_child_item(oleitem)
+          self.progress.Tick()
+        finally:
+          sys.stdout = oldOut
+          self.file.close()
+          self.file = None
+    finally:
+      sys.stdout = oldOut
+      self.progress.Finished()
+
+  def do_gen_child_item(self, oleitem):
+    moduleDoc = self.typelib.GetDocumentation(-1)
+    docDesc = ""
+    if moduleDoc[1]:
+      docDesc = moduleDoc[1]
+    self.progress.Starting(docDesc)
+    self.progress.SetDescription("Building definitions from type library...")
+    self.do_gen_file_header()
+    oleitem.WriteClass(self)
+    print 'win32com.client.CLSIDToClass.RegisterCLSID( "%s", %s )' % (oleitem.clsid, oleitem.python_name)
 
   def checkWriteDispatchBaseClass(self):
     if not self.bHaveWrittenDispatchBaseClass:
-      print "_PyIDispatchType = pythoncom.TypeIIDs[pythoncom.IID_IDispatch]"
-      print
-      print "class DispatchBaseClass:"
-      print '\tdef __init__(self, oobj=None):'
-      print '\t\tif oobj is None:'
-      print '\t\t\toobj = pythoncom.new(self.CLSID)'
-      print '\t\telif type(self) == type(oobj): # An instance'
-      print '\t\t\toobj = oobj._oleobj_.QueryInterface(self.CLSID, pythoncom.IID_IDispatch) # Must be a valid COM instance'
-      print '\t\tself.__dict__["_oleobj_"] = oobj # so we dont call __setattr__'
-      # Provide a prettier name than the CLSID
-      print '\tdef __repr__(self):'
-      print '\t\treturn "<win32com.gen_py.%s.%s>" % (__doc__, self.__class__.__name__)'
-      print
-
-      print '\tdef _ApplyTypes_(self, dispid, wFlags, retType, argTypes, user, resultCLSID, *args):'
-      print '\t\treturn self._get_good_object_(apply(self._oleobj_.InvokeTypes, (dispid, LCID, wFlags, retType, argTypes) + args), user, resultCLSID)'
-      print
-
-      # Create . operators for the class.
-      print '\tdef __getattr__(self, attr):'
-      print '\t\ttry:'
-      print '\t\t\targs=self._prop_map_get_[attr]'
-      print '\t\texcept KeyError:'
-      print '\t\t\traise AttributeError, attr'
-      print '\t\treturn apply(self._ApplyTypes_, args)'
-      print
-      print '\tdef __setattr__(self, attr, value):'
-      print '\t\tif self.__dict__.has_key(attr): self.__dict__[attr] = value; return'
-      print '\t\ttry:'
-      print '\t\t\targs, defArgs=self._prop_map_put_[attr]'
-      print '\t\texcept KeyError:'
-      print '\t\t\traise AttributeError, attr'
-      print '\t\tapply(self._oleobj_.Invoke, args + (value,) + defArgs)'
-      
-      print "\tdef _get_good_single_object_(self, obj, obUserName=None, resultCLSID=None):"
-      print "\t\tif _PyIDispatchType==type(obj):"
-      print "\t\t\treturn win32com.client.Dispatch(obj, obUserName, resultCLSID, UnicodeToString=%d)" % (self.bUnicodeToString)
-      if self.bUnicodeToString:
-        print "\t\telif UnicodeType==type(obj):"
-        print "\t\t\treturn str(obj)"
-      print "\t\treturn obj"
-      print "\tdef _get_good_object_(self, obj, obUserName=None, resultCLSID=None):"
-      print "\t\tif obj is None:"
-      print "\t\t\treturn None"
-      print "\t\telif type(obj)==TupleType:"
-      print "\t\t\treturn tuple(map(lambda o, s=self, oun=obUserName, rc=resultCLSID: s._get_good_single_object_(o, oun, rc),  obj))"
-      print "\t\telse:"
-      print "\t\t\treturn self._get_good_single_object_(obj, obUserName, resultCLSID)"
-      print
+      print "from win32com.client import DispatchBaseClass"
       self.bHaveWrittenDispatchBaseClass = 1
 
   def checkWriteCoClassBaseClass(self):
@@ -777,12 +823,11 @@ class Generator:
     # Nota base class as such...
       if not self.bHaveWrittenEventBaseClass:
         print "# Little helper to transform event arguments to more usable objects."
-        print "import win32com.client"
         print "from pywintypes import UnicodeType"
         print "dispatchType = pythoncom.TypeIIDs[pythoncom.IID_IDispatch]"
         print "def transformarg(arg):"
         print "\tif type(arg)==dispatchType:"
-        print "\t\treturn win32com.client.Dispatch(arg)"
+        print "\t\treturn Dispatch(arg)"
         print "\telif type(arg)==UnicodeType:"
         print "\t\treturn str(arg)"
         print "\treturn arg"

@@ -16,9 +16,19 @@ from scintillacon import *
 
 # Load Scintilla.dll to get access to the control.
 # We expect to find this in the same directory as win32ui.pyd
-try:
-	dllid = win32api.LoadLibrary(os.path.join(os.path.split(win32ui.__file__)[0], "Scintilla.DLL"))
-except win32api.error: # Not there - lets see if Windows can find it by searching?
+dllid = None
+if win32ui.debug: # If running _d version of Pythonwin...
+	try:
+		dllid = win32api.LoadLibrary(os.path.join(os.path.split(win32ui.__file__)[0], "Scintilla_d.DLL"))
+	except win32api.error: # Not there - we dont _need_ a debug ver, so ignore this error.
+		pass
+if dllid is None:
+	try:
+		dllid = win32api.LoadLibrary(os.path.join(os.path.split(win32ui.__file__)[0], "Scintilla.DLL"))
+	except win32api.error: 
+		pass
+if dllid is None:
+	# Still not there - lets see if Windows can find it by searching?
 	dllid = win32api.LoadLibrary("Scintilla.DLL")
 
 EM_GETTEXTRANGE = 1099
@@ -27,11 +37,27 @@ EM_FINDTEXTEX = 1103
 EM_GETSELTEXT = 1086
 EM_EXSETSEL = win32con.WM_USER + 55
 
+class ScintillaNotification:
+	def __init__(self, **args):
+		self.__dict__.update(args)
+
 class ScintillaControlInterface:
+	def SCIUnpackNotifyMessage(self, msg):
+		format = "iiiiPiiiiiiiii"
+		bytes = win32ui.GetBytes( msg, struct.calcsize(format) )
+		position, ch, modifiers, modificationType, text_ptr, \
+				length, linesAdded, msg, wParam, lParam, line, \
+				foldLevelNow, foldLevelPrev, margin \
+				= struct.unpack(format, bytes)
+		return ScintillaNotification(position=position,ch=ch,
+									 modifiers=modifiers, modificationType=modificationType,
+									 text_ptr = text_ptr, length=length, linesAdded=linesAdded,
+									 msg = msg, wParam = wParam, lParam = lParam,
+									 line = line, foldLevelNow = foldLevelNow, foldLevelPrev = foldLevelPrev,
+									 margin = margin)
+
 	def SCIAddText(self, text):
-		sma = array.array('c', text)
-		(a,l) = sma.buffer_info()
-		self.SendScintilla(SCI_ADDTEXT, l, a)
+		self.SendMessage(SCI_ADDTEXT, buffer(text))
 	def SCIAddStyledText(self, text, style = None):
 		# If style is None, text is assumed to be a "native" Scintilla buffer.
 		# If style is specified, text is a normal string, and the style is
@@ -39,9 +65,7 @@ class ScintillaControlInterface:
 		if style is not None:
 			text = map(lambda char, style=style: char+chr(style), text)
 			text = string.join(text, '')
-		sma = array.array("c", text)
-		(a,l) = sma.buffer_info()
-		self.SendScintilla(SCI_ADDSTYLEDTEXT, l, a)
+		self.SendMessage(SCI_ADDSTYLEDTEXT, buffer(text))
 	def SCIInsertText(self, text, pos=-1):
 		sma = array.array('c', text+"\0")
 		(a,l) = sma.buffer_info()
@@ -69,10 +93,16 @@ class ScintillaControlInterface:
 
 	####################################
 	# Styling
+#	def SCIColourise(self, start=0, end=-1):
+#   NOTE - dependent on of we use builtin lexer, so handled below.		
 	def SCIGetEndStyled(self):
 		return self.SendScintilla(SCI_GETENDSTYLED)
 	def SCIStyleSetFore(self, num, v):
 		return self.SendScintilla(SCI_STYLESETFORE, num, v)
+	def SCIStyleSetBack(self, num, v):
+		return self.SendScintilla(SCI_STYLESETBACK, num, v)
+	def SCIStyleSetEOLFilled(self, num, v):
+		return self.SendScintilla(SCI_STYLESETEOLFILLED, num, v)
 	def SCIStyleSetFont(self, num, name):
 		buff = array.array('c', name + "\0")
 		addressBuffer = buff.buffer_info()[0]
@@ -105,7 +135,11 @@ class ScintillaControlInterface:
 	def SCIGetStyleAt(self, pos):
 		return self.SendScintilla(SCI_GETSTYLEAT, pos)
 	def SCISetMarginWidth(self, width):
-		self.SendScintilla(SCI_SETMARGINWIDTH, width)
+		self.SendScintilla(SCI_SETMARGINWIDTHN, 1, width)
+	def SCISetMarginWidthN(self, n, width):
+		self.SendScintilla(SCI_SETMARGINWIDTHN, n, width)
+	def SCISetFoldFlags(self, flags):
+		self.SendScintilla(SCI_SETFOLDFLAGS, flags)
 	# Markers
 	def SCIMarkerDefine(self, markerNum, markerType):
 		self.SendScintilla(SCI_MARKERDEFINE, markerNum, markerType)
@@ -156,6 +190,33 @@ class ScintillaControlInterface:
 		return self.SendScintilla(SCI_CALLTIPPOSSTART)
 	def SCINewline(self):
 		self.SendScintilla(SCI_NEWLINE)
+	# Lexer etc
+	def SCISetKeywords(self, keywords, kw_list_no = 0):
+		ar = array.array('c', keywords+"\0")
+		(a,l) = ar.buffer_info()
+		self.SendScintilla(SCI_SETKEYWORDS, kw_list_no, a)
+	def SCISetProperty(self, name, value):
+		name_buff = array.array('c', name + "\0")
+		val_buff = array.array("c", str(value) + "\0")
+		address_name_buffer = name_buff.buffer_info()[0]
+		address_val_buffer = val_buff.buffer_info()[0]
+		self.SendScintilla(SCI_SETPROPERTY, address_name_buffer, address_val_buffer)
+	def SCISetStyleBits(self, nbits):
+		self.SendScintilla(SCI_SETSTYLEBITS, nbits)
+	# Folding
+	def SCIGetFoldLevel(self, lineno):
+		return self.SendScintilla(SCI_GETFOLDLEVEL, lineno)
+	def SCIToggleFold(self, lineno):
+		return self.SendScintilla(SCI_TOGGLEFOLD, lineno)
+	def SCIEnsureVisible(self, lineno):
+		self.SendScintilla(SCI_ENSUREVISIBLE, lineno)
+	def SCIGetFoldExpanded(self, lineno):
+		return self.SendScintilla(SCI_GETFOLDEXPANDED, lineno)
+	# Multi-doc
+	def SCIGetDocPointer(self):
+		return self.SendScintilla(SCI_GETDOCPOINTER)
+	def SCISetDocPointer(self, p):
+		return self.SendScintilla(SCI_SETDOCPOINTER, 0, p)
 
 class CScintillaEditInterface(ScintillaControlInterface):
 	def close(self):
@@ -210,7 +271,7 @@ class CScintillaEditInterface(ScintillaControlInterface):
 
 	def LineFromChar(self, charPos=-1):
 		if charPos==-1: charPos = self.GetSel()[0]
-		assert charPos >= 0 and charPos <= self.GetTextLength(), "The charPos postion is invalid"
+		assert charPos >= 0 and charPos <= self.GetTextLength(), "The charPos postion (%s) is invalid (max=%s)" % (charPos, self.GetTextLength())
 		#return self.SendScintilla(EM_EXLINEFROMCHAR, charPos)
 		# EM_EXLINEFROMCHAR puts charPos in lParam, not wParam
 		return self.SendScintilla(EM_EXLINEFROMCHAR, 0, charPos)
@@ -274,26 +335,22 @@ class CScintillaColorEditInterface(CScintillaEditInterface):
 		if hasattr(self.GetParent(), "_MakeColorizer"):
 			return self.GetParent()._MakeColorizer()
 		import formatter
-		return formatter.PythonSourceFormatter(self)
+##		return formatter.PythonSourceFormatter(self)
+		return formatter.BuiltinPythonSourceFormatter(self)
 
-	def Reformat(self, bReload=1):
+	def Colorize(self, start=0, end=-1):
 		c = self._GetColorizer()
-		if c is not None: c.Reformat(bReload)
+		if c is not None: c.Colorize(start, end)
+
+	def ApplyFormattingStyles(self, bReload=1):
+		c = self._GetColorizer()
+		if c is not None: c.ApplyFormattingStyles(bReload)
 
 	# The Parent window will normally hook
-	def HookStyleNotify(self, parent = None):
-		if self._GetColorizer() is not None: # No need if we have no color!
-			if parent is None: parent = self.GetParentFrame()
-			parent.HookNotify(self.OnStyleNeeded, SCN_STYLENEEDED)
-
-	def OnStyleNeeded(self, std, extra):
-		bytes = win32ui.GetBytes( extra, struct.calcsize("iii") )
-		endPosPaint, ch, modifiers = struct.unpack("iii", bytes)
-		endStyledChar = self.SendScintilla(SCI_GETENDSTYLED)
-		lineEndStyled = self.LineFromChar(endStyledChar)
-		endStyled = self.LineIndex(lineEndStyled)
-		#print "enPosPaint %d endStyledChar %d lineEndStyled %d endStyled %d" % (endPosPaint, endStyledChar, lineEndStyled, endStyled)
-		self._GetColorizer().Colorize(endStyled, endPosPaint)
+	def HookFormatter(self, parent = None):
+		c = self._GetColorizer()
+		if c is not None: # No need if we have no color!
+			c.HookFormatter(parent)
 
 class CScintillaEdit(window.Wnd, CScintillaColorEditInterface):
 	def __init__(self, wnd=None):

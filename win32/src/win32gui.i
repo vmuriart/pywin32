@@ -65,11 +65,42 @@ typedef int UINT;
 }
 
 %typemap(python,in) RECT *INPUT {
-	RECT r;
-	if (Py_ParseTuple($source, "llll", &r.left, &r.top, &r.right, &r.bottom) == 0) {
-           return PyWin_SetAPIError("$name");
+    RECT r;
+	if (PyTuple_Check($source)) {
+		if (PyArg_ParseTuple($source, "llll", &r.left, &r.top, &r.right, &r.bottom) == 0) {
+			return PyWin_SetAPIError("$name");
+		}
+		$target = &r;
+    } else {
+        return PyWin_SetAPIError("$name");
 	}
-	$target = r;
+}
+
+%typemap(python,in) RECT *INPUT_NULLOK {
+    RECT r;
+	if (PyTuple_Check($source)) {
+		if (PyArg_ParseTuple($source, "llll", &r.left, &r.top, &r.right, &r.bottom) == 0) {
+			return PyWin_SetAPIError("$name");
+		}
+		$target = &r;
+	} else {
+		if ($source == Py_None) {
+            $target = NULL;
+        } else {
+            PyErr_SetString(PyExc_TypeError, "This param must be a tuple of four integers or None");
+            return NULL;
+		}
+	}
+}
+
+%typemap(python,in) struct HRGN__ *NONE_ONLY {
+ /* Currently only allow NULL as a value -- I don't know of the
+    'right' way to do this.   DAA 1/9/2000 */
+	if ($source == Py_None) {
+        $target = NULL;
+    } else {
+        return PyWin_SetAPIError("$name");
+	}
 }
 
 %typemap(python,argout) RECT *OUTPUT {
@@ -877,6 +908,24 @@ BOOLAPI SetDlgItemText( HWND hDlg, int nIDDlgItem, TCHAR *text );
 // @pyswig |SetWindowText|Sets the window text.
 BOOLAPI SetWindowText(HWND hwnd, TCHAR *text);
 
+%{
+// @pyswig string|GetWindowText|Get the window text.
+static PyObject *PyGetWindowText(PyObject *self, PyObject *args)
+{
+    HWND hwnd;
+    TCHAR *buffer;
+    int len;
+    
+	buffer = (TCHAR *) malloc(sizeof(TCHAR) * 200);
+	if (!PyArg_ParseTuple(args, "l", &hwnd))
+		return NULL;
+    len = GetWindowText(hwnd, buffer, 200);
+    if (len == 0) return PyUnicodeObject_FromString("");
+	return PyWinObject_FromTCHAR(buffer, len);
+}
+%}
+%native (GetWindowText) PyGetWindowText;
+
 // @pyswig |InitCommonControls|Initializes the common controls.
 void InitCommonControls();
 
@@ -980,9 +1029,15 @@ BOOLAPI BringWindowToTop(HWND hWnd);
 // @pyparm int|hwnd||The handle to the window
 HWND SetActiveWindow(HWND hWnd);
 
+// @pyswig HWND|GetActiveWindow|
+HWND GetActiveWindow();
+
 // @pyswig HWND|SetForegroundWindow|
 // @pyparm int|hwnd||The handle to the window
 BOOLAPI SetForegroundWindow(HWND hWnd);
+
+// @pyswig HWND|GetForegroundWindow|
+HWND GetForegroundWindow();
 
 // @pyswig (left, top, right, bottom)|GetClientRect|
 // @pyparm int|hwnd||The handle to the window
@@ -991,6 +1046,10 @@ BOOLAPI GetClientRect(HWND hWnd, RECT *OUTPUT);
 // @pyswig HDC|GetDC|Gets the device context for the window.
 // @pyparm int|hwnd||The handle to the window
 HDC GetDC(  HWND hWnd );
+
+// @pyswig HWND|GetParent|Gets the parent window.
+// @pyparm int|hwnd||The handle to the window
+HWND GetParent(HWND hWnd);
 
 #ifndef MS_WINCE
 HINSTANCE GetModuleHandle(TCHAR *INPUT_NULLOK);
@@ -1386,17 +1445,8 @@ int ReleaseDC(
 	HDC hDC     // @pyparm int|hDC||handle to device context
 ); 
 
-// @pyswig int|ScrollWindowEx|scrolls the content of the specified window's client area. 
-int ScrollWindowEx(
-	HWND hWnd,        // @pyparm int|hWnd||handle to window to scroll
-	int dx,           // @pyparm int|dx||amount of horizontal scrolling
-	int dy,           // @pyparm int|dy||amount of vertical scrolling
-	 RECT *prcScroll, // @pyparm int|prcScroll||address of structure with scroll rectangle
-	 RECT *prcClip,  // @pyparm int|prcClip||address of structure with clip rectangle
-	HRGN hrgnUpdate,  // @pyparm int|hrgnUpdate||handle to update region
-	LPRECT prcUpdate, // @pyparm int|prcUpdate||address of structure for update rectangle
-	UINT flags        // @pyparm int|flags||scrolling flags
-); 
+%apply HRGN {long};
+typedef long HRGN
 
 // @pyswig |SystemParametersInfo|queries or sets system-wide parameters. This function can also update the user profile while setting a parameter. 
 
@@ -1420,6 +1470,18 @@ BOOLAPI CreateCaret(
 BOOLAPI DestroyCaret();
 
 */
+
+// @pyswig int|ScrollWindowEx|scrolls the content of the specified window's client area. 
+int ScrollWindowEx(
+	HWND hWnd,        // @pyparm int|hWnd||handle to window to scroll
+	int dx,           // @pyparm int|dx||amount of horizontal scrolling
+	int dy,           // @pyparm int|dy||amount of vertical scrolling
+	RECT *INPUT_NULLOK, // @pyparm int|prcScroll||address of structure with scroll rectangle
+	RECT *INPUT_NULLOK,  // @pyparm int|prcClip||address of structure with clip rectangle
+	struct HRGN__ *NONE_ONLY,  // @pyparm int|hrgnUpdate||handle to update region
+	RECT *INPUT_NULLOK, // @pyparm int|prcUpdate||address of structure for update rectangle
+	UINT flags        // @pyparm int|flags||scrolling flags
+); 
 
 // Get/SetScrollInfo
 
@@ -1548,17 +1610,23 @@ static PyObject *PySetScrollInfo(PyObject *self, PyObject *args) {
 	// @pyparm <o PySCROLLINFO>|scollInfo||Scollbar info.
 	// @pyparm int|bRedraw|1|Should the bar be redrawn?
 	if (!PyArg_ParseTuple(args, "liO|i:SetScrollInfo",
-						  &hwnd, &nBar, &obInfo, &bRedraw))
+						  &hwnd, &nBar, &obInfo, &bRedraw)) {
+		PyWin_SetAPIError("SetScrollInfo");
 		return NULL;
+	}
 	SCROLLINFO info;
 	info.cbSize = sizeof(SCROLLINFO);
-	if (ParseSCROLLINFOTuple(obInfo, &info) == 0)
+	if (ParseSCROLLINFOTuple(obInfo, &info) == 0) {
+		PyWin_SetAPIError("SetScrollInfo");
 		return NULL;
+	}
 	GUI_BGN_SAVE;
 	BOOL ok = SetScrollInfo(hwnd, nBar, &info, bRedraw);
 	GUI_END_SAVE;
-	if (!ok)
+	if (!ok) {
 		PyWin_SetAPIError("SetScrollInfo");
+		return NULL;
+	}
 	RETURN_NONE;
 }
 %}

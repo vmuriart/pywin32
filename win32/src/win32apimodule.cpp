@@ -1969,15 +1969,19 @@ countStrings(char *data, int len)
 
 /* Convert PyObject into Registry data. 
    Allocates space as needed. */
-static int
+static bool
 Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 {
 	int i,j;
 	switch (typ) {
 		case REG_DWORD:
 			if (value!=Py_None && !PyInt_Check(value))
-				return 0;
-			*retDataBuf=(BYTE *)PyMem_NEW(DWORD, 1);
+				return false;
+			*retDataBuf = (BYTE *)PyMem_NEW(DWORD, sizeof(DWORD));
+			if (*retDataBuf==NULL){
+				PyErr_NoMemory();
+				return false;
+			}
 			*retDataSize=sizeof(DWORD);
 			if (value==Py_None) {
 				DWORD zero = 0;
@@ -1992,10 +1996,14 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 				*retDataSize=1;
 			else {
 				if (!PyString_Check(value))
-					return 0;
+					return false;
 				*retDataSize=strlen(PyString_AS_STRING((PyStringObject *)value))+1;
 			}
 			*retDataBuf=(BYTE *)PyMem_NEW(DWORD, *retDataSize);
+			if (*retDataBuf==NULL){
+				PyErr_NoMemory();
+				return false;
+			}
 			if (value==Py_None)
 				strcpy((char *)*retDataBuf, "");
 			else
@@ -2010,7 +2018,7 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 					i = 0;
 				else {
 					if (!PyList_Check(value))
-						return 0;
+						return false;
 					i=PyList_Size(value);
 				}
 				for(j=0; j<i; j++)
@@ -2023,6 +2031,10 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 			
 				*retDataSize=size+1;
 				*retDataBuf=(BYTE *)PyMem_NEW(char, *retDataSize);
+				if (*retDataBuf==NULL){
+					PyErr_NoMemory();
+					return false;
+				}
 				char *P=(char *)*retDataBuf;
 
 				for(j=0; j<i; j++)
@@ -2043,9 +2055,13 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 				*retDataSize = 0;
 			else {
 				if (!PyString_Check(value))
-					return 0;
+					return false;
 				*retDataSize=PyString_Size(value);
 				*retDataBuf=(BYTE *)PyMem_NEW(char, *retDataSize);
+				if (*retDataBuf==NULL){
+					PyErr_NoMemory();
+					return false;
+				}
 				memcpy(*retDataBuf,PyString_AS_STRING((PyStringObject *)value),*retDataSize);
 			}
 			break;
@@ -2152,7 +2168,9 @@ PyRegEnumValue( PyObject *self, PyObject *args )
 	PyObject *obData=Reg2Py(retDataBuf, retDataSize, typ);
 	if (obData==NULL)
 		return NULL;
-	return Py_BuildValue("sOi", retValueBuf, obData, typ);
+	PyObject *retVal = Py_BuildValue("sOi", retValueBuf, obData, typ);
+	Py_DECREF(obData);
+	return retVal;
 	// @comm This function is typically called repeatedly, until an exception is raised, indicating no more values.
 }
 
@@ -2295,7 +2313,9 @@ PyRegQueryInfoKey( PyObject *self, PyObject *args)
   li.HighPart=ft.dwHighDateTime;
   if (!(l=PyLong_FromDouble(LI2double(&li))))
       return NULL;
-  return Py_BuildValue("iiO",nSubKeys,nValues,l);
+  PyObject *ret = Py_BuildValue("iiO",nSubKeys,nValues,l);
+  Py_DECREF(l);
+  return ret;
 }
 
 // @pymethod string|win32api|RegQueryValue|The RegQueryValue method retrieves the value associated with
@@ -2381,7 +2401,7 @@ PyRegSaveKey( PyObject *self, PyObject *args )
 	// @pyparm <o PyHKEY>/int|key||An already open key, or any one of the following win32con constants:<nl>HKEY_CLASSES_ROOT<nl>HKEY_CURRENT_USER<nl>HKEY_LOCAL_MACHINE<nl>HKEY_USERS
 	// @pyparm string|filename||The name of the file to save registry data to.
 	// This file cannot already exist. If this filename includes an extension, it cannot be used on file allocation table (FAT) file systems by the <om win32api.RegLoadKey>, <om win32api.RegReplaceKey>, or <om win32api.RegRestoreKey> methods. 
-	// @pyparm <o PySECURITY_ATTRIBUTES>|sa||The security attributes of the created file.
+	// @pyparm <o PySECURITY_ATTRIBUTES>|sa|None|The security attributes of the created file.
 	if (!PyArg_ParseTuple(args, "Os|O:RegSaveKey", &obKey, &fileName, &obSA))
 		return NULL;
 	if (!PyWinObject_AsHKEY(obKey, &hKey))
@@ -2399,7 +2419,6 @@ PyRegSaveKey( PyObject *self, PyObject *args )
 	return Py_None;
 	// @comm If key represents a key on a remote computer, the path described by fileName is relative to the remote computer.
 	// <nl>The caller of this method must possess the SeBackupPrivilege security privilege.
-	// <nl>Currently, this function passes NULL for security_attributes to the API.
 }
 // @pymethod |win32api|RegSetValue|Associates a value with a specified key.  Currently, only strings are supported.
 static PyObject *
@@ -2493,12 +2512,15 @@ PyRegSetValueEx( PyObject *self, PyObject *args )
 	// @pyseeapi RegSetValueEx
 	if (!Py2Reg(value, typ, &data, &len))
 	{
-		PyErr_SetObject(PyExc_ValueError, Py_BuildValue("sO","Data didn't match Registry Type", data));
+		if (!PyErr_Occurred())
+			PyErr_SetString(PyExc_ValueError, 
+		                	"Could not convert the data to the specified type.");
 		return NULL;
 	}
 	PyW32_BEGIN_ALLOW_THREADS
 	rc=RegSetValueEx(hKey, valueName, NULL, typ, data, len );
 	PyW32_END_ALLOW_THREADS
+	PyMem_Free((char *)data);
 	if (rc!=ERROR_SUCCESS)
 		return ReturnAPIError("RegSetValueEx", rc);
 	Py_INCREF(Py_None);
@@ -2510,6 +2532,69 @@ PyRegSetValueEx( PyObject *self, PyObject *args )
 	// Long values (more than 2048 bytes) should be stored as files with the filenames stored in the configuration registry.
 	// This helps the registry perform efficiently.
 	// <nl>The key identified by the key parameter must have been opened with KEY_SET_VALUE access.
+}
+
+// @pymethod |win32api|RegSetKeySecurity|Sets the security on the specified registry key.
+static PyObject *PyRegSetKeySecurity(PyObject *self, PyObject *args)
+{
+	long si;
+	HKEY hKey;
+	PyObject *obKey, *obSD;
+	DWORD rc;
+	SECURITY_DESCRIPTOR *sd;
+	if (!PyArg_ParseTuple(args, "OlO:RegSetKeySecurity", 
+		&obKey, // @pyparm <o PyHKEY>/int|key||Handle to an open key for which the security descriptor is set.
+		&si, //@pyparm int|security_info||] Specifies the components of the security descriptor to set. The value can be a combination of the *_SECURITY_INFORMATION constants.
+		&obSD)) // @pyparm <o PySECURITY_DESCRIPTOR>|sd||The new security descriptor for the key
+		return NULL;
+	if (!PyWinObject_AsHKEY(obKey, &hKey))
+		return NULL;
+	if (!PyWinObject_AsSECURITY_DESCRIPTOR(obSD, &sd, FALSE))
+		return NULL;
+	// @pyseeapi PyRegSetKeySecurity
+	PyW32_BEGIN_ALLOW_THREADS
+	rc=RegSetKeySecurity(hKey, si, sd);
+	PyW32_END_ALLOW_THREADS
+	if (rc!=ERROR_SUCCESS)
+		return ReturnAPIError("RegSetKeySecurity", rc);
+	Py_INCREF(Py_None);
+	return Py_None;
+	// @comm If key is one of the predefined keys, the predefined key should be closed with <om win32api.RegCloseKey>. That ensures that the new security information is in effect the next time the predefined key is referenced.
+}
+
+// @pymethod <o PySECURITY_DESCRIPTOR>|win32api|RegGetKeySecurity|Retrieves the security on the specified registry key.
+static PyObject *PyRegGetKeySecurity(PyObject *self, PyObject *args)
+{
+	long si;
+	HKEY hKey;
+	PyObject *obKey;
+	if (!PyArg_ParseTuple(args, "Ol:RegGetKeySecurity", 
+		&obKey, // @pyparm <o PyHKEY>/int|key||Handle to an open key for which the security descriptor is set.
+		&si)) //@pyparm int|security_info||Specifies the components of the security descriptor to retrieve. The value can be a combination of the *_SECURITY_INFORMATION constants.
+		return NULL;
+	if (!PyWinObject_AsHKEY(obKey, &hKey))
+		return NULL;
+	// @pyseeapi PyRegGetKeySecurity
+	DWORD cb = 0;
+	DWORD rc;
+	PyW32_BEGIN_ALLOW_THREADS
+	rc=RegGetKeySecurity(hKey, si, NULL, &cb);
+	PyW32_END_ALLOW_THREADS
+	if (rc!=ERROR_INSUFFICIENT_BUFFER)
+		return ReturnAPIError("RegGetKeySecurity", rc);
+	SECURITY_DESCRIPTOR *sd = (SECURITY_DESCRIPTOR *)malloc(cb);
+	if (sd==NULL)
+		return PyErr_NoMemory();
+	Py_BEGIN_ALLOW_THREADS
+	rc=RegGetKeySecurity(hKey, si, sd, &cb);
+	Py_END_ALLOW_THREADS
+	if (rc!=ERROR_SUCCESS) {
+		free(sd);
+		return ReturnAPIError("RegGetKeySecurity", rc);
+	}
+	PyObject *ret = PyWinObject_FromSECURITY_DESCRIPTOR(sd, cb);
+	free(sd);
+	return ret;
 }
 
 // @pymethod |win32api|RegisterWindowMessage|The RegisterWindowMessage method, given a string, returns a system wide unique
@@ -3670,6 +3755,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"RegEnumKey",          PyRegEnumKey, 1}, // @pymeth RegEnumKey|Enumerates subkeys of the specified open registry key.
 	{"RegEnumValue",        PyRegEnumValue, 1}, // @pymeth RegEnumValue|Enumerates values of the specified open registry key.
 	{"RegFlushKey",	        PyRegFlushKey, 1}, // @pymeth RegFlushKey|Writes all the attributes of the specified key to the registry.
+	{"RegGetKeySecurity",   PyRegGetKeySecurity, 1}, // @pymeth RegGetKeySecurity|Retrieves the security on the specified registry key.
 	{"RegLoadKey",          PyRegLoadKey, 1}, // @pymeth RegLoadKey|Creates a subkey under HKEY_USER or HKEY_LOCAL_MACHINE and stores registration information from a specified file into that subkey.
 	{"RegOpenKey",          PyRegOpenKey, 1}, // @pymeth RegOpenKey|Alias for <om win32api.RegOpenKeyEx>
 	{"RegOpenKeyEx",        PyRegOpenKey, 1}, // @pymeth RegOpenKeyEx|Opens the specified key.
@@ -3677,6 +3763,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"RegQueryValueEx",	PyRegQueryValueEx, 1}, // @pymeth RegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key. 
 	{"RegQueryInfoKey",	PyRegQueryInfoKey, 1}, // @pymeth RegQueryInfoKey|Returns information about the specified key.
 	{"RegSaveKey",          PyRegSaveKey, 1}, // @pymeth RegSaveKey|Saves the specified key, and all its subkeys to the specified file.
+	{"RegSetKeySecurity",   PyRegSetKeySecurity, 1}, // @pymeth RegSetKeySecurity|Sets the security on the specified registry key.
 	{"RegSetValue",         PyRegSetValue, 1}, // @pymeth RegSetValue|Associates a value with a specified key.  Currently, only strings are supported.
 	{"RegSetValueEx",       PyRegSetValueEx, 1}, // @pymeth RegSetValueEx|Stores data in the value field of an open registry key.
 	{"RegisterWindowMessage",PyRegisterWindowMessage, 1}, // @pymeth RegisterWindowMessage|Given a string, return a system wide unique message ID.

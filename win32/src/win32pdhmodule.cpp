@@ -136,6 +136,10 @@ typedef PDH_STATUS (WINAPI *FuncPdhBrowseCounters) (
   PPDH_BROWSE_DLG_CONFIG_A pBrowseDlgData
 );
 
+typedef PDH_STATUS (WINAPI *FuncPdhConnectMachine) (
+  LPCTSTR szMachineName
+);
+
 #define CHECK_PDH_PTR(ptr) if((ptr)==NULL) { PyErr_SetString(PyExc_RuntimeError, "The pdh.dll entry point functions could not be loaded."); return NULL;}
 
 // The function pointers
@@ -155,6 +159,8 @@ FuncPdhParseCounterPath pPdhParseCounterPath = NULL;
 FuncPdhSetCounterScaleFactor pPdhSetCounterScaleFactor = NULL;
 FuncPdhParseInstanceName pPdhParseInstanceName = NULL;
 FuncPdhBrowseCounters pPdhBrowseCounters = NULL;
+
+FuncPdhConnectMachine pPdhConnectMachine = NULL;
 
 #include "Python.h"
 #include "malloc.h"
@@ -185,30 +191,7 @@ BOOL LoadPointers()
 	pPdhSetCounterScaleFactor = (FuncPdhSetCounterScaleFactor)GetProcAddress(handle, "PdhSetCounterScaleFactor");
 	pPdhParseInstanceName = (FuncPdhParseInstanceName)GetProcAddress(handle, "PdhParseInstanceNameA");
 	pPdhBrowseCounters = (FuncPdhBrowseCounters)GetProcAddress(handle, "PdhBrowseCountersA");
-/*
-Python doesnt like errors set during module init.  Instead we now check
-each pointer before we use it
-
-	if (pPdhEnumObjects==NULL || 
-		pPdhEnumObjectItems==NULL ||
-		pPdhAddCounter==NULL ||
-		pPdhCloseQuery==NULL ||
-		pPdhRemoveCounter==NULL ||
-		pPdhOpenQuery==NULL ||
-		pPdhGetCounterInfo==NULL ||
-		pPdhGetFormattedCounterValue==NULL ||
-		pPdhCollectQueryData==NULL ||
-		pPdhMakeCounterPath==NULL ||
-		pPdhExpandCounterPath==NULL ||
-		pPdhValidatePath==NULL ||
-		pPdhParseInstanceName==NULL ||
-		pPdhSetCounterScaleFactor==NULL ||
-		pPdhBrowseCounters==NULL ||
-		pPdhParseCounterPath==NULL) {
-		PyErr_SetString(PyExc_RuntimeError, "Could not load the entry points from the PDH DLL");
-		return FALSE;
-	}
-*/
+        pPdhConnectMachine = (FuncPdhConnectMachine)GetProcAddress(handle, "PdhConnectMachineA");
 	return TRUE;
 }
 
@@ -340,6 +323,88 @@ static PyObject *PyEnumObjectItems(PyObject *self, PyObject *args)
 	free(szInstanceListBuffer);
 	free(szCounterListBuffer);
 	return rc;
+}
+
+// @pymethod list|win32pdh|EnumObjects|Enumerates objects
+static PyObject *PyEnumObjects(PyObject *self, PyObject *args)
+{
+	DWORD detailLevel, refresh=1;
+	char *reserved;
+	PyObject *obMachine;
+	if (!PyArg_ParseTuple(args, "zOi|i:EnumObjects", 
+	          &reserved, // @pyparm string|reserved||Should be None
+	          &obMachine, // @pyparm string|machine||The machine to use, or None
+	          &detailLevel, // @pyparm int|detailLevel||The level of data required.
+	          &refresh)) // @pyparm int|refresh|1|Should the list be refreshed.
+		return NULL;
+
+    LPTSTR      szObjectListBuffer     = NULL;
+    DWORD       dwObjectListSize       = 0;
+    LPTSTR      szTemp          = NULL;
+
+	CHECK_PDH_PTR(pPdhEnumObjects);
+
+	TCHAR *strMachine;
+	if (!PyWinObject_AsTCHAR(obMachine, &strMachine, TRUE))
+		return NULL;
+
+
+	PDH_STATUS pdhStatus;
+
+	Py_BEGIN_ALLOW_THREADS
+
+    pdhStatus = (*pPdhEnumObjects) (
+        reserved,                   // reserved
+        strMachine,                   // local machine
+        szObjectListBuffer,    // pass in NULL buffers
+        &dwObjectListSize,     // an 0 length to get
+        detailLevel,     // counter detail level
+        refresh); 
+	Py_END_ALLOW_THREADS
+
+	if (pdhStatus != ERROR_SUCCESS)  {
+		PyWinObject_FreeTCHAR(strMachine);
+		return PyWin_SetAPIError("EnumObjects for buffer size", pdhStatus);
+	}
+
+    // Allocate the buffers and try the call again.
+	if (dwObjectListSize) {
+		szObjectListBuffer = (LPTSTR)malloc (dwObjectListSize * sizeof (TCHAR));
+		if (szObjectListBuffer==NULL) {
+			PyErr_SetString(PyExc_MemoryError, "Allocating object buffer");
+			PyWinObject_FreeTCHAR(strMachine);
+			return NULL;
+		}
+	} else
+		szObjectListBuffer=NULL;
+
+
+	Py_BEGIN_ALLOW_THREADS
+	pdhStatus = (*pPdhEnumObjects) (
+	        reserved,                   // reserved
+	        strMachine,                   // local machine
+	        szObjectListBuffer,    // pass in NULL buffers
+	        &dwObjectListSize,     // an 0 length to get
+	        detailLevel,     // counter detail level
+	        0); 
+	Py_END_ALLOW_THREADS
+	PyWinObject_FreeTCHAR(strMachine);
+
+    if (pdhStatus != ERROR_SUCCESS) {
+		free(szObjectListBuffer);
+		return PyWin_SetAPIError("EnumObjects for data", pdhStatus);
+    }
+
+	PyObject *retObject = PyList_New(0);
+	if (szObjectListBuffer)
+		for (szTemp = szObjectListBuffer;
+			*szTemp != 0;
+			szTemp += lstrlen(szTemp) + 1) {
+				PyList_Append(retObject, PyString_FromString(szTemp));
+		}
+	free(szObjectListBuffer);
+	Py_INCREF(retObject);
+	return retObject;
 }
 
 // @pymethod int|win32pdh|AddCounter|Adds a new counter
@@ -887,12 +952,40 @@ static PyObject *PyBrowseCounters(PyObject *self, PyObject *args)
 	return rc;
 }
 
+// @pymethod string|win32pdh|ConnectMachine|connects to the specified machine, and creates and initializes a machine entry in the PDH DLL.
+static PyObject *PyConnectMachine(PyObject *self, PyObject *args)
+{
+	PyObject *obPath;
+	if (!PyArg_ParseTuple(args, "O:ConnectMachine", 
+	          &obPath))   // @pyparm string|machineName||The machine name.
+		return NULL;
+	TCHAR *path;
+	if (!PyWinObject_AsTCHAR(obPath, &path, FALSE))
+		return NULL;
+
+	CHECK_PDH_PTR(pPdhConnectMachine);
+	PyW32_BEGIN_ALLOW_THREADS
+	PDH_STATUS pdhStatus = (*pPdhConnectMachine) (path);
+	PyW32_END_ALLOW_THREADS
+	PyWinObject_FreeTCHAR(path);
+
+	PyObject *rc;
+	if (pdhStatus != 0) {
+		rc = PyWin_SetAPIError("ConnectMachine", pdhStatus);
+	} else {
+		rc = Py_None;
+		Py_INCREF(rc);
+	}
+	return rc;
+}
+
 /* List of functions exported by this module */
 // @module win32pdh|A module, encapsulating the Windows Performance Data Helpers API
 static struct PyMethodDef win32pdh_functions[] = {
 	{"AddCounter",               PyAddCounter,           1}, // @pymeth AddCounter|Adds a new counter
 	{"RemoveCounter",            PyRemoveCounter,        1}, // @pymeth RemoveCounter|Removes an open counter.
 	{"EnumObjectItems",          PyEnumObjectItems,      1}, // @pymeth EnumObjectItems|Enumerates an object's items
+ 	{"EnumObjects",		         PyEnumObjects,          1}, // @pymeth EnumObjects|Enumerates objects
 	{"OpenQuery",                PyOpenQuery,            1}, // @pymeth OpenQuery|Opens a new query
 	{"CloseQuery",               PyCloseQuery,           1}, // @pymeth CloseQuery|Closes an open query.
 	{"MakeCounterPath",          PyMakeCounterPath,      1}, // @pymeth MakeCounterPath|Makes a fully resolved counter path
@@ -905,6 +998,7 @@ static struct PyMethodDef win32pdh_functions[] = {
 	{"ParseInstanceName",        PyParseInstanceName,     1}, // @pymeth ParseInstanceName|Parses the elements of the instance name
 	{"SetCounterScaleFactor",	 PySetCounterScaleFactor, 1}, // @pymeth SetCounterScaleFactor|Sets the scale factor that is applied to the calculated value of the specified counter when you request the formatted counter value.
 	{"BrowseCounters",           PyBrowseCounters,        1}, // @pymeth BrowseCounters|Displays the counter browsing dialog box so that the user can select the counters to be returned to the caller. 
+	{"ConnectMachine",           PyConnectMachine,        1}, // @pymeth ConnectMachine|connects to the specified machine, and creates and initializes a machine entry in the PDH DLL.
 	{NULL}
 };
 

@@ -26,6 +26,9 @@ import build
 from types import StringType, IntType, TupleType, ListType
 from pywintypes import UnicodeType, IIDType
 
+import win32com.client # Needed as code we eval() references it.
+from win32com.client import NeedUnicodeConversions
+
 debugging=0			# General debugging
 debugging_attr=0	# Debugging dynamic attribute lookups.
 
@@ -45,6 +48,7 @@ def debug_attr_print(*args):
 
 # get the dispatch type in use.
 dispatchType = pythoncom.TypeIIDs[pythoncom.IID_IDispatch]
+iunkType = pythoncom.TypeIIDs[pythoncom.IID_IUnknown]
 _StringOrUnicodeType=[StringType, UnicodeType]
 _GoodDispatchType=[StringType,IIDType,UnicodeType]
 _defaultDispatchItem=build.DispatchItem
@@ -65,7 +69,7 @@ def _GetGoodDispatchAndUserName(IDispatch,userName,clsctx):
 			userName = "<unknown>"
 	return (_GetGoodDispatch(IDispatch, clsctx), userName)
 
-def Dispatch(IDispatch, userName = None, createClass = None, typeinfo = None, UnicodeToString=1, clsctx = pythoncom.CLSCTX_SERVER):
+def Dispatch(IDispatch, userName = None, createClass = None, typeinfo = None, UnicodeToString=NeedUnicodeConversions, clsctx = pythoncom.CLSCTX_SERVER):
 	IDispatch, userName = _GetGoodDispatchAndUserName(IDispatch,userName,clsctx)
 	if createClass is None:
 		createClass = CDispatch
@@ -106,7 +110,7 @@ def MakeOleRepr(IDispatch, typeinfo, typecomp):
 	if olerepr is None: olerepr = build.DispatchItem()
 	return olerepr
 
-def DumbDispatch(IDispatch, userName = None, createClass = None,UnicodeToString=1, clsctx=pythoncom.CLSCTX_SERVER):
+def DumbDispatch(IDispatch, userName = None, createClass = None,UnicodeToString=NeedUnicodeConversions, clsctx=pythoncom.CLSCTX_SERVER):
 	"Dispatch with no type info"
 	IDispatch, userName = _GetGoodDispatchAndUserName(IDispatch,userName,clsctx)
 	if createClass is None:
@@ -114,7 +118,7 @@ def DumbDispatch(IDispatch, userName = None, createClass = None,UnicodeToString=
 	return createClass(IDispatch, build.DispatchItem(), userName,UnicodeToString)
 
 class CDispatch:
-	def __init__(self, IDispatch, olerepr, userName =  None, UnicodeToString=1, lazydata = None):
+	def __init__(self, IDispatch, olerepr, userName =  None, UnicodeToString=NeedUnicodeConversions, lazydata = None):
 		if userName is None: userName = "<unknown>"
 		self.__dict__['_oleobj_'] = IDispatch
 		self.__dict__['_username_'] = userName
@@ -153,6 +157,10 @@ class CDispatch:
 			if details[0]!=winerror.DISP_E_MEMBERNOTFOUND:
 				raise
 			return self.__repr__()
+
+	# Delegate comparison to the oleobjs, as they know how to do identity.
+	def __cmp__(self, other):
+		return cmp(self._oleobj_, other._oleobj_)
 
 	def __int__(self):
 		return int(self.__call__())
@@ -209,11 +217,18 @@ class CDispatch:
 		result = apply(self._oleobj_.InvokeTypes, (dispid, LCID, wFlags, retType, argTypes) + args)
 		return self._get_good_object_(result, user, resultCLSID)
 
-	def _wrap_dispatch_(self, ob, userName = None, returnCLSID = None, UnicodeToString = 1):
+	def _wrap_dispatch_(self, ob, userName = None, returnCLSID = None, UnicodeToString = NeedUnicodeConversions):
 		# Given a dispatch object, wrap it in a class
 		return Dispatch(ob, userName, UnicodeToString=UnicodeToString)
 
 	def _get_good_single_object_(self,ob,userName = None, ReturnCLSID=None):
+		if iunkType==type(ob):
+			try:
+				ob = ob.QueryInterface(pythoncom.IID_IDispatch)
+				# If this works, we then enter the "is dispatch" test below.
+			except pythoncom.com_error:
+				# It is an IUnknown, but not an IDispatch, so just let it through.
+				pass
 		if dispatchType==type(ob):
 			# make a new instance of (probably this) class.
 			return self._wrap_dispatch_(ob, userName, ReturnCLSID)
@@ -242,12 +257,10 @@ class CDispatch:
 #			print "Method code for %s is:\n" % self._username_, methodCode
 #			self._print_details_()
 			codeObject = compile(methodCode, "<COMObject %s>" % self._username_,"exec")
-			# We must adjust the name for the map, as it may have been mangled if
-			# a keyword or otherwise illegal.
-			name = build.MakePublicAttributeName(name)
 			# Exec the code object
 			tempNameSpace = {}
 			exec codeObject in globals(), tempNameSpace # self.__dict__, self.__dict__
+			name = methodName
 			# Save the function in map.
 			fn = self._builtMethods_[name] = tempNameSpace[name]
 			newMeth = new.instancemethod(fn, self, self.__class__)
