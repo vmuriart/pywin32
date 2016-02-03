@@ -6,9 +6,9 @@
 #endif
 
 #ifndef NO_PYWINTYPES_SECURITY
-typedef BOOL (WINAPI *addacefunc)(PACL,DWORD,DWORD,PSID);
-typedef BOOL (WINAPI *addaceexfunc)(PACL, DWORD, DWORD, DWORD, PSID);
-typedef BOOL (WINAPI *addobjectacefunc)(PACL,DWORD,DWORD,DWORD,GUID*,GUID*,PSID);
+typedef BOOL(WINAPI *addacefunc)(PACL, DWORD, DWORD, PSID);
+typedef BOOL(WINAPI *addaceexfunc)(PACL, DWORD, DWORD, DWORD, PSID);
+typedef BOOL(WINAPI *addobjectacefunc)(PACL, DWORD, DWORD, DWORD, GUID*, GUID*, PSID);
 extern addacefunc addaccessallowedace;
 extern addacefunc addaccessdeniedace;
 extern addaceexfunc addaccessallowedaceex;
@@ -16,16 +16,16 @@ extern addaceexfunc addaccessdeniedaceex;
 extern addaceexfunc addmandatoryace;
 extern addobjectacefunc addaccessallowedobjectace;
 extern addobjectacefunc addaccessdeniedobjectace;
-extern BOOL (WINAPI *addauditaccessaceex)(PACL, DWORD, DWORD, DWORD, PSID, BOOL, BOOL);
-extern BOOL (WINAPI *addauditaccessobjectace)(PACL,DWORD,DWORD,DWORD,GUID*,GUID*,PSID,BOOL,BOOL);
-extern BOOL (WINAPI *setsecuritydescriptorcontrol)(PSECURITY_DESCRIPTOR, SECURITY_DESCRIPTOR_CONTROL, SECURITY_DESCRIPTOR_CONTROL);
+extern BOOL(WINAPI *addauditaccessaceex)(PACL, DWORD, DWORD, DWORD, PSID, BOOL, BOOL);
+extern BOOL(WINAPI *addauditaccessobjectace)(PACL, DWORD, DWORD, DWORD, GUID*, GUID*, PSID, BOOL, BOOL);
+extern BOOL(WINAPI *setsecuritydescriptorcontrol)(PSECURITY_DESCRIPTOR, SECURITY_DESCRIPTOR_CONTROL, SECURITY_DESCRIPTOR_CONTROL);
 
 // To do - rationalize PySECURITY_ATTRIBUTES and SECURITY_DESCRIPTOR
 // objects.
 class PYWINTYPES_EXPORT PySECURITY_ATTRIBUTES : public PyObject
 {
 public:
-	SECURITY_ATTRIBUTES *GetSA() {return &m_sa;}
+	SECURITY_ATTRIBUTES *GetSA() { return &m_sa; }
 
 	PySECURITY_ATTRIBUTES(void);
 	PySECURITY_ATTRIBUTES(const SECURITY_ATTRIBUTES &);
@@ -52,7 +52,7 @@ protected:
 class PYWINTYPES_EXPORT PySECURITY_DESCRIPTOR : public PyObject
 {
 public:
-	PSECURITY_DESCRIPTOR GetSD() {return m_psd;}
+	PSECURITY_DESCRIPTOR GetSD() { return m_psd; }
 	BOOL SetSD(PSECURITY_DESCRIPTOR psd);
 
 	PySECURITY_DESCRIPTOR(Py_ssize_t cb = 0);
@@ -93,7 +93,7 @@ protected:
 class PYWINTYPES_EXPORT PySID : public PyObject
 {
 public:
-	PSID GetSID() {return m_psid;}
+	PSID GetSID() { return m_psid; }
 
 	PySID(int bufSize, void *initBuf = NULL);
 	PySID(PSID other);
@@ -130,24 +130,24 @@ protected:
 class PYWINTYPES_EXPORT PyACL : public PyObject
 {
 public:
-	ACL *GetACL() {return (ACL *)buf;}
+	ACL *GetACL() { return (ACL *)buf; }
 	BOOL SetACL(ACL *pacl)
 	{
-		WORD origbufsize=((ACL *)buf)->AclSize;
-		if (pacl->AclSize<=origbufsize){
-			ZeroMemory(buf,origbufsize);
-			memcpy(buf,pacl,pacl->AclSize);
-			((ACL *)buf)->AclSize=origbufsize;
+		WORD origbufsize = ((ACL *)buf)->AclSize;
+		if (pacl->AclSize <= origbufsize) {
+			ZeroMemory(buf, origbufsize);
+			memcpy(buf, pacl, pacl->AclSize);
+			((ACL *)buf)->AclSize = origbufsize;
 			return TRUE;
-			}
-		void *buf_save=buf; // so we can restore state if allocation fails
-		buf = realloc(buf,pacl->AclSize);
-		if (buf==NULL){
-			PyErr_Format(PyExc_MemoryError,"SetACL: Unable to reallocate ACL to size %d",pacl->AclSize);
-			buf=buf_save;
+		}
+		void *buf_save = buf; // so we can restore state if allocation fails
+		buf = realloc(buf, pacl->AclSize);
+		if (buf == NULL) {
+			PyErr_Format(PyExc_MemoryError, "SetACL: Unable to reallocate ACL to size %d", pacl->AclSize);
+			buf = buf_save;
 			return FALSE;
-			}
-		memcpy(buf,pacl,pacl->AclSize);
+		}
+		memcpy(buf, pacl, pacl->AclSize);
 		return TRUE;
 	}
 

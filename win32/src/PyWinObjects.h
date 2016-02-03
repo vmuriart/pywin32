@@ -91,11 +91,11 @@ public:
 		// set to TRUE when we bump the reference count to keep the object
 		// alive while it is sitting in a completion port.
 		BOOL isArtificialReference;
-		sMyOverlapped() {obState=NULL;dwValue=0;isArtificialReference=0;}
-		sMyOverlapped(const OVERLAPPED &o) : OVERLAPPED(o) {obState=NULL;dwValue=0;}
+		sMyOverlapped() { obState = NULL; dwValue = 0; isArtificialReference = 0; }
+		sMyOverlapped(const OVERLAPPED &o) : OVERLAPPED(o) { obState = NULL; dwValue = 0; }
 	};
 	PyObject *obDummy;
-	OVERLAPPED *GetOverlapped() {return &m_overlapped;}
+	OVERLAPPED *GetOverlapped() { return &m_overlapped; }
 
 	PyOVERLAPPED(void);
 	PyOVERLAPPED(const sMyOverlapped *);
@@ -125,13 +125,13 @@ public:
 class PYWINTYPES_EXPORT PyHANDLE : public PyObject
 {
 public:
-	operator HANDLE() {return m_handle;}
+	operator HANDLE() { return m_handle; }
 
 	PyHANDLE(HANDLE hInit);
 	virtual ~PyHANDLE(void);
 
 	virtual BOOL Close(void);
-	virtual const char *GetTypeName() {return "PyHANDLE";}
+	virtual const char *GetTypeName() { return "PyHANDLE"; }
 
 	/* Python support */
 	PyObject *richcompare(PyObject *other, int op);
@@ -169,7 +169,7 @@ class PYWINTYPES_EXPORT PyHKEY : public PyHANDLE
 public:
 	PyHKEY(HANDLE hInit) : PyHANDLE(hInit) {}
 	virtual BOOL Close(void);
-	virtual const char *GetTypeName() {return "PyHKEY";}
+	virtual const char *GetTypeName() { return "PyHKEY"; }
 };
 #endif /* __PYWINTYPES_H__ */
 
@@ -195,7 +195,9 @@ public:
 	static PyObject *tp_new(PyTypeObject *, PyObject *, PyObject *);
 	// use this where a function modifies a passed-in PyDEVMODE to make changes visible to Python
 	void modify_in_place(void)
-		{memcpy(&devmode, pdevmode, pdevmode->dmSize);}
+	{
+		memcpy(&devmode, pdevmode, pdevmode->dmSize);
+	}
 	PDEVMODEA GetDEVMODE(void);
 protected:
 	// Pointer to variable length DEVMODE with dmDriverExtra bytes allocated at end, always use this externally
@@ -228,7 +230,9 @@ public:
 	static PyObject *tp_new(PyTypeObject *, PyObject *, PyObject *);
 	// use this where a function modifies a passed-in PyDEVMODE to make changes visible to Python
 	void modify_in_place(void)
-		{memcpy(&devmode, pdevmode, pdevmode->dmSize);}
+	{
+		memcpy(&devmode, pdevmode, pdevmode->dmSize);
+	}
 	PDEVMODEW GetDEVMODE(void);
 protected:
 	// Pointer to variable length DEVMODE with dmDriverExtra bytes allocated at end, always use this externally

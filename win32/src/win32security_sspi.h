@@ -163,47 +163,47 @@ PyObject *PyDsUnBind(PyObject *self, PyObject *args);
 PyObject *PyDsGetDcName(PyObject *self, PyObject *args, PyObject *kw);
 
 // function pointers that are initialized in win32security.i and used in win32security_sspi.cpp
-typedef DWORD (WINAPI *DsBindfunc)(LPCTSTR, LPCTSTR, HANDLE*);
+typedef DWORD(WINAPI *DsBindfunc)(LPCTSTR, LPCTSTR, HANDLE*);
 extern DsBindfunc pfnDsBind;
 
-typedef DWORD (WINAPI *DsUnBindfunc)(HANDLE*);
+typedef DWORD(WINAPI *DsUnBindfunc)(HANDLE*);
 extern DsUnBindfunc pfnDsUnBind;
 
-typedef DWORD (WINAPI *DsGetSpnfunc)(DS_SPN_NAME_TYPE, LPCTSTR, LPCTSTR,
+typedef DWORD(WINAPI *DsGetSpnfunc)(DS_SPN_NAME_TYPE, LPCTSTR, LPCTSTR,
 	USHORT, USHORT, LPCTSTR*, USHORT*, DWORD*, LPTSTR**);
 extern DsGetSpnfunc pfnDsGetSpn;
 
 typedef void (WINAPI *DsFreeSpnArrayfunc)(DWORD, LPTSTR*);
 extern DsFreeSpnArrayfunc pfnDsFreeSpnArray;
 
-typedef DWORD (WINAPI *DsWriteAccountSpnfunc)(HANDLE, DS_SPN_WRITE_OP, LPCTSTR, DWORD, LPCTSTR*);
+typedef DWORD(WINAPI *DsWriteAccountSpnfunc)(HANDLE, DS_SPN_WRITE_OP, LPCTSTR, DWORD, LPCTSTR*);
 extern DsWriteAccountSpnfunc pfnDsWriteAccountSpn;
 
-typedef DWORD (WINAPI *DsGetDcNamefunc)(LPCTSTR, LPCTSTR, GUID *, LPCTSTR, ULONG, PDOMAIN_CONTROLLER_INFO *);
+typedef DWORD(WINAPI *DsGetDcNamefunc)(LPCTSTR, LPCTSTR, GUID *, LPCTSTR, ULONG, PDOMAIN_CONTROLLER_INFO *);
 extern DsGetDcNamefunc pfnDsGetDcName;
 
-typedef DWORD (WINAPI *DsCrackNamesfunc)(HANDLE, DS_NAME_FLAGS, DS_NAME_FORMAT, DS_NAME_FORMAT, DWORD, LPTSTR *, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsCrackNamesfunc)(HANDLE, DS_NAME_FLAGS, DS_NAME_FORMAT, DS_NAME_FORMAT, DWORD, LPTSTR *, PDS_NAME_RESULT *);
 extern DsCrackNamesfunc pfnDsCrackNames;
 
-typedef DWORD (WINAPI *DsListInfoForServerfunc)(HANDLE, LPTSTR, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsListInfoForServerfunc)(HANDLE, LPTSTR, PDS_NAME_RESULT *);
 extern DsListInfoForServerfunc pfnDsListInfoForServer;
 
-typedef DWORD (WINAPI *DsListServersInSitefunc)(HANDLE, LPTSTR, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsListServersInSitefunc)(HANDLE, LPTSTR, PDS_NAME_RESULT *);
 extern DsListServersInSitefunc pfnDsListServersInSite;
 
-typedef DWORD (WINAPI *DsListDomainsInSitefunc)(HANDLE, LPTSTR, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsListDomainsInSitefunc)(HANDLE, LPTSTR, PDS_NAME_RESULT *);
 extern DsListDomainsInSitefunc pfnDsListDomainsInSite;
 
-typedef DWORD (WINAPI *DsListServersForDomainInSitefunc)(HANDLE, LPTSTR, LPTSTR, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsListServersForDomainInSitefunc)(HANDLE, LPTSTR, LPTSTR, PDS_NAME_RESULT *);
 extern DsListServersForDomainInSitefunc pfnDsListServersForDomainInSite;
 
-typedef DWORD (WINAPI *DsListSitesfunc)(HANDLE, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsListSitesfunc)(HANDLE, PDS_NAME_RESULT *);
 extern DsListSitesfunc pfnDsListSites;
 
-typedef DWORD (WINAPI *DsListRolesfunc)(HANDLE, PDS_NAME_RESULT *);
+typedef DWORD(WINAPI *DsListRolesfunc)(HANDLE, PDS_NAME_RESULT *);
 extern DsListRolesfunc pfnDsListRoles;
 
-typedef VOID (WINAPI *DsFreeNameResultfunc)(DS_NAME_RESULTW *);
+typedef VOID(WINAPI *DsFreeNameResultfunc)(DS_NAME_RESULTW *);
 extern DsFreeNameResultfunc pfnDsFreeNameResult;
 
 #define CHECK_PFN(fname) if (pfn##fname==NULL) return PyErr_Format(PyExc_NotImplementedError,"%s is not available on this platform", #fname);

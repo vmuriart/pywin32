@@ -9,7 +9,7 @@
   compiler, so should avoid C++ constructs and comments.
 
  */
-/* @doc - this file contains autoduck documentation in the comments. */
+ /* @doc - this file contains autoduck documentation in the comments. */
 #include <math.h>
 #include <limits.h>
 #include <string.h>
@@ -51,7 +51,7 @@ static HENV Env;
 typedef struct
 {
 	PyObject_HEAD
-	HDBC hdbc;
+		HDBC hdbc;
 	int  connected;
 	int  connect_id;
 	TCHAR *connectionString;
@@ -60,10 +60,10 @@ typedef struct
 
 static connectionObject *connection(PyObject *o)
 {
-	return  (connectionObject *) o;
+	return  (connectionObject *)o;
 }
 
-typedef PyObject * (* CopyFcn)(const void *, SQLLEN);
+typedef PyObject * (*CopyFcn)(const void *, SQLLEN);
 
 typedef struct _out
 {
@@ -88,7 +88,7 @@ typedef struct _in {
 typedef struct
 {
 	PyObject_HEAD
-	HSTMT hstmt;
+		HSTMT hstmt;
 	OutputBinding *outputVars;
 	InputBinding *inputVars;
 	long max_width;
@@ -101,7 +101,7 @@ typedef struct
 
 static cursorObject *cursor(PyObject *o)
 {
-	return  (cursorObject *) o;
+	return  (cursorObject *)o;
 }
 
 static void cursorDealloc(PyObject *self);
@@ -158,7 +158,7 @@ static PyTypeObject Connection_Type =
 {
 	PYWIN_OBJECT_HEAD
 	"odbcconn",				/*tp_name */
-	sizeof (connectionObject),	/*tp_basicsize */
+	sizeof(connectionObject),	/*tp_basicsize */
 	0,						/*tp_itemsize */
 	connectionDealloc,		/*tp_dealloc */
 	0,						/*tp_print */
@@ -224,7 +224,7 @@ static void odbcPrintError
 	connectionObject *conn,
 	HSTMT cur,
 	const TCHAR *action
-)
+	)
 {
 	TCHAR  sqlState[256];
 	long  nativeError;
@@ -239,7 +239,7 @@ static void odbcPrintError
 		(SQLTCHAR *)sqlState,
 		&nativeError,
 		(SQLTCHAR *)errorMsg,
-		sizeof(errorMsg)/sizeof(errorMsg[0]), &pcbErrorMsg)))
+		sizeof(errorMsg) / sizeof(errorMsg[0]), &pcbErrorMsg)))
 	{
 		error = odbcError;
 		_tcscpy(errorMsg, _T("Could not find error "));
@@ -257,8 +257,8 @@ static void odbcPrintError
 			conn->connected = 0;
 		}
 
-        /* internal is the default */
-		int errn = errorType ? errorType->index : 5 ;
+		/* internal is the default */
+		int errn = errorType ? errorType->index : 5;
 		error = dbiErrors[errn];
 	}
 
@@ -280,21 +280,21 @@ static int doConnect(connectionObject *conn)
 	RETCODE rc;
 	short connectionStringLength;
 	Py_BEGIN_ALLOW_THREADS
-	rc = SQLDriverConnect(
-		conn->hdbc,
-		NULL,
-		(SQLTCHAR *)conn->connectionString,
-		SQL_NTS,
-		NULL,
-		0,
-		&connectionStringLength,
-		SQL_DRIVER_NOPROMPT);
+		rc = SQLDriverConnect(
+			conn->hdbc,
+			NULL,
+			(SQLTCHAR *)conn->connectionString,
+			SQL_NTS,
+			NULL,
+			0,
+			&connectionStringLength,
+			SQL_DRIVER_NOPROMPT);
 	Py_END_ALLOW_THREADS
-	if  (unsuccessful(rc))
-	{
-		odbcPrintError(Env, conn, SQL_NULL_HSTMT, _T("LOGIN"));
-		return 1;
-	}
+		if (unsuccessful(rc))
+		{
+			odbcPrintError(Env, conn, SQL_NULL_HSTMT, _T("LOGIN"));
+			return 1;
+		}
 	conn->connected = 1;
 	conn->connect_id++; /* perturb it so cursors know to reconnect */
 
@@ -312,7 +312,7 @@ static int attemptReconnect(cursorObject *cur)
 			(only place where connected is set to 0)
 			SQLFreeStmt(cur->hstmt, SQL_DROP);
 		*/
-		cur->hstmt=NULL;
+		cur->hstmt = NULL;
 		if (cur->my_conx->connected == 0)
 		{
 			/* ie the db has not been reconnected */
@@ -340,10 +340,10 @@ static PyObject *odbcSetAutoCommit(PyObject *self, PyObject *args)
 	int c;
 	connectionObject *conn;
 	/* @pyparm int|c||The boolean autocommit mode. */
-	if (!PyArg_ParseTuple(args, "i",&c))
+	if (!PyArg_ParseTuple(args, "i", &c))
 		return NULL;
-	conn=connection(self);
-	if (c==0)
+	conn = connection(self);
+	if (c == 0)
 	{
 		if (unsuccessful(SQLSetConnectOption(
 			conn->hdbc,
@@ -376,21 +376,21 @@ static PyObject *odbcCommit(PyObject *self, PyObject *args)
 {
 	RETCODE rc;
 	Py_BEGIN_ALLOW_THREADS
-	rc = SQLTransact(
-		Env,
-		connection(self)->hdbc,
-		SQL_COMMIT);
+		rc = SQLTransact(
+			Env,
+			connection(self)->hdbc,
+			SQL_COMMIT);
 	Py_END_ALLOW_THREADS
-	if (unsuccessful(rc))
-	{
-		connectionError(connection(self), _T("COMMIT"));
-		return 0;
-	}
-	else
-	{
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
+		if (unsuccessful(rc))
+		{
+			connectionError(connection(self), _T("COMMIT"));
+			return 0;
+		}
+		else
+		{
+			Py_INCREF(Py_None);
+			return Py_None;
+		}
 }
 
 /* @pymethod |connection|rollback|Rollsback a transaction. */
@@ -398,20 +398,20 @@ static PyObject *odbcRollback(PyObject *self, PyObject *args)
 {
 	RETCODE rc;
 	Py_BEGIN_ALLOW_THREADS
-	rc = SQLTransact(
-		Env,
-		connection(self)->hdbc,
-		SQL_ROLLBACK);
+		rc = SQLTransact(
+			Env,
+			connection(self)->hdbc,
+			SQL_ROLLBACK);
 	Py_END_ALLOW_THREADS
-	if (unsuccessful(rc))
-	{
-		connectionError(connection(self), _T("ROLLBACK"));
-		return 0;
-	}
-	else {
-		Py_INCREF(Py_None);
-		return Py_None;
-	}
+		if (unsuccessful(rc))
+		{
+			connectionError(connection(self), _T("ROLLBACK"));
+			return 0;
+		}
+		else {
+			Py_INCREF(Py_None);
+			return Py_None;
+		}
 }
 
 /* @pymethod |connection|cursor|Creates a <o cursor> object */
@@ -435,8 +435,8 @@ static PyObject *odbcCursor(PyObject *self, PyObject *args)
 	cur->description = 0;
 	cur->max_width = 65536L;
 	cur->my_conx = 0;
-	cur->hstmt=NULL;
-	cur->cursorError=odbcError;
+	cur->hstmt = NULL;
+	cur->cursorError = odbcError;
 	Py_INCREF(odbcError);
 	if (unsuccessful(SQLAllocStmt(conn->hdbc, &cur->hstmt)))
 	{
@@ -447,14 +447,14 @@ static PyObject *odbcCursor(PyObject *self, PyObject *args)
 	cur->my_conx = conn;
 	cur->connect_id = cur->my_conx->connect_id;
 	Py_INCREF(self); /* the cursors owns a reference to the connection */
-	return (PyObject*) cur;
+	return (PyObject*)cur;
 }
 
 /* @pymethod |connection|close|Closes the connection. */
 static PyObject *odbcClose(PyObject *self, PyObject *args)
 {
-  Py_INCREF(Py_None);
-  return Py_None;
+	Py_INCREF(Py_None);
+	return Py_None;
 }
 
 /* @object connection|An object representing an ODBC connection */
@@ -550,13 +550,13 @@ static BOOL bindOutputVar
 	SQLLEN vsize,
 	int pos,
 	bool bUseGet
-)
+	)
 {
-	OutputBinding *ob = (OutputBinding *) malloc(sizeof(OutputBinding));
-	if (ob==NULL){
+	OutputBinding *ob = (OutputBinding *)malloc(sizeof(OutputBinding));
+	if (ob == NULL) {
 		PyErr_NoMemory();
 		return FALSE;
-		}
+	}
 	OutputBinding *current = NULL;
 
 	ob->bGetData = bUseGet;
@@ -585,10 +585,10 @@ static BOOL bindOutputVar
 
 	ob->copy_fcn = fcn;
 	ob->bind_area = malloc(vsize);
-	if (ob->bind_area == NULL){
+	if (ob->bind_area == NULL) {
 		PyErr_NoMemory();
 		return FALSE;
-		}
+	}
 	ob->rcode = vsize;
 	if (ob->bGetData == false)
 	{
@@ -609,7 +609,7 @@ static BOOL bindOutputVar
 
 static PyObject *wcharCopy(const void *v, SQLLEN sz)
 {
-	return PyWinObject_FromWCHAR((WCHAR *)v, sz/sizeof(WCHAR));
+	return PyWinObject_FromWCHAR((WCHAR *)v, sz / sizeof(WCHAR));
 }
 
 static PyObject *stringCopy(const void *v, SQLLEN sz)
@@ -631,9 +631,9 @@ static PyObject *doubleCopy(const void *v, SQLLEN sz)
 
 static PyObject *dateCopy(const void *v, SQLLEN sz)
 {
-	const TIMESTAMP_STRUCT  *dt = (const TIMESTAMP_STRUCT *) v;
+	const TIMESTAMP_STRUCT  *dt = (const TIMESTAMP_STRUCT *)v;
 	// Units for fraction is billionths, python datetime uses microseconds
-	unsigned long usec=dt->fraction/1000;
+	unsigned long usec = dt->fraction / 1000;
 	return PyObject_CallFunction(datetime_class, "hhhhhhk",
 		dt->year, dt->month, dt->day,
 		dt->hour, dt->minute, dt->second, usec);
@@ -647,10 +647,10 @@ static PyObject *rawCopy(const void *v, SQLLEN sz)
 	void *buf;
 	DWORD buflen;
 	// Should not fail, but check anyway
-	if (!PyWinObject_AsWriteBuffer(ret, &buf, &buflen)){
+	if (!PyWinObject_AsWriteBuffer(ret, &buf, &buflen)) {
 		Py_DECREF(ret);
 		return NULL;
-		}
+	}
 	memcpy(buf, v, sz);
 	return ret;
 }
@@ -666,9 +666,9 @@ typedef struct {
 
 static void initParseContext(parseContext *ct, const TCHAR *c)
 {
-  ct->state = 0;
-  ct->ptr = c;
-  ct->parmCount = 0;
+	ct->state = 0;
+	ct->ptr = c;
+	ct->parmCount = 0;
 }
 
 static TCHAR doParse(parseContext *ct)
@@ -702,7 +702,7 @@ static TCHAR doParse(parseContext *ct)
 			}
 			if (n)
 			{
-				ct->parmIdx = n-1;
+				ct->parmIdx = n - 1;
 				ct->parmCount++;
 				ct->ptr = m;
 				ct->isParm = 1;
@@ -766,15 +766,15 @@ static int ibindInt(cursorObject *cur, int column, PyObject *item)
 	return 1;
 }
 
-static int ibindLong(cursorObject*cur,int column, PyObject *item)
+static int ibindLong(cursorObject*cur, int column, PyObject *item)
 {
 	/* This will always be called in Py3k, so differentiate between an int
 		that fits in a long, and one that requires a 64=bit datatype. */
 	int len;
 	InputBinding *ib;
-	SQLSMALLINT ParamType=SQL_PARAM_INPUT, CType, SqlType;
+	SQLSMALLINT ParamType = SQL_PARAM_INPUT, CType, SqlType;
 	long longval = PyLong_AsLong(item);
-	if (longval != -1 || !PyErr_Occurred()){
+	if (longval != -1 || !PyErr_Occurred()) {
 		CType = SQL_C_LONG;
 		SqlType = SQL_INTEGER;
 		len = sizeof(long);
@@ -782,8 +782,8 @@ static int ibindLong(cursorObject*cur,int column, PyObject *item)
 		if (!ib)
 			return 0;
 		memcpy(ib->bind_area, &longval, len);
-		}
-	else{
+	}
+	else {
 		__int64 longlongval = PyLong_AsLongLong(item);
 		if (longlongval == -1 && PyErr_Occurred())
 			return 0;
@@ -794,7 +794,7 @@ static int ibindLong(cursorObject*cur,int column, PyObject *item)
 		if (!ib)
 			return 0;
 		memcpy(ib->bind_area, &longlongval, len);
-		}
+	}
 
 	if (unsuccessful(SQLBindParameter(
 		cur->hstmt,
@@ -817,32 +817,32 @@ static int ibindLong(cursorObject*cur,int column, PyObject *item)
 
 static int ibindNull(cursorObject*cur, int column)
 {
-  static SQLLEN nl;
-  /* apparently, ODBC does not read the last parameter
-     until EXEC time, i.e., after this function is
-     out of scope, hence nl must be static */
+	static SQLLEN nl;
+	/* apparently, ODBC does not read the last parameter
+	   until EXEC time, i.e., after this function is
+	   out of scope, hence nl must be static */
 
-  nl = SQL_NULL_DATA;
-  /* I don't know if ODBC resets the value of the parameter.
-     It shouldn't but god knows... */
+	nl = SQL_NULL_DATA;
+	/* I don't know if ODBC resets the value of the parameter.
+	   It shouldn't but god knows... */
 
-  if (unsuccessful(SQLBindParameter(
-	  cur->hstmt,
-	  column,
-	  SQL_PARAM_INPUT,
-	  SQL_C_CHAR,
-	  SQL_CHAR,
-	  0,
-	  0,
-	  0,
-	  0,
-	  &nl)))
-  {
-      cursorError(cur, _T("input-binding"));
-      return 0;
-  }
+	if (unsuccessful(SQLBindParameter(
+		cur->hstmt,
+		column,
+		SQL_PARAM_INPUT,
+		SQL_C_CHAR,
+		SQL_CHAR,
+		0,
+		0,
+		0,
+		0,
+		&nl)))
+	{
+		cursorError(cur, _T("input-binding"));
+		return 0;
+	}
 
-  return 1;
+	return 1;
 }
 
 
@@ -864,11 +864,11 @@ static int ibindDate(cursorObject*cur, int column, PyObject *item)
 	InputBinding *ib = initInputBinding(cur, len);
 	if (!ib)
 		return 0;
-	TIMESTAMP_STRUCT *dt = (TIMESTAMP_STRUCT*) ib->bind_area ;
+	TIMESTAMP_STRUCT *dt = (TIMESTAMP_STRUCT*)ib->bind_area;
 	ZeroMemory(dt, len);
 	// Accept either a PyTime or datetime object
 #ifndef NO_PYWINTYPES_TIME
-	if (PyWinTime_CHECK(item)){
+	if (PyWinTime_CHECK(item)) {
 		SYSTEMTIME st;
 		if (!((PyTime *)item)->GetTime(&st))
 			return 0;
@@ -880,15 +880,15 @@ static int ibindDate(cursorObject*cur, int column, PyObject *item)
 		dt->second = st.wSecond;
 		// Fraction is in nanoseconds
 		dt->fraction = st.wMilliseconds * 1000000;
-		}
-	else{
+	}
+	else {
 #endif // NO_PYWINTYPES_TIME
 		// Python 2.3 doesn't have C Api for datetime
 		TmpPyObject timeseq = PyObject_CallMethod(item, "timetuple", NULL);
-		if (timeseq==NULL)
+		if (timeseq == NULL)
 			return 0;
-		timeseq=PySequence_Tuple(timeseq);
-		if (timeseq==NULL)
+		timeseq = PySequence_Tuple(timeseq);
+		if (timeseq == NULL)
 			return 0;
 		// Last 3 items are ignored.
 		PyObject *obwday, *obyday, *obdst;
@@ -898,11 +898,11 @@ static int ibindDate(cursorObject*cur, int column, PyObject *item)
 			&obwday, &obyday, &obdst))
 			return 0;
 
-		TmpPyObject usec=PyObject_GetAttrString(item, "microsecond");
+		TmpPyObject usec = PyObject_GetAttrString(item, "microsecond");
 		if (usec == NULL)
 			PyErr_Clear();
-		else{
-			dt->fraction=PyLong_AsUnsignedLong(usec);
+		else {
+			dt->fraction = PyLong_AsUnsignedLong(usec);
 			if (dt->fraction == -1 && PyErr_Occurred())
 				return 0;
 			// Convert to nanoseconds
@@ -933,37 +933,37 @@ static int ibindDate(cursorObject*cur, int column, PyObject *item)
 
 static int ibindRaw(cursorObject *cur, int column, PyObject *item)
 {
-  void *val;
-  DWORD len;
-  if (!PyWinObject_AsReadBuffer(item, &val, &len))
-	  return 0;
-  InputBinding *ib = initInputBinding(cur, len);
-  if (!ib)
-      return 0;
-  ib->bPutData = true;
+	void *val;
+	DWORD len;
+	if (!PyWinObject_AsReadBuffer(item, &val, &len))
+		return 0;
+	InputBinding *ib = initInputBinding(cur, len);
+	if (!ib)
+		return 0;
+	ib->bPutData = true;
 
-  memcpy(ib->bind_area, val, len);
+	memcpy(ib->bind_area, val, len);
 
-  RETCODE rc = SQL_SUCCESS;
-  ib->sqlBytesAvailable = SQL_LEN_DATA_AT_EXEC(ib->len);
-  rc = SQLBindParameter(
-	  cur->hstmt,
-	  column,
-	  SQL_PARAM_INPUT,
-	  SQL_C_BINARY,
-	  SQL_LONGVARBINARY,
-	  len,
-	  0,
-	  ib->bind_area,
-	  len,
-	  &ib->len);
-  if (unsuccessful(rc))
-  {
-      cursorError(cur, _T("input-binding"));
-      return 0;
-  }
+	RETCODE rc = SQL_SUCCESS;
+	ib->sqlBytesAvailable = SQL_LEN_DATA_AT_EXEC(ib->len);
+	rc = SQLBindParameter(
+		cur->hstmt,
+		column,
+		SQL_PARAM_INPUT,
+		SQL_C_BINARY,
+		SQL_LONGVARBINARY,
+		len,
+		0,
+		ib->bind_area,
+		len,
+		&ib->len);
+	if (unsuccessful(rc))
+	{
+		cursorError(cur, _T("input-binding"));
+		return 0;
+	}
 
-  return 1;
+	return 1;
 }
 
 static int ibindFloat(cursorObject *cur, int column, PyObject *item)
@@ -997,97 +997,97 @@ static int ibindFloat(cursorObject *cur, int column, PyObject *item)
 
 static int ibindString(cursorObject *cur, int column, PyObject *item)
 {
-  const char *val = PyString_AsString(item);
-  size_t len = strlen(val);
+	const char *val = PyString_AsString(item);
+	size_t len = strlen(val);
 
-  InputBinding *ib = initInputBinding(cur, len);
-  if (!ib)
-      return 0;
+	InputBinding *ib = initInputBinding(cur, len);
+	if (!ib)
+		return 0;
 
-  strcpy(ib->bind_area, val);
-  int sqlType = SQL_VARCHAR; /* SQL_CHAR can cause padding in some drivers.. */
-  if (len > 255)	/* should remove hardcoded value and actually implement setinputsize method */
-  {
-	  ib->sqlBytesAvailable = SQL_LEN_DATA_AT_EXEC(ib->len);
-	  sqlType = SQL_LONGVARCHAR;
-	  ib->bPutData = true;
-  }
-  else
-  {
-	  ib->sqlBytesAvailable = ib->len;
-	  ib->bPutData = false;
-  }
+	strcpy(ib->bind_area, val);
+	int sqlType = SQL_VARCHAR; /* SQL_CHAR can cause padding in some drivers.. */
+	if (len > 255)	/* should remove hardcoded value and actually implement setinputsize method */
+	{
+		ib->sqlBytesAvailable = SQL_LEN_DATA_AT_EXEC(ib->len);
+		sqlType = SQL_LONGVARCHAR;
+		ib->bPutData = true;
+	}
+	else
+	{
+		ib->sqlBytesAvailable = ib->len;
+		ib->bPutData = false;
+	}
 
-  RETCODE rc = SQLBindParameter(
-	  cur->hstmt,
-	  column,
-	  SQL_PARAM_INPUT,
-	  SQL_C_CHAR,
-	  sqlType,
-	  len,
-	  0,
-	  ib->bind_area,
-	  len,
-	  &NTS);
-  if (unsuccessful(rc))
-  {
-      cursorError(cur, _T("input-binding"));
-      return 0;
-  }
+	RETCODE rc = SQLBindParameter(
+		cur->hstmt,
+		column,
+		SQL_PARAM_INPUT,
+		SQL_C_CHAR,
+		sqlType,
+		len,
+		0,
+		ib->bind_area,
+		len,
+		&NTS);
+	if (unsuccessful(rc))
+	{
+		cursorError(cur, _T("input-binding"));
+		return 0;
+	}
 
-  return 1;
+	return 1;
 }
 
 static int ibindUnicode(cursorObject *cur, int column, PyObject *item)
 {
-  const WCHAR *wval = (WCHAR *)PyUnicode_AsUnicode(item);
-  Py_ssize_t nchars = PyUnicode_GetSize(item) + 1;
-  Py_ssize_t nbytes = nchars * sizeof(WCHAR);
+	const WCHAR *wval = (WCHAR *)PyUnicode_AsUnicode(item);
+	Py_ssize_t nchars = PyUnicode_GetSize(item) + 1;
+	Py_ssize_t nbytes = nchars * sizeof(WCHAR);
 
-  InputBinding *ib = initInputBinding(cur, nbytes);
-  if (!ib)
-      return 0;
+	InputBinding *ib = initInputBinding(cur, nbytes);
+	if (!ib)
+		return 0;
 
-  memcpy(ib->bind_area, wval, nbytes);
-  /* See above re SQL_VARCHAR */
-  int sqlType = SQL_WVARCHAR;
-  if (nchars > 255)
-  {
-	  ib->sqlBytesAvailable = SQL_LEN_DATA_AT_EXEC(ib->len);
-	  sqlType = SQL_WLONGVARCHAR;
-	  ib->bPutData = true;
-  }
-  else
-  {
-	  ib->sqlBytesAvailable = ib->len;
-	  ib->bPutData = false;
-  }
+	memcpy(ib->bind_area, wval, nbytes);
+	/* See above re SQL_VARCHAR */
+	int sqlType = SQL_WVARCHAR;
+	if (nchars > 255)
+	{
+		ib->sqlBytesAvailable = SQL_LEN_DATA_AT_EXEC(ib->len);
+		sqlType = SQL_WLONGVARCHAR;
+		ib->bPutData = true;
+	}
+	else
+	{
+		ib->sqlBytesAvailable = ib->len;
+		ib->bPutData = false;
+	}
 
-  RETCODE rc = SQLBindParameter(
-	  cur->hstmt,
-	  column,
-	  SQL_PARAM_INPUT,
-	  SQL_C_WCHAR,
-	  sqlType,
-	  nchars,
-	  0,
-	  ib->bind_area,
-	  nbytes,
-	  &NTS);
-  if (unsuccessful(rc))
-  {
-      cursorError(cur, _T("input-binding"));
-      return 0;
-  }
+	RETCODE rc = SQLBindParameter(
+		cur->hstmt,
+		column,
+		SQL_PARAM_INPUT,
+		SQL_C_WCHAR,
+		sqlType,
+		nchars,
+		0,
+		ib->bind_area,
+		nbytes,
+		&NTS);
+	if (unsuccessful(rc))
+	{
+		cursorError(cur, _T("input-binding"));
+		return 0;
+	}
 
-  return 1;
+	return 1;
 }
 
 static int rewriteQuery
 (
 	TCHAR *out,
 	const TCHAR *in
-)
+	)
 {
 	parseContext ctx;
 
@@ -1102,7 +1102,7 @@ static int bindInput
 	cursorObject *cur,
 	PyObject *vars,
 	int columns
-)
+	)
 {
 	int i;
 	PyObject *item;
@@ -1114,7 +1114,7 @@ static int bindInput
 		return 1;
 	}
 
-	for(i = 0; i < PySequence_Length(vars); i++)
+	for (i = 0; i < PySequence_Length(vars); i++)
 	{
 		item = PySequence_GetItem(vars, i);
 		iCol = i + 1;
@@ -1134,7 +1134,7 @@ static int bindInput
 		{
 			rv = ibindUnicode(cur, iCol, item);
 		}
-		else if (item==Py_None)
+		else if (item == Py_None)
 		{
 			rv = ibindNull(cur, iCol);
 		}
@@ -1146,11 +1146,11 @@ static int bindInput
 		{
 			rv = ibindDate(cur, iCol, item);
 		}
-		#if (PY_VERSION_HEX < 0x03000000)
+#if (PY_VERSION_HEX < 0x03000000)
 		else if (PyBuffer_Check(item))
-		#else
+#else
 		else if (PyObject_CheckBuffer(item))
-		#endif
+#endif
 		{
 			rv = ibindRaw(cur, iCol, item);
 		}
@@ -1160,16 +1160,16 @@ static int bindInput
 			OutputDebugStringA(item->ob_type->tp_name);
 			OutputDebugString(_T("'\n"));
 			PyObject *sitem = PyObject_Str(item);
-			if (sitem==NULL)
+			if (sitem == NULL)
 				rv = 0;
 			else if (PyString_Check(sitem))
 				rv = ibindString(cur, iCol, sitem);
 			else if PyUnicode_Check(sitem)
 				rv = ibindUnicode(cur, iCol, sitem);
-			else{	// Just in case some object doesn't follow the rules
+			else {	// Just in case some object doesn't follow the rules
 				PyErr_Format(PyExc_SystemError, "??? Repr for type '%s' returned type '%s' ???", item->ob_type, sitem->ob_type);
-				rv=0;
-				}
+				rv = 0;
+			}
 			Py_XDECREF(sitem);
 		}
 		Py_DECREF(item);
@@ -1185,33 +1185,33 @@ static int bindInput
 static int display_size(short coltype, int collen, const TCHAR *colname)
 {
 
-  switch (coltype)
-    {
-    case SQL_CHAR:
-    case SQL_VARCHAR:
-    case SQL_DATE:
-    case SQL_TIMESTAMP:
-    case SQL_BIT:
-      return(max(collen, (int)_tcslen(colname)));
-    case SQL_SMALLINT:
-    case SQL_INTEGER:
-    case SQL_TINYINT:
-      return(max(collen+1, (int)_tcslen(colname)));
-    case SQL_DECIMAL:
-    case SQL_NUMERIC:
-      return(max(collen+2, (int)_tcslen(colname)));
-    case SQL_REAL:
-    case SQL_FLOAT:
-    case SQL_DOUBLE:
-      return(max(20, (int)_tcslen(colname)));
-    case SQL_BINARY:
-    case SQL_VARBINARY:
-      return(max(2*collen, (int)_tcslen(colname)));
-    case SQL_LONGVARBINARY:
-    case SQL_LONGVARCHAR:
-    default:
-      return (0);
-    }
+	switch (coltype)
+	{
+	case SQL_CHAR:
+	case SQL_VARCHAR:
+	case SQL_DATE:
+	case SQL_TIMESTAMP:
+	case SQL_BIT:
+		return(max(collen, (int)_tcslen(colname)));
+	case SQL_SMALLINT:
+	case SQL_INTEGER:
+	case SQL_TINYINT:
+		return(max(collen + 1, (int)_tcslen(colname)));
+	case SQL_DECIMAL:
+	case SQL_NUMERIC:
+		return(max(collen + 2, (int)_tcslen(colname)));
+	case SQL_REAL:
+	case SQL_FLOAT:
+	case SQL_DOUBLE:
+		return(max(20, (int)_tcslen(colname)));
+	case SQL_BINARY:
+	case SQL_VARBINARY:
+		return(max(2 * collen, (int)_tcslen(colname)));
+	case SQL_LONGVARBINARY:
+	case SQL_LONGVARCHAR:
+	default:
+		return (0);
+	}
 }
 
 
@@ -1236,7 +1236,7 @@ static BOOL bindOutput(cursorObject *cur)
 			cur->hstmt,
 			pos,
 			(SQLTCHAR *)name,
-			sizeof(name)/sizeof(name[0]),
+			sizeof(name) / sizeof(name[0]),
 			&nsize,
 			&vtype,
 			&vsize,	// This is column size in characters
@@ -1246,7 +1246,7 @@ static BOOL bindOutput(cursorObject *cur)
 		dsize = display_size(vtype, vsize, name);
 		prec = 0;
 
-		switch(vtype) {
+		switch (vtype) {
 		case SQL_BIT:
 		case SQL_SMALLINT:
 		case SQL_INTEGER:
@@ -1309,7 +1309,7 @@ static BOOL bindOutput(cursorObject *cur)
 			break;
 		case SQL_VARCHAR:
 		case SQL_WVARCHAR:
-			if (!bindOutputVar(cur, wcharCopy, SQL_C_WCHAR, (vsize+1)*sizeof(WCHAR), pos, false))
+			if (!bindOutputVar(cur, wcharCopy, SQL_C_WCHAR, (vsize + 1)*sizeof(WCHAR), pos, false))
 				return FALSE;
 			typeOf = DbiString;
 			break;
@@ -1320,7 +1320,7 @@ static BOOL bindOutput(cursorObject *cur)
 			typeOf = DbiString;
 			break;
 		default:
-			if (!bindOutputVar(cur, stringCopy, SQL_C_CHAR, vsize+1, pos, false))
+			if (!bindOutputVar(cur, stringCopy, SQL_C_CHAR, vsize + 1, pos, false))
 				return FALSE;
 			typeOf = DbiString;
 			break;
@@ -1347,13 +1347,13 @@ static BOOL bindOutput(cursorObject *cur)
 static RETCODE sendSQLInputData
 (
 	cursorObject *cur
-)
+	)
 {
 	RETCODE rc = SQL_SUCCESS;
 	char   *pIndx;
 
 	Py_BEGIN_ALLOW_THREADS
-	rc = SQLParamData(cur->hstmt, (void **)&pIndx);
+		rc = SQLParamData(cur->hstmt, (void **)&pIndx);
 	while (rc == SQL_NEED_DATA)
 	{
 		InputBinding* pInputBinding = cur->inputVars;
@@ -1384,12 +1384,12 @@ static RETCODE sendSQLInputData
 			size_t i;
 			for (i = 0; i < putTimes && rc == SQL_SUCCESS; i++)
 			{
-				rc = SQLPutData(cur->hstmt, (void*)(&pInputBinding->bind_area[i *  1024]), 1024);
+				rc = SQLPutData(cur->hstmt, (void*)(&pInputBinding->bind_area[i * 1024]), 1024);
 			}
 
 			if (remainder && rc == SQL_SUCCESS)
 			{
-				rc = SQLPutData(cur->hstmt, (void*)(&pInputBinding->bind_area[i *  1024]), remainder);
+				rc = SQLPutData(cur->hstmt, (void*)(&pInputBinding->bind_area[i * 1024]), remainder);
 			}
 		}
 
@@ -1398,14 +1398,14 @@ static RETCODE sendSQLInputData
 	}
 	Py_END_ALLOW_THREADS
 
-	return rc;
+		return rc;
 }
 
 /* @pymethod int|cursor|execute|Execute some SQL */
 static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 {
 	cursorObject *cur = cursor(self);
-	TCHAR *sql=NULL;
+	TCHAR *sql = NULL;
 	PyObject *obsql;
 	TCHAR *sqlbuf;
 	PyObject *inputvars = 0;
@@ -1431,21 +1431,21 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
-	if (inputvars){
+	if (inputvars) {
 		if (PyString_Check(inputvars) || PyUnicode_Check(inputvars) || !PySequence_Check(inputvars))
 			return PyErr_Format(odbcError, "Values must be a sequence, not %s", inputvars->ob_type->tp_name);
-		if (PySequence_Length(inputvars) > 0){
+		if (PySequence_Length(inputvars) > 0) {
 			PyObject *temp = PySequence_GetItem(inputvars, 0);
-			if (temp==NULL)
+			if (temp == NULL)
 				return NULL;
 			/* Strings don't count as a list in this case. */
-			if (PySequence_Check(temp) && !PyString_Check(temp) && !PyUnicode_Check(temp)){
+			if (PySequence_Check(temp) && !PyString_Check(temp) && !PyUnicode_Check(temp)) {
 				rows = inputvars;
 				inputvars = NULL;
-				}
-			Py_DECREF(temp);
 			}
+			Py_DECREF(temp);
 		}
+	}
 	if (!PyWinObject_AsTCHAR(obsql, &sql, FALSE))
 		return NULL;
 
@@ -1464,7 +1464,7 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 
 	cur->n_columns = 0;
 
-	sqlbuf = (TCHAR *) malloc((_tcslen(sql) + 100) * sizeof(TCHAR));
+	sqlbuf = (TCHAR *)malloc((_tcslen(sql) + 100) * sizeof(TCHAR));
 	if (!sqlbuf)
 	{
 		Py_DECREF(cur->description);
@@ -1477,19 +1477,19 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 	RETCODE rc = SQL_SUCCESS;
 	n_columns = rewriteQuery(sqlbuf, sql);
 	Py_BEGIN_ALLOW_THREADS
-	rc = SQLPrepare(cur->hstmt, (SQLTCHAR *)sqlbuf, SQL_NTS);
+		rc = SQLPrepare(cur->hstmt, (SQLTCHAR *)sqlbuf, SQL_NTS);
 	Py_END_ALLOW_THREADS
-	if (unsuccessful(rc))
-	{
-		cursorError(cur, _T("EXEC"));
-		goto Error;
-	}
+		if (unsuccessful(rc))
+		{
+			cursorError(cur, _T("EXEC"));
+			goto Error;
+		}
 
 	if (rows)
 	{
 		int i;
 		/* handle insert cases... */
-		for(i = 0; i < PySequence_Length(rows); i++)
+		for (i = 0; i < PySequence_Length(rows); i++)
 		{
 			inputvars = PySequence_GetItem(rows, i);
 			if (!PySequence_Check(inputvars))
@@ -1507,14 +1507,14 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 				goto Error;
 			}
 			Py_BEGIN_ALLOW_THREADS
-			rc = SQLExecDirect(cur->hstmt, (SQLTCHAR *)sqlbuf,
-							   SQL_NTS);
+				rc = SQLExecDirect(cur->hstmt, (SQLTCHAR *)sqlbuf,
+					SQL_NTS);
 			Py_END_ALLOW_THREADS
-			/* move data here. */
-			if (rc == SQL_NEED_DATA)
-			{
-				rc = sendSQLInputData(cur);
-			}
+				/* move data here. */
+				if (rc == SQL_NEED_DATA)
+				{
+					rc = sendSQLInputData(cur);
+				}
 			if (unsuccessful(rc))
 			{
 				cursorError(cur, _T("EXEC"));
@@ -1523,9 +1523,9 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 			/* Success! */
 			/* Note: multiple result sets aren't supported here, just bulk inserts... */
 			Py_BEGIN_ALLOW_THREADS
-			SQLRowCount(cur->hstmt, &t);
+				SQLRowCount(cur->hstmt, &t);
 			Py_END_ALLOW_THREADS
-			n_rows += t;
+				n_rows += t;
 			deleteBinding(cur);
 			Py_DECREF(inputvars);
 			inputvars = NULL;
@@ -1538,13 +1538,13 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 			goto Error;
 		}
 		Py_BEGIN_ALLOW_THREADS
-		rc = SQLExecDirect(cur->hstmt, (SQLTCHAR *)sqlbuf,
-						   SQL_NTS);
+			rc = SQLExecDirect(cur->hstmt, (SQLTCHAR *)sqlbuf,
+				SQL_NTS);
 		Py_END_ALLOW_THREADS
-		if (rc == SQL_NEED_DATA)
-		{
-			rc = sendSQLInputData(cur);
-		}
+			if (rc == SQL_NEED_DATA)
+			{
+				rc = sendSQLInputData(cur);
+			}
 		if (unsuccessful(rc))
 		{
 			cursorError(cur, _T("EXEC"));
@@ -1605,48 +1605,48 @@ static PyObject *processOutput(cursorObject *cur)
 					or the remaining size (as determined by ob->rcode).
 					Regarding above note, caller can now use cursor.setoutputsize
 					to work around any such bug in a driver */
-				if (ob->rcode){
+				if (ob->rcode) {
 					void *pTemp = ob->bind_area;
 					ob->vsize += cur->max_width;
 					/* Some BLOBs can be huge, be paranoid about allowing
 					   other threads to run. */
 					Py_BEGIN_ALLOW_THREADS
-					ob->bind_area = realloc (ob->bind_area, ob->vsize);
+						ob->bind_area = realloc(ob->bind_area, ob->vsize);
 					Py_END_ALLOW_THREADS
-					if (ob->bind_area == NULL){
-						PyErr_NoMemory();
-						ob->vsize -= cur->max_width;
-						ob->bind_area = pTemp;
-						Py_DECREF(row);
-						return NULL;
+						if (ob->bind_area == NULL) {
+							PyErr_NoMemory();
+							ob->vsize -= cur->max_width;
+							ob->bind_area = pTemp;
+							Py_DECREF(row);
+							return NULL;
 						}
-                }
+				}
 
 				Py_BEGIN_ALLOW_THREADS
-				rc = SQLGetData(cur->hstmt,
-								ob->pos,
-								ob->vtype,
-								(char *)ob->bind_area + cbRead,
-								ob->vsize - cbRead,
-								&ob->rcode);
+					rc = SQLGetData(cur->hstmt,
+						ob->pos,
+						ob->vtype,
+						(char *)ob->bind_area + cbRead,
+						ob->vsize - cbRead,
+						&ob->rcode);
 				Py_END_ALLOW_THREADS
-				if (unsuccessful(rc))
-				{
-					Py_DECREF(row);
-	 				cursorError(cur, _T("SQLGetData"));
-					return NULL;
-				}
+					if (unsuccessful(rc))
+					{
+						Py_DECREF(row);
+						cursorError(cur, _T("SQLGetData"));
+						return NULL;
+					}
 				/* Return code can be a negative status code:
 					SQL_NO_TOTAL if length is not known, SQL_NULL_DATA if nothing to retreive
 					Otherwise will be total bytes remaining including current read.
 				*/
-                if (ob->rcode >= 0 && ob->rcode <= ob->vsize - cbRead)
-                {
+				if (ob->rcode >= 0 && ob->rcode <= ob->vsize - cbRead)
+				{
 					/* If we get here, then this should be the last iteration through the loop. */
 					ob->rcode += cbRead;
-                }
-                else
-                {
+				}
+				else
+				{
 					cbRead = ob->vsize;
 					/* We want to ignore the intermediate
 						  NULL characters SQLGetData() gives us.
@@ -1701,21 +1701,21 @@ static PyObject *processOutput(cursorObject *cur)
 
 static PyObject *fetchOne(cursorObject *cur)
 {
-  RETCODE rc;
-  Py_BEGIN_ALLOW_THREADS
-  rc = SQLFetch(cur->hstmt);
-  Py_END_ALLOW_THREADS
-  if (rc == SQL_NO_DATA_FOUND)
-  {
-    Py_INCREF(Py_None);
-    return Py_None;
-  }
-  else if (unsuccessful(rc))
-  {
-    cursorError(cur, _T("FETCH"));
-    return 0;
-  }
-  return processOutput(cur);
+	RETCODE rc;
+	Py_BEGIN_ALLOW_THREADS
+		rc = SQLFetch(cur->hstmt);
+	Py_END_ALLOW_THREADS
+		if (rc == SQL_NO_DATA_FOUND)
+		{
+			Py_INCREF(Py_None);
+			return Py_None;
+		}
+		else if (unsuccessful(rc))
+		{
+			cursorError(cur, _T("FETCH"));
+			return 0;
+		}
+	return processOutput(cur);
 }
 
 static PyObject *fetchN(cursorObject *cur, long n_rows)
@@ -1734,11 +1734,11 @@ static PyObject *fetchN(cursorObject *cur, long n_rows)
 			}
 			else
 			{
-				if (PyList_Append(list, entry) == -1){
+				if (PyList_Append(list, entry) == -1) {
 					Py_DECREF(list);
 					Py_DECREF(entry);
 					return NULL;
-					}
+				}
 				Py_DECREF(entry);
 			}
 		}
@@ -1762,14 +1762,14 @@ static PyObject *odbcCurFetchOne(PyObject *self, PyObject *args)
 /* @pymethod [data, ...]|cursor|fetchmany|Fetch many rows of data */
 static PyObject *odbcCurFetchMany(PyObject *self, PyObject *args)
 {
-  long n_rows = 1;
+	long n_rows = 1;
 
-  if (!PyArg_ParseTuple(args, "|l", &n_rows))
-  {
-      return NULL;
-  }
+	if (!PyArg_ParseTuple(args, "|l", &n_rows))
+	{
+		return NULL;
+	}
 
-  return fetchN(cursor(self), n_rows);
+	return fetchN(cursor(self), n_rows);
 }
 
 /* @pymethod [data, ...]|cursor|fetchall|Fetch all rows of data */
@@ -1830,19 +1830,19 @@ static void parseInfo(connectionObject *conn, const TCHAR *c)
 
 	if (!firstEqualsSign || (firstSlash && firstSlash < firstEqualsSign))
 	{
-		_tcsncpy(buf, c, sizeof(buf)/sizeof(TCHAR));
+		_tcsncpy(buf, c, sizeof(buf) / sizeof(TCHAR));
 		p = _tcstok(buf, _T("/"));
 		if (p)
 		{
-			_tcsncpy(dsn, p, sizeof(dsn)/sizeof(TCHAR));
+			_tcsncpy(dsn, p, sizeof(dsn) / sizeof(TCHAR));
 			p = _tcstok(0, _T("/"));
 			if (p)
 			{
-				_tcsncpy(uid, p, sizeof(uid)/sizeof(TCHAR));
+				_tcsncpy(uid, p, sizeof(uid) / sizeof(TCHAR));
 				p = _tcstok(0, _T("/"));
 				if (p)
 				{
-					_tcsncpy(pwd, p, sizeof(pwd)/sizeof(TCHAR));
+					_tcsncpy(pwd, p, sizeof(pwd) / sizeof(TCHAR));
 				}
 				else
 				{
@@ -1863,7 +1863,7 @@ static void parseInfo(connectionObject *conn, const TCHAR *c)
 		}
 
 		connectionStringLength = _tcslen(dsn) + _tcslen(uid) + _tcslen(pwd) + 15; /* add room for DSN=;UID=;PWD=\0 */
-		conn->connectionString = (TCHAR *) malloc(connectionStringLength);
+		conn->connectionString = (TCHAR *)malloc(connectionStringLength);
 		_tcscpy(conn->connectionString, _T("DSN="));
 		_tcscat(conn->connectionString, dsn);
 		if (_tcslen(uid))
@@ -1879,7 +1879,7 @@ static void parseInfo(connectionObject *conn, const TCHAR *c)
 	}
 	else
 	{
-		conn->connectionString = (TCHAR *) malloc((_tcslen(c) + 1) * sizeof(TCHAR));
+		conn->connectionString = (TCHAR *)malloc((_tcslen(c) + 1) * sizeof(TCHAR));
 		_tcscpy(conn->connectionString, c);
 	}
 }
@@ -1887,7 +1887,7 @@ static void parseInfo(connectionObject *conn, const TCHAR *c)
 /* @pymethod <o connection>|odbc|odbc|Creates an ODBC connection */
 static PyObject *odbcLogon(PyObject *self, PyObject *args)
 {
-	TCHAR *connectionString=NULL;
+	TCHAR *connectionString = NULL;
 	PyObject *obconnectionString;
 	connectionObject *conn;
 
@@ -1910,7 +1910,7 @@ static PyObject *odbcLogon(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
-	conn->connectionError=odbcError;
+	conn->connectionError = odbcError;
 	Py_INCREF(odbcError);
 	conn->connect_id = 0; /* initialize it to anything */
 	conn->hdbc = SQL_NULL_HDBC;
@@ -1951,22 +1951,24 @@ static PyObject *odbcSQLDataSources(PyObject *self, PyObject *args)
 	SQLSMALLINT desc_size = sizeof(desc) / sizeof(desc[0]);
 	RETCODE rc;
 	Py_BEGIN_ALLOW_THREADS
-	rc = SQLDataSources(Env, direction,
-	                    svr, svr_size, &svr_size,
-	                    desc, desc_size, &desc_size);
+		rc = SQLDataSources(Env, direction,
+			svr, svr_size, &svr_size,
+			desc, desc_size, &desc_size);
 	Py_END_ALLOW_THREADS
 
-	if (rc == SQL_NO_DATA) {
-		ret = Py_None;
-		Py_INCREF(Py_None);
-	} else if (unsuccessful(rc)){
-		connectionError(NULL, _T("SQLDataSources"));
-		ret = NULL;
-	} else
-		ret = Py_BuildValue("NN",
-			PyWinObject_FromTCHAR((TCHAR *)svr, svr_size),
-			PyWinObject_FromTCHAR((TCHAR *)desc, desc_size));
-	return ret;
+		if (rc == SQL_NO_DATA) {
+			ret = Py_None;
+			Py_INCREF(Py_None);
+		}
+		else if (unsuccessful(rc)) {
+			connectionError(NULL, _T("SQLDataSources"));
+			ret = NULL;
+		}
+		else
+			ret = Py_BuildValue("NN",
+				PyWinObject_FromTCHAR((TCHAR *)svr, svr_size),
+				PyWinObject_FromTCHAR((TCHAR *)desc, desc_size));
+		return ret;
 }
 
 /* @module odbc|A Python wrapper around the ODBC API. */
@@ -1982,7 +1984,7 @@ static PyMethodDef globalMethods[] = {
 PYWIN_MODULE_INIT_FUNC(odbc)
 {
 	PYWIN_MODULE_INIT_PREPARE(odbc, globalMethods,
-				  "A Python wrapper around the ODBC API.");
+		"A Python wrapper around the ODBC API.");
 
 	if (PyType_Ready(&Cursor_Type) == -1)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
@@ -1991,18 +1993,18 @@ PYWIN_MODULE_INIT_FUNC(odbc)
 
 	// Sql dates are now returned as python's datetime object.
 	//	C Api for datetime didn't exist in 2.3, stick to dynamic semantics for now.
-	datetime_module=PyImport_ImportModule("datetime");
+	datetime_module = PyImport_ImportModule("datetime");
 	if (datetime_module == NULL)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 	datetime_class = PyObject_GetAttrString(datetime_module, "datetime");
 	if (datetime_class == NULL)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 
-    if (unsuccessful(SQLAllocEnv(&Env)))
+	if (unsuccessful(SQLAllocEnv(&Env)))
 	{
 		odbcPrintError(SQL_NULL_HENV, 0, SQL_NULL_HSTMT, _T("INIT"));
 		PYWIN_MODULE_INIT_RETURN_ERROR;
-    }
+	}
 
 	/* Names of various sql datatypes.
 		's' format of Py_BuildValue creates unicode on py3k, and char string on 2.x
@@ -2011,13 +2013,13 @@ PYWIN_MODULE_INIT_FUNC(odbc)
 	char *szDbiRaw = "RAW";
 	char *szDbiNumber = "NUMBER";
 	char *szDbiDate = "DATE";
-	PyObject *obtypes=Py_BuildValue("(ssss)",
-			szDbiString,
-			szDbiRaw,
-			szDbiNumber,
-			szDbiDate);
+	PyObject *obtypes = Py_BuildValue("(ssss)",
+		szDbiString,
+		szDbiRaw,
+		szDbiNumber,
+		szDbiDate);
 	// Steals a ref to obtypes, so it doesn't need to be DECREF'ed.
-	if (obtypes==NULL || PyModule_AddObject(module, "TYPES", obtypes) == -1)
+	if (obtypes == NULL || PyModule_AddObject(module, "TYPES", obtypes) == -1)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 	DbiString = PyTuple_GET_ITEM(obtypes, 0);
 	DbiRaw = PyTuple_GET_ITEM(obtypes, 1);
@@ -2027,9 +2029,9 @@ PYWIN_MODULE_INIT_FUNC(odbc)
 			not sure what the point of this is ???
 	*/
 	if (PyDict_SetItem(dict, DbiString, DbiString) == -1
-		||PyDict_SetItem(dict, DbiRaw, DbiRaw) == -1
-		||PyDict_SetItem(dict, DbiNumber, DbiNumber) == -1
-		||PyDict_SetItem(dict, DbiDate, DbiDate) == -1)
+		|| PyDict_SetItem(dict, DbiRaw, DbiRaw) == -1
+		|| PyDict_SetItem(dict, DbiNumber, DbiNumber) == -1
+		|| PyDict_SetItem(dict, DbiDate, DbiDate) == -1)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 
 	// Initialize various exception types
@@ -2170,8 +2172,8 @@ static odbcErrorDesc errorTable[] = {
 
 static int odbcCompare(const void * v1, const void * v2)
 {
-	return _tcscmp(((const odbcErrorDesc *) v1)->state,
-				  ((const odbcErrorDesc *) v2)->state);
+	return _tcscmp(((const odbcErrorDesc *)v1)->state,
+		((const odbcErrorDesc *)v2)->state);
 }
 
 
@@ -2185,7 +2187,7 @@ static odbcErrorDesc *lookupError(const TCHAR *sqlState)
 		bsearch(
 			&key,
 			errorTable,
-			sizeof(errorTable)/ sizeof(odbcErrorDesc), /* number of elems */
+			sizeof(errorTable) / sizeof(odbcErrorDesc), /* number of elems */
 			sizeof(odbcErrorDesc),
 			odbcCompare);
 }

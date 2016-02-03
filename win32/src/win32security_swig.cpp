@@ -16,7 +16,7 @@
 
 
 #define SWIGCODE
-/* Implementation : PYTHON */
+ /* Implementation : PYTHON */
 
 #define SWIGPYTHON
 #include <string.h>
@@ -40,7 +40,7 @@
 
 #include "Python.h"
 
-/* Definitions for Windows/Unix exporting */
+ /* Definitions for Windows/Unix exporting */
 #if defined(__WIN32__)
 #   if defined(_MSC_VER)
 #	define SWIGEXPORT(a,b) __declspec(dllexport) a b
@@ -70,16 +70,16 @@
 #ifdef NEED_SWIG_VARLINK
 
 typedef struct {
-  char  *name;
-  PyObject *(*get_attr)(void);
-  int (*set_attr)(PyObject *);
+	char  *name;
+	PyObject *(*get_attr)(void);
+	int(*set_attr)(PyObject *);
 } swig_globalvar;
 
 typedef struct swig_varlinkobject {
-  PyObject_HEAD
-  swig_globalvar **vars;
-  int      nvars;
-  int      maxvars;
+	PyObject_HEAD
+		swig_globalvar **vars;
+	int      nvars;
+	int      maxvars;
 } swig_varlinkobject;
 
 /* ----------------------------------------------------------------------
@@ -91,8 +91,8 @@ typedef struct swig_varlinkobject {
 static PyObject *
 swig_varlink_repr(swig_varlinkobject *v)
 {
-  v = v;
-  return PyString_FromString("<Global variables>");
+	v = v;
+	return PyString_FromString("<Global variables>");
 }
 
 /* ---------------------------------------------------------------------
@@ -105,16 +105,16 @@ static int
 swig_varlink_print(swig_varlinkobject *v, FILE *fp, int flags)
 {
 
-  int i = 0;
-  flags = flags;
-  fprintf(fp,"Global variables { ");
-  while (v->vars[i]) {
-    fprintf(fp,"%s", v->vars[i]->name);
-    i++;
-    if (v->vars[i]) fprintf(fp,", ");
-  }
-  fprintf(fp," }\n");
-  return 0;
+	int i = 0;
+	flags = flags;
+	fprintf(fp, "Global variables { ");
+	while (v->vars[i]) {
+		fprintf(fp, "%s", v->vars[i]->name);
+		i++;
+		if (v->vars[i]) fprintf(fp, ", ");
+	}
+	fprintf(fp, " }\n");
+	return 0;
 }
 
 /* --------------------------------------------------------------------
@@ -128,18 +128,18 @@ swig_varlink_print(swig_varlinkobject *v, FILE *fp, int flags)
 static PyObject *
 swig_varlink_getattr(swig_varlinkobject *v, char *n)
 {
-  int i = 0;
-  char temp[128];
+	int i = 0;
+	char temp[128];
 
-  while (v->vars[i]) {
-    if (strcmp(v->vars[i]->name,n) == 0) {
-      return (*v->vars[i]->get_attr)();
-    }
-    i++;
-  }
-  sprintf(temp,"C global variable %s not found.", n);
-  PyErr_SetString(PyExc_NameError,temp);
-  return NULL;
+	while (v->vars[i]) {
+		if (strcmp(v->vars[i]->name, n) == 0) {
+			return (*v->vars[i]->get_attr)();
+		}
+		i++;
+	}
+	sprintf(temp, "C global variable %s not found.", n);
+	PyErr_SetString(PyExc_NameError, temp);
+	return NULL;
 }
 
 /* -------------------------------------------------------------------
@@ -151,35 +151,35 @@ swig_varlink_getattr(swig_varlinkobject *v, char *n)
 static int
 swig_varlink_setattr(swig_varlinkobject *v, char *n, PyObject *p)
 {
-  char temp[128];
-  int i = 0;
-  while (v->vars[i]) {
-    if (strcmp(v->vars[i]->name,n) == 0) {
-      return (*v->vars[i]->set_attr)(p);
-    }
-    i++;
-  }
-  sprintf(temp,"C global variable %s not found.", n);
-  PyErr_SetString(PyExc_NameError,temp);
-  return 1;
+	char temp[128];
+	int i = 0;
+	while (v->vars[i]) {
+		if (strcmp(v->vars[i]->name, n) == 0) {
+			return (*v->vars[i]->set_attr)(p);
+		}
+		i++;
+	}
+	sprintf(temp, "C global variable %s not found.", n);
+	PyErr_SetString(PyExc_NameError, temp);
+	return 1;
 }
 
 statichere PyTypeObject varlinktype = {
-/*  PyObject_HEAD_INIT(&PyType_Type)  Note : This doesn't work on some machines */
-  PyObject_HEAD_INIT(0)
-  0,
-  "varlink",                          /* Type name    */
-  sizeof(swig_varlinkobject),         /* Basic size   */
-  0,                                  /* Itemsize     */
-  0,                                  /* Deallocator  */
-  (printfunc) swig_varlink_print,     /* Print        */
-  (getattrfunc) swig_varlink_getattr, /* get attr     */
-  (setattrfunc) swig_varlink_setattr, /* Set attr     */
-  0,                                  /* tp_compare   */
-  (reprfunc) swig_varlink_repr,       /* tp_repr      */
-  0,                                  /* tp_as_number */
-  0,                                  /* tp_as_mapping*/
-  0,                                  /* tp_hash      */
+	/*  PyObject_HEAD_INIT(&PyType_Type)  Note : This doesn't work on some machines */
+	  PyObject_HEAD_INIT(0)
+	  0,
+	  "varlink",                          /* Type name    */
+	  sizeof(swig_varlinkobject),         /* Basic size   */
+	  0,                                  /* Itemsize     */
+	  0,                                  /* Deallocator  */
+	  (printfunc)swig_varlink_print,     /* Print        */
+	  (getattrfunc)swig_varlink_getattr, /* get attr     */
+	  (setattrfunc)swig_varlink_setattr, /* Set attr     */
+	  0,                                  /* tp_compare   */
+	  (reprfunc)swig_varlink_repr,       /* tp_repr      */
+	  0,                                  /* tp_as_number */
+	  0,                                  /* tp_as_mapping*/
+	  0,                                  /* tp_hash      */
 };
 
 /* Create a variable linking object for use later */
@@ -187,41 +187,41 @@ statichere PyTypeObject varlinktype = {
 SWIGSTATIC PyObject *
 SWIG_newvarlink(void)
 {
-  swig_varlinkobject *result = 0;
-  result = PyMem_NEW(swig_varlinkobject,1);
-  varlinktype.ob_type = &PyType_Type;    /* Patch varlinktype into a PyType */
-  result->ob_type = &varlinktype;
-  /*  _Py_NewReference(result);  Does not seem to be necessary */
-  result->nvars = 0;
-  result->maxvars = 64;
-  result->vars = (swig_globalvar **) malloc(64*sizeof(swig_globalvar *));
-  result->vars[0] = 0;
-  Py_XINCREF((PyObject *) result);
-  return ((PyObject*) result);
+	swig_varlinkobject *result = 0;
+	result = PyMem_NEW(swig_varlinkobject, 1);
+	varlinktype.ob_type = &PyType_Type;    /* Patch varlinktype into a PyType */
+	result->ob_type = &varlinktype;
+	/*  _Py_NewReference(result);  Does not seem to be necessary */
+	result->nvars = 0;
+	result->maxvars = 64;
+	result->vars = (swig_globalvar **)malloc(64 * sizeof(swig_globalvar *));
+	result->vars[0] = 0;
+	Py_XINCREF((PyObject *)result);
+	return ((PyObject*)result);
 }
 
 SWIGSTATIC void
 SWIG_addvarlink(PyObject *p, char *name,
-	   PyObject *(*get_attr)(void), int (*set_attr)(PyObject *p))
+	PyObject *(*get_attr)(void), int(*set_attr)(PyObject *p))
 {
-  swig_varlinkobject *v;
-  v= (swig_varlinkobject *) p;
+	swig_varlinkobject *v;
+	v = (swig_varlinkobject *)p;
 
-  if (v->nvars >= v->maxvars -1) {
-    v->maxvars = 2*v->maxvars;
-    v->vars = (swig_globalvar **) realloc(v->vars,v->maxvars*sizeof(swig_globalvar *));
-    if (v->vars == NULL) {
-      fprintf(stderr,"SWIG : Fatal error in initializing Python module.\n");
-      exit(1);
-    }
-  }
-  v->vars[v->nvars] = (swig_globalvar *) malloc(sizeof(swig_globalvar));
-  v->vars[v->nvars]->name = (char *) malloc(strlen(name)+1);
-  strcpy(v->vars[v->nvars]->name,name);
-  v->vars[v->nvars]->get_attr = get_attr;
-  v->vars[v->nvars]->set_attr = set_attr;
-  v->nvars++;
-  v->vars[v->nvars] = 0;
+	if (v->nvars >= v->maxvars - 1) {
+		v->maxvars = 2 * v->maxvars;
+		v->vars = (swig_globalvar **)realloc(v->vars, v->maxvars*sizeof(swig_globalvar *));
+		if (v->vars == NULL) {
+			fprintf(stderr, "SWIG : Fatal error in initializing Python module.\n");
+			exit(1);
+		}
+	}
+	v->vars[v->nvars] = (swig_globalvar *)malloc(sizeof(swig_globalvar));
+	v->vars[v->nvars]->name = (char *)malloc(strlen(name) + 1);
+	strcpy(v->vars[v->nvars]->name, name);
+	v->vars[v->nvars]->get_attr = get_attr;
+	v->vars[v->nvars]->set_attr = set_attr;
+	v->nvars++;
+	v->vars[v->nvars] = 0;
 }
 
 #else
@@ -277,29 +277,29 @@ SWIG_addvarlink(PyObject *p, char *name,
 #endif
 
 
-/* SWIG pointer structure */
+ /* SWIG pointer structure */
 
 typedef struct SwigPtrType {
-  char               *name;               /* Datatype name                  */
-  int                 len;                /* Length (used for optimization) */
-  void               *(*cast)(void *);    /* Pointer casting function       */
-  struct SwigPtrType *next;               /* Linked list pointer            */
+	char               *name;               /* Datatype name                  */
+	int                 len;                /* Length (used for optimization) */
+	void               *(*cast)(void *);    /* Pointer casting function       */
+	struct SwigPtrType *next;               /* Linked list pointer            */
 } SwigPtrType;
 
 /* Pointer cache structure */
 
 typedef struct {
-  int                 stat;               /* Status (valid) bit             */
-  SwigPtrType        *tp;                 /* Pointer to type structure      */
-  char                name[256];          /* Given datatype name            */
-  char                mapped[256];        /* Equivalent name                */
+	int                 stat;               /* Status (valid) bit             */
+	SwigPtrType        *tp;                 /* Pointer to type structure      */
+	char                name[256];          /* Given datatype name            */
+	char                mapped[256];        /* Equivalent name                */
 } SwigCacheType;
 
 /* Some variables  */
 
-static int SwigPtrMax  = 64;           /* Max entries that can be currently held */
-                                       /* This value may be adjusted dynamically */
-static int SwigPtrN    = 0;            /* Current number of entries              */
+static int SwigPtrMax = 64;           /* Max entries that can be currently held */
+									   /* This value may be adjusted dynamically */
+static int SwigPtrN = 0;            /* Current number of entries              */
 static int SwigPtrSort = 0;            /* Status flag indicating sort            */
 static int SwigStart[256];             /* Starting positions of types            */
 
@@ -316,16 +316,16 @@ static int SwigLastCache = 0;
 
 /* Sort comparison function */
 static int swigsort(const void *data1, const void *data2) {
-	SwigPtrType *d1 = (SwigPtrType *) data1;
-	SwigPtrType *d2 = (SwigPtrType *) data2;
-	return strcmp(d1->name,d2->name);
+	SwigPtrType *d1 = (SwigPtrType *)data1;
+	SwigPtrType *d2 = (SwigPtrType *)data2;
+	return strcmp(d1->name, d2->name);
 }
 
 /* Binary Search function */
 static int swigcmp(const void *key, const void *data) {
-  char *k = (char *) key;
-  SwigPtrType *d = (SwigPtrType *) data;
-  return strncmp(k,d->name,d->len);
+	char *k = (char *)key;
+	SwigPtrType *d = (SwigPtrType *)data;
+	return strncmp(k, d->name, d->len);
 }
 
 /* Register a new datatype with the type-checker */
@@ -333,216 +333,220 @@ static int swigcmp(const void *key, const void *data) {
 SWIGSTATIC
 void SWIG_RegisterMapping(char *origtype, char *newtype, void *(*cast)(void *)) {
 
-  int i;
-  SwigPtrType *t = 0,*t1;
+	int i;
+	SwigPtrType *t = 0, *t1;
 
-  /* Allocate the pointer table if necessary */
+	/* Allocate the pointer table if necessary */
 
-  if (!SwigPtrTable) {
-    SwigPtrTable = (SwigPtrType *) malloc(SwigPtrMax*sizeof(SwigPtrType));
-    SwigPtrN = 0;
-  }
-  /* Grow the table */
-  if (SwigPtrN >= SwigPtrMax) {
-    SwigPtrMax = 2*SwigPtrMax;
-    SwigPtrTable = (SwigPtrType *) realloc((char *) SwigPtrTable,SwigPtrMax*sizeof(SwigPtrType));
-  }
-  for (i = 0; i < SwigPtrN; i++)
-    if (strcmp(SwigPtrTable[i].name,origtype) == 0) {
-      t = &SwigPtrTable[i];
-      break;
-    }
-  if (!t) {
-    t = &SwigPtrTable[SwigPtrN];
-    t->name = origtype;
-    t->len = strlen(t->name);
-    t->cast = 0;
-    t->next = 0;
-    SwigPtrN++;
-  }
+	if (!SwigPtrTable) {
+		SwigPtrTable = (SwigPtrType *)malloc(SwigPtrMax*sizeof(SwigPtrType));
+		SwigPtrN = 0;
+	}
+	/* Grow the table */
+	if (SwigPtrN >= SwigPtrMax) {
+		SwigPtrMax = 2 * SwigPtrMax;
+		SwigPtrTable = (SwigPtrType *)realloc((char *)SwigPtrTable, SwigPtrMax*sizeof(SwigPtrType));
+	}
+	for (i = 0; i < SwigPtrN; i++)
+		if (strcmp(SwigPtrTable[i].name, origtype) == 0) {
+			t = &SwigPtrTable[i];
+			break;
+		}
+	if (!t) {
+		t = &SwigPtrTable[SwigPtrN];
+		t->name = origtype;
+		t->len = strlen(t->name);
+		t->cast = 0;
+		t->next = 0;
+		SwigPtrN++;
+	}
 
-  /* Check for existing entry */
+	/* Check for existing entry */
 
-  while (t->next) {
-    if ((strcmp(t->name,newtype) == 0)) {
-      if (cast) t->cast = cast;
-      return;
-    }
-    t = t->next;
-  }
+	while (t->next) {
+		if ((strcmp(t->name, newtype) == 0)) {
+			if (cast) t->cast = cast;
+			return;
+		}
+		t = t->next;
+	}
 
-  /* Now place entry (in sorted order) */
+	/* Now place entry (in sorted order) */
 
-  t1 = (SwigPtrType *) malloc(sizeof(SwigPtrType));
-  t1->name = newtype;
-  t1->len = strlen(t1->name);
-  t1->cast = cast;
-  t1->next = 0;
-  t->next = t1;
-  SwigPtrSort = 0;
+	t1 = (SwigPtrType *)malloc(sizeof(SwigPtrType));
+	t1->name = newtype;
+	t1->len = strlen(t1->name);
+	t1->cast = cast;
+	t1->next = 0;
+	t->next = t1;
+	SwigPtrSort = 0;
 }
 
 /* Make a pointer value string */
 
 SWIGSTATIC
 void SWIG_MakePtr(char *_c, const void *_ptr, char *type) {
-  static char _hex[16] =
-  {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-   'a', 'b', 'c', 'd', 'e', 'f'};
-  unsigned long _p, _s;
-  char _result[20], *_r;    /* Note : a 64-bit hex number = 16 digits */
-  _r = _result;
-  _p = (unsigned long) _ptr;
-  if (_p > 0) {
-    while (_p > 0) {
-      _s = _p & 0xf;
-      *(_r++) = _hex[_s];
-      _p = _p >> 4;
-    }
-    *_r = '_';
-    while (_r >= _result)
-      *(_c++) = *(_r--);
-  } else {
-    strcpy (_c, "NULL");
-  }
-  if (_ptr)
-    strcpy (_c, type);
+	static char _hex[16] =
+	{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+	 'a', 'b', 'c', 'd', 'e', 'f' };
+	unsigned long _p, _s;
+	char _result[20], *_r;    /* Note : a 64-bit hex number = 16 digits */
+	_r = _result;
+	_p = (unsigned long)_ptr;
+	if (_p > 0) {
+		while (_p > 0) {
+			_s = _p & 0xf;
+			*(_r++) = _hex[_s];
+			_p = _p >> 4;
+		}
+		*_r = '_';
+		while (_r >= _result)
+			*(_c++) = *(_r--);
+	}
+	else {
+		strcpy(_c, "NULL");
+	}
+	if (_ptr)
+		strcpy(_c, type);
 }
 
 /* Define for backwards compatibility */
 
-#define _swig_make_hex   SWIG_MakePtr
+#define _swig_make_hex   SWIG_MakePtr 
 
 /* Function for getting a pointer value */
 
 SWIGSTATIC
 char *SWIG_GetPtr(char *_c, void **ptr, char *_t)
 {
-  unsigned long _p;
-  char temp_type[256];
-  char *name;
-  int  i, len;
-  SwigPtrType *sp,*tp;
-  SwigCacheType *cache;
-  int  start, end;
-  _p = 0;
+	unsigned long _p;
+	char temp_type[256];
+	char *name;
+	int  i, len;
+	SwigPtrType *sp, *tp;
+	SwigCacheType *cache;
+	int  start, end;
+	_p = 0;
 
-  /* Pointer values must start with leading underscore */
-  if (*_c == '_') {
-      _c++;
-      /* Extract hex value from pointer */
-      while (*_c) {
-	  if ((*_c >= '0') && (*_c <= '9'))
-	    _p = (_p << 4) + (*_c - '0');
-	  else if ((*_c >= 'a') && (*_c <= 'f'))
-	    _p = (_p << 4) + ((*_c - 'a') + 10);
-	  else
-	    break;
-	  _c++;
-      }
-
-      if (_t) {
-	if (strcmp(_t,_c)) {
-	  if (!SwigPtrSort) {
-	    qsort((void *) SwigPtrTable, SwigPtrN, sizeof(SwigPtrType), swigsort);
-	    for (i = 0; i < 256; i++) {
-	      SwigStart[i] = SwigPtrN;
-	    }
-	    for (i = SwigPtrN-1; i >= 0; i--) {
-	      SwigStart[(int) (SwigPtrTable[i].name[1])] = i;
-	    }
-	    for (i = 255; i >= 1; i--) {
-	      if (SwigStart[i-1] > SwigStart[i])
-		SwigStart[i-1] = SwigStart[i];
-	    }
-	    SwigPtrSort = 1;
-	    for (i = 0; i < SWIG_CACHESIZE; i++)
-	      SwigCache[i].stat = 0;
-	  }
-
-	  /* First check cache for matches.  Uses last cache value as starting point */
-	  cache = &SwigCache[SwigLastCache];
-	  for (i = 0; i < SWIG_CACHESIZE; i++) {
-	    if (cache->stat) {
-	      if (strcmp(_t,cache->name) == 0) {
-		if (strcmp(_c,cache->mapped) == 0) {
-		  cache->stat++;
-		  *ptr = (void *) _p;
-		  if (cache->tp->cast) *ptr = (*(cache->tp->cast))(*ptr);
-		  return (char *) 0;
+	/* Pointer values must start with leading underscore */
+	if (*_c == '_') {
+		_c++;
+		/* Extract hex value from pointer */
+		while (*_c) {
+			if ((*_c >= '0') && (*_c <= '9'))
+				_p = (_p << 4) + (*_c - '0');
+			else if ((*_c >= 'a') && (*_c <= 'f'))
+				_p = (_p << 4) + ((*_c - 'a') + 10);
+			else
+				break;
+			_c++;
 		}
-	      }
-	    }
-	    SwigLastCache = (SwigLastCache+1) & SWIG_CACHEMASK;
-	    if (!SwigLastCache) cache = SwigCache;
-	    else cache++;
-	  }
-	  /* We have a type mismatch.  Will have to look through our type
-	     mapping table to figure out whether or not we can accept this datatype */
 
-	  start = SwigStart[(int) _t[1]];
-	  end = SwigStart[(int) _t[1]+1];
-	  sp = &SwigPtrTable[start];
-	  while (start < end) {
-	    if (swigcmp(_t,sp) == 0) break;
-	    sp++;
-	    start++;
-	  }
-	  if (start >= end) sp = 0;
-	  /* Try to find a match for this */
-	  if (sp) {
-	    while (swigcmp(_t,sp) == 0) {
-	      name = sp->name;
-	      len = sp->len;
-	      tp = sp->next;
-	      /* Try to find entry for our given datatype */
-	      while(tp) {
-		if (tp->len >= 255) {
-		  return _c;
+		if (_t) {
+			if (strcmp(_t, _c)) {
+				if (!SwigPtrSort) {
+					qsort((void *)SwigPtrTable, SwigPtrN, sizeof(SwigPtrType), swigsort);
+					for (i = 0; i < 256; i++) {
+						SwigStart[i] = SwigPtrN;
+					}
+					for (i = SwigPtrN - 1; i >= 0; i--) {
+						SwigStart[(int)(SwigPtrTable[i].name[1])] = i;
+					}
+					for (i = 255; i >= 1; i--) {
+						if (SwigStart[i - 1] > SwigStart[i])
+							SwigStart[i - 1] = SwigStart[i];
+					}
+					SwigPtrSort = 1;
+					for (i = 0; i < SWIG_CACHESIZE; i++)
+						SwigCache[i].stat = 0;
+				}
+
+				/* First check cache for matches.  Uses last cache value as starting point */
+				cache = &SwigCache[SwigLastCache];
+				for (i = 0; i < SWIG_CACHESIZE; i++) {
+					if (cache->stat) {
+						if (strcmp(_t, cache->name) == 0) {
+							if (strcmp(_c, cache->mapped) == 0) {
+								cache->stat++;
+								*ptr = (void *)_p;
+								if (cache->tp->cast) *ptr = (*(cache->tp->cast))(*ptr);
+								return (char *)0;
+							}
+						}
+					}
+					SwigLastCache = (SwigLastCache + 1) & SWIG_CACHEMASK;
+					if (!SwigLastCache) cache = SwigCache;
+					else cache++;
+				}
+				/* We have a type mismatch.  Will have to look through our type
+				   mapping table to figure out whether or not we can accept this datatype */
+
+				start = SwigStart[(int)_t[1]];
+				end = SwigStart[(int)_t[1] + 1];
+				sp = &SwigPtrTable[start];
+				while (start < end) {
+					if (swigcmp(_t, sp) == 0) break;
+					sp++;
+					start++;
+				}
+				if (start >= end) sp = 0;
+				/* Try to find a match for this */
+				if (sp) {
+					while (swigcmp(_t, sp) == 0) {
+						name = sp->name;
+						len = sp->len;
+						tp = sp->next;
+						/* Try to find entry for our given datatype */
+						while (tp) {
+							if (tp->len >= 255) {
+								return _c;
+							}
+							strncpy(temp_type, tp->name, 255);
+							strncat(temp_type, _t + len, 255 - tp->len);
+							if (strcmp(_c, temp_type) == 0) {
+
+								strcpy(SwigCache[SwigCacheIndex].mapped, _c);
+								strcpy(SwigCache[SwigCacheIndex].name, _t);
+								SwigCache[SwigCacheIndex].stat = 1;
+								SwigCache[SwigCacheIndex].tp = tp;
+								SwigCacheIndex = SwigCacheIndex & SWIG_CACHEMASK;
+
+								/* Get pointer value */
+								*ptr = (void *)_p;
+								if (tp->cast) *ptr = (*(tp->cast))(*ptr);
+								return (char *)0;
+							}
+							tp = tp->next;
+						}
+						sp++;
+						/* Hmmm. Didn't find it this time */
+					}
+				}
+				/* Didn't find any sort of match for this data.
+				   Get the pointer value and return the received type */
+				*ptr = (void *)_p;
+				return _c;
+			}
+			else {
+				/* Found a match on the first try.  Return pointer value */
+				*ptr = (void *)_p;
+				return (char *)0;
+			}
 		}
-		strncpy(temp_type,tp->name,255);
-		strncat(temp_type,_t+len,255-tp->len);
-		if (strcmp(_c,temp_type) == 0) {
-
-		  strcpy(SwigCache[SwigCacheIndex].mapped,_c);
-		  strcpy(SwigCache[SwigCacheIndex].name,_t);
-		  SwigCache[SwigCacheIndex].stat = 1;
-		  SwigCache[SwigCacheIndex].tp = tp;
-		  SwigCacheIndex = SwigCacheIndex & SWIG_CACHEMASK;
-
-		  /* Get pointer value */
-		  *ptr = (void *) _p;
-		  if (tp->cast) *ptr = (*(tp->cast))(*ptr);
-		  return (char *) 0;
+		else {
+			/* No type specified.  Good luck */
+			*ptr = (void *)_p;
+			return (char *)0;
 		}
-		tp = tp->next;
-	      }
-	      sp++;
-	      /* Hmmm. Didn't find it this time */
-	    }
-	  }
-	  /* Didn't find any sort of match for this data.
-	     Get the pointer value and return the received type */
-	  *ptr = (void *) _p;
-	  return _c;
-	} else {
-	  /* Found a match on the first try.  Return pointer value */
-	  *ptr = (void *) _p;
-	  return (char *) 0;
 	}
-      } else {
-	/* No type specified.  Good luck */
-	*ptr = (void *) _p;
-	return (char *) 0;
-      }
-  } else {
-    if (strcmp (_c, "NULL") == 0) {
-	*ptr = (void *) 0;
-	return (char *) 0;
-    }
-    *ptr = (void *) 0;
-    return _c;
-  }
+	else {
+		if (strcmp(_c, "NULL") == 0) {
+			*ptr = (void *)0;
+			return (char *)0;
+		}
+		*ptr = (void *)0;
+		return _c;
+	}
 }
 
 /* Compatibility mode */
@@ -559,29 +563,31 @@ char *SWIG_GetPtr(char *_c, void **ptr, char *_t)
 #define _WIN32_WINNT 0x0501 // We are 2k specific
 
 static PyObject* t_output_helper(PyObject* target, PyObject* o) {
-    PyObject*   o2;
-    PyObject*   o3;
+	PyObject*   o2;
+	PyObject*   o3;
 
-    if (!target) {
-        target = o;
-    } else if (target == Py_None) {
-        Py_DECREF(Py_None);
-        target = o;
-    } else {
-        if (!PyTuple_Check(target)) {
-            o2 = target;
-            target = PyTuple_New(1);
-            PyTuple_SetItem(target, 0, o2);
-        }
-        o3 = PyTuple_New(1);
-        PyTuple_SetItem(o3, 0, o);
+	if (!target) {
+		target = o;
+	}
+	else if (target == Py_None) {
+		Py_DECREF(Py_None);
+		target = o;
+	}
+	else {
+		if (!PyTuple_Check(target)) {
+			o2 = target;
+			target = PyTuple_New(1);
+			PyTuple_SetItem(target, 0, o2);
+		}
+		o3 = PyTuple_New(1);
+		PyTuple_SetItem(o3, 0, o);
 
-        o2 = target;
-        target = PySequence_Concat(o2, o3);
-        Py_DECREF(o2);
-        Py_DECREF(o3);
-    }
-    return target;
+		o2 = target;
+		target = PySequence_Concat(o2, o3);
+		Py_DECREF(o2);
+		Py_DECREF(o3);
+	}
+	return target;
 }
 
 #include "PyWinTypes.h"
@@ -608,103 +614,103 @@ typedef DWORD  DWORDAPI;
 #include "win32security_sspi.h"
 
 
-typedef NTSTATUS (WINAPI *LsaRegisterLogonProcessfunc)
-	(PLSA_STRING, PHANDLE, PLSA_OPERATIONAL_MODE);
-static LsaRegisterLogonProcessfunc pfnLsaRegisterLogonProcess=NULL;
-typedef NTSTATUS (WINAPI *LsaDeregisterLogonProcessfunc)(HANDLE);
-static LsaDeregisterLogonProcessfunc pfnLsaDeregisterLogonProcess=NULL;
-typedef NTSTATUS (WINAPI *LsaConnectUntrustedfunc)(PHANDLE);
-static LsaConnectUntrustedfunc pfnLsaConnectUntrusted=NULL;
-typedef NTSTATUS (WINAPI *LsaLookupAuthenticationPackagefunc)
-	(HANDLE, PLSA_STRING, PULONG);
-static LsaLookupAuthenticationPackagefunc pfnLsaLookupAuthenticationPackage=NULL;
-typedef NTSTATUS (WINAPI *LsaEnumerateLogonSessionsfunc)(PULONG, PLUID*);
-static LsaEnumerateLogonSessionsfunc pfnLsaEnumerateLogonSessions=NULL;
-typedef NTSTATUS (WINAPI *LsaGetLogonSessionDatafunc)(PLUID, PSECURITY_LOGON_SESSION_DATA *);
-static LsaGetLogonSessionDatafunc pfnLsaGetLogonSessionData=NULL;
-typedef NTSTATUS (WINAPI *LsaFreeReturnBufferfunc)(PVOID);
-static LsaFreeReturnBufferfunc pfnLsaFreeReturnBuffer=NULL;
-typedef NTSTATUS (WINAPI *LsaCallAuthenticationPackagefunc)(HANDLE, ULONG, PVOID, ULONG, PVOID *, PULONG, PNTSTATUS);
-static LsaCallAuthenticationPackagefunc pfnLsaCallAuthenticationPackage=NULL;
+typedef NTSTATUS(WINAPI *LsaRegisterLogonProcessfunc)
+(PLSA_STRING, PHANDLE, PLSA_OPERATIONAL_MODE);
+static LsaRegisterLogonProcessfunc pfnLsaRegisterLogonProcess = NULL;
+typedef NTSTATUS(WINAPI *LsaDeregisterLogonProcessfunc)(HANDLE);
+static LsaDeregisterLogonProcessfunc pfnLsaDeregisterLogonProcess = NULL;
+typedef NTSTATUS(WINAPI *LsaConnectUntrustedfunc)(PHANDLE);
+static LsaConnectUntrustedfunc pfnLsaConnectUntrusted = NULL;
+typedef NTSTATUS(WINAPI *LsaLookupAuthenticationPackagefunc)
+(HANDLE, PLSA_STRING, PULONG);
+static LsaLookupAuthenticationPackagefunc pfnLsaLookupAuthenticationPackage = NULL;
+typedef NTSTATUS(WINAPI *LsaEnumerateLogonSessionsfunc)(PULONG, PLUID*);
+static LsaEnumerateLogonSessionsfunc pfnLsaEnumerateLogonSessions = NULL;
+typedef NTSTATUS(WINAPI *LsaGetLogonSessionDatafunc)(PLUID, PSECURITY_LOGON_SESSION_DATA *);
+static LsaGetLogonSessionDatafunc pfnLsaGetLogonSessionData = NULL;
+typedef NTSTATUS(WINAPI *LsaFreeReturnBufferfunc)(PVOID);
+static LsaFreeReturnBufferfunc pfnLsaFreeReturnBuffer = NULL;
+typedef NTSTATUS(WINAPI *LsaCallAuthenticationPackagefunc)(HANDLE, ULONG, PVOID, ULONG, PVOID *, PULONG, PNTSTATUS);
+static LsaCallAuthenticationPackagefunc pfnLsaCallAuthenticationPackage = NULL;
 
-typedef NTSTATUS (WINAPI *LsaRegisterPolicyChangeNotificationfunc)(POLICY_NOTIFICATION_INFORMATION_CLASS,HANDLE);
-static LsaRegisterPolicyChangeNotificationfunc pfnLsaRegisterPolicyChangeNotification=NULL;
-static LsaRegisterPolicyChangeNotificationfunc pfnLsaUnregisterPolicyChangeNotification=NULL;
+typedef NTSTATUS(WINAPI *LsaRegisterPolicyChangeNotificationfunc)(POLICY_NOTIFICATION_INFORMATION_CLASS, HANDLE);
+static LsaRegisterPolicyChangeNotificationfunc pfnLsaRegisterPolicyChangeNotification = NULL;
+static LsaRegisterPolicyChangeNotificationfunc pfnLsaUnregisterPolicyChangeNotification = NULL;
 
-typedef BOOL (WINAPI *CryptEnumProvidersfunc)(DWORD, DWORD *, DWORD, DWORD *, LPTSTR, DWORD *);
-static CryptEnumProvidersfunc pfnCryptEnumProviders=NULL;
+typedef BOOL(WINAPI *CryptEnumProvidersfunc)(DWORD, DWORD *, DWORD, DWORD *, LPTSTR, DWORD *);
+static CryptEnumProvidersfunc pfnCryptEnumProviders = NULL;
 
-typedef BOOL (WINAPI *CheckTokenMembershipfunc)(HANDLE, PSID, PBOOL);
-static CheckTokenMembershipfunc pfnCheckTokenMembership=NULL;
-typedef BOOL (WINAPI *CreateRestrictedTokenfunc)(HANDLE,DWORD,DWORD,PSID_AND_ATTRIBUTES,
-	DWORD,PLUID_AND_ATTRIBUTES,DWORD,PSID_AND_ATTRIBUTES,PHANDLE);
-static CreateRestrictedTokenfunc pfnCreateRestrictedToken=NULL;
+typedef BOOL(WINAPI *CheckTokenMembershipfunc)(HANDLE, PSID, PBOOL);
+static CheckTokenMembershipfunc pfnCheckTokenMembership = NULL;
+typedef BOOL(WINAPI *CreateRestrictedTokenfunc)(HANDLE, DWORD, DWORD, PSID_AND_ATTRIBUTES,
+	DWORD, PLUID_AND_ATTRIBUTES, DWORD, PSID_AND_ATTRIBUTES, PHANDLE);
+static CreateRestrictedTokenfunc pfnCreateRestrictedToken = NULL;
 
-typedef BOOL (WINAPI *ConvertSidToStringSidfunc)(PSID, WCHAR **);
+typedef BOOL(WINAPI *ConvertSidToStringSidfunc)(PSID, WCHAR **);
 static ConvertSidToStringSidfunc pfnConvertSidToStringSid = NULL;
-typedef BOOL (WINAPI *ConvertStringSidToSidfunc)(LPCWSTR, PSID);
+typedef BOOL(WINAPI *ConvertStringSidToSidfunc)(LPCWSTR, PSID);
 static ConvertStringSidToSidfunc pfnConvertStringSidToSid = NULL;
-typedef BOOL (WINAPI *ConvertSecurityDescriptorToStringSecurityDescriptorfunc)
-    (PSECURITY_DESCRIPTOR,DWORD,SECURITY_INFORMATION, LPTSTR*,PULONG);
+typedef BOOL(WINAPI *ConvertSecurityDescriptorToStringSecurityDescriptorfunc)
+(PSECURITY_DESCRIPTOR, DWORD, SECURITY_INFORMATION, LPTSTR*, PULONG);
 static ConvertSecurityDescriptorToStringSecurityDescriptorfunc
-	pfnConvertSecurityDescriptorToStringSecurityDescriptor=NULL;
-typedef BOOL (WINAPI *ConvertStringSecurityDescriptorToSecurityDescriptorfunc)
-	(LPCTSTR,DWORD,PSECURITY_DESCRIPTOR*,PULONG);
+pfnConvertSecurityDescriptorToStringSecurityDescriptor = NULL;
+typedef BOOL(WINAPI *ConvertStringSecurityDescriptorToSecurityDescriptorfunc)
+(LPCTSTR, DWORD, PSECURITY_DESCRIPTOR*, PULONG);
 static ConvertStringSecurityDescriptorToSecurityDescriptorfunc
-	pfnConvertStringSecurityDescriptorToSecurityDescriptor = NULL;
-typedef BOOL (WINAPI *ImpersonateAnonymousTokenfunc)(HANDLE);
-static ImpersonateAnonymousTokenfunc pfnImpersonateAnonymousToken=NULL;
-typedef BOOL (WINAPI *IsTokenRestrictedfunc)(HANDLE);
+pfnConvertStringSecurityDescriptorToSecurityDescriptor = NULL;
+typedef BOOL(WINAPI *ImpersonateAnonymousTokenfunc)(HANDLE);
+static ImpersonateAnonymousTokenfunc pfnImpersonateAnonymousToken = NULL;
+typedef BOOL(WINAPI *IsTokenRestrictedfunc)(HANDLE);
 static IsTokenRestrictedfunc pfnIsTokenRestricted = NULL;
 
-typedef PSecurityFunctionTableW (SEC_ENTRY *InitSecurityInterfacefunc)(void);
-static InitSecurityInterfacefunc pfnInitSecurityInterface=NULL;
-extern PSecurityFunctionTableW psecurityfunctiontable=NULL;
+typedef PSecurityFunctionTableW(SEC_ENTRY *InitSecurityInterfacefunc)(void);
+static InitSecurityInterfacefunc pfnInitSecurityInterface = NULL;
+extern PSecurityFunctionTableW psecurityfunctiontable = NULL;
 
-typedef BOOL (WINAPI *TranslateNamefunc)(LPCTSTR, EXTENDED_NAME_FORMAT, EXTENDED_NAME_FORMAT, LPTSTR, PULONG);
-static TranslateNamefunc pfnTranslateName=NULL;
-typedef BOOL (WINAPI *CreateWellKnownSidfunc)(WELL_KNOWN_SID_TYPE, PSID, PSID, DWORD *);
-static CreateWellKnownSidfunc pfnCreateWellKnownSid=NULL;
-typedef BOOL (WINAPI *LogonUserExfunc)(LPWSTR,LPWSTR,LPWSTR,DWORD,DWORD,PHANDLE,PSID*,PVOID*,LPDWORD,PQUOTA_LIMITS);
+typedef BOOL(WINAPI *TranslateNamefunc)(LPCTSTR, EXTENDED_NAME_FORMAT, EXTENDED_NAME_FORMAT, LPTSTR, PULONG);
+static TranslateNamefunc pfnTranslateName = NULL;
+typedef BOOL(WINAPI *CreateWellKnownSidfunc)(WELL_KNOWN_SID_TYPE, PSID, PSID, DWORD *);
+static CreateWellKnownSidfunc pfnCreateWellKnownSid = NULL;
+typedef BOOL(WINAPI *LogonUserExfunc)(LPWSTR, LPWSTR, LPWSTR, DWORD, DWORD, PHANDLE, PSID*, PVOID*, LPDWORD, PQUOTA_LIMITS);
 static LogonUserExfunc pfnLogonUserEx = NULL;
-typedef BOOL (WINAPI *LogonUserExExfunc)(LPWSTR,LPWSTR,LPWSTR,DWORD,PTOKEN_GROUPS,DWORD,PHANDLE,PSID*,PVOID*,LPDWORD,PQUOTA_LIMITS);
+typedef BOOL(WINAPI *LogonUserExExfunc)(LPWSTR, LPWSTR, LPWSTR, DWORD, PTOKEN_GROUPS, DWORD, PHANDLE, PSID*, PVOID*, LPDWORD, PQUOTA_LIMITS);
 static LogonUserExExfunc pfnLogonUserExEx = NULL;
 
 
 // function pointers used in win32security_sspi.cpp and win32security_ds.cpp
-extern DsBindfunc pfnDsBind=NULL;
-extern DsUnBindfunc pfnDsUnBind=NULL;
-extern DsGetSpnfunc pfnDsGetSpn=NULL;
-extern DsWriteAccountSpnfunc pfnDsWriteAccountSpn=NULL;
-extern DsFreeSpnArrayfunc pfnDsFreeSpnArray=NULL;
-extern DsGetDcNamefunc pfnDsGetDcName=NULL;
-extern DsCrackNamesfunc pfnDsCrackNames=NULL;
-extern DsListInfoForServerfunc pfnDsListInfoForServer=NULL;
-extern DsListServersForDomainInSitefunc pfnDsListServersForDomainInSite=NULL;
-extern DsListServersInSitefunc pfnDsListServersInSite=NULL;
-extern DsListSitesfunc pfnDsListSites=NULL;
-extern DsListDomainsInSitefunc pfnDsListDomainsInSite=NULL;
-extern DsListRolesfunc pfnDsListRoles=NULL;
-extern DsFreeNameResultfunc pfnDsFreeNameResult=NULL;
+extern DsBindfunc pfnDsBind = NULL;
+extern DsUnBindfunc pfnDsUnBind = NULL;
+extern DsGetSpnfunc pfnDsGetSpn = NULL;
+extern DsWriteAccountSpnfunc pfnDsWriteAccountSpn = NULL;
+extern DsFreeSpnArrayfunc pfnDsFreeSpnArray = NULL;
+extern DsGetDcNamefunc pfnDsGetDcName = NULL;
+extern DsCrackNamesfunc pfnDsCrackNames = NULL;
+extern DsListInfoForServerfunc pfnDsListInfoForServer = NULL;
+extern DsListServersForDomainInSitefunc pfnDsListServersForDomainInSite = NULL;
+extern DsListServersInSitefunc pfnDsListServersInSite = NULL;
+extern DsListSitesfunc pfnDsListSites = NULL;
+extern DsListDomainsInSitefunc pfnDsListDomainsInSite = NULL;
+extern DsListRolesfunc pfnDsListRoles = NULL;
+extern DsFreeNameResultfunc pfnDsFreeNameResult = NULL;
 
-static HMODULE advapi32_dll=NULL;
-static HMODULE secur32_dll =NULL;
-static HMODULE security_dll=NULL;
-static HMODULE ntdll_dll   =NULL;
-static HMODULE ntdsapi_dll =NULL;
-static HMODULE netapi32_dll=NULL;
+static HMODULE advapi32_dll = NULL;
+static HMODULE secur32_dll = NULL;
+static HMODULE security_dll = NULL;
+static HMODULE ntdll_dll = NULL;
+static HMODULE ntdsapi_dll = NULL;
+static HMODULE netapi32_dll = NULL;
 
 HMODULE loadmodule(WCHAR *dllname)
 {
 	HMODULE hmodule = GetModuleHandle(dllname);
-    if (hmodule==NULL)
-        hmodule = LoadLibrary(dllname);
+	if (hmodule == NULL)
+		hmodule = LoadLibrary(dllname);
 	return hmodule;
 }
 
 FARPROC loadapifunc(char *funcname, HMODULE hmodule)
 {
-	if (hmodule==NULL)
+	if (hmodule == NULL)
 		return NULL;
 	return GetProcAddress(hmodule, funcname);
 }
@@ -723,16 +729,16 @@ PyObject *PyWinObject_FromSecHandle(PSecHandle h)
 #include "PyWinObjects.h"
 // @object PyLSA_HANDLE|Object representing an Lsa policy handle (LSA_HANDLE), created by <om win32security.LsaOpenPolicy>
 //   Identical to <o PyHANDLE>, but calls LsaClose on destruction
-class PyLSA_HANDLE: public PyHANDLE
+class PyLSA_HANDLE : public PyHANDLE
 {
 public:
 	PyLSA_HANDLE(HANDLE hInit) : PyHANDLE(hInit) {}
 	virtual BOOL Close(void) {
 		NTSTATUS err = m_handle ? LsaClose((LSA_HANDLE)m_handle) : STATUS_SUCCESS;
 		m_handle = 0;
-		if (err!= STATUS_SUCCESS)
+		if (err != STATUS_SUCCESS)
 			PyWin_SetAPIError("LsaClose", LsaNtStatusToWinError(err));
-		return err== STATUS_SUCCESS;
+		return err == STATUS_SUCCESS;
 	}
 	virtual const char *GetTypeName() {
 		return "PyLSA_HANDLE";
@@ -742,20 +748,20 @@ public:
 // @object PyLsaLogon_HANDLE|Lsa handle used to access authentication packages, returned by
 //   <om win32security.LsaRegisterLogonProcess> or <om win32security.LsaConnectUntrusted>. Base low-level object is a plain HANDLE.
 //   Inherits all properties and methods of <o PyHANDLE>, but Close uses LsaDeregisterLogonProcess
-class PyLsaLogon_HANDLE: public PyHANDLE
+class PyLsaLogon_HANDLE : public PyHANDLE
 {
 public:
 	PyLsaLogon_HANDLE(HANDLE hInit) : PyHANDLE(hInit) {}
 	virtual BOOL Close(void) {
-		if (pfnLsaDeregisterLogonProcess==NULL){
-			PyErr_SetString(PyExc_SystemError,"PyLsaLogon_HANDLE cannot be closed - LsaDeregisterLogonProcess is not available ??????");
+		if (pfnLsaDeregisterLogonProcess == NULL) {
+			PyErr_SetString(PyExc_SystemError, "PyLsaLogon_HANDLE cannot be closed - LsaDeregisterLogonProcess is not available ??????");
 			return FALSE;
-			}
+		}
 		NTSTATUS err = m_handle ? (*pfnLsaDeregisterLogonProcess)(m_handle) : STATUS_SUCCESS;
 		m_handle = 0;
-		if (err!= STATUS_SUCCESS)
+		if (err != STATUS_SUCCESS)
 			PyWin_SetAPIError("LsaDeregisterLogonProcess", LsaNtStatusToWinError(err));
-		return err== STATUS_SUCCESS;
+		return err == STATUS_SUCCESS;
 	}
 	virtual const char *GetTypeName() {
 		return "PyLsaLogon_HANDLE";
@@ -770,46 +776,46 @@ PyObject *PyWinObject_FromLSA_HANDLE(LSA_HANDLE h)
 
 BOOL PyWinObject_CloseLSA_HANDLE(PyObject *obHandle)
 {
-	if (PyHANDLE_Check(obHandle)){
+	if (PyHANDLE_Check(obHandle)) {
 		// If it's a PyHANDLE, make sure it's the right type, since any other handle's Close method could be called successfully
-		if (strcmp(((PyHANDLE *)obHandle)->GetTypeName(),"PyLSA_HANDLE")!=0){
-			PyErr_SetString(PyExc_TypeError,"PyHANDLE passed to LsaClose must be a PyLSA_HANDLE");
+		if (strcmp(((PyHANDLE *)obHandle)->GetTypeName(), "PyLSA_HANDLE") != 0) {
+			PyErr_SetString(PyExc_TypeError, "PyHANDLE passed to LsaClose must be a PyLSA_HANDLE");
 			return FALSE;
-			}
-		return ((PyHANDLE *)obHandle)->Close();
 		}
+		return ((PyHANDLE *)obHandle)->Close();
+	}
 
 	HANDLE lsahandle;
 	NTSTATUS err;
 	if (!PyWinObject_AsHANDLE(obHandle, &lsahandle))
 		return FALSE;
-	err=LsaClose(lsahandle);
-	if (err==STATUS_SUCCESS)
+	err = LsaClose(lsahandle);
+	if (err == STATUS_SUCCESS)
 		return TRUE;
-	PyWin_SetAPIError("LsaClose",LsaNtStatusToWinError(err));
+	PyWin_SetAPIError("LsaClose", LsaNtStatusToWinError(err));
 	return FALSE;
 }
 
 BOOL PyWinObject_CloseLsaLogon_HANDLE(PyObject *obHandle)
 {
-	if (PyHANDLE_Check(obHandle)){
+	if (PyHANDLE_Check(obHandle)) {
 		// If it's a PyHANDLE, make sure it's the right type, since any other handle's Close method could be called successfully
-		if (strcmp(((PyHANDLE *)obHandle)->GetTypeName(),"PyLsaLogon_HANDLE")!=0){
-			PyErr_SetString(PyExc_TypeError,"PyHANDLE passed to LsaDeregisterLogonProcess must be a PyLsaLogon_HANDLE");
+		if (strcmp(((PyHANDLE *)obHandle)->GetTypeName(), "PyLsaLogon_HANDLE") != 0) {
+			PyErr_SetString(PyExc_TypeError, "PyHANDLE passed to LsaDeregisterLogonProcess must be a PyLsaLogon_HANDLE");
 			return FALSE;
-			}
-		return ((PyHANDLE *)obHandle)->Close();
 		}
+		return ((PyHANDLE *)obHandle)->Close();
+	}
 
 	HANDLE lsahandle;
 	NTSTATUS err;
 	if (!PyWinObject_AsHANDLE(obHandle, &lsahandle))
 		return FALSE;
 	// function pointer checked in PyLsaDeregisterLogonProcess
-	err=(*pfnLsaDeregisterLogonProcess)(lsahandle);
-	if (err==STATUS_SUCCESS)
+	err = (*pfnLsaDeregisterLogonProcess)(lsahandle);
+	if (err == STATUS_SUCCESS)
 		return TRUE;
-	PyWin_SetAPIError("LsaDeregisterLogonProcess",LsaNtStatusToWinError(err));
+	PyWin_SetAPIError("LsaDeregisterLogonProcess", LsaNtStatusToWinError(err));
 	return FALSE;
 }
 
@@ -824,13 +830,13 @@ PyObject *PyWinObject_FromTOKEN_PRIVILEGES(TOKEN_PRIVILEGES *tp)
 	PyObject *priv = NULL, *obluid = NULL;
 	PLUID pluid;
 	PyObject *privs = PyTuple_New(tp->PrivilegeCount);
-	for (privInd = 0; privInd < tp->PrivilegeCount; privInd++){
+	for (privInd = 0; privInd < tp->PrivilegeCount; privInd++) {
 		pluid = &tp->Privileges[privInd].Luid;
-		obluid = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *) pluid));
-		priv = Py_BuildValue("(Ol)",obluid,tp->Privileges[privInd].Attributes );
+		obluid = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)pluid));
+		priv = Py_BuildValue("(Ol)", obluid, tp->Privileges[privInd].Attributes);
 		PyTuple_SET_ITEM(privs, privInd, priv);
 		Py_DECREF(obluid);
-		}
+	}
 	return privs;
 }
 
@@ -841,19 +847,19 @@ PyObject *PyWinObject_FromTOKEN_GROUPS(TOKEN_GROUPS *tg)
 	PyObject *group = NULL;
 	PyObject *groupSID = NULL;
 	PyObject *groups = PyTuple_New(tg->GroupCount);
-	if (groups==NULL)
+	if (groups == NULL)
 		return NULL;
-	for (groupInd = 0; groupInd < tg->GroupCount; groupInd++){
+	for (groupInd = 0; groupInd < tg->GroupCount; groupInd++) {
 		groupSID = PyWinObject_FromSID(tg->Groups[groupInd].Sid);
-		group = Py_BuildValue("(Ol)", groupSID, tg->Groups[groupInd].Attributes );
+		group = Py_BuildValue("(Ol)", groupSID, tg->Groups[groupInd].Attributes);
 		Py_DECREF(groupSID);
-		if (group==NULL){
+		if (group == NULL) {
 			Py_DECREF(groups);
-			groups=NULL;
+			groups = NULL;
 			break;
-			}
-		PyTuple_SET_ITEM(groups, groupInd, group);
 		}
+		PyTuple_SET_ITEM(groups, groupInd, group);
+	}
 	return groups;
 }
 
@@ -861,22 +867,22 @@ PyObject *PyWinObject_FromTOKEN_GROUPS(TOKEN_GROUPS *tg)
 // @comm Attributes is an integer containing flags that depend on intended usage
 BOOL PyWinObject_AsSID_AND_ATTRIBUTES(PyObject *obsid_attr, PSID_AND_ATTRIBUTES sid_attr)
 {
-	static char *fmt_msg="SID_AND_ATTRIBUTES must be a tuple of (PySID,int)";
+	static char *fmt_msg = "SID_AND_ATTRIBUTES must be a tuple of (PySID,int)";
 	PyObject *obsid, *obsid_attr_tuple;
-	BOOL bsuccess=TRUE;
-	obsid_attr_tuple=PySequence_Tuple(obsid_attr);
-	if (obsid_attr_tuple==NULL){
+	BOOL bsuccess = TRUE;
+	obsid_attr_tuple = PySequence_Tuple(obsid_attr);
+	if (obsid_attr_tuple == NULL) {
 		PyErr_Clear();
-		PyErr_SetString(PyExc_TypeError,fmt_msg);
-		bsuccess=FALSE;
-		}
-	else if (!PyArg_ParseTuple(obsid_attr_tuple,"Ol",&obsid,&sid_attr->Attributes)){
+		PyErr_SetString(PyExc_TypeError, fmt_msg);
+		bsuccess = FALSE;
+	}
+	else if (!PyArg_ParseTuple(obsid_attr_tuple, "Ol", &obsid, &sid_attr->Attributes)) {
 		PyErr_Clear();
-		PyErr_SetString(PyExc_TypeError,fmt_msg);
-		bsuccess=FALSE;
-		}
+		PyErr_SetString(PyExc_TypeError, fmt_msg);
+		bsuccess = FALSE;
+	}
 	else
-		bsuccess=PyWinObject_AsSID(obsid,&sid_attr->Sid);
+		bsuccess = PyWinObject_AsSID(obsid, &sid_attr->Sid);
 	Py_XDECREF(obsid_attr_tuple);
 	return bsuccess;
 }
@@ -884,36 +890,36 @@ BOOL PyWinObject_AsSID_AND_ATTRIBUTES(PyObject *obsid_attr, PSID_AND_ATTRIBUTES 
 BOOL PyWinObject_AsSID_AND_ATTRIBUTESArray(PyObject *obsids, PSID_AND_ATTRIBUTES *psid_attr_array, DWORD *sid_cnt)
 {
 	PyObject *obsid_attr, *sids_tuple;
-	*psid_attr_array=NULL;
-	*sid_cnt=0;
+	*psid_attr_array = NULL;
+	*sid_cnt = 0;
 
-	if (obsids==Py_None)
+	if (obsids == Py_None)
 		return TRUE;
-	sids_tuple=PyWinSequence_Tuple(obsids, sid_cnt);
+	sids_tuple = PyWinSequence_Tuple(obsids, sid_cnt);
 	if (sids_tuple == NULL)
 		return FALSE;
 
-	BOOL bsuccess=TRUE;
-	*psid_attr_array=(SID_AND_ATTRIBUTES *)malloc((*sid_cnt)*sizeof(SID_AND_ATTRIBUTES));
-	if (*psid_attr_array==NULL){
-		PyErr_Format(PyExc_MemoryError,"Unable to allocate array of %d SID_AND_ATTRIBUTES structures",sid_cnt);
+	BOOL bsuccess = TRUE;
+	*psid_attr_array = (SID_AND_ATTRIBUTES *)malloc((*sid_cnt)*sizeof(SID_AND_ATTRIBUTES));
+	if (*psid_attr_array == NULL) {
+		PyErr_Format(PyExc_MemoryError, "Unable to allocate array of %d SID_AND_ATTRIBUTES structures", sid_cnt);
 		bsuccess = FALSE;
-		}
-	else{
-		for (DWORD sid_ind=0;sid_ind<*sid_cnt;sid_ind++){
-			obsid_attr=PyTuple_GET_ITEM(sids_tuple, sid_ind);
-			bsuccess = PyWinObject_AsSID_AND_ATTRIBUTES(obsid_attr,&(*psid_attr_array)[sid_ind]);
+	}
+	else {
+		for (DWORD sid_ind = 0; sid_ind < *sid_cnt; sid_ind++) {
+			obsid_attr = PyTuple_GET_ITEM(sids_tuple, sid_ind);
+			bsuccess = PyWinObject_AsSID_AND_ATTRIBUTES(obsid_attr, &(*psid_attr_array)[sid_ind]);
 			if (!bsuccess)
 				break;
-			}
 		}
+	}
 
-	if (!bsuccess){
-		if (*psid_attr_array){
+	if (!bsuccess) {
+		if (*psid_attr_array) {
 			free(*psid_attr_array);
-			*psid_attr_array=NULL;
-			}
+			*psid_attr_array = NULL;
 		}
+	}
 	Py_DECREF(sids_tuple);
 	return bsuccess;
 }
@@ -922,22 +928,22 @@ BOOL PyWinObject_AsSID_AND_ATTRIBUTESArray(PyObject *obsids, PSID_AND_ATTRIBUTES
 // @comm LUID is a large integer, and attributes is an integer containing flags
 BOOL PyWinObject_AsLUID_AND_ATTRIBUTES(PyObject *obluid_attr, PLUID_AND_ATTRIBUTES luid_attr)
 {
-	static char *fmt_msg="LUID_AND_ATTRIBUTES must be a sequence of (LARGE_INTEGER,int)";
+	static char *fmt_msg = "LUID_AND_ATTRIBUTES must be a sequence of (LARGE_INTEGER,int)";
 	PyObject *obluid, *obluid_attr_tuple;
-	BOOL bsuccess=TRUE;
-	obluid_attr_tuple=PySequence_Tuple(obluid_attr);
-	if (obluid_attr_tuple==NULL){
+	BOOL bsuccess = TRUE;
+	obluid_attr_tuple = PySequence_Tuple(obluid_attr);
+	if (obluid_attr_tuple == NULL) {
 		PyErr_Clear();
-		PyErr_SetString(PyExc_TypeError,fmt_msg);
-		bsuccess=FALSE;
-		}
-	else if (!PyArg_ParseTuple(obluid_attr_tuple,"Ol",&obluid,&luid_attr->Attributes)){
+		PyErr_SetString(PyExc_TypeError, fmt_msg);
+		bsuccess = FALSE;
+	}
+	else if (!PyArg_ParseTuple(obluid_attr_tuple, "Ol", &obluid, &luid_attr->Attributes)) {
 		PyErr_Clear();
-		PyErr_SetString(PyExc_TypeError,fmt_msg);
-		bsuccess=FALSE;
-		}
+		PyErr_SetString(PyExc_TypeError, fmt_msg);
+		bsuccess = FALSE;
+	}
 	else
-		bsuccess=PyWinObject_AsLARGE_INTEGER(obluid, (LARGE_INTEGER *)&luid_attr->Luid);
+		bsuccess = PyWinObject_AsLARGE_INTEGER(obluid, (LARGE_INTEGER *)&luid_attr->Luid);
 	Py_XDECREF(obluid_attr_tuple);
 	return bsuccess;
 }
@@ -945,36 +951,36 @@ BOOL PyWinObject_AsLUID_AND_ATTRIBUTES(PyObject *obluid_attr, PLUID_AND_ATTRIBUT
 BOOL PyWinObject_AsLUID_AND_ATTRIBUTESArray(PyObject *obluids, PLUID_AND_ATTRIBUTES *pluid_attr_array, DWORD *luid_cnt)
 {
 	PyObject *obluid_attr, *luid_attr_tuple;
-	*pluid_attr_array=NULL;
-	*luid_cnt=0;
+	*pluid_attr_array = NULL;
+	*luid_cnt = 0;
 
-	if (obluids==Py_None)
+	if (obluids == Py_None)
 		return TRUE;
-	luid_attr_tuple=PyWinSequence_Tuple(obluids, luid_cnt);
+	luid_attr_tuple = PyWinSequence_Tuple(obluids, luid_cnt);
 	if (luid_attr_tuple == NULL)
 		return FALSE;
 
-	BOOL bsuccess=TRUE;
-	*pluid_attr_array=(LUID_AND_ATTRIBUTES *)malloc((*luid_cnt)*sizeof(LUID_AND_ATTRIBUTES));
-	if (*pluid_attr_array==NULL){
-		PyErr_Format(PyExc_MemoryError,"Unable to allocate array of %d LUID_AND_ATTRIBUTES structures",luid_cnt);
+	BOOL bsuccess = TRUE;
+	*pluid_attr_array = (LUID_AND_ATTRIBUTES *)malloc((*luid_cnt)*sizeof(LUID_AND_ATTRIBUTES));
+	if (*pluid_attr_array == NULL) {
+		PyErr_Format(PyExc_MemoryError, "Unable to allocate array of %d LUID_AND_ATTRIBUTES structures", luid_cnt);
 		bsuccess = FALSE;
-		}
-	else{
-		for (DWORD luid_ind=0;luid_ind<*luid_cnt;luid_ind++){
-			obluid_attr=PyTuple_GET_ITEM(luid_attr_tuple,luid_ind);
-			bsuccess=PyWinObject_AsLUID_AND_ATTRIBUTES(obluid_attr,&(*pluid_attr_array)[luid_ind]);
+	}
+	else {
+		for (DWORD luid_ind = 0; luid_ind < *luid_cnt; luid_ind++) {
+			obluid_attr = PyTuple_GET_ITEM(luid_attr_tuple, luid_ind);
+			bsuccess = PyWinObject_AsLUID_AND_ATTRIBUTES(obluid_attr, &(*pluid_attr_array)[luid_ind]);
 			if (!bsuccess)
 				break;
-			}
 		}
+	}
 
-	if (!bsuccess){
-		if (*pluid_attr_array){
+	if (!bsuccess) {
+		if (*pluid_attr_array) {
 			free(*pluid_attr_array);
-			*pluid_attr_array=NULL;
-			}
+			*pluid_attr_array = NULL;
 		}
+	}
 	Py_DECREF(luid_attr_tuple);
 	return bsuccess;
 }
@@ -982,14 +988,14 @@ BOOL PyWinObject_AsLUID_AND_ATTRIBUTESArray(PyObject *obluids, PLUID_AND_ATTRIBU
 BOOL PyWinObject_AsLSA_STRING(PyObject *obname, PLSA_STRING plsas)
 {
 	Py_ssize_t len;
-	if (PyString_AsStringAndSize(obname, &plsas->Buffer, &len)==-1)
+	if (PyString_AsStringAndSize(obname, &plsas->Buffer, &len) == -1)
 		return FALSE;
-	if (len>USHRT_MAX){
-		PyErr_Format(PyExc_ValueError,"String can be at most %d characters", USHRT_MAX);
+	if (len > USHRT_MAX) {
+		PyErr_Format(PyExc_ValueError, "String can be at most %d characters", USHRT_MAX);
 		return FALSE;
-		}
-	plsas->Length=(USHORT)len;
-	plsas->MaximumLength=plsas->Length;
+	}
+	plsas->Length = (USHORT)len;
+	plsas->MaximumLength = plsas->Length;
 	return TRUE;
 }
 
@@ -1000,23 +1006,23 @@ BOOL PyWinObject_AsLSA_UNICODE_STRING(PyObject *obstr, LSA_UNICODE_STRING *plsau
 	if (!PyWinObject_AsWCHAR(obstr, &plsaus->Buffer, bNoneOk, &len))
 		return FALSE;
 	// Length is in bytes, not characters, and does not include null terminator
-	static USHORT max_len = USHRT_MAX/sizeof(WCHAR) - 1;
-	if (len > max_len){
-		PyErr_Format(PyExc_ValueError,"String can be at most %d characters", max_len);
+	static USHORT max_len = USHRT_MAX / sizeof(WCHAR) - 1;
+	if (len > max_len) {
+		PyErr_Format(PyExc_ValueError, "String can be at most %d characters", max_len);
 		PyWinObject_FreeWCHAR(plsaus->Buffer);
-		plsaus->Buffer=NULL;
+		plsaus->Buffer = NULL;
 		return FALSE;
-		}
-	if (plsaus->Buffer){
+	}
+	if (plsaus->Buffer) {
 		plsaus->Length = (USHORT)len * sizeof(WCHAR);
-		plsaus->MaximumLength=plsaus->Length+sizeof(WCHAR);
-		}
+		plsaus->MaximumLength = plsaus->Length + sizeof(WCHAR);
+	}
 	return TRUE;
 }
 
 PyObject* PyWinObject_FromLSA_UNICODE_STRING(LSA_UNICODE_STRING lsaus)
 {
-	return PyWinObject_FromWCHAR(lsaus.Buffer, lsaus.Length/sizeof(WCHAR));
+	return PyWinObject_FromWCHAR(lsaus.Buffer, lsaus.Length / sizeof(WCHAR));
 }
 
 BOOL PyWinObject_AsTOKEN_GROUPS(PyObject *groups, TOKEN_GROUPS **ptg)
@@ -1026,49 +1032,49 @@ BOOL PyWinObject_AsTOKEN_GROUPS(PyObject *groups, TOKEN_GROUPS **ptg)
 	DWORD groupind, groupcnt;
 	static char *errMsg = "TOKEN_GROUPS must be a sequence of ((PySID,int),...)";
 
-	PyObject *groups_tuple=PyWinSequence_Tuple(groups, &groupcnt);
-	if (groups_tuple==NULL)
+	PyObject *groups_tuple = PyWinSequence_Tuple(groups, &groupcnt);
+	if (groups_tuple == NULL)
 		return FALSE;
 
 	*ptg = (TOKEN_GROUPS *)malloc(sizeof(DWORD) + (sizeof(SID_AND_ATTRIBUTES) * groupcnt));
-	if (*ptg==NULL){
+	if (*ptg == NULL) {
 		PyErr_Format(PyExc_MemoryError, "Unable to allocate TOKEN_GROUPS (%d Groups)", groupcnt);
 		bsuccess = FALSE;
-		}
-	else{
+	}
+	else {
 		(*ptg)->GroupCount = groupcnt;
-		for (groupind=0; groupind<groupcnt; groupind++){
+		for (groupind = 0; groupind < groupcnt; groupind++) {
 			group = PyTuple_GET_ITEM(groups_tuple, groupind);
-			bsuccess = PyWinObject_AsSID_AND_ATTRIBUTES(group,&(*ptg)->Groups[groupind]);
+			bsuccess = PyWinObject_AsSID_AND_ATTRIBUTES(group, &(*ptg)->Groups[groupind]);
 			if (!bsuccess)
 				break;
-			}
 		}
-	if (!bsuccess){
-		if (*ptg){
+	}
+	if (!bsuccess) {
+		if (*ptg) {
 			free(*ptg);
-			*ptg=NULL;
-			}
+			*ptg = NULL;
 		}
+	}
 	Py_DECREF(groups_tuple);
 	return bsuccess;
 }
 
 void PyWinObject_FreeTOKEN_GROUPS(TOKEN_GROUPS *ptg)
 {
-	if (ptg!=NULL)
+	if (ptg != NULL)
 		free(ptg);
 }
 
 BOOL PyWinObject_AsTOKEN_PRIVILEGES(PyObject *ob, TOKEN_PRIVILEGES **ppRet, BOOL bNoneOK /*= TRUE*/)
 {
-	*ppRet=NULL;
-	if (ob==Py_None){
+	*ppRet = NULL;
+	if (ob == Py_None) {
 		if (bNoneOK)
 			return TRUE;
 		PyErr_SetString(PyExc_ValueError, "TOKEN_PRIVILEGES cannot be None");
 		return FALSE;
-		}
+	}
 
 	BOOL ok = TRUE;
 	PyObject *subObj = NULL;
@@ -1079,25 +1085,25 @@ BOOL PyWinObject_AsTOKEN_PRIVILEGES(PyObject *ob, TOKEN_PRIVILEGES **ppRet, BOOL
 
 	// space for the array and the priv. count.
 	TOKEN_PRIVILEGES *pRet = (TOKEN_PRIVILEGES *)malloc((sizeof(LUID_AND_ATTRIBUTES) * priv_cnt) + sizeof(DWORD));
-	if (pRet==NULL){
+	if (pRet == NULL) {
 		PyErr_Format(PyExc_MemoryError, "Unable to allocate TOKEN_PRIVILEGES with %d LUID_AND_ATTRIBUTES", priv_cnt);
-		ok=FALSE;
-		}
-	else{
+		ok = FALSE;
+	}
+	else {
 		pRet->PrivilegeCount = priv_cnt;
-		for (DWORD i =0;i<priv_cnt;i++) {
+		for (DWORD i = 0; i < priv_cnt; i++) {
 			subObj = PyTuple_GET_ITEM(priv_tuple, i);
-			ok=PyWinObject_AsLUID_AND_ATTRIBUTES(subObj,&pRet->Privileges[i]);
+			ok = PyWinObject_AsLUID_AND_ATTRIBUTES(subObj, &pRet->Privileges[i]);
 			if (!ok)
 				break;
-			}
 		}
+	}
 	if (ok)
 		*ppRet = pRet;
-	else{
+	else {
 		if (pRet)
 			free(pRet);
-		}
+	}
 	Py_DECREF(priv_tuple);
 	return ok;
 }
@@ -1109,18 +1115,18 @@ void PyWinObject_FreeTOKEN_PRIVILEGES(TOKEN_PRIVILEGES *pPriv)
 
 // work around issues with SWIG and kwargs.
 #define PYDSGETDCNAME (PyCFunction)PyDsGetDcName
-extern PyObject *PyDsCrackNames(PyObject *,PyObject *);
-extern PyObject *PyDsListInfoForServer(PyObject *,PyObject *);
-extern PyObject *PyDsListServersInSite(PyObject *,PyObject *);
-extern PyObject *PyDsListServersForDomainInSite(PyObject *,PyObject *);
-extern PyObject *PyDsListSites(PyObject *,PyObject *);
-extern PyObject *PyDsListRoles(PyObject *,PyObject *);
-extern PyObject *PyDsListDomainsInSite(PyObject *,PyObject *);
+extern PyObject *PyDsCrackNames(PyObject *, PyObject *);
+extern PyObject *PyDsListInfoForServer(PyObject *, PyObject *);
+extern PyObject *PyDsListServersInSite(PyObject *, PyObject *);
+extern PyObject *PyDsListServersForDomainInSite(PyObject *, PyObject *);
+extern PyObject *PyDsListSites(PyObject *, PyObject *);
+extern PyObject *PyDsListRoles(PyObject *, PyObject *);
+extern PyObject *PyDsListDomainsInSite(PyObject *, PyObject *);
 
 // @pyswig |ImpersonateAnonymousToken|Cause a thread to act in the security context of an anonymous token
 static PyObject * PyImpersonateAnonymousToken(PyObject *self, PyObject *args)
 {
-	HANDLE hthread;			// @pyparm <o PyHANDLE>|ThreadHandle||Handle to thread that will
+	HANDLE hthread;			// @pyparm <o PyHANDLE>|ThreadHandle||Handle to thread that will 
 	PyObject *obhthread;
 	CHECK_PFN(ImpersonateAnonymousToken);
 	if (!PyArg_ParseTuple(args, "O:ImpersonateAnonymousToken", &obhthread))
@@ -1136,14 +1142,14 @@ static PyObject * PyImpersonateAnonymousToken(PyObject *self, PyObject *args)
 // @pyswig bool|IsTokenRestricted|Checks if a token contains restricted sids
 static PyObject * PyIsTokenRestricted(PyObject *self, PyObject *args)
 {
-	HANDLE th;			// @pyparm <o PyHANDLE>|TokenHandle||Handle to an access token
+	HANDLE th;			// @pyparm <o PyHANDLE>|TokenHandle||Handle to an access token 
 	PyObject *obth;
 	CHECK_PFN(IsTokenRestricted);
 	if (!PyArg_ParseTuple(args, "O:IsTokenRestricted", &obth))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obth, &th))
 		return NULL;
-	BOOL ret=(*pfnIsTokenRestricted)(th);
+	BOOL ret = (*pfnIsTokenRestricted)(th);
 	return PyBool_FromLong(ret);
 }
 
@@ -1154,13 +1160,13 @@ PyObject *PyLogonUser(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 	DWORD logontype, logonprovider;
 	PyObject *obusername, *obdomain, *obpassword;
-	WCHAR *username=NULL, *domain=NULL, *password=NULL;
+	WCHAR *username = NULL, *domain = NULL, *password = NULL;
 	HANDLE htoken;
-	PyObject *ret=NULL;
+	PyObject *ret = NULL;
 
-	static char *keywords[]={"Username","Domain","Password","LogonType","LogonProvider", NULL};
+	static char *keywords[] = { "Username","Domain","Password","LogonType","LogonProvider", NULL };
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOOkk:LogonUser", keywords,
-		&obusername,	// @pyparm <o PyUnicode>|Username||The name of the user account to log on to.
+		&obusername,	// @pyparm <o PyUnicode>|Username||The name of the user account to log on to. 
 						// This may also be a marshalled credential (see <om win32cred.CredMarshalCredential>).
 		&obdomain,		// @pyparm <o PyUnicode>|Domain||The name of the domain, or None for the current domain
 		&obpassword,	// @pyparm <o PyUnicode>|Password||User's password.  Use a blank string if Username contains a marshalled credential.
@@ -1169,13 +1175,13 @@ PyObject *PyLogonUser(PyObject *self, PyObject *args, PyObject *kwargs)
 		return NULL;
 
 	if (PyWinObject_AsWCHAR(obusername, &username, FALSE)
-		&&PyWinObject_AsWCHAR(obdomain, &domain, TRUE)
-		&&PyWinObject_AsWCHAR(obpassword, &password, FALSE)){
+		&& PyWinObject_AsWCHAR(obdomain, &domain, TRUE)
+		&& PyWinObject_AsWCHAR(obpassword, &password, FALSE)) {
 		if (!LogonUser(username, domain, password, logontype, logonprovider, &htoken))
 			PyWin_SetAPIError("LogonUser");
 		else
-			ret=PyWinObject_FromHANDLE(htoken);
-		}
+			ret = PyWinObject_FromHANDLE(htoken);
+	}
 
 	if (password)
 		SecureZeroMemory(password, wcslen(password)*sizeof(WCHAR));
@@ -1188,12 +1194,12 @@ PyObject *PyLogonUser(PyObject *self, PyObject *args, PyObject *kwargs)
 PyObject *PyWinObject_FromQUOTA_LIMITS(PQUOTA_LIMITS pql)
 {
 	return Py_BuildValue("{s:N, s:N, s:N, s:N, s:N, s:N}",
-		"PagedPoolLimit",			PyLong_FromUnsignedLongLong(pql->PagedPoolLimit),
-		"NonPagedPoolLimit",		PyLong_FromUnsignedLongLong(pql->NonPagedPoolLimit),
-		"MinimumWorkingSetSize",	PyLong_FromUnsignedLongLong(pql->MinimumWorkingSetSize),
-		"MaximumWorkingSetSize",	PyLong_FromUnsignedLongLong(pql->MaximumWorkingSetSize),
-		"PagefileLimit",			PyLong_FromUnsignedLongLong(pql->PagefileLimit),
-		"TimeLimit",				PyLong_FromUnsignedLongLong(pql->TimeLimit.QuadPart));
+		"PagedPoolLimit", PyLong_FromUnsignedLongLong(pql->PagedPoolLimit),
+		"NonPagedPoolLimit", PyLong_FromUnsignedLongLong(pql->NonPagedPoolLimit),
+		"MinimumWorkingSetSize", PyLong_FromUnsignedLongLong(pql->MinimumWorkingSetSize),
+		"MaximumWorkingSetSize", PyLong_FromUnsignedLongLong(pql->MaximumWorkingSetSize),
+		"PagefileLimit", PyLong_FromUnsignedLongLong(pql->PagefileLimit),
+		"TimeLimit", PyLong_FromUnsignedLongLong(pql->TimeLimit.QuadPart));
 }
 
 // @pyswig (<o PyHANDLE>, <o PySID>, str, dict)|LogonUserEx|Log a user onto the local machine,
@@ -1206,14 +1212,14 @@ PyObject *PyLogonUserEx(PyObject *self, PyObject *args, PyObject *kwargs)
 	CHECK_PFN(LogonUserEx);
 	DWORD logontype, logonprovider, profilelen;
 	PyObject *obusername, *obdomain, *obpassword;
-	WCHAR *username=NULL, *domain=NULL, *password=NULL;
+	WCHAR *username = NULL, *domain = NULL, *password = NULL;
 	HANDLE htoken;
-	void *profile=NULL;
-	PSID psid=NULL;
+	void *profile = NULL;
+	PSID psid = NULL;
 	QUOTA_LIMITS quota_limits;
-	PyObject *ret=NULL;
+	PyObject *ret = NULL;
 
-	static char *keywords[]={"Username","Domain","Password","LogonType","LogonProvider", NULL};
+	static char *keywords[] = { "Username","Domain","Password","LogonType","LogonProvider", NULL };
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOOkk:LogonUserEx", keywords,
 		&obusername,	// @pyparm <o PyUnicode>|Username||User account, may be specified as a UPN (user@domain.com).
 						// This may also be a marshalled credential (see <om win32cred.CredMarshalCredential>).
@@ -1224,33 +1230,33 @@ PyObject *PyLogonUserEx(PyObject *self, PyObject *args, PyObject *kwargs)
 		return NULL;
 
 	if (PyWinObject_AsWCHAR(obusername, &username, FALSE)
-		&&PyWinObject_AsWCHAR(obdomain, &domain, TRUE)
-		&&PyWinObject_AsWCHAR(obpassword, &password, FALSE)){
+		&& PyWinObject_AsWCHAR(obdomain, &domain, TRUE)
+		&& PyWinObject_AsWCHAR(obpassword, &password, FALSE)) {
 		if (!(*pfnLogonUserEx)(username, domain, password, logontype, logonprovider, &htoken,
 			&psid, &profile, &profilelen, &quota_limits))
 			PyWin_SetAPIError("LogonUserEx");
 		else
-			ret=Py_BuildValue("NNNN",
+			ret = Py_BuildValue("NNNN",
 				PyWinObject_FromHANDLE(htoken),
 				PyWinObject_FromSID(psid),
 				PyString_FromStringAndSize((char *)profile, profilelen),
 				PyWinObject_FromQUOTA_LIMITS(&quota_limits));
-		}
+	}
 
 	// MSDN doesn't specify how the output buffers should be freed.  The docs for LsaLogonUser
 	//	reference LsaFreeReturnBuffer, but it returns an error when trying to free the sid.
 	//	LsaFreeMemory succeeds for both buffers, so use it and warn if it returns an error
 	NTSTATUS ntstatus;
-	if (profile){
-		ntstatus=LsaFreeMemory(profile);
+	if (profile) {
+		ntstatus = LsaFreeMemory(profile);
 		if (ntstatus != ERROR_SUCCESS)
 			PyErr_Warn(PyExc_RuntimeWarning, "Profile buffer could not be freed using LsaFreeMemory");
-		}
-	if (psid){
-		ntstatus=LsaFreeMemory(psid);
+	}
+	if (psid) {
+		ntstatus = LsaFreeMemory(psid);
 		if (ntstatus != ERROR_SUCCESS)
 			PyErr_Warn(PyExc_RuntimeWarning, "SID could not be freed using LsaFreeMemory");
-		}
+	}
 	if (password)
 		SecureZeroMemory(password, wcslen(password)*sizeof(WCHAR));
 	PyWinObject_FreeWCHAR(username);
@@ -1258,8 +1264,8 @@ PyObject *PyLogonUserEx(PyObject *self, PyObject *args, PyObject *kwargs)
 	PyWinObject_FreeWCHAR(password);
 	return ret;
 }
-PyCFunction pfn_PyLogonUser=(PyCFunction)PyLogonUser;
-PyCFunction pfn_PyLogonUserEx=(PyCFunction)PyLogonUserEx;
+PyCFunction pfn_PyLogonUser = (PyCFunction)PyLogonUser;
+PyCFunction pfn_PyLogonUserEx = (PyCFunction)PyLogonUserEx;
 
 PyObject *LookupAccountName(PyObject *self, PyObject *args)
 {
@@ -1268,7 +1274,7 @@ PyObject *LookupAccountName(PyObject *self, PyObject *args)
 	PyObject *obDomain = NULL;
 	TCHAR *szAcctName = NULL;
 	TCHAR *szSystemName = NULL;
-	TCHAR refDomain[MAX_PATH+1];
+	TCHAR refDomain[MAX_PATH + 1];
 	DWORD refDomainSize = sizeof(refDomain);
 	PSID pSid = NULL;
 	DWORD sidSize = 0;
@@ -1277,8 +1283,8 @@ PyObject *LookupAccountName(PyObject *self, PyObject *args)
 	PyObject *result = NULL;
 
 	if (!PyArg_ParseTuple(args, "OO:LookupAccountName",
-	                 &obSystemName, // @pyparm string|systemName||The system name, or None
-					 &obAcctName))  // @pyparm string|accountName||The account name
+		&obSystemName, // @pyparm string|systemName||The system name, or None
+		&obAcctName))  // @pyparm string|accountName||The account name
 		goto done;
 
 	if (!PyWinObject_AsTCHAR(obSystemName, &szSystemName, TRUE))
@@ -1288,14 +1294,14 @@ PyObject *LookupAccountName(PyObject *self, PyObject *args)
 		goto done;
 
 	// Get the SID size.
-        Py_BEGIN_ALLOW_THREADS
-	LookupAccountName(szSystemName, szAcctName, pSid, &sidSize, refDomain, &refDomainSize, &sidType);
-        Py_END_ALLOW_THREADS
+	Py_BEGIN_ALLOW_THREADS
+		LookupAccountName(szSystemName, szAcctName, pSid, &sidSize, refDomain, &refDomainSize, &sidType);
+	Py_END_ALLOW_THREADS
 
-	if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
-		PyWin_SetAPIError("LookupAccountName");
-		goto done;
-	}
+		if (GetLastError() != ERROR_INSUFFICIENT_BUFFER) {
+			PyWin_SetAPIError("LookupAccountName");
+			goto done;
+		}
 
 	pSid = (PSID)malloc(sidSize);
 
@@ -1309,7 +1315,7 @@ PyObject *LookupAccountName(PyObject *self, PyObject *args)
 
 done:
 	if (pSid)
-		free (pSid);
+		free(pSid);
 	PyWinObject_FreeTCHAR(szSystemName);
 	PyWinObject_FreeTCHAR(szAcctName);
 	Py_XDECREF(obDomain);
@@ -1323,18 +1329,18 @@ PyObject *LookupAccountSid(PyObject *self, PyObject *args)
 	PyObject *obRetAcctName = NULL;
 	PyObject *obDomain = NULL;
 	TCHAR szRetAcctName[256];
-	DWORD retAcctNameSize = sizeof(szRetAcctName)/sizeof(TCHAR);
+	DWORD retAcctNameSize = sizeof(szRetAcctName) / sizeof(TCHAR);
 	TCHAR *szSystemName = NULL;
 	TCHAR refDomain[256];
-	DWORD refDomainSize = sizeof(refDomain)/sizeof(TCHAR);
+	DWORD refDomainSize = sizeof(refDomain) / sizeof(TCHAR);
 	PSID pSid;
 	PyObject *obSid;
 	SID_NAME_USE sidType;
 	PyObject *result = NULL;
 
 	if (!PyArg_ParseTuple(args, "OO:LookupAccountSid",
-	                 &obSystemName, // @pyparm string|systemName||The system name, or None
-					 &obSid))  // @pyparm <o PySID>|sid||The SID
+		&obSystemName, // @pyparm string|systemName||The system name, or None
+		&obSid))  // @pyparm <o PySID>|sid||The SID
 		goto done;
 
 	if (!PyWinObject_AsTCHAR(obSystemName, &szSystemName, TRUE))
@@ -1343,15 +1349,15 @@ PyObject *LookupAccountSid(PyObject *self, PyObject *args)
 	if (!PyWinObject_AsSID(obSid, &pSid))
 		goto done;
 
-        BOOL ok;
-        Py_BEGIN_ALLOW_THREADS
-        ok = LookupAccountSid(szSystemName, pSid, szRetAcctName, &retAcctNameSize, refDomain, &refDomainSize, &sidType);
-        Py_END_ALLOW_THREADS
+	BOOL ok;
+	Py_BEGIN_ALLOW_THREADS
+		ok = LookupAccountSid(szSystemName, pSid, szRetAcctName, &retAcctNameSize, refDomain, &refDomainSize, &sidType);
+	Py_END_ALLOW_THREADS
 
-	if (!ok) {
-		PyWin_SetAPIError("LookupAccountSid");
-		goto done;
-	}
+		if (!ok) {
+			PyWin_SetAPIError("LookupAccountSid");
+			goto done;
+		}
 	obRetAcctName = PyWinObject_FromTCHAR(szRetAcctName);
 	obDomain = PyWinObject_FromTCHAR(refDomain);
 	result = Py_BuildValue("OOl", obRetAcctName, obDomain, sidType);
@@ -1363,144 +1369,144 @@ done:
 	return result;
 }
 /* from MS knowledge base article Q198907
-    GetBinarySid() accepts a buffer that contains the textual
-    representation of a SID. This function returns NULL
-    if it fails. If the SID can be constructed successfully,
-    a valid binary SID is returned.
+	GetBinarySid() accepts a buffer that contains the textual
+	representation of a SID. This function returns NULL
+	if it fails. If the SID can be constructed successfully,
+	a valid binary SID is returned.
 
-    This function requires TCHAR.H and the C runtime library.
+	This function requires TCHAR.H and the C runtime library.
 
-    The following are macros defined in TCHAR.H that allow this
-    function to be compiled with or without UNICODE defined. To
-    replace these macros with direct calls to their corresponding
-    ANSI functions first make sure this module is not compiled
-    with UNICODE (or _UNICODE) defined.
+	The following are macros defined in TCHAR.H that allow this
+	function to be compiled with or without UNICODE defined. To
+	replace these macros with direct calls to their corresponding
+	ANSI functions first make sure this module is not compiled
+	with UNICODE (or _UNICODE) defined.
 
-      TCHAR           ANSI
-     _stscanf() ->   sscanf()
-     _tcschr()  ->   strchr()
+	  TCHAR           ANSI
+	 _stscanf() ->   sscanf()
+	 _tcschr()  ->   strchr()
 
 */
 
 PSID GetBinarySid(
-    LPTSTR TextualSid  // Buffer for Textual representation of SID.
-    )
+	LPTSTR TextualSid  // Buffer for Textual representation of SID.
+	)
 {
-    PSID  pSid = 0;
-    SID_IDENTIFIER_AUTHORITY identAuthority;
-    TCHAR buffer[1024];
-    int   i;
+	PSID  pSid = 0;
+	SID_IDENTIFIER_AUTHORITY identAuthority;
+	TCHAR buffer[1024];
+	int   i;
 
-    LPTSTR ptr, ptr1;
+	LPTSTR ptr, ptr1;
 
 
-    BYTE  nByteAuthorityCount = 0;
-    DWORD dwSubAuthority[8] = {0, 0, 0, 0, 0, 0, 0, 0};
+	BYTE  nByteAuthorityCount = 0;
+	DWORD dwSubAuthority[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-    ZeroMemory(&identAuthority, sizeof(identAuthority));
+	ZeroMemory(&identAuthority, sizeof(identAuthority));
 
-    /* avoid buffer overflows */
-    if (lstrlen(TextualSid) >= sizeof(buffer)/sizeof(buffer[0]))
-        return NULL;
+	/* avoid buffer overflows */
+	if (lstrlen(TextualSid) >= sizeof(buffer) / sizeof(buffer[0]))
+		return NULL;
 
-    lstrcpy(buffer, TextualSid);
+	lstrcpy(buffer, TextualSid);
 
-    // S-SID_REVISION- + identifierauthority- + subauthorities- + NULL
+	// S-SID_REVISION- + identifierauthority- + subauthorities- + NULL
 
-    // Skip S
-    if (!(ptr = _tcschr(buffer, _T('-'))))
-    {
-        return pSid;
-    }
+	// Skip S
+	if (!(ptr = _tcschr(buffer, _T('-'))))
+	{
+		return pSid;
+	}
 
-    // Skip -
-    ptr++;
+	// Skip -
+	ptr++;
 
-    // Skip SID_REVISION
-    if (!(ptr = _tcschr(ptr, _T('-'))))
-    {
-        return pSid;
-    }
+	// Skip SID_REVISION
+	if (!(ptr = _tcschr(ptr, _T('-'))))
+	{
+		return pSid;
+	}
 
-    // Skip -
-    ptr++;
+	// Skip -
+	ptr++;
 
-    // Skip identifierauthority
-    if (!(ptr1 = _tcschr(ptr, _T('-'))))
-    {
-        return pSid;
-    }
-    *ptr1= 0;
+	// Skip identifierauthority
+	if (!(ptr1 = _tcschr(ptr, _T('-'))))
+	{
+		return pSid;
+	}
+	*ptr1 = 0;
 
-    if ((*ptr == '0') && (*(ptr+1) == 'x'))
-    {
-        _stscanf(ptr, _T("0x%02hx%02hx%02hx%02hx%02hx%02hx"),
-            &identAuthority.Value[0],
-            &identAuthority.Value[1],
-            &identAuthority.Value[2],
-            &identAuthority.Value[3],
-            &identAuthority.Value[4],
-            &identAuthority.Value[5]);
-    }
-    else
-    {
-        DWORD value;
+	if ((*ptr == '0') && (*(ptr + 1) == 'x'))
+	{
+		_stscanf(ptr, _T("0x%02hx%02hx%02hx%02hx%02hx%02hx"),
+			&identAuthority.Value[0],
+			&identAuthority.Value[1],
+			&identAuthority.Value[2],
+			&identAuthority.Value[3],
+			&identAuthority.Value[4],
+			&identAuthority.Value[5]);
+	}
+	else
+	{
+		DWORD value;
 
-        _stscanf(ptr, _T("%lu"), &value);
+		_stscanf(ptr, _T("%lu"), &value);
 
-        identAuthority.Value[5] = (BYTE)(value & 0x000000FF);
-        identAuthority.Value[4] = (BYTE)(value & 0x0000FF00) >> 8;
-        identAuthority.Value[3] = (BYTE)(value & 0x00FF0000) >> 16;
-        identAuthority.Value[2] = (BYTE)(value & 0xFF000000) >> 24;
-    }
+		identAuthority.Value[5] = (BYTE)(value & 0x000000FF);
+		identAuthority.Value[4] = (BYTE)(value & 0x0000FF00) >> 8;
+		identAuthority.Value[3] = (BYTE)(value & 0x00FF0000) >> 16;
+		identAuthority.Value[2] = (BYTE)(value & 0xFF000000) >> 24;
+	}
 
-    // Skip -
-    *ptr1 = '-';
-    ptr = ptr1;
-    ptr1++;
+	// Skip -
+	*ptr1 = '-';
+	ptr = ptr1;
+	ptr1++;
 
-    for (i = 0; i < 8; i++)
-    {
-        // get subauthority
-        if (!(ptr = _tcschr(ptr, '-')))
-        {
-            break;
-        }
-        *ptr=0;
-        ptr++;
-        nByteAuthorityCount++;
-    }
+	for (i = 0; i < 8; i++)
+	{
+		// get subauthority
+		if (!(ptr = _tcschr(ptr, '-')))
+		{
+			break;
+		}
+		*ptr = 0;
+		ptr++;
+		nByteAuthorityCount++;
+	}
 
-    for (i = 0; i < nByteAuthorityCount; i++)
-    {
-        // Get subauthority.
-        _stscanf(ptr1, _T("%lu"), &dwSubAuthority[i]);
-        ptr1 += lstrlen(ptr1) + 1;
-    }
+	for (i = 0; i < nByteAuthorityCount; i++)
+	{
+		// Get subauthority.
+		_stscanf(ptr1, _T("%lu"), &dwSubAuthority[i]);
+		ptr1 += lstrlen(ptr1) + 1;
+	}
 
-    if (!AllocateAndInitializeSid(&identAuthority,
-        nByteAuthorityCount,
-        dwSubAuthority[0],
-        dwSubAuthority[1],
-        dwSubAuthority[2],
-        dwSubAuthority[3],
-        dwSubAuthority[4],
-        dwSubAuthority[5],
-        dwSubAuthority[6],
-        dwSubAuthority[7],
-        &pSid))
-    {
-        pSid = 0;
-    }
+	if (!AllocateAndInitializeSid(&identAuthority,
+		nByteAuthorityCount,
+		dwSubAuthority[0],
+		dwSubAuthority[1],
+		dwSubAuthority[2],
+		dwSubAuthority[3],
+		dwSubAuthority[4],
+		dwSubAuthority[5],
+		dwSubAuthority[6],
+		dwSubAuthority[7],
+		&pSid))
+	{
+		pSid = 0;
+	}
 
-    return pSid;
+	return pSid;
 }
 
 // @pyswig <o PySID>|GetBinarySid|Accepts a SID string (eg: S-1-5-32-544) and returns the SID as a PySID object.
-static PyObject *PyGetBinarySid (PyObject *self, PyObject *args)
+static PyObject *PyGetBinarySid(PyObject *self, PyObject *args)
 {
 	PyObject *obTextualSid; // @pyparm string|SID||Textual representation of a SID. Textual SID example: S-1-5-32-544
-	TCHAR *TextualSid= NULL;
+	TCHAR *TextualSid = NULL;
 	PSID pSid;
 	PyObject *obSid;
 
@@ -1512,14 +1518,14 @@ static PyObject *PyGetBinarySid (PyObject *self, PyObject *args)
 		PyErr_SetString(PyExc_ValueError, "Textual SID invalid");
 		return NULL;
 	}
-	if (NULL == (pSid= GetBinarySid(TextualSid)))
+	if (NULL == (pSid = GetBinarySid(TextualSid)))
 	{
 		PyErr_SetString(PyExc_ValueError, "SID conversion failed");
 		return NULL;
 	}
 	PyWinObject_FreeTCHAR(TextualSid);
 
-	obSid= new PySID(pSid);
+	obSid = new PySID(pSid);
 	return obSid;
 }
 
@@ -1527,7 +1533,7 @@ PyObject *SetSecurityInfo(PyObject *self, PyObject *args)
 {
 	PSID pSidOwner = NULL;
 	PSID pSidGroup = NULL;
-	PACL pDacl= NULL;
+	PACL pDacl = NULL;
 	PACL pSacl = NULL;
 	PyObject *obHandle;
 	PyObject *obSidOwner = Py_None;
@@ -1540,13 +1546,13 @@ PyObject *SetSecurityInfo(PyObject *self, PyObject *args)
 	DWORD err;
 
 	if (!PyArg_ParseTuple(args, "Oll|OOOO:SetSecurityInfo",
-				&obHandle,				// @pyparm int/<o PyHANDLE>|handle||Handle to object
-				(long *)(&typeHandle),	// @pyparm int|ObjectType||Value from SE_OBJECT_TYPE enum
-				&info,					// @pyparm int|SecurityInfo||Combination of SECURITY_INFORMATION constants
-				&obSidOwner,			// @pyparm <o PySID>|Owner||Sid to set as owner of object, can be None
-				&obSidGroup,			// @pyparm <o PySID>|Group||Group Sid, can be None
-				&obDacl,				// @pyparm <o PyACL>|Dacl||Discretionary ACL to set for object, can be None
-				&obSacl))				// @pyparm <o PyACL>|Sacl||System Audit ACL to set for object, can be None
+		&obHandle,				// @pyparm int/<o PyHANDLE>|handle||Handle to object
+		(long *)(&typeHandle),	// @pyparm int|ObjectType||Value from SE_OBJECT_TYPE enum
+		&info,					// @pyparm int|SecurityInfo||Combination of SECURITY_INFORMATION constants			
+		&obSidOwner,			// @pyparm <o PySID>|Owner||Sid to set as owner of object, can be None
+		&obSidGroup,			// @pyparm <o PySID>|Group||Group Sid, can be None
+		&obDacl,				// @pyparm <o PyACL>|Dacl||Discretionary ACL to set for object, can be None
+		&obSacl))				// @pyparm <o PyACL>|Sacl||System Audit ACL to set for object, can be None
 		return NULL;
 
 	if (!PyWinObject_AsHANDLE(obHandle, &handle))
@@ -1560,9 +1566,9 @@ PyObject *SetSecurityInfo(PyObject *self, PyObject *args)
 	if (!PyWinObject_AsACL(obSacl, &pSacl, TRUE))
 		return NULL;
 
-	err=SetSecurityInfo(handle, typeHandle, info, pSidOwner, pSidGroup, pDacl, pSacl);
-	if (err!=ERROR_SUCCESS)
-		return PyWin_SetAPIError("SetSecurityInfo",err);
+	err = SetSecurityInfo(handle, typeHandle, info, pSidOwner, pSidGroup, pDacl, pSacl);
+	if (err != ERROR_SUCCESS)
+		return PyWin_SetAPIError("SetSecurityInfo", err);
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -1570,24 +1576,24 @@ PyObject *SetSecurityInfo(PyObject *self, PyObject *args)
 static PyObject *PyGetSecurityInfo(PyObject *self, PyObject *args)
 {
 	HANDLE handle;
-	PSECURITY_DESCRIPTOR pSD=NULL;
+	PSECURITY_DESCRIPTOR pSD = NULL;
 	SE_OBJECT_TYPE object_type;
 	SECURITY_INFORMATION required_info;
 	DWORD err;
-	PyObject *ret=NULL, *obhandle=NULL;
+	PyObject *ret = NULL, *obhandle = NULL;
 	// @pyparm int/<o PyHANDLE>|handle||Handle to object
 	// @pyparm int|ObjectType||Value from SE_OBJECT_TYPE enum
 	// @pyparm int|SecurityInfo||Combination of SECURITY_INFORMATION constants
-	if (!PyArg_ParseTuple(args, "Oll:GetSecurityInfo",&obhandle, &object_type, &required_info))
+	if (!PyArg_ParseTuple(args, "Oll:GetSecurityInfo", &obhandle, &object_type, &required_info))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhandle, &handle))
 		return NULL;
 
-	err=GetSecurityInfo(handle, object_type, required_info, NULL, NULL, NULL, NULL, &pSD);
-	if (err==ERROR_SUCCESS)
-		ret=new PySECURITY_DESCRIPTOR(pSD);
+	err = GetSecurityInfo(handle, object_type, required_info, NULL, NULL, NULL, NULL, &pSD);
+	if (err == ERROR_SUCCESS)
+		ret = new PySECURITY_DESCRIPTOR(pSD);
 	else
-		PyWin_SetAPIError("GetSecurityInfo",err);
+		PyWin_SetAPIError("GetSecurityInfo", err);
 	if (pSD)
 		LocalFree(pSD);
 	return ret;
@@ -1597,26 +1603,26 @@ PyObject *SetNamedSecurityInfo(PyObject *self, PyObject *args)
 {
 	PSID pSidOwner = NULL;
 	PSID pSidGroup = NULL;
-	PACL pDacl= NULL;
+	PACL pDacl = NULL;
 	PACL pSacl = NULL;
-	PyObject *obObjectName=NULL, *ret=NULL;
+	PyObject *obObjectName = NULL, *ret = NULL;
 	PyObject *obSidOwner = Py_None;
 	PyObject *obSidGroup = Py_None;
 	PyObject *obDacl = Py_None;
 	PyObject *obSacl = Py_None;
 	SECURITY_INFORMATION info = 0;
 	SE_OBJECT_TYPE ObjectType;
-	WCHAR *ObjectName=NULL;
+	WCHAR *ObjectName = NULL;
 	DWORD err;
 
 	if (!PyArg_ParseTuple(args, "Oll|OOOO:SetNamedSecurityInfo",
-				&obObjectName,			// @pyparm str/unicode|ObjectName||Name of object
-				&ObjectType,			// @pyparm int|ObjectType||Value from SE_OBJECT_TYPE enum
-				&info,					// @pyparm int|SecurityInfo||Combination of SECURITY_INFORMATION constants
-				&obSidOwner,			// @pyparm <o PySID>|Owner||Sid to set as owner of object, can be None
-				&obSidGroup,			// @pyparm <o PySID>|Group||Group Sid, can be None
-				&obDacl,				// @pyparm <o PyACL>|Dacl||Discretionary ACL to set for object, can be None
-				&obSacl))				// @pyparm <o PyACL>|Sacl||System Audit ACL to set for object, can be None
+		&obObjectName,			// @pyparm str/unicode|ObjectName||Name of object
+		&ObjectType,			// @pyparm int|ObjectType||Value from SE_OBJECT_TYPE enum
+		&info,					// @pyparm int|SecurityInfo||Combination of SECURITY_INFORMATION constants			
+		&obSidOwner,			// @pyparm <o PySID>|Owner||Sid to set as owner of object, can be None
+		&obSidGroup,			// @pyparm <o PySID>|Group||Group Sid, can be None
+		&obDacl,				// @pyparm <o PyACL>|Dacl||Discretionary ACL to set for object, can be None
+		&obSacl))				// @pyparm <o PyACL>|Sacl||System Audit ACL to set for object, can be None
 		return NULL;
 
 	if (!PyWinObject_AsSID(obSidOwner, &pSidOwner, TRUE))
@@ -1627,49 +1633,49 @@ PyObject *SetNamedSecurityInfo(PyObject *self, PyObject *args)
 		return NULL;
 	if (!PyWinObject_AsACL(obSacl, &pSacl, TRUE))
 		return NULL;
-	if (!PyWinObject_AsWCHAR(obObjectName, &ObjectName, FALSE ))
+	if (!PyWinObject_AsWCHAR(obObjectName, &ObjectName, FALSE))
 		return NULL;
 
-	err=SetNamedSecurityInfo(ObjectName, ObjectType, info, pSidOwner, pSidGroup, pDacl, pSacl);
-	if (err==ERROR_SUCCESS){
+	err = SetNamedSecurityInfo(ObjectName, ObjectType, info, pSidOwner, pSidGroup, pDacl, pSacl);
+	if (err == ERROR_SUCCESS) {
 		Py_INCREF(Py_None);
-		ret=Py_None;
-		}
+		ret = Py_None;
+	}
 	else
-		PyWin_SetAPIError("SetNamedSecurityInfo",err);
+		PyWin_SetAPIError("SetNamedSecurityInfo", err);
 	PyWinObject_FreeWCHAR(ObjectName);
 	return ret;
 }
 
 static PyObject *PyGetNamedSecurityInfo(PyObject *self, PyObject *args)
 {
-	WCHAR *ObjectName=NULL;
-	PSECURITY_DESCRIPTOR pSD=NULL;
+	WCHAR *ObjectName = NULL;
+	PSECURITY_DESCRIPTOR pSD = NULL;
 	SE_OBJECT_TYPE object_type;
 	SECURITY_INFORMATION required_info;
 	DWORD err;
-	PyObject *ret=NULL, *obObjectName=NULL;
+	PyObject *ret = NULL, *obObjectName = NULL;
 	// @pyparm str/unicode|ObjectName||Name of object
 	// @pyparm int|ObjectType||Value from SE_OBJECT_TYPE enum
 	// @pyparm int|SecurityInfo||Combination of SECURITY_INFORMATION constants
-	if (!PyArg_ParseTuple(args, "Oll:GetNamedSecurityInfo",&obObjectName, &object_type, &required_info))
+	if (!PyArg_ParseTuple(args, "Oll:GetNamedSecurityInfo", &obObjectName, &object_type, &required_info))
 		return NULL;
 	if (!PyWinObject_AsWCHAR(obObjectName, &ObjectName, FALSE))
 		return NULL;
 
-	err=GetNamedSecurityInfoW(ObjectName, object_type, required_info, NULL, NULL, NULL, NULL, &pSD);
-	if (err==ERROR_SUCCESS){
+	err = GetNamedSecurityInfoW(ObjectName, object_type, required_info, NULL, NULL, NULL, NULL, &pSD);
+	if (err == ERROR_SUCCESS) {
 		// When retrieving security for an administrative share (C$, D$, etc) the returned security descriptor
 		//	may be NULL even though the return code indicates success.
 		if (pSD)
-			ret=new PySECURITY_DESCRIPTOR(pSD);
-		else{
+			ret = new PySECURITY_DESCRIPTOR(pSD);
+		else {
 			Py_INCREF(Py_None);
 			ret = Py_None;
-			}
 		}
+	}
 	else
-		PyWin_SetAPIError("GetNamedSecurityInfo",err);
+		PyWin_SetAPIError("GetNamedSecurityInfo", err);
 	PyWinObject_FreeWCHAR(ObjectName);
 	if (pSD)
 		LocalFree(pSD);
@@ -1699,39 +1705,39 @@ PyObject *LookupPrivilegeName(PyObject *self, PyObject *args)
 
 	// if first call fails due to too small buffer, get required size
 	priv_name = (TCHAR *)malloc(origbufsize*sizeof(TCHAR));
-	if (priv_name == NULL){
+	if (priv_name == NULL) {
 		PyErr_SetString(PyExc_MemoryError, "Unable to allocate memory for privilege name");
 		return NULL;
-		}
+	}
 
 	bufsize = origbufsize;
-    if (!::LookupPrivilegeName(system_name, &priv_value, priv_name, &bufsize)){
-		if (bufsize <= origbufsize){
+	if (!::LookupPrivilegeName(system_name, &priv_value, priv_name, &bufsize)) {
+		if (bufsize <= origbufsize) {
 			PyWin_SetAPIError("LookupPrivilegeName");
 			goto done;
-			}
-		else{
-			free (priv_name);
+		}
+		else {
+			free(priv_name);
 			bufsize += 1;
 			priv_name = (TCHAR *)malloc(bufsize*sizeof(TCHAR));
-			if (priv_name == NULL){
+			if (priv_name == NULL) {
 				PyErr_SetString(PyExc_MemoryError, "Unable to allocate memory for privilege name");
 				return NULL;
-				}
-			if (!::LookupPrivilegeName(system_name, &priv_value, priv_name, &bufsize)){
+			}
+			if (!::LookupPrivilegeName(system_name, &priv_value, priv_name, &bufsize)) {
 				PyWin_SetAPIError("LookupPrivilegeName");
 				goto done;
-				}
 			}
 		}
+	}
 
 	ret = PyWinObject_FromTCHAR(priv_name);
-	done:
-		if (obsystem_name != NULL)
-			PyWinObject_FreeTCHAR(system_name);
-		if (priv_name != NULL)
-			free(priv_name);
-		return ret;
+done:
+	if (obsystem_name != NULL)
+		PyWinObject_FreeTCHAR(system_name);
+	if (priv_name != NULL)
+		free(priv_name);
+	return ret;
 }
 
 PyObject *LookupPrivilegeDisplayName(PyObject *self, PyObject *args)
@@ -1757,40 +1763,40 @@ PyObject *LookupPrivilegeDisplayName(PyObject *self, PyObject *args)
 
 	// if first call fails due to too small buffer, get required size
 	priv_desc = (TCHAR *)malloc(origbufsize*sizeof(TCHAR));
-	if (priv_desc == NULL){
+	if (priv_desc == NULL) {
 		PyErr_SetString(PyExc_MemoryError, "Unable to allocate memory for privilege description");
 		return NULL;
-		}
+	}
 	bufsize = origbufsize;
-    if (!::LookupPrivilegeDisplayName(system_name, priv_name, priv_desc, &bufsize, &language_id)){
-		if (bufsize <= origbufsize){
+	if (!::LookupPrivilegeDisplayName(system_name, priv_name, priv_desc, &bufsize, &language_id)) {
+		if (bufsize <= origbufsize) {
 			PyWin_SetAPIError("LookupPrivilegeDisplayName");
 			goto done;
-			}
-		else{
-			free (priv_desc);
+		}
+		else {
+			free(priv_desc);
 			bufsize += 1;
 			priv_desc = (TCHAR *)malloc(bufsize*sizeof(TCHAR));
-			if (priv_desc == NULL){
+			if (priv_desc == NULL) {
 				PyErr_SetString(PyExc_MemoryError, "Unable to allocate memory for privilege description");
 				return NULL;
-				}
-			if (!::LookupPrivilegeDisplayName(system_name, priv_name, priv_desc, &bufsize, &language_id)){
+			}
+			if (!::LookupPrivilegeDisplayName(system_name, priv_name, priv_desc, &bufsize, &language_id)) {
 				PyWin_SetAPIError("LookupPrivilegeDisplayName");
 				goto done;
-				}
 			}
 		}
+	}
 
 	ret = PyWinObject_FromTCHAR(priv_desc);
-	done:
-		if (system_name != NULL)
-			PyWinObject_FreeTCHAR(system_name);
-		if (priv_name != NULL)
-			PyWinObject_FreeTCHAR(priv_name);
-		if (priv_desc != NULL)
-			free(priv_desc);
-		return ret;
+done:
+	if (system_name != NULL)
+		PyWinObject_FreeTCHAR(system_name);
+	if (priv_name != NULL)
+		PyWinObject_FreeTCHAR(priv_name);
+	if (priv_desc != NULL)
+		free(priv_desc);
+	return ret;
 }
 
 // @pyswig <o PyTOKEN_PRIVILEGES>|AdjustTokenPrivileges|Enables or disables privileges for an access token.
@@ -1799,12 +1805,12 @@ PyObject *LookupPrivilegeDisplayName(PyObject *self, PyObject *args)
 // @comm Accepts keyword args.
 static PyObject *PyAdjustTokenPrivileges(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-	TOKEN_PRIVILEGES *NewState=NULL, *PreviousState=NULL;
+	TOKEN_PRIVILEGES *NewState = NULL, *PreviousState = NULL;
 	HANDLE TokenHandle;
-	PyObject *obNewState, *obTokenHandle, *ret=NULL;
+	PyObject *obNewState, *obTokenHandle, *ret = NULL;
 	BOOL DisableAllPrivileges;
 	DWORD rc;
-	static char *keywords[]={"TokenHandle","bDisableAllPrivileges","NewState", NULL};
+	static char *keywords[] = { "TokenHandle","bDisableAllPrivileges","NewState", NULL };
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OlO:AdjustTokenPrivileges", keywords,
 		&obTokenHandle,			// @pyparm <o PyHANDLE>|TokenHandle||Handle to an access token
@@ -1816,41 +1822,41 @@ static PyObject *PyAdjustTokenPrivileges(PyObject *self, PyObject *args, PyObjec
 	if (!PyWinObject_AsTOKEN_PRIVILEGES(obNewState, &NewState, TRUE))
 		return NULL;
 
-	DWORD origbufsize=sizeof(DWORD) + (3*sizeof(LUID_AND_ATTRIBUTES));
-	DWORD reqdbufsize=0;
-	PreviousState=(TOKEN_PRIVILEGES *)malloc(origbufsize);
-	if (PreviousState==NULL){
-		PyErr_SetString(PyExc_MemoryError,"AdjustTokenPrivileges: unable to allocate return buffer");
+	DWORD origbufsize = sizeof(DWORD) + (3 * sizeof(LUID_AND_ATTRIBUTES));
+	DWORD reqdbufsize = 0;
+	PreviousState = (TOKEN_PRIVILEGES *)malloc(origbufsize);
+	if (PreviousState == NULL) {
+		PyErr_SetString(PyExc_MemoryError, "AdjustTokenPrivileges: unable to allocate return buffer");
 		goto done;
-		}
+	}
 
 	if (!AdjustTokenPrivileges(TokenHandle, DisableAllPrivileges, NewState, origbufsize, PreviousState, &reqdbufsize))
-		if (reqdbufsize>origbufsize){
+		if (reqdbufsize > origbufsize) {
 			free(PreviousState);
-			PreviousState=(TOKEN_PRIVILEGES *)malloc(reqdbufsize);
-			if (PreviousState==NULL){
-				PyErr_SetString(PyExc_MemoryError,"AdjustTokenPrivileges: unable to allocate return buffer");
+			PreviousState = (TOKEN_PRIVILEGES *)malloc(reqdbufsize);
+			if (PreviousState == NULL) {
+				PyErr_SetString(PyExc_MemoryError, "AdjustTokenPrivileges: unable to allocate return buffer");
 				goto done;
-				}
-			AdjustTokenPrivileges(TokenHandle, DisableAllPrivileges, NewState, reqdbufsize, PreviousState, &reqdbufsize);
 			}
+			AdjustTokenPrivileges(TokenHandle, DisableAllPrivileges, NewState, reqdbufsize, PreviousState, &reqdbufsize);
+		}
 	// Note that AdjustTokenPrivileges may succeed, and yet
 	// some privileges weren't actually adjusted.
 	// You've got to check GetLastError() to be sure!
 	rc = GetLastError();
-	if (rc==0 || rc==ERROR_NOT_ALL_ASSIGNED)
+	if (rc == 0 || rc == ERROR_NOT_ALL_ASSIGNED)
 		ret = PyWinObject_FromTOKEN_PRIVILEGES(PreviousState);
 	else
-		PyWin_SetAPIError("AdjustTokenPrivileges",rc);
+		PyWin_SetAPIError("AdjustTokenPrivileges", rc);
 
-	done:
+done:
 	if (PreviousState)
 		free(PreviousState);
 	if (NewState)
 		PyWinObject_FreeTOKEN_PRIVILEGES(NewState);
 	return ret;
 }
-PyCFunction pfn_PyAdjustTokenPrivileges=(PyCFunction)PyAdjustTokenPrivileges;
+PyCFunction pfn_PyAdjustTokenPrivileges = (PyCFunction)PyAdjustTokenPrivileges;
 
 // @pyswig <o PyTOKEN_GROUPS>|AdjustTokenGroups|Sets the groups associated to an access token.
 // @rdesc Returns previous state of groups modified
@@ -1860,10 +1866,10 @@ static PyObject *PyAdjustTokenGroups(PyObject *self, PyObject *args, PyObject *k
 	PyObject *obHandle, *obtg;
 	PyObject *ret = NULL;
 	HANDLE th;
-	TOKEN_GROUPS *newstate=NULL, *oldstate=NULL;
+	TOKEN_GROUPS *newstate = NULL, *oldstate = NULL;
 	BOOL ok = TRUE, reset;
-	DWORD reqdbufsize=0, origgroupcnt=1, origbufsize, err;
-	static char *keywords[] = {"TokenHandle","ResetToDefault","NewState", NULL};
+	DWORD reqdbufsize = 0, origgroupcnt = 1, origbufsize, err;
+	static char *keywords[] = { "TokenHandle","ResetToDefault","NewState", NULL };
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OiO:AdjustTokenGroups", keywords,
 		&obHandle, // @pyparm <o PyHANDLE>|TokenHandle||The handle to access token to be modified
@@ -1874,36 +1880,36 @@ static PyObject *PyAdjustTokenGroups(PyObject *self, PyObject *args, PyObject *k
 		return NULL;
 	if (!PyWinObject_AsTOKEN_GROUPS(obtg, &newstate))
 		return NULL;
-	origbufsize=sizeof(DWORD) + (sizeof(SID_AND_ATTRIBUTES) * origgroupcnt);
-	oldstate=(TOKEN_GROUPS *)malloc(origbufsize);
-	if (oldstate==NULL){
+	origbufsize = sizeof(DWORD) + (sizeof(SID_AND_ATTRIBUTES) * origgroupcnt);
+	oldstate = (TOKEN_GROUPS *)malloc(origbufsize);
+	if (oldstate == NULL) {
 		PyErr_Format(PyExc_MemoryError, "AdjustTokenGroups: unable to allocate %d SID_AND_ATTRIBUTES structs", origgroupcnt);
-		ok=FALSE;
-		}
-	else{
-		oldstate->GroupCount=origgroupcnt;
-		if (!AdjustTokenGroups(th, reset, newstate, origbufsize, oldstate, &reqdbufsize)){
-			err=GetLastError();
-			if (err!=ERROR_INSUFFICIENT_BUFFER){
-				PyWin_SetAPIError("AdjustTokenGroups",err);
-				ok=FALSE;
-				}
-			else{
-				free (oldstate);
+		ok = FALSE;
+	}
+	else {
+		oldstate->GroupCount = origgroupcnt;
+		if (!AdjustTokenGroups(th, reset, newstate, origbufsize, oldstate, &reqdbufsize)) {
+			err = GetLastError();
+			if (err != ERROR_INSUFFICIENT_BUFFER) {
+				PyWin_SetAPIError("AdjustTokenGroups", err);
+				ok = FALSE;
+			}
+			else {
+				free(oldstate);
 				oldstate = (TOKEN_GROUPS *)malloc(reqdbufsize);
-				if (oldstate==NULL){
+				if (oldstate == NULL) {
 					PyErr_Format(PyExc_MemoryError, "AdjustTokenGroups: unable to allocate %d bytes", reqdbufsize);
-					ok=FALSE;
-					}
-				else{
-					if (!AdjustTokenGroups(th, reset, newstate, reqdbufsize, oldstate, &reqdbufsize)){
-						PyWin_SetAPIError("AdjustTokenGroups",GetLastError());
-						ok=FALSE;
-						}
+					ok = FALSE;
+				}
+				else {
+					if (!AdjustTokenGroups(th, reset, newstate, reqdbufsize, oldstate, &reqdbufsize)) {
+						PyWin_SetAPIError("AdjustTokenGroups", GetLastError());
+						ok = FALSE;
 					}
 				}
 			}
 		}
+	}
 	if (ok)
 		ret = PyWinObject_FromTOKEN_GROUPS(oldstate);
 	if (oldstate != NULL)
@@ -1911,7 +1917,7 @@ static PyObject *PyAdjustTokenGroups(PyObject *self, PyObject *args, PyObject *k
 	PyWinObject_FreeTOKEN_GROUPS(newstate);
 	return ret;
 }
-PyCFunction pfn_PyAdjustTokenGroups=(PyCFunction)PyAdjustTokenGroups;
+PyCFunction pfn_PyAdjustTokenGroups = (PyCFunction)PyAdjustTokenGroups;
 
 static PyObject *PyGetTokenInformation(PyObject *self, PyObject *args)
 {
@@ -1933,22 +1939,22 @@ static PyObject *PyGetTokenInformation(PyObject *self, PyObject *args)
 	switch (typ) {
 		// @rdesc The following types are supported
 		// @flagh TokenInformationClass|Return type
-		case TokenSessionId:	// @flag TokenSessionId|int - Terminal Services session id
-		case TokenSandBoxInert:	// @flag TokenSandBoxInert|Boolean
-		case TokenType:	// @flag TokenType|Value from TOKEN_TYPE enum (TokenPrimary,TokenImpersonation)
-		case TokenImpersonationLevel:	// @flag TokenImpersonationLevel|Value from SECURITY_IMPERSONATION_LEVEL enum
-		#ifdef _WIN32_WINNT_LONGHORN		// Vista info types related to UAC
-		case TokenVirtualizationEnabled:	// @flag TokenVirtualizationEnabled|Boolean
-		case TokenVirtualizationAllowed:	// @flag TokenVirtualizationAllowed|Boolean
-		case TokenHasRestrictions:	// @flag TokenHasRestrictions|Boolean
-		case TokenElevationType:	// @flag TokenElevationType|int - TokenElevation* value indicating what type of token is linked to
-		case TokenUIAccess:			// @flag TokenUIAccess|Boolean
-		#endif
-			bufSize = sizeof(DWORD);
-			if (!GetTokenInformation(handle, typ, &dwordbuf, bufSize, &retLength))
-				return PyWin_SetAPIError("GetTokenInformation");
-			return PyLong_FromUnsignedLong(dwordbuf);
-		}
+	case TokenSessionId:	// @flag TokenSessionId|int - Terminal Services session id
+	case TokenSandBoxInert:	// @flag TokenSandBoxInert|Boolean
+	case TokenType:	// @flag TokenType|Value from TOKEN_TYPE enum (TokenPrimary,TokenImpersonation)
+	case TokenImpersonationLevel:	// @flag TokenImpersonationLevel|Value from SECURITY_IMPERSONATION_LEVEL enum
+#ifdef _WIN32_WINNT_LONGHORN		// Vista info types related to UAC
+	case TokenVirtualizationEnabled:	// @flag TokenVirtualizationEnabled|Boolean
+	case TokenVirtualizationAllowed:	// @flag TokenVirtualizationAllowed|Boolean
+	case TokenHasRestrictions:	// @flag TokenHasRestrictions|Boolean
+	case TokenElevationType:	// @flag TokenElevationType|int - TokenElevation* value indicating what type of token is linked to
+	case TokenUIAccess:			// @flag TokenUIAccess|Boolean
+#endif
+		bufSize = sizeof(DWORD);
+		if (!GetTokenInformation(handle, typ, &dwordbuf, bufSize, &retLength))
+			return PyWin_SetAPIError("GetTokenInformation");
+		return PyLong_FromUnsignedLong(dwordbuf);
+	}
 
 	PyObject *ret = NULL;
 	void *buf = NULL;
@@ -1958,158 +1964,158 @@ static PyObject *PyGetTokenInformation(PyObject *self, PyObject *args)
 		return PyWin_SetAPIError("GetTokenInformation");
 	bufSize = retLength;
 	buf = malloc(retLength);
-	if (buf==NULL)
+	if (buf == NULL)
 		return PyErr_Format(PyExc_MemoryError, "Unable to allocate buffer for token info (%d bytes)", retLength);
 	if (!GetTokenInformation(handle, typ, buf, bufSize, &retLength)) {
 		PyWin_SetAPIError("GetTokenInformation");
 		goto done;
-		}
+	}
 
 	switch (typ) {
-		case TokenUser: {
-			// @flag TokenUser|(<o PySID>,int)
-			TOKEN_USER *p = (TOKEN_USER *)buf;
-			PyObject *obSid = PyWinObject_FromSID(p->User.Sid);
-			ret = Py_BuildValue("(Ol)", obSid, p->User.Attributes );
-			Py_XDECREF(obSid);
-			break;
-			}
-		case TokenOwner: {
-			// @flag TokenOwner|<o PySID>
-			TOKEN_OWNER *p = (TOKEN_OWNER *)buf;
-			ret = PyWinObject_FromSID(p->Owner);
-			break;
-			}
-		case TokenGroups: {
-			// @flag TokenGroups|((<o PySID>,int),)
-			// returns a list of tuples containing (group Sid, attribute flags)
-			TOKEN_GROUPS *tg = (TOKEN_GROUPS *)buf;
-			ret = PyWinObject_FromTOKEN_GROUPS(tg);
-			break;
-			}
-		case TokenRestrictedSids: {
-			// @flag TokenRestrictedSids|((<o PySID>,int),)
-			TOKEN_GROUPS *tg = (TOKEN_GROUPS *)buf;
-			ret = PyWinObject_FromTOKEN_GROUPS(tg);
-			break;
-			}
-		case TokenPrivileges: {
-			// @flag TokenPrivileges|((int,int),)
-			// returns PyTOKEN_PRIVILEGES (tuple of LUID and attribute flags for each privilege)
-			// attributes are combination of SE_PRIVILEGE_ENABLED,SE_PRIVILEGE_ENABLED_BY_DEFAULT,SE_PRIVILEGE_USED_FOR_ACCESS
-			ret = PyWinObject_FromTOKEN_PRIVILEGES((TOKEN_PRIVILEGES *)buf);
-			break;
-			}
-		case TokenPrimaryGroup: {
-			// @flag TokenPrimaryGroup|<o PySID>
-			TOKEN_PRIMARY_GROUP *pg = (TOKEN_PRIMARY_GROUP *)buf;
-			ret = PyWinObject_FromSID(pg->PrimaryGroup);
-			break;
-			}
-		case TokenSource: {
-			// @flag TokenSource|(string,LUID)
-			TOKEN_SOURCE *ts = (TOKEN_SOURCE *)buf;
-			PLUID pluid = &ts->SourceIdentifier;
-			ret = Py_BuildValue("NN",
-				PyString_FromStringAndSize(ts->SourceName,8),
-				PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *) pluid)));
-			break;
-			}
-		case TokenDefaultDacl: {
-			// @flag TokenDefaultDacl|<o PyACL>
-			TOKEN_DEFAULT_DACL *dacl = (TOKEN_DEFAULT_DACL *)buf;
-			ret = new PyACL(dacl->DefaultDacl);
-			break;
-			}
-		case TokenStatistics: {
-			// @flag TokenStatistics|dict
-			// Returns a dictionary representing a TOKEN_STATISTICS structure
-			TOKEN_STATISTICS *pts=(TOKEN_STATISTICS *)buf;
-			ret=Py_BuildValue("{s:N,s:N,s:N,s:l,s:l,s:l,s:l,s:l,s:l,s:N}",
-				"TokenId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pts->TokenId)),
-				"AuthenticationId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pts->AuthenticationId)),
-				"ExpirationTime", PyWinObject_FromTimeStamp(pts->ExpirationTime),
-				"TokenType", pts->TokenType,
-				"ImpersonationLevel", pts->ImpersonationLevel,
-				"DynamicCharged", pts->DynamicCharged,
-				"DynamicAvailable", pts->DynamicAvailable,
-				"GroupCount", pts->GroupCount,
-				"PrivilegeCount", pts->PrivilegeCount,
-				"ModifiedId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pts->ModifiedId)));
-			break;
-			}
-		case TokenOrigin: {
-			// @flag TokenOrigin|LUID identifying the logon session
-			TOKEN_ORIGIN *torg = (TOKEN_ORIGIN *)buf;
-			LARGE_INTEGER luid;
-			luid.HighPart=torg->OriginatingLogonSession.HighPart;
-			luid.LowPart=torg->OriginatingLogonSession.LowPart;
-			ret = PyWinObject_FromLARGE_INTEGER(luid);
-			break;
-			}
+	case TokenUser: {
+		// @flag TokenUser|(<o PySID>,int)
+		TOKEN_USER *p = (TOKEN_USER *)buf;
+		PyObject *obSid = PyWinObject_FromSID(p->User.Sid);
+		ret = Py_BuildValue("(Ol)", obSid, p->User.Attributes);
+		Py_XDECREF(obSid);
+		break;
+	}
+	case TokenOwner: {
+		// @flag TokenOwner|<o PySID>
+		TOKEN_OWNER *p = (TOKEN_OWNER *)buf;
+		ret = PyWinObject_FromSID(p->Owner);
+		break;
+	}
+	case TokenGroups: {
+		// @flag TokenGroups|((<o PySID>,int),)
+		// returns a list of tuples containing (group Sid, attribute flags)
+		TOKEN_GROUPS *tg = (TOKEN_GROUPS *)buf;
+		ret = PyWinObject_FromTOKEN_GROUPS(tg);
+		break;
+	}
+	case TokenRestrictedSids: {
+		// @flag TokenRestrictedSids|((<o PySID>,int),)
+		TOKEN_GROUPS *tg = (TOKEN_GROUPS *)buf;
+		ret = PyWinObject_FromTOKEN_GROUPS(tg);
+		break;
+	}
+	case TokenPrivileges: {
+		// @flag TokenPrivileges|((int,int),)
+		// returns PyTOKEN_PRIVILEGES (tuple of LUID and attribute flags for each privilege)
+		// attributes are combination of SE_PRIVILEGE_ENABLED,SE_PRIVILEGE_ENABLED_BY_DEFAULT,SE_PRIVILEGE_USED_FOR_ACCESS
+		ret = PyWinObject_FromTOKEN_PRIVILEGES((TOKEN_PRIVILEGES *)buf);
+		break;
+	}
+	case TokenPrimaryGroup: {
+		// @flag TokenPrimaryGroup|<o PySID>
+		TOKEN_PRIMARY_GROUP *pg = (TOKEN_PRIMARY_GROUP *)buf;
+		ret = PyWinObject_FromSID(pg->PrimaryGroup);
+		break;
+	}
+	case TokenSource: {
+		// @flag TokenSource|(string,LUID)
+		TOKEN_SOURCE *ts = (TOKEN_SOURCE *)buf;
+		PLUID pluid = &ts->SourceIdentifier;
+		ret = Py_BuildValue("NN",
+			PyString_FromStringAndSize(ts->SourceName, 8),
+			PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)pluid)));
+		break;
+	}
+	case TokenDefaultDacl: {
+		// @flag TokenDefaultDacl|<o PyACL>
+		TOKEN_DEFAULT_DACL *dacl = (TOKEN_DEFAULT_DACL *)buf;
+		ret = new PyACL(dacl->DefaultDacl);
+		break;
+	}
+	case TokenStatistics: {
+		// @flag TokenStatistics|dict
+		// Returns a dictionary representing a TOKEN_STATISTICS structure
+		TOKEN_STATISTICS *pts = (TOKEN_STATISTICS *)buf;
+		ret = Py_BuildValue("{s:N,s:N,s:N,s:l,s:l,s:l,s:l,s:l,s:l,s:N}",
+			"TokenId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pts->TokenId)),
+			"AuthenticationId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pts->AuthenticationId)),
+			"ExpirationTime", PyWinObject_FromTimeStamp(pts->ExpirationTime),
+			"TokenType", pts->TokenType,
+			"ImpersonationLevel", pts->ImpersonationLevel,
+			"DynamicCharged", pts->DynamicCharged,
+			"DynamicAvailable", pts->DynamicAvailable,
+			"GroupCount", pts->GroupCount,
+			"PrivilegeCount", pts->PrivilegeCount,
+			"ModifiedId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pts->ModifiedId)));
+		break;
+	}
+	case TokenOrigin: {
+		// @flag TokenOrigin|LUID identifying the logon session
+		TOKEN_ORIGIN *torg = (TOKEN_ORIGIN *)buf;
+		LARGE_INTEGER luid;
+		luid.HighPart = torg->OriginatingLogonSession.HighPart;
+		luid.LowPart = torg->OriginatingLogonSession.LowPart;
+		ret = PyWinObject_FromLARGE_INTEGER(luid);
+		break;
+	}
 
-		#ifdef _WIN32_WINNT_LONGHORN
-		// Vista-specific types require recent platform SDK
-		case TokenLinkedToken: {
-			// @flag TokenLinkedToken|<o PyHANDLE> - Returns handle to the access token to which token is linked
-			TOKEN_LINKED_TOKEN *tlt=(TOKEN_LINKED_TOKEN *)buf;
-			ret = PyWinObject_FromHANDLE(tlt->LinkedToken);
-			break;
-			}
-		case TokenLogonSid:
-			// @flag TokenLogonSid|<o PySID>
-			ret=PyWinObject_FromSID((PSID)buf);
-			break;
-		case TokenElevation: {
-			// @flag TokenElevation|Boolean
-			TOKEN_ELEVATION *te=(TOKEN_ELEVATION *)buf;
-			ret=PyLong_FromUnsignedLong(te->TokenIsElevated);
-			break;
-			}
-		case TokenIntegrityLevel: {
-			// @flag TokenIntegrityLevel|(<o PySID>, int)
-			TOKEN_MANDATORY_LABEL *tml=(TOKEN_MANDATORY_LABEL *)buf;
-			// Need to create function for SID_AND_ATTRIBUTES, used several places now
-			ret = Py_BuildValue("Nk",
-				PyWinObject_FromSID(tml->Label.Sid),
-				tml->Label.Attributes);
-			break;
-			}
-		case TokenMandatoryPolicy: {
-			// @flag TokenMandatoryPolicy|int (TOKEN_MANDATORY_POLICY_* flag)
-			TOKEN_MANDATORY_POLICY *tmp=(TOKEN_MANDATORY_POLICY *)buf;
-			ret=PyLong_FromUnsignedLong(tmp->Policy);
-			break;
-			}
-		/*
-		case TokenAccessInformation:
-		typedef struct _TOKEN_ACCESS_INFORMATION {
-			PSID_AND_ATTRIBUTES_HASH SidHash;
-			PSID_AND_ATTRIBUTES_HASH RestrictedSidHash;
-			PTOKEN_PRIVILEGES Privileges;
-			LUID AuthenticationId;
-			TOKEN_TYPE TokenType;
-			SECURITY_IMPERSONATION_LEVEL ImpersonationLevel;
-			TOKEN_MANDATORY_POLICY MandatoryPolicy;
-			DWORD Flags;
-		} TOKEN_ACCESS_INFORMATION
-		typedef struct _SID_AND_ATTRIBUTES_HASH {
-			DWORD SidCount;
-			PSID_AND_ATTRIBUTES SidAttr;
-			SID_HASH_ENTRY Hash[SID_HASH_SIZE];
-		} SID_AND_ATTRIBUTES_HASH
-		*/
-		#endif
-		default:
-			PyErr_Format(PyExc_NotImplementedError, "TokenInformationClass %d is not supported yet", typ);
+#ifdef _WIN32_WINNT_LONGHORN
+					  // Vista-specific types require recent platform SDK
+	case TokenLinkedToken: {
+		// @flag TokenLinkedToken|<o PyHANDLE> - Returns handle to the access token to which token is linked
+		TOKEN_LINKED_TOKEN *tlt = (TOKEN_LINKED_TOKEN *)buf;
+		ret = PyWinObject_FromHANDLE(tlt->LinkedToken);
+		break;
+	}
+	case TokenLogonSid:
+		// @flag TokenLogonSid|<o PySID>
+		ret = PyWinObject_FromSID((PSID)buf);
+		break;
+	case TokenElevation: {
+		// @flag TokenElevation|Boolean
+		TOKEN_ELEVATION *te = (TOKEN_ELEVATION *)buf;
+		ret = PyLong_FromUnsignedLong(te->TokenIsElevated);
+		break;
+	}
+	case TokenIntegrityLevel: {
+		// @flag TokenIntegrityLevel|(<o PySID>, int)
+		TOKEN_MANDATORY_LABEL *tml = (TOKEN_MANDATORY_LABEL *)buf;
+		// Need to create function for SID_AND_ATTRIBUTES, used several places now
+		ret = Py_BuildValue("Nk",
+			PyWinObject_FromSID(tml->Label.Sid),
+			tml->Label.Attributes);
+		break;
+	}
+	case TokenMandatoryPolicy: {
+		// @flag TokenMandatoryPolicy|int (TOKEN_MANDATORY_POLICY_* flag)
+		TOKEN_MANDATORY_POLICY *tmp = (TOKEN_MANDATORY_POLICY *)buf;
+		ret = PyLong_FromUnsignedLong(tmp->Policy);
+		break;
+	}
+							   /*
+							   case TokenAccessInformation:
+							   typedef struct _TOKEN_ACCESS_INFORMATION {
+								   PSID_AND_ATTRIBUTES_HASH SidHash;
+								   PSID_AND_ATTRIBUTES_HASH RestrictedSidHash;
+								   PTOKEN_PRIVILEGES Privileges;
+								   LUID AuthenticationId;
+								   TOKEN_TYPE TokenType;
+								   SECURITY_IMPERSONATION_LEVEL ImpersonationLevel;
+								   TOKEN_MANDATORY_POLICY MandatoryPolicy;
+								   DWORD Flags;
+							   } TOKEN_ACCESS_INFORMATION
+							   typedef struct _SID_AND_ATTRIBUTES_HASH {
+								   DWORD SidCount;
+								   PSID_AND_ATTRIBUTES SidAttr;
+								   SID_HASH_ENTRY Hash[SID_HASH_SIZE];
+							   } SID_AND_ATTRIBUTES_HASH
+							   */
+#endif
+	default:
+		PyErr_Format(PyExc_NotImplementedError, "TokenInformationClass %d is not supported yet", typ);
 	}
 done:
-    if (buf != NULL)
+	if (buf != NULL)
 		free(buf);
 	return ret;
 }
 
-// @pyswig |SetThreadToken|Assigns an impersonation token to a thread. The function
+// @pyswig |SetThreadToken|Assigns an impersonation token to a thread. The function 
 // can also cause a thread to stop using an impersonation token.
 static PyObject *PySetThreadToken(PyObject *self, PyObject *args)
 {
@@ -2118,16 +2124,16 @@ static PyObject *PySetThreadToken(PyObject *self, PyObject *args)
 		&obThread,	// @pyparm <o PyHANDLE>|Thread||Handle to a thread.  Use None to indicate calling thread.
 		&obToken))	// @pyparm <o PyHANDLE>|Token||Handle to an impersonation token.  Use None to end impersonation.
 		return NULL;
-    HANDLE *phThread;
+	HANDLE *phThread;
 	HANDLE hThread, hToken;
-    // Special handling for None here - this means pass a NULL pointer.
-    if (obThread == Py_None)
-        phThread = NULL;
-    else {
-        if (!PyWinObject_AsHANDLE(obThread, &hThread))
-            return NULL;
-        phThread = &hThread;
-    }
+	// Special handling for None here - this means pass a NULL pointer.
+	if (obThread == Py_None)
+		phThread = NULL;
+	else {
+		if (!PyWinObject_AsHANDLE(obThread, &hThread))
+			return NULL;
+		phThread = &hThread;
+	}
 	if (!PyWinObject_AsHANDLE(obToken, &hToken))
 		return NULL;
 	BOOL ok;
@@ -2142,7 +2148,7 @@ static PyObject *MyGetFileSecurity(PyObject *self, PyObject *args)
 {
 	PyObject *rc = NULL;
 	PyObject *obFname;
-	unsigned long info = OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION | SACL_SECURITY_INFORMATION ;
+	unsigned long info = OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION | SACL_SECURITY_INFORMATION;
 
 	// @pyparm string|filename||The name of the file
 	// @pyparm int|info|OWNER_SECURITY_INFORMATION \| GROUP_SECURITY_INFORMATION \| DACL_SECURITY_INFORMATION \| SACL_SECURITY_INFORMATION|Flags that specify the information requested.
@@ -2160,11 +2166,11 @@ static PyObject *MyGetFileSecurity(PyObject *self, PyObject *args)
 		goto done;
 	}
 	psd = (PSECURITY_DESCRIPTOR)malloc(dwSize);
-	if (psd==NULL) {
+	if (psd == NULL) {
 		PyErr_SetString(PyExc_MemoryError, "allocating SECURITY_DESCRIPTOR");
 		goto done;
 	}
-    if (!GetFileSecurity(fname, info, psd, dwSize, &dwSize)) {
+	if (!GetFileSecurity(fname, info, psd, dwSize, &dwSize)) {
 		PyWin_SetAPIError("GetFileSecurity");
 		goto done;
 	}
@@ -2211,7 +2217,7 @@ static PyObject *MyGetUserObjectSecurity(PyObject *self, PyObject *args)
 {
 	PyObject *rc = NULL;
 	PyObject *obHandle;
-	unsigned long info = OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION | SACL_SECURITY_INFORMATION ;
+	unsigned long info = OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION | SACL_SECURITY_INFORMATION;
 
 	// @pyparm <o PyHANDLE>|handle||The handle to the object
 	// @pyparm int|info|OWNER_SECURITY_INFORMATION \| GROUP_SECURITY_INFORMATION \| DACL_SECURITY_INFORMATION \| SACL_SECURITY_INFORMATION|Flags that specify the information requested.
@@ -2229,11 +2235,11 @@ static PyObject *MyGetUserObjectSecurity(PyObject *self, PyObject *args)
 		goto done;
 	}
 	psd = (SECURITY_DESCRIPTOR *)malloc(dwSize);
-	if (psd==NULL) {
+	if (psd == NULL) {
 		PyErr_SetString(PyExc_MemoryError, "allocating SECURITY_DESCRIPTOR");
 		goto done;
 	}
-    if (!GetUserObjectSecurity(handle, &info, psd, dwSize, &dwSize)) {
+	if (!GetUserObjectSecurity(handle, &info, psd, dwSize, &dwSize)) {
 		PyWin_SetAPIError("GetUserObjectSecurity");
 		goto done;
 	}
@@ -2278,7 +2284,7 @@ static PyObject *MyGetKernelObjectSecurity(PyObject *self, PyObject *args)
 {
 	PyObject *rc = NULL;
 	PyObject *obHandle;
-	unsigned long info = OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION | SACL_SECURITY_INFORMATION ;
+	unsigned long info = OWNER_SECURITY_INFORMATION | GROUP_SECURITY_INFORMATION | DACL_SECURITY_INFORMATION | SACL_SECURITY_INFORMATION;
 
 	// @pyparm <o PyHANDLE>|handle||The handle to the object
 	// @pyparm int|info|OWNER_SECURITY_INFORMATION \| GROUP_SECURITY_INFORMATION \| DACL_SECURITY_INFORMATION \| SACL_SECURITY_INFORMATION|Flags that specify the information requested.
@@ -2296,17 +2302,17 @@ static PyObject *MyGetKernelObjectSecurity(PyObject *self, PyObject *args)
 		goto done;
 	}
 	psd = (SECURITY_DESCRIPTOR *)malloc(dwSize);
-	if (psd==NULL) {
+	if (psd == NULL) {
 		PyErr_SetString(PyExc_MemoryError, "allocating SECURITY_DESCRIPTOR");
 		goto done;
 	}
-    if (!GetKernelObjectSecurity(handle, info, psd, dwSize, &dwSize)) {
+	if (!GetKernelObjectSecurity(handle, info, psd, dwSize, &dwSize)) {
 		PyWin_SetAPIError("GetKernelObjectSecurity");
 		goto done;
 	}
 	rc = PyWinObject_FromSECURITY_DESCRIPTOR(psd);
 done:
-	if (psd!=NULL)
+	if (psd != NULL)
 		free(psd);
 	return rc;
 }
@@ -2345,7 +2351,7 @@ static PyObject *PySetTokenInformation(PyObject *self, PyObject *args)
 {
 	PyObject *obth;
 	HANDLE th;
-	PyObject *obinfo, *ret=NULL;
+	PyObject *obinfo, *ret = NULL;
 	DWORD bufsize = 0;
 	void *buf = NULL;
 	TOKEN_INFORMATION_CLASS typ;
@@ -2361,85 +2367,85 @@ static PyObject *PySetTokenInformation(PyObject *self, PyObject *args)
 
 	// @flagh TokenInformationClass|Type of input expected
 	switch (typ) {
-		case TokenOwner: {	// @flag TokenOwner|<o PySID> to be used as owner of created objects
-			bufsize=sizeof(TOKEN_OWNER);
-			buf=malloc(bufsize);
-			if (buf==NULL)
-				return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
-			if (!PyWinObject_AsSID(obinfo, &((PTOKEN_OWNER)buf)->Owner, FALSE))
-				goto done;
-			break;
-			}
-		case TokenPrimaryGroup: {	// @flag TokenPrimaryGroup|<o PySID>
-			bufsize=sizeof(TOKEN_PRIMARY_GROUP);
-			buf=malloc(bufsize);
-			if (buf==NULL)
-				return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
-			if (!PyWinObject_AsSID(obinfo, &((PTOKEN_PRIMARY_GROUP)buf)->PrimaryGroup, FALSE))
-				goto done;
-			break;
-			}
-		case TokenDefaultDacl: {	// @flag TokenDefaultDacl|<o PyACL> - Default permissions for created objects
-			bufsize=sizeof(TOKEN_DEFAULT_DACL);
-			buf=malloc(bufsize);
-			if (buf==NULL)
-				return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
-			if (!PyWinObject_AsACL(obinfo, &((PTOKEN_DEFAULT_DACL)buf)->DefaultDacl, TRUE))
-				goto done;
-			break;
-			}
-		case TokenSessionId:				// @flag TokenSessionId|Int - Terminal services session id
-		#ifdef _WIN32_WINNT_LONGHORN		// Vista info types related to UAC
-		case TokenVirtualizationEnabled:	// @flag TokenVirtualizationEnabled|Boolean
-		case TokenVirtualizationAllowed:	// @flag TokenVirtualizationAllowed|Boolean
-		#endif
-			bufsize = sizeof(DWORD);
-			buf=malloc(bufsize);
-			if (buf==NULL)
-				return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
-			*(DWORD *)buf=PyLong_AsUnsignedLong(obinfo);
-			if (*(DWORD *)buf ==  (DWORD)-1 && PyErr_Occurred()){
-				// PyLong_AsUnsignedLong returns stupid "bad argument to internal function" error when it fails
-				PyErr_Clear();
-				PyErr_SetString(PyExc_TypeError, "Information must be an int >= 0");
-				goto done;
-				}
-			break;
-		#ifdef _WIN32_WINNT_LONGHORN
-		case TokenIntegrityLevel:	// @flag TokenIntegrityLevel|<o PySID_AND_ATTRIBUTES> containing an integrity SID and SE_GROUP_INTEGRITY flag
-			bufsize=sizeof(TOKEN_MANDATORY_LABEL);
-			buf=malloc(bufsize);
-			if (buf==NULL)
-				return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
-			if (!PyWinObject_AsSID_AND_ATTRIBUTES(obinfo, &((PTOKEN_MANDATORY_LABEL)buf)->Label))
-				goto done;
-			break;
-		case TokenMandatoryPolicy:	// @flag TokenMandatoryPolicy|Int. one of TOKEN_MANDATORY_POLICY_* values
-			bufsize = sizeof(TOKEN_MANDATORY_POLICY);
-			buf=malloc(bufsize);
-			if (buf==NULL)
-				return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
-			((PTOKEN_MANDATORY_POLICY)buf)->Policy=PyLong_AsUnsignedLong(obinfo);
-			if (((PTOKEN_MANDATORY_POLICY)buf)->Policy ==  (DWORD)-1 && PyErr_Occurred()){
-				// PyLong_AsUnsignedLong returns stupid "bad argument to internal function" error when it fails
-				PyErr_Clear();
-				PyErr_SetString(PyExc_TypeError, "Information must be an int >= 0");
-				goto done;
-				}
-			break;
-		#endif
-		default:
-			PyErr_Format(PyExc_NotImplementedError, "TokenInformationClass %d is not yet supported", typ);
+	case TokenOwner: {	// @flag TokenOwner|<o PySID> to be used as owner of created objects
+		bufsize = sizeof(TOKEN_OWNER);
+		buf = malloc(bufsize);
+		if (buf == NULL)
+			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
+		if (!PyWinObject_AsSID(obinfo, &((PTOKEN_OWNER)buf)->Owner, FALSE))
 			goto done;
+		break;
 	}
-	if (!SetTokenInformation(th,typ,buf,bufsize))
-		PyWin_SetAPIError("SetTokenInformation");
-	else{
-		Py_INCREF(Py_None);
-		ret=Py_None;
+	case TokenPrimaryGroup: {	// @flag TokenPrimaryGroup|<o PySID>
+		bufsize = sizeof(TOKEN_PRIMARY_GROUP);
+		buf = malloc(bufsize);
+		if (buf == NULL)
+			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
+		if (!PyWinObject_AsSID(obinfo, &((PTOKEN_PRIMARY_GROUP)buf)->PrimaryGroup, FALSE))
+			goto done;
+		break;
+	}
+	case TokenDefaultDacl: {	// @flag TokenDefaultDacl|<o PyACL> - Default permissions for created objects
+		bufsize = sizeof(TOKEN_DEFAULT_DACL);
+		buf = malloc(bufsize);
+		if (buf == NULL)
+			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
+		if (!PyWinObject_AsACL(obinfo, &((PTOKEN_DEFAULT_DACL)buf)->DefaultDacl, TRUE))
+			goto done;
+		break;
+	}
+	case TokenSessionId:				// @flag TokenSessionId|Int - Terminal services session id
+#ifdef _WIN32_WINNT_LONGHORN		// Vista info types related to UAC
+	case TokenVirtualizationEnabled:	// @flag TokenVirtualizationEnabled|Boolean
+	case TokenVirtualizationAllowed:	// @flag TokenVirtualizationAllowed|Boolean
+#endif
+		bufsize = sizeof(DWORD);
+		buf = malloc(bufsize);
+		if (buf == NULL)
+			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
+		*(DWORD *)buf = PyLong_AsUnsignedLong(obinfo);
+		if (*(DWORD *)buf == (DWORD)-1 && PyErr_Occurred()) {
+			// PyLong_AsUnsignedLong returns stupid "bad argument to internal function" error when it fails
+			PyErr_Clear();
+			PyErr_SetString(PyExc_TypeError, "Information must be an int >= 0");
+			goto done;
 		}
+		break;
+#ifdef _WIN32_WINNT_LONGHORN
+	case TokenIntegrityLevel:	// @flag TokenIntegrityLevel|<o PySID_AND_ATTRIBUTES> containing an integrity SID and SE_GROUP_INTEGRITY flag
+		bufsize = sizeof(TOKEN_MANDATORY_LABEL);
+		buf = malloc(bufsize);
+		if (buf == NULL)
+			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
+		if (!PyWinObject_AsSID_AND_ATTRIBUTES(obinfo, &((PTOKEN_MANDATORY_LABEL)buf)->Label))
+			goto done;
+		break;
+	case TokenMandatoryPolicy:	// @flag TokenMandatoryPolicy|Int. one of TOKEN_MANDATORY_POLICY_* values
+		bufsize = sizeof(TOKEN_MANDATORY_POLICY);
+		buf = malloc(bufsize);
+		if (buf == NULL)
+			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", bufsize);
+		((PTOKEN_MANDATORY_POLICY)buf)->Policy = PyLong_AsUnsignedLong(obinfo);
+		if (((PTOKEN_MANDATORY_POLICY)buf)->Policy == (DWORD)-1 && PyErr_Occurred()) {
+			// PyLong_AsUnsignedLong returns stupid "bad argument to internal function" error when it fails
+			PyErr_Clear();
+			PyErr_SetString(PyExc_TypeError, "Information must be an int >= 0");
+			goto done;
+		}
+		break;
+#endif
+	default:
+		PyErr_Format(PyExc_NotImplementedError, "TokenInformationClass %d is not yet supported", typ);
+		goto done;
+	}
+	if (!SetTokenInformation(th, typ, buf, bufsize))
+		PyWin_SetAPIError("SetTokenInformation");
+	else {
+		Py_INCREF(Py_None);
+		ret = Py_None;
+	}
 
-	done:
+done:
 	if (buf)
 		free(buf);
 	return ret;
@@ -2465,7 +2471,7 @@ static PyObject *PyLsaOpenPolicy(PyObject *self, PyObject *args)
 
 	ntsResult = LsaOpenPolicy(&system_name, &ObjectAttributes, access_mask, &lsahPolicyHandle);
 	if (ntsResult != STATUS_SUCCESS)
-		PyWin_SetAPIError("LsaOpenPolicy",LsaNtStatusToWinError(ntsResult));
+		PyWin_SetAPIError("LsaOpenPolicy", LsaNtStatusToWinError(ntsResult));
 	else
 		ret = PyWinObject_FromLSA_HANDLE(lsahPolicyHandle);
 	PyWinObject_FreeWCHAR(system_name.Buffer);
@@ -2487,110 +2493,110 @@ static PyObject *PyLsaClose(PyObject *self, PyObject *args)
 
 static PyObject *PyLsaQueryInformationPolicy(PyObject *self, PyObject *args)
 {
-	PyObject *ret=NULL;
+	PyObject *ret = NULL;
 	PyObject *obhandle;
 	LSA_HANDLE lsah;
 	NTSTATUS err;
 	void* buf = NULL;
 	POLICY_INFORMATION_CLASS info_class;
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
-	// @pyparm int|InformationClass||POLICY_INFORMATION_CLASS value
+	// @pyparm int|InformationClass||POLICY_INFORMATION_CLASS value 
 	if (!PyArg_ParseTuple(args, "Oi:LsaQueryInformationPolicy", &obhandle, (long *)&info_class))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhandle, &lsah))
 		return NULL;;
 
 	err = LsaQueryInformationPolicy(lsah, info_class, &buf);
-	if (err != STATUS_SUCCESS){
-		PyWin_SetAPIError("LsaQueryInformationPolicy",LsaNtStatusToWinError(err));
+	if (err != STATUS_SUCCESS) {
+		PyWin_SetAPIError("LsaQueryInformationPolicy", LsaNtStatusToWinError(err));
 		return NULL;
-		}
+	}
 	// @flagh POLICY_INFORMATION_CLASS value|Return type
-	switch (info_class){
-		case PolicyAuditEventsInformation:{
-			// @flag PolicyAuditEventsInformation|returns tuple of (boolean,(int,...))
-			// Tuple consists of a boolean indicating if auditing is enabled, and a tuple of
-			//   ints, indexed by POLICY_AUDIT_EVENT_TYPE values, containing a combination
-			//   of POLICY_AUDIT_EVENT_UNCHANGED, POLICY_AUDIT_EVENT_SUCCESS, POLICY_AUDIT_EVENT_FAILURE, POLICY_AUDIT_EVENT_NONE
-			POLICY_AUDIT_EVENTS_INFO *info = (POLICY_AUDIT_EVENTS_INFO *)buf;
-			PyObject *events = PyTuple_New(info->MaximumAuditEventCount);
-			DWORD *auditing_option = info->EventAuditingOptions;
-			for (unsigned long event_ind=0;event_ind<info->MaximumAuditEventCount;event_ind++){
-				PyTuple_SetItem(events, event_ind, Py_BuildValue("i", *auditing_option));
-				auditing_option++;
-				}
-			ret=Py_BuildValue("iO",info->AuditingMode,events);
-			Py_DECREF(events);
-			break;
-			}
-
-		case PolicyDnsDomainInformation:{
-			// @flag PolicyDnsDomainInformation|Returns a tuple representing a POLICY_DNS_DOMAIN_INFO struct
-			POLICY_DNS_DOMAIN_INFO *info = (POLICY_DNS_DOMAIN_INFO *)buf;
-			PyObject *domain_name =     PyWinObject_FromLSA_UNICODE_STRING(info->Name);
-			PyObject *dns_domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->DnsDomainName);
-			PyObject *dns_forest_name = PyWinObject_FromLSA_UNICODE_STRING(info->DnsForestName);
-			PyObject *domain_guid = PyWinCoreString_FromIID(info->DomainGuid);
-			PyObject *domain_sid = PyWinObject_FromSID(info->Sid);
-			ret = Py_BuildValue("(OOOOO)",domain_name,dns_domain_name,dns_forest_name,domain_guid,domain_sid);
-			Py_DECREF(domain_name);
-			Py_DECREF(dns_domain_name);
-			Py_DECREF(dns_forest_name);
-			Py_DECREF(domain_guid);
-			Py_DECREF(domain_sid);
-			break;
-			}
-
-		case PolicyPrimaryDomainInformation:{
-			// @flag PolicyPrimaryDomainInformation|Returns name and SID of primary domain
-			POLICY_PRIMARY_DOMAIN_INFO *info = (POLICY_PRIMARY_DOMAIN_INFO *)buf;
-			PyObject *domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->Name);
-			PyObject *domain_sid = PyWinObject_FromSID(info->Sid);
-			ret = Py_BuildValue("(OO)",domain_name,domain_sid);
-			Py_DECREF(domain_name);
-			Py_DECREF(domain_sid);
-			break;
-			}
-
-		case PolicyAccountDomainInformation:{
-			// @flag PolicyAccountDomainInformation|Returns name and SID of account domain
-			POLICY_ACCOUNT_DOMAIN_INFO *info = (POLICY_ACCOUNT_DOMAIN_INFO *)buf;
-			PyObject *domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->DomainName);
-			PyObject *domain_sid = PyWinObject_FromSID(info->DomainSid);
-			ret = Py_BuildValue("(OO)",domain_name,domain_sid);
-			Py_DECREF(domain_name);
-			Py_DECREF(domain_sid);
-			break;
-			}
-
-		case PolicyLsaServerRoleInformation:{
-			// @flag PolicyLsaServerRoleInformation|Returns an int, one of PolicyServerRoleBackup, PolicyServerRolePrimary
-			POLICY_LSA_SERVER_ROLE_INFO *info = (POLICY_LSA_SERVER_ROLE_INFO *)buf;
-			ret=Py_BuildValue("i",info->LsaServerRole);
-			break;
-			}
-
-		case PolicyModificationInformation:{
-			/* ???????? This alway blows up in the LsaQueryInformationPolicy call
-			   (87, 'LsaQueryInformationPolicy', 'The parameter is incorrect.')
-			   Tried it with local handle, PDC and BDC with no luck
-			   Running test case with everything hardcoded produced same result
-			   Maybe only works locally on PDC ?
-			   Data conversions below are untested
-			*/
-			// @flag PolicyModificationInformation|Returns modification serial nbr and modified time of Lsa database
-			POLICY_MODIFICATION_INFO *info = (POLICY_MODIFICATION_INFO *)buf;
-			PyObject *modserial = PyWinObject_FromLARGE_INTEGER(info->ModifiedId);
-			PyObject *modtime = PyWinObject_FromTimeStamp(info->DatabaseCreationTime);
-			ret = Py_BuildValue("(NN)",modserial,modtime);
-			Py_DECREF(modserial);
-			Py_DECREF(modtime);
-			break;
-			}
-		default:
-			PyErr_SetString(PyExc_NotImplementedError, "The POLICY_INFORMATION_CLASS specified is not supported yet");
-			break;
+	switch (info_class) {
+	case PolicyAuditEventsInformation: {
+		// @flag PolicyAuditEventsInformation|returns tuple of (boolean,(int,...))
+		// Tuple consists of a boolean indicating if auditing is enabled, and a tuple of 
+		//   ints, indexed by POLICY_AUDIT_EVENT_TYPE values, containing a combination
+		//   of POLICY_AUDIT_EVENT_UNCHANGED, POLICY_AUDIT_EVENT_SUCCESS, POLICY_AUDIT_EVENT_FAILURE, POLICY_AUDIT_EVENT_NONE 
+		POLICY_AUDIT_EVENTS_INFO *info = (POLICY_AUDIT_EVENTS_INFO *)buf;
+		PyObject *events = PyTuple_New(info->MaximumAuditEventCount);
+		DWORD *auditing_option = info->EventAuditingOptions;
+		for (unsigned long event_ind = 0; event_ind < info->MaximumAuditEventCount; event_ind++) {
+			PyTuple_SetItem(events, event_ind, Py_BuildValue("i", *auditing_option));
+			auditing_option++;
 		}
+		ret = Py_BuildValue("iO", info->AuditingMode, events);
+		Py_DECREF(events);
+		break;
+	}
+
+	case PolicyDnsDomainInformation: {
+		// @flag PolicyDnsDomainInformation|Returns a tuple representing a POLICY_DNS_DOMAIN_INFO struct
+		POLICY_DNS_DOMAIN_INFO *info = (POLICY_DNS_DOMAIN_INFO *)buf;
+		PyObject *domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->Name);
+		PyObject *dns_domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->DnsDomainName);
+		PyObject *dns_forest_name = PyWinObject_FromLSA_UNICODE_STRING(info->DnsForestName);
+		PyObject *domain_guid = PyWinCoreString_FromIID(info->DomainGuid);
+		PyObject *domain_sid = PyWinObject_FromSID(info->Sid);
+		ret = Py_BuildValue("(OOOOO)", domain_name, dns_domain_name, dns_forest_name, domain_guid, domain_sid);
+		Py_DECREF(domain_name);
+		Py_DECREF(dns_domain_name);
+		Py_DECREF(dns_forest_name);
+		Py_DECREF(domain_guid);
+		Py_DECREF(domain_sid);
+		break;
+	}
+
+	case PolicyPrimaryDomainInformation: {
+		// @flag PolicyPrimaryDomainInformation|Returns name and SID of primary domain
+		POLICY_PRIMARY_DOMAIN_INFO *info = (POLICY_PRIMARY_DOMAIN_INFO *)buf;
+		PyObject *domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->Name);
+		PyObject *domain_sid = PyWinObject_FromSID(info->Sid);
+		ret = Py_BuildValue("(OO)", domain_name, domain_sid);
+		Py_DECREF(domain_name);
+		Py_DECREF(domain_sid);
+		break;
+	}
+
+	case PolicyAccountDomainInformation: {
+		// @flag PolicyAccountDomainInformation|Returns name and SID of account domain
+		POLICY_ACCOUNT_DOMAIN_INFO *info = (POLICY_ACCOUNT_DOMAIN_INFO *)buf;
+		PyObject *domain_name = PyWinObject_FromLSA_UNICODE_STRING(info->DomainName);
+		PyObject *domain_sid = PyWinObject_FromSID(info->DomainSid);
+		ret = Py_BuildValue("(OO)", domain_name, domain_sid);
+		Py_DECREF(domain_name);
+		Py_DECREF(domain_sid);
+		break;
+	}
+
+	case PolicyLsaServerRoleInformation: {
+		// @flag PolicyLsaServerRoleInformation|Returns an int, one of PolicyServerRoleBackup, PolicyServerRolePrimary
+		POLICY_LSA_SERVER_ROLE_INFO *info = (POLICY_LSA_SERVER_ROLE_INFO *)buf;
+		ret = Py_BuildValue("i", info->LsaServerRole);
+		break;
+	}
+
+	case PolicyModificationInformation: {
+		/* ???????? This alway blows up in the LsaQueryInformationPolicy call
+		   (87, 'LsaQueryInformationPolicy', 'The parameter is incorrect.')
+		   Tried it with local handle, PDC and BDC with no luck
+		   Running test case with everything hardcoded produced same result
+		   Maybe only works locally on PDC ?
+		   Data conversions below are untested
+		*/
+		// @flag PolicyModificationInformation|Returns modification serial nbr and modified time of Lsa database
+		POLICY_MODIFICATION_INFO *info = (POLICY_MODIFICATION_INFO *)buf;
+		PyObject *modserial = PyWinObject_FromLARGE_INTEGER(info->ModifiedId);
+		PyObject *modtime = PyWinObject_FromTimeStamp(info->DatabaseCreationTime);
+		ret = Py_BuildValue("(NN)", modserial, modtime);
+		Py_DECREF(modserial);
+		Py_DECREF(modtime);
+		break;
+	}
+	default:
+		PyErr_SetString(PyExc_NotImplementedError, "The POLICY_INFORMATION_CLASS specified is not supported yet");
+		break;
+	}
 
 	LsaFreeMemory(buf);
 	return ret;
@@ -2598,9 +2604,9 @@ static PyObject *PyLsaQueryInformationPolicy(PyObject *self, PyObject *args)
 
 static PyObject *PyLsaSetInformationPolicy(PyObject *self, PyObject *args)
 {
-	PyObject *ret=NULL;
-	PyObject *obhandle=NULL;
-	PyObject *obinfo=NULL;
+	PyObject *ret = NULL;
+	PyObject *obhandle = NULL;
+	PyObject *obinfo = NULL;
 	LSA_HANDLE lsah;
 	NTSTATUS err;
 	void* buf = NULL;
@@ -2612,72 +2618,72 @@ static PyObject *PyLsaSetInformationPolicy(PyObject *self, PyObject *args)
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhandle, &lsah))
 		return NULL;;
-	switch (info_class){
+	switch (info_class) {
 		// @flagh InformationClass|Type of input expected
-		case PolicyAuditEventsInformation:{
-			// @flag PolicyAuditEventsInformation|(boolean, (int, ...))
-			//	<nl>First member imdicates whether auditing is enabled or not.
-			//	<nl>Seconed member is a sequence of POLICY_AUDIT_EVENT_* flags specifying which events
-			//	should be audited.  See AuditCategory* values for positions of each event type.
-			PyObject *obauditing_options = NULL, *obauditing_option = NULL, *options_tuple=NULL;
-			ULONG option_ind;
-			POLICY_AUDIT_EVENTS_INFO info={0, NULL, 0};
+	case PolicyAuditEventsInformation: {
+		// @flag PolicyAuditEventsInformation|(boolean, (int, ...))
+		//	<nl>First member imdicates whether auditing is enabled or not.
+		//	<nl>Seconed member is a sequence of POLICY_AUDIT_EVENT_* flags specifying which events
+		//	should be audited.  See AuditCategory* values for positions of each event type.
+		PyObject *obauditing_options = NULL, *obauditing_option = NULL, *options_tuple = NULL;
+		ULONG option_ind;
+		POLICY_AUDIT_EVENTS_INFO info = { 0, NULL, 0 };
 
-			if (!PyArg_ParseTuple(obinfo, "bO:PyLsaSetInformationPolicy", &info.AuditingMode, &obauditing_options)){
-				PyErr_SetString(PyExc_TypeError, "Info for PolicyAuditEventsInformation must be (boolean, [int, ...])");
-				return NULL;
-				}
-
-			options_tuple=PyWinSequence_Tuple(obauditing_options, &info.MaximumAuditEventCount);
-			if (options_tuple==NULL){
-				PyErr_SetString(PyExc_TypeError, "Info for PolicyAuditEventsInformation must be (boolean, [int, ...])");
-				return NULL;
-				}
-			info.EventAuditingOptions = (unsigned long *)calloc(info.MaximumAuditEventCount, sizeof(unsigned long));
-			if (info.EventAuditingOptions==NULL){
-				PyErr_NoMemory();
-				goto done;
-				}
-
-			for (option_ind=0; option_ind<info.MaximumAuditEventCount; option_ind++){
-				obauditing_option = PyTuple_GET_ITEM(options_tuple, option_ind);
-				info.EventAuditingOptions[option_ind] = PyInt_AsLong(obauditing_option);
-				if (info.EventAuditingOptions[option_ind] == (ULONG)-1 && PyErr_Occurred())
-					goto done;
-				}
-			err = LsaSetInformationPolicy(lsah, info_class, &info);
-			if (err != STATUS_SUCCESS){
-				PyWin_SetAPIError("LsaSetInformationPolicy",LsaNtStatusToWinError(err));
-				goto done;
-				}
-			Py_INCREF(Py_None);
-			ret = Py_None;
-			done:
-				Py_DECREF(options_tuple);
-				if (info.EventAuditingOptions)
-					free (info.EventAuditingOptions);
-				return ret;
-			break;
-			}
-
-		default:{
-			PyErr_SetString(PyExc_NotImplementedError, "The specified POLICY_INFORMATION_CLASS is not supported yet");
+		if (!PyArg_ParseTuple(obinfo, "bO:PyLsaSetInformationPolicy", &info.AuditingMode, &obauditing_options)) {
+			PyErr_SetString(PyExc_TypeError, "Info for PolicyAuditEventsInformation must be (boolean, [int, ...])");
 			return NULL;
-			}
 		}
+
+		options_tuple = PyWinSequence_Tuple(obauditing_options, &info.MaximumAuditEventCount);
+		if (options_tuple == NULL) {
+			PyErr_SetString(PyExc_TypeError, "Info for PolicyAuditEventsInformation must be (boolean, [int, ...])");
+			return NULL;
+		}
+		info.EventAuditingOptions = (unsigned long *)calloc(info.MaximumAuditEventCount, sizeof(unsigned long));
+		if (info.EventAuditingOptions == NULL) {
+			PyErr_NoMemory();
+			goto done;
+		}
+
+		for (option_ind = 0; option_ind < info.MaximumAuditEventCount; option_ind++) {
+			obauditing_option = PyTuple_GET_ITEM(options_tuple, option_ind);
+			info.EventAuditingOptions[option_ind] = PyInt_AsLong(obauditing_option);
+			if (info.EventAuditingOptions[option_ind] == (ULONG)-1 && PyErr_Occurred())
+				goto done;
+		}
+		err = LsaSetInformationPolicy(lsah, info_class, &info);
+		if (err != STATUS_SUCCESS) {
+			PyWin_SetAPIError("LsaSetInformationPolicy", LsaNtStatusToWinError(err));
+			goto done;
+		}
+		Py_INCREF(Py_None);
+		ret = Py_None;
+	done:
+		Py_DECREF(options_tuple);
+		if (info.EventAuditingOptions)
+			free(info.EventAuditingOptions);
+		return ret;
+		break;
+	}
+
+	default: {
+		PyErr_SetString(PyExc_NotImplementedError, "The specified POLICY_INFORMATION_CLASS is not supported yet");
+		return NULL;
+	}
+	}
 }
 
 static PyObject *PyLsaAddAccountRights(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-	PyObject *privs=NULL, *priv=NULL, *policy_handle=NULL;
-	PyObject *obsid=NULL, *ret=NULL;
-	PSID psid=NULL;
-	PLSA_UNICODE_STRING plsau=NULL, plsau_start=NULL;
-	DWORD priv_cnt=0,priv_ind=0;
+	PyObject *privs = NULL, *priv = NULL, *policy_handle = NULL;
+	PyObject *obsid = NULL, *ret = NULL;
+	PSID psid = NULL;
+	PLSA_UNICODE_STRING plsau = NULL, plsau_start = NULL;
+	DWORD priv_cnt = 0, priv_ind = 0;
 	HANDLE hpolicy;
 	NTSTATUS err;
 
-	static char *keywords[] = {"PolicyHandle","AccountSid","UserRights", NULL};
+	static char *keywords[] = { "PolicyHandle","AccountSid","UserRights", NULL };
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
 	// @pyparm <o PySID>|AccountSid||Account to which privs will be added
 	// @pyparm (str/unicode,...)|UserRights||Sequence of privilege names (SE_*_NAME unicode constants)
@@ -2690,65 +2696,65 @@ static PyObject *PyLsaAddAccountRights(PyObject *self, PyObject *args, PyObject 
 		return NULL;
 
 	PyObject *privs_tuple = PyWinSequence_Tuple(privs, &priv_cnt);
-	if (privs_tuple==NULL)
+	if (privs_tuple == NULL)
 		return NULL;
-	plsau_start=(PLSA_UNICODE_STRING)calloc(priv_cnt,sizeof(LSA_UNICODE_STRING));
-	if (plsau_start==NULL){
-		PyErr_Format(PyExc_MemoryError,"LsaAddAccountRights: Unable to allocate %d bytes", priv_cnt*sizeof(LSA_UNICODE_STRING));
+	plsau_start = (PLSA_UNICODE_STRING)calloc(priv_cnt, sizeof(LSA_UNICODE_STRING));
+	if (plsau_start == NULL) {
+		PyErr_Format(PyExc_MemoryError, "LsaAddAccountRights: Unable to allocate %d bytes", priv_cnt*sizeof(LSA_UNICODE_STRING));
 		goto done;
-		}
+	}
 
-	plsau=plsau_start;
-	for (priv_ind=0; priv_ind<priv_cnt; priv_ind++){
-		plsau->Buffer=NULL;
-		priv=PyTuple_GET_ITEM(privs_tuple, priv_ind);
-		if (!PyWinObject_AsLSA_UNICODE_STRING(priv,plsau,FALSE))
+	plsau = plsau_start;
+	for (priv_ind = 0; priv_ind < priv_cnt; priv_ind++) {
+		plsau->Buffer = NULL;
+		priv = PyTuple_GET_ITEM(privs_tuple, priv_ind);
+		if (!PyWinObject_AsLSA_UNICODE_STRING(priv, plsau, FALSE))
 			goto done;
 		plsau++;
-		}
-	err=LsaAddAccountRights(hpolicy, psid, plsau_start, priv_cnt);
-	if (err != STATUS_SUCCESS){
-		PyWin_SetAPIError("LsaAddAccountRights",LsaNtStatusToWinError(err));
+	}
+	err = LsaAddAccountRights(hpolicy, psid, plsau_start, priv_cnt);
+	if (err != STATUS_SUCCESS) {
+		PyWin_SetAPIError("LsaAddAccountRights", LsaNtStatusToWinError(err));
 		goto done;
-		}
+	}
 	Py_INCREF(Py_None);
-	ret=Py_None;
+	ret = Py_None;
 
-	done:
+done:
 	Py_DECREF(privs_tuple);
-	if (plsau_start){
-		plsau=plsau_start;
-		for (priv_ind=0; priv_ind<priv_cnt; priv_ind++){
+	if (plsau_start) {
+		plsau = plsau_start;
+		for (priv_ind = 0; priv_ind < priv_cnt; priv_ind++) {
 			// in case object in privs is not a string
-			if(plsau->Buffer==NULL)
+			if (plsau->Buffer == NULL)
 				break;
 			PyWinObject_FreeWCHAR(plsau->Buffer);
 			plsau++;
-			}
-		free(plsau_start);
 		}
+		free(plsau_start);
+	}
 	return ret;
 }
-PyCFunction pfn_PyLsaAddAccountRights=PyCFunction(PyLsaAddAccountRights);
+PyCFunction pfn_PyLsaAddAccountRights = PyCFunction(PyLsaAddAccountRights);
 
 static PyObject *PyLsaRemoveAccountRights(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-	PyObject *privs=NULL, *priv=NULL, *policy_handle=NULL;
-	PyObject *obsid=NULL, *ret=NULL;
-	PSID psid=NULL;
-	BOOL AllRights=FALSE;
-	PLSA_UNICODE_STRING plsau=NULL, plsau_start=NULL;
-	DWORD priv_cnt=0,priv_ind=0;
+	PyObject *privs = NULL, *priv = NULL, *policy_handle = NULL;
+	PyObject *obsid = NULL, *ret = NULL;
+	PSID psid = NULL;
+	BOOL AllRights = FALSE;
+	PLSA_UNICODE_STRING plsau = NULL, plsau_start = NULL;
+	DWORD priv_cnt = 0, priv_ind = 0;
 	HANDLE hpolicy;
 	NTSTATUS err;
 
-	static char *keywords[] = {"PolicyHandle","AccountSid","AllRights","UserRights", NULL};
+	static char *keywords[] = { "PolicyHandle","AccountSid","AllRights","UserRights", NULL };
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
 	// @pyparm <o PySID>|AccountSid||Account whose privileges will be removed
 	// @pyparm int|AllRights||Boolean value indicating if all privs should be removed from account
 	// @pyparm (str/unicode,...)|UserRights||List of privilege names to be removed (SE_*_NAME unicode constants)
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOiO:LsaAddAccountRights", keywords,
-		&policy_handle, &obsid,  &AllRights, &privs))
+		&policy_handle, &obsid, &AllRights, &privs))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(policy_handle, &hpolicy))
 		return NULL;
@@ -2756,54 +2762,54 @@ static PyObject *PyLsaRemoveAccountRights(PyObject *self, PyObject *args, PyObje
 		return NULL;
 
 	PyObject *privs_tuple = PyWinSequence_Tuple(privs, &priv_cnt);
-	if (privs_tuple==NULL)
+	if (privs_tuple == NULL)
 		return NULL;
-	plsau_start=(PLSA_UNICODE_STRING)calloc(priv_cnt,sizeof(LSA_UNICODE_STRING));
-	if (plsau_start==NULL){
-		PyErr_Format(PyExc_MemoryError,"LsaRemoveAccountRights: Unable to allocate %d bytes", priv_cnt*sizeof(LSA_UNICODE_STRING));
+	plsau_start = (PLSA_UNICODE_STRING)calloc(priv_cnt, sizeof(LSA_UNICODE_STRING));
+	if (plsau_start == NULL) {
+		PyErr_Format(PyExc_MemoryError, "LsaRemoveAccountRights: Unable to allocate %d bytes", priv_cnt*sizeof(LSA_UNICODE_STRING));
 		goto done;
-		}
+	}
 
-	plsau=plsau_start;
-	for (priv_ind=0; priv_ind<priv_cnt; priv_ind++){
-		plsau->Buffer=NULL;
-		priv=PyTuple_GET_ITEM(privs_tuple, priv_ind);
-		if (!PyWinObject_AsLSA_UNICODE_STRING(priv,plsau,FALSE))
+	plsau = plsau_start;
+	for (priv_ind = 0; priv_ind < priv_cnt; priv_ind++) {
+		plsau->Buffer = NULL;
+		priv = PyTuple_GET_ITEM(privs_tuple, priv_ind);
+		if (!PyWinObject_AsLSA_UNICODE_STRING(priv, plsau, FALSE))
 			goto done;
 		plsau++;
-		}
-	err=LsaRemoveAccountRights(hpolicy, psid, AllRights, plsau_start, priv_cnt);
-	if (err != STATUS_SUCCESS){
-		PyWin_SetAPIError("LsaRemoveAccountRights",LsaNtStatusToWinError(err));
+	}
+	err = LsaRemoveAccountRights(hpolicy, psid, AllRights, plsau_start, priv_cnt);
+	if (err != STATUS_SUCCESS) {
+		PyWin_SetAPIError("LsaRemoveAccountRights", LsaNtStatusToWinError(err));
 		goto done;
-		}
+	}
 	Py_INCREF(Py_None);
-	ret=Py_None;
+	ret = Py_None;
 
-	done:
+done:
 	Py_DECREF(privs_tuple);
-	if (plsau_start){
-		plsau=plsau_start;
-		for (priv_ind=0; priv_ind<priv_cnt; priv_ind++){
+	if (plsau_start) {
+		plsau = plsau_start;
+		for (priv_ind = 0; priv_ind < priv_cnt; priv_ind++) {
 			// in case object in privs is not a string
-			if(plsau->Buffer==NULL)
+			if (plsau->Buffer == NULL)
 				break;
 			PyWinObject_FreeWCHAR(plsau->Buffer);
 			plsau++;
-			}
-		free(plsau_start);
 		}
+		free(plsau_start);
+	}
 	return ret;
 }
-PyCFunction pfn_PyLsaRemoveAccountRights=PyCFunction(PyLsaRemoveAccountRights);
+PyCFunction pfn_PyLsaRemoveAccountRights = PyCFunction(PyLsaRemoveAccountRights);
 
 static PyObject *PyLsaEnumerateAccountRights(PyObject *self, PyObject *args)
 {
-	PyObject *privs=NULL, *priv=NULL, *policy_handle=NULL;
-	PyObject *obsid=NULL, *ret=NULL;
-	PSID psid=NULL;
-	PLSA_UNICODE_STRING plsau=NULL;
-	ULONG priv_cnt=0,priv_ind=0;
+	PyObject *privs = NULL, *priv = NULL, *policy_handle = NULL;
+	PyObject *obsid = NULL, *ret = NULL;
+	PSID psid = NULL;
+	PLSA_UNICODE_STRING plsau = NULL;
+	ULONG priv_cnt = 0, priv_ind = 0;
 	HANDLE hpolicy;
 	NTSTATUS err;
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
@@ -2814,23 +2820,23 @@ static PyObject *PyLsaEnumerateAccountRights(PyObject *self, PyObject *args)
 		return NULL;
 	if (!PyWinObject_AsSID(obsid, &psid, FALSE))
 		return NULL;
-	err=LsaEnumerateAccountRights(hpolicy,psid, &plsau, &priv_cnt);
-	if (err != STATUS_SUCCESS){
-		PyWin_SetAPIError("LsaEnumerateAccountRights",LsaNtStatusToWinError(err));
+	err = LsaEnumerateAccountRights(hpolicy, psid, &plsau, &priv_cnt);
+	if (err != STATUS_SUCCESS) {
+		PyWin_SetAPIError("LsaEnumerateAccountRights", LsaNtStatusToWinError(err));
 		goto done;
-		}
-	privs=PyTuple_New(priv_cnt);
+	}
+	privs = PyTuple_New(priv_cnt);
 	if (privs)
-		for (priv_ind=0; priv_ind<priv_cnt; priv_ind++){
-		    priv=PyWinObject_FromLSA_UNICODE_STRING(plsau[priv_ind]);
-			if (!priv){
+		for (priv_ind = 0; priv_ind < priv_cnt; priv_ind++) {
+			priv = PyWinObject_FromLSA_UNICODE_STRING(plsau[priv_ind]);
+			if (!priv) {
 				Py_DECREF(privs);
-				privs=NULL;
+				privs = NULL;
 				break;
-				}
-			PyTuple_SET_ITEM(privs, priv_ind, priv);
 			}
-	done:
+			PyTuple_SET_ITEM(privs, priv_ind, priv);
+		}
+done:
 	if (plsau)
 		LsaFreeMemory(plsau);
 	return privs;
@@ -2838,14 +2844,14 @@ static PyObject *PyLsaEnumerateAccountRights(PyObject *self, PyObject *args)
 
 static PyObject *PyLsaEnumerateAccountsWithUserRight(PyObject *self, PyObject *args)
 {
-	PyObject *obpriv=NULL, *policy_handle=NULL;
-	PyObject *sids=NULL, *sid=NULL;
-	PSID psid=NULL;
+	PyObject *obpriv = NULL, *policy_handle = NULL;
+	PyObject *sids = NULL, *sid = NULL;
+	PSID psid = NULL;
 	LSA_UNICODE_STRING lsau;
-	ULONG sid_cnt=0, sid_ind=0;
+	ULONG sid_cnt = 0, sid_ind = 0;
 	HANDLE hpolicy;
 	LSA_ENUMERATION_INFORMATION *buf;
-	void *buf_start=NULL;
+	void *buf_start = NULL;
 	NTSTATUS err;
 	DWORD win32err;
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
@@ -2854,28 +2860,28 @@ static PyObject *PyLsaEnumerateAccountsWithUserRight(PyObject *self, PyObject *a
 		return NULL;
 	if (!PyWinObject_AsHANDLE(policy_handle, &hpolicy))
 		return NULL;
-	if (!PyWinObject_AsLSA_UNICODE_STRING(obpriv,&lsau,FALSE))
+	if (!PyWinObject_AsLSA_UNICODE_STRING(obpriv, &lsau, FALSE))
 		return NULL;
-	err=LsaEnumerateAccountsWithUserRight(hpolicy,&lsau,&buf_start,&sid_cnt);
-	if (err == STATUS_SUCCESS){
-		sids=PyTuple_New(sid_cnt);
-		if (sids!=NULL){
-			buf=(LSA_ENUMERATION_INFORMATION *)buf_start;
-			for (sid_ind=0; sid_ind<sid_cnt; sid_ind++){
-				sid=PyWinObject_FromSID(buf->Sid);
+	err = LsaEnumerateAccountsWithUserRight(hpolicy, &lsau, &buf_start, &sid_cnt);
+	if (err == STATUS_SUCCESS) {
+		sids = PyTuple_New(sid_cnt);
+		if (sids != NULL) {
+			buf = (LSA_ENUMERATION_INFORMATION *)buf_start;
+			for (sid_ind = 0; sid_ind < sid_cnt; sid_ind++) {
+				sid = PyWinObject_FromSID(buf->Sid);
 				PyTuple_SetItem(sids, sid_ind, sid);
 				buf++;
-				}
 			}
 		}
-	else{
-		win32err=LsaNtStatusToWinError(err);
+	}
+	else {
+		win32err = LsaNtStatusToWinError(err);
 		// real error code is STATUS_NO_MORE_ENTRIES, which is only defined in ntstatus.h that only comes with Driver Development Kit
-		if (win32err==ERROR_NO_MORE_ITEMS)
-			sids=PyTuple_New(0);
+		if (win32err == ERROR_NO_MORE_ITEMS)
+			sids = PyTuple_New(0);
 		else
-			PyWin_SetAPIError("LsaEnumerateAccountsWithUserRight",win32err);
-		}
+			PyWin_SetAPIError("LsaEnumerateAccountsWithUserRight", win32err);
+	}
 	if (buf_start)
 		LsaFreeMemory(buf_start);
 	PyWinObject_FreeTCHAR(lsau.Buffer);
@@ -2885,105 +2891,105 @@ static PyObject *PyLsaEnumerateAccountsWithUserRight(PyObject *self, PyObject *a
 static PyObject *PyConvertSidToStringSid(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(ConvertSidToStringSid);
-    PyObject *obsid=NULL, *ret=NULL;
-    // @pyparm <o PySID>|Sid||PySID object
-    PSID psid=NULL;
-    WCHAR *stringsid=NULL;
+	PyObject *obsid = NULL, *ret = NULL;
+	// @pyparm <o PySID>|Sid||PySID object
+	PSID psid = NULL;
+	WCHAR *stringsid = NULL;
 
-    if (!PyArg_ParseTuple(args, "O:ConvertSidToStringSid", &obsid))
-        return NULL;
-    if (!PyWinObject_AsSID(obsid, &psid))
-        return NULL;
-    if (!(*pfnConvertSidToStringSid)(psid,&stringsid))
-        PyWin_SetAPIError("ConvertSidToStringSid");
-    else
-        ret=PyWinObject_FromWCHAR(stringsid);
-    if (stringsid!=NULL)
-        LocalFree(stringsid);
-    return ret;
+	if (!PyArg_ParseTuple(args, "O:ConvertSidToStringSid", &obsid))
+		return NULL;
+	if (!PyWinObject_AsSID(obsid, &psid))
+		return NULL;
+	if (!(*pfnConvertSidToStringSid)(psid, &stringsid))
+		PyWin_SetAPIError("ConvertSidToStringSid");
+	else
+		ret = PyWinObject_FromWCHAR(stringsid);
+	if (stringsid != NULL)
+		LocalFree(stringsid);
+	return ret;
 }
 
 static PyObject *PyConvertStringSidToSid(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(ConvertStringSidToSid);
-    PyObject *ret=NULL, *obstringsid=NULL;
-    PSID psid=NULL;
-    TCHAR *stringsid=NULL;
-    // @pyparm string|StringSid||String representation of a SID
+	PyObject *ret = NULL, *obstringsid = NULL;
+	PSID psid = NULL;
+	TCHAR *stringsid = NULL;
+	// @pyparm string|StringSid||String representation of a SID
 
-    if (!PyArg_ParseTuple(args, "O:ConvertStringSidToSid", &obstringsid))
-        return NULL;
-    if (!PyWinObject_AsWCHAR(obstringsid, &stringsid))
-        return NULL;
-    if (!(*pfnConvertStringSidToSid)(stringsid, &psid))
-        PyWin_SetAPIError("ConvertStringSidToSid");
-    else
-        ret=PyWinObject_FromSID(psid);
-    if (psid != NULL)
-        LocalFree(psid);
-    if (stringsid!=NULL)
-        PyWinObject_FreeWCHAR(stringsid);
-    return ret;
+	if (!PyArg_ParseTuple(args, "O:ConvertStringSidToSid", &obstringsid))
+		return NULL;
+	if (!PyWinObject_AsWCHAR(obstringsid, &stringsid))
+		return NULL;
+	if (!(*pfnConvertStringSidToSid)(stringsid, &psid))
+		PyWin_SetAPIError("ConvertStringSidToSid");
+	else
+		ret = PyWinObject_FromSID(psid);
+	if (psid != NULL)
+		LocalFree(psid);
+	if (stringsid != NULL)
+		PyWinObject_FreeWCHAR(stringsid);
+	return ret;
 }
 
 static PyObject *PyConvertSecurityDescriptorToStringSecurityDescriptor(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(ConvertSecurityDescriptorToStringSecurityDescriptor);
-    PyObject *obsd=NULL, *ret=NULL;
-    // @pyparm <o PySECURITY_DESCRIPTOR>|SecurityDescriptor||PySECURITY_DESCRIPTOR object
-    // @pyparm int|RequestedStringSDRevision||Only SDDL_REVISION_1 currently valid
-    // @pyparm int|SecurityInformation||Combination of bit flags from SECURITY_INFORMATION enum
-    PSECURITY_DESCRIPTOR psd=NULL;
-    WCHAR *stringsd=NULL;
-    DWORD sd_rev;
-    SECURITY_INFORMATION info;
-    if (!PyArg_ParseTuple(args, "Oii:ConvertSecurityDescriptorToStringSecurityDescriptor", &obsd, &sd_rev, &info))
-        return NULL;
-    if (!PyWinObject_AsSECURITY_DESCRIPTOR(obsd, &psd, FALSE))
-        return NULL;
-    if (!(*pfnConvertSecurityDescriptorToStringSecurityDescriptor)(psd, sd_rev, info, &stringsd, NULL))
-        PyWin_SetAPIError("ConvertSecurityDescriptorToStringSecurityDescriptor");
-    else
-        ret=PyWinObject_FromWCHAR(stringsd);
-    if (stringsd!=NULL)
-        LocalFree(stringsd);
-    return ret;
+	PyObject *obsd = NULL, *ret = NULL;
+	// @pyparm <o PySECURITY_DESCRIPTOR>|SecurityDescriptor||PySECURITY_DESCRIPTOR object
+	// @pyparm int|RequestedStringSDRevision||Only SDDL_REVISION_1 currently valid
+	// @pyparm int|SecurityInformation||Combination of bit flags from SECURITY_INFORMATION enum
+	PSECURITY_DESCRIPTOR psd = NULL;
+	WCHAR *stringsd = NULL;
+	DWORD sd_rev;
+	SECURITY_INFORMATION info;
+	if (!PyArg_ParseTuple(args, "Oii:ConvertSecurityDescriptorToStringSecurityDescriptor", &obsd, &sd_rev, &info))
+		return NULL;
+	if (!PyWinObject_AsSECURITY_DESCRIPTOR(obsd, &psd, FALSE))
+		return NULL;
+	if (!(*pfnConvertSecurityDescriptorToStringSecurityDescriptor)(psd, sd_rev, info, &stringsd, NULL))
+		PyWin_SetAPIError("ConvertSecurityDescriptorToStringSecurityDescriptor");
+	else
+		ret = PyWinObject_FromWCHAR(stringsd);
+	if (stringsd != NULL)
+		LocalFree(stringsd);
+	return ret;
 }
 
 static PyObject *PyConvertStringSecurityDescriptorToSecurityDescriptor(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(ConvertStringSecurityDescriptorToSecurityDescriptor);
-    PyObject *obssd=NULL, *ret=NULL;
-    PSECURITY_DESCRIPTOR psd=NULL;
-    // @pyparm string|StringSecurityDescriptor||String representation of a SECURITY_DESCRIPTOR
-    // @pyparm int|StringSDRevision||Only SDDL_REVISION_1 currently valid
+	PyObject *obssd = NULL, *ret = NULL;
+	PSECURITY_DESCRIPTOR psd = NULL;
+	// @pyparm string|StringSecurityDescriptor||String representation of a SECURITY_DESCRIPTOR
+	// @pyparm int|StringSDRevision||Only SDDL_REVISION_1 currently valid
 
-    WCHAR *stringsd=NULL;
-    DWORD sd_rev;
-    if (!PyArg_ParseTuple(args, "Oi:ConvertStringSecurityDescriptorToSecurityDescriptor", &obssd, &sd_rev))
-        return NULL;
-    if (!PyWinObject_AsWCHAR(obssd, &stringsd, FALSE))
-        return NULL;
-    if (!(*pfnConvertStringSecurityDescriptorToSecurityDescriptor)(stringsd, sd_rev, &psd, NULL))
-        PyWin_SetAPIError("ConvertStringSecurityDescriptorToSecurityDescriptor");
-    else
-        ret=PyWinObject_FromSECURITY_DESCRIPTOR(psd);
-    PyWinObject_FreeWCHAR(stringsd);
-    LocalFree(psd);
-    return ret;
+	WCHAR *stringsd = NULL;
+	DWORD sd_rev;
+	if (!PyArg_ParseTuple(args, "Oi:ConvertStringSecurityDescriptorToSecurityDescriptor", &obssd, &sd_rev))
+		return NULL;
+	if (!PyWinObject_AsWCHAR(obssd, &stringsd, FALSE))
+		return NULL;
+	if (!(*pfnConvertStringSecurityDescriptorToSecurityDescriptor)(stringsd, sd_rev, &psd, NULL))
+		PyWin_SetAPIError("ConvertStringSecurityDescriptorToSecurityDescriptor");
+	else
+		ret = PyWinObject_FromSECURITY_DESCRIPTOR(psd);
+	PyWinObject_FreeWCHAR(stringsd);
+	LocalFree(psd);
+	return ret;
 }
 
 static PyObject *PyLsaStorePrivateData(PyObject *self, PyObject *args)
 {
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
-    // @pyparm string|KeyName||Registry key in which to store data
-    // @pyparm <o PyUNICODE>|PrivateData||Unicode string to be encrypted and stored
-	PyObject *obpolicyhandle=NULL, *obkeyname=NULL, *obprivatedata=NULL;
-	PyObject * ret=NULL;
+	// @pyparm string|KeyName||Registry key in which to store data
+	// @pyparm <o PyUNICODE>|PrivateData||Unicode string to be encrypted and stored
+	PyObject *obpolicyhandle = NULL, *obkeyname = NULL, *obprivatedata = NULL;
+	PyObject * ret = NULL;
 	LSA_HANDLE policyhandle;
-    LSA_UNICODE_STRING keyname, privatedata;
-	keyname.Buffer=NULL;
-	privatedata.Buffer=NULL;
+	LSA_UNICODE_STRING keyname, privatedata;
+	keyname.Buffer = NULL;
+	privatedata.Buffer = NULL;
 	NTSTATUS err = NULL;
 	if (!PyArg_ParseTuple(args, "OOO:LsaStorePrivateData", &obpolicyhandle, &obkeyname, &obprivatedata))
 		return NULL;
@@ -2993,36 +2999,36 @@ static PyObject *PyLsaStorePrivateData(PyObject *self, PyObject *args)
 		goto done;
 	// passing NULL deletes the data stored under specified key
 	// use Py_None since empty string is considered valid data
-	if (obprivatedata==Py_None)
+	if (obprivatedata == Py_None)
 		err = LsaStorePrivateData(policyhandle, &keyname, NULL);
-	else{
+	else {
 		if (!PyWinObject_AsLSA_UNICODE_STRING(obprivatedata, &privatedata, FALSE))
 			goto done;
 		err = LsaStorePrivateData(policyhandle, &keyname, &privatedata);
-		}
+	}
 	if (err == STATUS_SUCCESS)
-		ret=Py_None;
+		ret = Py_None;
 	else
-		PyWin_SetAPIError("LsaStorePrivateData",LsaNtStatusToWinError(err));
+		PyWin_SetAPIError("LsaStorePrivateData", LsaNtStatusToWinError(err));
 
-	done:
-		if (keyname.Buffer != NULL)
-			PyWinObject_FreeWCHAR(keyname.Buffer);
-		if (privatedata.Buffer != NULL)
-			PyWinObject_FreeWCHAR(privatedata.Buffer);
-		Py_XINCREF(ret);
-		return ret;
+done:
+	if (keyname.Buffer != NULL)
+		PyWinObject_FreeWCHAR(keyname.Buffer);
+	if (privatedata.Buffer != NULL)
+		PyWinObject_FreeWCHAR(privatedata.Buffer);
+	Py_XINCREF(ret);
+	return ret;
 }
 
 static PyObject *PyLsaRetrievePrivateData(PyObject *self, PyObject *args)
 {
 	// @pyparm <o PyLSA_HANDLE>|PolicyHandle||An LSA policy handle as returned by <om win32security.LsaOpenPolicy>
-    // @pyparm string|KeyName||Registry key to read
-	PyObject *obpolicyhandle=NULL, *obkeyname=NULL, *obprivatedata=NULL;
-	PyObject * ret=NULL;
+	// @pyparm string|KeyName||Registry key to read
+	PyObject *obpolicyhandle = NULL, *obkeyname = NULL, *obprivatedata = NULL;
+	PyObject * ret = NULL;
 	LSA_HANDLE policyhandle;
-    LSA_UNICODE_STRING keyname;
-	keyname.Buffer=NULL;
+	LSA_UNICODE_STRING keyname;
+	keyname.Buffer = NULL;
 	PLSA_UNICODE_STRING privatedata = NULL;
 	NTSTATUS err = NULL;
 	if (!PyArg_ParseTuple(args, "OO:LsaRetrievePrivateData", &obpolicyhandle, &obkeyname))
@@ -3034,22 +3040,22 @@ static PyObject *PyLsaRetrievePrivateData(PyObject *self, PyObject *args)
 
 	err = LsaRetrievePrivateData(policyhandle, &keyname, &privatedata);
 	if (err == STATUS_SUCCESS)
-	    ret=PyWinObject_FromLSA_UNICODE_STRING(*privatedata);
+		ret = PyWinObject_FromLSA_UNICODE_STRING(*privatedata);
 	else
-		PyWin_SetAPIError("LsaRetrievePrivateData",LsaNtStatusToWinError(err));
-	done:
-		if (keyname.Buffer != NULL)
-			PyWinObject_FreeWCHAR(keyname.Buffer);
-		if (privatedata != NULL)
-			LsaFreeMemory(privatedata);
-		return ret;
+		PyWin_SetAPIError("LsaRetrievePrivateData", LsaNtStatusToWinError(err));
+done:
+	if (keyname.Buffer != NULL)
+		PyWinObject_FreeWCHAR(keyname.Buffer);
+	if (privatedata != NULL)
+		LsaFreeMemory(privatedata);
+	return ret;
 }
 
 static PyObject *PyLsaRegisterPolicyChangeNotification(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(LsaRegisterPolicyChangeNotification);
-	PyObject *obHandle=NULL;
-	PyObject *ret=NULL;
+	PyObject *obHandle = NULL;
+	PyObject *ret = NULL;
 	HANDLE hevent;
 	POLICY_NOTIFICATION_INFORMATION_CLASS info_class;
 	NTSTATUS err;
@@ -3059,11 +3065,11 @@ static PyObject *PyLsaRegisterPolicyChangeNotification(PyObject *self, PyObject 
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obHandle, &hevent))
 		return NULL;
-	err=(*pfnLsaRegisterPolicyChangeNotification)(info_class,hevent);
-	if (err==STATUS_SUCCESS)
-		ret=Py_None;
+	err = (*pfnLsaRegisterPolicyChangeNotification)(info_class, hevent);
+	if (err == STATUS_SUCCESS)
+		ret = Py_None;
 	else
-		PyWin_SetAPIError("LsaRegisterPolicyChangeNotification",LsaNtStatusToWinError(err));
+		PyWin_SetAPIError("LsaRegisterPolicyChangeNotification", LsaNtStatusToWinError(err));
 	Py_XINCREF(ret);
 	return ret;
 }
@@ -3072,7 +3078,7 @@ static PyObject *PyLsaUnregisterPolicyChangeNotification(PyObject *self, PyObjec
 {
 	CHECK_PFN(LsaUnregisterPolicyChangeNotification);
 	PyObject *obHandle;
-	PyObject *ret=NULL;
+	PyObject *ret = NULL;
 	HANDLE hevent;
 	POLICY_NOTIFICATION_INFORMATION_CLASS info_class;
 	NTSTATUS err;
@@ -3082,11 +3088,11 @@ static PyObject *PyLsaUnregisterPolicyChangeNotification(PyObject *self, PyObjec
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obHandle, &hevent))
 		return NULL;
-	err=(*pfnLsaUnregisterPolicyChangeNotification)(info_class,hevent);
-	if (err==STATUS_SUCCESS)
-		ret=Py_None;
+	err = (*pfnLsaUnregisterPolicyChangeNotification)(info_class, hevent);
+	if (err == STATUS_SUCCESS)
+		ret = Py_None;
 	else
-		PyWin_SetAPIError("LsaUnregisterPolicyChangeNotification",LsaNtStatusToWinError(err));
+		PyWin_SetAPIError("LsaUnregisterPolicyChangeNotification", LsaNtStatusToWinError(err));
 	Py_XINCREF(ret);
 	return ret;
 }
@@ -3096,47 +3102,47 @@ static PyObject *PyCryptEnumProviders(PyObject *self, PyObject *args)
 	CHECK_PFN(CryptEnumProviders);
 	if (!PyArg_ParseTuple(args, ":CryptEnumProviders"))
 		return NULL;
-	DWORD dwFlags=0, dwIndex=0, dwReserved=NULL, dwProvType=0, cbProvName=0;
-	WCHAR *pszProvName=NULL;
-	PyObject *ret=PyList_New(0);
-	if (ret==NULL)
+	DWORD dwFlags = 0, dwIndex = 0, dwReserved = NULL, dwProvType = 0, cbProvName = 0;
+	WCHAR *pszProvName = NULL;
+	PyObject *ret = PyList_New(0);
+	if (ret == NULL)
 		return NULL;
-	PyObject *ret_item=NULL;
+	PyObject *ret_item = NULL;
 	DWORD err = 0;
-	while(TRUE){
-		cbProvName=0;
-		pszProvName=NULL;
-		ret_item=NULL;
-		if(!(*pfnCryptEnumProviders)(dwIndex, NULL, dwFlags, &dwProvType, NULL, &cbProvName)){
-			err=GetLastError();
+	while (TRUE) {
+		cbProvName = 0;
+		pszProvName = NULL;
+		ret_item = NULL;
+		if (!(*pfnCryptEnumProviders)(dwIndex, NULL, dwFlags, &dwProvType, NULL, &cbProvName)) {
+			err = GetLastError();
 			break;
-			}
+		}
 		pszProvName = (WCHAR *)malloc(cbProvName);
-		if (pszProvName==NULL){
+		if (pszProvName == NULL) {
 			PyErr_Format(PyExc_MemoryError, "CryptEnumProviders: Unable to allocate %d bytes", cbProvName);
 			break;
-			}
-		if (!(*pfnCryptEnumProviders)(dwIndex, NULL, dwFlags, &dwProvType, pszProvName, &cbProvName)){
-			err=GetLastError();
+		}
+		if (!(*pfnCryptEnumProviders)(dwIndex, NULL, dwFlags, &dwProvType, pszProvName, &cbProvName)) {
+			err = GetLastError();
 			break;
-			}
-		ret_item = Py_BuildValue("uk",pszProvName, dwProvType);
-		if ((ret_item==NULL) || (PyList_Append(ret, ret_item)==-1))
+		}
+		ret_item = Py_BuildValue("uk", pszProvName, dwProvType);
+		if ((ret_item == NULL) || (PyList_Append(ret, ret_item) == -1))
 			break;
 		Py_DECREF(ret_item);
 		free(pszProvName);
 		dwIndex++;
-		}
+	}
 	// cleanup in case loop exited with error
 	Py_XDECREF(ret_item);
 	if (pszProvName)
 		free(pszProvName);
-	if (err != ERROR_NO_MORE_ITEMS){
+	if (err != ERROR_NO_MORE_ITEMS) {
 		Py_DECREF(ret);
-		ret=NULL;
+		ret = NULL;
 		if (!PyErr_Occurred())
-			PyWin_SetAPIError("CryptEnumProviders",err);
-		}
+			PyWin_SetAPIError("CryptEnumProviders", err);
+	}
 	return ret;
 }
 
@@ -3146,42 +3152,42 @@ static PyObject *PyEnumerateSecurityPackages(PyObject *self, PyObject *args)
 	CHECK_SECURITYFUNCTIONTABLE(FreeContextBuffer);
 	if (!PyArg_ParseTuple(args, ":EnumerateSecurityPackages"))
 		return NULL;
-	PSecPkgInfoW pbuf=NULL, psecpkg=NULL;
-	PyObject *ret=NULL, *obsecpkg=NULL;
+	PSecPkgInfoW pbuf = NULL, psecpkg = NULL;
+	PyObject *ret = NULL, *obsecpkg = NULL;
 	SECURITY_STATUS result;
 	ULONG pkg_cnt, pkg_ind;
 	result = (*psecurityfunctiontable->EnumerateSecurityPackagesW)(&pkg_cnt, &pbuf);
-	if (result!=SEC_E_OK)
+	if (result != SEC_E_OK)
 		goto done;
-	ret=PyTuple_New(pkg_cnt);
-	if (ret==NULL)
+	ret = PyTuple_New(pkg_cnt);
+	if (ret == NULL)
 		goto done;
-	psecpkg=pbuf;
-	for (pkg_ind=0;pkg_ind<pkg_cnt;pkg_ind++){
-		obsecpkg=PyWinObject_FromSecPkgInfo(psecpkg);
-		if (obsecpkg==NULL){
+	psecpkg = pbuf;
+	for (pkg_ind = 0; pkg_ind < pkg_cnt; pkg_ind++) {
+		obsecpkg = PyWinObject_FromSecPkgInfo(psecpkg);
+		if (obsecpkg == NULL) {
 			Py_DECREF(ret);
-			ret=NULL;
+			ret = NULL;
 			break;
-			}
-		PyTuple_SetItem(ret,pkg_ind,obsecpkg);
-		psecpkg++;
 		}
-	done:
-	if (pbuf!=NULL)
+		PyTuple_SetItem(ret, pkg_ind, obsecpkg);
+		psecpkg++;
+	}
+done:
+	if (pbuf != NULL)
 		(*psecurityfunctiontable->FreeContextBuffer)(pbuf);
 	return ret;
 }
 
 static PyObject *PyDuplicateTokenEx(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-	static char *keywords[]={"ExistingToken","ImpersonationLevel","DesiredAccess","TokenType","TokenAttributes", NULL};
+	static char *keywords[] = { "ExistingToken","ImpersonationLevel","DesiredAccess","TokenType","TokenAttributes", NULL };
 	HANDLE htoken, hnewtoken;
 	PSECURITY_ATTRIBUTES psa;
 	SECURITY_IMPERSONATION_LEVEL lvl;
 	DWORD access;
 	TOKEN_TYPE tokentype;
-	PyObject *obtoken, *obsa=Py_None;
+	PyObject *obtoken, *obsa = Py_None;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Okkk|O:DuplicateTokenEx", keywords,
 		&obtoken,	// @pyparm <o PyHANDLE>|ExistingToken||Logon token opened with TOKEN_DUPLICATE access
@@ -3198,64 +3204,64 @@ static PyObject *PyDuplicateTokenEx(PyObject *self, PyObject *args, PyObject *kw
 		return PyWin_SetAPIError("DuplicateTokenEx");
 	return PyWinObject_FromHANDLE(hnewtoken);
 }
-PyCFunction pfnPyDuplicateTokenEx=(PyCFunction)PyDuplicateTokenEx;
+PyCFunction pfnPyDuplicateTokenEx = (PyCFunction)PyDuplicateTokenEx;
 
 static PyObject *PyCheckTokenMembership(PyObject *self, PyObject *args)
 {
-	PyObject *ret=NULL;
+	PyObject *ret = NULL;
 	HANDLE htoken;
 	PSID sid;
 	BOOL enabled;
-	PyObject *obsid=NULL, *obtoken=NULL;
+	PyObject *obsid = NULL, *obtoken = NULL;
 	CHECK_PFN(CheckTokenMembership);
 	// @pyparm <o PyHANDLE>|TokenHandle||Handle to an access token, current process token used if None
 	// @pyparm <o PySID>|SidToCheck||Sid to be checked for presence in token
-	if (!PyArg_ParseTuple(args, "OO:CheckTokenMembership",&obtoken, &obsid))
+	if (!PyArg_ParseTuple(args, "OO:CheckTokenMembership", &obtoken, &obsid))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obtoken, &htoken))
 		return NULL;
 	if (!PyWinObject_AsSID(obsid, &sid, FALSE))
 		return NULL;
-	if (!(*pfnCheckTokenMembership)(htoken,sid,&enabled))
-		PyWin_SetAPIError("CheckTokenMembership",GetLastError());
+	if (!(*pfnCheckTokenMembership)(htoken, sid, &enabled))
+		PyWin_SetAPIError("CheckTokenMembership", GetLastError());
 	else
-		ret=PyBool_FromLong(enabled);
+		ret = PyBool_FromLong(enabled);
 	return ret;
 }
 
 static PyObject *PyCreateRestrictedToken(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-	PyObject *obExistingTokenHandle, *ret=NULL;
+	PyObject *obExistingTokenHandle, *ret = NULL;
 	PyObject *obSidsToDisable, *obSidsToRestrict, *obPrivilegesToDelete;
 	HANDLE ExistingTokenHandle, NewTokenHandle;
-	DWORD Flags,DisableSidCount=0,DeletePrivilegeCount=0,RestrictedSidCount=0;
-	PSID_AND_ATTRIBUTES SidsToDisable=NULL,SidsToRestrict=NULL;
-	PLUID_AND_ATTRIBUTES PrivilegesToDelete=NULL;
-	BOOL bsuccess=TRUE;
-	static char *keywords[] = {"ExistingTokenHandle","Flags","SidsToDisable","PrivilegesToDelete","SidsToRestrict", NULL};
+	DWORD Flags, DisableSidCount = 0, DeletePrivilegeCount = 0, RestrictedSidCount = 0;
+	PSID_AND_ATTRIBUTES SidsToDisable = NULL, SidsToRestrict = NULL;
+	PLUID_AND_ATTRIBUTES PrivilegesToDelete = NULL;
+	BOOL bsuccess = TRUE;
+	static char *keywords[] = { "ExistingTokenHandle","Flags","SidsToDisable","PrivilegesToDelete","SidsToRestrict", NULL };
 
 	CHECK_PFN(CreateRestrictedToken);
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OlOOO:CreateRestrictedToken", keywords,
 		&obExistingTokenHandle,	// @pyparm <o PyHANDLE>|ExistingTokenHandle||Handle to an access token (see <om win32security.LogonUser>,<om win32security.OpenProcessToken>
 		&Flags,					// @pyparm int|Flags||Valid values are zero or a combination of DISABLE_MAX_PRIVILEGE and SANDBOX_INERT
 		&obSidsToDisable,		// @pyparm (<o PySID_AND_ATTRIBUTES>,...)|SidsToDisable||Ssequence of <o PySID_AND_ATTRIBUTES> tuples, or None
-		&obPrivilegesToDelete,	// @pyparm (<o PyLUID_AND_ATTRIBUTES>,...)|PrivilegesToDelete||Privilege LUIDS to remove from token (attributes are ignored), or None
+		&obPrivilegesToDelete,	// @pyparm (<o PyLUID_AND_ATTRIBUTES>,...)|PrivilegesToDelete||Privilege LUIDS to remove from token (attributes are ignored), or None 
 		&obSidsToRestrict))		// @pyparm (<o PySID_AND_ATTRIBUTES>,...)|SidsToRestrict||Sequence of <o PySID_AND_ATTRIBUTES> tuples (attributes must be 0).  Can be None.
 		return NULL;
 	if (PyWinObject_AsHANDLE(obExistingTokenHandle, &ExistingTokenHandle))
 		if (PyWinObject_AsSID_AND_ATTRIBUTESArray(obSidsToDisable, &SidsToDisable, &DisableSidCount))
 			if (PyWinObject_AsSID_AND_ATTRIBUTESArray(obSidsToRestrict, &SidsToRestrict, &RestrictedSidCount))
 				if (PyWinObject_AsLUID_AND_ATTRIBUTESArray(obPrivilegesToDelete, &PrivilegesToDelete, &DeletePrivilegeCount))
-					if ((*pfnCreateRestrictedToken)(ExistingTokenHandle,Flags,DisableSidCount,SidsToDisable,
-							DeletePrivilegeCount,PrivilegesToDelete,RestrictedSidCount,SidsToRestrict,&NewTokenHandle))
-						ret=PyWinObject_FromHANDLE(NewTokenHandle);
+					if ((*pfnCreateRestrictedToken)(ExistingTokenHandle, Flags, DisableSidCount, SidsToDisable,
+						DeletePrivilegeCount, PrivilegesToDelete, RestrictedSidCount, SidsToRestrict, &NewTokenHandle))
+						ret = PyWinObject_FromHANDLE(NewTokenHandle);
 					else
-						PyWin_SetAPIError("CreateRestrictedToken",GetLastError());
-	if (SidsToDisable!=NULL)
+						PyWin_SetAPIError("CreateRestrictedToken", GetLastError());
+	if (SidsToDisable != NULL)
 		free(SidsToDisable);
-	if (PrivilegesToDelete!=NULL)
+	if (PrivilegesToDelete != NULL)
 		free(PrivilegesToDelete);
-	if (SidsToRestrict!=NULL)
+	if (SidsToRestrict != NULL)
 		free(SidsToRestrict);
 	return ret;
 }
@@ -3274,10 +3280,10 @@ static PyObject *PyLsaRegisterLogonProcess(PyObject *self, PyObject *args)
 		return NULL;
 	if (!PyWinObject_AsLSA_STRING(obname, &LogonProcessName))
 		return NULL;
-	err=(*pfnLsaRegisterLogonProcess)(&LogonProcessName, &lsahandle, &dummy);
-	if (err==STATUS_SUCCESS)
+	err = (*pfnLsaRegisterLogonProcess)(&LogonProcessName, &lsahandle, &dummy);
+	if (err == STATUS_SUCCESS)
 		return new PyLsaLogon_HANDLE(lsahandle);
-	PyWin_SetAPIError("LsaRegisterLogonProcess",LsaNtStatusToWinError(err));
+	PyWin_SetAPIError("LsaRegisterLogonProcess", LsaNtStatusToWinError(err));
 	return NULL;
 }
 
@@ -3289,10 +3295,10 @@ static PyObject *PyLsaConnectUntrusted(PyObject *self, PyObject *args)
 	NTSTATUS err;
 	if (!PyArg_ParseTuple(args, ":LsaConnectUntrusted"))
 		return NULL;
-	err=(*pfnLsaConnectUntrusted)(&lsahandle);
-	if (err==STATUS_SUCCESS)
+	err = (*pfnLsaConnectUntrusted)(&lsahandle);
+	if (err == STATUS_SUCCESS)
 		return new PyLsaLogon_HANDLE(lsahandle);
-	PyWin_SetAPIError("LsaConnectUntrusted",LsaNtStatusToWinError(err));
+	PyWin_SetAPIError("LsaConnectUntrusted", LsaNtStatusToWinError(err));
 	return NULL;
 }
 
@@ -3301,7 +3307,7 @@ static PyObject *PyLsaDeregisterLogonProcess(PyObject *self, PyObject *args)
 	CHECK_PFN(LsaDeregisterLogonProcess);
 	PyObject *obhandle;
 	// @pyparm <o PyLsaLogon_HANDLE>|LsaHandle||An Lsa handle as returned by <om win32security.LsaConnectUntrusted> or <om win32security.LsaRegisterLogonProcess>
-	if (!PyArg_ParseTuple(args, "O:LsaDeregisterLogonProcess",&obhandle))
+	if (!PyArg_ParseTuple(args, "O:LsaDeregisterLogonProcess", &obhandle))
 		return NULL;
 	if (!PyWinObject_CloseLsaLogon_HANDLE(obhandle))
 		return NULL;
@@ -3320,15 +3326,15 @@ static PyObject *PyLsaLookupAuthenticationPackage(PyObject *self, PyObject *args
 	ULONG packageid;
 	// @pyparm <o PyLsaLogon_HANDLE>|LsaHandle||An Lsa handle as returned by <om win32security.LsaConnectUntrusted> or <om win32security.LsaRegisterLogonProcess>
 	// @pyparm string|PackageName||Name of security package to be identified
-	if (!PyArg_ParseTuple(args,"OO:LsaLookupAuthenticationPackage",
+	if (!PyArg_ParseTuple(args, "OO:LsaLookupAuthenticationPackage",
 		&obhandle, &obname))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhandle, &lsahandle))
 		return NULL;
 	if (!PyWinObject_AsLSA_STRING(obname, &packagename))
 		return NULL;
-	err=(*pfnLsaLookupAuthenticationPackage)(lsahandle, &packagename, &packageid);
-	if (err!=STATUS_SUCCESS)
+	err = (*pfnLsaLookupAuthenticationPackage)(lsahandle, &packagename, &packageid);
+	if (err != STATUS_SUCCESS)
 		return PyWin_SetAPIError("LsaLookupAuthenticationPackage", LsaNtStatusToWinError(err));
 	return PyLong_FromLong(packageid);
 }
@@ -3336,32 +3342,32 @@ static PyObject *PyLsaLookupAuthenticationPackage(PyObject *self, PyObject *args
 static PyObject *PyLsaEnumerateLogonSessions(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(LsaEnumerateLogonSessions);
-	if (!PyArg_ParseTuple(args,":LsaEnumerateLogonSessions"))
+	if (!PyArg_ParseTuple(args, ":LsaEnumerateLogonSessions"))
 		return NULL;
 
 	NTSTATUS err;
-	unsigned long sessioncount=0, sessionind;
-	PLUID logonids=NULL, logonid;
-	PyObject *ret=NULL, *ret_item;
-	err=(*pfnLsaEnumerateLogonSessions)(&sessioncount, &logonids);
-	if (err!=STATUS_SUCCESS)
+	unsigned long sessioncount = 0, sessionind;
+	PLUID logonids = NULL, logonid;
+	PyObject *ret = NULL, *ret_item;
+	err = (*pfnLsaEnumerateLogonSessions)(&sessioncount, &logonids);
+	if (err != STATUS_SUCCESS)
 		PyWin_SetAPIError("LsaEnumerateLogonSessions", LsaNtStatusToWinError(err));
-	else{
-		logonid=logonids;
-		ret=PyTuple_New(sessioncount);
-		if (ret!=NULL)
-			for (sessionind=0;sessionind<sessioncount;sessionind++){
-				ret_item=PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)logonid));
-				if (ret_item==NULL){
+	else {
+		logonid = logonids;
+		ret = PyTuple_New(sessioncount);
+		if (ret != NULL)
+			for (sessionind = 0; sessionind < sessioncount; sessionind++) {
+				ret_item = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)logonid));
+				if (ret_item == NULL) {
 					Py_DECREF(ret);
-					ret=NULL;
+					ret = NULL;
 					break;
-					}
-				PyTuple_SetItem(ret,sessionind,ret_item);
-				logonid++;
 				}
-		}
-	if (logonids !=NULL)
+				PyTuple_SetItem(ret, sessionind, ret_item);
+				logonid++;
+			}
+	}
+	if (logonids != NULL)
 		(*pfnLsaFreeReturnBuffer)(logonids);
 	return ret;
 }
@@ -3371,37 +3377,37 @@ static PyObject *PyLsaGetLogonSessionData(PyObject *self, PyObject *args)
 	PyObject *obluid, *obLogonServer, *obDnsDomainName, *obUpn;
 	LUID logonid;
 	NTSTATUS err;
-	PSECURITY_LOGON_SESSION_DATA pdata=NULL;
-	PyObject *ret=NULL;
+	PSECURITY_LOGON_SESSION_DATA pdata = NULL;
+	PyObject *ret = NULL;
 
 	CHECK_PFN(LsaGetLogonSessionData);
 	CHECK_PFN(LsaFreeReturnBuffer);
-	if (!PyArg_ParseTuple(args,"O:LsaGetLogonSessionData", &obluid))
+	if (!PyArg_ParseTuple(args, "O:LsaGetLogonSessionData", &obluid))
 		return NULL;
 	// @pyparm <o PyLARGE_INTEGER>|LogonId||An LUID identifying a logon session
 	if (!PyWinObject_AsLARGE_INTEGER(obluid, (LARGE_INTEGER *)&logonid))
 		return NULL;
 
-	err=(*pfnLsaGetLogonSessionData)(&logonid, &pdata);
-	if (err!=STATUS_SUCCESS)
+	err = (*pfnLsaGetLogonSessionData)(&logonid, &pdata);
+	if (err != STATUS_SUCCESS)
 		PyWin_SetAPIError("LsaGetLogonSessionData", LsaNtStatusToWinError(err));
-	else{
+	else {
 		// Last 3 members of SECURITY_LOGON_SESSION_DATA don't exist on Win2k
-		if (pdata->Size>offsetof(SECURITY_LOGON_SESSION_DATA,LogonServer)){
-			obLogonServer=PyWinObject_FromLSA_UNICODE_STRING(pdata->LogonServer);
-			obDnsDomainName=PyWinObject_FromLSA_UNICODE_STRING(pdata->DnsDomainName);
-			obUpn=PyWinObject_FromLSA_UNICODE_STRING(pdata->Upn);
-			}
-		else{
-			obLogonServer=Py_None;
+		if (pdata->Size > offsetof(SECURITY_LOGON_SESSION_DATA, LogonServer)) {
+			obLogonServer = PyWinObject_FromLSA_UNICODE_STRING(pdata->LogonServer);
+			obDnsDomainName = PyWinObject_FromLSA_UNICODE_STRING(pdata->DnsDomainName);
+			obUpn = PyWinObject_FromLSA_UNICODE_STRING(pdata->Upn);
+		}
+		else {
+			obLogonServer = Py_None;
 			Py_INCREF(Py_None);
-			obDnsDomainName=Py_None;
+			obDnsDomainName = Py_None;
 			Py_INCREF(Py_None);
-			obUpn=Py_None;
+			obUpn = Py_None;
 			Py_INCREF(Py_None);
-			}
+		}
 
-		ret=Py_BuildValue("{s:N,s:N,s:N,s:N,s:l,s:l,s:N,s:N,s:N,s:N,s:N}",
+		ret = Py_BuildValue("{s:N,s:N,s:N,s:N,s:l,s:l,s:N,s:N,s:N,s:N,s:N}",
 			"LogonId", PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)&pdata->LogonId)),
 			"UserName", PyWinObject_FromLSA_UNICODE_STRING(pdata->UserName),
 			"LogonDomain", PyWinObject_FromLSA_UNICODE_STRING(pdata->LogonDomain),
@@ -3413,9 +3419,9 @@ static PyObject *PyLsaGetLogonSessionData(PyObject *self, PyObject *args)
 			"LogonServer", obLogonServer,
 			"DnsDomainName", obDnsDomainName,
 			"Upn", obUpn);
-		}
+	}
 
-	if (pdata!=NULL)
+	if (pdata != NULL)
 		(*pfnLsaFreeReturnBuffer)(pdata);
 	return ret;
 }
@@ -3423,30 +3429,30 @@ static PyObject *PyLsaGetLogonSessionData(PyObject *self, PyObject *args)
 // NOTE: PyWinObject_FreeSEC_WINNT_AUTH_IDENTITY must be called even if we fail!
 BOOL PyWinObject_AsSEC_WINNT_AUTH_IDENTITY(PyObject *obAuthData, PSEC_WINNT_AUTH_IDENTITY_W pAuthData)
 {
-	static char *err_msg="AuthData must be a tuple of 3 strings (or None): (User, Domain, Password)";
+	static char *err_msg = "AuthData must be a tuple of 3 strings (or None): (User, Domain, Password)";
 	PyObject *obUser, *obDomain, *obPW;
-	ZeroMemory(pAuthData,sizeof(SEC_WINNT_AUTH_IDENTITY_W));
-	if (!PyTuple_Check(obAuthData)){
+	ZeroMemory(pAuthData, sizeof(SEC_WINNT_AUTH_IDENTITY_W));
+	if (!PyTuple_Check(obAuthData)) {
 		PyErr_Clear();
 		PyErr_SetString(PyExc_TypeError, err_msg);
 		return FALSE;
-		}
+	}
 	// No format string for "unicode or None" and no decent functions for
 	// "string or unicode or None" - use pywintypes which auto-encodes as mbcs.
-	if (!PyArg_ParseTuple(obAuthData,"OOO", &obUser, &obDomain, &obPW)) {
+	if (!PyArg_ParseTuple(obAuthData, "OOO", &obUser, &obDomain, &obPW)) {
 		PyErr_Clear();
 		PyErr_SetString(PyExc_TypeError, err_msg);
 		return FALSE;
-		}
+	}
 	static const BOOL none_ok = TRUE; // NULL seems OK anywhere
 	if (!PyWinObject_AsWCHAR(obUser, &pAuthData->User, none_ok, &pAuthData->UserLength) || \
-	    !PyWinObject_AsWCHAR(obDomain, &pAuthData->Domain, none_ok, &pAuthData->DomainLength) || \
+		!PyWinObject_AsWCHAR(obDomain, &pAuthData->Domain, none_ok, &pAuthData->DomainLength) || \
 		!PyWinObject_AsWCHAR(obPW, &pAuthData->Password, none_ok, &pAuthData->PasswordLength)) {
 		PyErr_Clear();
 		PyErr_SetString(PyExc_TypeError, err_msg);
 		return FALSE;
 	}
-	pAuthData->Flags=SEC_WINNT_AUTH_IDENTITY_UNICODE;
+	pAuthData->Flags = SEC_WINNT_AUTH_IDENTITY_UNICODE;
 	return TRUE;
 }
 
@@ -3465,25 +3471,25 @@ void PyWinObject_FreeSEC_WINNT_AUTH_IDENTITY(PSEC_WINNT_AUTH_IDENTITY_W pAuthDat
 
 static PyObject *PyAcquireCredentialsHandle(PyObject *self, PyObject *args)
 {
-    CHECK_SECURITYFUNCTIONTABLE(AcquireCredentialsHandleW);
-	WCHAR *Principal=NULL, *Package=NULL;
+	CHECK_SECURITYFUNCTIONTABLE(AcquireCredentialsHandleW);
+	WCHAR *Principal = NULL, *Package = NULL;
 	PyObject *obPrincipal, *obPackage;
 	ULONG CredentialUse;
 	LUID LogonID;
-	PLUID pLogonID=NULL;
+	PLUID pLogonID = NULL;
 	PyObject *obLogonID;
 	SEC_WINNT_AUTH_IDENTITY_W AuthData;
-	SEC_WINNT_AUTH_IDENTITY_W *pAuthData=NULL;
-	PyObject *obAuthData=Py_None;
-	SEC_GET_KEY_FN GetKeyFn=NULL;
-	PVOID GetKeyArgument=NULL;
-	PyObject *obGetKeyFn=Py_None, *obGetKeyArgument=Py_None;
-	PyObject *ret=NULL;
+	SEC_WINNT_AUTH_IDENTITY_W *pAuthData = NULL;
+	PyObject *obAuthData = Py_None;
+	SEC_GET_KEY_FN GetKeyFn = NULL;
+	PVOID GetKeyArgument = NULL;
+	PyObject *obGetKeyFn = Py_None, *obGetKeyArgument = Py_None;
+	PyObject *ret = NULL;
 	CredHandle Credential;
 	TimeStamp Expiry;
 	SECURITY_STATUS err;
 
-	if (!PyArg_ParseTuple(args,"OOlOO|OO:AcquireCredentialsHandle",
+	if (!PyArg_ParseTuple(args, "OOlOO|OO:AcquireCredentialsHandle",
 		&obPrincipal,						// @pyparm str/unicode|Principal||Use None for current security context
 		&obPackage,							// @pyparm str/unicode|Package||Name of security package that credentials will be used with
 		&CredentialUse,						// @pyparm int|CredentialUse||Intended use of requested credentials, SECPKG_CRED_INBOUND, SECPKG_CRED_OUTBOUND, or SECPKG_CRED_BOTH
@@ -3491,31 +3497,31 @@ static PyObject *PyAcquireCredentialsHandle(PyObject *self, PyObject *args)
 		&obAuthData,						// @pyparm tuple|AuthData||Sequence of 3 strings: (User, Domain, Password) - use none for existing credentials
 		&obGetKeyFn, &obGetKeyArgument))	// not supported yet
 		return NULL;
-	if (obGetKeyFn!=Py_None || obGetKeyArgument!=Py_None){
-		PyErr_SetString(PyExc_NotImplementedError,"GetKeyFn and arguments are not supported");
+	if (obGetKeyFn != Py_None || obGetKeyArgument != Py_None) {
+		PyErr_SetString(PyExc_NotImplementedError, "GetKeyFn and arguments are not supported");
 		return NULL;
-		}
-	if (obAuthData!=Py_None){
-		pAuthData=&AuthData; // set first so freed on failure.
+	}
+	if (obAuthData != Py_None) {
+		pAuthData = &AuthData; // set first so freed on failure.
 		if (!PyWinObject_AsSEC_WINNT_AUTH_IDENTITY(obAuthData, &AuthData))
 			goto done;
-		}
-	if (obLogonID!=Py_None){
+	}
+	if (obLogonID != Py_None) {
 		if (!PyWinObject_AsLARGE_INTEGER(obLogonID, (LARGE_INTEGER *)&LogonID))
 			goto done;
-		pLogonID=&LogonID;
-		}
+		pLogonID = &LogonID;
+	}
 
 	if (PyWinObject_AsWCHAR(obPrincipal, &Principal, TRUE)
-		&&PyWinObject_AsWCHAR(obPackage, &Package, FALSE)){
-		err=(*psecurityfunctiontable->AcquireCredentialsHandleW)
+		&& PyWinObject_AsWCHAR(obPackage, &Package, FALSE)) {
+		err = (*psecurityfunctiontable->AcquireCredentialsHandleW)
 			(Principal, Package, CredentialUse, pLogonID, pAuthData,
-			NULL, NULL, &Credential, &Expiry);
-		if (err==SEC_E_OK)
-			ret=Py_BuildValue("NN",new PyCredHandle(&Credential), PyWinObject_FromTimeStamp(Expiry));
+				NULL, NULL, &Credential, &Expiry);
+		if (err == SEC_E_OK)
+			ret = Py_BuildValue("NN", new PyCredHandle(&Credential), PyWinObject_FromTimeStamp(Expiry));
 		else
-			PyWin_SetAPIError("AcquireCredentialsHandle",err);
-		}
+			PyWin_SetAPIError("AcquireCredentialsHandle", err);
+	}
 done:
 	if (Principal)
 		PyWinObject_FreeWCHAR(Principal);
@@ -3532,12 +3538,12 @@ static PyObject *PyInitializeSecurityContext(PyObject *self, PyObject *args)
 	PCredHandle pcredhandle;
 	PCtxtHandle pctxt, pctxtout;
 	PSecBufferDesc psecbufferdesc, psecbufferdescout;
-	WCHAR *targetname=NULL;
-	ULONG contextreq, contextattr, targetdatarep, reserved1=0, reserved2=0;
+	WCHAR *targetname = NULL;
+	ULONG contextreq, contextattr, targetdatarep, reserved1 = 0, reserved2 = 0;
 	TimeStamp expiry;
 	SECURITY_STATUS	err;
-	PyObject *ret=NULL;
-	if (!PyArg_ParseTuple(args,"OOOllOOO:InitializeSecurityContext",
+	PyObject *ret = NULL;
+	if (!PyArg_ParseTuple(args, "OOOllOOO:InitializeSecurityContext",
 		&obcredhandle,			// @pyparm <o PyCredHandle>|Credential||A credentials handle as returned by <om win32security.AcquireCredentialsHandle>
 		&obctxt,				// @pyparm <o PyCtxtHandle>|Context||Use None on initial call, then handle returned in NewContext thereafter
 		&obtargetname,			// @pyparm str/unicode|TargetName||Target of context, security package specific - Use None with NTLM
@@ -3547,26 +3553,26 @@ static PyObject *PyInitializeSecurityContext(PyObject *self, PyObject *args)
 		&obctxtout,				// @pyparm <o PyCtxtHandle>|NewContext||Uninitialized context handle to receive output
 		&obsecbufferdescout))	// @pyparm <o PySecBufferDesc>|pOutput||Buffer that receives output data for subsequent calls
 		return NULL;
-	if (contextreq&ISC_REQ_ALLOCATE_MEMORY){
-		PyErr_SetString(PyExc_NotImplementedError,"Use of ISC_REQ_ALLOCATE_MEMORY is not yet supported");
+	if (contextreq&ISC_REQ_ALLOCATE_MEMORY) {
+		PyErr_SetString(PyExc_NotImplementedError, "Use of ISC_REQ_ALLOCATE_MEMORY is not yet supported");
 		return NULL;
-		}
+	}
 
 	if (PyWinObject_AsCredHandle(obcredhandle, &pcredhandle, FALSE)
-		&&PyWinObject_AsCtxtHandle(obctxt, &pctxt, TRUE)
-		&&PyWinObject_AsSecBufferDesc(obsecbufferdesc, &psecbufferdesc, TRUE)
-		&&PyWinObject_AsCtxtHandle(obctxtout, &pctxtout, FALSE)
-		&&PyWinObject_AsSecBufferDesc(obsecbufferdescout, &psecbufferdescout, FALSE)
-		&&PyWinObject_AsWCHAR(obtargetname, &targetname, TRUE)){
-		err=(*psecurityfunctiontable->InitializeSecurityContextW)(pcredhandle, pctxt, targetname, contextreq, reserved1,
+		&& PyWinObject_AsCtxtHandle(obctxt, &pctxt, TRUE)
+		&& PyWinObject_AsSecBufferDesc(obsecbufferdesc, &psecbufferdesc, TRUE)
+		&& PyWinObject_AsCtxtHandle(obctxtout, &pctxtout, FALSE)
+		&& PyWinObject_AsSecBufferDesc(obsecbufferdescout, &psecbufferdescout, FALSE)
+		&& PyWinObject_AsWCHAR(obtargetname, &targetname, TRUE)) {
+		err = (*psecurityfunctiontable->InitializeSecurityContextW)(pcredhandle, pctxt, targetname, contextreq, reserved1,
 			targetdatarep, psecbufferdesc, reserved2, pctxtout, psecbufferdescout, &contextattr, &expiry);
-		if (err<0)
-			PyWin_SetAPIError("InitializeSecurityContext",err);
-		else{
+		if (err < 0)
+			PyWin_SetAPIError("InitializeSecurityContext", err);
+		else {
 			((PySecBufferDesc *)obsecbufferdescout)->modify_in_place();
-			ret=Py_BuildValue("llN",err,contextattr,PyWinObject_FromTimeStamp(expiry));
-			}
+			ret = Py_BuildValue("llN", err, contextattr, PyWinObject_FromTimeStamp(expiry));
 		}
+	}
 	PyWinObject_FreeWCHAR(targetname);
 	return ret;
 }
@@ -3578,12 +3584,12 @@ static PyObject *PyAcceptSecurityContext(PyObject *self, PyObject *args)
 	PCredHandle pcredhandle;
 	PCtxtHandle pctxt, pctxtout;
 	PSecBufferDesc psecbufferdesc, psecbufferdescout;
-	ULONG contextreq, contextattr, targetdatarep, reserved1=0, reserved2=0;
+	ULONG contextreq, contextattr, targetdatarep, reserved1 = 0, reserved2 = 0;
 	TimeStamp expiry;
 	SECURITY_STATUS	err;
-	PyObject *ret=NULL;
+	PyObject *ret = NULL;
 
-	if (!PyArg_ParseTuple(args,"OOOllOO:AcceptSecurityContext",
+	if (!PyArg_ParseTuple(args, "OOOllOO:AcceptSecurityContext",
 		&obcredhandle,			// @pyparm <o PyCredHandle>|Credential||Handle to server's credentials (see AcquireCredentialsHandle)
 		&obctxt,				// @pyparm <o PyCtxtHandle>|Context||Use None on initial call, then handle returned in NewContext thereafter
 		&obsecbufferdesc,		// @pyparm <o PySecBufferDesc>|pInput||Data buffer received from client
@@ -3592,25 +3598,25 @@ static PyObject *PyAcceptSecurityContext(PyObject *self, PyObject *args)
 		&obctxtout,				// @pyparm <o PyCtxtHandle>|NewContext||Uninitialized context handle to receive output
 		&obsecbufferdescout))	// @pyparm <o PySecBufferDesc>|pOutput||Buffer that receives output data, to be passed back as pInput on subsequent calls
 		return NULL;
-	if (contextreq&ISC_REQ_ALLOCATE_MEMORY){
-		PyErr_SetString(PyExc_NotImplementedError,"Use of ISC_REQ_ALLOCATE_MEMORY is not yet supported");
+	if (contextreq&ISC_REQ_ALLOCATE_MEMORY) {
+		PyErr_SetString(PyExc_NotImplementedError, "Use of ISC_REQ_ALLOCATE_MEMORY is not yet supported");
 		return NULL;
-		}
+	}
 
 	if (PyWinObject_AsCredHandle(obcredhandle, &pcredhandle, FALSE)
-		&&PyWinObject_AsCtxtHandle(obctxt, &pctxt, TRUE)
-		&&PyWinObject_AsSecBufferDesc(obsecbufferdesc, &psecbufferdesc, TRUE)
-		&&PyWinObject_AsCtxtHandle(obctxtout, &pctxtout, FALSE)
-		&&PyWinObject_AsSecBufferDesc(obsecbufferdescout, &psecbufferdescout, FALSE)){
-		err=(*psecurityfunctiontable->AcceptSecurityContext)(pcredhandle, pctxt, psecbufferdesc, contextreq,
+		&& PyWinObject_AsCtxtHandle(obctxt, &pctxt, TRUE)
+		&& PyWinObject_AsSecBufferDesc(obsecbufferdesc, &psecbufferdesc, TRUE)
+		&& PyWinObject_AsCtxtHandle(obctxtout, &pctxtout, FALSE)
+		&& PyWinObject_AsSecBufferDesc(obsecbufferdescout, &psecbufferdescout, FALSE)) {
+		err = (*psecurityfunctiontable->AcceptSecurityContext)(pcredhandle, pctxt, psecbufferdesc, contextreq,
 			targetdatarep, pctxtout, psecbufferdescout, &contextattr, &expiry);
-		if (err<0)
-			PyWin_SetAPIError("AcceptSecurityContext",err);
-		else{
+		if (err < 0)
+			PyWin_SetAPIError("AcceptSecurityContext", err);
+		else {
 			((PySecBufferDesc *)obsecbufferdescout)->modify_in_place();
-			ret=Py_BuildValue("llN",err, contextattr, PyWinObject_FromTimeStamp(expiry));
-			}
+			ret = Py_BuildValue("llN", err, contextattr, PyWinObject_FromTimeStamp(expiry));
 		}
+	}
 	return ret;
 }
 
@@ -3619,22 +3625,22 @@ static PyObject *PyQuerySecurityPackageInfo(PyObject *self, PyObject *args)
 	CHECK_SECURITYFUNCTIONTABLE(QuerySecurityPackageInfoW);
 	CHECK_SECURITYFUNCTIONTABLE(FreeContextBuffer);
 
-	PSecPkgInfoW psecpkginfo=NULL;
+	PSecPkgInfoW psecpkginfo = NULL;
 	SECURITY_STATUS err;
 	WCHAR *packagename;
-	PyObject *obpackagename, *ret=NULL;
+	PyObject *obpackagename, *ret = NULL;
 	// @pyparm <o PyUNICODE>|PackageName||Name of the security package to query
-	if (!PyArg_ParseTuple(args,"O:QuerySecurityPackageInfo",&obpackagename))
+	if (!PyArg_ParseTuple(args, "O:QuerySecurityPackageInfo", &obpackagename))
 		return NULL;
 	if (!PyWinObject_AsWCHAR(obpackagename, &packagename, FALSE))
 		return NULL;
-	err=(*psecurityfunctiontable->QuerySecurityPackageInfoW)(packagename, &psecpkginfo);
-	if (err==SEC_E_OK){
-		ret=PyWinObject_FromSecPkgInfo(psecpkginfo);
+	err = (*psecurityfunctiontable->QuerySecurityPackageInfoW)(packagename, &psecpkginfo);
+	if (err == SEC_E_OK) {
+		ret = PyWinObject_FromSecPkgInfo(psecpkginfo);
 		(*psecurityfunctiontable->FreeContextBuffer)(psecpkginfo);
-		}
+	}
 	else
-		PyWin_SetAPIError("QuerySecurityPackageInfo",err);
+		PyWin_SetAPIError("QuerySecurityPackageInfo", err);
 	PyWinObject_FreeWCHAR(packagename);
 	return ret;
 }
@@ -3654,8 +3660,8 @@ static PyObject *PyLsaCallAuthenticationPackage(PyObject *self, PyObject *args)
 	PyObject *obhandle;
 	NTSTATUS err, protocol_status;
 	ULONG pkgid, inputbuflen, outputbuflen, msgtype;
-	PVOID inputbuf=NULL, outputbuf=NULL;
-	PyObject *ret=NULL, *obinputbuf;
+	PVOID inputbuf = NULL, outputbuf = NULL;
+	PyObject *ret = NULL, *obinputbuf;
 	if (!PyArg_ParseTuple(args, "OllO:LsaCallAuthenticationPackage", &obhandle, &pkgid, &msgtype, &obinputbuf))
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhandle, &lsahandle))
@@ -3663,170 +3669,171 @@ static PyObject *PyLsaCallAuthenticationPackage(PyObject *self, PyObject *args)
 
 	// Message-specific input
 	// @flagh MessageType|Input type
-	switch (msgtype){
+	switch (msgtype) {
 		// @flag KerbQueryTicketCacheMessage|long - a logon id, use 0 for current logon session
 		// @flag KerbRetrieveTicketMessage|long - a logon id, use 0 for current logon session
-		case KerbQueryTicketCacheMessage:
-		case KerbRetrieveTicketMessage:
-			inputbuflen=sizeof(KERB_QUERY_TKT_CACHE_REQUEST);
-			inputbuf=malloc(inputbuflen);
-			if (inputbuf==NULL){
-				PyErr_Format(PyExc_MemoryError,"Unable to allocate %s bytes", inputbuflen);
-				goto done;
-				}
-			ZeroMemory(inputbuf, inputbuflen);
-			((PKERB_QUERY_TKT_CACHE_REQUEST)inputbuf)->MessageType=(KERB_PROTOCOL_MESSAGE_TYPE)msgtype;
-			if (!PyWinObject_AsLARGE_INTEGER(obinputbuf,(LARGE_INTEGER *)&((PKERB_QUERY_TKT_CACHE_REQUEST)inputbuf)->LogonId))
-				goto done;
-			break;
+	case KerbQueryTicketCacheMessage:
+	case KerbRetrieveTicketMessage:
+		inputbuflen = sizeof(KERB_QUERY_TKT_CACHE_REQUEST);
+		inputbuf = malloc(inputbuflen);
+		if (inputbuf == NULL) {
+			PyErr_Format(PyExc_MemoryError, "Unable to allocate %s bytes", inputbuflen);
+			goto done;
+		}
+		ZeroMemory(inputbuf, inputbuflen);
+		((PKERB_QUERY_TKT_CACHE_REQUEST)inputbuf)->MessageType = (KERB_PROTOCOL_MESSAGE_TYPE)msgtype;
+		if (!PyWinObject_AsLARGE_INTEGER(obinputbuf, (LARGE_INTEGER *)&((PKERB_QUERY_TKT_CACHE_REQUEST)inputbuf)->LogonId))
+			goto done;
+		break;
 		// @flag KerbPurgeTicketCacheMessage|(long, <o PyUnicode>, <o PyUnicode>) - tuple containing (LogonId, ServerName, RealmName)
-		case KerbPurgeTicketCacheMessage:
-			PyObject *obLogonId, *obServerName, *obRealmName;
-			inputbuflen=sizeof(KERB_PURGE_TKT_CACHE_REQUEST);
-			inputbuf=malloc(inputbuflen);
-			if (inputbuf==NULL){
-				PyErr_Format(PyExc_MemoryError,"Unable to allocate %s bytes", inputbuflen);
-				goto done;
-				}
-			ZeroMemory(inputbuf, inputbuflen);
-			if (!PyTuple_Check(obinputbuf)){
-				PyErr_SetString(PyExc_TypeError,"Input must be a tuple of (LogonId,ServerName,RealmName)");
-				goto done;
-				}
-			if (!PyArg_ParseTuple(obinputbuf,"OOO:KERB_PURGE_TKT_CACHE_REQUEST", &obLogonId, &obServerName, &obRealmName))
-				goto done;
-			if (!PyWinObject_AsLARGE_INTEGER(obLogonId,(LARGE_INTEGER *)&((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->LogonId)||
-				!PyWinObject_AsLSA_UNICODE_STRING(obServerName,&((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->ServerName, TRUE)||
-				!PyWinObject_AsLSA_UNICODE_STRING(obRealmName,&((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->RealmName, TRUE))
-				goto done;
-			((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->MessageType=(KERB_PROTOCOL_MESSAGE_TYPE)msgtype;
-			break;
+	case KerbPurgeTicketCacheMessage:
+		PyObject *obLogonId, *obServerName, *obRealmName;
+		inputbuflen = sizeof(KERB_PURGE_TKT_CACHE_REQUEST);
+		inputbuf = malloc(inputbuflen);
+		if (inputbuf == NULL) {
+			PyErr_Format(PyExc_MemoryError, "Unable to allocate %s bytes", inputbuflen);
+			goto done;
+		}
+		ZeroMemory(inputbuf, inputbuflen);
+		if (!PyTuple_Check(obinputbuf)) {
+			PyErr_SetString(PyExc_TypeError, "Input must be a tuple of (LogonId,ServerName,RealmName)");
+			goto done;
+		}
+		if (!PyArg_ParseTuple(obinputbuf, "OOO:KERB_PURGE_TKT_CACHE_REQUEST", &obLogonId, &obServerName, &obRealmName))
+			goto done;
+		if (!PyWinObject_AsLARGE_INTEGER(obLogonId, (LARGE_INTEGER *)&((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->LogonId) ||
+			!PyWinObject_AsLSA_UNICODE_STRING(obServerName, &((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->ServerName, TRUE) ||
+			!PyWinObject_AsLSA_UNICODE_STRING(obRealmName, &((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->RealmName, TRUE))
+			goto done;
+		((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->MessageType = (KERB_PROTOCOL_MESSAGE_TYPE)msgtype;
+		break;
 		// @flag KerbRetrieveEncodedTicketMessage|(LogonId, TargetName, TicketFlags, CacheOptions, EncryptionType, CredentialsHandle)
 		//	(int, <o PyUnicode>, int, int, int, <o PyCredHandle>)
-		case KerbRetrieveEncodedTicketMessage:
-		default:
-			return PyErr_Format(PyExc_NotImplementedError,"Message type %d is not supported yet", msgtype);
-		}
+	case KerbRetrieveEncodedTicketMessage:
+	default:
+		return PyErr_Format(PyExc_NotImplementedError, "Message type %d is not supported yet", msgtype);
+	}
 
-	err=(*pfnLsaCallAuthenticationPackage)(lsahandle, pkgid, inputbuf, inputbuflen,
+	err = (*pfnLsaCallAuthenticationPackage)(lsahandle, pkgid, inputbuf, inputbuflen,
 		&outputbuf, &outputbuflen, &protocol_status);
-	if (err!=STATUS_SUCCESS){
-		PyWin_SetAPIError("LsaCallAuthenticationPackage",LsaNtStatusToWinError(err));
+	if (err != STATUS_SUCCESS) {
+		PyWin_SetAPIError("LsaCallAuthenticationPackage", LsaNtStatusToWinError(err));
 		goto done;
-		}
-	if (protocol_status!=STATUS_SUCCESS){
-		PyWin_SetAPIError("LsaCallAuthenticationPackage",LsaNtStatusToWinError(protocol_status));
+	}
+	if (protocol_status != STATUS_SUCCESS) {
+		PyWin_SetAPIError("LsaCallAuthenticationPackage", LsaNtStatusToWinError(protocol_status));
 		goto done;
-		}
+	}
 
 	// Message-specific output
 	// @flagh MessageType|Return type
-	switch (msgtype){
+	switch (msgtype) {
 		// @flag KerbQueryTicketCacheMessage|(dict,...) - Returns all tickets for the specified logon session (form is KERB_TICKET_CACHE_INFO)
-		case KerbQueryTicketCacheMessage:
-			ULONG tkt_ind;
-			PKERB_QUERY_TKT_CACHE_RESPONSE kqtcr;
-			PyObject *obktci;
-			kqtcr=(PKERB_QUERY_TKT_CACHE_RESPONSE)outputbuf;
-			ret=PyTuple_New(kqtcr->CountOfTickets);
-			if (ret==NULL)
+	case KerbQueryTicketCacheMessage:
+		ULONG tkt_ind;
+		PKERB_QUERY_TKT_CACHE_RESPONSE kqtcr;
+		PyObject *obktci;
+		kqtcr = (PKERB_QUERY_TKT_CACHE_RESPONSE)outputbuf;
+		ret = PyTuple_New(kqtcr->CountOfTickets);
+		if (ret == NULL)
+			goto done;
+		for (tkt_ind = 0; tkt_ind < kqtcr->CountOfTickets; tkt_ind++) {
+			obktci = Py_BuildValue("{s:N,s:N,s:N,s:N,s:N,s:l,s:l}",
+				"ServerName", PyWinObject_FromLSA_UNICODE_STRING(kqtcr->Tickets[tkt_ind].ServerName),
+				"RealmName", PyWinObject_FromLSA_UNICODE_STRING(kqtcr->Tickets[tkt_ind].RealmName),
+				"StartTime", PyWinObject_FromTimeStamp(kqtcr->Tickets[tkt_ind].StartTime),
+				"EndTime", PyWinObject_FromTimeStamp(kqtcr->Tickets[tkt_ind].EndTime),
+				"RenewTime", PyWinObject_FromTimeStamp(kqtcr->Tickets[tkt_ind].RenewTime),
+				"EncryptionType", kqtcr->Tickets[tkt_ind].EncryptionType,
+				"TicketFlags", kqtcr->Tickets[tkt_ind].TicketFlags);
+			if (obktci == NULL) {
+				Py_DECREF(ret);
+				ret = NULL;
 				goto done;
-			for (tkt_ind=0; tkt_ind<kqtcr->CountOfTickets; tkt_ind++){
-				obktci=Py_BuildValue("{s:N,s:N,s:N,s:N,s:N,s:l,s:l}",
-					"ServerName", PyWinObject_FromLSA_UNICODE_STRING(kqtcr->Tickets[tkt_ind].ServerName),
-					"RealmName", PyWinObject_FromLSA_UNICODE_STRING(kqtcr->Tickets[tkt_ind].RealmName),
-					"StartTime", PyWinObject_FromTimeStamp(kqtcr->Tickets[tkt_ind].StartTime),
-					"EndTime", PyWinObject_FromTimeStamp(kqtcr->Tickets[tkt_ind].EndTime),
-					"RenewTime", PyWinObject_FromTimeStamp(kqtcr->Tickets[tkt_ind].RenewTime),
-					"EncryptionType", kqtcr->Tickets[tkt_ind].EncryptionType,
-					"TicketFlags", kqtcr->Tickets[tkt_ind].TicketFlags);
-				if (obktci==NULL){
-					Py_DECREF(ret);
-					ret=NULL;
-					goto done;
-					}
-				PyTuple_SET_ITEM(ret, tkt_ind, obktci);
-				}
-			break;
+			}
+			PyTuple_SET_ITEM(ret, tkt_ind, obktci);
+		}
+		break;
 		// @flag KerbPurgeTicketCacheMessage|None
-		case KerbPurgeTicketCacheMessage:
-			Py_INCREF(Py_None);
-			ret=Py_None;
-			break;
+	case KerbPurgeTicketCacheMessage:
+		Py_INCREF(Py_None);
+		ret = Py_None;
+		break;
 		// @flag KerbRetrieveTicketMessage|Returns the ticket granting ticket for the logon session as a KERB_EXTERNAL_TICKET
-		case KerbRetrieveTicketMessage:
+	case KerbRetrieveTicketMessage:
 		// @flag KerbRetrieveEncodedTicketMessage|Returns specified ticket as a KERB_EXTERNAL_TICKET
-		case KerbRetrieveEncodedTicketMessage:
-			// KERB_EXTERNAL_TICKET ket;
-			// ket=((PKERB_RETRIEVE_TKT_RESPONSE)outputbuf)->Ticket;  // this is going to be a pain to translate
-			// break;
-		default:
-			PyErr_Format(PyExc_NotImplementedError,"Message type %d is not supported yet", msgtype);
-		}
+	case KerbRetrieveEncodedTicketMessage:
+		// KERB_EXTERNAL_TICKET ket;
+		// ket=((PKERB_RETRIEVE_TKT_RESPONSE)outputbuf)->Ticket;  // this is going to be a pain to translate
+		// break;
+	default:
+		PyErr_Format(PyExc_NotImplementedError, "Message type %d is not supported yet", msgtype);
+	}
 
-	done:
+done:
 	// Message-specific cleanup
-	switch (msgtype){
-		case KerbPurgeTicketCacheMessage:
-			if (inputbuf!=NULL){
-				PyWinObject_FreeWCHAR(((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->ServerName.Buffer);
-				PyWinObject_FreeWCHAR(((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->RealmName.Buffer);
-				}
-			break;
+	switch (msgtype) {
+	case KerbPurgeTicketCacheMessage:
+		if (inputbuf != NULL) {
+			PyWinObject_FreeWCHAR(((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->ServerName.Buffer);
+			PyWinObject_FreeWCHAR(((PKERB_PURGE_TKT_CACHE_REQUEST)inputbuf)->RealmName.Buffer);
 		}
-	if (inputbuf!=NULL)
+		break;
+	}
+	if (inputbuf != NULL)
 		free(inputbuf);
-	if (outputbuf!=NULL)
+	if (outputbuf != NULL)
 		(*pfnLsaFreeReturnBuffer)(outputbuf);
 	return ret;
 }
 
 static PyObject *PyTranslateName(PyObject *self, PyObject *args)
 {
-    PyObject *obAcctName;
-    int format, desiredFormat;
-    ULONG numChars = 1024;
-    CHECK_PFN(TranslateName);
-    WCHAR *szAcctName = NULL;
-    WCHAR *buf = NULL;
-    BOOL ok;
-    if (!PyArg_ParseTuple(args, "Oii|l:TranslateName",
-            &obAcctName, // @pyparm <o PyUnicode>|accountName||object name
-            &format, // @pyparm int|accountNameFormat||A value from the EXTENDED_NAME_FORMAT enumeration type indicating the format of the accountName name.
-            &desiredFormat, // @pyparm int|accountNameFormat||A value from the EXTENDED_NAME_FORMAT enumeration type indicating the format of the desired name.
-            &numChars)) // @pyparm int|numChars|1024|Number of Unicode characters to allocate for the return buffer.
-        return NULL;
-    if (!PyWinObject_AsWCHAR(obAcctName, &szAcctName, FALSE))
-        return NULL;
-    buf = (WCHAR *)malloc(sizeof(WCHAR) * numChars);
-    if (!buf) {
-        PyWinObject_FreeWCHAR(szAcctName);
-        return PyErr_NoMemory();
-    }
-    Py_BEGIN_ALLOW_THREADS
-    ok = (*pfnTranslateName)(szAcctName, (EXTENDED_NAME_FORMAT)format,
-                       (EXTENDED_NAME_FORMAT)desiredFormat, buf, &numChars);
-    Py_END_ALLOW_THREADS
-    PyObject *ret = NULL;
-    if (ok) {
-        ret = PyWinObject_FromWCHAR(buf, numChars-1);
-    } else
-        PyWin_SetAPIError("TranslateName");
-    PyWinObject_FreeWCHAR(szAcctName);
-    free(buf);
-    return ret;
+	PyObject *obAcctName;
+	int format, desiredFormat;
+	ULONG numChars = 1024;
+	CHECK_PFN(TranslateName);
+	WCHAR *szAcctName = NULL;
+	WCHAR *buf = NULL;
+	BOOL ok;
+	if (!PyArg_ParseTuple(args, "Oii|l:TranslateName",
+		&obAcctName, // @pyparm <o PyUnicode>|accountName||object name
+		&format, // @pyparm int|accountNameFormat||A value from the EXTENDED_NAME_FORMAT enumeration type indicating the format of the accountName name. 
+		&desiredFormat, // @pyparm int|accountNameFormat||A value from the EXTENDED_NAME_FORMAT enumeration type indicating the format of the desired name.
+		&numChars)) // @pyparm int|numChars|1024|Number of Unicode characters to allocate for the return buffer.
+		return NULL;
+	if (!PyWinObject_AsWCHAR(obAcctName, &szAcctName, FALSE))
+		return NULL;
+	buf = (WCHAR *)malloc(sizeof(WCHAR) * numChars);
+	if (!buf) {
+		PyWinObject_FreeWCHAR(szAcctName);
+		return PyErr_NoMemory();
+	}
+	Py_BEGIN_ALLOW_THREADS
+		ok = (*pfnTranslateName)(szAcctName, (EXTENDED_NAME_FORMAT)format,
+			(EXTENDED_NAME_FORMAT)desiredFormat, buf, &numChars);
+	Py_END_ALLOW_THREADS
+		PyObject *ret = NULL;
+	if (ok) {
+		ret = PyWinObject_FromWCHAR(buf, numChars - 1);
+	}
+	else
+		PyWin_SetAPIError("TranslateName");
+	PyWinObject_FreeWCHAR(szAcctName);
+	free(buf);
+	return ret;
 }
 
 static PyObject *PyCreateWellKnownSid(PyObject *self, PyObject *args)
 {
-    PyObject *obDomainSid=Py_None, *ret=NULL;
-    PSID DomainSid=NULL, outsid=NULL;
-    WELL_KNOWN_SID_TYPE sidtype;
-    DWORD bufsize=SECURITY_MAX_SID_SIZE;
-    CHECK_PFN(CreateWellKnownSid);
+	PyObject *obDomainSid = Py_None, *ret = NULL;
+	PSID DomainSid = NULL, outsid = NULL;
+	WELL_KNOWN_SID_TYPE sidtype;
+	DWORD bufsize = SECURITY_MAX_SID_SIZE;
+	CHECK_PFN(CreateWellKnownSid);
 
-    outsid=malloc(bufsize);
-    if (outsid==NULL)
+	outsid = malloc(bufsize);
+	if (outsid == NULL)
 		return PyErr_Format(PyExc_MemoryError, "CreateWellKnownSid: Unable to allocate %d bytes", bufsize);
 
 	if (!PyArg_ParseTuple(args, "k|O:CreateWellKnownSid",
@@ -3838,9 +3845,9 @@ static PyObject *PyCreateWellKnownSid(PyObject *self, PyObject *args)
 	if (!(*pfnCreateWellKnownSid)(sidtype, DomainSid, outsid, &bufsize))
 		PyWin_SetAPIError("CreateWellKnownSid");
 	else
-	    ret=new PySID(outsid);
-    free(outsid);
-    return ret;
+		ret = new PySID(outsid);
+	free(outsid);
+	return ret;
 }
 
 static PyObject *PyMapGenericMask(PyObject *self, PyObject *args)
@@ -3851,422 +3858,432 @@ static PyObject *PyMapGenericMask(PyObject *self, PyObject *args)
 	// @pyparm int|AccessMask||A bitmask of generic rights to be interpreted according to GenericMapping
 	// @pyparm (int,int,int,int)|GenericMapping||A tuple of 4 bitmasks (GenericRead, GenericWrite, GenericExecute, GenericAll)
 	// containing the standard and specific rights that correspond to the generic rights.
-	if (!PyArg_ParseTuple(args,"k(kkkk):MapGenericMask", &mask, &mapping.GenericRead, &mapping.GenericWrite,
+	if (!PyArg_ParseTuple(args, "k(kkkk):MapGenericMask", &mask, &mapping.GenericRead, &mapping.GenericWrite,
 		&mapping.GenericExecute, &mapping.GenericAll))
 		return NULL;
 	Py_BEGIN_ALLOW_THREADS
-	MapGenericMask(&mask, &mapping);
+		MapGenericMask(&mask, &mapping);
 	Py_END_ALLOW_THREADS
-	return PyLong_FromUnsignedLong(mask);
+		return PyLong_FromUnsignedLong(mask);
 }
 static PyObject *_wrap_ImpersonateNamedPipeClient(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    PyHANDLE  _arg0;
-    PyObject * _obj0 = 0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	PyHANDLE  _arg0;
+	PyObject * _obj0 = 0;
 
-    self = self;
-    if(!PyArg_ParseTuple(args,"O:ImpersonateNamedPipeClient",&_obj0))
-        return NULL;
-{
-	if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+	self = self;
+	if (!PyArg_ParseTuple(args, "O:ImpersonateNamedPipeClient", &_obj0))
 		return NULL;
-}
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )ImpersonateNamedPipeClient(_arg0);
+	{
+		if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+			return NULL;
+	}
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)ImpersonateNamedPipeClient(_arg0);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("ImpersonateNamedPipeClient");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-    return _resultobj;
+				return PyWin_SetAPIError("ImpersonateNamedPipeClient");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_ImpersonateLoggedOnUser(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    PyHANDLE  _arg0;
-    PyObject * _obj0 = 0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	PyHANDLE  _arg0;
+	PyObject * _obj0 = 0;
 
-    self = self;
-    if(!PyArg_ParseTuple(args,"O:ImpersonateLoggedOnUser",&_obj0))
-        return NULL;
-{
-	if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+	self = self;
+	if (!PyArg_ParseTuple(args, "O:ImpersonateLoggedOnUser", &_obj0))
 		return NULL;
-}
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )ImpersonateLoggedOnUser(_arg0);
+	{
+		if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+			return NULL;
+	}
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)ImpersonateLoggedOnUser(_arg0);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("ImpersonateLoggedOnUser");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-    return _resultobj;
+				return PyWin_SetAPIError("ImpersonateLoggedOnUser");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_RevertToSelf(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
 
-    self = self;
-    if(!PyArg_ParseTuple(args,":RevertToSelf"))
-        return NULL;
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )RevertToSelf();
+	self = self;
+	if (!PyArg_ParseTuple(args, ":RevertToSelf"))
+		return NULL;
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)RevertToSelf();
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("RevertToSelf");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-    return _resultobj;
+				return PyWin_SetAPIError("RevertToSelf");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_OpenProcessToken(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    PyHANDLE  _arg0;
-    DWORD  _arg1;
-    PyHANDLE * _arg2;
-    HANDLE  handle_output;
-    PyObject * _obj0 = 0;
-    PyObject * _obj1 = 0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	PyHANDLE  _arg0;
+	DWORD  _arg1;
+	PyHANDLE * _arg2;
+	HANDLE  handle_output;
+	PyObject * _obj0 = 0;
+	PyObject * _obj1 = 0;
 
-    self = self;
-{
-  _arg2 = &handle_output;
-}
-    if(!PyArg_ParseTuple(args,"OO:OpenProcessToken",&_obj0,&_obj1))
-        return NULL;
-{
-	if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+	self = self;
+	{
+		_arg2 = &handle_output;
+	}
+	if (!PyArg_ParseTuple(args, "OO:OpenProcessToken", &_obj0, &_obj1))
 		return NULL;
-}
-{
-	// PyLong_AsUnsignedLongMask isn't ideal - no overflow checking - but
-	// this is what the 'k' format specifier in PyArg_ParseTuple uses, and
-	// that is what much of pywin32 uses for DWORDS, so we use it here too
-	_arg1 = PyLong_AsUnsignedLongMask(_obj1);
-	if (_arg1==(DWORD)-1 && PyErr_Occurred())
-		return NULL;
-}
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )OpenProcessToken(_arg0,_arg1,_arg2);
+	{
+		if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+			return NULL;
+	}
+	{
+		// PyLong_AsUnsignedLongMask isn't ideal - no overflow checking - but
+		// this is what the 'k' format specifier in PyArg_ParseTuple uses, and
+		// that is what much of pywin32 uses for DWORDS, so we use it here too
+		_arg1 = PyLong_AsUnsignedLongMask(_obj1);
+		if (_arg1 == (DWORD)-1 && PyErr_Occurred())
+			return NULL;
+	}
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)OpenProcessToken(_arg0, _arg1, _arg2);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("OpenProcessToken");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-{
-    PyObject *o;
-    o = PyWinObject_FromHANDLE(*_arg2);
-    if (!_resultobj) {
-      _resultobj = o;
-    } else if (_resultobj == Py_None) {
-      Py_DECREF(Py_None);
-      _resultobj = o;
-    } else {
-      if (!PyList_Check(_resultobj)) {
-	PyObject *o2 = _resultobj;
-	_resultobj = PyList_New(0);
-	PyList_Append(_resultobj,o2);
-	Py_XDECREF(o2);
-      }
-      PyList_Append(_resultobj,o);
-      Py_XDECREF(o);
-    }
-}
-    return _resultobj;
+				return PyWin_SetAPIError("OpenProcessToken");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	{
+		PyObject *o;
+		o = PyWinObject_FromHANDLE(*_arg2);
+		if (!_resultobj) {
+			_resultobj = o;
+		}
+		else if (_resultobj == Py_None) {
+			Py_DECREF(Py_None);
+			_resultobj = o;
+		}
+		else {
+			if (!PyList_Check(_resultobj)) {
+				PyObject *o2 = _resultobj;
+				_resultobj = PyList_New(0);
+				PyList_Append(_resultobj, o2);
+				Py_XDECREF(o2);
+			}
+			PyList_Append(_resultobj, o);
+			Py_XDECREF(o);
+		}
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_LookupPrivilegeValue(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    TCHAR * _arg0;
-    TCHAR * _arg1;
-    LUID * _arg2;
-    LUID  temp;
-    PyObject * _obj0 = 0;
-    PyObject * _obj1 = 0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	TCHAR * _arg0;
+	TCHAR * _arg1;
+	LUID * _arg2;
+	LUID  temp;
+	PyObject * _obj0 = 0;
+	PyObject * _obj1 = 0;
 
-    self = self;
-{
-	_arg0 = NULL;
-}
-{
-	_arg1 = NULL;
-}
-{
-  _arg2 = &temp;
-}
-    if(!PyArg_ParseTuple(args,"OO:LookupPrivilegeValue",&_obj0,&_obj1))
-        return NULL;
-{
-	if (!PyWinObject_AsTCHAR(_obj0, &_arg0, TRUE))
+	self = self;
+	{
+		_arg0 = NULL;
+	}
+	{
+		_arg1 = NULL;
+	}
+	{
+		_arg2 = &temp;
+	}
+	if (!PyArg_ParseTuple(args, "OO:LookupPrivilegeValue", &_obj0, &_obj1))
 		return NULL;
-}
-{
-	if (!PyWinObject_AsTCHAR(_obj1, &_arg1, FALSE))
-		return NULL;
-}
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )LookupPrivilegeValue(_arg0,_arg1,_arg2);
+	{
+		if (!PyWinObject_AsTCHAR(_obj0, &_arg0, TRUE))
+			return NULL;
+	}
+	{
+		if (!PyWinObject_AsTCHAR(_obj1, &_arg1, FALSE))
+			return NULL;
+	}
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)LookupPrivilegeValue(_arg0, _arg1, _arg2);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
-           {
-	PyWinObject_FreeTCHAR(_arg0);
-}
-{
-	PyWinObject_FreeTCHAR(_arg1);
-}
+		Py_END_ALLOW_THREADS
+			if (!_result) {
+				{
+					PyWinObject_FreeTCHAR(_arg0);
+				}
+				{
+					PyWinObject_FreeTCHAR(_arg1);
+				}
 
-           return PyWin_SetAPIError("LookupPrivilegeValue");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-{
-    PyObject *o;
-    o = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)_arg2));
-    if (!_resultobj) {
-      _resultobj = o;
-    } else if (_resultobj == Py_None) {
-      Py_DECREF(Py_None);
-      _resultobj = o;
-    } else {
-      if (!PyList_Check(_resultobj)) {
-	PyObject *o2 = _resultobj;
-	_resultobj = PyList_New(0);
-	PyList_Append(_resultobj,o2);
-	Py_XDECREF(o2);
-      }
-      PyList_Append(_resultobj,o);
-      Py_XDECREF(o);
-    }
-}
-{
-	PyWinObject_FreeTCHAR(_arg0);
-}
-{
-	PyWinObject_FreeTCHAR(_arg1);
-}
-    return _resultobj;
+				return PyWin_SetAPIError("LookupPrivilegeValue");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	{
+		PyObject *o;
+		o = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)_arg2));
+		if (!_resultobj) {
+			_resultobj = o;
+		}
+		else if (_resultobj == Py_None) {
+			Py_DECREF(Py_None);
+			_resultobj = o;
+		}
+		else {
+			if (!PyList_Check(_resultobj)) {
+				PyObject *o2 = _resultobj;
+				_resultobj = PyList_New(0);
+				PyList_Append(_resultobj, o2);
+				Py_XDECREF(o2);
+			}
+			PyList_Append(_resultobj, o);
+			Py_XDECREF(o);
+		}
+	}
+	{
+		PyWinObject_FreeTCHAR(_arg0);
+	}
+	{
+		PyWinObject_FreeTCHAR(_arg1);
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_OpenThreadToken(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    PyHANDLE  _arg0;
-    DWORD  _arg1;
-    BOOL  _arg2;
-    PyHANDLE * _arg3;
-    HANDLE  handle_output;
-    PyObject * _obj0 = 0;
-    PyObject * _obj1 = 0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	PyHANDLE  _arg0;
+	DWORD  _arg1;
+	BOOL  _arg2;
+	PyHANDLE * _arg3;
+	HANDLE  handle_output;
+	PyObject * _obj0 = 0;
+	PyObject * _obj1 = 0;
 
-    self = self;
-{
-  _arg3 = &handle_output;
-}
-    if(!PyArg_ParseTuple(args,"OOi:OpenThreadToken",&_obj0,&_obj1,&_arg2))
-        return NULL;
-{
-	if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+	self = self;
+	{
+		_arg3 = &handle_output;
+	}
+	if (!PyArg_ParseTuple(args, "OOi:OpenThreadToken", &_obj0, &_obj1, &_arg2))
 		return NULL;
-}
-{
-	// PyLong_AsUnsignedLongMask isn't ideal - no overflow checking - but
-	// this is what the 'k' format specifier in PyArg_ParseTuple uses, and
-	// that is what much of pywin32 uses for DWORDS, so we use it here too
-	_arg1 = PyLong_AsUnsignedLongMask(_obj1);
-	if (_arg1==(DWORD)-1 && PyErr_Occurred())
-		return NULL;
-}
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )OpenThreadToken(_arg0,_arg1,_arg2,_arg3);
+	{
+		if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+			return NULL;
+	}
+	{
+		// PyLong_AsUnsignedLongMask isn't ideal - no overflow checking - but
+		// this is what the 'k' format specifier in PyArg_ParseTuple uses, and
+		// that is what much of pywin32 uses for DWORDS, so we use it here too
+		_arg1 = PyLong_AsUnsignedLongMask(_obj1);
+		if (_arg1 == (DWORD)-1 && PyErr_Occurred())
+			return NULL;
+	}
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)OpenThreadToken(_arg0, _arg1, _arg2, _arg3);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("OpenThreadToken");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-{
-    PyObject *o;
-    o = PyWinObject_FromHANDLE(*_arg3);
-    if (!_resultobj) {
-      _resultobj = o;
-    } else if (_resultobj == Py_None) {
-      Py_DECREF(Py_None);
-      _resultobj = o;
-    } else {
-      if (!PyList_Check(_resultobj)) {
-	PyObject *o2 = _resultobj;
-	_resultobj = PyList_New(0);
-	PyList_Append(_resultobj,o2);
-	Py_XDECREF(o2);
-      }
-      PyList_Append(_resultobj,o);
-      Py_XDECREF(o);
-    }
-}
-    return _resultobj;
+				return PyWin_SetAPIError("OpenThreadToken");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	{
+		PyObject *o;
+		o = PyWinObject_FromHANDLE(*_arg3);
+		if (!_resultobj) {
+			_resultobj = o;
+		}
+		else if (_resultobj == Py_None) {
+			Py_DECREF(Py_None);
+			_resultobj = o;
+		}
+		else {
+			if (!PyList_Check(_resultobj)) {
+				PyObject *o2 = _resultobj;
+				_resultobj = PyList_New(0);
+				PyList_Append(_resultobj, o2);
+				Py_XDECREF(o2);
+			}
+			PyList_Append(_resultobj, o);
+			Py_XDECREF(o);
+		}
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_AllocateLocallyUniqueId(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    LUID * _arg0;
-    LUID  temp;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	LUID * _arg0;
+	LUID  temp;
 
-    self = self;
-{
-  _arg0 = &temp;
-}
-    if(!PyArg_ParseTuple(args,":AllocateLocallyUniqueId"))
-        return NULL;
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )AllocateLocallyUniqueId(_arg0);
+	self = self;
+	{
+		_arg0 = &temp;
+	}
+	if (!PyArg_ParseTuple(args, ":AllocateLocallyUniqueId"))
+		return NULL;
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)AllocateLocallyUniqueId(_arg0);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("AllocateLocallyUniqueId");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-{
-    PyObject *o;
-    o = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)_arg0));
-    if (!_resultobj) {
-      _resultobj = o;
-    } else if (_resultobj == Py_None) {
-      Py_DECREF(Py_None);
-      _resultobj = o;
-    } else {
-      if (!PyList_Check(_resultobj)) {
-	PyObject *o2 = _resultobj;
-	_resultobj = PyList_New(0);
-	PyList_Append(_resultobj,o2);
-	Py_XDECREF(o2);
-      }
-      PyList_Append(_resultobj,o);
-      Py_XDECREF(o);
-    }
-}
-    return _resultobj;
+				return PyWin_SetAPIError("AllocateLocallyUniqueId");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	{
+		PyObject *o;
+		o = PyWinObject_FromLARGE_INTEGER(*((LARGE_INTEGER *)_arg0));
+		if (!_resultobj) {
+			_resultobj = o;
+		}
+		else if (_resultobj == Py_None) {
+			Py_DECREF(Py_None);
+			_resultobj = o;
+		}
+		else {
+			if (!PyList_Check(_resultobj)) {
+				PyObject *o2 = _resultobj;
+				_resultobj = PyList_New(0);
+				PyList_Append(_resultobj, o2);
+				Py_XDECREF(o2);
+			}
+			PyList_Append(_resultobj, o);
+			Py_XDECREF(o);
+		}
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_ImpersonateSelf(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    SECURITY_IMPERSONATION_LEVEL  _arg0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	SECURITY_IMPERSONATION_LEVEL  _arg0;
 
-    self = self;
-    if(!PyArg_ParseTuple(args,"l:ImpersonateSelf",&_arg0))
-        return NULL;
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )ImpersonateSelf(_arg0);
+	self = self;
+	if (!PyArg_ParseTuple(args, "l:ImpersonateSelf", &_arg0))
+		return NULL;
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)ImpersonateSelf(_arg0);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("ImpersonateSelf");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-    return _resultobj;
+				return PyWin_SetAPIError("ImpersonateSelf");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	return _resultobj;
 }
 
 static PyObject *_wrap_DuplicateToken(PyObject *self, PyObject *args) {
-    PyObject * _resultobj;
-    BOOLAPI  _result;
-    HANDLE  _arg0;
-    SECURITY_IMPERSONATION_LEVEL  _arg1;
-    PyHANDLE * _arg2;
-    HANDLE  handle_output;
-    PyObject * _obj0 = 0;
+	PyObject * _resultobj;
+	BOOLAPI  _result;
+	HANDLE  _arg0;
+	SECURITY_IMPERSONATION_LEVEL  _arg1;
+	PyHANDLE * _arg2;
+	HANDLE  handle_output;
+	PyObject * _obj0 = 0;
 
-    self = self;
-{
-  _arg2 = &handle_output;
-}
-    if(!PyArg_ParseTuple(args,"Ol:DuplicateToken",&_obj0,&_arg1))
-        return NULL;
-{
-	if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+	self = self;
+	{
+		_arg2 = &handle_output;
+	}
+	if (!PyArg_ParseTuple(args, "Ol:DuplicateToken", &_obj0, &_arg1))
 		return NULL;
-}
-{
-      Py_BEGIN_ALLOW_THREADS
-          _result = (BOOLAPI )DuplicateToken(_arg0,_arg1,_arg2);
+	{
+		if (!PyWinObject_AsHANDLE(_obj0, &_arg0))
+			return NULL;
+	}
+	{
+		Py_BEGIN_ALLOW_THREADS
+			_result = (BOOLAPI)DuplicateToken(_arg0, _arg1, _arg2);
 
-      Py_END_ALLOW_THREADS
-      if (!_result)  {
+		Py_END_ALLOW_THREADS
+			if (!_result) {
 
-           return PyWin_SetAPIError("DuplicateToken");
-      }
-}{
-	_resultobj = Py_None;
-	Py_INCREF(Py_None);
-}
-{
-    PyObject *o;
-    o = PyWinObject_FromHANDLE(*_arg2);
-    if (!_resultobj) {
-      _resultobj = o;
-    } else if (_resultobj == Py_None) {
-      Py_DECREF(Py_None);
-      _resultobj = o;
-    } else {
-      if (!PyList_Check(_resultobj)) {
-	PyObject *o2 = _resultobj;
-	_resultobj = PyList_New(0);
-	PyList_Append(_resultobj,o2);
-	Py_XDECREF(o2);
-      }
-      PyList_Append(_resultobj,o);
-      Py_XDECREF(o);
-    }
-}
-    return _resultobj;
+				return PyWin_SetAPIError("DuplicateToken");
+			}
+	} {
+		_resultobj = Py_None;
+		Py_INCREF(Py_None);
+	}
+	{
+		PyObject *o;
+		o = PyWinObject_FromHANDLE(*_arg2);
+		if (!_resultobj) {
+			_resultobj = o;
+		}
+		else if (_resultobj == Py_None) {
+			Py_DECREF(Py_None);
+			_resultobj = o;
+		}
+		else {
+			if (!PyList_Check(_resultobj)) {
+				PyObject *o2 = _resultobj;
+				_resultobj = PyList_New(0);
+				PyList_Append(_resultobj, o2);
+				Py_XDECREF(o2);
+			}
+			PyList_Append(_resultobj, o);
+			Py_XDECREF(o);
+		}
+	}
+	return _resultobj;
 }
 
 static PyMethodDef win32securityMethods[] = {
@@ -4363,49 +4380,49 @@ extern "C"
 #endif
 #if (PY_VERSION_HEX < 0x03000000)
 #define MODINIT_ERROR_RETURN
-SWIGEXPORT(void,initwin32security)() {
+	SWIGEXPORT(void, initwin32security)() {
 #else
 #define MODINIT_ERROR_RETURN NULL
-SWIGEXPORT(PyObject*,  PyInit_win32security)(void) {
+	SWIGEXPORT(PyObject*, PyInit_win32security)(void) {
 #endif
-	 PyObject *m, *d;
-	 SWIG_globals = SWIG_newvarlink();
+	PyObject *m, *d;
+	SWIG_globals = SWIG_newvarlink();
 #if (PY_VERSION_HEX < 0x03000000)
-	 m = Py_InitModule("win32security", win32securityMethods);
-	 d = PyModule_GetDict(m);
+	m = Py_InitModule("win32security", win32securityMethods);
+	d = PyModule_GetDict(m);
 #else
-  static PyModuleDef win32security_def = {
-    PyModuleDef_HEAD_INIT,
-      "win32security",
-      "",
-      -1,
-      win32securityMethods,
-      };
-  m = PyModule_Create(&win32security_def);
-  if (!m)
-    return NULL;
-  d = PyModule_GetDict(m);
-  if (!d)
-    return NULL;
+	static PyModuleDef win32security_def = {
+	  PyModuleDef_HEAD_INIT,
+		"win32security",
+		"",
+		-1,
+		win32securityMethods,
+	};
+	m = PyModule_Create(&win32security_def);
+	if (!m)
+		return NULL;
+	d = PyModule_GetDict(m);
+	if (!d)
+		return NULL;
 #endif
 
 #ifndef SWIG_PYTHONCOM
-/* This code only valid if non COM SWIG builds */
+	/* This code only valid if non COM SWIG builds */
 #ifndef PYCOM_EXPORT
-	 PyDict_SetItemString(d,"UNICODE", PyInt_FromLong(
+	PyDict_SetItemString(d, "UNICODE", PyInt_FromLong(
 #ifdef UNICODE
-	1
+		1
 #else
-	0
+		0
 #endif
-	));
+		));
 #endif
-  PyWinGlobals_Ensure();
-  PyDict_SetItemString(d, "error", PyWinExc_ApiError);
+	PyWinGlobals_Ensure();
+	PyDict_SetItemString(d, "error", PyWinExc_ApiError);
 #endif SWIG_PYTHONCOM
 
 	PyObject *s;
-	#define ADD_UNICODE_CONSTANT(constant_name)  \
+#define ADD_UNICODE_CONSTANT(constant_name)  \
 		s=PyUnicode_FromWideChar(constant_name,wcslen(constant_name)); \
 		PyDict_SetItemString(d,#constant_name,s); \
 		Py_DECREF(s);
@@ -4455,221 +4472,221 @@ SWIGEXPORT(PyObject*,  PyInit_win32security)(void) {
 	ADD_UNICODE_CONSTANT(SE_IMPERSONATE_NAME);
 	ADD_UNICODE_CONSTANT(SE_CREATE_GLOBAL_NAME);
 	// Requires Vista SDK
-	#ifdef _WIN32_WINNT_LONGHORN
+#ifdef _WIN32_WINNT_LONGHORN
 	ADD_UNICODE_CONSTANT(SE_TRUSTED_CREDMAN_ACCESS_NAME);
 	ADD_UNICODE_CONSTANT(SE_RELABEL_NAME);
 	ADD_UNICODE_CONSTANT(SE_INC_WORKING_SET_NAME);
 	ADD_UNICODE_CONSTANT(SE_TIME_ZONE_NAME);
 	ADD_UNICODE_CONSTANT(SE_CREATE_SYMBOLIC_LINK_NAME);
-	#endif
+#endif
 
-	PyDict_SetItemString(d,"MSV1_0_PACKAGE_NAME",PyString_FromString(MSV1_0_PACKAGE_NAME));
-	PyDict_SetItemString(d,"MICROSOFT_KERBEROS_NAME_A",PyString_FromString(MICROSOFT_KERBEROS_NAME_A));
+	PyDict_SetItemString(d, "MSV1_0_PACKAGE_NAME", PyString_FromString(MSV1_0_PACKAGE_NAME));
+	PyDict_SetItemString(d, "MICROSOFT_KERBEROS_NAME_A", PyString_FromString(MICROSOFT_KERBEROS_NAME_A));
 
 	// TOKEN_INFORMATION_CLASS, used with Get/SetTokenInformation
-	PyModule_AddIntConstant(m,"TokenUser", TokenUser);
-	PyModule_AddIntConstant(m,"TokenGroups", TokenGroups);
-	PyModule_AddIntConstant(m,"TokenPrivileges", TokenPrivileges);
-	PyModule_AddIntConstant(m,"TokenOwner", TokenOwner);
-	PyModule_AddIntConstant(m,"TokenPrimaryGroup", TokenPrimaryGroup);
-	PyModule_AddIntConstant(m,"TokenDefaultDacl", TokenDefaultDacl);
-	PyModule_AddIntConstant(m,"TokenSource", TokenSource);
-	PyModule_AddIntConstant(m,"TokenType", TokenType);
-	PyModule_AddIntConstant(m,"TokenImpersonationLevel", TokenImpersonationLevel);
-	PyModule_AddIntConstant(m,"TokenStatistics", TokenStatistics);
-	PyModule_AddIntConstant(m,"TokenRestrictedSids", TokenRestrictedSids);
-	PyModule_AddIntConstant(m,"TokenSessionId", TokenSessionId);
-	PyModule_AddIntConstant(m,"TokenGroupsAndPrivileges", TokenGroupsAndPrivileges);
-	PyModule_AddIntConstant(m,"TokenSessionReference", TokenSessionReference);
-	PyModule_AddIntConstant(m,"TokenSandBoxInert", TokenSandBoxInert);
-	PyModule_AddIntConstant(m,"TokenAuditPolicy", TokenAuditPolicy);
-	PyModule_AddIntConstant(m,"TokenOrigin", TokenOrigin);
+	PyModule_AddIntConstant(m, "TokenUser", TokenUser);
+	PyModule_AddIntConstant(m, "TokenGroups", TokenGroups);
+	PyModule_AddIntConstant(m, "TokenPrivileges", TokenPrivileges);
+	PyModule_AddIntConstant(m, "TokenOwner", TokenOwner);
+	PyModule_AddIntConstant(m, "TokenPrimaryGroup", TokenPrimaryGroup);
+	PyModule_AddIntConstant(m, "TokenDefaultDacl", TokenDefaultDacl);
+	PyModule_AddIntConstant(m, "TokenSource", TokenSource);
+	PyModule_AddIntConstant(m, "TokenType", TokenType);
+	PyModule_AddIntConstant(m, "TokenImpersonationLevel", TokenImpersonationLevel);
+	PyModule_AddIntConstant(m, "TokenStatistics", TokenStatistics);
+	PyModule_AddIntConstant(m, "TokenRestrictedSids", TokenRestrictedSids);
+	PyModule_AddIntConstant(m, "TokenSessionId", TokenSessionId);
+	PyModule_AddIntConstant(m, "TokenGroupsAndPrivileges", TokenGroupsAndPrivileges);
+	PyModule_AddIntConstant(m, "TokenSessionReference", TokenSessionReference);
+	PyModule_AddIntConstant(m, "TokenSandBoxInert", TokenSandBoxInert);
+	PyModule_AddIntConstant(m, "TokenAuditPolicy", TokenAuditPolicy);
+	PyModule_AddIntConstant(m, "TokenOrigin", TokenOrigin);
 	// ??? These are defined in Vista platform SDK, but they aren't conditionally defined.
 	//	This symbol is defined in the Vista SDK, but not in earlier ones.
 	//	There's probably a better way to determine which SDK is in use. ???
-	#ifdef _WIN32_WINNT_LONGHORN
-		PyModule_AddIntConstant(m,"TokenElevationType", TokenElevationType);
-		PyModule_AddIntConstant(m,"TokenLinkedToken", TokenLinkedToken);
-		PyModule_AddIntConstant(m,"TokenElevation", TokenElevation);
-		PyModule_AddIntConstant(m,"TokenHasRestrictions", TokenHasRestrictions);
-		PyModule_AddIntConstant(m,"TokenAccessInformation", TokenAccessInformation);
-		PyModule_AddIntConstant(m,"TokenVirtualizationAllowed", TokenVirtualizationAllowed);
-		PyModule_AddIntConstant(m,"TokenVirtualizationEnabled", TokenVirtualizationEnabled);
-		PyModule_AddIntConstant(m,"TokenIntegrityLevel", TokenIntegrityLevel);
-		PyModule_AddIntConstant(m,"TokenUIAccess", TokenUIAccess);
-		PyModule_AddIntConstant(m,"TokenMandatoryPolicy", TokenMandatoryPolicy);
-		PyModule_AddIntConstant(m,"TokenLogonSid", TokenLogonSid);
+#ifdef _WIN32_WINNT_LONGHORN
+	PyModule_AddIntConstant(m, "TokenElevationType", TokenElevationType);
+	PyModule_AddIntConstant(m, "TokenLinkedToken", TokenLinkedToken);
+	PyModule_AddIntConstant(m, "TokenElevation", TokenElevation);
+	PyModule_AddIntConstant(m, "TokenHasRestrictions", TokenHasRestrictions);
+	PyModule_AddIntConstant(m, "TokenAccessInformation", TokenAccessInformation);
+	PyModule_AddIntConstant(m, "TokenVirtualizationAllowed", TokenVirtualizationAllowed);
+	PyModule_AddIntConstant(m, "TokenVirtualizationEnabled", TokenVirtualizationEnabled);
+	PyModule_AddIntConstant(m, "TokenIntegrityLevel", TokenIntegrityLevel);
+	PyModule_AddIntConstant(m, "TokenUIAccess", TokenUIAccess);
+	PyModule_AddIntConstant(m, "TokenMandatoryPolicy", TokenMandatoryPolicy);
+	PyModule_AddIntConstant(m, "TokenLogonSid", TokenLogonSid);
 
-		// TOKEN_ELEVATION_TYPE enum
-		PyModule_AddIntConstant(m,"TokenElevationTypeDefault",TokenElevationTypeDefault);
-		PyModule_AddIntConstant(m,"TokenElevationTypeFull",TokenElevationTypeFull);
-		PyModule_AddIntConstant(m,"TokenElevationTypeLimited",TokenElevationTypeLimited);
+	// TOKEN_ELEVATION_TYPE enum
+	PyModule_AddIntConstant(m, "TokenElevationTypeDefault", TokenElevationTypeDefault);
+	PyModule_AddIntConstant(m, "TokenElevationTypeFull", TokenElevationTypeFull);
+	PyModule_AddIntConstant(m, "TokenElevationTypeLimited", TokenElevationTypeLimited);
 
-		// TOKEN_MANDATORY_POLICY enum
-		PyModule_AddIntConstant(m,"TOKEN_MANDATORY_POLICY_OFF",TOKEN_MANDATORY_POLICY_OFF);
-		PyModule_AddIntConstant(m,"TOKEN_MANDATORY_POLICY_NO_WRITE_UP",TOKEN_MANDATORY_POLICY_NO_WRITE_UP);
-		PyModule_AddIntConstant(m,"TOKEN_MANDATORY_POLICY_NEW_PROCESS_MIN",TOKEN_MANDATORY_POLICY_NEW_PROCESS_MIN);
-		PyModule_AddIntConstant(m,"TOKEN_MANDATORY_POLICY_VALID_MASK",TOKEN_MANDATORY_POLICY_VALID_MASK);
+	// TOKEN_MANDATORY_POLICY enum
+	PyModule_AddIntConstant(m, "TOKEN_MANDATORY_POLICY_OFF", TOKEN_MANDATORY_POLICY_OFF);
+	PyModule_AddIntConstant(m, "TOKEN_MANDATORY_POLICY_NO_WRITE_UP", TOKEN_MANDATORY_POLICY_NO_WRITE_UP);
+	PyModule_AddIntConstant(m, "TOKEN_MANDATORY_POLICY_NEW_PROCESS_MIN", TOKEN_MANDATORY_POLICY_NEW_PROCESS_MIN);
+	PyModule_AddIntConstant(m, "TOKEN_MANDATORY_POLICY_VALID_MASK", TOKEN_MANDATORY_POLICY_VALID_MASK);
 
-		PyModule_AddIntConstant(m,"SE_GROUP_INTEGRITY", SE_GROUP_INTEGRITY);
-		PyModule_AddIntConstant(m,"SE_GROUP_INTEGRITY_ENABLED", SE_GROUP_INTEGRITY_ENABLED);
+	PyModule_AddIntConstant(m, "SE_GROUP_INTEGRITY", SE_GROUP_INTEGRITY);
+	PyModule_AddIntConstant(m, "SE_GROUP_INTEGRITY_ENABLED", SE_GROUP_INTEGRITY_ENABLED);
 
-		// Access mask used with integrity level ACE's (SYSTEM_MANDATORY_LABEL_ACE_TYPE)
-		PyModule_AddIntConstant(m,"SYSTEM_MANDATORY_LABEL_NO_WRITE_UP", SYSTEM_MANDATORY_LABEL_NO_WRITE_UP);
-		PyModule_AddIntConstant(m,"SYSTEM_MANDATORY_LABEL_NO_READ_UP", SYSTEM_MANDATORY_LABEL_NO_READ_UP);
-		PyModule_AddIntConstant(m,"SYSTEM_MANDATORY_LABEL_NO_EXECUTE_UP", SYSTEM_MANDATORY_LABEL_NO_EXECUTE_UP);
-		PyModule_AddIntConstant(m,"SYSTEM_MANDATORY_LABEL_VALID_MASK", SYSTEM_MANDATORY_LABEL_VALID_MASK);
-	#endif
+	// Access mask used with integrity level ACE's (SYSTEM_MANDATORY_LABEL_ACE_TYPE)
+	PyModule_AddIntConstant(m, "SYSTEM_MANDATORY_LABEL_NO_WRITE_UP", SYSTEM_MANDATORY_LABEL_NO_WRITE_UP);
+	PyModule_AddIntConstant(m, "SYSTEM_MANDATORY_LABEL_NO_READ_UP", SYSTEM_MANDATORY_LABEL_NO_READ_UP);
+	PyModule_AddIntConstant(m, "SYSTEM_MANDATORY_LABEL_NO_EXECUTE_UP", SYSTEM_MANDATORY_LABEL_NO_EXECUTE_UP);
+	PyModule_AddIntConstant(m, "SYSTEM_MANDATORY_LABEL_VALID_MASK", SYSTEM_MANDATORY_LABEL_VALID_MASK);
+#endif
 
 	// WELL_KNOWN_SID_TYPE used with CreateWellKnownSid
-	PyModule_AddIntConstant(m,"WinNullSid", WinNullSid);
-	PyModule_AddIntConstant(m,"WinWorldSid", WinWorldSid);
-	PyModule_AddIntConstant(m,"WinLocalSid", WinLocalSid);
-	PyModule_AddIntConstant(m,"WinCreatorOwnerSid", WinCreatorOwnerSid);
-	PyModule_AddIntConstant(m,"WinCreatorGroupSid", WinCreatorGroupSid);
-	PyModule_AddIntConstant(m,"WinCreatorOwnerServerSid", WinCreatorOwnerServerSid);
-	PyModule_AddIntConstant(m,"WinCreatorGroupServerSid", WinCreatorGroupServerSid);
-	PyModule_AddIntConstant(m,"WinNtAuthoritySid", WinNtAuthoritySid);
-	PyModule_AddIntConstant(m,"WinDialupSid", WinDialupSid);
-	PyModule_AddIntConstant(m,"WinNetworkSid", WinNetworkSid);
-	PyModule_AddIntConstant(m,"WinBatchSid", WinBatchSid);
-	PyModule_AddIntConstant(m,"WinInteractiveSid", WinInteractiveSid);
-	PyModule_AddIntConstant(m,"WinServiceSid", WinServiceSid);
-	PyModule_AddIntConstant(m,"WinAnonymousSid", WinAnonymousSid);
-	PyModule_AddIntConstant(m,"WinProxySid", WinProxySid);
-	PyModule_AddIntConstant(m,"WinEnterpriseControllersSid", WinEnterpriseControllersSid);
-	PyModule_AddIntConstant(m,"WinSelfSid", WinSelfSid);
-	PyModule_AddIntConstant(m,"WinAuthenticatedUserSid", WinAuthenticatedUserSid);
-	PyModule_AddIntConstant(m,"WinRestrictedCodeSid", WinRestrictedCodeSid);
-	PyModule_AddIntConstant(m,"WinTerminalServerSid", WinTerminalServerSid);
-	PyModule_AddIntConstant(m,"WinRemoteLogonIdSid", WinRemoteLogonIdSid);
-	PyModule_AddIntConstant(m,"WinLogonIdsSid", WinLogonIdsSid);
-	PyModule_AddIntConstant(m,"WinLocalSystemSid", WinLocalSystemSid);
-	PyModule_AddIntConstant(m,"WinLocalServiceSid", WinLocalServiceSid);
-	PyModule_AddIntConstant(m,"WinNetworkServiceSid", WinNetworkServiceSid);
-	PyModule_AddIntConstant(m,"WinBuiltinDomainSid", WinBuiltinDomainSid);
-	PyModule_AddIntConstant(m,"WinBuiltinAdministratorsSid", WinBuiltinAdministratorsSid);
-	PyModule_AddIntConstant(m,"WinBuiltinUsersSid", WinBuiltinUsersSid);
-	PyModule_AddIntConstant(m,"WinBuiltinGuestsSid", WinBuiltinGuestsSid);
-	PyModule_AddIntConstant(m,"WinBuiltinPowerUsersSid", WinBuiltinPowerUsersSid);
-	PyModule_AddIntConstant(m,"WinBuiltinAccountOperatorsSid", WinBuiltinAccountOperatorsSid);
-	PyModule_AddIntConstant(m,"WinBuiltinSystemOperatorsSid", WinBuiltinSystemOperatorsSid);
-	PyModule_AddIntConstant(m,"WinBuiltinPrintOperatorsSid", WinBuiltinPrintOperatorsSid);
-	PyModule_AddIntConstant(m,"WinBuiltinBackupOperatorsSid", WinBuiltinBackupOperatorsSid);
-	PyModule_AddIntConstant(m,"WinBuiltinReplicatorSid", WinBuiltinReplicatorSid);
-	PyModule_AddIntConstant(m,"WinBuiltinPreWindows2000CompatibleAccessSid", WinBuiltinPreWindows2000CompatibleAccessSid);
-	PyModule_AddIntConstant(m,"WinBuiltinRemoteDesktopUsersSid", WinBuiltinRemoteDesktopUsersSid);
-	PyModule_AddIntConstant(m,"WinBuiltinNetworkConfigurationOperatorsSid", WinBuiltinNetworkConfigurationOperatorsSid);
-	PyModule_AddIntConstant(m,"WinAccountAdministratorSid", WinAccountAdministratorSid);
-	PyModule_AddIntConstant(m,"WinAccountGuestSid", WinAccountGuestSid);
-	PyModule_AddIntConstant(m,"WinAccountKrbtgtSid", WinAccountKrbtgtSid);
-	PyModule_AddIntConstant(m,"WinAccountDomainAdminsSid", WinAccountDomainAdminsSid);
-	PyModule_AddIntConstant(m,"WinAccountDomainUsersSid", WinAccountDomainUsersSid);
-	PyModule_AddIntConstant(m,"WinAccountDomainGuestsSid", WinAccountDomainGuestsSid);
-	PyModule_AddIntConstant(m,"WinAccountComputersSid", WinAccountComputersSid);
-	PyModule_AddIntConstant(m,"WinAccountControllersSid", WinAccountControllersSid);
-	PyModule_AddIntConstant(m,"WinAccountCertAdminsSid", WinAccountCertAdminsSid);
-	PyModule_AddIntConstant(m,"WinAccountSchemaAdminsSid", WinAccountSchemaAdminsSid);
-	PyModule_AddIntConstant(m,"WinAccountEnterpriseAdminsSid", WinAccountEnterpriseAdminsSid);
-	PyModule_AddIntConstant(m,"WinAccountPolicyAdminsSid", WinAccountPolicyAdminsSid);
-	PyModule_AddIntConstant(m,"WinAccountRasAndIasServersSid", WinAccountRasAndIasServersSid);
-	PyModule_AddIntConstant(m,"WinNTLMAuthenticationSid", WinNTLMAuthenticationSid);
-	PyModule_AddIntConstant(m,"WinDigestAuthenticationSid", WinDigestAuthenticationSid);
-	PyModule_AddIntConstant(m,"WinSChannelAuthenticationSid", WinSChannelAuthenticationSid);
-	PyModule_AddIntConstant(m,"WinThisOrganizationSid", WinThisOrganizationSid);
-	PyModule_AddIntConstant(m,"WinOtherOrganizationSid", WinOtherOrganizationSid);
-	PyModule_AddIntConstant(m,"WinBuiltinIncomingForestTrustBuildersSid", WinBuiltinIncomingForestTrustBuildersSid);
-	PyModule_AddIntConstant(m,"WinBuiltinPerfMonitoringUsersSid", WinBuiltinPerfMonitoringUsersSid);
-	PyModule_AddIntConstant(m,"WinBuiltinPerfLoggingUsersSid", WinBuiltinPerfLoggingUsersSid);
+	PyModule_AddIntConstant(m, "WinNullSid", WinNullSid);
+	PyModule_AddIntConstant(m, "WinWorldSid", WinWorldSid);
+	PyModule_AddIntConstant(m, "WinLocalSid", WinLocalSid);
+	PyModule_AddIntConstant(m, "WinCreatorOwnerSid", WinCreatorOwnerSid);
+	PyModule_AddIntConstant(m, "WinCreatorGroupSid", WinCreatorGroupSid);
+	PyModule_AddIntConstant(m, "WinCreatorOwnerServerSid", WinCreatorOwnerServerSid);
+	PyModule_AddIntConstant(m, "WinCreatorGroupServerSid", WinCreatorGroupServerSid);
+	PyModule_AddIntConstant(m, "WinNtAuthoritySid", WinNtAuthoritySid);
+	PyModule_AddIntConstant(m, "WinDialupSid", WinDialupSid);
+	PyModule_AddIntConstant(m, "WinNetworkSid", WinNetworkSid);
+	PyModule_AddIntConstant(m, "WinBatchSid", WinBatchSid);
+	PyModule_AddIntConstant(m, "WinInteractiveSid", WinInteractiveSid);
+	PyModule_AddIntConstant(m, "WinServiceSid", WinServiceSid);
+	PyModule_AddIntConstant(m, "WinAnonymousSid", WinAnonymousSid);
+	PyModule_AddIntConstant(m, "WinProxySid", WinProxySid);
+	PyModule_AddIntConstant(m, "WinEnterpriseControllersSid", WinEnterpriseControllersSid);
+	PyModule_AddIntConstant(m, "WinSelfSid", WinSelfSid);
+	PyModule_AddIntConstant(m, "WinAuthenticatedUserSid", WinAuthenticatedUserSid);
+	PyModule_AddIntConstant(m, "WinRestrictedCodeSid", WinRestrictedCodeSid);
+	PyModule_AddIntConstant(m, "WinTerminalServerSid", WinTerminalServerSid);
+	PyModule_AddIntConstant(m, "WinRemoteLogonIdSid", WinRemoteLogonIdSid);
+	PyModule_AddIntConstant(m, "WinLogonIdsSid", WinLogonIdsSid);
+	PyModule_AddIntConstant(m, "WinLocalSystemSid", WinLocalSystemSid);
+	PyModule_AddIntConstant(m, "WinLocalServiceSid", WinLocalServiceSid);
+	PyModule_AddIntConstant(m, "WinNetworkServiceSid", WinNetworkServiceSid);
+	PyModule_AddIntConstant(m, "WinBuiltinDomainSid", WinBuiltinDomainSid);
+	PyModule_AddIntConstant(m, "WinBuiltinAdministratorsSid", WinBuiltinAdministratorsSid);
+	PyModule_AddIntConstant(m, "WinBuiltinUsersSid", WinBuiltinUsersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinGuestsSid", WinBuiltinGuestsSid);
+	PyModule_AddIntConstant(m, "WinBuiltinPowerUsersSid", WinBuiltinPowerUsersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinAccountOperatorsSid", WinBuiltinAccountOperatorsSid);
+	PyModule_AddIntConstant(m, "WinBuiltinSystemOperatorsSid", WinBuiltinSystemOperatorsSid);
+	PyModule_AddIntConstant(m, "WinBuiltinPrintOperatorsSid", WinBuiltinPrintOperatorsSid);
+	PyModule_AddIntConstant(m, "WinBuiltinBackupOperatorsSid", WinBuiltinBackupOperatorsSid);
+	PyModule_AddIntConstant(m, "WinBuiltinReplicatorSid", WinBuiltinReplicatorSid);
+	PyModule_AddIntConstant(m, "WinBuiltinPreWindows2000CompatibleAccessSid", WinBuiltinPreWindows2000CompatibleAccessSid);
+	PyModule_AddIntConstant(m, "WinBuiltinRemoteDesktopUsersSid", WinBuiltinRemoteDesktopUsersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinNetworkConfigurationOperatorsSid", WinBuiltinNetworkConfigurationOperatorsSid);
+	PyModule_AddIntConstant(m, "WinAccountAdministratorSid", WinAccountAdministratorSid);
+	PyModule_AddIntConstant(m, "WinAccountGuestSid", WinAccountGuestSid);
+	PyModule_AddIntConstant(m, "WinAccountKrbtgtSid", WinAccountKrbtgtSid);
+	PyModule_AddIntConstant(m, "WinAccountDomainAdminsSid", WinAccountDomainAdminsSid);
+	PyModule_AddIntConstant(m, "WinAccountDomainUsersSid", WinAccountDomainUsersSid);
+	PyModule_AddIntConstant(m, "WinAccountDomainGuestsSid", WinAccountDomainGuestsSid);
+	PyModule_AddIntConstant(m, "WinAccountComputersSid", WinAccountComputersSid);
+	PyModule_AddIntConstant(m, "WinAccountControllersSid", WinAccountControllersSid);
+	PyModule_AddIntConstant(m, "WinAccountCertAdminsSid", WinAccountCertAdminsSid);
+	PyModule_AddIntConstant(m, "WinAccountSchemaAdminsSid", WinAccountSchemaAdminsSid);
+	PyModule_AddIntConstant(m, "WinAccountEnterpriseAdminsSid", WinAccountEnterpriseAdminsSid);
+	PyModule_AddIntConstant(m, "WinAccountPolicyAdminsSid", WinAccountPolicyAdminsSid);
+	PyModule_AddIntConstant(m, "WinAccountRasAndIasServersSid", WinAccountRasAndIasServersSid);
+	PyModule_AddIntConstant(m, "WinNTLMAuthenticationSid", WinNTLMAuthenticationSid);
+	PyModule_AddIntConstant(m, "WinDigestAuthenticationSid", WinDigestAuthenticationSid);
+	PyModule_AddIntConstant(m, "WinSChannelAuthenticationSid", WinSChannelAuthenticationSid);
+	PyModule_AddIntConstant(m, "WinThisOrganizationSid", WinThisOrganizationSid);
+	PyModule_AddIntConstant(m, "WinOtherOrganizationSid", WinOtherOrganizationSid);
+	PyModule_AddIntConstant(m, "WinBuiltinIncomingForestTrustBuildersSid", WinBuiltinIncomingForestTrustBuildersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinPerfMonitoringUsersSid", WinBuiltinPerfMonitoringUsersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinPerfLoggingUsersSid", WinBuiltinPerfLoggingUsersSid);
 	// These require recent SDK
-	#ifdef _WIN32_WINNT_LONGHORN
-		PyModule_AddIntConstant(m,"WinBuiltinAuthorizationAccessSid", WinBuiltinAuthorizationAccessSid);
-		PyModule_AddIntConstant(m,"WinBuiltinTerminalServerLicenseServersSid", WinBuiltinTerminalServerLicenseServersSid);
-		PyModule_AddIntConstant(m,"WinBuiltinDCOMUsersSid", WinBuiltinDCOMUsersSid);
-		PyModule_AddIntConstant(m,"WinBuiltinIUsersSid", WinBuiltinIUsersSid);
-		PyModule_AddIntConstant(m,"WinIUserSid", WinIUserSid);
-		PyModule_AddIntConstant(m,"WinBuiltinCryptoOperatorsSid", WinBuiltinCryptoOperatorsSid);
-		PyModule_AddIntConstant(m,"WinUntrustedLabelSid", WinUntrustedLabelSid);
-		PyModule_AddIntConstant(m,"WinLowLabelSid", WinLowLabelSid);
-		PyModule_AddIntConstant(m,"WinMediumLabelSid", WinMediumLabelSid);
-		PyModule_AddIntConstant(m,"WinHighLabelSid", WinHighLabelSid);
-		PyModule_AddIntConstant(m,"WinSystemLabelSid", WinSystemLabelSid);
-		PyModule_AddIntConstant(m,"WinWriteRestrictedCodeSid", WinWriteRestrictedCodeSid);
-		PyModule_AddIntConstant(m,"WinCreatorOwnerRightsSid", WinCreatorOwnerRightsSid);
-		PyModule_AddIntConstant(m,"WinCacheablePrincipalsGroupSid", WinCacheablePrincipalsGroupSid);
-		PyModule_AddIntConstant(m,"WinNonCacheablePrincipalsGroupSid", WinNonCacheablePrincipalsGroupSid);
-		PyModule_AddIntConstant(m,"WinEnterpriseReadonlyControllersSid", WinEnterpriseReadonlyControllersSid);
-		PyModule_AddIntConstant(m,"WinAccountReadonlyControllersSid", WinAccountReadonlyControllersSid);
-		PyModule_AddIntConstant(m,"WinBuiltinEventLogReadersGroup", WinBuiltinEventLogReadersGroup);
-	#endif
+#ifdef _WIN32_WINNT_LONGHORN
+	PyModule_AddIntConstant(m, "WinBuiltinAuthorizationAccessSid", WinBuiltinAuthorizationAccessSid);
+	PyModule_AddIntConstant(m, "WinBuiltinTerminalServerLicenseServersSid", WinBuiltinTerminalServerLicenseServersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinDCOMUsersSid", WinBuiltinDCOMUsersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinIUsersSid", WinBuiltinIUsersSid);
+	PyModule_AddIntConstant(m, "WinIUserSid", WinIUserSid);
+	PyModule_AddIntConstant(m, "WinBuiltinCryptoOperatorsSid", WinBuiltinCryptoOperatorsSid);
+	PyModule_AddIntConstant(m, "WinUntrustedLabelSid", WinUntrustedLabelSid);
+	PyModule_AddIntConstant(m, "WinLowLabelSid", WinLowLabelSid);
+	PyModule_AddIntConstant(m, "WinMediumLabelSid", WinMediumLabelSid);
+	PyModule_AddIntConstant(m, "WinHighLabelSid", WinHighLabelSid);
+	PyModule_AddIntConstant(m, "WinSystemLabelSid", WinSystemLabelSid);
+	PyModule_AddIntConstant(m, "WinWriteRestrictedCodeSid", WinWriteRestrictedCodeSid);
+	PyModule_AddIntConstant(m, "WinCreatorOwnerRightsSid", WinCreatorOwnerRightsSid);
+	PyModule_AddIntConstant(m, "WinCacheablePrincipalsGroupSid", WinCacheablePrincipalsGroupSid);
+	PyModule_AddIntConstant(m, "WinNonCacheablePrincipalsGroupSid", WinNonCacheablePrincipalsGroupSid);
+	PyModule_AddIntConstant(m, "WinEnterpriseReadonlyControllersSid", WinEnterpriseReadonlyControllersSid);
+	PyModule_AddIntConstant(m, "WinAccountReadonlyControllersSid", WinAccountReadonlyControllersSid);
+	PyModule_AddIntConstant(m, "WinBuiltinEventLogReadersGroup", WinBuiltinEventLogReadersGroup);
+#endif
 
-	advapi32_dll=loadmodule(_T("Advapi32.dll"));
-	secur32_dll =loadmodule(_T("Secur32.dll"));
-	security_dll=loadmodule(_T("security.dll"));
-	ntdll_dll   =loadmodule(_T("ntdll.dll"));
-	ntdsapi_dll =loadmodule(_T("ntdsapi.dll"));
-	netapi32_dll =loadmodule(_T("netapi32.dll"));
+	advapi32_dll = loadmodule(_T("Advapi32.dll"));
+	secur32_dll = loadmodule(_T("Secur32.dll"));
+	security_dll = loadmodule(_T("security.dll"));
+	ntdll_dll = loadmodule(_T("ntdll.dll"));
+	ntdsapi_dll = loadmodule(_T("ntdsapi.dll"));
+	netapi32_dll = loadmodule(_T("netapi32.dll"));
 
-	pfnCheckTokenMembership=(CheckTokenMembershipfunc)loadapifunc("CheckTokenMembership", advapi32_dll);
-	pfnCreateRestrictedToken=(CreateRestrictedTokenfunc)loadapifunc("CreateRestrictedToken", advapi32_dll);
+	pfnCheckTokenMembership = (CheckTokenMembershipfunc)loadapifunc("CheckTokenMembership", advapi32_dll);
+	pfnCreateRestrictedToken = (CreateRestrictedTokenfunc)loadapifunc("CreateRestrictedToken", advapi32_dll);
 
-	pfnCryptEnumProviders=(CryptEnumProvidersfunc)loadapifunc("CryptEnumProvidersW", advapi32_dll);
+	pfnCryptEnumProviders = (CryptEnumProvidersfunc)loadapifunc("CryptEnumProvidersW", advapi32_dll);
 
 	/* ??? Below four functions live in Secur32.dll on Win2K and higher, but apparently are only
 	   exported by ntoskrnl.exe on NT - not sure what the implications of loading *that* are ???
 	*/
-	pfnLsaRegisterLogonProcess=(LsaRegisterLogonProcessfunc)loadapifunc("LsaRegisterLogonProcess", secur32_dll);
-	pfnLsaConnectUntrusted=(LsaConnectUntrustedfunc)loadapifunc("LsaConnectUntrusted", secur32_dll);
-	pfnLsaDeregisterLogonProcess=(LsaDeregisterLogonProcessfunc)loadapifunc("LsaDeregisterLogonProcess", secur32_dll);
-	pfnLsaLookupAuthenticationPackage=(LsaLookupAuthenticationPackagefunc)loadapifunc("LsaLookupAuthenticationPackage", secur32_dll);
+	pfnLsaRegisterLogonProcess = (LsaRegisterLogonProcessfunc)loadapifunc("LsaRegisterLogonProcess", secur32_dll);
+	pfnLsaConnectUntrusted = (LsaConnectUntrustedfunc)loadapifunc("LsaConnectUntrusted", secur32_dll);
+	pfnLsaDeregisterLogonProcess = (LsaDeregisterLogonProcessfunc)loadapifunc("LsaDeregisterLogonProcess", secur32_dll);
+	pfnLsaLookupAuthenticationPackage = (LsaLookupAuthenticationPackagefunc)loadapifunc("LsaLookupAuthenticationPackage", secur32_dll);
 
-	pfnLsaEnumerateLogonSessions=(LsaEnumerateLogonSessionsfunc)loadapifunc("LsaEnumerateLogonSessions",secur32_dll);
-	pfnLsaGetLogonSessionData=(LsaGetLogonSessionDatafunc)loadapifunc("LsaGetLogonSessionData",secur32_dll);
-	pfnLsaFreeReturnBuffer=(LsaFreeReturnBufferfunc)loadapifunc("LsaFreeReturnBuffer",secur32_dll);
-	pfnLsaCallAuthenticationPackage=(LsaCallAuthenticationPackagefunc)loadapifunc("LsaCallAuthenticationPackage",secur32_dll);
+	pfnLsaEnumerateLogonSessions = (LsaEnumerateLogonSessionsfunc)loadapifunc("LsaEnumerateLogonSessions", secur32_dll);
+	pfnLsaGetLogonSessionData = (LsaGetLogonSessionDatafunc)loadapifunc("LsaGetLogonSessionData", secur32_dll);
+	pfnLsaFreeReturnBuffer = (LsaFreeReturnBufferfunc)loadapifunc("LsaFreeReturnBuffer", secur32_dll);
+	pfnLsaCallAuthenticationPackage = (LsaCallAuthenticationPackagefunc)loadapifunc("LsaCallAuthenticationPackage", secur32_dll);
 
-	pfnLsaRegisterPolicyChangeNotification=(LsaRegisterPolicyChangeNotificationfunc)
+	pfnLsaRegisterPolicyChangeNotification = (LsaRegisterPolicyChangeNotificationfunc)
 		loadapifunc("LsaRegisterPolicyChangeNotification", secur32_dll);
-	pfnLsaUnregisterPolicyChangeNotification=(LsaRegisterPolicyChangeNotificationfunc)
+	pfnLsaUnregisterPolicyChangeNotification = (LsaRegisterPolicyChangeNotificationfunc)
 		loadapifunc("LsaUnregisterPolicyChangeNotification", secur32_dll);
 
-	pfnConvertSidToStringSid=(ConvertSidToStringSidfunc)loadapifunc("ConvertSidToStringSidW", advapi32_dll);
-	pfnConvertStringSidToSid=(ConvertStringSidToSidfunc)loadapifunc("ConvertStringSidToSidW", advapi32_dll);
-	pfnConvertSecurityDescriptorToStringSecurityDescriptor=(ConvertSecurityDescriptorToStringSecurityDescriptorfunc)
+	pfnConvertSidToStringSid = (ConvertSidToStringSidfunc)loadapifunc("ConvertSidToStringSidW", advapi32_dll);
+	pfnConvertStringSidToSid = (ConvertStringSidToSidfunc)loadapifunc("ConvertStringSidToSidW", advapi32_dll);
+	pfnConvertSecurityDescriptorToStringSecurityDescriptor = (ConvertSecurityDescriptorToStringSecurityDescriptorfunc)
 		loadapifunc("ConvertSecurityDescriptorToStringSecurityDescriptorW", advapi32_dll);
-	pfnConvertStringSecurityDescriptorToSecurityDescriptor=(ConvertStringSecurityDescriptorToSecurityDescriptorfunc)
+	pfnConvertStringSecurityDescriptorToSecurityDescriptor = (ConvertStringSecurityDescriptorToSecurityDescriptorfunc)
 		loadapifunc("ConvertStringSecurityDescriptorToSecurityDescriptorW", advapi32_dll);
-	pfnImpersonateAnonymousToken=(ImpersonateAnonymousTokenfunc)loadapifunc("ImpersonateAnonymousToken", advapi32_dll);
-	pfnIsTokenRestricted=(IsTokenRestrictedfunc)loadapifunc("IsTokenRestricted", advapi32_dll);
-	pfnLogonUserEx=(LogonUserExfunc)loadapifunc("LogonUserExW", advapi32_dll);
-	pfnLogonUserExEx=(LogonUserExExfunc)loadapifunc("LogonUserExExW", advapi32_dll);
+	pfnImpersonateAnonymousToken = (ImpersonateAnonymousTokenfunc)loadapifunc("ImpersonateAnonymousToken", advapi32_dll);
+	pfnIsTokenRestricted = (IsTokenRestrictedfunc)loadapifunc("IsTokenRestricted", advapi32_dll);
+	pfnLogonUserEx = (LogonUserExfunc)loadapifunc("LogonUserExW", advapi32_dll);
+	pfnLogonUserExEx = (LogonUserExExfunc)loadapifunc("LogonUserExExW", advapi32_dll);
 
 	// Load InitSecurityInterface, which returns a table of pointers to the SSPI functions so they don't all have to be
 	// loaded individually - from security.dll on NT, and secur32.dll on win2k and up
-	pfnInitSecurityInterface=(InitSecurityInterfacefunc)loadapifunc("InitSecurityInterfaceW",secur32_dll);
-	if (pfnInitSecurityInterface==NULL)
-		pfnInitSecurityInterface=(InitSecurityInterfacefunc)loadapifunc("InitSecurityInterfaceW",security_dll);
-	if (pfnInitSecurityInterface!=NULL)
-		psecurityfunctiontable=(*pfnInitSecurityInterface)();
+	pfnInitSecurityInterface = (InitSecurityInterfacefunc)loadapifunc("InitSecurityInterfaceW", secur32_dll);
+	if (pfnInitSecurityInterface == NULL)
+		pfnInitSecurityInterface = (InitSecurityInterfacefunc)loadapifunc("InitSecurityInterfaceW", security_dll);
+	if (pfnInitSecurityInterface != NULL)
+		psecurityfunctiontable = (*pfnInitSecurityInterface)();
 
-	pfnTranslateName=(TranslateNamefunc)loadapifunc("TranslateNameW",secur32_dll);
-	pfnCreateWellKnownSid=(CreateWellKnownSidfunc)loadapifunc("CreateWellKnownSid",advapi32_dll);
+	pfnTranslateName = (TranslateNamefunc)loadapifunc("TranslateNameW", secur32_dll);
+	pfnCreateWellKnownSid = (CreateWellKnownSidfunc)loadapifunc("CreateWellKnownSid", advapi32_dll);
 
-	pfnDsBind=(DsBindfunc)loadapifunc("DsBindW", ntdsapi_dll);
-	pfnDsUnBind=(DsUnBindfunc)loadapifunc("DsUnBindW", ntdsapi_dll);
-	pfnDsGetSpn=(DsGetSpnfunc)loadapifunc("DsGetSpnW", ntdsapi_dll);
-	pfnDsWriteAccountSpn=(DsWriteAccountSpnfunc)loadapifunc("DsWriteAccountSpnW", ntdsapi_dll);
-	pfnDsFreeSpnArray=(DsFreeSpnArrayfunc)loadapifunc("DsFreeSpnArrayW", ntdsapi_dll);
-	pfnDsCrackNames=(DsCrackNamesfunc)loadapifunc("DsCrackNamesW", ntdsapi_dll);
-	pfnDsListInfoForServer=(DsListInfoForServerfunc)loadapifunc("DsListInfoForServerW", ntdsapi_dll);
-	pfnDsListDomainsInSite=(DsListDomainsInSitefunc)loadapifunc("DsListDomainsInSiteW", ntdsapi_dll);
-	pfnDsListServersForDomainInSite=(DsListServersForDomainInSitefunc)loadapifunc("DsListServersForDomainInSiteW", ntdsapi_dll);
-	pfnDsListServersInSite=(DsListServersInSitefunc)loadapifunc("DsListServersInSiteW", ntdsapi_dll);
-	pfnDsListSites=(DsListSitesfunc)loadapifunc("DsListSitesW", ntdsapi_dll);
-	pfnDsListRoles=(DsListRolesfunc)loadapifunc("DsListRolesW", ntdsapi_dll);
+	pfnDsBind = (DsBindfunc)loadapifunc("DsBindW", ntdsapi_dll);
+	pfnDsUnBind = (DsUnBindfunc)loadapifunc("DsUnBindW", ntdsapi_dll);
+	pfnDsGetSpn = (DsGetSpnfunc)loadapifunc("DsGetSpnW", ntdsapi_dll);
+	pfnDsWriteAccountSpn = (DsWriteAccountSpnfunc)loadapifunc("DsWriteAccountSpnW", ntdsapi_dll);
+	pfnDsFreeSpnArray = (DsFreeSpnArrayfunc)loadapifunc("DsFreeSpnArrayW", ntdsapi_dll);
+	pfnDsCrackNames = (DsCrackNamesfunc)loadapifunc("DsCrackNamesW", ntdsapi_dll);
+	pfnDsListInfoForServer = (DsListInfoForServerfunc)loadapifunc("DsListInfoForServerW", ntdsapi_dll);
+	pfnDsListDomainsInSite = (DsListDomainsInSitefunc)loadapifunc("DsListDomainsInSiteW", ntdsapi_dll);
+	pfnDsListServersForDomainInSite = (DsListServersForDomainInSitefunc)loadapifunc("DsListServersForDomainInSiteW", ntdsapi_dll);
+	pfnDsListServersInSite = (DsListServersInSitefunc)loadapifunc("DsListServersInSiteW", ntdsapi_dll);
+	pfnDsListSites = (DsListSitesfunc)loadapifunc("DsListSitesW", ntdsapi_dll);
+	pfnDsListRoles = (DsListRolesfunc)loadapifunc("DsListRolesW", ntdsapi_dll);
 
-	pfnDsFreeNameResult=(DsFreeNameResultfunc)loadapifunc("DsFreeNameResultW", ntdsapi_dll);
-	pfnDsGetDcName=(DsGetDcNamefunc)loadapifunc("DsGetDcNameW", netapi32_dll);
+	pfnDsFreeNameResult = (DsFreeNameResultfunc)loadapifunc("DsFreeNameResultW", ntdsapi_dll);
+	pfnDsGetDcName = (DsGetDcNamefunc)loadapifunc("DsGetDcNameW", netapi32_dll);
 
 	// Py3k requires that *all* types have to be initialized
 #if (PY_VERSION_HEX >= 0x03000000)
@@ -4694,246 +4711,246 @@ SWIGEXPORT(PyObject*,  PyInit_win32security)(void) {
 	PyDict_SetItemString(d, "PyCtxtHandleType", (PyObject *)&PyCtxtHandleType);
 	PyDict_SetItemString(d, "PyCredHandleType", (PyObject *)&PyCredHandleType);
 
-    // Patch up any kwarg functions - SWIG doesn't like them.
-    for (PyMethodDef *pmd = win32securityMethods;pmd->ml_name;pmd++)
-        if   ((strcmp(pmd->ml_name, "DsGetDcName")==0)
-			||(strcmp(pmd->ml_name, "DuplicateTokenEx")==0)
-			||(strcmp(pmd->ml_name, "AdjustTokenPrivileges")==0)
-			||(strcmp(pmd->ml_name, "AdjustTokenGroups")==0)
-			||(strcmp(pmd->ml_name, "CreateRestrictedToken")==0)
-			||(strcmp(pmd->ml_name, "LsaAddAccountRights")==0)
-			||(strcmp(pmd->ml_name, "LsaRemoveAccountRights")==0)
-			||(strcmp(pmd->ml_name, "LogonUser")==0)
-			||(strcmp(pmd->ml_name, "LogonUserEx")==0)
-			){
+	// Patch up any kwarg functions - SWIG doesn't like them.
+	for (PyMethodDef *pmd = win32securityMethods; pmd->ml_name; pmd++)
+		if ((strcmp(pmd->ml_name, "DsGetDcName") == 0)
+			|| (strcmp(pmd->ml_name, "DuplicateTokenEx") == 0)
+			|| (strcmp(pmd->ml_name, "AdjustTokenPrivileges") == 0)
+			|| (strcmp(pmd->ml_name, "AdjustTokenGroups") == 0)
+			|| (strcmp(pmd->ml_name, "CreateRestrictedToken") == 0)
+			|| (strcmp(pmd->ml_name, "LsaAddAccountRights") == 0)
+			|| (strcmp(pmd->ml_name, "LsaRemoveAccountRights") == 0)
+			|| (strcmp(pmd->ml_name, "LogonUser") == 0)
+			|| (strcmp(pmd->ml_name, "LogonUserEx") == 0)
+			) {
 			pmd->ml_flags = METH_VARARGS | METH_KEYWORDS;
-			}
-	 PyDict_SetItemString(d,"TOKEN_ADJUST_DEFAULT", PyInt_FromLong((long) TOKEN_ADJUST_DEFAULT));
-	 PyDict_SetItemString(d,"TOKEN_ADJUST_GROUPS", PyInt_FromLong((long) TOKEN_ADJUST_GROUPS));
-	 PyDict_SetItemString(d,"TOKEN_ADJUST_PRIVILEGES", PyInt_FromLong((long) TOKEN_ADJUST_PRIVILEGES));
-	 PyDict_SetItemString(d,"TOKEN_ALL_ACCESS", PyInt_FromLong((long) TOKEN_ALL_ACCESS));
-	 PyDict_SetItemString(d,"TOKEN_ASSIGN_PRIMARY", PyInt_FromLong((long) TOKEN_ASSIGN_PRIMARY));
-	 PyDict_SetItemString(d,"TOKEN_DUPLICATE", PyInt_FromLong((long) TOKEN_DUPLICATE));
-	 PyDict_SetItemString(d,"TOKEN_EXECUTE", PyInt_FromLong((long) TOKEN_EXECUTE));
-	 PyDict_SetItemString(d,"TOKEN_IMPERSONATE", PyInt_FromLong((long) TOKEN_IMPERSONATE));
-	 PyDict_SetItemString(d,"TOKEN_QUERY", PyInt_FromLong((long) TOKEN_QUERY));
-	 PyDict_SetItemString(d,"TOKEN_QUERY_SOURCE", PyInt_FromLong((long) TOKEN_QUERY_SOURCE));
-	 PyDict_SetItemString(d,"TOKEN_READ", PyInt_FromLong((long) TOKEN_READ));
-	 PyDict_SetItemString(d,"TOKEN_WRITE", PyInt_FromLong((long) TOKEN_WRITE));
-	 PyDict_SetItemString(d,"SE_UNKNOWN_OBJECT_TYPE", PyInt_FromLong((long) SE_UNKNOWN_OBJECT_TYPE));
-	 PyDict_SetItemString(d,"SE_FILE_OBJECT", PyInt_FromLong((long) SE_FILE_OBJECT));
-	 PyDict_SetItemString(d,"SE_SERVICE", PyInt_FromLong((long) SE_SERVICE));
-	 PyDict_SetItemString(d,"SE_PRINTER", PyInt_FromLong((long) SE_PRINTER));
-	 PyDict_SetItemString(d,"SE_REGISTRY_KEY", PyInt_FromLong((long) SE_REGISTRY_KEY));
-	 PyDict_SetItemString(d,"SE_LMSHARE", PyInt_FromLong((long) SE_LMSHARE));
-	 PyDict_SetItemString(d,"SE_KERNEL_OBJECT", PyInt_FromLong((long) SE_KERNEL_OBJECT));
-	 PyDict_SetItemString(d,"SE_WINDOW_OBJECT", PyInt_FromLong((long) SE_WINDOW_OBJECT));
-	 PyDict_SetItemString(d,"SE_DS_OBJECT", PyInt_FromLong((long) SE_DS_OBJECT));
-	 PyDict_SetItemString(d,"SE_DS_OBJECT_ALL", PyInt_FromLong((long) SE_DS_OBJECT_ALL));
-	 PyDict_SetItemString(d,"SE_PROVIDER_DEFINED_OBJECT", PyInt_FromLong((long) SE_PROVIDER_DEFINED_OBJECT));
-	 PyDict_SetItemString(d,"SE_WMIGUID_OBJECT", PyInt_FromLong((long) SE_WMIGUID_OBJECT));
-	 PyDict_SetItemString(d,"SE_REGISTRY_WOW64_32KEY", PyInt_FromLong((long) SE_REGISTRY_WOW64_32KEY));
-	 PyDict_SetItemString(d,"SE_GROUP_ENABLED", PyInt_FromLong((long) SE_GROUP_ENABLED));
-	 PyDict_SetItemString(d,"SE_GROUP_ENABLED_BY_DEFAULT", PyInt_FromLong((long) SE_GROUP_ENABLED_BY_DEFAULT));
-	 PyDict_SetItemString(d,"SE_GROUP_LOGON_ID", PyInt_FromLong((long) SE_GROUP_LOGON_ID));
-	 PyDict_SetItemString(d,"SE_GROUP_MANDATORY", PyInt_FromLong((long) SE_GROUP_MANDATORY));
-	 PyDict_SetItemString(d,"SE_GROUP_OWNER", PyInt_FromLong((long) SE_GROUP_OWNER));
-	 PyDict_SetItemString(d,"SE_GROUP_RESOURCE", PyInt_FromLong((long) SE_GROUP_RESOURCE));
-	 PyDict_SetItemString(d,"SE_GROUP_USE_FOR_DENY_ONLY", PyInt_FromLong((long) SE_GROUP_USE_FOR_DENY_ONLY));
-	 PyDict_SetItemString(d,"OWNER_SECURITY_INFORMATION", PyInt_FromLong((long) OWNER_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"GROUP_SECURITY_INFORMATION", PyInt_FromLong((long) GROUP_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"DACL_SECURITY_INFORMATION", PyInt_FromLong((long) DACL_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"SACL_SECURITY_INFORMATION", PyInt_FromLong((long) SACL_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"LABEL_SECURITY_INFORMATION", PyInt_FromLong((long) 0x00000010));
-	 PyDict_SetItemString(d,"PROTECTED_DACL_SECURITY_INFORMATION", PyInt_FromLong((long) PROTECTED_DACL_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"PROTECTED_SACL_SECURITY_INFORMATION", PyInt_FromLong((long) PROTECTED_SACL_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"UNPROTECTED_DACL_SECURITY_INFORMATION", PyInt_FromLong((long) UNPROTECTED_DACL_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"UNPROTECTED_SACL_SECURITY_INFORMATION", PyInt_FromLong((long) UNPROTECTED_SACL_SECURITY_INFORMATION));
-	 PyDict_SetItemString(d,"SidTypeUser", PyInt_FromLong((long) SidTypeUser));
-	 PyDict_SetItemString(d,"SidTypeGroup", PyInt_FromLong((long) SidTypeGroup));
-	 PyDict_SetItemString(d,"SidTypeDomain", PyInt_FromLong((long) SidTypeDomain));
-	 PyDict_SetItemString(d,"SidTypeAlias", PyInt_FromLong((long) SidTypeAlias));
-	 PyDict_SetItemString(d,"SidTypeWellKnownGroup", PyInt_FromLong((long) SidTypeWellKnownGroup));
-	 PyDict_SetItemString(d,"SidTypeDeletedAccount", PyInt_FromLong((long) SidTypeDeletedAccount));
-	 PyDict_SetItemString(d,"SidTypeInvalid", PyInt_FromLong((long) SidTypeInvalid));
-	 PyDict_SetItemString(d,"SidTypeUnknown", PyInt_FromLong((long) SidTypeUnknown));
-	 PyDict_SetItemString(d,"SidTypeComputer", PyInt_FromLong((long) SidTypeComputer));
-	 PyDict_SetItemString(d,"TokenPrimary", PyInt_FromLong((long) TokenPrimary));
-	 PyDict_SetItemString(d,"TokenImpersonation", PyInt_FromLong((long) TokenImpersonation));
-	 PyDict_SetItemString(d,"SecurityAnonymous", PyInt_FromLong((long) SecurityAnonymous));
-	 PyDict_SetItemString(d,"SecurityIdentification", PyInt_FromLong((long) SecurityIdentification));
-	 PyDict_SetItemString(d,"SecurityImpersonation", PyInt_FromLong((long) SecurityImpersonation));
-	 PyDict_SetItemString(d,"SecurityDelegation", PyInt_FromLong((long) SecurityDelegation));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_BATCH", PyInt_FromLong((long) LOGON32_LOGON_BATCH));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_INTERACTIVE", PyInt_FromLong((long) LOGON32_LOGON_INTERACTIVE));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_SERVICE", PyInt_FromLong((long) LOGON32_LOGON_SERVICE));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_NETWORK", PyInt_FromLong((long) LOGON32_LOGON_NETWORK));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_UNLOCK", PyInt_FromLong((long) LOGON32_LOGON_UNLOCK));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_NETWORK_CLEARTEXT", PyInt_FromLong((long) LOGON32_LOGON_NETWORK_CLEARTEXT));
-	 PyDict_SetItemString(d,"LOGON32_LOGON_NEW_CREDENTIALS", PyInt_FromLong((long) LOGON32_LOGON_NEW_CREDENTIALS));
-	 PyDict_SetItemString(d,"LOGON32_PROVIDER_DEFAULT", PyInt_FromLong((long) LOGON32_PROVIDER_DEFAULT));
-	 PyDict_SetItemString(d,"LOGON32_PROVIDER_WINNT40", PyInt_FromLong((long) LOGON32_PROVIDER_WINNT40));
-	 PyDict_SetItemString(d,"LOGON32_PROVIDER_WINNT35", PyInt_FromLong((long) LOGON32_PROVIDER_WINNT35));
-	 PyDict_SetItemString(d,"LOGON32_PROVIDER_WINNT50", PyInt_FromLong((long) LOGON32_PROVIDER_WINNT50));
-	 PyDict_SetItemString(d,"SECURITY_NULL_SID_AUTHORITY", PyInt_FromLong((long) 0));
-	 PyDict_SetItemString(d,"SECURITY_WORLD_SID_AUTHORITY", PyInt_FromLong((long) 1));
-	 PyDict_SetItemString(d,"SECURITY_LOCAL_SID_AUTHORITY", PyInt_FromLong((long) 2));
-	 PyDict_SetItemString(d,"SECURITY_CREATOR_SID_AUTHORITY", PyInt_FromLong((long) 3));
-	 PyDict_SetItemString(d,"SECURITY_NON_UNIQUE_AUTHORITY", PyInt_FromLong((long) 4));
-	 PyDict_SetItemString(d,"SECURITY_NT_AUTHORITY", PyInt_FromLong((long) 5));
-	 PyDict_SetItemString(d,"SECURITY_RESOURCE_MANAGER_AUTHORITY", PyInt_FromLong((long) 9));
-	 PyDict_SetItemString(d,"SE_DACL_AUTO_INHERITED", PyInt_FromLong((long) SE_DACL_AUTO_INHERITED));
-	 PyDict_SetItemString(d,"SE_SACL_AUTO_INHERITED", PyInt_FromLong((long) SE_SACL_AUTO_INHERITED));
-	 PyDict_SetItemString(d,"SE_DACL_PROTECTED", PyInt_FromLong((long) SE_DACL_PROTECTED));
-	 PyDict_SetItemString(d,"SE_SACL_PROTECTED", PyInt_FromLong((long) SE_SACL_PROTECTED));
-	 PyDict_SetItemString(d,"SE_DACL_DEFAULTED", PyInt_FromLong((long) SE_DACL_DEFAULTED));
-	 PyDict_SetItemString(d,"SE_DACL_PRESENT", PyInt_FromLong((long) SE_DACL_PRESENT));
-	 PyDict_SetItemString(d,"SE_GROUP_DEFAULTED", PyInt_FromLong((long) SE_GROUP_DEFAULTED));
-	 PyDict_SetItemString(d,"SE_OWNER_DEFAULTED", PyInt_FromLong((long) SE_OWNER_DEFAULTED));
-	 PyDict_SetItemString(d,"SE_SACL_PRESENT", PyInt_FromLong((long) SE_SACL_PRESENT));
-	 PyDict_SetItemString(d,"SE_SELF_RELATIVE", PyInt_FromLong((long) SE_SELF_RELATIVE));
-	 PyDict_SetItemString(d,"SE_SACL_DEFAULTED", PyInt_FromLong((long) SE_SACL_DEFAULTED));
-	 PyDict_SetItemString(d,"ACL_REVISION", PyInt_FromLong((long) ACL_REVISION));
-	 PyDict_SetItemString(d,"ACL_REVISION_DS", PyInt_FromLong((long) ACL_REVISION_DS));
-	 PyDict_SetItemString(d,"ACCESS_ALLOWED_ACE_TYPE", PyInt_FromLong((long) ACCESS_ALLOWED_ACE_TYPE));
-	 PyDict_SetItemString(d,"ACCESS_ALLOWED_OBJECT_ACE_TYPE", PyInt_FromLong((long) ACCESS_ALLOWED_OBJECT_ACE_TYPE));
-	 PyDict_SetItemString(d,"ACCESS_DENIED_ACE_TYPE", PyInt_FromLong((long) ACCESS_DENIED_ACE_TYPE));
-	 PyDict_SetItemString(d,"ACCESS_DENIED_OBJECT_ACE_TYPE", PyInt_FromLong((long) ACCESS_DENIED_OBJECT_ACE_TYPE));
-	 PyDict_SetItemString(d,"SYSTEM_AUDIT_ACE_TYPE", PyInt_FromLong((long) SYSTEM_AUDIT_ACE_TYPE));
-	 PyDict_SetItemString(d,"SYSTEM_AUDIT_OBJECT_ACE_TYPE", PyInt_FromLong((long) SYSTEM_AUDIT_OBJECT_ACE_TYPE));
-	 PyDict_SetItemString(d,"POLICY_VIEW_LOCAL_INFORMATION", PyInt_FromLong((long) POLICY_VIEW_LOCAL_INFORMATION));
-	 PyDict_SetItemString(d,"POLICY_VIEW_AUDIT_INFORMATION", PyInt_FromLong((long) POLICY_VIEW_AUDIT_INFORMATION));
-	 PyDict_SetItemString(d,"POLICY_GET_PRIVATE_INFORMATION", PyInt_FromLong((long) POLICY_GET_PRIVATE_INFORMATION));
-	 PyDict_SetItemString(d,"POLICY_TRUST_ADMIN", PyInt_FromLong((long) POLICY_TRUST_ADMIN));
-	 PyDict_SetItemString(d,"POLICY_CREATE_ACCOUNT", PyInt_FromLong((long) POLICY_CREATE_ACCOUNT));
-	 PyDict_SetItemString(d,"POLICY_CREATE_SECRET", PyInt_FromLong((long) POLICY_CREATE_SECRET));
-	 PyDict_SetItemString(d,"POLICY_CREATE_PRIVILEGE", PyInt_FromLong((long) POLICY_CREATE_PRIVILEGE));
-	 PyDict_SetItemString(d,"POLICY_SET_DEFAULT_QUOTA_LIMITS", PyInt_FromLong((long) POLICY_SET_DEFAULT_QUOTA_LIMITS));
-	 PyDict_SetItemString(d,"POLICY_SET_AUDIT_REQUIREMENTS", PyInt_FromLong((long) POLICY_SET_AUDIT_REQUIREMENTS));
-	 PyDict_SetItemString(d,"POLICY_AUDIT_LOG_ADMIN", PyInt_FromLong((long) POLICY_AUDIT_LOG_ADMIN));
-	 PyDict_SetItemString(d,"POLICY_SERVER_ADMIN", PyInt_FromLong((long) POLICY_SERVER_ADMIN));
-	 PyDict_SetItemString(d,"POLICY_LOOKUP_NAMES", PyInt_FromLong((long) POLICY_LOOKUP_NAMES));
-	 PyDict_SetItemString(d,"POLICY_NOTIFICATION", PyInt_FromLong((long) POLICY_NOTIFICATION));
-	 PyDict_SetItemString(d,"POLICY_ALL_ACCESS", PyInt_FromLong((long) POLICY_ALL_ACCESS));
-	 PyDict_SetItemString(d,"POLICY_READ", PyInt_FromLong((long) POLICY_READ));
-	 PyDict_SetItemString(d,"POLICY_WRITE", PyInt_FromLong((long) POLICY_WRITE));
-	 PyDict_SetItemString(d,"POLICY_EXECUTE", PyInt_FromLong((long) POLICY_EXECUTE));
-	 PyDict_SetItemString(d,"PolicyAuditLogInformation", PyInt_FromLong((long) PolicyAuditLogInformation));
-	 PyDict_SetItemString(d,"PolicyAuditEventsInformation", PyInt_FromLong((long) PolicyAuditEventsInformation));
-	 PyDict_SetItemString(d,"PolicyPrimaryDomainInformation", PyInt_FromLong((long) PolicyPrimaryDomainInformation));
-	 PyDict_SetItemString(d,"PolicyPdAccountInformation", PyInt_FromLong((long) PolicyPdAccountInformation));
-	 PyDict_SetItemString(d,"PolicyAccountDomainInformation", PyInt_FromLong((long) PolicyAccountDomainInformation));
-	 PyDict_SetItemString(d,"PolicyLsaServerRoleInformation", PyInt_FromLong((long) PolicyLsaServerRoleInformation));
-	 PyDict_SetItemString(d,"PolicyReplicaSourceInformation", PyInt_FromLong((long) PolicyReplicaSourceInformation));
-	 PyDict_SetItemString(d,"PolicyDefaultQuotaInformation", PyInt_FromLong((long) PolicyDefaultQuotaInformation));
-	 PyDict_SetItemString(d,"PolicyModificationInformation", PyInt_FromLong((long) PolicyModificationInformation));
-	 PyDict_SetItemString(d,"PolicyAuditFullSetInformation", PyInt_FromLong((long) PolicyAuditFullSetInformation));
-	 PyDict_SetItemString(d,"PolicyAuditFullQueryInformation", PyInt_FromLong((long) PolicyAuditFullQueryInformation));
-	 PyDict_SetItemString(d,"PolicyDnsDomainInformation", PyInt_FromLong((long) PolicyDnsDomainInformation));
-	 PyDict_SetItemString(d,"AuditCategorySystem", PyInt_FromLong((long) AuditCategorySystem));
-	 PyDict_SetItemString(d,"AuditCategoryLogon", PyInt_FromLong((long) AuditCategoryLogon));
-	 PyDict_SetItemString(d,"AuditCategoryObjectAccess", PyInt_FromLong((long) AuditCategoryObjectAccess));
-	 PyDict_SetItemString(d,"AuditCategoryPrivilegeUse", PyInt_FromLong((long) AuditCategoryPrivilegeUse));
-	 PyDict_SetItemString(d,"AuditCategoryDetailedTracking", PyInt_FromLong((long) AuditCategoryDetailedTracking));
-	 PyDict_SetItemString(d,"AuditCategoryPolicyChange", PyInt_FromLong((long) AuditCategoryPolicyChange));
-	 PyDict_SetItemString(d,"AuditCategoryAccountManagement", PyInt_FromLong((long) AuditCategoryAccountManagement));
-	 PyDict_SetItemString(d,"AuditCategoryDirectoryServiceAccess", PyInt_FromLong((long) AuditCategoryDirectoryServiceAccess));
-	 PyDict_SetItemString(d,"AuditCategoryAccountLogon", PyInt_FromLong((long) AuditCategoryAccountLogon));
-	 PyDict_SetItemString(d,"POLICY_AUDIT_EVENT_UNCHANGED", PyInt_FromLong((long) POLICY_AUDIT_EVENT_UNCHANGED));
-	 PyDict_SetItemString(d,"POLICY_AUDIT_EVENT_SUCCESS", PyInt_FromLong((long) POLICY_AUDIT_EVENT_SUCCESS));
-	 PyDict_SetItemString(d,"POLICY_AUDIT_EVENT_FAILURE", PyInt_FromLong((long) POLICY_AUDIT_EVENT_FAILURE));
-	 PyDict_SetItemString(d,"POLICY_AUDIT_EVENT_NONE", PyInt_FromLong((long) POLICY_AUDIT_EVENT_NONE));
-	 PyDict_SetItemString(d,"PolicyServerRoleBackup", PyInt_FromLong((long) PolicyServerRoleBackup));
-	 PyDict_SetItemString(d,"PolicyServerRolePrimary", PyInt_FromLong((long) PolicyServerRolePrimary));
-	 PyDict_SetItemString(d,"PolicyServerEnabled", PyInt_FromLong((long) 2));
-	 PyDict_SetItemString(d,"PolicyServerDisabled", PyInt_FromLong((long) 3));
-	 PyDict_SetItemString(d,"PolicyNotifyAuditEventsInformation", PyInt_FromLong((long) PolicyNotifyAuditEventsInformation));
-	 PyDict_SetItemString(d,"PolicyNotifyAccountDomainInformation", PyInt_FromLong((long) PolicyNotifyAccountDomainInformation));
-	 PyDict_SetItemString(d,"PolicyNotifyServerRoleInformation", PyInt_FromLong((long) PolicyNotifyServerRoleInformation));
-	 PyDict_SetItemString(d,"PolicyNotifyDnsDomainInformation", PyInt_FromLong((long) PolicyNotifyDnsDomainInformation));
-	 PyDict_SetItemString(d,"PolicyNotifyDomainEfsInformation", PyInt_FromLong((long) PolicyNotifyDomainEfsInformation));
-	 PyDict_SetItemString(d,"PolicyNotifyDomainKerberosTicketInformation", PyInt_FromLong((long) PolicyNotifyDomainKerberosTicketInformation));
-	 PyDict_SetItemString(d,"PolicyNotifyMachineAccountPasswordInformation", PyInt_FromLong((long) PolicyNotifyMachineAccountPasswordInformation));
-	 PyDict_SetItemString(d,"TrustedDomainNameInformation", PyInt_FromLong((long) TrustedDomainNameInformation));
-	 PyDict_SetItemString(d,"TrustedControllersInformation", PyInt_FromLong((long) TrustedControllersInformation));
-	 PyDict_SetItemString(d,"TrustedPosixOffsetInformation", PyInt_FromLong((long) TrustedPosixOffsetInformation));
-	 PyDict_SetItemString(d,"TrustedPasswordInformation", PyInt_FromLong((long) TrustedPasswordInformation));
-	 PyDict_SetItemString(d,"TrustedDomainInformationBasic", PyInt_FromLong((long) TrustedDomainInformationBasic));
-	 PyDict_SetItemString(d,"TrustedDomainInformationEx", PyInt_FromLong((long) TrustedDomainInformationEx));
-	 PyDict_SetItemString(d,"TrustedDomainAuthInformation", PyInt_FromLong((long) TrustedDomainAuthInformation));
-	 PyDict_SetItemString(d,"TrustedDomainFullInformation", PyInt_FromLong((long) TrustedDomainFullInformation));
-	 PyDict_SetItemString(d,"TrustedDomainAuthInformationInternal", PyInt_FromLong((long) TrustedDomainAuthInformationInternal));
-	 PyDict_SetItemString(d,"TrustedDomainFullInformationInternal", PyInt_FromLong((long) TrustedDomainFullInformationInternal));
-	 PyDict_SetItemString(d,"TrustedDomainInformationEx2Internal", PyInt_FromLong((long) TrustedDomainInformationEx2Internal));
-	 PyDict_SetItemString(d,"TrustedDomainFullInformation2Internal", PyInt_FromLong((long) TrustedDomainFullInformation2Internal));
-	 PyDict_SetItemString(d,"CONTAINER_INHERIT_ACE", PyInt_FromLong((long) CONTAINER_INHERIT_ACE));
-	 PyDict_SetItemString(d,"FAILED_ACCESS_ACE_FLAG", PyInt_FromLong((long) FAILED_ACCESS_ACE_FLAG));
-	 PyDict_SetItemString(d,"INHERIT_ONLY_ACE", PyInt_FromLong((long) INHERIT_ONLY_ACE));
-	 PyDict_SetItemString(d,"INHERITED_ACE", PyInt_FromLong((long) INHERITED_ACE));
-	 PyDict_SetItemString(d,"NO_PROPAGATE_INHERIT_ACE", PyInt_FromLong((long) NO_PROPAGATE_INHERIT_ACE));
-	 PyDict_SetItemString(d,"OBJECT_INHERIT_ACE", PyInt_FromLong((long) OBJECT_INHERIT_ACE));
-	 PyDict_SetItemString(d,"SUCCESSFUL_ACCESS_ACE_FLAG", PyInt_FromLong((long) SUCCESSFUL_ACCESS_ACE_FLAG));
-	 PyDict_SetItemString(d,"NO_INHERITANCE", PyInt_FromLong((long) NO_INHERITANCE));
-	 PyDict_SetItemString(d,"SUB_CONTAINERS_AND_OBJECTS_INHERIT", PyInt_FromLong((long) SUB_CONTAINERS_AND_OBJECTS_INHERIT));
-	 PyDict_SetItemString(d,"SUB_CONTAINERS_ONLY_INHERIT", PyInt_FromLong((long) SUB_CONTAINERS_ONLY_INHERIT));
-	 PyDict_SetItemString(d,"SUB_OBJECTS_ONLY_INHERIT", PyInt_FromLong((long) SUB_OBJECTS_ONLY_INHERIT));
-	 PyDict_SetItemString(d,"NOT_USED_ACCESS", PyInt_FromLong((long) NOT_USED_ACCESS));
-	 PyDict_SetItemString(d,"GRANT_ACCESS", PyInt_FromLong((long) GRANT_ACCESS));
-	 PyDict_SetItemString(d,"SET_ACCESS", PyInt_FromLong((long) SET_ACCESS));
-	 PyDict_SetItemString(d,"DENY_ACCESS", PyInt_FromLong((long) DENY_ACCESS));
-	 PyDict_SetItemString(d,"REVOKE_ACCESS", PyInt_FromLong((long) REVOKE_ACCESS));
-	 PyDict_SetItemString(d,"SET_AUDIT_SUCCESS", PyInt_FromLong((long) SET_AUDIT_SUCCESS));
-	 PyDict_SetItemString(d,"SET_AUDIT_FAILURE", PyInt_FromLong((long) SET_AUDIT_FAILURE));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_SID", PyInt_FromLong((long) TRUSTEE_IS_SID));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_NAME", PyInt_FromLong((long) TRUSTEE_IS_NAME));
-	 PyDict_SetItemString(d,"TRUSTEE_BAD_FORM", PyInt_FromLong((long) TRUSTEE_BAD_FORM));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_OBJECTS_AND_SID", PyInt_FromLong((long) TRUSTEE_IS_OBJECTS_AND_SID));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_OBJECTS_AND_NAME", PyInt_FromLong((long) TRUSTEE_IS_OBJECTS_AND_NAME));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_UNKNOWN", PyInt_FromLong((long) TRUSTEE_IS_UNKNOWN));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_USER", PyInt_FromLong((long) TRUSTEE_IS_USER));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_GROUP", PyInt_FromLong((long) TRUSTEE_IS_GROUP));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_DOMAIN", PyInt_FromLong((long) TRUSTEE_IS_DOMAIN));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_ALIAS", PyInt_FromLong((long) TRUSTEE_IS_ALIAS));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_WELL_KNOWN_GROUP", PyInt_FromLong((long) TRUSTEE_IS_WELL_KNOWN_GROUP));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_DELETED", PyInt_FromLong((long) TRUSTEE_IS_DELETED));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_INVALID", PyInt_FromLong((long) TRUSTEE_IS_INVALID));
-	 PyDict_SetItemString(d,"TRUSTEE_IS_COMPUTER", PyInt_FromLong((long) TRUSTEE_IS_COMPUTER));
-	 PyDict_SetItemString(d,"SE_PRIVILEGE_ENABLED_BY_DEFAULT", PyInt_FromLong((long) SE_PRIVILEGE_ENABLED_BY_DEFAULT));
-	 PyDict_SetItemString(d,"SE_PRIVILEGE_ENABLED", PyInt_FromLong((long) SE_PRIVILEGE_ENABLED));
-	 PyDict_SetItemString(d,"SE_PRIVILEGE_REMOVED", PyInt_FromLong((long) SE_PRIVILEGE_REMOVED));
-	 PyDict_SetItemString(d,"SE_PRIVILEGE_USED_FOR_ACCESS", PyInt_FromLong((long) SE_PRIVILEGE_USED_FOR_ACCESS));
-	 PyDict_SetItemString(d,"STYPE_DISKTREE", PyInt_FromLong((long) STYPE_DISKTREE));
-	 PyDict_SetItemString(d,"STYPE_PRINTQ", PyInt_FromLong((long) STYPE_PRINTQ));
-	 PyDict_SetItemString(d,"STYPE_DEVICE", PyInt_FromLong((long) STYPE_DEVICE));
-	 PyDict_SetItemString(d,"STYPE_IPC", PyInt_FromLong((long) STYPE_IPC));
-	 PyDict_SetItemString(d,"STYPE_TEMPORARY", PyInt_FromLong((long) STYPE_TEMPORARY));
-	 PyDict_SetItemString(d,"STYPE_SPECIAL", PyInt_FromLong((long) STYPE_SPECIAL));
-	 PyDict_SetItemString(d,"SDDL_REVISION_1", PyInt_FromLong((long) SDDL_REVISION_1));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_INTEGRITY", PyInt_FromLong((long) SECPKG_FLAG_INTEGRITY));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_PRIVACY", PyInt_FromLong((long) SECPKG_FLAG_PRIVACY));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_TOKEN_ONLY", PyInt_FromLong((long) SECPKG_FLAG_TOKEN_ONLY));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_DATAGRAM", PyInt_FromLong((long) SECPKG_FLAG_DATAGRAM));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_CONNECTION", PyInt_FromLong((long) SECPKG_FLAG_CONNECTION));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_MULTI_REQUIRED", PyInt_FromLong((long) SECPKG_FLAG_MULTI_REQUIRED));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_CLIENT_ONLY", PyInt_FromLong((long) SECPKG_FLAG_CLIENT_ONLY));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_EXTENDED_ERROR", PyInt_FromLong((long) SECPKG_FLAG_EXTENDED_ERROR));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_IMPERSONATION", PyInt_FromLong((long) SECPKG_FLAG_IMPERSONATION));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_ACCEPT_WIN32_NAME", PyInt_FromLong((long) SECPKG_FLAG_ACCEPT_WIN32_NAME));
-	 PyDict_SetItemString(d,"SECPKG_FLAG_STREAM", PyInt_FromLong((long) SECPKG_FLAG_STREAM));
-	 PyDict_SetItemString(d,"SECPKG_CRED_INBOUND", PyInt_FromLong((long) SECPKG_CRED_INBOUND));
-	 PyDict_SetItemString(d,"SECPKG_CRED_OUTBOUND", PyInt_FromLong((long) SECPKG_CRED_OUTBOUND));
-	 PyDict_SetItemString(d,"SECPKG_CRED_BOTH", PyInt_FromLong((long) SECPKG_CRED_BOTH));
-	 PyDict_SetItemString(d,"DISABLE_MAX_PRIVILEGE", PyInt_FromLong((long) DISABLE_MAX_PRIVILEGE));
-	 PyDict_SetItemString(d,"SANDBOX_INERT", PyInt_FromLong((long) SANDBOX_INERT));
-	 PyDict_SetItemString(d,"DS_SPN_DNS_HOST", PyInt_FromLong((long) DS_SPN_DNS_HOST));
-	 PyDict_SetItemString(d,"DS_SPN_DN_HOST", PyInt_FromLong((long) DS_SPN_DN_HOST));
-	 PyDict_SetItemString(d,"DS_SPN_NB_HOST", PyInt_FromLong((long) DS_SPN_NB_HOST));
-	 PyDict_SetItemString(d,"DS_SPN_DOMAIN", PyInt_FromLong((long) DS_SPN_DOMAIN));
-	 PyDict_SetItemString(d,"DS_SPN_NB_DOMAIN", PyInt_FromLong((long) DS_SPN_NB_DOMAIN));
-	 PyDict_SetItemString(d,"DS_SPN_SERVICE", PyInt_FromLong((long) DS_SPN_SERVICE));
-	 PyDict_SetItemString(d,"DS_SPN_ADD_SPN_OP", PyInt_FromLong((long) DS_SPN_ADD_SPN_OP));
-	 PyDict_SetItemString(d,"DS_SPN_REPLACE_SPN_OP", PyInt_FromLong((long) DS_SPN_REPLACE_SPN_OP));
-	 PyDict_SetItemString(d,"DS_SPN_DELETE_SPN_OP", PyInt_FromLong((long) DS_SPN_DELETE_SPN_OP));
+		}
+	PyDict_SetItemString(d, "TOKEN_ADJUST_DEFAULT", PyInt_FromLong((long)TOKEN_ADJUST_DEFAULT));
+	PyDict_SetItemString(d, "TOKEN_ADJUST_GROUPS", PyInt_FromLong((long)TOKEN_ADJUST_GROUPS));
+	PyDict_SetItemString(d, "TOKEN_ADJUST_PRIVILEGES", PyInt_FromLong((long)TOKEN_ADJUST_PRIVILEGES));
+	PyDict_SetItemString(d, "TOKEN_ALL_ACCESS", PyInt_FromLong((long)TOKEN_ALL_ACCESS));
+	PyDict_SetItemString(d, "TOKEN_ASSIGN_PRIMARY", PyInt_FromLong((long)TOKEN_ASSIGN_PRIMARY));
+	PyDict_SetItemString(d, "TOKEN_DUPLICATE", PyInt_FromLong((long)TOKEN_DUPLICATE));
+	PyDict_SetItemString(d, "TOKEN_EXECUTE", PyInt_FromLong((long)TOKEN_EXECUTE));
+	PyDict_SetItemString(d, "TOKEN_IMPERSONATE", PyInt_FromLong((long)TOKEN_IMPERSONATE));
+	PyDict_SetItemString(d, "TOKEN_QUERY", PyInt_FromLong((long)TOKEN_QUERY));
+	PyDict_SetItemString(d, "TOKEN_QUERY_SOURCE", PyInt_FromLong((long)TOKEN_QUERY_SOURCE));
+	PyDict_SetItemString(d, "TOKEN_READ", PyInt_FromLong((long)TOKEN_READ));
+	PyDict_SetItemString(d, "TOKEN_WRITE", PyInt_FromLong((long)TOKEN_WRITE));
+	PyDict_SetItemString(d, "SE_UNKNOWN_OBJECT_TYPE", PyInt_FromLong((long)SE_UNKNOWN_OBJECT_TYPE));
+	PyDict_SetItemString(d, "SE_FILE_OBJECT", PyInt_FromLong((long)SE_FILE_OBJECT));
+	PyDict_SetItemString(d, "SE_SERVICE", PyInt_FromLong((long)SE_SERVICE));
+	PyDict_SetItemString(d, "SE_PRINTER", PyInt_FromLong((long)SE_PRINTER));
+	PyDict_SetItemString(d, "SE_REGISTRY_KEY", PyInt_FromLong((long)SE_REGISTRY_KEY));
+	PyDict_SetItemString(d, "SE_LMSHARE", PyInt_FromLong((long)SE_LMSHARE));
+	PyDict_SetItemString(d, "SE_KERNEL_OBJECT", PyInt_FromLong((long)SE_KERNEL_OBJECT));
+	PyDict_SetItemString(d, "SE_WINDOW_OBJECT", PyInt_FromLong((long)SE_WINDOW_OBJECT));
+	PyDict_SetItemString(d, "SE_DS_OBJECT", PyInt_FromLong((long)SE_DS_OBJECT));
+	PyDict_SetItemString(d, "SE_DS_OBJECT_ALL", PyInt_FromLong((long)SE_DS_OBJECT_ALL));
+	PyDict_SetItemString(d, "SE_PROVIDER_DEFINED_OBJECT", PyInt_FromLong((long)SE_PROVIDER_DEFINED_OBJECT));
+	PyDict_SetItemString(d, "SE_WMIGUID_OBJECT", PyInt_FromLong((long)SE_WMIGUID_OBJECT));
+	PyDict_SetItemString(d, "SE_REGISTRY_WOW64_32KEY", PyInt_FromLong((long)SE_REGISTRY_WOW64_32KEY));
+	PyDict_SetItemString(d, "SE_GROUP_ENABLED", PyInt_FromLong((long)SE_GROUP_ENABLED));
+	PyDict_SetItemString(d, "SE_GROUP_ENABLED_BY_DEFAULT", PyInt_FromLong((long)SE_GROUP_ENABLED_BY_DEFAULT));
+	PyDict_SetItemString(d, "SE_GROUP_LOGON_ID", PyInt_FromLong((long)SE_GROUP_LOGON_ID));
+	PyDict_SetItemString(d, "SE_GROUP_MANDATORY", PyInt_FromLong((long)SE_GROUP_MANDATORY));
+	PyDict_SetItemString(d, "SE_GROUP_OWNER", PyInt_FromLong((long)SE_GROUP_OWNER));
+	PyDict_SetItemString(d, "SE_GROUP_RESOURCE", PyInt_FromLong((long)SE_GROUP_RESOURCE));
+	PyDict_SetItemString(d, "SE_GROUP_USE_FOR_DENY_ONLY", PyInt_FromLong((long)SE_GROUP_USE_FOR_DENY_ONLY));
+	PyDict_SetItemString(d, "OWNER_SECURITY_INFORMATION", PyInt_FromLong((long)OWNER_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "GROUP_SECURITY_INFORMATION", PyInt_FromLong((long)GROUP_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "DACL_SECURITY_INFORMATION", PyInt_FromLong((long)DACL_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "SACL_SECURITY_INFORMATION", PyInt_FromLong((long)SACL_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "LABEL_SECURITY_INFORMATION", PyInt_FromLong((long)0x00000010));
+	PyDict_SetItemString(d, "PROTECTED_DACL_SECURITY_INFORMATION", PyInt_FromLong((long)PROTECTED_DACL_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "PROTECTED_SACL_SECURITY_INFORMATION", PyInt_FromLong((long)PROTECTED_SACL_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "UNPROTECTED_DACL_SECURITY_INFORMATION", PyInt_FromLong((long)UNPROTECTED_DACL_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "UNPROTECTED_SACL_SECURITY_INFORMATION", PyInt_FromLong((long)UNPROTECTED_SACL_SECURITY_INFORMATION));
+	PyDict_SetItemString(d, "SidTypeUser", PyInt_FromLong((long)SidTypeUser));
+	PyDict_SetItemString(d, "SidTypeGroup", PyInt_FromLong((long)SidTypeGroup));
+	PyDict_SetItemString(d, "SidTypeDomain", PyInt_FromLong((long)SidTypeDomain));
+	PyDict_SetItemString(d, "SidTypeAlias", PyInt_FromLong((long)SidTypeAlias));
+	PyDict_SetItemString(d, "SidTypeWellKnownGroup", PyInt_FromLong((long)SidTypeWellKnownGroup));
+	PyDict_SetItemString(d, "SidTypeDeletedAccount", PyInt_FromLong((long)SidTypeDeletedAccount));
+	PyDict_SetItemString(d, "SidTypeInvalid", PyInt_FromLong((long)SidTypeInvalid));
+	PyDict_SetItemString(d, "SidTypeUnknown", PyInt_FromLong((long)SidTypeUnknown));
+	PyDict_SetItemString(d, "SidTypeComputer", PyInt_FromLong((long)SidTypeComputer));
+	PyDict_SetItemString(d, "TokenPrimary", PyInt_FromLong((long)TokenPrimary));
+	PyDict_SetItemString(d, "TokenImpersonation", PyInt_FromLong((long)TokenImpersonation));
+	PyDict_SetItemString(d, "SecurityAnonymous", PyInt_FromLong((long)SecurityAnonymous));
+	PyDict_SetItemString(d, "SecurityIdentification", PyInt_FromLong((long)SecurityIdentification));
+	PyDict_SetItemString(d, "SecurityImpersonation", PyInt_FromLong((long)SecurityImpersonation));
+	PyDict_SetItemString(d, "SecurityDelegation", PyInt_FromLong((long)SecurityDelegation));
+	PyDict_SetItemString(d, "LOGON32_LOGON_BATCH", PyInt_FromLong((long)LOGON32_LOGON_BATCH));
+	PyDict_SetItemString(d, "LOGON32_LOGON_INTERACTIVE", PyInt_FromLong((long)LOGON32_LOGON_INTERACTIVE));
+	PyDict_SetItemString(d, "LOGON32_LOGON_SERVICE", PyInt_FromLong((long)LOGON32_LOGON_SERVICE));
+	PyDict_SetItemString(d, "LOGON32_LOGON_NETWORK", PyInt_FromLong((long)LOGON32_LOGON_NETWORK));
+	PyDict_SetItemString(d, "LOGON32_LOGON_UNLOCK", PyInt_FromLong((long)LOGON32_LOGON_UNLOCK));
+	PyDict_SetItemString(d, "LOGON32_LOGON_NETWORK_CLEARTEXT", PyInt_FromLong((long)LOGON32_LOGON_NETWORK_CLEARTEXT));
+	PyDict_SetItemString(d, "LOGON32_LOGON_NEW_CREDENTIALS", PyInt_FromLong((long)LOGON32_LOGON_NEW_CREDENTIALS));
+	PyDict_SetItemString(d, "LOGON32_PROVIDER_DEFAULT", PyInt_FromLong((long)LOGON32_PROVIDER_DEFAULT));
+	PyDict_SetItemString(d, "LOGON32_PROVIDER_WINNT40", PyInt_FromLong((long)LOGON32_PROVIDER_WINNT40));
+	PyDict_SetItemString(d, "LOGON32_PROVIDER_WINNT35", PyInt_FromLong((long)LOGON32_PROVIDER_WINNT35));
+	PyDict_SetItemString(d, "LOGON32_PROVIDER_WINNT50", PyInt_FromLong((long)LOGON32_PROVIDER_WINNT50));
+	PyDict_SetItemString(d, "SECURITY_NULL_SID_AUTHORITY", PyInt_FromLong((long)0));
+	PyDict_SetItemString(d, "SECURITY_WORLD_SID_AUTHORITY", PyInt_FromLong((long)1));
+	PyDict_SetItemString(d, "SECURITY_LOCAL_SID_AUTHORITY", PyInt_FromLong((long)2));
+	PyDict_SetItemString(d, "SECURITY_CREATOR_SID_AUTHORITY", PyInt_FromLong((long)3));
+	PyDict_SetItemString(d, "SECURITY_NON_UNIQUE_AUTHORITY", PyInt_FromLong((long)4));
+	PyDict_SetItemString(d, "SECURITY_NT_AUTHORITY", PyInt_FromLong((long)5));
+	PyDict_SetItemString(d, "SECURITY_RESOURCE_MANAGER_AUTHORITY", PyInt_FromLong((long)9));
+	PyDict_SetItemString(d, "SE_DACL_AUTO_INHERITED", PyInt_FromLong((long)SE_DACL_AUTO_INHERITED));
+	PyDict_SetItemString(d, "SE_SACL_AUTO_INHERITED", PyInt_FromLong((long)SE_SACL_AUTO_INHERITED));
+	PyDict_SetItemString(d, "SE_DACL_PROTECTED", PyInt_FromLong((long)SE_DACL_PROTECTED));
+	PyDict_SetItemString(d, "SE_SACL_PROTECTED", PyInt_FromLong((long)SE_SACL_PROTECTED));
+	PyDict_SetItemString(d, "SE_DACL_DEFAULTED", PyInt_FromLong((long)SE_DACL_DEFAULTED));
+	PyDict_SetItemString(d, "SE_DACL_PRESENT", PyInt_FromLong((long)SE_DACL_PRESENT));
+	PyDict_SetItemString(d, "SE_GROUP_DEFAULTED", PyInt_FromLong((long)SE_GROUP_DEFAULTED));
+	PyDict_SetItemString(d, "SE_OWNER_DEFAULTED", PyInt_FromLong((long)SE_OWNER_DEFAULTED));
+	PyDict_SetItemString(d, "SE_SACL_PRESENT", PyInt_FromLong((long)SE_SACL_PRESENT));
+	PyDict_SetItemString(d, "SE_SELF_RELATIVE", PyInt_FromLong((long)SE_SELF_RELATIVE));
+	PyDict_SetItemString(d, "SE_SACL_DEFAULTED", PyInt_FromLong((long)SE_SACL_DEFAULTED));
+	PyDict_SetItemString(d, "ACL_REVISION", PyInt_FromLong((long)ACL_REVISION));
+	PyDict_SetItemString(d, "ACL_REVISION_DS", PyInt_FromLong((long)ACL_REVISION_DS));
+	PyDict_SetItemString(d, "ACCESS_ALLOWED_ACE_TYPE", PyInt_FromLong((long)ACCESS_ALLOWED_ACE_TYPE));
+	PyDict_SetItemString(d, "ACCESS_ALLOWED_OBJECT_ACE_TYPE", PyInt_FromLong((long)ACCESS_ALLOWED_OBJECT_ACE_TYPE));
+	PyDict_SetItemString(d, "ACCESS_DENIED_ACE_TYPE", PyInt_FromLong((long)ACCESS_DENIED_ACE_TYPE));
+	PyDict_SetItemString(d, "ACCESS_DENIED_OBJECT_ACE_TYPE", PyInt_FromLong((long)ACCESS_DENIED_OBJECT_ACE_TYPE));
+	PyDict_SetItemString(d, "SYSTEM_AUDIT_ACE_TYPE", PyInt_FromLong((long)SYSTEM_AUDIT_ACE_TYPE));
+	PyDict_SetItemString(d, "SYSTEM_AUDIT_OBJECT_ACE_TYPE", PyInt_FromLong((long)SYSTEM_AUDIT_OBJECT_ACE_TYPE));
+	PyDict_SetItemString(d, "POLICY_VIEW_LOCAL_INFORMATION", PyInt_FromLong((long)POLICY_VIEW_LOCAL_INFORMATION));
+	PyDict_SetItemString(d, "POLICY_VIEW_AUDIT_INFORMATION", PyInt_FromLong((long)POLICY_VIEW_AUDIT_INFORMATION));
+	PyDict_SetItemString(d, "POLICY_GET_PRIVATE_INFORMATION", PyInt_FromLong((long)POLICY_GET_PRIVATE_INFORMATION));
+	PyDict_SetItemString(d, "POLICY_TRUST_ADMIN", PyInt_FromLong((long)POLICY_TRUST_ADMIN));
+	PyDict_SetItemString(d, "POLICY_CREATE_ACCOUNT", PyInt_FromLong((long)POLICY_CREATE_ACCOUNT));
+	PyDict_SetItemString(d, "POLICY_CREATE_SECRET", PyInt_FromLong((long)POLICY_CREATE_SECRET));
+	PyDict_SetItemString(d, "POLICY_CREATE_PRIVILEGE", PyInt_FromLong((long)POLICY_CREATE_PRIVILEGE));
+	PyDict_SetItemString(d, "POLICY_SET_DEFAULT_QUOTA_LIMITS", PyInt_FromLong((long)POLICY_SET_DEFAULT_QUOTA_LIMITS));
+	PyDict_SetItemString(d, "POLICY_SET_AUDIT_REQUIREMENTS", PyInt_FromLong((long)POLICY_SET_AUDIT_REQUIREMENTS));
+	PyDict_SetItemString(d, "POLICY_AUDIT_LOG_ADMIN", PyInt_FromLong((long)POLICY_AUDIT_LOG_ADMIN));
+	PyDict_SetItemString(d, "POLICY_SERVER_ADMIN", PyInt_FromLong((long)POLICY_SERVER_ADMIN));
+	PyDict_SetItemString(d, "POLICY_LOOKUP_NAMES", PyInt_FromLong((long)POLICY_LOOKUP_NAMES));
+	PyDict_SetItemString(d, "POLICY_NOTIFICATION", PyInt_FromLong((long)POLICY_NOTIFICATION));
+	PyDict_SetItemString(d, "POLICY_ALL_ACCESS", PyInt_FromLong((long)POLICY_ALL_ACCESS));
+	PyDict_SetItemString(d, "POLICY_READ", PyInt_FromLong((long)POLICY_READ));
+	PyDict_SetItemString(d, "POLICY_WRITE", PyInt_FromLong((long)POLICY_WRITE));
+	PyDict_SetItemString(d, "POLICY_EXECUTE", PyInt_FromLong((long)POLICY_EXECUTE));
+	PyDict_SetItemString(d, "PolicyAuditLogInformation", PyInt_FromLong((long)PolicyAuditLogInformation));
+	PyDict_SetItemString(d, "PolicyAuditEventsInformation", PyInt_FromLong((long)PolicyAuditEventsInformation));
+	PyDict_SetItemString(d, "PolicyPrimaryDomainInformation", PyInt_FromLong((long)PolicyPrimaryDomainInformation));
+	PyDict_SetItemString(d, "PolicyPdAccountInformation", PyInt_FromLong((long)PolicyPdAccountInformation));
+	PyDict_SetItemString(d, "PolicyAccountDomainInformation", PyInt_FromLong((long)PolicyAccountDomainInformation));
+	PyDict_SetItemString(d, "PolicyLsaServerRoleInformation", PyInt_FromLong((long)PolicyLsaServerRoleInformation));
+	PyDict_SetItemString(d, "PolicyReplicaSourceInformation", PyInt_FromLong((long)PolicyReplicaSourceInformation));
+	PyDict_SetItemString(d, "PolicyDefaultQuotaInformation", PyInt_FromLong((long)PolicyDefaultQuotaInformation));
+	PyDict_SetItemString(d, "PolicyModificationInformation", PyInt_FromLong((long)PolicyModificationInformation));
+	PyDict_SetItemString(d, "PolicyAuditFullSetInformation", PyInt_FromLong((long)PolicyAuditFullSetInformation));
+	PyDict_SetItemString(d, "PolicyAuditFullQueryInformation", PyInt_FromLong((long)PolicyAuditFullQueryInformation));
+	PyDict_SetItemString(d, "PolicyDnsDomainInformation", PyInt_FromLong((long)PolicyDnsDomainInformation));
+	PyDict_SetItemString(d, "AuditCategorySystem", PyInt_FromLong((long)AuditCategorySystem));
+	PyDict_SetItemString(d, "AuditCategoryLogon", PyInt_FromLong((long)AuditCategoryLogon));
+	PyDict_SetItemString(d, "AuditCategoryObjectAccess", PyInt_FromLong((long)AuditCategoryObjectAccess));
+	PyDict_SetItemString(d, "AuditCategoryPrivilegeUse", PyInt_FromLong((long)AuditCategoryPrivilegeUse));
+	PyDict_SetItemString(d, "AuditCategoryDetailedTracking", PyInt_FromLong((long)AuditCategoryDetailedTracking));
+	PyDict_SetItemString(d, "AuditCategoryPolicyChange", PyInt_FromLong((long)AuditCategoryPolicyChange));
+	PyDict_SetItemString(d, "AuditCategoryAccountManagement", PyInt_FromLong((long)AuditCategoryAccountManagement));
+	PyDict_SetItemString(d, "AuditCategoryDirectoryServiceAccess", PyInt_FromLong((long)AuditCategoryDirectoryServiceAccess));
+	PyDict_SetItemString(d, "AuditCategoryAccountLogon", PyInt_FromLong((long)AuditCategoryAccountLogon));
+	PyDict_SetItemString(d, "POLICY_AUDIT_EVENT_UNCHANGED", PyInt_FromLong((long)POLICY_AUDIT_EVENT_UNCHANGED));
+	PyDict_SetItemString(d, "POLICY_AUDIT_EVENT_SUCCESS", PyInt_FromLong((long)POLICY_AUDIT_EVENT_SUCCESS));
+	PyDict_SetItemString(d, "POLICY_AUDIT_EVENT_FAILURE", PyInt_FromLong((long)POLICY_AUDIT_EVENT_FAILURE));
+	PyDict_SetItemString(d, "POLICY_AUDIT_EVENT_NONE", PyInt_FromLong((long)POLICY_AUDIT_EVENT_NONE));
+	PyDict_SetItemString(d, "PolicyServerRoleBackup", PyInt_FromLong((long)PolicyServerRoleBackup));
+	PyDict_SetItemString(d, "PolicyServerRolePrimary", PyInt_FromLong((long)PolicyServerRolePrimary));
+	PyDict_SetItemString(d, "PolicyServerEnabled", PyInt_FromLong((long)2));
+	PyDict_SetItemString(d, "PolicyServerDisabled", PyInt_FromLong((long)3));
+	PyDict_SetItemString(d, "PolicyNotifyAuditEventsInformation", PyInt_FromLong((long)PolicyNotifyAuditEventsInformation));
+	PyDict_SetItemString(d, "PolicyNotifyAccountDomainInformation", PyInt_FromLong((long)PolicyNotifyAccountDomainInformation));
+	PyDict_SetItemString(d, "PolicyNotifyServerRoleInformation", PyInt_FromLong((long)PolicyNotifyServerRoleInformation));
+	PyDict_SetItemString(d, "PolicyNotifyDnsDomainInformation", PyInt_FromLong((long)PolicyNotifyDnsDomainInformation));
+	PyDict_SetItemString(d, "PolicyNotifyDomainEfsInformation", PyInt_FromLong((long)PolicyNotifyDomainEfsInformation));
+	PyDict_SetItemString(d, "PolicyNotifyDomainKerberosTicketInformation", PyInt_FromLong((long)PolicyNotifyDomainKerberosTicketInformation));
+	PyDict_SetItemString(d, "PolicyNotifyMachineAccountPasswordInformation", PyInt_FromLong((long)PolicyNotifyMachineAccountPasswordInformation));
+	PyDict_SetItemString(d, "TrustedDomainNameInformation", PyInt_FromLong((long)TrustedDomainNameInformation));
+	PyDict_SetItemString(d, "TrustedControllersInformation", PyInt_FromLong((long)TrustedControllersInformation));
+	PyDict_SetItemString(d, "TrustedPosixOffsetInformation", PyInt_FromLong((long)TrustedPosixOffsetInformation));
+	PyDict_SetItemString(d, "TrustedPasswordInformation", PyInt_FromLong((long)TrustedPasswordInformation));
+	PyDict_SetItemString(d, "TrustedDomainInformationBasic", PyInt_FromLong((long)TrustedDomainInformationBasic));
+	PyDict_SetItemString(d, "TrustedDomainInformationEx", PyInt_FromLong((long)TrustedDomainInformationEx));
+	PyDict_SetItemString(d, "TrustedDomainAuthInformation", PyInt_FromLong((long)TrustedDomainAuthInformation));
+	PyDict_SetItemString(d, "TrustedDomainFullInformation", PyInt_FromLong((long)TrustedDomainFullInformation));
+	PyDict_SetItemString(d, "TrustedDomainAuthInformationInternal", PyInt_FromLong((long)TrustedDomainAuthInformationInternal));
+	PyDict_SetItemString(d, "TrustedDomainFullInformationInternal", PyInt_FromLong((long)TrustedDomainFullInformationInternal));
+	PyDict_SetItemString(d, "TrustedDomainInformationEx2Internal", PyInt_FromLong((long)TrustedDomainInformationEx2Internal));
+	PyDict_SetItemString(d, "TrustedDomainFullInformation2Internal", PyInt_FromLong((long)TrustedDomainFullInformation2Internal));
+	PyDict_SetItemString(d, "CONTAINER_INHERIT_ACE", PyInt_FromLong((long)CONTAINER_INHERIT_ACE));
+	PyDict_SetItemString(d, "FAILED_ACCESS_ACE_FLAG", PyInt_FromLong((long)FAILED_ACCESS_ACE_FLAG));
+	PyDict_SetItemString(d, "INHERIT_ONLY_ACE", PyInt_FromLong((long)INHERIT_ONLY_ACE));
+	PyDict_SetItemString(d, "INHERITED_ACE", PyInt_FromLong((long)INHERITED_ACE));
+	PyDict_SetItemString(d, "NO_PROPAGATE_INHERIT_ACE", PyInt_FromLong((long)NO_PROPAGATE_INHERIT_ACE));
+	PyDict_SetItemString(d, "OBJECT_INHERIT_ACE", PyInt_FromLong((long)OBJECT_INHERIT_ACE));
+	PyDict_SetItemString(d, "SUCCESSFUL_ACCESS_ACE_FLAG", PyInt_FromLong((long)SUCCESSFUL_ACCESS_ACE_FLAG));
+	PyDict_SetItemString(d, "NO_INHERITANCE", PyInt_FromLong((long)NO_INHERITANCE));
+	PyDict_SetItemString(d, "SUB_CONTAINERS_AND_OBJECTS_INHERIT", PyInt_FromLong((long)SUB_CONTAINERS_AND_OBJECTS_INHERIT));
+	PyDict_SetItemString(d, "SUB_CONTAINERS_ONLY_INHERIT", PyInt_FromLong((long)SUB_CONTAINERS_ONLY_INHERIT));
+	PyDict_SetItemString(d, "SUB_OBJECTS_ONLY_INHERIT", PyInt_FromLong((long)SUB_OBJECTS_ONLY_INHERIT));
+	PyDict_SetItemString(d, "NOT_USED_ACCESS", PyInt_FromLong((long)NOT_USED_ACCESS));
+	PyDict_SetItemString(d, "GRANT_ACCESS", PyInt_FromLong((long)GRANT_ACCESS));
+	PyDict_SetItemString(d, "SET_ACCESS", PyInt_FromLong((long)SET_ACCESS));
+	PyDict_SetItemString(d, "DENY_ACCESS", PyInt_FromLong((long)DENY_ACCESS));
+	PyDict_SetItemString(d, "REVOKE_ACCESS", PyInt_FromLong((long)REVOKE_ACCESS));
+	PyDict_SetItemString(d, "SET_AUDIT_SUCCESS", PyInt_FromLong((long)SET_AUDIT_SUCCESS));
+	PyDict_SetItemString(d, "SET_AUDIT_FAILURE", PyInt_FromLong((long)SET_AUDIT_FAILURE));
+	PyDict_SetItemString(d, "TRUSTEE_IS_SID", PyInt_FromLong((long)TRUSTEE_IS_SID));
+	PyDict_SetItemString(d, "TRUSTEE_IS_NAME", PyInt_FromLong((long)TRUSTEE_IS_NAME));
+	PyDict_SetItemString(d, "TRUSTEE_BAD_FORM", PyInt_FromLong((long)TRUSTEE_BAD_FORM));
+	PyDict_SetItemString(d, "TRUSTEE_IS_OBJECTS_AND_SID", PyInt_FromLong((long)TRUSTEE_IS_OBJECTS_AND_SID));
+	PyDict_SetItemString(d, "TRUSTEE_IS_OBJECTS_AND_NAME", PyInt_FromLong((long)TRUSTEE_IS_OBJECTS_AND_NAME));
+	PyDict_SetItemString(d, "TRUSTEE_IS_UNKNOWN", PyInt_FromLong((long)TRUSTEE_IS_UNKNOWN));
+	PyDict_SetItemString(d, "TRUSTEE_IS_USER", PyInt_FromLong((long)TRUSTEE_IS_USER));
+	PyDict_SetItemString(d, "TRUSTEE_IS_GROUP", PyInt_FromLong((long)TRUSTEE_IS_GROUP));
+	PyDict_SetItemString(d, "TRUSTEE_IS_DOMAIN", PyInt_FromLong((long)TRUSTEE_IS_DOMAIN));
+	PyDict_SetItemString(d, "TRUSTEE_IS_ALIAS", PyInt_FromLong((long)TRUSTEE_IS_ALIAS));
+	PyDict_SetItemString(d, "TRUSTEE_IS_WELL_KNOWN_GROUP", PyInt_FromLong((long)TRUSTEE_IS_WELL_KNOWN_GROUP));
+	PyDict_SetItemString(d, "TRUSTEE_IS_DELETED", PyInt_FromLong((long)TRUSTEE_IS_DELETED));
+	PyDict_SetItemString(d, "TRUSTEE_IS_INVALID", PyInt_FromLong((long)TRUSTEE_IS_INVALID));
+	PyDict_SetItemString(d, "TRUSTEE_IS_COMPUTER", PyInt_FromLong((long)TRUSTEE_IS_COMPUTER));
+	PyDict_SetItemString(d, "SE_PRIVILEGE_ENABLED_BY_DEFAULT", PyInt_FromLong((long)SE_PRIVILEGE_ENABLED_BY_DEFAULT));
+	PyDict_SetItemString(d, "SE_PRIVILEGE_ENABLED", PyInt_FromLong((long)SE_PRIVILEGE_ENABLED));
+	PyDict_SetItemString(d, "SE_PRIVILEGE_REMOVED", PyInt_FromLong((long)SE_PRIVILEGE_REMOVED));
+	PyDict_SetItemString(d, "SE_PRIVILEGE_USED_FOR_ACCESS", PyInt_FromLong((long)SE_PRIVILEGE_USED_FOR_ACCESS));
+	PyDict_SetItemString(d, "STYPE_DISKTREE", PyInt_FromLong((long)STYPE_DISKTREE));
+	PyDict_SetItemString(d, "STYPE_PRINTQ", PyInt_FromLong((long)STYPE_PRINTQ));
+	PyDict_SetItemString(d, "STYPE_DEVICE", PyInt_FromLong((long)STYPE_DEVICE));
+	PyDict_SetItemString(d, "STYPE_IPC", PyInt_FromLong((long)STYPE_IPC));
+	PyDict_SetItemString(d, "STYPE_TEMPORARY", PyInt_FromLong((long)STYPE_TEMPORARY));
+	PyDict_SetItemString(d, "STYPE_SPECIAL", PyInt_FromLong((long)STYPE_SPECIAL));
+	PyDict_SetItemString(d, "SDDL_REVISION_1", PyInt_FromLong((long)SDDL_REVISION_1));
+	PyDict_SetItemString(d, "SECPKG_FLAG_INTEGRITY", PyInt_FromLong((long)SECPKG_FLAG_INTEGRITY));
+	PyDict_SetItemString(d, "SECPKG_FLAG_PRIVACY", PyInt_FromLong((long)SECPKG_FLAG_PRIVACY));
+	PyDict_SetItemString(d, "SECPKG_FLAG_TOKEN_ONLY", PyInt_FromLong((long)SECPKG_FLAG_TOKEN_ONLY));
+	PyDict_SetItemString(d, "SECPKG_FLAG_DATAGRAM", PyInt_FromLong((long)SECPKG_FLAG_DATAGRAM));
+	PyDict_SetItemString(d, "SECPKG_FLAG_CONNECTION", PyInt_FromLong((long)SECPKG_FLAG_CONNECTION));
+	PyDict_SetItemString(d, "SECPKG_FLAG_MULTI_REQUIRED", PyInt_FromLong((long)SECPKG_FLAG_MULTI_REQUIRED));
+	PyDict_SetItemString(d, "SECPKG_FLAG_CLIENT_ONLY", PyInt_FromLong((long)SECPKG_FLAG_CLIENT_ONLY));
+	PyDict_SetItemString(d, "SECPKG_FLAG_EXTENDED_ERROR", PyInt_FromLong((long)SECPKG_FLAG_EXTENDED_ERROR));
+	PyDict_SetItemString(d, "SECPKG_FLAG_IMPERSONATION", PyInt_FromLong((long)SECPKG_FLAG_IMPERSONATION));
+	PyDict_SetItemString(d, "SECPKG_FLAG_ACCEPT_WIN32_NAME", PyInt_FromLong((long)SECPKG_FLAG_ACCEPT_WIN32_NAME));
+	PyDict_SetItemString(d, "SECPKG_FLAG_STREAM", PyInt_FromLong((long)SECPKG_FLAG_STREAM));
+	PyDict_SetItemString(d, "SECPKG_CRED_INBOUND", PyInt_FromLong((long)SECPKG_CRED_INBOUND));
+	PyDict_SetItemString(d, "SECPKG_CRED_OUTBOUND", PyInt_FromLong((long)SECPKG_CRED_OUTBOUND));
+	PyDict_SetItemString(d, "SECPKG_CRED_BOTH", PyInt_FromLong((long)SECPKG_CRED_BOTH));
+	PyDict_SetItemString(d, "DISABLE_MAX_PRIVILEGE", PyInt_FromLong((long)DISABLE_MAX_PRIVILEGE));
+	PyDict_SetItemString(d, "SANDBOX_INERT", PyInt_FromLong((long)SANDBOX_INERT));
+	PyDict_SetItemString(d, "DS_SPN_DNS_HOST", PyInt_FromLong((long)DS_SPN_DNS_HOST));
+	PyDict_SetItemString(d, "DS_SPN_DN_HOST", PyInt_FromLong((long)DS_SPN_DN_HOST));
+	PyDict_SetItemString(d, "DS_SPN_NB_HOST", PyInt_FromLong((long)DS_SPN_NB_HOST));
+	PyDict_SetItemString(d, "DS_SPN_DOMAIN", PyInt_FromLong((long)DS_SPN_DOMAIN));
+	PyDict_SetItemString(d, "DS_SPN_NB_DOMAIN", PyInt_FromLong((long)DS_SPN_NB_DOMAIN));
+	PyDict_SetItemString(d, "DS_SPN_SERVICE", PyInt_FromLong((long)DS_SPN_SERVICE));
+	PyDict_SetItemString(d, "DS_SPN_ADD_SPN_OP", PyInt_FromLong((long)DS_SPN_ADD_SPN_OP));
+	PyDict_SetItemString(d, "DS_SPN_REPLACE_SPN_OP", PyInt_FromLong((long)DS_SPN_REPLACE_SPN_OP));
+	PyDict_SetItemString(d, "DS_SPN_DELETE_SPN_OP", PyInt_FromLong((long)DS_SPN_DELETE_SPN_OP));
 #if (PY_VERSION_HEX > 0x03000000)
 	return m;
 #endif
