@@ -149,7 +149,7 @@ PyComEnumTypeObject PyIEnumConnections::type("PyIEnumConnections",
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumConnections::Next( 
+STDMETHODIMP PyGEnumConnections::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ LPCONNECTDATA rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -201,7 +201,7 @@ STDMETHODIMP PyGEnumConnections::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumConnections);
 }
 
-STDMETHODIMP PyGEnumConnections::Skip( 
+STDMETHODIMP PyGEnumConnections::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -214,7 +214,7 @@ STDMETHODIMP PyGEnumConnections::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumConnections::Clone( 
+STDMETHODIMP PyGEnumConnections::Clone(
             /* [out] */ IEnumConnections __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

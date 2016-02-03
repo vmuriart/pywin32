@@ -54,12 +54,12 @@ static struct PyMethodDef ui_control_object_methods[] = {
 	{NULL,			NULL}		/* sentinel */
 };
 
-ui_type_CObject ui_control_object::type("PyCControl", 
-										&PyCWnd::type, 
-										RUNTIME_CLASS(CObject), 
-										sizeof(ui_control_object), 
-										PYOBJ_OFFSET(ui_control_object), 
-										ui_control_object_methods, 
+ui_type_CObject ui_control_object::type("PyCControl",
+										&PyCWnd::type,
+										RUNTIME_CLASS(CObject),
+										sizeof(ui_control_object),
+										PYOBJ_OFFSET(ui_control_object),
+										ui_control_object_methods,
 										NULL);
 
 
@@ -96,13 +96,13 @@ PyCButton_create_window(PyObject *self, PyObject *args)
 	int style, id;
 	PyObject *obParent, *obcaption;
 	RECT rect;
-	if (!PyArg_ParseTuple(args, "Oi(iiii)Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "Oi(iiii)Oi:CreateWindow",
 		       &obcaption, // @pyparm string|caption||The caption (text) for the button.
 			   &style, // @pyparm int|style||The style for the button.  Use any of the win32con.BS_* constants.
 			   &rect.left,&rect.top,&rect.right,&rect.bottom,
 			   // @pyparm (left, top, right, bottom)|rect||The size and position of the button.
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the button.  Usually a <o PyCDialog>.
-			   &id )) // @pyparm int|id||The buttons control ID. 
+			   &id )) // @pyparm int|id||The buttons control ID.
 		return NULL;
 
 	if (!ui_base_class::is_uiobject(obParent, &PyCWnd::type))
@@ -164,7 +164,7 @@ PyCButton_get_state(PyObject *self, PyObject *args)
 	GUI_BGN_SAVE;
 	int rc = pBut->GetState();
 	GUI_END_SAVE;
-	return Py_BuildValue("i", rc); 
+	return Py_BuildValue("i", rc);
 }
 // @pymethod int|PyCButton|SetState|Sets the state of the button.
 static PyObject *
@@ -180,7 +180,7 @@ PyCButton_set_state(PyObject *self, PyObject *args)
 	pBut->SetState(state);
 	GUI_END_SAVE;
 	return Py_BuildValue("i", state);
-	// @comm Highlighting affects the exterior of a button control. It has no effect on the check state of a radio button or check box. 
+	// @comm Highlighting affects the exterior of a button control. It has no effect on the check state of a radio button or check box.
 }
 // @pymethod int|PyCButton|GetButtonStyle|Gets the style of the button.
 static PyObject *
@@ -201,7 +201,7 @@ PyCButton_set_style(PyObject *self, PyObject *args)
 {
 	int style;
 	BOOL bRedraw = TRUE;
-	if (!PyArg_ParseTuple(args, "i|i", 
+	if (!PyArg_ParseTuple(args, "i|i",
 	          &style, // @pyparm int|style||The new style for the button.
 	          &bRedraw))// @pyparm int|bRedraw|1|Should the button be redrawn?
 		return NULL;
@@ -218,7 +218,7 @@ static PyObject *
 PyCButton_set_bitmap(PyObject *self, PyObject *args)
 {
 	PyObject *obBitmap;
-	if (!PyArg_ParseTuple(args, "O", 
+	if (!PyArg_ParseTuple(args, "O",
 	          &obBitmap)) // @pyparm int|hBitmap|1|Handle of the new bitmap
 		return NULL;
 	HBITMAP hBitmap;
@@ -261,12 +261,12 @@ static struct PyMethodDef PyCButton_methods[] = {
 	{NULL,				NULL}
 };
 
-ui_type_CObject PyCButton::type("PyCButton", 
-								&ui_control_object::type, 
-								RUNTIME_CLASS(CButton), 
-								sizeof(PyCButton), 
-								PYOBJ_OFFSET(PyCButton), 
-								PyCButton_methods, 
+ui_type_CObject PyCButton::type("PyCButton",
+								&ui_control_object::type,
+								RUNTIME_CLASS(CButton),
+								sizeof(PyCButton),
+								PYOBJ_OFFSET(PyCButton),
+								PyCButton_methods,
 								GET_PY_CTOR(PyCButton));
 
 /////////////////////////////////////////////////////////////////////
@@ -396,8 +396,8 @@ PyCListBox_get_caret_index(PyObject *self, PyObject *args)
 	GUI_BGN_SAVE;
 	int rc = pLB->GetCaretIndex();
 	GUI_END_SAVE;
-	return Py_BuildValue("i", rc); 
-	// @rdesc The zero-based index of the item that has the focus rectangle in a list box.  
+	return Py_BuildValue("i", rc);
+	// @rdesc The zero-based index of the item that has the focus rectangle in a list box.
 	//If the list box is a single-selection list box, the return value is the index of the item that is selected, if any.
 
 }
@@ -434,7 +434,7 @@ PyCListBox_get_cur_sel(PyObject *self, PyObject *args)
 PyObject *PyCListBox_GetItemData( PyObject *self, PyObject *args )
 {
 	int item;
-	if (!PyArg_ParseTuple( args, "i:GetItemData", 
+	if (!PyArg_ParseTuple( args, "i:GetItemData",
 	                   &item)) // @pyparm int|item||The index of the item whose data is to be retrieved.
 
 		return NULL;
@@ -450,7 +450,7 @@ PyObject *PyCListBox_GetItemData( PyObject *self, PyObject *args )
 PyObject *PyCListBox_GetItemValue( PyObject *self, PyObject *args )
 {
 	int item;
-	if (!PyArg_ParseTuple( args, "i:GetItemValue", 
+	if (!PyArg_ParseTuple( args, "i:GetItemValue",
 	                   &item)) // @pyparm int|item||The index of the item whose data is to be retrieved.
 
 		return NULL;
@@ -476,7 +476,7 @@ PyCListBox_get_sel(PyObject *self, PyObject *args)
 	int rc = pLB->GetSel(pos);
 	GUI_END_SAVE;
 	return Py_BuildValue("i", rc); // @pyseemfc CListBox|GetSel
-	//@rdesc A +ve number if the item is selected, else zero. 
+	//@rdesc A +ve number if the item is selected, else zero.
 }
 // @pymethod int|PyCListBox|GetSelCount|Returns the number of selected items in a multiple selection listbox.
 static PyObject *
@@ -747,7 +747,7 @@ PyObject *PyCListBox_SetItemData( PyObject *self, PyObject *args )
 	if (!pLB) return NULL;
 	int item;
 	PyObject *data;
-	if (!PyArg_ParseTuple( args, "iO:SetItemData", 
+	if (!PyArg_ParseTuple( args, "iO:SetItemData",
 		                   &item, // @pyparm int|item||Index of the item whose Data is to be set.
 						   &data)) // @pyparm object|Data||New value for the data.
 		return NULL;
@@ -769,7 +769,7 @@ PyObject *PyCListBox_SetItemValue( PyObject *self, PyObject *args )
 	if (!pLB) return NULL;
 	int item;
 	int data;
-	if (!PyArg_ParseTuple( args, "ii:SetItemValue", 
+	if (!PyArg_ParseTuple( args, "ii:SetItemValue",
 		                   &item, // @pyparm int|item||Index of the item whose Data is to be set.
 						   &data)) // @pyparm int|data||New value for the data.
 		return NULL;
@@ -876,12 +876,12 @@ static struct PyMethodDef PyCListBox_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCListBox::type("PyCListBox", 
-								 &ui_control_object::type, 
-								 RUNTIME_CLASS(CListBox), 
-								 sizeof(PyCListBox), 
-								 PYOBJ_OFFSET(PyCListBox), 
-								 PyCListBox_methods, 
+ui_type_CObject PyCListBox::type("PyCListBox",
+								 &ui_control_object::type,
+								 RUNTIME_CLASS(CListBox),
+								 sizeof(PyCListBox),
+								 PYOBJ_OFFSET(PyCListBox),
+								 PyCListBox_methods,
 								 GET_PY_CTOR(PyCListBox));
 
 /////////////////////////////////////////////////////////////////////
@@ -1035,10 +1035,10 @@ PyCComboBox_get_edit_sel(PyObject *self, PyObject *args)
 	if (IS_CB_ERR(rc))
 		RETURN_ERR("GetEditSel failed");
 
-	return Py_BuildValue("i", rc); 
-	// @rdesc A 32-bit value that contains the starting position in the low-order word and 
+	return Py_BuildValue("i", rc);
+	// @rdesc A 32-bit value that contains the starting position in the low-order word and
 	// the position of the first nonselected character after the end of
-	// the selection in the high-order word. If this function is used on a combo box 
+	// the selection in the high-order word. If this function is used on a combo box
 	// without an edit control, an exception is raised.
 }
 // @pymethod int|PyCComboBox|GetExtendedUI|Indicates if the combo has the extended interface.
@@ -1060,7 +1060,7 @@ PyCComboBox_get_extended_ui(PyObject *self, PyObject *args)
 PyObject *PyCComboBox_GetItemData( PyObject *self, PyObject *args )
 {
 	int item;
-	if (!PyArg_ParseTuple( args, "i:GetItemData", 
+	if (!PyArg_ParseTuple( args, "i:GetItemData",
 	                   &item)) // @pyparm int|item||The index of the item whose data is to be retrieved.
 
 		return NULL;
@@ -1076,7 +1076,7 @@ PyObject *PyCComboBox_GetItemData( PyObject *self, PyObject *args )
 PyObject *PyCComboBox_GetItemValue( PyObject *self, PyObject *args )
 {
 	int item;
-	if (!PyArg_ParseTuple( args, "i:GetItemValue", 
+	if (!PyArg_ParseTuple( args, "i:GetItemValue",
 	                   &item)) // @pyparm int|item||The index of the item whose data is to be retrieved.
 
 		return NULL;
@@ -1096,7 +1096,7 @@ PyCComboBox_get_lb_text(PyObject *self, PyObject *args)
 	if (!pLB)
 		return NULL;
 	int pos; // @pyparm int|index||The index of the item to return the string for.
-	if (!PyArg_ParseTuple(args,"i",&pos)) 
+	if (!PyArg_ParseTuple(args,"i",&pos))
 		return NULL;
 	CString cs;
 	// Prevent MFC ASSERTing when empty - dont use the CString version.
@@ -1110,7 +1110,7 @@ PyCComboBox_get_lb_text(PyObject *self, PyObject *args)
 	if (IS_CB_ERR(size))
 		RETURN_ERR("GetLBText failed - invalid index");
     return PyWinObject_FromTCHAR(cs);
-	// @rdesc The requested string. If index does 
+	// @rdesc The requested string. If index does
 	// not specify a valid index, no exception is raised.
 }
 // @pymethod int|PyCComboBox|GetLBTextLen|Returns the length of a string in the list of a combobox.
@@ -1241,7 +1241,7 @@ PyObject *PyCComboBox_SetItemData( PyObject *self, PyObject *args )
 	if (!pLB) return NULL;
 	int item;
 	PyObject *data;
-	if (!PyArg_ParseTuple( args, "iO:SetItemData", 
+	if (!PyArg_ParseTuple( args, "iO:SetItemData",
 		                   &item, // @pyparm int|item||Index of the item whose Data is to be set.
 						   &data)) // @pyparm object|Data||New value for the data.
 		return NULL;
@@ -1263,7 +1263,7 @@ PyObject *PyCComboBox_SetItemValue( PyObject *self, PyObject *args )
 	if (!pLB) return NULL;
 	int item;
 	int data;
-	if (!PyArg_ParseTuple( args, "ii:SetItemValue", 
+	if (!PyArg_ParseTuple( args, "ii:SetItemValue",
 		                   &item, // @pyparm int|item||Index of the item whose Data is to be set.
 						   &data)) // @pyparm int|data||New value for the data.
 		return NULL;
@@ -1315,12 +1315,12 @@ static struct PyMethodDef PyCComboBox_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCComboBox::type("PyCComboBox", 
-								  &ui_control_object::type, 
-								  RUNTIME_CLASS(CComboBox), 
-								  sizeof(PyCComboBox), 
-								  PYOBJ_OFFSET(PyCComboBox), 
-								  PyCComboBox_methods, 
+ui_type_CObject PyCComboBox::type("PyCComboBox",
+								  &ui_control_object::type,
+								  RUNTIME_CLASS(CComboBox),
+								  sizeof(PyCComboBox),
+								  PYOBJ_OFFSET(PyCComboBox),
+								  PyCComboBox_methods,
 								  GET_PY_CTOR(PyCComboBox));
 
 /////////////////////////////////////////////////////////////////////
@@ -1356,12 +1356,12 @@ PyCProgressCtrl_create_window(PyObject *self, PyObject *args)
 	int style, id;
 	PyObject *obParent;
 	RECT rect;
-	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow",
 			   &style, // @pyparm int|style||The style for the control.
 			   &rect.left,&rect.top,&rect.right,&rect.bottom,
 			   // @pyparm (left, top, right, bottom)|rect||The size and position of the control.
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the control.  Usually a <o PyCDialog>.
-			   &id )) // @pyparm int|id||The control's ID. 
+			   &id )) // @pyparm int|id||The control's ID.
 		return NULL;
 
 	if (!ui_base_class::is_uiobject(obParent, &PyCWnd::type))
@@ -1386,7 +1386,7 @@ static PyObject *
 PyCProgressCtrl_set_range(PyObject *self, PyObject *args)
 {
 	int nLower, nUpper;
-	if (!PyArg_ParseTuple(args, "ii", 
+	if (!PyArg_ParseTuple(args, "ii",
 	          &nLower,// @pyparm int|nLower|1|Specifies the lower limit of the range (default is zero).
 	          &nUpper))// @pyparm int|nUpper|1|Specifies the upper limit of the range (default is 100).
 		return NULL;
@@ -1404,7 +1404,7 @@ static PyObject *
 PyCProgressCtrl_set_pos(PyObject *self, PyObject *args)
 {
 	int nPos;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nPos))// @pyparm int|nPos|1|New position of the progress bar control.
 		return NULL;
 	CProgressCtrl *pPC = GetProgressCtrl(self);
@@ -1421,7 +1421,7 @@ static PyObject *
 PyCProgressCtrl_offset_pos(PyObject *self, PyObject *args)
 {
 	int nPos;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nPos))// @pyparm int|nPos|1|Amount to advance the position.
 		return NULL;
 	CProgressCtrl *pPC = GetProgressCtrl(self);
@@ -1438,7 +1438,7 @@ static PyObject *
 PyCProgressCtrl_set_step(PyObject *self, PyObject *args)
 {
 	int nStep;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nStep))// @pyparm int|nStep|1|New step increment.
 		return NULL;
 	CProgressCtrl *pPC = GetProgressCtrl(self);
@@ -1475,12 +1475,12 @@ static struct PyMethodDef PyCProgressCtrl_methods[] = {
 	{NULL,				NULL}
 };
 
-ui_type_CObject PyCProgressCtrl::type("PyCProgressCtrl", 
-								&ui_control_object::type, 
-								RUNTIME_CLASS(CProgressCtrl), 
-								sizeof(PyCProgressCtrl), 
-								PYOBJ_OFFSET(PyCProgressCtrl), 
-								PyCProgressCtrl_methods, 
+ui_type_CObject PyCProgressCtrl::type("PyCProgressCtrl",
+								&ui_control_object::type,
+								RUNTIME_CLASS(CProgressCtrl),
+								sizeof(PyCProgressCtrl),
+								PYOBJ_OFFSET(PyCProgressCtrl),
+								PyCProgressCtrl_methods,
 								GET_PY_CTOR(PyCProgressCtrl));
 
 
@@ -1505,7 +1505,7 @@ PyCSliderCtrl::~PyCSliderCtrl()
 PyObject *
 PyCSliderCtrl_create(PyObject *self, PyObject *args)
 {
-	// @comm  The method <om PySliderCtrl.CreateWindow> is used to 
+	// @comm  The method <om PySliderCtrl.CreateWindow> is used to
 	// create the actual control.
 	CHECK_NO_ARGS(args);
 	CSliderCtrl *pPC = new CSliderCtrl();
@@ -1519,12 +1519,12 @@ PyCSliderCtrl_create_window(PyObject *self, PyObject *args)
 	int style, id;
 	PyObject *obParent;
 	RECT rect;
-	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow",
 			   &style, // @pyparm int|style||The style for the control.
 			   &rect.left,&rect.top,&rect.right,&rect.bottom,
 			   // @pyparm (left, top, right, bottom)|rect||The size and position of the control.
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the control.  Usually a <o PyCDialog>.
-			   &id )) // @pyparm int|id||The control's ID. 
+			   &id )) // @pyparm int|id||The control's ID.
 		return NULL;
 
 	if (!ui_base_class::is_uiobject(obParent, &PyCWnd::type))
@@ -1564,7 +1564,7 @@ static PyObject *
 PyCSliderCtrl_set_line_size(PyObject *self, PyObject *args)
 {
 	int nLineSize;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nLineSize))// @pyparm int|nLineSize|1|New line size of the Slider bar control
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1595,7 +1595,7 @@ static PyObject *
 PyCSliderCtrl_set_page_size(PyObject *self, PyObject *args)
 {
 	int nPageSize;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nPageSize))// @pyparm int|nPageSize|1|New page size of the Slider bar control.
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1656,7 +1656,7 @@ PyCSliderCtrl_set_range_min(PyObject *self, PyObject *args)
 {
 	int nRangeMin;
 	BOOL bRedraw = FALSE;
-	if (!PyArg_ParseTuple(args, "i|i", 
+	if (!PyArg_ParseTuple(args, "i|i",
 	          &nRangeMin,// @pyparm int|nRangeMin|1|New minimum of the Slider bar control.
 			  &bRedraw))// @pyparm int|bRedraw|1|Should slider be redrawn?
 		return NULL;
@@ -1675,7 +1675,7 @@ PyCSliderCtrl_set_range_max(PyObject *self, PyObject *args)
 {
 	int nRangeMax;
 	BOOL bRedraw = FALSE;
-	if (!PyArg_ParseTuple(args, "i|i", 
+	if (!PyArg_ParseTuple(args, "i|i",
 	          &nRangeMax,// @pyparm int|nRangeMax|1|New maximum of the Slider bar control.
 			  &bRedraw))// @pyparm int|bRedraw|1|Should slider be redrawn?
 		return NULL;
@@ -1695,7 +1695,7 @@ PyCSliderCtrl_set_range(PyObject *self, PyObject *args)
 	int nRangeMax;
 	int nRangeMin;
 	BOOL bRedraw = FALSE;
-	if (!PyArg_ParseTuple(args, "ii|i", 
+	if (!PyArg_ParseTuple(args, "ii|i",
 	          &nRangeMin,// @pyparm int|nRangeMin|1|New minimum of the Slider bar control.
 	          &nRangeMax,// @pyparm int|nRangeMax|1|New maximum of the Slider bar control.
 			  &bRedraw))// @pyparm int|bRedraw|1|Should slider be redrawn?
@@ -1730,7 +1730,7 @@ PyCSliderCtrl_set_selection(PyObject *self, PyObject *args)
 {
 	int nRangeMax;
 	int nRangeMin;
-	if (!PyArg_ParseTuple(args, "ii", 
+	if (!PyArg_ParseTuple(args, "ii",
 	          &nRangeMin,// @pyparm int|nRangeMin|1|New start of the Slider's selection.
 	          &nRangeMax))// @pyparm int|nRangeMax|1|New end of the Slider's selection.
 		return NULL;
@@ -1792,7 +1792,7 @@ static PyObject *
 PyCSliderCtrl_set_pos(PyObject *self, PyObject *args)
 {
 	int nPos;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nPos))// @pyparm int|nPos|1|New position of the Slider bar control.
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1842,7 +1842,7 @@ static PyObject *
 PyCSliderCtrl_get_tic(PyObject *self, PyObject *args)
 {
 	int nTic;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nTic))// @pyparm int|nTic|1|Zero based index of the tic mark
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1859,7 +1859,7 @@ static PyObject *
 PyCSliderCtrl_get_tic_pos(PyObject *self, PyObject *args)
 {
 	int nTic;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nTic))// @pyparm int|nTic|1|Zero based index of the tic mark
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1876,7 +1876,7 @@ static PyObject *
 PyCSliderCtrl_set_tic(PyObject *self, PyObject *args)
 {
 	int nTic;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nTic))// @pyparm int|nTic|1|Position of the desired tic mark
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1893,7 +1893,7 @@ static PyObject *
 PyCSliderCtrl_set_tic_freq(PyObject *self, PyObject *args)
 {
 	int nFreq;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &nFreq))// @pyparm int|nFreq|1|Frequency of tic marks
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1910,7 +1910,7 @@ static PyObject *
 PyCSliderCtrl_clear_sel(PyObject *self, PyObject *args)
 {
 	BOOL bRedraw;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &bRedraw))// @pyparm int|bRedraw|1|Redraw the control?
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1948,7 +1948,7 @@ static PyObject *
 PyCSliderCtrl_clear_tics(PyObject *self, PyObject *args)
 {
 	BOOL bRedraw;
-	if (!PyArg_ParseTuple(args, "i", 
+	if (!PyArg_ParseTuple(args, "i",
 	          &bRedraw))// @pyparm int|bRedraw|1|Redraw the control?
 		return NULL;
 	CSliderCtrl *pSC = GetSliderCtrl(self);
@@ -1991,12 +1991,12 @@ static struct PyMethodDef PyCSliderCtrl_methods[] = {
 	{NULL,				NULL}
 };
 
-ui_type_CObject PyCSliderCtrl::type("PyCSliderCtrl", 
-								&ui_control_object::type, 
-								RUNTIME_CLASS(CSliderCtrl), 
-								sizeof(PyCSliderCtrl), 
-								PYOBJ_OFFSET(PyCSliderCtrl), 
-								PyCSliderCtrl_methods, 
+ui_type_CObject PyCSliderCtrl::type("PyCSliderCtrl",
+								&ui_control_object::type,
+								RUNTIME_CLASS(CSliderCtrl),
+								sizeof(PyCSliderCtrl),
+								PYOBJ_OFFSET(PyCSliderCtrl),
+								PyCSliderCtrl_methods,
 								GET_PY_CTOR(PyCSliderCtrl));
 
 
@@ -2033,12 +2033,12 @@ PyCStatusBarCtrl_create_window(PyObject *self, PyObject *args)
 	int style, id;
 	PyObject *obParent;
 	RECT rect;
-	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow",
 			   &style, // @pyparm int|style||The style for the control.
 			   &rect.left,&rect.top,&rect.right,&rect.bottom,
 			   // @pyparm (left, top, right, bottom)|rect||The size and position of the control.
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the control.  Usually a <o PyCDialog>.
-			   &id )) // @pyparm int|id||The control's ID. 
+			   &id )) // @pyparm int|id||The control's ID.
 		return NULL;
 
 	if (!ui_base_class::is_uiobject(obParent, &PyCWnd::type))
@@ -2197,7 +2197,7 @@ PyCStatusBarCtrl_get_text (PyObject *self, PyObject *args)
 	TCHAR *buf = new TCHAR[len];
 	pSB->GetText (buf, nPane, &attr);
 	GUI_END_SAVE;
-	
+
 	PyObject *ret=PyWinObject_FromTCHAR(buf);
 	delete buf;
 	return ret;
@@ -2439,12 +2439,12 @@ static struct PyMethodDef PyCStatusBarCtrl_methods[] = {
 	{NULL,				NULL}
 };
 
-ui_type_CObject PyCStatusBarCtrl::type("PyCStatusBarCtrl", 
-				       &ui_control_object::type, 
-				       RUNTIME_CLASS(CStatusBarCtrl), 
-				       sizeof(PyCStatusBarCtrl), 
-				       PYOBJ_OFFSET(PyCStatusBarCtrl), 
-				       PyCStatusBarCtrl_methods, 
+ui_type_CObject PyCStatusBarCtrl::type("PyCStatusBarCtrl",
+				       &ui_control_object::type,
+				       RUNTIME_CLASS(CStatusBarCtrl),
+				       sizeof(PyCStatusBarCtrl),
+				       PYOBJ_OFFSET(PyCStatusBarCtrl),
+				       PyCStatusBarCtrl_methods,
 				       GET_PY_CTOR(PyCStatusBarCtrl));
 
 // A spin control
@@ -2528,10 +2528,10 @@ static struct PyMethodDef PyCSpinButtonCtrl_methods[] = {
 	{ NULL }
 };
 
-ui_type_CObject PyCSpinButtonCtrl::type("PyCSpinButtonCtrl", 
-				       &ui_control_object::type, 
-				       RUNTIME_CLASS(CSpinButtonCtrl), 
-				       sizeof(PyCSpinButtonCtrl), 
-				       PYOBJ_OFFSET(PyCSpinButtonCtrl), 
-				       PyCSpinButtonCtrl_methods, 
+ui_type_CObject PyCSpinButtonCtrl::type("PyCSpinButtonCtrl",
+				       &ui_control_object::type,
+				       RUNTIME_CLASS(CSpinButtonCtrl),
+				       sizeof(PyCSpinButtonCtrl),
+				       PYOBJ_OFFSET(PyCSpinButtonCtrl),
+				       PyCSpinButtonCtrl_methods,
 				       GET_PY_CTOR(PyCSpinButtonCtrl));

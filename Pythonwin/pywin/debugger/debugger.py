@@ -203,7 +203,7 @@ class DebuggerStackWindow(DebuggerWindow):
 		if not self.listOK:
 			self.listOK = 1
 			self.list.Setup(self.debugger)
-		else:			
+		else:
 			self.list.Refresh()
 
 	def RespondDebuggerData(self):

@@ -34,7 +34,7 @@ struct PyMethodDef PyTYPEATTR::methods[] = {
 
 
 // Sequence stuff to provide compatibility with tuples.
-static PySequenceMethods PyTYPEATTR_Sequence = 
+static PySequenceMethods PyTYPEATTR_Sequence =
 {
 	PyTYPEATTR::getlength, // sq_length;
 	NULL, // sq_concat;

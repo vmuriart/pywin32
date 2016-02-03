@@ -47,7 +47,7 @@ protected:
 		DWORD dwAppCookie);
 
 	STDMETHOD(CreateDebugDocumentHelper)(
-		IUnknown *punkOuter,  
+		IUnknown *punkOuter,
 		IDebugDocumentHelper** pddh);
 
 };

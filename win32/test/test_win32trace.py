@@ -36,7 +36,7 @@ class TestInitOps(unittest.TestCase):
             win32trace.TermWrite()
         except win32trace.error:
             pass
-        
+
     def testInitTermRead(self):
         self.assertRaises(win32trace.error, win32trace.read)
         win32trace.InitRead()
@@ -93,9 +93,9 @@ class BasicSetupTearDown(unittest.TestCase):
     def tearDown(self):
         win32trace.TermWrite()
         win32trace.TermRead()
-    
 
-class TestModuleOps(BasicSetupTearDown):        
+
+class TestModuleOps(BasicSetupTearDown):
     def testRoundTrip(self):
         win32trace.write('Syver Enstad')
         syverEnstad = win32trace.read()
@@ -141,7 +141,7 @@ class TestTraceObjectOps(BasicSetupTearDown):
     def testIsatty(self):
         tracer = win32trace.GetTracer()
         assert tracer.isatty() == False
-        
+
 
     def testRoundTrip(self):
         traceObject = win32trace.GetTracer()
@@ -163,7 +163,7 @@ class TestMultipleThreadsWriting(unittest.TestCase):
     FullBucket = 50
     BucketCount = 9 # buckets must be a single digit number (ie. less than 10)
     def setUp(self):
-        WriterThread.BucketCount = self.BucketCount        
+        WriterThread.BucketCount = self.BucketCount
         win32trace.InitRead()
         win32trace.read() # clear any old data.
         win32trace.InitWrite()
@@ -185,7 +185,7 @@ class TestMultipleThreadsWriting(unittest.TestCase):
                 bucketsAreFull = False
                 break
         return bucketsAreFull
-        
+
 
     def read(self):
         while 1:
@@ -198,7 +198,7 @@ class TestMultipleThreadsWriting(unittest.TestCase):
                 if self.buckets[integer] == self.FullBucket:
                     if self.areBucketsFull():
                         return
-                        
+
     def testThreads(self):
         for each in self.threads:
             each.start()
@@ -234,7 +234,7 @@ class TraceWriteProcess:
     def __init__(self, threadCount):
         self.exitCode = -1
         self.threadCount = threadCount
-        
+
     def start(self):
         procHandle, threadHandle, procId, threadId  = win32process.CreateProcess(
             None, # appName
@@ -250,7 +250,7 @@ class TraceWriteProcess:
             win32process.STARTUPINFO(), # startup info
             )
         self.processHandle = procHandle
-        
+
     def join(self):
         win32event.WaitForSingleObject(self.processHandle,
                                        win32event.INFINITE)
@@ -283,7 +283,7 @@ class TestOutofProcess(unittest.TestCase):
             self.processes.append(TraceWriteProcess(quot))
         if remainder:
             self.processes.append(TraceWriteProcess(remainder))
-            
+
     def areBucketsFull(self):
         bucketsAreFull = True
         for each in self.buckets:
@@ -292,7 +292,7 @@ class TestOutofProcess(unittest.TestCase):
                 bucketsAreFull = False
                 break
         return bucketsAreFull
-        
+
     def read(self):
         while 1:
             readString = win32trace.blockingread()
@@ -304,7 +304,7 @@ class TestOutofProcess(unittest.TestCase):
                 if self.buckets[integer] == self.FullBucket:
                     if self.areBucketsFull():
                         return
-                        
+
     def testProcesses(self):
         for each in self.processes:
             each.start()
@@ -313,7 +313,7 @@ class TestOutofProcess(unittest.TestCase):
             each.join()
         for each in self.processes:
             assert each.verifyWritten()
-        assert self.areBucketsFull()    
+        assert self.areBucketsFull()
 
 def _RunAsTestProcess():
     # Run as an external process by the main tests.
@@ -328,7 +328,7 @@ def _RunAsTestProcess():
     for t in threads:
         if not t.verifyWritten():
             sys.exit(-1)
-    
+
 if __name__ == '__main__':
     if sys.argv[1:2]==["/run_test_process"]:
         _RunAsTestProcess()

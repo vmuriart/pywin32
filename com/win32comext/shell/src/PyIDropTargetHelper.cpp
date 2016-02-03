@@ -47,8 +47,8 @@ PyObject *PyIDropTargetHelper::DragEnter(PyObject *self, PyObject *args)
 	HWND hwnd;
 	PyObject *obhwnd;
     DWORD dwEffect;
-	
-	if (!PyArg_ParseTuple(args, "OOOl:DragEnter", 
+
+	if (!PyArg_ParseTuple(args, "OOOl:DragEnter",
 		&obhwnd,		// @pyparm <o PyHANDLE>|hwnd||Handle to target window
 		&obpDataObj,	// @pyparm <o PyIDataObject>|pDataObj||Object that is dragged onto the window
 		&obpt,			// @pyparm (int, int)|pt||Coordinates where drag operation entered the window

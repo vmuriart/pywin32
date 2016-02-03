@@ -140,13 +140,13 @@ PyCRgn::delete_object(PyObject *self, PyObject *args)
 	if (!pRgn) return NULL;
 
 	CHECK_NO_ARGS2(args,DeleteObject);
-	
+
 	BOOL ok=TRUE;
 	if(pRgn->GetSafeHandle())
 		ok=pRgn->DeleteObject();
 	if(!ok)
 		RETURN_ERR("DeleteObject failed");
-	pRgn->m_hObject=0; // assert 
+	pRgn->m_hObject=0; // assert
 
 	RETURN_NONE;
 	}

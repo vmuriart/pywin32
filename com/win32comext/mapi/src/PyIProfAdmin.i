@@ -32,8 +32,8 @@ PyIProfAdmin::~PyIProfAdmin()
 
 HRESULT GetLastError(HRESULT hr, unsigned long flags, MAPIERROR **OUTPUT);
 
-HRESULT CreateProfile( 
-	TCHAR *INPUT, // LPTSTR lpszProfileName, 
+HRESULT CreateProfile(
+	TCHAR *INPUT, // LPTSTR lpszProfileName,
 	TCHAR *INPUT_NULLOK, // LPTSTR lpszPassword,
 	unsigned long ulUIParam,
 	unsigned long ulFlags
@@ -68,7 +68,7 @@ HRESULT CopyProfile(
 	unsigned long ulFlags
 );
 
-HRESULT RenameProfile( 
+HRESULT RenameProfile(
 	TCHAR *INPUT, // lpszOldProfileName,
 	TCHAR *INPUT_NULLOK, // lpszOldPassword,
 	TCHAR *INPUT2, // lpszNewProfileName,
@@ -76,7 +76,7 @@ HRESULT RenameProfile(
 	unsigned long ulFlags
 );
 
-HRESULT SetDefaultProfile( 
+HRESULT SetDefaultProfile(
 	TCHAR *INPUT_NULLOK, // lpszProfileName
 	unsigned long ulFlags
 );

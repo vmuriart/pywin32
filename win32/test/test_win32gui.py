@@ -47,7 +47,7 @@ class TestPyGetMemory(unittest.TestCase):
         addr, buflen = c.buffer_info()
         got = win32gui.PyGetMemory(addr, buflen)
         self.failUnlessEqual(got[0:3], pywin32_testutil.str2bytes('\0\1\2'))
-    
+
     def test_real_view(self):
         # Do the PyGetMemory, then change the original memory, then ensure
         # the initial object we fetched sees the new value.

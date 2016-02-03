@@ -20,7 +20,7 @@ if not ico_files:
     ico_files = glob.glob(os.path.join(sys.prefix, "PC", "*.ico"))
 if not ico_files:
     print "WARNING: Can't find any icon files"
-    
+
 # Our shell extension.
 IExtractIcon_Methods = "Extract GetIconLocation".split()
 IPersistFile_Methods = "IsDirty Load Save SaveCompleted GetCurFile".split()
@@ -31,7 +31,7 @@ class ShellExtension:
     _reg_clsid_ = "{a97e32d7-3b78-448c-b341-418120ea9227}"
     _com_interfaces_ = [shell.IID_IExtractIcon, pythoncom.IID_IPersistFile]
     _public_methods_ = IExtractIcon_Methods + IPersistFile_Methods
-    
+
     def Load(self, filename, mode):
         self.filename = filename
         self.mode = mode

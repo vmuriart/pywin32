@@ -20,7 +20,7 @@ def DumpLink(fname):
 def FavDumper(nothing, path, names):
 	# called by os.path.walk
 	for name in names:
-		print name, 
+		print name,
 		try:
 			DumpLink(name)
 		except pythoncom.com_error:

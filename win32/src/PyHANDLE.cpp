@@ -95,7 +95,7 @@ PyObject *PyHANDLE::Detach(PyObject *self, PyObject *args)
 
 // @object PyHANDLE|A Python object, representing a win32 HANDLE.
 // @comm This object wraps a win32 HANDLE object, automatically closing it when the object
-// is destroyed.  To guarantee cleanup, you can call either <om PyHANDLE.Close>, or 
+// is destroyed.  To guarantee cleanup, you can call either <om PyHANDLE.Close>, or
 // <om win32api.CloseHandle>.
 // <nl>Most functions which accept a handle object also accept an integer - however,
 // use of the handle object is encouraged.
@@ -384,9 +384,9 @@ char *failMsg = "bad operand type";
 	// This can be delicate.  Setting an exception in a destructor is evil
 	// (as it will cause gc to die with a fatal error, and if that doesn't
 	// happen, make unrelated code appear to fail with the exception.)
-	// Clearing any existing exceptions that may be set is also evil, as 
-	// we may be destructing as part of unwinding the stack handling an 
-	// existing exception. Therefore, we "push" any existing exception 
+	// Clearing any existing exceptions that may be set is also evil, as
+	// we may be destructing as part of unwinding the stack handling an
+	// existing exception. Therefore, we "push" any existing exception
 	// contexts, and restoring it clobbers any we raise.
 	PyObject *typ, *val, *tb;
 	PyErr_Fetch(&typ, &val, &tb);

@@ -28,7 +28,7 @@ BOOL PyWinObject_AsPfnAllocatedWCHAR(PyObject *stringObject, void *(*pfnAllocato
 		/* We assume that we dont need more 'wide characters' for the result
 		   then the number of bytes in the input. Often we
 		   will need less, as the input may contain multi-byte chars, but we
-		   should never need more 
+		   should never need more
 		*/
 		*ppResult = (LPWSTR)(*pfnAllocator)((cch+1)*sizeof(WCHAR));
 		if (*ppResult)
@@ -229,7 +229,7 @@ static BOOL PyString_AsBstr(PyObject *stringObject, BSTR *pResult)
 	/* We assume that we dont need more 'wide characters' for the result
 	   then the number of bytes in the input. Often we
 	   will need less, as the input may contain multi-byte chars, but we
-	   should never need more 
+	   should never need more
 	*/
 
 	LPWSTR wstr = (LPWSTR)malloc(size*sizeof(WCHAR));
@@ -267,7 +267,7 @@ BOOL PyWinObject_AsBstr(PyObject *stringObject, BSTR *pResult, BOOL bNoneOK /*= 
 				rc = FALSE;
 			} else {
 				// The SysAllocStringLen docs indicate that nchars+1 bytes are allocated,
-				// and that normally a \0 is appened by the function.  It also states 
+				// and that normally a \0 is appened by the function.  It also states
 				// the \0 is not necessary!  While it seems to work fine without it,
 				// we do copy it, as the previous code, which used SysAllocStringLen
 				// with a non-NULL arg is documented clearly as appending the \0.
@@ -316,7 +316,7 @@ BOOL PyWinObject_AsWCHAR(PyObject *stringObject, WCHAR **pResult, BOOL bNoneOK /
 		/* We assume that we dont need more 'wide characters' for the result
 		   then the number of bytes in the input. Often we
 		   will need less, as the input may contain multi-byte chars, but we
-		   should never need more 
+		   should never need more
 		*/
 		*pResult = (LPWSTR)PyMem_Malloc((size+1)*sizeof(WCHAR));
 		if (*pResult==NULL) {

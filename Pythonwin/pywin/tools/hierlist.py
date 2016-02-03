@@ -14,7 +14,7 @@
 # to provide maximum flexibility (but with extra work).
 
 import sys
-import win32ui 
+import win32ui
 import win32con
 import win32api
 from win32api import RGB
@@ -106,7 +106,7 @@ class HierList(object.Object):
 		self.root = None
 		self.itemHandleMap = {}
 		self.filledItemHandlesMap = {}
-		
+
 	def HierTerm(self):
 		# Dont want notifies as we kill the list.
 		parent = self.notify_parent # GetParentFrame()
@@ -115,7 +115,7 @@ class HierList(object.Object):
 			parent.HookNotify(None, commctrl.TVN_SELCHANGEDA)
 		else:
 			parent.HookNotify(None, commctrl.TVN_ITEMEXPANDINGW)
-			parent.HookNotify(None, commctrl.TVN_SELCHANGEDW)		
+			parent.HookNotify(None, commctrl.TVN_SELCHANGEDW)
 		parent.HookNotify(None, commctrl.NM_DBLCLK)
 
 		self.DeleteAllItems()
@@ -210,7 +210,7 @@ class HierList(object.Object):
 				for i in range(inew, inewlook):
 #					print "Inserting index %d (%s)" % (i, new_items[i])
 					hAfter = self.AddItem(hparent, new_items[i], hAfter)
-					
+
 				inew = inewlook + 1
 				# And recursively refresh iold
 				hold = old_handles[iold]

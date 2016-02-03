@@ -31,7 +31,7 @@ class DDEServer(object.Object):
 		self.app = app
 		object.Object.__init__(self, CreateServer())
 		self.topic = self.item = None
-		
+
 	def CreateSystemTopic(self):
 		return DDESystemTopic(self.app)
 
@@ -44,10 +44,10 @@ class DDEServer(object.Object):
 		if self.item is not None:
 			self.item.Destroy()
 			self.item = None
-		
+
 	def OnCreate(self):
 		return 1
-		
+
 	def Status(self, msg):
 		try:
 			win32ui.SetStatusText(msg)

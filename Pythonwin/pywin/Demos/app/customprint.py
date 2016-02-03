@@ -21,7 +21,7 @@ class PrintDemoTemplate(docview.DocTemplate):
         pass
 
 class PrintDemoView(docview.ScrollView):
-        
+
     def OnInitialUpdate(self):
         ret = self._obj_.OnInitialUpdate()
         self.colors = {'Black'  : (0x00<<0) + (0x00<<8) + (0x00<<16),
@@ -101,7 +101,7 @@ class PrintDemoView(docview.ScrollView):
 
     def OnFilePrint(self, *arg):
         self._obj_.OnFilePrint()
-        
+
     def OnPrint(self, dc, pInfo):
         doc = self.GetDocument()
         metrics = dc.GetTextMetrics()
@@ -138,7 +138,7 @@ class PrintDemoView(docview.ScrollView):
 class PrintDemoApp(app.CApp):
     def __init__(self):
         app.CApp.__init__(self)
-    
+
     def InitInstance(self):
         template = PrintDemoTemplate(None, None,
                                      None, PrintDemoView)
@@ -148,11 +148,11 @@ class PrintDemoApp(app.CApp):
         doc = template.OpenDocumentFile(None)
         doc.SetTitle('Custom Print Document')
 
-        
+
 class ImagePrintDialog(dialog.PrintDialog):
 
     sectionPos = 'Image Print Demo'
-    
+
     def __init__(self, pInfo, dlgID, flags=win32ui.PD_USEDEVMODECOPIES):
         dialog.PrintDialog.__init__(self, pInfo, dlgID, flags=flags)
         mag = win32ui.GetProfileVal(self.sectionPos,
@@ -163,7 +163,7 @@ class ImagePrintDialog(dialog.PrintDialog):
             win32ui.WriteProfileVal(self.sectionPos,
                                     'Document Magnification',
                                     mag)
-                
+
         self['mag'] = mag
 
     def OnInitDialog(self):

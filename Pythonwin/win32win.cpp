@@ -47,7 +47,7 @@ public:
 	{ return CWnd::OnEraseBkgnd(pDC);}
 	void OnPaint()
 	{ CWnd::OnPaint();}
-	HCURSOR OnQueryDragIcon() 
+	HCURSOR OnQueryDragIcon()
 	{ return CWnd::OnQueryDragIcon(); }
 	HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	{ return CWnd::OnCtlColor(pDC, pWnd, nCtlColor); }
@@ -76,9 +76,9 @@ BOOL Python_check_message(const MSG *msg)	// TRUE if fully processed.
 	// is_uiobjects calls python methods, must already hold lock
 	CEnterLeavePython _celp;
 	if (pWnd &&
-		(pObj=ui_assoc_object::GetAssocObject(pWnd)) && 
+		(pObj=ui_assoc_object::GetAssocObject(pWnd)) &&
 		pObj->is_uiobject( &PyCWnd::type ) &&
-		((PyCWnd *)pObj)->pMessageHookList && 
+		((PyCWnd *)pObj)->pMessageHookList &&
 		((PyCWnd *)pObj)->pMessageHookList->Lookup(msg->message,(void *&)method)) {
 
 #ifdef TRACE_CALLBACKS
@@ -164,10 +164,10 @@ CMDIFrameWnd *GetMDIFrame(PyObject *self)
 // @tupleitem 2|int|max|The maximum scrolling position.  Both min and max, or neither, must be provided.
 // @tupleitem 3|int|page|Specifies the page size. A scroll bar uses this value to determine the appropriate size of the proportional scroll box.
 // @tupleitem 4|int|pos|Specifies the position of the scroll box.
-// @tupleitem 5|int|trackPos|Specifies the immediate position of a scroll box that the user 
-// is dragging. An application can retrieve this value while processing 
-// the SB_THUMBTRACK notification message. An application cannot set 
-// the immediate scroll position; the <om PyCWnd.SetScrollInfo> function ignores 
+// @tupleitem 5|int|trackPos|Specifies the immediate position of a scroll box that the user
+// is dragging. An application can retrieve this value while processing
+// the SB_THUMBTRACK notification message. An application cannot set
+// the immediate scroll position; the <om PyCWnd.SetScrollInfo> function ignores
 // this member.
 // @comm When returned from a method, will always be a tuple of size 6, and items may be None if not available.
 // @comm When passed as an arg, it must have the addn mask attribute, but all other items may be None, or not exist.
@@ -293,7 +293,7 @@ ui_window_create_window(PyObject *self, PyObject *args)
 			   &rect.left,&rect.top,&rect.right,&rect.bottom,
 			   // @pyparm (left, top, right, bottom)|rect||The size and position of the window.
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the new window..
-			   &id, // @pyparm int|id||The control's ID. 
+			   &id, // @pyparm int|id||The control's ID.
 			   &contextObject)) // @pyparm object|context|None|A CreateContext object.
 		return NULL;
 
@@ -352,7 +352,7 @@ ui_window_create_window_ex(PyObject *self, PyObject *args)
 			  &rect.left,&rect.top,&rect.right,&rect.bottom,
 			  // @pyparm (left, top, right, bottom)|rect||The size and position of the window.
 			  &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the new window..
-			  &id, // @pyparm int|id||The control's ID. 
+			  &id, // @pyparm int|id||The control's ID.
 			  &csObject)) // @pyparm <o CREATESTRUCT>|createStruct|None|A CreateStruct object (ie, a tuple)
 		return NULL;
 
@@ -427,7 +427,7 @@ PyCWnd::CreateControl(PyObject *self, PyObject *args)
 	TCHAR *szClass=NULL, *szWndName=NULL;
 	PyObject *obClass, *obWndName;
 	PyObject *obLicKey = Py_None;
-	if (!PyArg_ParseTuple(args, "OOi(iiii)Oi|OiO:CreateControl", 
+	if (!PyArg_ParseTuple(args, "OOi(iiii)Oi|OiO:CreateControl",
 	          &obClass,   // @pyparm string|classId||The class ID for the window.
 	          &obWndName, // @pyparm string|windowName||The title for the window.
 	          &style,     // @pyparm int|style||The style for the control.
@@ -654,7 +654,7 @@ CWnd *PyCWnd::GetPythonGenericWnd(PyObject *self, ui_type_CObject *pType)
 	// FromHandlePerm is thread specific!
 	if (pSearch==NULL && GetWindowLongPtr(wnd, GWLP_WNDPROC)==(LONG_PTR)AfxGetAfxWndProc()) {
 
-/******* 
+/*******
 	Windows are per thread.  This gross hack lets me get windows across
 	threads, but there must be a good reason for the restriction, and this
 	hack only works with the main thread, rather than any thread.
@@ -663,7 +663,7 @@ CWnd *PyCWnd::GetPythonGenericWnd(PyObject *self, ui_type_CObject *pType)
 		extern AFX_MODULE_THREAD_STATE * PyWin_MainModuleThreadState;
 
 		// Lets see if it is in the main thread state
-		if (PyWin_MainModuleThreadState->m_pmapHWND && 
+		if (PyWin_MainModuleThreadState->m_pmapHWND &&
 			(AfxGetModuleThreadState() != PyWin_MainModuleThreadState)) {
 			// Gross hack - look it up in the internal map structure.
 			pSearch = (CWnd*)(PyWin_MainModuleThreadState->m_pmapHWND->LookupPermanent(wnd));
@@ -679,7 +679,7 @@ CWnd *PyCWnd::GetPythonGenericWnd(PyObject *self, ui_type_CObject *pType)
 			RETURN_ERR("The window can not be created as it has an invalid handle");
 		CWnd *pWnd;
 		ASSERT(makeType.pCObjectClass); // we want to know the exact type to create!
-		if (makeType.pCObjectClass && makeType.pCObjectClass->m_pfnCreateObject) { 
+		if (makeType.pCObjectClass && makeType.pCObjectClass->m_pfnCreateObject) {
 			pWnd = (CWnd *)makeType.pCObjectClass->CreateObject();
 			if (pWnd==NULL) {
 				PyErr_SetString(PyExc_MemoryError, "Cant create the window object");
@@ -723,7 +723,7 @@ ui_window_activate_frame(PyObject *self, PyObject *args)
 		RETURN_ERR("The specified window does not have a parent frame window");
 	GUI_BGN_SAVE;
 	((CFrameWnd *)pWnd)->ActivateFrame(cmdShow); // @pyseemfc CFrameWnd|ActivateFrame
-	
+
 	GUI_END_SAVE;
 	RETURN_NONE;
 }
@@ -732,11 +732,11 @@ ui_window_activate_frame(PyObject *self, PyObject *args)
 static PyObject *
 ui_window_bring_window_to_top(PyObject *self, PyObject *args)
 {
-	// @comm This method activates pop-up, top-level, and MDI child windows. 
-	// The BringWindowToTop member function should be used to uncover any window that is partially or 
+	// @comm This method activates pop-up, top-level, and MDI child windows.
+	// The BringWindowToTop member function should be used to uncover any window that is partially or
 	// completely obscured by any overlapping windows.<nl>
-	// Calling this method is similar to calling the <om PyCWnd.SetWindowPos> method to 
-	// change a window's position in the Z order. The BringWindowToTop method 
+	// Calling this method is similar to calling the <om PyCWnd.SetWindowPos> method to
+	// change a window's position in the Z order. The BringWindowToTop method
 	// does not change the window style to make it a top-level window of the desktop.
 	CHECK_NO_ARGS(args);
 	CWnd *pWnd = GetWndPtrGoodHWnd(self);
@@ -761,7 +761,7 @@ ui_window_calc_window_rect(PyObject *self, PyObject *args)
 	CRect rect;
 	UINT nAdjustType = CWnd::adjustBorder;
 	// @pyparm (left, top, right, bottom)|rect||The size to calculate from
-	// @pyparm int|nAdjustType|adjustBorder|An enumerated type used for in-place editing. It can have the following values: CWnd::adjustBorder = 0, which 
+	// @pyparm int|nAdjustType|adjustBorder|An enumerated type used for in-place editing. It can have the following values: CWnd::adjustBorder = 0, which
 	// means that scrollbar sizes are ignored in calculation; and CWnd::adjustOutside = 1, which means that they are added into the final
 	// measurements of the rectangle.
 	if (!PyArg_ParseTuple(args,"(iiii)|i:CalcWindowRect", &rect.left, &rect.top, &rect.right, &rect.bottom, &nAdjustType))
@@ -771,7 +771,7 @@ ui_window_calc_window_rect(PyObject *self, PyObject *args)
 	GUI_END_SAVE;
 	return Py_BuildValue("(iiii)",rect.left, rect.top, rect.right, rect.bottom);
 }
-// @pymethod |PyCWnd|CheckRadioButton|Selects the specified radio button, and clears 
+// @pymethod |PyCWnd|CheckRadioButton|Selects the specified radio button, and clears
 // all others in the group.
 static PyObject *
 ui_window_check_radio_button(PyObject *self, PyObject *args)
@@ -780,7 +780,7 @@ ui_window_check_radio_button(PyObject *self, PyObject *args)
 	if (!pWnd)
 		return NULL;
 	int idFirst, idLast, idCheck;
-	if (!PyArg_ParseTuple(args,"iii:CheckRadioButton", 
+	if (!PyArg_ParseTuple(args,"iii:CheckRadioButton",
 			&idFirst, // @pyparm int|idFirst||The identifier of the first radio button in the group.
 			&idLast,  // @pyparm int|idLast||The identifier of the last radio button in the group.
 			&idCheck))// @pyparm int|idCheck||The identifier of the radio button to be checked.
@@ -800,7 +800,7 @@ ui_child_window_from_point(PyObject *self, PyObject *args)
 		return NULL;
 	CPoint pnt;
 	int flag=0;
-	if (!PyArg_ParseTuple(args,"(ii)|i:ChildWindowFromPoint", 
+	if (!PyArg_ParseTuple(args,"(ii)|i:ChildWindowFromPoint",
 			&pnt.x, // @pyparm int|x||x coordinate of point
 			&pnt.y,  // @pyparm int|y||y coordinate of point
 			&flag))// @pyparm int|flag|0|Specifies which child windows to skip
@@ -820,7 +820,7 @@ ui_window_def_window_proc(PyObject *self, PyObject *args)
 		return NULL;
 	int message;
 	PyObject *obwparam, *oblparam;
-	if (!PyArg_ParseTuple(args,"iOO:DefWindowProc", 
+	if (!PyArg_ParseTuple(args,"iOO:DefWindowProc",
 			&message, // @pyparm int|message||The Windows message.
 			&obwparam,  // @pyparm int|idLast||The lParam for the message.
 			&oblparam))// @pyparm int|idCheck||The wParam for the message.
@@ -846,11 +846,11 @@ ui_window_dlg_dir_list(PyObject *self, PyObject *args)
 	TCHAR *defPath;
 	PyObject *obdefPath;
 	int nIDListBox, nIDStaticPath, nFileType;
-	if (!PyArg_ParseTuple(args,"Oiii:DlgDirList", 
+	if (!PyArg_ParseTuple(args,"Oiii:DlgDirList",
 			&obdefPath,        // @pyparm string|defPath||The file spec to fill the list box with
 			&nIDListBox,     // @pyparm int|idListbox||The Id of the listbox control to fill.
 			&nIDStaticPath,  // @pyparm int|idStaticPath||The Id of the static control used to display the current drive and directory. If idStaticPath is 0, it is assumed that no such control exists.
-			&nFileType))	 // @pyparm int|fileType||Specifies the attributes of the files to be displayed. 
+			&nFileType))	 // @pyparm int|fileType||Specifies the attributes of the files to be displayed.
 			                 // It can be any combination of DDL_READWRITE, DDL_READONLY, DDL_HIDDEN, DDL_SYSTEM, DDL_DIRECTORY, DDL_ARCHIVE, DDL_POSTMSGS, DDL_DRIVES or DDL_EXCLUSIVE
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obdefPath, &defPath, FALSE))
@@ -924,7 +924,7 @@ ui_window_dlg_dir_select(PyObject *self, PyObject *args)
 }
 
 // @pymethod string|PyCWnd|DlgDirSelectComboBox|
-// Retrieves the current selection from the list box of a combo box. It assumes that the list box has been filled by the <om PyCWnd.DlgDirListComboBox> member function and that the selection is a drive letter, a file, or a directory name. 
+// Retrieves the current selection from the list box of a combo box. It assumes that the list box has been filled by the <om PyCWnd.DlgDirListComboBox> member function and that the selection is a drive letter, a file, or a directory name.
 static PyObject *
 ui_window_dlg_dir_select_combo(PyObject *self, PyObject *args)
 {
@@ -983,11 +983,11 @@ ui_window_destroy_window(PyObject *self, PyObject *args)
 	if (!rc)
 		RETURN_ERR("DestroyWindow could not destroy the window");
 	RETURN_NONE;
-	// @comm The DestroyWindow member function sends appropriate messages 
-	// to the window to deactivate it and remove the input focus. 
-	// It also destroys the window's menu, flushes the application queue, 
-	// destroys outstanding timers, removes Clipboard ownership, and breaks the 
-	// Clipboard-viewer chain if CWnd is at the top of the viewer chain. 
+	// @comm The DestroyWindow member function sends appropriate messages
+	// to the window to deactivate it and remove the input focus.
+	// It also destroys the window's menu, flushes the application queue,
+	// destroys outstanding timers, removes Clipboard ownership, and breaks the
+	// Clipboard-viewer chain if CWnd is at the top of the viewer chain.
 	// It sends WM_DESTROY and WM_NCDESTROY messages to the window.
 }
 
@@ -1029,7 +1029,7 @@ static PyObject *
 ui_window_get_checked_rb(PyObject *self, PyObject *args)
 {
 	int idFirst, idLast;
-	if (!PyArg_ParseTuple(args, "ii:GetCheckedRadioButton", 
+	if (!PyArg_ParseTuple(args, "ii:GetCheckedRadioButton",
 	           &idFirst, // @pyparm int|idFirst||The Id of the first radio button in the group.
 	           &idLast ))// @pyparm int|idLast||The Id of the last radio button in the group.
 		return NULL;
@@ -1134,7 +1134,7 @@ ui_window_get_dlg_item_int(PyObject *self, PyObject *args)
 	BOOL bUnsigned = TRUE;
 	// @pyparm int|idControl||The Id of the control to be retrieved.
 	// @pyparm int|bUnsigned|1|Should the function check for a minus sign
-	if (!PyArg_ParseTuple(args, "i|i:GetDlgItemInt", &id, &bUnsigned )) 
+	if (!PyArg_ParseTuple(args, "i|i:GetDlgItemInt", &id, &bUnsigned ))
 		return NULL;
 	CWnd *pWnd = GetWndPtr(self);
 	if (!pWnd)
@@ -1224,7 +1224,7 @@ ui_window_get_parent_frame(PyObject *self, PyObject *args)
 	// @rdesc The result is a <o PyCWnd> object, or None if no Window can be found.
 }
 
-// @pymethod <o PyCWnd>|PyCWnd|GetParentOwner|Returns the child window's parent window or owner window. 
+// @pymethod <o PyCWnd>|PyCWnd|GetParentOwner|Returns the child window's parent window or owner window.
 static PyObject *
 ui_window_get_parent_owner(PyObject *self, PyObject *args)
 {
@@ -1359,7 +1359,7 @@ ui_window_get_scroll_info (PyObject *self, PyObject *args)
 	return MakeSCROLLINFOTuple(&info);
 }
 
-// @pymethod int|PyCWnd|GetScrollPos|Retrieves the current position of the scroll box of a scroll bar. 
+// @pymethod int|PyCWnd|GetScrollPos|Retrieves the current position of the scroll box of a scroll bar.
 static PyObject *
 ui_window_get_scroll_pos (PyObject *self, PyObject *args)
 {
@@ -1374,7 +1374,7 @@ ui_window_get_scroll_pos (PyObject *self, PyObject *args)
 	long pos = pWnd->GetScrollPos(nBar);
 	GUI_END_SAVE;
 	return PyInt_FromLong(pos);
-	
+
 }
 
 // @pymethod int|PyCWnd|GetStyle|Retrieves the window style
@@ -1405,7 +1405,7 @@ ui_window_get_ex_style(PyObject *self, PyObject *args)
 	DWORD ret = pWnd->GetExStyle();
 	GUI_END_SAVE;
 	return PyInt_FromLong(ret);
-	
+
 }
 
 // @pymethod <o PyCMenu>|PyCWnd|GetSystemMenu|Returns the menu object for the window's system menu.
@@ -1422,7 +1422,7 @@ ui_window_get_system_menu(PyObject *self, PyObject *args)
 	GUI_END_SAVE;
 	return ui_assoc_object::make( PyCMenu::type, hMenu)->GetGoodRet();
 }
-// @pymethod <o PyCWnd>|PyCWnd|GetTopWindow|Identifies the top-level child window in a linked list of child windows. 
+// @pymethod <o PyCWnd>|PyCWnd|GetTopWindow|Identifies the top-level child window in a linked list of child windows.
 PyObject *
 PyCWnd::get_top_window(PyObject *self, PyObject *args)
 {
@@ -1486,7 +1486,7 @@ ui_window_get_window_placement(PyObject *self, PyObject *args)
 	// @flag flags|One of the WPF_* constants
 	// @flag showCmd|Current state - one of the SW_* constants.
 	// @flag minpos|Specifies the coordinates of the window's upper-left corner when the window is minimized.
-	// @flag maxpos|Specifies the coordinates of the window's upper-left corner when the window is maximized. 
+	// @flag maxpos|Specifies the coordinates of the window's upper-left corner when the window is maximized.
 	// @flag normalpos|Specifies the window's coordinates when the window is in the restored position.
 	return Py_BuildValue("(ii(ii)(ii)(iiii))",pment.flags, pment.showCmd,
 										pment.ptMinPosition.x,pment.ptMinPosition.y,
@@ -1538,7 +1538,7 @@ ui_window_hook_key_stroke(PyObject *self, PyObject *args)
 	// Note: This handler will not be called if a <om PyCWnd.HookAllKeyStrokes> hook is in place.
 
 	// @pyparm object|obHandler||The handler of the keystroke.  This must be a callable object.
-	// @pyparm int|ch||The ID for the keystroke to be handled. 
+	// @pyparm int|ch||The ID for the keystroke to be handled.
 	// This may be an ascii code, or a virtual key code.
 	// @rdesc The return value is the previous handler, or None.
 	PyCWnd *s = (PyCWnd *)self;
@@ -1588,7 +1588,7 @@ ui_window_hook_message(PyObject *self, PyObject *args)
 	// @tupleitem 5|int, int|point|The point where the mouse was when the message was posted.
 
 	// @pyparm object|obHandler||The handler for the message notification.  This must be a callable object.
-	// @pyparm int|message||The ID of the message to be handled. 
+	// @pyparm int|message||The ID of the message to be handled.
 	// @rdesc The return value is the previous handler, or None.
 	PyCWnd *s = (PyCWnd *)self;
 	return add_hook_list(s, args,&s->pMessageHookList);
@@ -1691,8 +1691,8 @@ ui_window_message_box(PyObject * self, PyObject * args)
   TCHAR *message, *title=NULL;
   PyObject *obmessage, *obtitle=Py_None;
   long style = MB_OK;
-	
-  if (!PyArg_ParseTuple(args, "O|Ol:MessageBox", 
+
+  if (!PyArg_ParseTuple(args, "O|Ol:MessageBox",
             &obmessage, // @pyparm string|message||The message to be displayed in the message box.
             &obtitle,   // @pyparm string/None|title|None|The title for the message box.  If None, the applications title will be used.
             &style))  // @pyparm int|style|win32con.MB_OK|The style of the message box.
@@ -1727,10 +1727,10 @@ ui_window_modify_style(PyObject *self, PyObject *args)
 	unsigned flags = 0;
 	int add;
 	int remove;
-	if (!PyArg_ParseTuple(args, "ii|i:ModifyStyle", 
+	if (!PyArg_ParseTuple(args, "ii|i:ModifyStyle",
 	          &remove,   // @pyparm int|remove||Specifies window styles to be removed during style modification.
   	          &add,// @pyparm int|add||Specifies window styles to be added during style modification.
-  	          &flags)) // @pyparm int|flags|0|Flags to be passed to SetWindowPos, or zero if SetWindowPos should not be called. The default is zero. 
+  	          &flags)) // @pyparm int|flags|0|Flags to be passed to SetWindowPos, or zero if SetWindowPos should not be called. The default is zero.
 		return NULL;
 
 	CWnd *pWnd = GetWndPtr(self);
@@ -1759,10 +1759,10 @@ ui_window_modify_style_ex(PyObject *self, PyObject *args)
 	unsigned flags = 0;
 	int add;
 	int remove;
-	if (!PyArg_ParseTuple(args, "ii|i:ModifyStyleEx", 
+	if (!PyArg_ParseTuple(args, "ii|i:ModifyStyleEx",
 	          &remove,   // @pyparm int|remove||Specifies extended window styles to be removed during style modification.
   	          &add,// @pyparm int|add||Specifies extended extended window styles to be added during style modification.
-  	          &flags)) // @pyparm int|flags|0|Flags to be passed to SetWindowPos, or zero if SetWindowPos should not be called. The default is zero. 
+  	          &flags)) // @pyparm int|flags|0|Flags to be passed to SetWindowPos, or zero if SetWindowPos should not be called. The default is zero.
 		return NULL;
 
 	CWnd *pWnd = GetWndPtr(self);
@@ -1789,9 +1789,9 @@ ui_window_move_window(PyObject *self, PyObject *args)
 {
 	CRect rect;
 	BOOL bRepaint= TRUE;
-	if (!PyArg_ParseTuple(args, "(iiii)|i:MoveWindow", 
+	if (!PyArg_ParseTuple(args, "(iiii)|i:MoveWindow",
 	          // @pyparm (left, top, right, bottom)|rect||The new location of the window, relative to the parent.
-	          &rect.left, &rect.top, &rect.right, &rect.bottom, 
+	          &rect.left, &rect.top, &rect.right, &rect.bottom,
 	          &bRepaint)) // @pyparm int|bRepaint|1|Indicates if the window should be repainted after the move.
 		return NULL;
 
@@ -1813,7 +1813,7 @@ ui_window_on_ctl_color(PyObject *self, PyObject *args)
 	PyObject *obDC;
     PyObject *obControl;
     int nCtlColor;
-	if (!PyArg_ParseTuple(args, "OOi:OnCtlColor", 
+	if (!PyArg_ParseTuple(args, "OOi:OnCtlColor",
                           &obDC,       // @pyparm <o PyCDC>|dc||The dc
                           &obControl,  // @pyparm <o PyCWin>|control||The control that want's it's color changed
                           &nCtlColor)) // @pyparm int|type||Type of control
@@ -1841,7 +1841,7 @@ static PyObject *
 ui_window_on_erase_bkgnd(PyObject *self, PyObject *args)
 {
 	PyObject *obDC;
-	if (!PyArg_ParseTuple(args, "O:OnEraseBkgnd", 
+	if (!PyArg_ParseTuple(args, "O:OnEraseBkgnd",
 	          &obDC)) // @pyparm <o PyCDC>|dc||The dc
 		return NULL;
 
@@ -1921,7 +1921,7 @@ ui_window_on_wnd_msg(PyObject *self, PyObject *args)
 	PyObject *obwParam, *oblParam;
 	CRect rect;
 	BOOL bRepaint= TRUE;
-	if (!PyArg_ParseTuple(args, "iOO:OnWndMsg", 
+	if (!PyArg_ParseTuple(args, "iOO:OnWndMsg",
 	          &msg, // @pyparm int|msg||The message
 			  &obwParam, // @pyparm int|wParam||The wParam for the message
 			  &oblParam)) // @pyparm int|lParam||The lParam for the message
@@ -1954,7 +1954,7 @@ ui_window_post_message(PyObject *self, PyObject *args)
 		return NULL;
 	UINT message;
 	PyObject *obwParam = Py_None, *oblParam = Py_None;
-	if (!PyArg_ParseTuple(args, "i|OO:PostMessage", 
+	if (!PyArg_ParseTuple(args, "i|OO:PostMessage",
 	          &message, // @pyparm int|idMessage||The ID of the message to post.
 	          &obwParam,  // @pyparm int|wParam|0|The wParam for the message
 	          &oblParam)) // @pyparm int|lParam|0|The lParam for the message
@@ -2019,7 +2019,7 @@ ui_window_redraw_window(PyObject *self, PyObject *args)
 static PyObject *
 ui_window_client_to_screen(PyObject *self, PyObject *args)
 {
-	// @comm The new screen coordinates are relative to the upper-left corner of the system display. 
+	// @comm The new screen coordinates are relative to the upper-left corner of the system display.
 	// This function assumes that the given pointis in client coordinates.
 	CWnd *pWnd = GetWndPtr(self);
 	if (!pWnd)
@@ -2040,7 +2040,7 @@ ui_window_client_to_screen(PyObject *self, PyObject *args)
 			return NULL;
 		}
 	}
-		
+
 	// @pyseemfc CWnd|ClientToScreen
 	GUI_BGN_SAVE;
 	if (bHaveRect)
@@ -2054,7 +2054,7 @@ ui_window_client_to_screen(PyObject *self, PyObject *args)
 		return Py_BuildValue("(ii)",pnt.x, pnt.y);
 }
 
-// @pymethod (left, top, right, bottom) or (x, y)|PyCWnd|ScreenToClient|Converts the screen coordinates of a given point or rectangle on the display to client coordinates. 
+// @pymethod (left, top, right, bottom) or (x, y)|PyCWnd|ScreenToClient|Converts the screen coordinates of a given point or rectangle on the display to client coordinates.
 static PyObject *
 ui_window_screen_to_client(PyObject *self, PyObject *args)
 {
@@ -2111,7 +2111,7 @@ ui_window_set_active_window(PyObject *self, PyObject *args)
 	return PyCWnd::make( UITypeFromCObject(pRel), pRel)->GetGoodRet();
 	// @rdesc The result is the previous window with focus, or None.
 }
-// @pymethod |PyCWnd|SetRedraw|Allows changes to be redrawn or to prevent changes from being redrawn. 
+// @pymethod |PyCWnd|SetRedraw|Allows changes to be redrawn or to prevent changes from being redrawn.
 static PyObject *
 ui_window_set_redraw(PyObject *self, PyObject *args)
 {
@@ -2156,7 +2156,7 @@ ui_window_set_scroll_info (PyObject *self, PyObject *args)
 	RETURN_NONE;
 }
 
-// @pymethod int|PyCWnd|SetScrollPos|Sets the current position of the scroll box of a scroll bar. 
+// @pymethod int|PyCWnd|SetScrollPos|Sets the current position of the scroll box of a scroll bar.
 static PyObject *
 ui_window_set_scroll_pos (PyObject *self, PyObject *args)
 {
@@ -2329,7 +2329,7 @@ ui_window_send_message_to_desc(PyObject *self, PyObject *args)
 	UINT message;
 	BOOL bDeep = TRUE;
 	PyObject *obwParam = Py_None, *oblParam = Py_None;
-	if (!PyArg_ParseTuple(args, "i|OOi:SendMessageToDescendants", 
+	if (!PyArg_ParseTuple(args, "i|OOi:SendMessageToDescendants",
 		      &message, // @pyparm int|idMessage||The ID of the message to send.
 	          &obwParam,  // @pyparm int|wParam|0|The wParam for the message
 	          &oblParam,  // @pyparm int|lParam|0|The lParam for the message
@@ -2358,7 +2358,7 @@ ui_window_show_scrollbar(PyObject *self, PyObject *args)
 		return NULL;
 	int bar;
 	BOOL bShow = TRUE;
-	if (!PyArg_ParseTuple(args, "i|i:ShowScrollBar", 
+	if (!PyArg_ParseTuple(args, "i|i:ShowScrollBar",
 	          &bar, // @pyparm int|nBar||Specifies whether the scroll bar is a control or part of a window's nonclient area.
 			        // If it is part of the nonclient area, nBar also indicates whether the scroll bar is positioned horizontally, vertically, or both.
 			        // It must be one of win32con.SB_BOTH, win32con.SB_HORZ or win32con.SB_VERT.
@@ -2483,7 +2483,7 @@ ui_window_get_dc (PyObject *self, PyObject *args)
 	// @rdesc The result is a <o PyCDC>, or a win32ui.error exception is raised.
 }
 
-// @pymethod |PyCWnd|SetCapture|Causes all subsequent mouse input to be sent to the window object regardless of the position of the cursor. 
+// @pymethod |PyCWnd|SetCapture|Causes all subsequent mouse input to be sent to the window object regardless of the position of the cursor.
 static PyObject *
 ui_window_set_capture (PyObject *self, PyObject *args)
 {
@@ -2598,7 +2598,7 @@ ui_window_release_capture (PyObject *self, PyObject *args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCWnd|ReleaseDC|Releases a device context, freeing it for use by other applications. 
+// @pymethod |PyCWnd|ReleaseDC|Releases a device context, freeing it for use by other applications.
 static PyObject *
 ui_window_release_dc (PyObject *self, PyObject *args)
 {
@@ -2615,7 +2615,7 @@ ui_window_release_dc (PyObject *self, PyObject *args)
 	CDC *pDC;
 	if (!(pDC=ui_dc_object::GetDC(obDC)))
 		return NULL;
-	
+
 	GUI_BGN_SAVE;
 	BOOL ok = view->ReleaseDC(pDC);
 	GUI_END_SAVE;
@@ -2790,7 +2790,7 @@ ui_window_pump_waiting_messages(PyObject *self, PyObject *args)
 		return NULL;
 	UINT firstMsg;
 	UINT lastMsg;
-	if (!PyArg_ParseTuple(args, "ii:PumpWaitingMessages", 
+	if (!PyArg_ParseTuple(args, "ii:PumpWaitingMessages",
 	          &firstMsg, // @pyparm int|firstMsg||First message ID to process
 	          &lastMsg)) // @pyparm int|lastMsg||First message ID to process
 		return NULL;
@@ -2864,7 +2864,7 @@ ui_window_get_dc_ex(PyObject *self, PyObject *args)
 
 	PyObject *objRgn;
 	DWORD flags;
-	if (!PyArg_ParseTuple(args,"Oi:GetDCEx",&objRgn,&flags)) 
+	if (!PyArg_ParseTuple(args,"Oi:GetDCEx",&objRgn,&flags))
 		return NULL;
 
 	CRgn *prgnClip;
@@ -2893,7 +2893,7 @@ ui_window_is_window(PyObject *self, PyObject *args)
 	CWnd *pWnd = GetWndPtr(self);
 	if (!pWnd)return NULL;
 
-	BOOL bAns=::IsWindow(pWnd->m_hWnd);   
+	BOOL bAns=::IsWindow(pWnd->m_hWnd);
 	return Py_BuildValue("i",bAns);
 	}
 
@@ -2904,13 +2904,13 @@ ui_window_map_window_points(PyObject *self, PyObject *args)
 	{
 	CWnd *pWnd = GetWndPtr(self);
 	if (!pWnd)return NULL;
-  
+
 	PyObject *pPyCWnd;
 	PyObject *point_list;
 	// @pyparm <o PyCWnd>|wnd||
 	// @pyparm [ (x,y), ...]|points||The points to map
 
-	if (!PyArg_ParseTuple(args,"OO:MapWindowPoints",&pPyCWnd,&point_list)) 
+	if (!PyArg_ParseTuple(args,"OO:MapWindowPoints",&pPyCWnd,&point_list))
 		return NULL;
 
 	CWnd *pWndTo;
@@ -2921,37 +2921,37 @@ ui_window_map_window_points(PyObject *self, PyObject *args)
 	else
 		RETURN_TYPE_ERR("1st argument must be a window object, or None");
 
-	if(!PyList_Check(point_list)) 
+	if(!PyList_Check(point_list))
 		return NULL;
 
 	// Convert the list of point tuples into an array of POINT structs
 	Py_ssize_t num = PyList_Size (point_list);
 	Py_ssize_t i;
 	POINT * point_array = new POINT[num];
-	for (i=0; i < num; i++) 
+	for (i=0; i < num; i++)
 		{
 		PyObject * point_tuple = PyList_GetItem (point_list, i);
-		if (!PyTuple_Check (point_tuple) || PyTuple_Size (point_tuple) != 2) 
+		if (!PyTuple_Check (point_tuple) || PyTuple_Size (point_tuple) != 2)
 			{
 			PyErr_SetString (PyExc_ValueError,
 					 "point list must be a list of (x,y) tuples");
 			delete[] point_array;
 			return NULL;
-			} 
-		else 
+			}
+		else
 			{
 			long x, y;
 			PyObject *px, *py;
 			px = PyTuple_GetItem (point_tuple, 0);
 			py = PyTuple_GetItem (point_tuple, 1);
-			if ((!PyInt_Check(px)) || (!PyInt_Check(py))) 
+			if ((!PyInt_Check(px)) || (!PyInt_Check(py)))
 				{
 				PyErr_SetString (PyExc_ValueError,
 					   "point list must be a list of (x,y) tuples");
 				delete[] point_array;
 				return NULL;
-				} 
-			else 
+				}
+			else
 				{
 				x = PyInt_AsLong (px);
 				y = PyInt_AsLong (py);
@@ -2970,7 +2970,7 @@ ui_window_map_window_points(PyObject *self, PyObject *args)
 	// copy mapped points
 	// return list of points
 	PyObject *list = PyList_New(num);
-	for (i=0;i<num;i++) 
+	for (i=0;i<num;i++)
 		PyList_SetItem(list,i,Py_BuildValue("(ii)",point_array[i].x,point_array[i].y));
 
 	delete[] point_array;
@@ -3025,7 +3025,7 @@ ui_window_invalidate_rgn(PyObject *self, PyObject *args)
 	BOOL bErase = TRUE;
 	// @pyparm <o PyCRgn>|region||The region to erase.
 	// @pyparm int|bErase|1|Indicates if the region should be erased.
-	if (!PyArg_ParseTuple(args,"O|i:InvalidateRgn",&objRgn,&bErase)) 
+	if (!PyArg_ParseTuple(args,"O|i:InvalidateRgn",&objRgn,&bErase))
 		return NULL;
 	CRgn *pRgn = PyCRgn::GetRgn(objRgn);
 	if (!pRgn) return NULL;
@@ -3043,7 +3043,7 @@ ui_window_run_modal_loop(PyObject *self, PyObject *args)
 	if (!pWnd)return NULL;
 	DWORD dwFlags;
 	// @pyparm int|flags||
-	if (!PyArg_ParseTuple(args,"i:RunModalLoop",&dwFlags)) 
+	if (!PyArg_ParseTuple(args,"i:RunModalLoop",&dwFlags))
 		return NULL;
 	GUI_BGN_SAVE;
 	int nResult=pWnd->RunModalLoop(dwFlags);
@@ -3058,7 +3058,7 @@ ui_window_end_modal_loop(PyObject *self, PyObject *args)
 	if (!pWnd)return NULL;
 	int nResult;
 	// @pyparm int|result||The result as returned to RunModalLoop
-	if (!PyArg_ParseTuple(args,"i:EndModalLoop",&nResult)) 
+	if (!PyArg_ParseTuple(args,"i:EndModalLoop",&nResult))
 		return NULL;
 	GUI_BGN_SAVE;
 	pWnd->EndModalLoop(nResult);
@@ -3076,7 +3076,7 @@ ui_window_reposition_bars(PyObject *self, PyObject *args)
 	// @pyparm int|idFirst||The ID of the first control to reposition.
 	// @pyparm int|idLast||The ID of the last control to reposition.
 	// @pyparm int|idLeftOver||
-	if (!PyArg_ParseTuple(args,"iii:RepositionBars",&nIDFirst,&nIDLast,&nIDLeftOver)) 
+	if (!PyArg_ParseTuple(args,"iii:RepositionBars",&nIDFirst,&nIDLast,&nIDLeftOver))
 		return NULL;
 	GUI_BGN_SAVE;
 	pWnd->RepositionBars(nIDFirst,nIDLast,nIDLeftOver);
@@ -3243,7 +3243,7 @@ static struct PyMethodDef PyCWnd_methods[] = {
 	{"GetMenu",				ui_window_get_menu,				1}, // @pymeth GetMenu|Get the current menu for a window.
 	{"GetParent",			ui_window_get_parent,			1}, // @pymeth GetParent|Get the parent window.
 	{"GetParentFrame",      ui_window_get_parent_frame,     1}, // @pymeth GetParentFrame|Returns the window's frame.
-	{"GetParentOwner",		ui_window_get_parent_owner,		1}, // @pymeth GetParent|Returns the child window's parent window or owner window. 
+	{"GetParentOwner",		ui_window_get_parent_owner,		1}, // @pymeth GetParent|Returns the child window's parent window or owner window.
 	{"GetSafeHwnd",         ui_window_get_safe_hwnd,        1}, // @pymeth GetSafeHwnd|Returns the HWnd of this window.
 	{"GetScrollInfo",	    ui_window_get_scroll_info,		1}, // @pymeth GetScrollInfo|Retrieve information about a scroll bar
 	{"GetScrollPos",        ui_window_get_scroll_pos,       1}, // @pymeth GetScrollPos|Retrieves the current position of the scroll box of a scroll bar.
@@ -3311,7 +3311,7 @@ static struct PyMethodDef PyCWnd_methods[] = {
 	{"SetIcon",             ui_window_set_icon,             1}, // @pymeth SetIcon | Sets the handle to a specific icon.
 	{"SetMenu",				ui_window_set_menu,				1}, // @pymeth SetMenu|Sets the menu for a window.
 	{"SetRedraw",			ui_window_set_redraw,			1}, // @pymeth SetRedraw|Sets the redraw flag for the window.
-	{"SetScrollPos",	    ui_window_set_scroll_pos,		1}, // @pymeth SetScrollPos|Sets the current position of the scroll box of a scroll bar. 
+	{"SetScrollPos",	    ui_window_set_scroll_pos,		1}, // @pymeth SetScrollPos|Sets the current position of the scroll box of a scroll bar.
 	{"SetScrollInfo",	    ui_window_set_scroll_info,		1}, // @pymeth SetScrollInfo|Set information about a scroll bar
 	{"SetTimer",            ui_window_set_timer,            1}, // @pymeth SetTimer|Installs a system timer
 	{"SetWindowPlacement",	ui_window_set_window_placement,	1}, // @pymeth SetWindowPlacement|Sets the window's placement options.
@@ -3337,12 +3337,12 @@ CString PyCWnd::repr()
 	return csRet;
 }
 
-ui_type_CObject PyCWnd::type("PyCWnd", 
+ui_type_CObject PyCWnd::type("PyCWnd",
 							 &PyCCmdTarget::type, // @base PyCWnd|PyCCmdTarget
-							 RUNTIME_CLASS(CWnd), 
-							 sizeof(PyCWnd), 
-							 PYOBJ_OFFSET(PyCWnd), 
-							 PyCWnd_methods, 
+							 RUNTIME_CLASS(CWnd),
+							 sizeof(PyCWnd),
+							 PYOBJ_OFFSET(PyCWnd),
+							 PyCWnd_methods,
 							 GET_PY_CTOR(PyCWnd) );
 
 
@@ -3410,19 +3410,19 @@ PyCFrameWnd_CreateWindow(PyObject *self, PyObject *args)
 		return NULL;
 
 	CCreateContext* pContext = NULL;
-	if (obContext != Py_None) 
+	if (obContext != Py_None)
 		{
 		cc.SetPythonObject(obContext);
 		pContext = &cc;
 		}
 
 	if (obRect != Py_None){
-		if (!PyArg_ParseTuple(obRect, "iiii:RECT", &rect.left,  &rect.top,  &rect.right,&rect.bottom)) 
+		if (!PyArg_ParseTuple(obRect, "iiii:RECT", &rect.left,  &rect.top,  &rect.right,&rect.bottom))
 			return NULL;
 		}
 
 	CFrameWnd *pParent = NULL;
-	if (obParent != Py_None) 
+	if (obParent != Py_None)
 		{
 		pParent = GetFramePtr(obParent);
 		if (pParent==NULL)
@@ -3504,7 +3504,7 @@ PyCFrameWnd_LoadAccelTable(PyObject *self, PyObject *args)
 static PyObject *
 ui_frame_load_frame(PyObject *self, PyObject *args)
 {
-	int idResource = IDR_PYTHONTYPE; 
+	int idResource = IDR_PYTHONTYPE;
 	long style = -1;
 	CPythonMDIChildWnd *pFrame = GetPythonFrame(self);
 	BOOL bMakeVisible = TRUE;
@@ -3515,7 +3515,7 @@ ui_frame_load_frame(PyObject *self, PyObject *args)
 	PythonCreateContext cc;
 	PyObject *wndParent = Py_None;
 	PyObject *contextObject = Py_None;
-	if (!PyArg_ParseTuple(args, "|ilOO:LoadFrame", 
+	if (!PyArg_ParseTuple(args, "|ilOO:LoadFrame",
 	                      &idResource, // @pyparm int|idResource|IDR_PYTHONTYPE|The Id of the resources (menu, icon, etc) for this window
 	                      &style,	   // @pyparm long|style|-1|The window style.  Note -1 implies win32con.WS_OVERLAPPEDWINDOW\|win32con.FWS_ADDTOTITLE
 						  &wndParent,  // @pyparm <o PyCWnd>|wndParent|None|The parent of the window, or None.
@@ -3539,7 +3539,7 @@ ui_frame_load_frame(PyObject *self, PyObject *args)
 		RETURN_ERR("There is no main application frame - an MDI child can not be created.");
 	if (!pMain->IsKindOf(RUNTIME_CLASS(CMDIFrameWnd)))
 		RETURN_ERR("There is no MDI Frame Window available - an MDI child can not be created.");
-	
+
 	GUI_BGN_SAVE;
 	ok = pFrame->LoadFrame(idResource, style, pParent, &cc); // @pyseemfc CFrameWnd|LoadFrame
 	GUI_END_SAVE;
@@ -3558,7 +3558,7 @@ ui_frame_recalc_layout(PyObject *self, PyObject *args)
 	if (!pFrame)
 		return NULL;
 	BOOL bNotify = TRUE;
-	if (!PyArg_ParseTuple(args,"|i:RecalcLayout", 
+	if (!PyArg_ParseTuple(args,"|i:RecalcLayout",
 		&bNotify)) // @pyparm int|bNotify|1|Notify flag
 		return NULL;
 	GUI_BGN_SAVE;
@@ -3567,7 +3567,7 @@ ui_frame_recalc_layout(PyObject *self, PyObject *args)
 	RETURN_NONE;
 }
 // @pymethod |PyCFrameWnd|EnableDocking|Enable dockable control bars in a frame window
-PyObject *PyCFrameWnd_EnableDocking( PyObject *self, PyObject *args ) 
+PyObject *PyCFrameWnd_EnableDocking( PyObject *self, PyObject *args )
 {
 	CFrameWnd *pFrame = GetFramePtr(self);
 	if (!pFrame)
@@ -3593,7 +3593,7 @@ PyCFrameWnd_DockControlBar(PyObject *self, PyObject *args)
 	PyObject *ob;
 	int docBarId = 0;
 	CRect rect(0,0,0,0);
-	if (!PyArg_ParseTuple(args,"O|i(iiii):DockControlBar", 
+	if (!PyArg_ParseTuple(args,"O|i(iiii):DockControlBar",
 		       &ob, // @pyparm <o PyCControlBar>|controlBar||The control bar to dock.
 			   &docBarId, // @pyparm int|dockBarId|0|Determines which sides of the frame window to consider for docking.
 			   // @pyparm left, top, right, bottom|int, int, int, int|0,0,0,0|Determines, in screen coordinates, where the control bar will be docked in the nonclient area of the destination frame window.
@@ -3629,7 +3629,7 @@ PyCFrameWnd_FloatControlBar(PyObject *self, PyObject *args)
 	PyObject *ob;
 	int style = CBRS_ALIGN_TOP;
 	CPoint pt;
-	if (!PyArg_ParseTuple(args,"O(ii)|i:FloatControlBar", 
+	if (!PyArg_ParseTuple(args,"O(ii)|i:FloatControlBar",
 		       &ob, // @pyparm <o PyCControlBar>|controlBar||The control bar to dock.
 			   &pt.x, &pt.y, // @pyparm x,y|int, int||The location, in screen coordinates, where the top left corner of the control bar will be placed.
 			   &style)) // @pyparm int|style|CBRS_ALIGN_TOP|Determines which sides of the frame window to consider for docking.
@@ -3651,7 +3651,7 @@ PyCFrameWnd_ShowControlBar(PyObject *self, PyObject *args)
 		return NULL;
 	PyObject *ob;
 	BOOL bShow, bDelay;
-	if (!PyArg_ParseTuple(args,"Oii:ShowControlBar", 
+	if (!PyArg_ParseTuple(args,"Oii:ShowControlBar",
 		       &ob, // @pyparm <o PyCControlBar>|controlBar||The control bar to dock.
 			   &bShow, // @pyparm int|bShow||Show or hide flag.
 			   &bDelay)) // @pyparm int|bDelay||If TRUE, delay showing the control bar. If FALSE, show the control bar immediately.
@@ -3675,7 +3675,7 @@ PyCFrameWnd_SaveBarState(PyObject *self, PyObject *args)
 		return NULL;
 	TCHAR *profileName;
 	PyObject *obprofileName;
-	if (!PyArg_ParseTuple(args,"O:SaveBarState", 
+	if (!PyArg_ParseTuple(args,"O:SaveBarState",
 		       &obprofileName)) // @pyparm string|profileName||Name of a section in the initialization file or a key in the Windows registry where state information is stored.
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obprofileName, &profileName, FALSE))
@@ -3696,7 +3696,7 @@ PyCFrameWnd_LoadBarState(PyObject *self, PyObject *args)
 		return NULL;
 	TCHAR *profileName;
 	PyObject *obprofileName;
-	if (!PyArg_ParseTuple(args,"O:LoadBarState", 
+	if (!PyArg_ParseTuple(args,"O:LoadBarState",
 		       &obprofileName)) // @pyparm string|profileName||Name of a section in the initialization file or a key in the Windows registry where state information is stored.
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obprofileName, &profileName, FALSE))
@@ -3848,7 +3848,7 @@ PyCFrameWnd_SetActiveView(PyObject *self, PyObject *args)
 		return NULL;
 	PyObject *ob;
 	BOOL bNotify = TRUE;
-	if (!PyArg_ParseTuple(args,"O|i:SetActiveView", 
+	if (!PyArg_ParseTuple(args,"O|i:SetActiveView",
 		       &ob, // @pyparm <o PyCView>|view||The view to set active.
 			   &bNotify)) // @pyparm int|bNotify|1|Specifies whether the view is to be notified of activation. If TRUE, OnActivateView is called for the new view; if FALSE, it is not.
 		return NULL;
@@ -3943,12 +3943,12 @@ static struct PyMethodDef PyCFrameWnd_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCFrameWnd::type("PyCFrameWnd", 
+ui_type_CObject PyCFrameWnd::type("PyCFrameWnd",
 								  &PyCWnd::type, // @base PyCFrameWnd|PyCWnd
 								  RUNTIME_CLASS(CFrameWnd),
-								  sizeof(PyCFrameWnd), 
-								  PYOBJ_OFFSET(PyCFrameWnd), 
-								  PyCFrameWnd_methods, 
+								  sizeof(PyCFrameWnd),
+								  PYOBJ_OFFSET(PyCFrameWnd),
+								  PyCFrameWnd_methods,
 								  GET_PY_CTOR(PyCFrameWnd));
 
 // @pymethod tuple|PyCMDIFrameWnd|PreCreateWindow|Calls the underlying MFC PreCreateWindow method.
@@ -4051,7 +4051,7 @@ ui_mdi_frame_mdi_activate( PyObject *self, PyObject *args)
 	if (!pFrame)return NULL;
 
 	PyObject *ob;
-	if (!PyArg_ParseTuple(args,"O:MDIActivate", 
+	if (!PyArg_ParseTuple(args,"O:MDIActivate",
 		       &ob)) // @pyparm <o PyCWnd>|window||The window to activate.
 		return NULL;
 
@@ -4105,7 +4105,7 @@ ui_mdi_frame_on_close(PyObject *self, PyObject *args)
 // @object PyCMDIFrameWnd|A main application frame window.  Encapsulates an MFC <c CMDIFrameWnd> class
 static struct PyMethodDef PyCMDIFrameWnd_methods[] = {
 	{"GetMDIClient",ui_mdi_frame_get_mdi_client,1}, // @pymeth GetMDIClient|Returns the MDI client window
-	{"MDIGetActive",		ui_mdi_frame_window_mdi_get_active,			1}, // @pymeth MDIGetActive|Retrieves the current active MDI child window, along with a flag indicating whether the child window is maximized.	
+	{"MDIGetActive",		ui_mdi_frame_window_mdi_get_active,			1}, // @pymeth MDIGetActive|Retrieves the current active MDI child window, along with a flag indicating whether the child window is maximized.
 	{"MDIActivate",ui_mdi_frame_mdi_activate,1}, // @pymeth MDIActivate|Activate an MDI child window
 	{"MDINext", ui_mdi_frame_window_mdi_next, 1}, // @pymeth MDINext|Activates the next MDI window
 	{"PreCreateWindow", ui_mdi_frame_window_pre_create_window, 1}, // @pymeth PreCreateWindow|Calls the underlying MFC PreCreateWindow method.
@@ -4116,12 +4116,12 @@ static struct PyMethodDef PyCMDIFrameWnd_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCMDIFrameWnd::type("PyCMDIFrameWnd", 
+ui_type_CObject PyCMDIFrameWnd::type("PyCMDIFrameWnd",
 									 &PyCFrameWnd::type, // @base PyCMDIFrameWnd|PyCFrameWnd
-									 RUNTIME_CLASS(CMDIFrameWnd), 
-									 sizeof(PyCMDIFrameWnd), 
-									 PYOBJ_OFFSET(PyCMDIFrameWnd), 
-									 PyCMDIFrameWnd_methods, 
+									 RUNTIME_CLASS(CMDIFrameWnd),
+									 sizeof(PyCMDIFrameWnd),
+									 PYOBJ_OFFSET(PyCMDIFrameWnd),
+									 PyCMDIFrameWnd_methods,
 									 GET_PY_CTOR(PyCMDIFrameWnd));
 
 // @pymethod |PyCMDIChildWnd|ActivateFrame|Calls the underlying MFC ActivateFrame method.
@@ -4233,7 +4233,7 @@ ui_mdi_child_window_get_mdi_frame(PyObject *self, PyObject *args)
 	GUI_BGN_SAVE;
 	CMDIFrameWnd* pFrame=pWnd->GetMDIFrame();
 	GUI_END_SAVE;
-	
+
 	return ui_assoc_object::make(UITypeFromCObject(pFrame), pFrame)->GetGoodRet();
 }
 
@@ -4303,12 +4303,12 @@ static struct PyMethodDef PyCMDIChildWnd_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCMDIChildWnd::type("PyCMDIChildWnd", 
+ui_type_CObject PyCMDIChildWnd::type("PyCMDIChildWnd",
 									 &PyCFrameWnd::type, // @base PyCMDIChildWnd|PyCFrameWnd
-									 RUNTIME_CLASS(CMDIChildWnd), 
-									 sizeof(PyCMDIChildWnd), 
-									 PYOBJ_OFFSET(PyCMDIChildWnd), 
-									 PyCMDIChildWnd_methods, 
+									 RUNTIME_CLASS(CMDIChildWnd),
+									 sizeof(PyCMDIChildWnd),
+									 PYOBJ_OFFSET(PyCMDIChildWnd),
+									 PyCMDIChildWnd_methods,
 									 GET_PY_CTOR(PyCMDIChildWnd));
 
- 	  	 
+

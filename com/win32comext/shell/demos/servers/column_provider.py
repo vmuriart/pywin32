@@ -1,6 +1,6 @@
 # A sample shell column provider
 # Mainly ported from MSDN article:
-#  Using Shell Column Handlers for Detailed File Information, 
+#  Using Shell Column Handlers for Detailed File Information,
 #  Raymond Chen, Microsoft Corporation, February 2000
 #
 # To demostrate:

@@ -56,7 +56,7 @@ logger = logging # use logging module global methods for now.
 
 # Returns distinguished name of SCP.
 def ScpCreate(
-    service_binding_info, 
+    service_binding_info,
     service_class_name,      # Service class string to store in SCP.
     account_name = None,    # Logon account that needs access to SCP.
     container_name = None,
@@ -73,10 +73,10 @@ def ScpCreate(
     # Get the distinguished name of the computer object for the local computer
     if dn is None:
         dn = win32api.GetComputerObjectName(win32con.NameFullyQualifiedDN)
-    
+
     # Compose the ADSpath and bind to the computer object for the local computer
     comp = adsi.ADsGetObject("LDAP://" + dn, adsi.IID_IDirectoryObject)
-    
+
     # Publish the SCP as a child of the computer object
     keywords = keywords or []
     # Fill in the attribute values to be stored in the SCP.
@@ -101,7 +101,7 @@ def ScpDelete(container_name, dn = None):
     if dn is None:
         dn = win32api.GetComputerObjectName(win32con.NameFullyQualifiedDN)
     logger.debug("Removing connection point '%s' from %s", container_name, dn)
-    
+
     # Compose the ADSpath and bind to the computer object for the local computer
     comp = adsi.ADsGetObject("LDAP://" + dn, adsi.IID_IDirectoryObject)
     comp.DeleteDSObject("cn=" + container_name)
@@ -118,10 +118,10 @@ def ScpDelete(container_name, dn = None):
 # will get access-denied errors if it tries to modify the SCP's properties.
 #
 # The code uses the IADsSecurityDescriptor, IADsAccessControlList, and
-# IADsAccessControlEntry interfaces to do the following: 
-# * Get the SCP object's security descriptor. 
-# * Set ACEs in the DACL of the security descriptor. 
-# * Set the security descriptor back on the SCP object. 
+# IADsAccessControlEntry interfaces to do the following:
+# * Get the SCP object's security descriptor.
+# * Set ACEs in the DACL of the security descriptor.
+# * Set the security descriptor back on the SCP object.
 
 def AllowAccessToScpProperties(
     accountSAM, #Service account to allow access.
@@ -130,8 +130,8 @@ def AllowAccessToScpProperties(
         ("{28630eb8-41d5-11d1-a9c1-0000f80367c1}", # serviceDNSName
          "{b7b1311c-b82e-11d0-afee-0000f80367c1}",  # serviceBindingInformation
         )
-    ):  
-    
+    ):
+
     # If no service account is specified, service runs under LocalSystem.
     # So allow access to the computer account of the service's host.
     if accountSAM:
@@ -139,7 +139,7 @@ def AllowAccessToScpProperties(
     else:
         # Get the SAM account name of the computer object for the server.
         trustee = win32api.GetComputerObjectName(win32con.NameSamCompatible)
-    
+
     # Get the nTSecurityDescriptor attribute
     attribute = "nTSecurityDescriptor"
     sd = getattr(scpObject, attribute)
@@ -152,7 +152,7 @@ def AllowAccessToScpProperties(
         # Allow read and write access to the property.
         ace.AccessMask = ADS_RIGHT_DS_READ_PROP | ADS_RIGHT_DS_WRITE_PROP
 
-        # Set the trustee, which is either the service account or the 
+        # Set the trustee, which is either the service account or the
         # host computer account.
         ace.Trustee = trustee
 
@@ -198,7 +198,7 @@ def SpnRegister(
            ):
     assert type(spns) not in [str, unicode] and hasattr(spns, "__iter__"), \
            "spns must be a sequence of strings (got %r)" % spns
-    # Bind to a domain controller. 
+    # Bind to a domain controller.
     # Get the domain for the current user.
     samName = win32api.GetUserNameEx(win32api.NameSamCompatible)
     samName = samName.split('\\', 1)[0]
@@ -233,8 +233,8 @@ def UserChangePassword(username_dn, new_password):
     # Use the distinguished name to bind to the account object.
     accountPath = "LDAP://" + username_dn
     user = adsi.ADsGetObject(accountPath, adsi.IID_IADsUser)
- 
-    # Set the password on the account. 
+
+    # Set the password on the account.
     user.SetPassword(new_password)
 
 # functions related to the command-line interface
@@ -421,7 +421,7 @@ def main():
     if options.test:
         if args:
             parser.error("Can't specify args with --test")
-    
+
         args = "ScpDelete ScpCreate SpnCreate SpnRegister SpnUnregister ScpDelete"
         log(1, "--test - pretending args are:\n %s", args)
         args = args.split()

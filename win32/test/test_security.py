@@ -70,7 +70,7 @@ class DomainTests(unittest.TestCase):
     def tearDown(self):
         if self.ds_handle is not None:
             self.ds_handle.close()
-    
+
 class TestDS(DomainTests):
     def testDsGetDcName(self):
         # Not sure what we can actually test here!  At least calling it

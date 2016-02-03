@@ -38,9 +38,9 @@ class DoJobAppDialog(dlgappcore.AppDialog):
 	def OnDestroy(self,msg):
 		pass
 #	def OnOK(self):
-#		pass	
+#		pass
 #	def OnCancel(self): default behaviour - cancel == close.
-#		return 
+#		return
 
 class DoJobDialogApp(dlgappcore.DialogApp):
 	def CreateDialog(self):
@@ -56,7 +56,7 @@ def t():
 	t = DoJobAppDialog("Copy To")
 	t.DoModal()
 	return t
-	
+
 if __name__=='__main__':
 	import demoutils
 	demoutils.NeedApp()

@@ -22,7 +22,7 @@ void PythonDDEServer::Status(const TCHAR* pszFormat, ...)
 	helper.call(buf);
 }
 
-CDDEServerSystemTopic *PythonDDEServer::CreateSystemTopic() 
+CDDEServerSystemTopic *PythonDDEServer::CreateSystemTopic()
 {
 	CVirtualHelper helper("CreateSystemTopic", this);
 	PyObject *ob;
@@ -137,10 +137,10 @@ static struct PyMethodDef PyDDEServer_methods[] = {
 
 
 
-ui_type_CObject PyDDEServer::type("PyDDEServer", 
-								   &ui_assoc_CObject::type, 
-								   RUNTIME_CLASS(CDDEServer), 
-								   sizeof(PyDDEServer), 
-								   PYOBJ_OFFSET(PyDDEServer), 
+ui_type_CObject PyDDEServer::type("PyDDEServer",
+								   &ui_assoc_CObject::type,
+								   RUNTIME_CLASS(CDDEServer),
+								   sizeof(PyDDEServer),
+								   PYOBJ_OFFSET(PyDDEServer),
 								   PyDDEServer_methods,
       							   GET_PY_CTOR(PyDDEServer));

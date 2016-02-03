@@ -62,7 +62,7 @@ def search():
     prefs = [(ADS_SEARCHPREF_SEARCH_SCOPE, (ADS_SCOPE_SUBTREE,))]
     hr, statuses = gc.SetSearchPreference(prefs)
     log(3, "SetSearchPreference returned %d/%r", hr, statuses)
-    
+
     if options.attributes:
         attributes = options.attributes.split(",")
     else:
@@ -92,7 +92,7 @@ def search():
                     print_attribute( (a, None, None) )
         hr = gc.GetNextRow(h)
     gc.CloseSearchHandle(h)
-   
+
 def main():
     global options
     from optparse import OptionParser
@@ -116,7 +116,7 @@ def main():
                       help="specify the search filter")
     parser.add_option("", "--attributes",
                       help="comma sep'd list of attribute names to print")
-    
+
     options, args = parser.parse_args()
     if options.quiet:
         if options.verbose != 1:

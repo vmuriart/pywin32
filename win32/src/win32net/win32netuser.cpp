@@ -3,7 +3,7 @@
 win32netuser.cpp -- module for interface into NetUser part
 of the Network API.  This is part of the win32net module.
 
-// SWT 2/8/01 - added accessors for USER_MODALS_INFO_* 
+// SWT 2/8/01 - added accessors for USER_MODALS_INFO_*
 
 ***********************************************************/
 // @doc
@@ -305,7 +305,7 @@ static struct PyNET_STRUCT user_modals_infos[] = { // @flagh Level|Data
 };
 
 // @pymethod dict|win32net|NetUserModalsGet|Retrieves global user information on a server.
-PyObject *PyNetUserModalsGet(PyObject *self, PyObject *args) 
+PyObject *PyNetUserModalsGet(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The information level contained in the data
@@ -316,7 +316,7 @@ PyObject *PyNetUserModalsGet(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetUserModalsSet|Sets global user parameters on a server.
-PyObject *PyNetUserModalsSet(PyObject *self, PyObject *args) 
+PyObject *PyNetUserModalsSet(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The information level contained in the data
@@ -326,7 +326,7 @@ PyObject *PyNetUserModalsSet(PyObject *self, PyObject *args)
 }
 
 // @pymethod dict|win32net|NetUserGetInfo|Retrieves information about a particular user account on a server.
-PyObject *PyNetUserGetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetUserGetInfo(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|username||The user name
@@ -338,7 +338,7 @@ PyObject *PyNetUserGetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetUserSetInfo|Sets information about a particular user account on a server.
-PyObject *PyNetUserSetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetUserSetInfo(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|username||The user name
@@ -349,7 +349,7 @@ PyObject *PyNetUserSetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetUserAdd|Creates a new user.
-PyObject *PyNetUserAdd(PyObject *self, PyObject *args) 
+PyObject *PyNetUserAdd(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The information level contained in the data
@@ -360,7 +360,7 @@ PyObject *PyNetUserAdd(PyObject *self, PyObject *args)
 
 
 // @pymethod |win32net|NetUserDel|Deletes a user.
-PyObject *PyNetUserDel(PyObject *self, PyObject *args) 
+PyObject *PyNetUserDel(PyObject *self, PyObject *args)
 {
 	return PyDoDel(self, args, &NetUserDel, "NetUserDel");
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
@@ -377,7 +377,7 @@ PyObject *PyNetUserDel(PyObject *self, PyObject *args)
 // returned, which can be used to call the function again to fetch more data.
 // This process may repeat, each time with a new resume handle, until zero is
 // returned for the new handle, indicating all the data has been read.
-PyObject *PyNetUserEnum(PyObject *self, PyObject *args) 
+PyObject *PyNetUserEnum(PyObject *self, PyObject *args)
 {
 	WCHAR *szServer = NULL;
 	PyObject *obServer;
@@ -433,7 +433,7 @@ done:
 }
 
 // @pymethod |win32net|NetUserChangePassword|Changes the password for a user.
-PyObject *PyNetUserChangePassword(PyObject *self, PyObject *args) 
+PyObject *PyNetUserChangePassword(PyObject *self, PyObject *args)
 {
 	// @comm A server or domain can be configured to require that a
 	// user log on to change the password on a user account.
@@ -488,13 +488,13 @@ done:
 PyObject *
 PyNetUserGetGroups( PyObject *self, PyObject *args)
 {
-	DWORD dwBuffsize = MAX_PREFERRED_LENGTH;	
+	DWORD dwBuffsize = MAX_PREFERRED_LENGTH;
 	PyWin_AutoFreeBstr	wzServerName;		// storage for incoming servername string pointer
 	PyWin_AutoFreeBstr	wzUserName;			// incoming username
 	PyObject *		obServerName;
 	PyObject *              obUserName;
 
-	
+
 	if (!PyArg_ParseTuple(args, "OO:NetUserGetGroups",
 			&obServerName, // @pyparm string|serverName||The name of the remote server on which the function is to execute. None or an empty string specifies the server program running on the local computer.
 			&obUserName)) // @pyparm string|userName||The name of the user to search for in each group account.
@@ -513,7 +513,7 @@ PyNetUserGetGroups( PyObject *self, PyObject *args)
 
 	PyObject * pRetlist = PyList_New(0);	//create a return list of 0 size
 	if (pRetlist==NULL) return NULL; // did we err?
-	
+
 	Py_BEGIN_ALLOW_THREADS
 	Errno = NetUserGetGroups((BSTR)wzServerName, (BSTR)wzUserName, 1, (LPBYTE *)&lpBuffer, dwBuffsize, &dwCount, &dwMaxCount);
 	Py_END_ALLOW_THREADS
@@ -528,7 +528,7 @@ PyNetUserGetGroups( PyObject *self, PyObject *args)
 			do
 			{
 				PyObject *obName = PyWinObject_FromWCHAR(p_nr->grui1_name);
-				PyObject *t_ob = Py_BuildValue("(Oi)",obName, p_nr->grui1_attributes);	
+				PyObject *t_ob = Py_BuildValue("(Oi)",obName, p_nr->grui1_attributes);
 				Py_XDECREF(obName);
 
 				int listerr = PyList_Append(pRetlist,t_ob);				// append our obj...Append does an INCREF!
@@ -545,7 +545,7 @@ PyNetUserGetGroups( PyObject *self, PyObject *args)
 			} while (dwCount);
 		}; // if (dwCount > 0)
 
-	}	
+	}
 	else {	// ERROR Occurred
 		Py_DECREF(pRetlist);
 		return ReturnNetError("NetUserGetGroups", Errno);
@@ -569,7 +569,7 @@ PyObject *
 PyNetUserGetLocalGroups( PyObject *self, PyObject *args)
 {
 	DWORD dwFlags = LG_INCLUDE_INDIRECT;
-	DWORD dwBuffsize = 0xFFFFFFFF;	// request it all baby! 
+	DWORD dwBuffsize = 0xFFFFFFFF;	// request it all baby!
 	PyWin_AutoFreeBstr wzServerName;		// storage for incoming domain string pointer
 	PyWin_AutoFreeBstr wzUserName;			// incoming username
 	PyObject *obServerName;
@@ -577,7 +577,7 @@ PyNetUserGetLocalGroups( PyObject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "OO|i:NetUserGetLocalGroups",
 			&obServerName, // @pyparm string|serverName||The name of the remote server on which the function is to execute. None or an empty string specifies the server program running on the local computer.
-			&obUserName, // @pyparm string|userName||The name of the user to search for in each group account. This parameter can be of the form \<UserName\>, in which case the username is expected to be found on servername. The user name can also be of the form \<DomainName\>\\\<UserName\> in which case \<DomainName\> is associated with servername and \<UserName\> is expected to be to be found on that domain. 
+			&obUserName, // @pyparm string|userName||The name of the user to search for in each group account. This parameter can be of the form \<UserName\>, in which case the username is expected to be found on servername. The user name can also be of the form \<DomainName\>\\\<UserName\> in which case \<DomainName\> is associated with servername and \<UserName\> is expected to be to be found on that domain.
 			&dwFlags)) // @pyparm int|flags|LG_INCLUDE_INDIRECT|Flags for the call.
 		return NULL;
 
@@ -594,7 +594,7 @@ PyNetUserGetLocalGroups( PyObject *self, PyObject *args)
 
 	PyObject * pRetlist = PyList_New(0);	//create a return list of 0 size
 	if (pRetlist==NULL) return NULL; // did we err?
-	
+
 	Py_BEGIN_ALLOW_THREADS
 	Errno = NetUserGetLocalGroups(wzServerName, wzUserName, 0, dwFlags, (LPBYTE *)&lpBuffer, dwBuffsize, &dwCount, &dwMaxCount);	// do the enumeration
     Py_END_ALLOW_THREADS
@@ -626,7 +626,7 @@ PyNetUserGetLocalGroups( PyObject *self, PyObject *args)
 			} while (dwCount);
 		}; // if (dwCount > 0)
 
-	}	
+	}
 	else	// ERROR Occurred
 	{
 		Py_DECREF(pRetlist);

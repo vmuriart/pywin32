@@ -231,10 +231,10 @@ BOOL PyPERF_OBJECT_TYPE::InitMemoryLayout( MappingManager *pmm, PyPerfMonManager
 	}
 	pPCB->ByteLength = totalCounterSize;
 	// Now back-fill the PERF_OBJECT_TYPE buffer.
-	m_pPOT->TotalByteLength = sizeof(PERF_OBJECT_TYPE) + 
-							  (numCounters * sizeof(PERF_COUNTER_DEFINITION)) + 
+	m_pPOT->TotalByteLength = sizeof(PERF_OBJECT_TYPE) +
+							  (numCounters * sizeof(PERF_COUNTER_DEFINITION)) +
 							  totalCounterSize;
-	m_pPOT->DefinitionLength = sizeof(PERF_OBJECT_TYPE) + 
+	m_pPOT->DefinitionLength = sizeof(PERF_OBJECT_TYPE) +
 							  (numCounters * sizeof(PERF_COUNTER_DEFINITION));
 	m_pPOT->HeaderLength = sizeof(PERF_OBJECT_TYPE);
 	m_pPOT->ObjectNameTitleIndex = m_ObjectNameTitleIndex;

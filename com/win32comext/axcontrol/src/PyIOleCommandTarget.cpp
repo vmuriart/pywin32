@@ -136,7 +136,7 @@ PyObject *PyIOleCommandTarget::Exec(PyObject *self, PyObject *args)
 	PY_INTERFACE_PRECALL;
 	hr = pIOCT->Exec( pguid, cmdid, cmdopt, &varIn, &varOut);
 	PY_INTERFACE_POSTCALL;
-	
+
 	VariantClear(&varIn);
 
 	if ( FAILED(hr) ) {
@@ -227,7 +227,7 @@ STDMETHODIMP PyGOleCommandTarget::QueryStatus(
 			PyErr_Format(PyExc_ValueError, "Sequence must have %d items (got %d)",
 				     cCmds, PySequence_Length(cmds));
 			ok = FALSE;
-			
+
 		}
 		if (ok)
 			ok = FillOLECMDsWithSequence(prgCmds, cCmds, cmds);

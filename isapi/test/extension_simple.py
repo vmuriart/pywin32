@@ -36,7 +36,7 @@ class Extension(threaded_extension.ThreadPoolExtension):
         if result is None:
             # This means the test finalized everything
             return
-        ecb.SendResponseHeaders("200 OK", "Content-type: text/html\r\n\r\n", 
+        ecb.SendResponseHeaders("200 OK", "Content-type: text/html\r\n\r\n",
                                 False)
         print >> ecb, "<HTML><BODY>Finished running test <i>", test_name, "</i>"
         print >> ecb, "<pre>"

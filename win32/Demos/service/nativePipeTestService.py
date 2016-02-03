@@ -1,4 +1,4 @@
-# This is an example of a service hosted by python.exe rather than 
+# This is an example of a service hosted by python.exe rather than
 # pythonservice.exe.
 
 # Note that it is very rare that using python.exe is a better option
@@ -36,7 +36,7 @@ def main():
         import win32traceutil
         print "service is starting..."
         print "(execute this script with '--help' if that isn't what you want)"
-        
+
         servicemanager.Initialize()
         servicemanager.PrepareToHostSingle(NativeTestPipeService)
         # Now ask the service manager to fire things up for us...

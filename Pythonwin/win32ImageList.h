@@ -1,6 +1,6 @@
 /* win32ImageList : header
 
-	Image List object.  
+	Image List object.
 
 	Created May 1996, Mark Hammond (MHammond@skippinet.com.au)
 

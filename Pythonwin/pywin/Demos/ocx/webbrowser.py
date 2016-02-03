@@ -34,7 +34,7 @@ class BrowserFrame(window.MDIChildWnd):
 		rect = self.GetClientRect()
 		rect = (0,0,rect[2]-rect[0], rect[3]-rect[1])
 		self.ocx = MyWebBrowser()
-		self.ocx.CreateControl("Web Browser", win32con.WS_VISIBLE | win32con.WS_CHILD, rect, self, 1000)		
+		self.ocx.CreateControl("Web Browser", win32con.WS_VISIBLE | win32con.WS_CHILD, rect, self, 1000)
 		self.ocx.Navigate(self.url)
 		self.HookMessage (self.OnSize, win32con.WM_SIZE)
 	def OnSize (self, params):

@@ -45,6 +45,6 @@ def main():
 </UL>
 </BODY></HTML>
 """)
-    
+
 if __name__ == "__main__":
     main()

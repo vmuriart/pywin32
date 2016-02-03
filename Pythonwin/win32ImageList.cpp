@@ -1,6 +1,6 @@
 /* win32ImageList : implementation file
 
-	Image List object.  
+	Image List object.
 
 	Created Feb 1997, Mark Hammond (MHammond@skippinet.com.au)
 
@@ -54,7 +54,7 @@ PyObject *PyCImageList_Create( PyObject *self, PyObject *args )
 	BOOL bMask;
 	CImageList *pList = new PythonImageList();
 
-	if (PyArg_ParseTuple(args, "iiiii", 
+	if (PyArg_ParseTuple(args, "iiiii",
 			&cx, // @pyparm int|cx||Dimension of each image, in pixels.
 			&cy, // @pyparm int|cy||Dimension of each image, in pixels.
 			&bMask, // @pyparm int|mask||TRUE if the image contains a mask; otherwise FALSE.
@@ -72,7 +72,7 @@ PyObject *PyCImageList_Create( PyObject *self, PyObject *args )
 	BOOL bRet;
 	PyObject *obID;
 	TCHAR *bitmapID=NULL;
-	if (PyArg_ParseTuple(args, "Oiii", 
+	if (PyArg_ParseTuple(args, "Oiii",
 			&obID, // @pyparmalt1 <o PyResourceId>|bitmapId||Resource name or ID of the bitmap to be associated with the image list.
 			&cx, // @pyparmalt1 int|cx||Dimension of each image, in pixels.
 			&nGrow, // @pyparmalt1 int|grow||Number of images by which the image list can grow when the system needs to resize the list to make room for new images. This parameter represents the number of new images the resized image list can contain.
@@ -123,7 +123,7 @@ PyObject *PyCImageList_Add( PyObject *self, PyObject *args )
 	int rc;
 	if (!pList)
 		return NULL;
-	if (PyArg_ParseTuple(args, "(OO)", 
+	if (PyArg_ParseTuple(args, "(OO)",
 			&obbmp1, &obbmp2)) {// @pyparm (int,int)|bitmap, bitmapMask||2 Bitmaps to use (primary and mask)
 		HBITMAP bmp1, bmp2;
 		if (!PyWinObject_AsHANDLE(obbmp1, (HANDLE *)&bmp1) || !PyWinObject_AsHANDLE(obbmp2, (HANDLE *)&bmp2))
@@ -136,7 +136,7 @@ PyObject *PyCImageList_Add( PyObject *self, PyObject *args )
 	} else {
 		PyErr_Clear();
 		HBITMAP bmp1;
-		if (PyArg_ParseTuple(args, "Oi", 
+		if (PyArg_ParseTuple(args, "Oi",
 				&obbmp1, 	// @pyparmalt1 int|bitmap||Bitmap to use
 				&mask)) { // @pyparmalt1 int|color||Color to use for the mask.
 			if (!PyWinObject_AsHANDLE(obbmp1, (HANDLE *)&bmp1))
@@ -149,7 +149,7 @@ PyObject *PyCImageList_Add( PyObject *self, PyObject *args )
 		} else {
 			PyErr_Clear();
 			PyObject *obIcon;
-			if (PyArg_ParseTuple(args, "O", 
+			if (PyArg_ParseTuple(args, "O",
 					&obIcon)) {// @pyparmalt2 int|hIcon||Handle of an icon to add.
 				HICON hIcon;
 				if (!PyWinObject_AsHANDLE(obIcon, (HANDLE *)&hIcon))
@@ -272,10 +272,10 @@ static struct PyMethodDef PyCImageList_methods[] = {
 	{NULL, NULL }
 };
 
-ui_type_CObject PyCImageList::type("PyCImageList", 
-								   &ui_assoc_CObject::type, 
-								   RUNTIME_CLASS(CImageList), 
+ui_type_CObject PyCImageList::type("PyCImageList",
+								   &ui_assoc_CObject::type,
+								   RUNTIME_CLASS(CImageList),
 								   sizeof(PyCImageList),
 								   PYOBJ_OFFSET(PyCImageList),
-								   PyCImageList_methods, 
+								   PyCImageList_methods,
 								   GET_PY_CTOR(PyCImageList));

@@ -23,7 +23,7 @@ struct PyMemberDef PyDEVMODEA::members[] = {
 	// @prop int|Size|Size of structure
 	{"Size",	 		T_USHORT, OFF(devmode.dmSize), READONLY, "Size of structure"},
 	// @prop int|DriverExtra|Number of extra bytes allocated for driver data, can only be set when new object is created
-	{"DriverExtra", 	T_USHORT, OFF(devmode.dmDriverExtra), READONLY, 
+	{"DriverExtra", 	T_USHORT, OFF(devmode.dmDriverExtra), READONLY,
 		"Number of extra bytes allocated for driver data, can only be set when new object is created"},
 	// @prop int|Fields|Bitmask of win32con.DM_* constants indicating which members are set
 	{"Fields",			T_ULONG,  OFF(devmode.dmFields), 0, "Bitmask of win32con.DM_* constants indicating which members are set"},
@@ -44,7 +44,7 @@ struct PyMemberDef PyDEVMODEA::members[] = {
 	// @prop int|DisplayOrientation|Display rotation: DMDO_DEFAULT,DMDO_90, DMDO_180, DMDO_270
 	{"DisplayOrientation",T_ULONG,OFF(devmode.dmDisplayOrientation), 0, "Display rotation: DMDO_DEFAULT,DMDO_90, DMDO_180, DMDO_270"},
 	// @prop int|DisplayFixedOutput|DMDFO_DEFAULT, DMDFO_CENTER, DMDFO_STRETCH
-	{"DisplayFixedOutput",T_ULONG,OFF(devmode.dmDisplayFixedOutput), 0, "DMDFO_DEFAULT, DMDFO_CENTER, DMDFO_STRETCH"}, 
+	{"DisplayFixedOutput",T_ULONG,OFF(devmode.dmDisplayFixedOutput), 0, "DMDFO_DEFAULT, DMDFO_CENTER, DMDFO_STRETCH"},
 	// @prop int|Scale|Specified as percentage, eg 50 means half size of original
 	{"Scale",			T_SHORT,  OFF(devmode.dmScale), 0, "Specified as percentage, eg 50 means half size of original"},
 	// @prop int|Copies|Nbr of copies to print
@@ -196,7 +196,7 @@ int PyDEVMODEA::set_DriverData(PyObject *self, PyObject *v, void *unused)
 		return -1;
 		}
 	// This is not a real struct member, calculate address after end of fixed part of structure
-	char *driverdata=(char *)((ULONG_PTR)pdevmode + pdevmode->dmSize); 
+	char *driverdata=(char *)((ULONG_PTR)pdevmode + pdevmode->dmSize);
 	ZeroMemory(driverdata, pdevmode->dmDriverExtra);
 	memcpy(driverdata, value, valuelen);
 	return 0;
@@ -307,7 +307,7 @@ PyDEVMODEA::~PyDEVMODEA()
 BOOL PyDEVMODE_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PyDEVMODEAType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyDEVMODE");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyDEVMODE");
 		return FALSE;
 		}
 	return TRUE;
@@ -421,7 +421,7 @@ struct PyMemberDef PyDEVMODEW::members[] = {
 	// @prop int|Size|Size of structure
 	{"Size",	 		T_USHORT, OFFW(devmode.dmSize), READONLY, "Size of structure"},
 	// @prop int|DriverExtra|Number of extra bytes allocated for driver data, can only be set when new object is created
-	{"DriverExtra", 	T_USHORT, OFFW(devmode.dmDriverExtra), READONLY, 
+	{"DriverExtra", 	T_USHORT, OFFW(devmode.dmDriverExtra), READONLY,
 		"Number of extra bytes allocated for driver data, can only be set when new object is created"},
 	// @prop int|Fields|Bitmask of win32con.DM_* constants indicating which members are set
 	{"Fields",			T_ULONG,  OFFW(devmode.dmFields), 0, "Bitmask of win32con.DM_* constants indicating which members are set"},
@@ -442,7 +442,7 @@ struct PyMemberDef PyDEVMODEW::members[] = {
 	// @prop int|DisplayOrientation|Display rotation: DMDO_DEFAULT,DMDO_90, DMDO_180, DMDO_270
 	{"DisplayOrientation",T_ULONG,OFFW(devmode.dmDisplayOrientation), 0, "Display rotation: DMDO_DEFAULT,DMDO_90, DMDO_180, DMDO_270"},
 	// @prop int|DisplayFixedOutput|DMDFO_DEFAULT, DMDFO_CENTER, DMDFO_STRETCH
-	{"DisplayFixedOutput",T_ULONG,OFFW(devmode.dmDisplayFixedOutput), 0, "DMDFO_DEFAULT, DMDFO_CENTER, DMDFO_STRETCH"}, 
+	{"DisplayFixedOutput",T_ULONG,OFFW(devmode.dmDisplayFixedOutput), 0, "DMDFO_DEFAULT, DMDFO_CENTER, DMDFO_STRETCH"},
 	// @prop int|Scale|Specified as percentage, eg 50 means half size of original
 	{"Scale",			T_SHORT,  OFFW(devmode.dmScale), 0, "Specified as percentage, eg 50 means half size of original"},
 	// @prop int|Copies|Nbr of copies to print
@@ -594,7 +594,7 @@ int PyDEVMODEW::set_DriverData(PyObject *self, PyObject *v, void *unused)
 		return -1;
 		}
 	// This is not a real struct member, calculate address after end of fixed part of structure
-	char *driverdata=(char *)((ULONG_PTR)pdevmode + pdevmode->dmSize); 
+	char *driverdata=(char *)((ULONG_PTR)pdevmode + pdevmode->dmSize);
 	ZeroMemory(driverdata, pdevmode->dmDriverExtra);
 	memcpy(driverdata, value, valuelen);
 	return 0;
@@ -704,7 +704,7 @@ PyDEVMODEW::~PyDEVMODEW()
 BOOL PyDEVMODEW_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PyDEVMODEWType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyDEVMODEW");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyDEVMODEW");
 		return FALSE;
 		}
 	return TRUE;

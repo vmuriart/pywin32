@@ -6,7 +6,7 @@
 #include "PySecurityObjects.h"
 #include "structmember.h"
 
-#ifdef NO_PYWINTYPES_SECURITY  
+#ifdef NO_PYWINTYPES_SECURITY
 
 BOOL PyWinObject_AsSECURITY_ATTRIBUTES(PyObject *ob, SECURITY_ATTRIBUTES **ppSECURITY_ATTRIBUTES, BOOL bNoneOK /*= TRUE*/)
 {

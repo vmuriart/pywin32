@@ -42,8 +42,8 @@ static BOOL (*pfnMakeOlePythonCall)(PyObject *handler, DISPPARAMS FAR* params, V
 	EXCEPINFO FAR* pexcepinfo, UINT FAR* puArgErr, PyObject *addnlArgs) = NULL;
 
 // General command handler for Python.
-BOOL 
-Python_OnCmdMsg (CCmdTarget *obj, UINT nID, int nCode, 
+BOOL
+Python_OnCmdMsg (CCmdTarget *obj, UINT nID, int nCode,
 		 void* pExtra, AFX_CMDHANDLERINFO*pHandlerInfo)
 {
 	// Let MFC deal with the file menu.
@@ -68,7 +68,7 @@ Python_OnCmdMsg (CCmdTarget *obj, UINT nID, int nCode,
 			CWnd *control = ((CWnd *)obj)->GetDlgItem(nID);
 			CEnterLeavePython _celp;
 			PyCCmdTarget *pObj = (PyCCmdTarget *) ui_assoc_CObject::GetAssocObject(control);
-			if (pObj && pObj->pOleEventHookList && 
+			if (pObj && pObj->pOleEventHookList &&
 				pObj->pOleEventHookList->Lookup ((unsigned short)pEvent->m_dispid, (void *&)method)) {
 					if (pfnMakeOlePythonCall==NULL) {
 						pfnMakeOlePythonCall = (BOOL (*)(PyObject *, DISPPARAMS FAR* , VARIANT FAR* ,EXCEPINFO FAR* , UINT FAR*, PyObject * ))
@@ -105,7 +105,7 @@ Python_OnCmdMsg (CCmdTarget *obj, UINT nID, int nCode,
 		if (nCode == CN_UPDATE_COMMAND_UI) {
 			CCmdUI *pUI = (CCmdUI *)pExtra;
 			PyObject *method;
-			if (pObj->pCommandUpdateHookList && 
+			if (pObj->pCommandUpdateHookList &&
 				pObj->pCommandUpdateHookList->Lookup (nID, (void *&)method)) {
 				// I have a specific user interface element.
 				// create a PyCCmdUI object.
@@ -128,9 +128,9 @@ Python_OnCmdMsg (CCmdTarget *obj, UINT nID, int nCode,
 					DODECREF(ob);
 				}
 				rc = TRUE;
-			} else if (pObj->pCommandHookList && 
+			} else if (pObj->pCommandHookList &&
 				       pObj->pCommandHookList->Lookup (nID, (void *&)method)) {
-				// we have a handler for the command itself, but not the 
+				// we have a handler for the command itself, but not the
 				// user interface element.  Enable the element.
 				pUI->Enable();
 				rc = TRUE; // did handle it.
@@ -309,10 +309,10 @@ PyCCmdUI::getattro(PyObject *obname)
 }
 
 
-ui_type PyCCmdUI::type("PyCCmdUI", 
-					   &ui_assoc_object::type, 
-					   sizeof(PyCCmdUI), 
-					   PYOBJ_OFFSET(PyCCmdUI), 
-					   PyCCmdUI_methods, 
+ui_type PyCCmdUI::type("PyCCmdUI",
+					   &ui_assoc_object::type,
+					   sizeof(PyCCmdUI),
+					   PYOBJ_OFFSET(PyCCmdUI),
+					   PyCCmdUI_methods,
 					   GET_PY_CTOR(PyCCmdUI));
 

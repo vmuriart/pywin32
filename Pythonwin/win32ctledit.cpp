@@ -63,12 +63,12 @@ PyCEdit_create_window(PyObject *self, PyObject *args)
 	PyObject *obParent;
 	RECT rect;
 
-	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow",
 			   &style, // @pyparm int|style||The style for the Edit.  Use any of the win32con.BS_* constants.
 			   &rect.left,&rect.top,&rect.right,&rect.bottom,
 			   // @pyparm (left, top, right, bottom)|rect||The size and position of the Edit.
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the Edit.  Usually a <o PyCDialog>.
-			   &id )) // @pyparm int|id||The Edits control ID. 
+			   &id )) // @pyparm int|id||The Edits control ID.
 		return NULL;
 
 	if (!ui_base_class::is_uiobject(obParent, &PyCWnd::type))
@@ -98,9 +98,9 @@ PyCEdit_create_window(PyObject *self, PyObject *args)
 static PyObject *PyCEdit_fmt_lines(PyObject *self, PyObject *args)
 {
 	// @ comm Sets the inclusion of soft line-break characters on or off within a multiple-line edit control.
-	// A soft line break consists of two carriage returns and a linefeed inserted at the end of a line that is 
+	// A soft line break consists of two carriage returns and a linefeed inserted at the end of a line that is
 	// broken because of word wrapping.
-	// A hard line break consists of one carriage return and a linefeed. 
+	// A hard line break consists of one carriage return and a linefeed.
 	// Lines that end with a hard line break are not affected by FmtLines. ~
 	// This function is inly effective on multi-line edit controls.
 	CEdit *pEdit = GetEditCtrl(self);
@@ -136,17 +136,17 @@ static PyObject *PyCEdit_set_sel(PyObject *self, PyObject *args)
 	BOOL bNoScroll = FALSE;
 	if (!pEdit)
 		return NULL;
-	if (!PyArg_ParseTuple(args, "i|ii:SetSel", 
-	                    &start, // @pyparm int|start||Specifies the starting position. 
-	                            // If start is 0 and end is -1, all the text in the edit control is selected. 
+	if (!PyArg_ParseTuple(args, "i|ii:SetSel",
+	                    &start, // @pyparm int|start||Specifies the starting position.
+	                            // If start is 0 and end is -1, all the text in the edit control is selected.
 	                            // If start is -1, any current selection is removed.
-	                    &end,   // @pyparm int|end|start|Specifies the ending position. 
+	                    &end,   // @pyparm int|end|start|Specifies the ending position.
 	                    &bNoScroll)) {  // @pyparm int|bNoScroll|0|Indicates whether the caret should be scrolled into view. If 0, the caret is scrolled into view. If 1, the caret is not scrolled into view.
 		PyErr_Clear();
 		bNoScroll = FALSE;
-		if (!PyArg_ParseTuple(args, "(ii)|i:SetSel", 
+		if (!PyArg_ParseTuple(args, "(ii)|i:SetSel",
 							&start, // @pyparmalt2 (int, int)|start,end)||As for normal start, end args.
-							&end,  
+							&end,
 							&bNoScroll)) // @pyparmalt2 int|bNoScroll|0|Indicates whether the caret should be scrolled into view. If 0, the caret is scrolled into view. If 1, the caret is not scrolled into view.
 			return NULL;
 	}
@@ -226,7 +226,7 @@ PyCEdit_set_readonly(PyObject *self, PyObject *args)
 	GUI_BGN_SAVE;
 	pEdit->SetReadOnly(bState);	// @pyseemfc CEdit|SetReadOnly
 	GUI_END_SAVE;
-	RETURN_NONE;	
+	RETURN_NONE;
 }
 // @pymethod int|PyCEdit|GetLineCount|Gets the number of lines in an edit control.
 static PyObject *
@@ -264,7 +264,7 @@ static PyObject *PyCEdit_limit_text(PyObject *self, PyObject *args)
 	if (!pEdit)
 		return NULL;
 	int nChars = 0;
-	// @pyparm int|nChars|0|Specifies the length (in bytes) of the text that the user can enter. If this parameter is 0, the text length is set to 
+	// @pyparm int|nChars|0|Specifies the length (in bytes) of the text that the user can enter. If this parameter is 0, the text length is set to
 	// UINT_MAX bytes. This is the default behavior.
 	if (!PyArg_ParseTuple(args, "|i:LimitText", &nChars))
 		return NULL;
@@ -282,7 +282,7 @@ PyCEdit_line_index(PyObject *self, PyObject *args)
 	CEdit *pEdit = GetEditCtrl(self);
 	if (!pEdit)
 		return NULL;
-	// @pyparm int|lineNo|-1|Contains the index value for the desired line in the text 
+	// @pyparm int|lineNo|-1|Contains the index value for the desired line in the text
 	// of the edit control, or contains -1.  If -1, then it specifies the current line.
 	int lineNo = -1;
 	if (!PyArg_ParseTuple(args, "|i:LineIndex", &lineNo))
@@ -291,8 +291,8 @@ PyCEdit_line_index(PyObject *self, PyObject *args)
 	long rc = pEdit->LineIndex(lineNo);
 	GUI_END_SAVE;
 	return Py_BuildValue("i",rc); // @pyseemfc CEdit|LineIndex
-	// @rdesc The character index of the line specified in lineNo, or -1 if 
-	// the specified line number is greater then the number of lines in 
+	// @rdesc The character index of the line specified in lineNo, or -1 if
+	// the specified line number is greater then the number of lines in
 	// the edit control.
 }
 // @pymethod int|PyCEdit|LineScroll|Scroll the control vertically and horizontally
@@ -323,7 +323,7 @@ PyCEdit_line_from_char(PyObject *self, PyObject *args)
 	if (!pEdit)
 		return NULL;
 	int charNo=-1;
-	// @pyparm int|charNo|-1|Contains the zero-based index value for the desired character in the text of the edit 
+	// @pyparm int|charNo|-1|Contains the zero-based index value for the desired character in the text of the edit
 	// control, or -1.  If -1, then it specifies the current line.
 	if (!PyArg_ParseTuple(args, "|i:LineFromChar", &charNo))
 		return NULL;
@@ -331,7 +331,7 @@ PyCEdit_line_from_char(PyObject *self, PyObject *args)
 	int rc = pEdit->LineFromChar(charNo);
 	GUI_END_SAVE;
 	return Py_BuildValue("i", rc); // @pyseemfc CEdit|LineFromChar
-	// @rdesc The zero-based line number of the line containing the character index specified by charNo. 
+	// @rdesc The zero-based line number of the line containing the character index specified by charNo.
 	// If charNo is -1, the number of the line that contains the first character of the selection is returned.
 	// If there is no selection, the current line number is returned.
 }
@@ -420,9 +420,9 @@ static struct PyMethodDef PyCEdit_methods[] = {
 };
 
 ui_type_CObject PyCEdit::type("PyCEdit",
-							  &ui_control_object::type, 
-							  RUNTIME_CLASS(CEdit), 
-							  sizeof(PyCEdit), 
-							  PYOBJ_OFFSET(PyCEdit), 
-							  PyCEdit_methods, 
+							  &ui_control_object::type,
+							  RUNTIME_CLASS(CEdit),
+							  sizeof(PyCEdit),
+							  PYOBJ_OFFSET(PyCEdit),
+							  PyCEdit_methods,
 							  GET_PY_CTOR(PyCEdit));

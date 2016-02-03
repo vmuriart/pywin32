@@ -738,7 +738,7 @@ static struct PyMethodDef PyIActiveDesktop_methods[] =
 	// @pymeth SetDesktopItemOptions|Sets Active Desktop options
 	{ "SetDesktopItemOptions", PyIActiveDesktop::SetDesktopItemOptions, METH_VARARGS, "Sets Active Desktop options"},
 	// @pymeth AddDesktopItem|Creates a new item to display on the desktop
-	{ "AddDesktopItem", PyIActiveDesktop::AddDesktopItem, METH_VARARGS, "Creates a new item to display on the desktop"}, 
+	{ "AddDesktopItem", PyIActiveDesktop::AddDesktopItem, METH_VARARGS, "Creates a new item to display on the desktop"},
 	// @pymeth AddDesktopItemWithUI|Adds a desktop item, allowing user interaction
 	{ "AddDesktopItemWithUI", PyIActiveDesktop::AddDesktopItemWithUI, METH_VARARGS, "Adds a desktop item, allowing user interaction"},
 	// @pymeth ModifyDesktopItem|Changes parameters for a desktop item

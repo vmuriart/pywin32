@@ -14,7 +14,7 @@ typedef void *ASSOC_CPP;
 class ui_assoc_object;
 ////////////////////
 
-class CAssocManager 
+class CAssocManager
 #ifdef _DEBUG
 						: public CObject	// CObject for diag only.
 #endif
@@ -40,7 +40,7 @@ private:
 };
 
 //
-// ui_assoc_object 
+// ui_assoc_object
 //
 class PYW_EXPORT ui_assoc_object : public ui_base_class{
 public:	// some probably shouldnt be, but...

@@ -174,9 +174,9 @@ PyObject *PyIScheduledWorkItem::GetRunTimes(PyObject *self, PyObject *args)
 
 	if ( FAILED(hr) )
 		return PyCom_BuildPyException(hr, pISWI, IID_IScheduledWorkItem );
-  
+
 	ret = PyTuple_New(wCount);
-	run_time = first_run_time; 
+	run_time = first_run_time;
 	for (time_ind = 0; time_ind < wCount; time_ind++){
 		run_time_obj = PyWinObject_FromSYSTEMTIME(*run_time);
 		PyTuple_SetItem(ret, time_ind, run_time_obj);
@@ -714,7 +714,7 @@ PyObject *PyIScheduledWorkItem::GetAccountInformation(PyObject *self, PyObject *
 
 	if ( FAILED(hr) )
 		PyCom_BuildPyException(hr, pISWI, IID_IScheduledWorkItem);
-	else 
+	else
 		ret=PyWinObject_FromWCHAR(AccountName);
 	CoTaskMemFree(AccountName);
 	return ret;

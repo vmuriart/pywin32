@@ -57,7 +57,7 @@ generates Windows .hlp files.
 
 // Headers needed for the f_trace hacks.
 #include "compile.h"
-#include "frameobject.h" 
+#include "frameobject.h"
 
 static PyObject* axdebug_Error;     /* 'Python level' errors */
 
@@ -301,7 +301,7 @@ PYWIN_MODULE_INIT_FUNC(axdebug)
 	// AX-Debugging interface registration
 	PyCom_RegisterExtensionSupport(dict, g_interfaceSupportData, sizeof(g_interfaceSupportData)/sizeof(PyCom_InterfaceSupportInfo));
 
-	ADD_CONSTANT(APPBREAKFLAG_DEBUGGER_BLOCK); // @const axdebug|APPBREAKFLAG_DEBUGGER_BLOCK|Languages should break immediately with BREAKREASON_DEBUGGER_BLOCK 
+	ADD_CONSTANT(APPBREAKFLAG_DEBUGGER_BLOCK); // @const axdebug|APPBREAKFLAG_DEBUGGER_BLOCK|Languages should break immediately with BREAKREASON_DEBUGGER_BLOCK
 	ADD_CONSTANT(APPBREAKFLAG_DEBUGGER_HALT); // @const axdebug|APPBREAKFLAG_DEBUGGER_HALT|Languages should break immediately with BREAKREASON_DEBUGGER_HALT
 	ADD_CONSTANT(APPBREAKFLAG_STEP); // @const axdebug|APPBREAKFLAG_STEP|
 //	ADD_CONSTANT(APPBREAKFLAG_APPBREAKFLAG_NESTED);
@@ -332,10 +332,10 @@ PYWIN_MODULE_INIT_FUNC(axdebug)
 	ADD_CONSTANT(DEBUG_TEXT_ISEXPRESSION);  // @const axdebug|DEBUG_TEXT_ISEXPRESSION|Indicates that the text is an expression as opposed to a statement. This flag may affect the way in which the text is parsed by some languages.
 	ADD_CONSTANT(DEBUG_TEXT_ALLOWBREAKPOINTS); // @const axdebug|DEBUG_TEXT_ALLOWBREAKPOINTS|Allow breakpoints during the evaluation of the text. If this flag is not set then breakpoints will be ignored during the evaluation of the text.
 
-	ADD_CONSTANT(DOCUMENTNAMETYPE_APPNODE);	// @const axdebug|DOCUMENTNAMETYPE_APPNODE|Gets the name as it appears in the app tree  
-	ADD_CONSTANT(DOCUMENTNAMETYPE_TITLE);	// @const axdebug|DOCUMENTNAMETYPE_TITLE|Gets the name as it appears on the doc viewer title bar  
-	ADD_CONSTANT(DOCUMENTNAMETYPE_FILE_TAIL);	// @const axdebug|DOCUMENTNAMETYPE_FILE_TAIL|Gets the filename without a path (for save as...)  
-	ADD_CONSTANT(DOCUMENTNAMETYPE_URL);		// @const axdebug|DOCUMENTNAMETYPE_URL|Gets the URL of the document, if any  
+	ADD_CONSTANT(DOCUMENTNAMETYPE_APPNODE);	// @const axdebug|DOCUMENTNAMETYPE_APPNODE|Gets the name as it appears in the app tree
+	ADD_CONSTANT(DOCUMENTNAMETYPE_TITLE);	// @const axdebug|DOCUMENTNAMETYPE_TITLE|Gets the name as it appears on the doc viewer title bar
+	ADD_CONSTANT(DOCUMENTNAMETYPE_FILE_TAIL);	// @const axdebug|DOCUMENTNAMETYPE_FILE_TAIL|Gets the filename without a path (for save as...)
+	ADD_CONSTANT(DOCUMENTNAMETYPE_URL);		// @const axdebug|DOCUMENTNAMETYPE_URL|Gets the URL of the document, if any
 
     ADD_CONSTANT(DBGPROP_ATTRIB_NO_ATTRIB); // @const axdebug|DBGPROP_ATTRIB_NO_ATTRIB|
 	ADD_CONSTANT(DBGPROP_ATTRIB_VALUE_IS_INVALID); // @const axdebug|DBGPROP_ATTRIB_VALUE_IS_INVALID|

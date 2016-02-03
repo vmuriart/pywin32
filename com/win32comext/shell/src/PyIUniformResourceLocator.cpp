@@ -56,7 +56,7 @@ PyObject *PyIUniformResourceLocator::SetURL(PyObject *self, PyObject *args)
 	PyObject *oburl;
 	LPTSTR url;
 	DWORD flags;
-	if (!PyArg_ParseTuple(args, "O|k:SetURL", 
+	if (!PyArg_ParseTuple(args, "O|k:SetURL",
 		&oburl,		// @pyparm str|URL||The url to be set
 		&flags))	// @pyparm int|InFlags|0|One of the shellcon.IURL_SETURL* flags
 		return NULL;

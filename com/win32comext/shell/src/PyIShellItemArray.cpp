@@ -72,7 +72,7 @@ PyObject *PyIShellItemArray::GetPropertyStore(PyObject *self, PyObject *args)
 	// @pyparm <o PyIID>|riid|IID__IPropertyStore|The interface to return, IID_IPropertyStore or related interface
 	IID riid = IID_IPropertyStore;
 	void *pv;
-	if ( !PyArg_ParseTuple(args, "|kO&:GetPropertyStore", &flags, 
+	if ( !PyArg_ParseTuple(args, "|kO&:GetPropertyStore", &flags,
 		PyWinObject_AsIID, &riid))
 		return NULL;
 	HRESULT hr;

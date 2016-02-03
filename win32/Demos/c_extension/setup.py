@@ -17,7 +17,7 @@ ext = Extension("win32_extension", sources,
                 )
 
 setup(
-    name="win32 extension sample", 
+    name="win32 extension sample",
     version="0.1",
     ext_modules=[ext],
 )

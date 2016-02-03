@@ -10,9 +10,9 @@ const int nMaxSessions = 10;
 
 //class CPyComTestImpl
 
-class CPyCOMTest : 
-	public IDispatchImpl<IPyCOMTest, &IID_IPyCOMTest, &LIBID_PyCOMTestLib>, 
-//	public CComDualImpl<IPyCOMTest, &IID_IPyCOMTest, &LIBID_PyCOMTestLib>, 
+class CPyCOMTest :
+	public IDispatchImpl<IPyCOMTest, &IID_IPyCOMTest, &LIBID_PyCOMTestLib>,
+//	public CComDualImpl<IPyCOMTest, &IID_IPyCOMTest, &LIBID_PyCOMTestLib>,
 	public IConnectionPointContainerImpl<CPyCOMTest>,
 	public IConnectionPointImpl<CPyCOMTest, &IID_IPyCOMTestEvent, CComDynamicUnkArray>,
 	public ISupportErrorInfo,
@@ -35,8 +35,8 @@ BEGIN_COM_MAP(CPyCOMTest)
 	COM_INTERFACE_ENTRY(ISupportErrorInfo)
 	COM_INTERFACE_ENTRY_IMPL(IConnectionPointContainer)
 END_COM_MAP()
-//	DECLARE_NOT_AGGREGATABLE(CPyCOMTest) 
-// Remove the comment from the line above if you don't want your object to 
+//	DECLARE_NOT_AGGREGATABLE(CPyCOMTest)
+// Remove the comment from the line above if you don't want your object to
 // support aggregation.  The default is to support it
 
 	DECLARE_REGISTRY_RESOURCEID(IDR_PYCOMTEST)
@@ -45,7 +45,7 @@ END_COM_MAP()
 	BEGIN_CONNECTION_POINT_MAP(CPyCOMTest)
 		CONNECTION_POINT_ENTRY(IID_IPyCOMTestEvent)
 	END_CONNECTION_POINT_MAP()
-	
+
 // ISupportsErrorInfo
 	STDMETHOD(InterfaceSupportsErrorInfo)(REFIID riid);
 

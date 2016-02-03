@@ -40,14 +40,14 @@ PyObject *PyPopen(PyObject *self, PyObject *args)
 	int bufsize=-1;
 	PyObject *f,*s;
 	int tm=0;
-  
+
 	if (!PyArg_ParseTuple(args, "s|s:popen",
 						  &cmdstring,    // @pyparm string|cmdstring||The cmdstring to pass to the shell
 						  &mode))        // @pyparm string|mode||Either 'r' or 'w'
 		return NULL;
 
 	s = PyTuple_New(0);
-      
+
 	if (*mode == 'r')
 		tm = _O_RDONLY;
 	else if (*mode != 'w')
@@ -57,16 +57,16 @@ PyObject *PyPopen(PyObject *self, PyObject *args)
 	}
 	else
 		tm = _O_WRONLY;
-     
+
 	if (*(mode+1) == 't')
 		f = _PyPopen(cmdstring, tm | _O_TEXT , POPEN_1);
 	else if (*(mode+1) == 'b')
 		f = _PyPopen(cmdstring, tm | _O_BINARY , POPEN_1);
 	else
 		f = _PyPopen(cmdstring, tm | _O_TEXT, POPEN_1);
-  
+
 	return f;
-  
+
 }
 
 // @pymethod (pipe, pipe)|win32pipe|popen2|Variation on <om win32pipe.popen>
@@ -78,12 +78,12 @@ PyObject *PyPopen2(PyObject *self, PyObject  *args)
 	char *mode="t";
 	PyObject *f;
 	int tm=0;
-  
+
 	if (!PyArg_ParseTuple(args, "s|s:popen2",
 						  &cmdstring,    // @pyparm string|cmdstring||The cmdstring to pass to the shell
 						  &mode))        // @pyparm string|mode||Either 't' or 'b'
 		return NULL;
-  
+
 	if (*mode == 't')
 		tm = _O_TEXT;
 	else if (*mode != 'b')
@@ -93,9 +93,9 @@ PyObject *PyPopen2(PyObject *self, PyObject  *args)
     }
 	else
 		tm = _O_BINARY;
-  
+
 	f = _PyPopen(cmdstring, tm , POPEN_2);
-  
+
 	return f;
 }
 
@@ -107,12 +107,12 @@ PyObject *PyPopen3(PyObject *self, PyObject  *args)
 	char *mode="t";
 	PyObject *f;
 	int tm=0;
-  
+
 	if (!PyArg_ParseTuple(args, "s|s:Popen3",
 						  &cmdstring,    // @pyparm string|cmdstring||The cmdstring to pass to the shell
 						  &mode))        // @pyparm string|mode||Either 't' or 'b'
 		return NULL;
-  
+
 	if (*mode == 't')
 		tm = _O_TEXT;
 	else if (*mode != 'b')
@@ -122,14 +122,14 @@ PyObject *PyPopen3(PyObject *self, PyObject  *args)
     }
 	else
 		tm = _O_BINARY;
-  
+
 	f = _PyPopen(cmdstring, tm , POPEN_3);
-  
+
 	return f;
 }
 
 // @pymethod (pipe, pipe)|win32pipe|popen4|Variation on <om win32pipe.popen>
-// @rdesc The result of this function is 2 pipes - the processes stdin, 
+// @rdesc The result of this function is 2 pipes - the processes stdin,
 // and stdout+stderr combined as a single pipe.
 PyObject *PyPopen4(PyObject *self, PyObject  *args)
 {
@@ -137,12 +137,12 @@ PyObject *PyPopen4(PyObject *self, PyObject  *args)
 	char *mode="t";
 	PyObject *f;
 	int tm=0;
-  
+
 	if (!PyArg_ParseTuple(args, "s|s:popen4",
 						  &cmdstring,    // @pyparm string|cmdstring||The cmdstring to pass to the shell
 						  &mode))        // @pyparm string|mode||Either 't' or 'b'
 		return NULL;
-  
+
 	if (*mode == 't')
 		tm = _O_TEXT;
 	else if (*mode != 'b')
@@ -152,12 +152,12 @@ PyObject *PyPopen4(PyObject *self, PyObject  *args)
     }
 	else
 		tm = _O_BINARY;
-  
+
 	f = _PyPopen(cmdstring, tm , POPEN_4);
-  
+
 	return f;
 }
-												
+
 static int _PyPopenCreateProcess(char *cmdstring,
 				 HANDLE hStdin,
 				 HANDLE hStdout,
@@ -184,7 +184,7 @@ static int _PyPopenCreateProcess(char *cmdstring,
 	// Now we'll just error out..
 	else
 		return FALSE;
-  
+
 	ZeroMemory( &siStartInfo, sizeof(STARTUPINFO));
 	siStartInfo.cb = sizeof(STARTUPINFO);
 	siStartInfo.dwFlags = STARTF_USESTDHANDLES | STARTF_USESHOWWINDOW;
@@ -219,7 +219,7 @@ static PyObject *_PyPopen(char *cmdstring, int mode, int n)
 	HANDLE hChildStdinRd, hChildStdinWr, hChildStdoutRd, hChildStdoutWr,
 		hChildStderrRd, hChildStderrWr, hChildStdinWrDup, hChildStdoutRdDup,
 		hChildStderrRdDup, hProcess; // hChildStdoutWrDup;
-      
+
 	SECURITY_ATTRIBUTES saAttr;
 	BOOL fSuccess;
 	int fd1, fd2, fd3;
@@ -277,7 +277,7 @@ static PyObject *_PyPopen(char *cmdstring, int mode, int n)
 		// Close the inheritable version of ChildStdErr that we're using.
 		CloseHandle(hChildStderrRd);
 	}
-      
+
 	switch (n)
 	{
 	case POPEN_1:
@@ -329,13 +329,13 @@ static PyObject *_PyPopen(char *cmdstring, int mode, int n)
 		}
 		file_count = 1;
 		break;
-	
+
 	case POPEN_2:
 	case POPEN_4:
 	{
 	    char *m1, *m2;
 	    PyObject *p1, *p2;
-	    
+
 	    if (mode & _O_TEXT)
 		{
 			m1="r";
@@ -365,12 +365,12 @@ static PyObject *_PyPopen(char *cmdstring, int mode, int n)
 	    file_count = 2;
 	    break;
 	}
-	
+
 	case POPEN_3:
 	{
 	    char *m1, *m2;
 	    PyObject *p1, *p2, *p3;
-	    
+
 	    if (mode & _O_TEXT)
 		{
 			m1="r";
@@ -514,10 +514,10 @@ static PyObject *_PyPopen(char *cmdstring, int mode, int n)
 	// not close when the child process exits and the ReadFile will hang.
 	if (!CloseHandle(hChildStdinRd))
 		return PyWin_SetAPIError("CloseHandle");
-      
+
 	if (!CloseHandle(hChildStdoutWr))
 		return PyWin_SetAPIError("CloseHandle");
-      
+
 	if ((n != 4) && (!CloseHandle(hChildStderrWr)))
 		return PyWin_SetAPIError("CloseHandle");
 
@@ -553,7 +553,7 @@ static int _PyPclose(FILE *file)
 	HANDLE hProcess;
 	PyObject *procObj, *hProcessObj, *intObj, *fileObj;
 	long file_count;
-   
+
 	/* Close the file handle first, to ensure it can't block the
 	 * child from exiting if it's the last handle.
 	 */

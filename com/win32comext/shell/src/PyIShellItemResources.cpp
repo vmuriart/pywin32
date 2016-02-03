@@ -98,7 +98,7 @@ PyObject *PyIShellItemResources::SetTimes(PyObject *self, PyObject *args)
 	FILETIME ftCreation;
 	FILETIME ftWrite;
 	FILETIME ftAccess;
-	if ( !PyArg_ParseTuple(args, "O&O&O&:SetTimes", 
+	if ( !PyArg_ParseTuple(args, "O&O&O&:SetTimes",
 		PyWinObject_AsFILETIME, &ftCreation,
 		PyWinObject_AsFILETIME, &ftWrite,
 		PyWinObject_AsFILETIME, &ftAccess))

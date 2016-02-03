@@ -36,7 +36,7 @@ static PyTypeObject PyInterfaceType_Type = {
 PyComTypeObject::PyComTypeObject( const char *name, PyComTypeObject *pBase, int typeSize, struct PyMethodDef* methodList, PyIUnknown * (* thector)(IUnknown *))
 {
 // originally, this copied the typeobject of the parent, but as it is impossible
-// to guarantee order of static object construction, I went this way.  This is 
+// to guarantee order of static object construction, I went this way.  This is
 // probably better, as is forces _all_ python objects have the same type sig.
 	static const PyTypeObject type_template = {
 		PYWIN_OBJECT_HEAD
@@ -67,7 +67,7 @@ PyComTypeObject::PyComTypeObject( const char *name, PyComTypeObject *pBase, int 
 		0,                              /* tp_weaklistoffset */
 		0,					/* tp_iter */
 		0,					/* tp_iternext */
-		0,					/* tp_methods */	
+		0,					/* tp_methods */
 		0,					/* tp_members */
 		0,					/* tp_getset */
 		0, // setup to a real value below.	/* tp_base */
@@ -147,11 +147,11 @@ PyObject *PyComEnumTypeObject::iternext(PyObject *self)
 
 
 // Our type for IEnum provider interfaces
-PyComEnumProviderTypeObject::PyComEnumProviderTypeObject( 
-                                        const char *name, 
-                                        PyComTypeObject *pBase, 
-                                        int typeSize, 
-                                        struct PyMethodDef* methodList, 
+PyComEnumProviderTypeObject::PyComEnumProviderTypeObject(
+                                        const char *name,
+                                        PyComTypeObject *pBase,
+                                        int typeSize,
+                                        struct PyMethodDef* methodList,
                                         PyIUnknown * (* thector)(IUnknown *),
                                         const char *penum_method_name) :
 	PyComTypeObject( name, pBase, typeSize, methodList, thector),
@@ -195,7 +195,7 @@ PyObject *PyComEnumProviderTypeObject::iter(PyObject *self)
 }
 
 
-// code changed by ssc	
+// code changed by ssc
 /////////////////////////////////////////////////////////////////////////////
 // class PyOleNothing
 PyOleNothing::PyOleNothing()

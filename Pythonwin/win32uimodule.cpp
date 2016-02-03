@@ -127,7 +127,7 @@ ui_type::ui_type( const char *name, ui_type *pBase, int typeSize,
 		 struct PyMethodDef* methodList, ui_base_class * (* thector)() )
 {
 // originally, this copied the typeobject of the parent, but as it is impossible
-// to guarantee order of static object construction, I went this way.  This is 
+// to guarantee order of static object construction, I went this way.  This is
 // probably better, as is forces _all_ python objects have the same type sig.
 	static PyTypeObject type_template = {
 		PYWIN_OBJECT_HEAD
@@ -244,7 +244,7 @@ ui_base_class *ui_base_class::make( ui_type &makeTypeRef)
 	if (makeType->ctor==NULL) {
 		RETURN_ERR("Internal error - the type does not declare a win32ui constructor");
 	}
-	
+
 	ui_base_class *pNew = (*makeType->ctor)();
 	pNew->ob_type = makeType;
 	_Py_NewReference(pNew);
@@ -382,11 +382,11 @@ struct PyMethodDef ui_base_class_methods[] = {
 	{NULL,	NULL}
 };
 
-ui_type ui_base_class::type( "PyCBase", 
-							NULL, 
-							sizeof(ui_base_class), 
-							PYOBJ_OFFSET(ui_base_class), 
-							ui_base_class_methods, 
+ui_type ui_base_class::type( "PyCBase",
+							NULL,
+							sizeof(ui_base_class),
+							PYOBJ_OFFSET(ui_base_class),
+							ui_base_class_methods,
 							NULL);
 
 
@@ -403,7 +403,7 @@ void DumpAssocPyObject( CDumpContext &dc , void *object )
 	{
 		dc << ", Python object ";
 		if (AfxIsValidAddress(py_bob, sizeof(ui_assoc_object))) {
-			dc << py_bob << " with refcounf " << 
+			dc << py_bob << " with refcounf " <<
 			py_bob->ob_refcnt;
 			Py_XDECREF(py_bob);
 		} else
@@ -440,7 +440,7 @@ void PYW_EXPORT Python_addpath(const TCHAR *paths )
 	TCHAR workBuf[MAX_PATH+20];
 	TCHAR fullThisPath[MAX_PATH+20];
 	TCHAR fullWorkBuf[MAX_PATH+20];
-	
+
 	PyObject *p = PySys_GetObject("path");
 	if (!PyList_Check(p))
 		return;
@@ -492,7 +492,7 @@ BOOL DisplayPythonTraceback(PyObject *exc_type, PyObject *exc_val, PyObject *exc
 {
 	class CTracebackDialog : public CDialog {
 	public:
-		CTracebackDialog(PyObject *exc_type, PyObject *exc_value, PyObject *exc_tb, const TCHAR *extraTitleMsg) : 
+		CTracebackDialog(PyObject *exc_type, PyObject *exc_value, PyObject *exc_tb, const TCHAR *extraTitleMsg) :
 		  CDialog(IDD_LARGE_EDIT)
 		{
 			m_exc_type = exc_type;
@@ -524,7 +524,7 @@ BOOL DisplayPythonTraceback(PyObject *exc_type, PyObject *exc_val, PyObject *exc
 			// Translate '\n' to '\r\n' - do it the easy way!
 			CString useMsg;
 			for (;*msg;msg++)
-				if (*msg=='\n') 
+				if (*msg=='\n')
 					useMsg += "\r\n";
 				else
 					useMsg += *msg;
@@ -1097,7 +1097,7 @@ ui_get_profile_val(PyObject *self, PyObject *args)
 			RETURN_TYPE_ERR("Default value must be string or int");
 		}
 	if (PyWinObject_AsTCHAR(obsect, &sect, FALSE)
-		&&PyWinObject_AsTCHAR(obentry, &entry, FALSE)){	
+		&&PyWinObject_AsTCHAR(obentry, &entry, FALSE)){
 		if (bHaveInt){
 			int rc;
 			GUI_BGN_SAVE;
@@ -1576,7 +1576,7 @@ ui_win_help( PyObject *self, PyObject *args )
 
 	CWinApp *pApp = GetApp();
 	if (!pApp) return NULL;
-		
+
 	GUI_BGN_SAVE;
 	pApp->WinHelp(data, cmd);
 	GUI_END_SAVE;
@@ -1750,7 +1750,7 @@ ui_register_wnd_class(PyObject *self, PyObject *args)
 		return NULL;
 
 	GUI_BGN_SAVE;
-	LPCTSTR ret = AfxRegisterWndClass( style, (HCURSOR)hCursor, (HBRUSH)hBrush, (HICON)hIcon); 
+	LPCTSTR ret = AfxRegisterWndClass( style, (HCURSOR)hCursor, (HBRUSH)hBrush, (HICON)hIcon);
 	GUI_END_SAVE;
 	return PyWinObject_FromTCHAR(ret);
 	// @comm The Microsoft Foundation Class Library automatically registers several standard window classes for you. Call this function if you want to register your own window classes.
@@ -2172,7 +2172,7 @@ int AddConstants(PyObject *module)
 
 	ADD_CONSTANT(ID_INDICATOR_LINENUM);// @const win32ui|ID_INDICATOR_LINENUM|
 	ADD_CONSTANT(ID_INDICATOR_COLNUM);// @const win32ui|ID_INDICATOR_COLNUM|
-	
+
 	ADD_CONSTANT(ID_FILE_NEW);// @const win32ui|ID_FILE_NEW|
 	ADD_CONSTANT(ID_FILE_OPEN);// @const win32ui|ID_FILE_OPEN|
 	ADD_CONSTANT(ID_FILE_CLOSE);// @const win32ui|ID_FILE_CLOSE|
@@ -2262,27 +2262,27 @@ int AddConstants(PyObject *module)
 	ADD_ENUM(CRichEditView,WrapToWindow);// @const win32ui|CRichEditView_WrapToWindow|
 	ADD_ENUM(CRichEditView,WrapToTargetDevice);// @const win32ui|CRichEditView_WrapToTargetDevice|
 
-	ADD_CONSTANT(PD_ALLPAGES); // @const win32ui|PD_ALLPAGES|The default flag that indicates that the All radio button is initially selected. This flag is used as a placeholder to indicate that the PD_PAGENUMS and PD_SELECTION flags are not specified. 
-	ADD_CONSTANT(PD_COLLATE); // @const win32ui|PD_COLLATE|If this flag is set, the Collate check box is checked. If this flag is set when the PrintDlg function returns, the application must simulate collation of multiple copies. For more information, see the description of the PD_USEDEVMODECOPIESANDCOLLATE flag. 
+	ADD_CONSTANT(PD_ALLPAGES); // @const win32ui|PD_ALLPAGES|The default flag that indicates that the All radio button is initially selected. This flag is used as a placeholder to indicate that the PD_PAGENUMS and PD_SELECTION flags are not specified.
+	ADD_CONSTANT(PD_COLLATE); // @const win32ui|PD_COLLATE|If this flag is set, the Collate check box is checked. If this flag is set when the PrintDlg function returns, the application must simulate collation of multiple copies. For more information, see the description of the PD_USEDEVMODECOPIESANDCOLLATE flag.
 	ADD_CONSTANT(PD_DISABLEPRINTTOFILE); // @const win32ui|PD_DISABLEPRINTTOFILE|Disables the Print to File check box.
 	ADD_CONSTANT(PD_ENABLEPRINTHOOK); // @const win32ui|PD_ENABLEPRINTHOOK|Enables the hook procedure specified in the lpfnPrintHook member. This enables the hook procedure for the Print dialog box.
 	ADD_CONSTANT(PD_ENABLEPRINTTEMPLATE); // @const win32ui|PD_ENABLEPRINTTEMPLATE|PD_ENABLEPRINTTEMPLATE
-	ADD_CONSTANT(PD_ENABLEPRINTTEMPLATEHANDLE); // @const win32ui|PD_ENABLEPRINTTEMPLATEHANDLE|Indicates that the hPrintTemplate member identifies a data block that contains a preloaded dialog box template. This template replaces the default template for the Print dialog box. The system ignores the lpPrintTemplateName member if this flag is specified. 
+	ADD_CONSTANT(PD_ENABLEPRINTTEMPLATEHANDLE); // @const win32ui|PD_ENABLEPRINTTEMPLATEHANDLE|Indicates that the hPrintTemplate member identifies a data block that contains a preloaded dialog box template. This template replaces the default template for the Print dialog box. The system ignores the lpPrintTemplateName member if this flag is specified.
 	ADD_CONSTANT(PD_ENABLESETUPHOOK); // @const win32ui|PD_ENABLESETUPHOOK|Enables the hook procedure specified in the lpfnSetupHook member. This enables the hook procedure for the Print Setup dialog box.
-	ADD_CONSTANT(PD_ENABLESETUPTEMPLATE); // @const win32ui|PD_ENABLESETUPTEMPLATE|Indicates that the hInstance and lpSetupTemplateName members specify a replacement for the default Print Setup dialog box template. 
-	ADD_CONSTANT(PD_ENABLESETUPTEMPLATEHANDLE); // @const win32ui|PD_ENABLESETUPTEMPLATEHANDLE|Indicates that the hSetupTemplate member identifies a data block that contains a preloaded dialog box template. This template replaces the default template for the Print Setup dialog box. The system ignores the lpSetupTemplateName member if this flag is specified. 
+	ADD_CONSTANT(PD_ENABLESETUPTEMPLATE); // @const win32ui|PD_ENABLESETUPTEMPLATE|Indicates that the hInstance and lpSetupTemplateName members specify a replacement for the default Print Setup dialog box template.
+	ADD_CONSTANT(PD_ENABLESETUPTEMPLATEHANDLE); // @const win32ui|PD_ENABLESETUPTEMPLATEHANDLE|Indicates that the hSetupTemplate member identifies a data block that contains a preloaded dialog box template. This template replaces the default template for the Print Setup dialog box. The system ignores the lpSetupTemplateName member if this flag is specified.
 	ADD_CONSTANT(PD_HIDEPRINTTOFILE); // @const win32ui|PD_HIDEPRINTTOFILE|Hides the Print to File check box.
-	ADD_CONSTANT(PD_NONETWORKBUTTON); // @const win32ui|PD_NONETWORKBUTTON|Hides and disables the Network button. 
+	ADD_CONSTANT(PD_NONETWORKBUTTON); // @const win32ui|PD_NONETWORKBUTTON|Hides and disables the Network button.
 	ADD_CONSTANT(PD_NOPAGENUMS); // @const win32ui|PD_NOPAGENUMS|Disables the Pages radio button and the associated edit controls.
 	ADD_CONSTANT(PD_NOSELECTION); // @const win32ui|PD_NOSELECTION|Disables the Selection radio button.
 	ADD_CONSTANT(PD_NOWARNING); // @const win32ui|PD_NOWARNING|Prevents the warning message from being displayed when there is no default printer.
 	ADD_CONSTANT(PD_PAGENUMS); // @const win32ui|PD_PAGENUMS|If this flag is set, the Pages radio button is selected. If this flag is set when the PrintDlg function returns, the nFromPage and nFromPage members indicate the starting and ending pages specified by the user.
 	ADD_CONSTANT(PD_PRINTSETUP); // @const win32ui|PD_PRINTSETUP|Causes the system to display the Print Setup dialog box rather than the Print dialog box.
-	ADD_CONSTANT(PD_PRINTTOFILE); // @const win32ui|PD_PRINTTOFILE|If this flag is set, the Print to File check box is selected. If this flag is set when the PrintDlg function returns, the offset indicated by the wOutputOffset member of the DEVNAMES structure contains the string "FILE:". When you call theStartDoc function to start the printing operation, specify this "FILE:" string in the lpszOutput member of theDOCINFO structure. Specifying this string causes the print subsystem to query the user for the name of the output file. 
+	ADD_CONSTANT(PD_PRINTTOFILE); // @const win32ui|PD_PRINTTOFILE|If this flag is set, the Print to File check box is selected. If this flag is set when the PrintDlg function returns, the offset indicated by the wOutputOffset member of the DEVNAMES structure contains the string "FILE:". When you call theStartDoc function to start the printing operation, specify this "FILE:" string in the lpszOutput member of theDOCINFO structure. Specifying this string causes the print subsystem to query the user for the name of the output file.
 	ADD_CONSTANT(PD_RETURNDC); // @const win32ui|PD_RETURNDC|Causes PrintDlg to return a device context matching the selections the user made in the dialog box. The device context is returned in hDC.
 	ADD_CONSTANT(PD_RETURNDEFAULT); // @const win32ui|PD_RETURNDEFAULT|If this flag is set, the PrintDlg function does not display the dialog box. Instead, it sets the hDevNames and hDevMode members to handles toDEVMODE and DEVNAMES structures that are initialized for the system default printer. Both hDevNames and hDevMode must be NULL, or PrintDlg returns an error. If the system default printer is supported by an old printer driver (earlier than Windows version 3.0), only hDevNames is returned; hDevMode is NULL.
 	ADD_CONSTANT(PD_RETURNIC); // @const win32ui|PD_RETURNIC|Similar to the PD_RETURNDC flag, except this flag returns an information context rather than a device context. If neither PD_RETURNDC nor PD_RETURNIC is specified, hDC is undefined on output.
-	ADD_CONSTANT(PD_SELECTION); // @const win32ui|PD_SELECTION|If this flag is set, the Selection radio button is selected. If neither PD_PAGENUMS nor PD_SELECTION is set, the All radio button is selected. 
+	ADD_CONSTANT(PD_SELECTION); // @const win32ui|PD_SELECTION|If this flag is set, the Selection radio button is selected. If neither PD_PAGENUMS nor PD_SELECTION is set, the All radio button is selected.
 	ADD_CONSTANT(PD_SHOWHELP); // @const win32ui|PD_SHOWHELP|Causes the dialog box to display the Help button. The hwndOwner member must specify the window to receive the HELPMSGSTRING registered messages that the dialog box sends when the user clicks the Help button.
 	ADD_CONSTANT(PD_USEDEVMODECOPIES); // @const win32ui|PD_USEDEVMODECOPIES|Same as PD_USEDEVMODECOPIESANDCOLLATE
 	ADD_CONSTANT(PD_USEDEVMODECOPIESANDCOLLATE); // @const win32ui|PD_USEDEVMODECOPIESANDCOLLATE|This flag indicates whether your application supports multiple copies and collation. Set this flag on input to indicate that your application does not support multiple copies and collation. In this case, the nCopies member of the PRINTDLG structure always returns 1, and PD_COLLATE is never set in the Flags member. If this flag is not set, the application is responsible for printing and collating multiple copies. In this case, the nCopies member of the PRINTDLG structure indicates the number of copies the user wants to print, and the PD_COLLATE flag in the Flags member indicates whether the user wants collation. Regardless of whether this flag is set, an application can determine from nCopies and PD_COLLATE how many copies to render and whether to print them collated.  If this flag is set and the printer driver does not support multiple copies, the Copies edit control is disabled. Similarly, if this flag is set and the printer driver does not support collation, the Collate checkbox is disabled. The dmCopies and dmCollate members of theDEVMODE structure contain the copies and collate information used by the printer driver. If this flag is set and the printer driver supports multiple copies, the dmCopies member indicates the number of copies requested by the user. If this flag is set and the printer driver supports collation, the dmCollate member of the DEVMODE structure indicates whether the user wants collation. If this flag is not set, the dmCopies member always returns 1, and the dmCollate member is always zero.
@@ -2426,7 +2426,7 @@ BOOL Win32uiInitInstance()
 // Run is the last thing _exited_.  During the Run call the ExitInstance call
 // is made.  Whoever calls "Run" must call Win32uiFinalize after.
 int Win32uiRun(void)
-{ 
+{
 	int ret = -1;
 	// An error here is too late for anything to usefully print it,
 	// so we use a dialog.

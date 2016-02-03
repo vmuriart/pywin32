@@ -81,7 +81,7 @@ void PyObject_FreeVARDESC(VARDESC *p)
 }
 
 // Sequence stuff to provide compatibility with tuples.
-static PySequenceMethods PyVARDESC_Sequence = 
+static PySequenceMethods PyVARDESC_Sequence =
 {
 	PyVARDESC::getlength, // sq_length;
 	NULL, // sq_concat;
@@ -247,7 +247,7 @@ PyVARDESC::~PyVARDESC()
 		case 3: // @tupleitem 3|int|varFlags|Variable flags
 			return PyInt_FromLong(p->wVarFlags);
 		case 4: // @tupleitem 4|int|varKind|Kind flags.
-			return PyInt_FromLong(p->varkind); 
+			return PyInt_FromLong(p->varkind);
 	}
 	PyErr_SetString(PyExc_IndexError, "index out of range");
 	return NULL;

@@ -8,12 +8,12 @@ class WinThread(object.CmdTarget):
 		if initObj is None:
 			initObj = win32ui.CreateThread()
 		object.CmdTarget.__init__(self, initObj)
-		
+
 	def InitInstance(self):
 		pass # Default None/0 return indicates success for InitInstance()
 	def ExitInstance(self):
 		pass
-		
+
 
 class WinApp(WinThread):
 	def __init__(self, initApp = None):

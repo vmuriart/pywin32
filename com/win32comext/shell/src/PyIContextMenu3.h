@@ -30,12 +30,12 @@ protected:
 		LPSTR pszName,
 		UINT cchMax);
 	// IContextMenu2
-        STDMETHOD(HandleMenuMsg)( 
+        STDMETHOD(HandleMenuMsg)(
                 UINT uMsg,
                 WPARAM wParam,
                 LPARAM lParam);
 	// IContextMenu3
-        STDMETHOD(HandleMenuMsg2)( 
+        STDMETHOD(HandleMenuMsg2)(
                 UINT uMsg,
                 WPARAM wParam,
                 LPARAM lParam,

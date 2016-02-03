@@ -72,7 +72,7 @@ class MainFrame(app.MainFrame):
 
 		self.DestroyControlBar(afxres.AFX_IDW_TOOLBAR)
 		self.DestroyControlBar(win32ui.ID_VIEW_TOOLBAR_DBG)
-		
+
 		return self._obj_.OnClose()
 
 	def DestroyControlBar(self, id):
@@ -138,7 +138,7 @@ class InteractivePythonApp(app.CApp):
 			return None
 
 	def InitDDE(self):
-		# Do all the magic DDE handling.  
+		# Do all the magic DDE handling.
 		# Returns TRUE if we have pumped the arguments to our
 		# remote DDE app, and we should terminate.
 		try:

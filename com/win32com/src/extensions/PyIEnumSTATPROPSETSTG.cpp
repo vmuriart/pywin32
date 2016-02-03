@@ -162,7 +162,7 @@ PyComEnumTypeObject PyIEnumSTATPROPSETSTG::type("PyIEnumSTATPROPSETSTG",
 // ---------------------------------------------------
 //
 // Gateway Implementation
-STDMETHODIMP PyGEnumSTATPROPSETSTG::Next( 
+STDMETHODIMP PyGEnumSTATPROPSETSTG::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ STATPROPSETSTG __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -209,7 +209,7 @@ STDMETHODIMP PyGEnumSTATPROPSETSTG::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumSTATPROPSETSTG, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumSTATPROPSETSTG::Skip( 
+STDMETHODIMP PyGEnumSTATPROPSETSTG::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -222,7 +222,7 @@ STDMETHODIMP PyGEnumSTATPROPSETSTG::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumSTATPROPSETSTG::Clone( 
+STDMETHODIMP PyGEnumSTATPROPSETSTG::Clone(
             /* [out] */ IEnumSTATPROPSETSTG __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

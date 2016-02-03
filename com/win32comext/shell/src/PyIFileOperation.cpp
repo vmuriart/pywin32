@@ -374,7 +374,7 @@ PyObject *PyIFileOperation::MoveItems(PyObject *self, PyObject *args)
 	IUnknown * pItems;
 	IShellItem * pDestinationFolder;
 	if ( !PyArg_ParseTuple(args, "OO:MoveItems", &obItems, &obDestinationFolder) )
-		return NULL;	
+		return NULL;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obItems, IID_IUnknown, (void **)&pItems, FALSE))
 		return NULL;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obDestinationFolder, IID_IShellItem, (void **)&pDestinationFolder, FALSE)){
@@ -605,7 +605,7 @@ PyObject *PyIFileOperation::PerformOperations(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-// @pymethod boolean|PyIFileOperation|GetAnyOperationsAborted|Determines if any operations were terminated 
+// @pymethod boolean|PyIFileOperation|GetAnyOperationsAborted|Determines if any operations were terminated
 PyObject *PyIFileOperation::GetAnyOperationsAborted(PyObject *self, PyObject *args)
 {
 	IFileOperation *pIFO = GetI(self);

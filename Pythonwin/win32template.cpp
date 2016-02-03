@@ -179,8 +179,8 @@ PyCDocTemplate::CreateNewFrame(PyObject *self, PyObject *args)
 	// If the doc parameter is None, a new document will be created.
 	// Otherwise, the new view will be associated with the existing document specified by pDoc.
 	// The wndOther parameter is used to implement the Window New command.
-	// It provides a frame window on which to model the new frame window. 
-	// The new frame window is usually created invisible. 
+	// It provides a frame window on which to model the new frame window.
+	// The new frame window is usually created invisible.
 	CDocTemplate *pTempl = GetTemplate(self);
 	if (pTempl==NULL)
 		return NULL;
@@ -406,16 +406,16 @@ static struct PyMethodDef PyCDocTemplate_methods[] = {
 	{"OpenDocumentFile",  PyCDocTemplate::OpenDocumentFile, 1}, // @pymeth OpenDocumentFile|Opens a document file, creating a view and frame.
 	{NULL,			NULL}
 };
-ui_type_CObject PyCDocTemplate::type("PyCDocTemplate", 
-									 &PyCCmdTarget::type, 
-									 RUNTIME_CLASS(CDocTemplate), 
-									 sizeof(PyCDocTemplate), 
-									 PYOBJ_OFFSET(PyCDocTemplate), 
-									 PyCDocTemplate_methods, 
+ui_type_CObject PyCDocTemplate::type("PyCDocTemplate",
+									 &PyCCmdTarget::type,
+									 RUNTIME_CLASS(CDocTemplate),
+									 sizeof(PyCDocTemplate),
+									 PYOBJ_OFFSET(PyCDocTemplate),
+									 PyCDocTemplate_methods,
 									 GET_PY_CTOR(PyCDocTemplate) );
 
 // The MFC class.
-CPythonDocTemplate::CPythonDocTemplate(UINT idResource) : 
+CPythonDocTemplate::CPythonDocTemplate(UINT idResource) :
 	CMultiDocTemplate(idResource, NULL, NULL, NULL)
 {
 }
@@ -486,7 +486,7 @@ CDocument* CPythonDocTemplate::CreateNewDocument()
 		TRACE0("CPythonDocTemplate::CreateNewDocument fails due to no handler\n");
 		return NULL;
 	}
-		
+
 	ok = ok && helper.call();
 	PyObject *retObject=NULL;
 	ok = ok && helper.retval( retObject );
@@ -514,7 +514,7 @@ CDocument* CPythonDocTemplate::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bMake
 	BOOL ok = helper.HaveHandler();
 	if (!ok)
 		return CMultiDocTemplate::OpenDocumentFile(lpszPathName, bMakeVisible);
-		
+
 	ok = ok && helper.call(lpszPathName, bMakeVisible);
 	PyObject *retObject=NULL;
 	ok = ok && helper.retval( retObject );

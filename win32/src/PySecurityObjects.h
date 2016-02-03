@@ -3,7 +3,7 @@
 
 #ifdef MS_WINCE
 #	define NO_PYWINTYPES_SECURITY /* This source is not included for WinCE */
-#endif 
+#endif
 
 #ifndef NO_PYWINTYPES_SECURITY
 typedef BOOL (WINAPI *addacefunc)(PACL,DWORD,DWORD,PSID);
@@ -187,4 +187,4 @@ protected:
 	void *buf;
 };
 
-#endif // NO_PYWINTYPES_SECURITY 
+#endif // NO_PYWINTYPES_SECURITY

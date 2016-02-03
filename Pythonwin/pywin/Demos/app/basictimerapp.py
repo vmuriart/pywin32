@@ -17,7 +17,7 @@ class TimerAppDialog(dlgappcore.AppDialog):
 		self.timerAppName = appName
 		self.argOff = 0
 		if len(self.timerAppName)==0:
-			if len(sys.argv)>1 and sys.argv[1][0]!='/': 
+			if len(sys.argv)>1 and sys.argv[1][0]!='/':
 				self.timerAppName = sys.argv[1]
 				self.argOff = 1
 
@@ -66,7 +66,7 @@ class TimerAppDialog(dlgappcore.AppDialog):
 		self.timerManager.go()
 		return
 #	def OnCancel(self): default behaviour - cancel == close.
-#		return 
+#		return
 
 class TimerManager:
 	def __init__(self, dlg):
@@ -133,7 +133,7 @@ class TimerManager:
 				self.dlg.prompt1.SetWindowText("Next connection due in %02d:%02d:%02d" % (timeDiffHours,timeDiffMinutes,timeDiffSeconds))
 		self.timerId = timer.set_timer (self.intervaler.GetWakeupInterval(), self.OnTimer)
 		self.bConnectNow = 0
-		
+
 class TimerIntervaler:
 	def __init__(self):
 		self.nextTime = None
@@ -152,7 +152,7 @@ class TimerIntervaler:
 			self.nextTime = self.SetNextTime(self.nextTime, now)
 			# do the work.
 		return ret
-	
+
 class EachAnyIntervaler(TimerIntervaler):
 	def __init__(self, timeAt, timePos, timeAdd, wakeUpInterval = None):
 		TimerIntervaler.__init__(self)
@@ -173,8 +173,8 @@ class EachAnyIntervaler(TimerIntervaler):
 		ret = time.mktime(tuple(lst))
 		if (bAdd):
 			ret = ret + self.timeAdd
-		return ret;			
-		
+		return ret;
+
 	def SetNextTime(self, lastTime, now):
 		return lastTime + self.timeAdd
 

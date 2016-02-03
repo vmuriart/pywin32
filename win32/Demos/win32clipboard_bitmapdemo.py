@@ -26,7 +26,7 @@ class ViewerWindow:
                 win32gui.SelectObject(dc,hf)
                 win32gui.SetBkMode(dc, win32con.TRANSPARENT)
                 win32gui.SetTextColor(dc,win32api.RGB(0,0,0))
-                win32gui.DrawText(dc,'No bitmaps are in the clipboard\n(try pressing the PrtScn button)', -1, 
+                win32gui.DrawText(dc,'No bitmaps are in the clipboard\n(try pressing the PrtScn button)', -1,
                      (0,0, wndwidth, wndheight),
                      win32con.DT_CENTER)
             else:
@@ -44,16 +44,16 @@ class ViewerWindow:
         win32gui.InvalidateRect(hwnd,None,True)
 
     def OnChangeCBChain(self, hwnd, msg, wp, lp):
-        # If the next window is closing, repair the chain. 
+        # If the next window is closing, repair the chain.
         if wp == self.hwndNextViewer:
             self.hwndNextViewer = lp
-        # Otherwise, pass the message to the next link. 
+        # Otherwise, pass the message to the next link.
         elif self.hwndNextViewer:
             win32gui.SendMessage(self.hwndNextViewer, msg, wp, lp)
- 
+
     def OnCreate(self, hwnd, msg, wp, lp):
-        self.hwndNextViewer = win32gui.SetClipboardViewer(hwnd); 
-    
+        self.hwndNextViewer = win32gui.SetClipboardViewer(hwnd);
+
     def OnClose(self, hwnd, msg, wp, lp):
         win32clipboard.ChangeClipboardChain(hwnd, self.hwndNextViewer)
         win32gui.DestroyWindow(hwnd)
@@ -72,7 +72,7 @@ class ViewerWindow:
         wc.style =  win32con.CS_GLOBALCLASS|win32con.CS_VREDRAW | win32con.CS_HREDRAW
         wc.hbrBackground = win32con.COLOR_WINDOW+1
         wc.lpfnWndProc=wndproc
-        class_atom=win32gui.RegisterClass(wc)       
+        class_atom=win32gui.RegisterClass(wc)
         hwnd = win32gui.CreateWindowEx(0, class_atom,'ClipboardViewer',
             win32con.WS_CAPTION|win32con.WS_VISIBLE|win32con.WS_THICKFRAME|win32con.WS_SYSMENU,
             100,100,900,900, 0, 0, 0, None)

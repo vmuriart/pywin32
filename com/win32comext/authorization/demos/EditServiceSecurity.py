@@ -41,7 +41,7 @@ class ServiceSecurity(win32com.server.policy.DesignatedWrapPolicy):
         flags=SI_ADVANCED|SI_EDIT_ALL|SI_PAGE_TITLE|SI_RESET
         hinstance=0  ## handle to module containing string resources
         servername=''  ## name of authenticating server if not local machine
-        
+
         ## service name can contain remote machine name of the form \\Server\ServiceName
         objectname=os.path.split(self.ServiceName)[1]
         pagetitle='Service Permissions for '+self.ServiceName
@@ -75,10 +75,10 @@ class ServiceSecurity(win32com.server.policy.DesignatedWrapPolicy):
         if (objecttype is not None) and (objecttype!=IID_NULL):
             ## Not relevent for services
             raise NotImplementedError("Object type is not supported")
-        
+
         ## ???? for some reason, the DACL for a service will not retain ACCESS_SYSTEM_SECURITY in an ACE ????
         ## (IID_NULL, win32con.ACCESS_SYSTEM_SECURITY, 'View/change audit settings', SI_ACCESS_SPECIFIC),
-        
+
         accessrights=[
             (IID_NULL, win32service.SERVICE_ALL_ACCESS, 'Full control', SI_ACCESS_GENERAL),
             (IID_NULL, SERVICE_GENERIC_READ, 'Generic read', SI_ACCESS_GENERAL),

@@ -60,12 +60,12 @@ PyObject *PyIErrorLog::AddError(PyObject *self, PyObject *args)
 }
 
 // @object PyIErrorLog|A Python wrapper for a COM IErrorLog interface.
-// @comm The IErrorLog interface is an abstraction for an error log that is used to 
-// communicate detailed error information between a client and an object. 
-// The caller of the single interface method, <om PyIErrorLog::AddError>, simply logs an error 
-// where the error is an EXCEPINFO structure related to a specific property. 
+// @comm The IErrorLog interface is an abstraction for an error log that is used to
+// communicate detailed error information between a client and an object.
+// The caller of the single interface method, <om PyIErrorLog::AddError>, simply logs an error
+// where the error is an EXCEPINFO structure related to a specific property.
 // The implementer of the interface is responsible for handling the error in whatever way it desires.
-// <nl>IErrorLog is used in the protocol between a client that implements <o PyIPropertyBag> and an 
+// <nl>IErrorLog is used in the protocol between a client that implements <o PyIPropertyBag> and an
 // object that implements <o PyIPersistPropertyBag>.
 static struct PyMethodDef PyIErrorLog_methods[] =
 {

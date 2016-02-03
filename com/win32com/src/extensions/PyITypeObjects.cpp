@@ -100,7 +100,7 @@ PyObject *PyObject_FromARRAYDESC(ARRAYDESC *ad)
 BOOL PyObject_AsTYPEDESC( PyObject *ob, TYPEDESC *pDesc, void *pMore)
 {
 	BOOL rc = FALSE;
-	if (PyInt_Check(ob)) { // a simple VT 
+	if (PyInt_Check(ob)) { // a simple VT
 		pDesc->vt = (VARTYPE)PyInt_AsLong(ob);
 		return TRUE; // quick exit!
 	}
@@ -151,7 +151,7 @@ BOOL PyObject_AsTYPEDESC( PyObject *ob, TYPEDESC **ppDesc)
 	*ppDesc = (TYPEDESC *)AllocateMoreBuffer(sizeof(TYPEDESC));
 	if (*ppDesc==NULL) return FALSE;
 	BOOL rc = PyObject_AsTYPEDESC(ob, *ppDesc, *ppDesc);
-	if (!rc) 
+	if (!rc)
 		FreeMoreBuffer(*ppDesc);
 	return rc;
 }
@@ -161,7 +161,7 @@ void PyObject_FreeTYPEDESC(TYPEDESC *pDesc)
 	FreeMoreBuffer(pDesc);
 }
 
-// @object TYPEDESC|A typedesc is a complicated, recursive object, 
+// @object TYPEDESC|A typedesc is a complicated, recursive object,
 // It may be either a simple Python type, or a tuple of (indirectType, object), where object
 // may be a simple Python type, or a tuple of etc ...
 PyObject *PyObject_FromTYPEDESC(const TYPEDESC *td)
@@ -239,11 +239,11 @@ BOOL PyObject_AsELEMDESCArray( PyObject *ob, ELEMDESC **ppDesc, short *pNum, voi
 	*pNum = PySequence_Length(ob);
 	*ppDesc = (ELEMDESC *)AllocMore(pMore, sizeof(ELEMDESC) * *pNum);
 	if (*ppDesc==NULL) return NULL;
-	
+
 	for (int i=0;i<*pNum;i++) {
 		PyObject *sub = PySequence_GetItem(ob, i);
 		if (sub==NULL) return FALSE;
-		BOOL ok = PyObject_AsELEMDESC(sub, (*ppDesc)+i, pMore); 
+		BOOL ok = PyObject_AsELEMDESC(sub, (*ppDesc)+i, pMore);
 		Py_DECREF(sub);
 		if (!ok)
 			return FALSE;

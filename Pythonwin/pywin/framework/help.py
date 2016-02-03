@@ -26,7 +26,7 @@ def FinalizeHelp():
 			except win32help.error:
 				print "Failed to finalize htmlhelp!"
 			htmlhelp_handle = None
-			
+
 def OpenHelpFile(fileName, helpCmd = None, helpArg = None):
 	"Open a help file, given a full path"
 	# default help arg.
@@ -140,12 +140,12 @@ def SetHelpMenuOtherHelp(mainMenu):
 	otherMenu = helpMenu.GetSubMenu(otherHelpMenuPos)
 	while otherMenu.GetMenuItemCount():
 		otherMenu.DeleteMenu(0, win32con.MF_BYPOSITION)
-	
+
 	if helpIDMap:
 		for id, (desc, fname) in helpIDMap.iteritems():
 			otherMenu.AppendMenu(win32con.MF_ENABLED|win32con.MF_STRING,id, desc)
 	else:
 		helpMenu.EnableMenuItem(otherHelpMenuPos, win32con.MF_BYPOSITION | win32con.MF_GRAYED)
-		
+
 def HandleHelpOtherCommand(cmd, code):
 	OpenHelpFile(helpIDMap[cmd][1])

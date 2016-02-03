@@ -258,7 +258,7 @@ BOOL _MakeAbsoluteSD(PSECURITY_DESCRIPTOR psd_relative, PSECURITY_DESCRIPTOR *pp
 		return TRUE;
 		}
 	PyWin_SetAPIError("MakeAbsoluteSD");
-	
+
 	error_exit:
 	*ppsd_absolute=NULL;
 	// *Don't* use FreeAbsoluteSD since function may exit without the sd having been constructed yet
@@ -447,7 +447,7 @@ PyObject *PySECURITY_DESCRIPTOR::GetSecurityDescriptorOwner(PyObject *self, PyOb
 // @pymethod |PySECURITY_DESCRIPTOR|SetSecurityDescriptorOwner|Set owner SID.
 PyObject *PySECURITY_DESCRIPTOR::SetSecurityDescriptorOwner(PyObject *self, PyObject *args)
 {
-	
+
 	// @pyparm <o PySID>|sid||The sid to be set as owner in the security descriptor.
 	// @pyparm int|bOwnerDefaulted||Normally set to false since this explicitely set the owner.
 	BOOL bOwnerDefaulted;
@@ -679,16 +679,16 @@ PyObject *PySECURITY_DESCRIPTOR::GetLength(PyObject *self, PyObject *args)
 // @object PySECURITY_DESCRIPTOR|A Python object, representing a SECURITY_DESCRIPTOR structure
 struct PyMethodDef PySECURITY_DESCRIPTOR::methods[] = {
 	{"Initialize",     PySECURITY_DESCRIPTOR::Initialize, 1}, 	// @pymeth Initialize|Initializes the object.
-	{"GetSecurityDescriptorOwner", PySECURITY_DESCRIPTOR::GetSecurityDescriptorOwner, 1}, // @pymeth GetSecurityDescriptorOwner|Return the owner of the security descriptor. SID is returned.	
+	{"GetSecurityDescriptorOwner", PySECURITY_DESCRIPTOR::GetSecurityDescriptorOwner, 1}, // @pymeth GetSecurityDescriptorOwner|Return the owner of the security descriptor. SID is returned.
 	{"GetSecurityDescriptorGroup", PySECURITY_DESCRIPTOR::GetSecurityDescriptorGroup, 1}, // @pymeth GetSecurityDescriptorOwner|Return the group owning the security descriptor. SID is returned.
 	{"GetSecurityDescriptorDacl", PySECURITY_DESCRIPTOR::GetSecurityDescriptorDacl, 1}, // @pymeth GetSecurityDescriptorDacl|Return the discretionary ACL of the security descriptor.
 	{"GetSecurityDescriptorSacl", PySECURITY_DESCRIPTOR::GetSecurityDescriptorSacl, 1}, // @pymeth GetSecurityDescriptorSacl|Return the system ACL of the security descriptor.
 	{"GetSecurityDescriptorControl", PySECURITY_DESCRIPTOR::GetSecurityDescriptorControl, 1}, // @pymeth GetSecurityDescriptorControl|Returns the control bit flags and revistion of the SD
-	{"SetSecurityDescriptorOwner", PySECURITY_DESCRIPTOR::SetSecurityDescriptorOwner, 1}, // @pymeth SetSecurityDescriptorOwner|Set the owner of the security descriptor. Returns non-zero on success.	
-	{"SetSecurityDescriptorGroup", PySECURITY_DESCRIPTOR::SetSecurityDescriptorGroup, 1}, // @pymeth SetSecurityDescriptorGroup|Set the primary group of the security descriptor. Returns non-zero on success.	
+	{"SetSecurityDescriptorOwner", PySECURITY_DESCRIPTOR::SetSecurityDescriptorOwner, 1}, // @pymeth SetSecurityDescriptorOwner|Set the owner of the security descriptor. Returns non-zero on success.
+	{"SetSecurityDescriptorGroup", PySECURITY_DESCRIPTOR::SetSecurityDescriptorGroup, 1}, // @pymeth SetSecurityDescriptorGroup|Set the primary group of the security descriptor. Returns non-zero on success.
 	{"SetDacl",     PySECURITY_DESCRIPTOR::SetSecurityDescriptorDacl, 1}, 	// @pymeth SetDacl|Sets information in a discretionary access-control list.
 	{"SetSecurityDescriptorDacl",     PySECURITY_DESCRIPTOR::SetSecurityDescriptorDacl, 1},
-	{"SetSecurityDescriptorSacl",     PySECURITY_DESCRIPTOR::SetSecurityDescriptorSacl, 1},	//@pymeth SetSecurityDescriptorSacl|Sets the system access control list in the security descriptor	
+	{"SetSecurityDescriptorSacl",     PySECURITY_DESCRIPTOR::SetSecurityDescriptorSacl, 1},	//@pymeth SetSecurityDescriptorSacl|Sets the system access control list in the security descriptor
 	{"IsValid", PySECURITY_DESCRIPTOR::IsValid, 1}, // @pymeth IsValid|Determine if security descriptor is valid (IsValidSecurityDescriptor)
 	{"GetLength", PySECURITY_DESCRIPTOR::GetLength, 1}, // @pymeth GetLength|Return length of security descriptor (GetSecurityDescriptorLength)
 	{"IsSelfRelative", PySECURITY_DESCRIPTOR::IsSelfRelative, 1}, // @pymeth IsSelfRelative|Returns true if SD is self-relative, false if absolute

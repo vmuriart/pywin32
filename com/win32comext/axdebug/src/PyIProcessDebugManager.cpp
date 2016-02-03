@@ -214,7 +214,7 @@ STDMETHODIMP PyGProcessDebugManager::RemoveApplication(
 }
 
 STDMETHODIMP PyGProcessDebugManager::CreateDebugDocumentHelper(
-		/* [in] */ IUnknown *punkOuter,  
+		/* [in] */ IUnknown *punkOuter,
 		/* [out] */ IDebugDocumentHelper** pddh)
 {
 	PY_GATEWAY_METHOD;

@@ -388,8 +388,8 @@ PyObject *PyIPropertyDescription::GetEnumTypeList(PyObject *self, PyObject *args
 	return PyCom_PyObjectFromIUnknown((IUnknown *)ret, riid);
 }
 
-// @pymethod int|PyIPropertyDescription|CoerceToCanonicalValue|Converts a variant value to the exact type expected by the property 
-// @comm This method mutates the PyPROPVARIANT in place.  It may be cleared on failure. 
+// @pymethod int|PyIPropertyDescription|CoerceToCanonicalValue|Converts a variant value to the exact type expected by the property
+// @comm This method mutates the PyPROPVARIANT in place.  It may be cleared on failure.
 // @rdesc Returns the HRESULT from the operation on success.
 PyObject *PyIPropertyDescription::CoerceToCanonicalValue(PyObject *self, PyObject *args)
 {
@@ -484,7 +484,7 @@ static struct PyMethodDef PyIPropertyDescription_methods[] =
 	{ "GetAggregationType", PyIPropertyDescription::GetAggregationType, 1 }, // @pymeth GetAggregationType|Describes how properties for multiple items are displayed (PDAT_*)
 	{ "GetConditionType", PyIPropertyDescription::GetConditionType, 1 }, // @pymeth GetConditionType|Returns options that determine how the property is used to build a search query
 	{ "GetEnumTypeList", PyIPropertyDescription::GetEnumTypeList, 1 }, // @pymeth GetEnumTypeList|Returns an interface used for querying valid property range
-	{ "CoerceToCanonicalValue", PyIPropertyDescription::CoerceToCanonicalValue, 1 }, // @pymeth CoerceToCanonicalValue|Converts a variant value to the exact type expected by the property 
+	{ "CoerceToCanonicalValue", PyIPropertyDescription::CoerceToCanonicalValue, 1 }, // @pymeth CoerceToCanonicalValue|Converts a variant value to the exact type expected by the property
 	{ "FormatForDisplay", PyIPropertyDescription::FormatForDisplay, 1 }, // @pymeth FormatForDisplay|Converts a value to its string representation
 	{ "IsValueCanonical", PyIPropertyDescription::IsValueCanonical, 1 }, // @pymeth IsValueCanonical|Determines if a value exactly matches the specification for the property
 	{ NULL }

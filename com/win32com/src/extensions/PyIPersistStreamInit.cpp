@@ -47,7 +47,7 @@ PyObject *PyIPersistStreamInit::InitNew(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIPersistStreamInit_methods[] =
 {
 	{"InitNew",      PyIPersistStreamInit::InitNew, 1}, // @pymeth InitNew|Initializes the object to a default state.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIPersistStreamInit::type("PyIPersistStreamInit",

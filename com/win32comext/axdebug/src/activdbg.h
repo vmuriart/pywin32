@@ -7,8 +7,8 @@
 /* Compiler settings for activdbg.idl:
     Oicf, W1, Zp8, env=Win32 (32b run)
     protocol : dce , ms_ext, c_ext
-    error checks: allocation ref bounds_check enum stub_data 
-    VC __declspec() decoration level: 
+    error checks: allocation ref bounds_check enum stub_data
+    VC __declspec() decoration level:
          __declspec(uuid()), __declspec(selectany), __declspec(novtable)
          DECLSPEC_UUID(), MIDL_INTERFACE()
 */
@@ -41,7 +41,7 @@
 #pragma once
 #endif
 
-/* Forward Declarations */ 
+/* Forward Declarations */
 
 #ifndef __IActiveScriptDebug32_FWD_DEFINED__
 #define __IActiveScriptDebug32_FWD_DEFINED__
@@ -800,13 +800,13 @@ typedef struct DefaultDebugSessionProvider DefaultDebugSessionProvider;
 
 #ifdef __cplusplus
 extern "C"{
-#endif 
+#endif
 
 void * __RPC_USER MIDL_user_allocate(size_t);
-void __RPC_USER MIDL_user_free( void * ); 
+void __RPC_USER MIDL_user_free( void * );
 
 /* interface __MIDL_itf_activdbg_0000 */
-/* [local] */ 
+/* [local] */
 
 //=--------------------------------------------------------------------------=
 // ActivDbg.h
@@ -881,7 +881,7 @@ void __RPC_USER MIDL_user_free( void * );
 
 
 
-typedef 
+typedef
 enum tagBREAKPOINT_STATE
     {	BREAKPOINT_DELETED	= 0,
 	BREAKPOINT_DISABLED	= 1,
@@ -908,7 +908,7 @@ typedef DWORD APPBREAKFLAGS;
 
 #define	APPBREAKFLAG_IN_BREAKPOINT	( 0x80000000 )
 
-typedef 
+typedef
 enum tagBREAKREASON
     {	BREAKREASON_STEP	= 0,
 	BREAKREASON_BREAKPOINT	= BREAKREASON_STEP + 1,
@@ -920,7 +920,7 @@ enum tagBREAKREASON
 	BREAKREASON_JIT	= BREAKREASON_ERROR + 1
     } 	BREAKREASON;
 
-typedef 
+typedef
 enum tagBREAKRESUME_ACTION
     {	BREAKRESUMEACTION_ABORT	= 0,
 	BREAKRESUMEACTION_CONTINUE	= BREAKRESUMEACTION_ABORT + 1,
@@ -930,14 +930,14 @@ enum tagBREAKRESUME_ACTION
 	BREAKRESUMEACTION_IGNORE	= BREAKRESUMEACTION_STEP_OUT + 1
     } 	BREAKRESUMEACTION;
 
-typedef 
+typedef
 enum tagERRORRESUMEACTION
     {	ERRORRESUMEACTION_ReexecuteErrorStatement	= 0,
 	ERRORRESUMEACTION_AbortCallAndReturnErrorToCaller	= ERRORRESUMEACTION_ReexecuteErrorStatement + 1,
 	ERRORRESUMEACTION_SkipErrorStatement	= ERRORRESUMEACTION_AbortCallAndReturnErrorToCaller + 1
     } 	ERRORRESUMEACTION;
 
-typedef 
+typedef
 enum tagDOCUMENTNAMETYPE
     {	DOCUMENTNAMETYPE_APPNODE	= 0,
 	DOCUMENTNAMETYPE_TITLE	= DOCUMENTNAMETYPE_APPNODE + 1,
@@ -995,79 +995,79 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0000_v0_0_s_ifspec;
 #define __IActiveScriptDebug32_INTERFACE_DEFINED__
 
 /* interface IActiveScriptDebug32 */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IActiveScriptDebug32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C10-CB0C-11d0-B5C9-00A0244A0E7A")
     IActiveScriptDebug32 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetScriptTextAttributes( 
+        virtual HRESULT STDMETHODCALLTYPE GetScriptTextAttributes(
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetScriptletTextAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetScriptletTextAttributes(
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumCodeContextsOfPosition( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumCodeContextsOfPosition(
             /* [in] */ DWORD dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IEnumDebugCodeContexts **ppescc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IActiveScriptDebug32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IActiveScriptDebug32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IActiveScriptDebug32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IActiveScriptDebug32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptTextAttributes )(
             IActiveScriptDebug32 * This,
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptletTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptletTextAttributes )(
             IActiveScriptDebug32 * This,
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumCodeContextsOfPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumCodeContextsOfPosition )(
             IActiveScriptDebug32 * This,
             /* [in] */ DWORD dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IEnumDebugCodeContexts **ppescc);
-        
+
         END_INTERFACE
     } IActiveScriptDebug32Vtbl;
 
@@ -1076,7 +1076,7 @@ EXTERN_C const IID IID_IActiveScriptDebug32;
         CONST_VTBL struct IActiveScriptDebug32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -1107,7 +1107,7 @@ EXTERN_C const IID IID_IActiveScriptDebug32;
 
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptDebug32_GetScriptTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptDebug32_GetScriptTextAttributes_Proxy(
     IActiveScriptDebug32 * This,
     /* [size_is][in] */ LPCOLESTR pstrCode,
     /* [in] */ ULONG uNumCodeChars,
@@ -1123,7 +1123,7 @@ void __RPC_STUB IActiveScriptDebug32_GetScriptTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptDebug32_GetScriptletTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptDebug32_GetScriptletTextAttributes_Proxy(
     IActiveScriptDebug32 * This,
     /* [size_is][in] */ LPCOLESTR pstrCode,
     /* [in] */ ULONG uNumCodeChars,
@@ -1139,7 +1139,7 @@ void __RPC_STUB IActiveScriptDebug32_GetScriptletTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptDebug32_EnumCodeContextsOfPosition_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptDebug32_EnumCodeContextsOfPosition_Proxy(
     IActiveScriptDebug32 * This,
     /* [in] */ DWORD dwSourceContext,
     /* [in] */ ULONG uCharacterOffset,
@@ -1162,79 +1162,79 @@ void __RPC_STUB IActiveScriptDebug32_EnumCodeContextsOfPosition_Stub(
 #define __IActiveScriptDebug64_INTERFACE_DEFINED__
 
 /* interface IActiveScriptDebug64 */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IActiveScriptDebug64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("bc437e23-f5b8-47f4-bb79-7d1ce5483b86")
     IActiveScriptDebug64 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetScriptTextAttributes( 
+        virtual HRESULT STDMETHODCALLTYPE GetScriptTextAttributes(
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetScriptletTextAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetScriptletTextAttributes(
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumCodeContextsOfPosition( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumCodeContextsOfPosition(
             /* [in] */ DWORDLONG dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IEnumDebugCodeContexts **ppescc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IActiveScriptDebug64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IActiveScriptDebug64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IActiveScriptDebug64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IActiveScriptDebug64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptTextAttributes )(
             IActiveScriptDebug64 * This,
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptletTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptletTextAttributes )(
             IActiveScriptDebug64 * This,
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumCodeContextsOfPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumCodeContextsOfPosition )(
             IActiveScriptDebug64 * This,
             /* [in] */ DWORDLONG dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IEnumDebugCodeContexts **ppescc);
-        
+
         END_INTERFACE
     } IActiveScriptDebug64Vtbl;
 
@@ -1243,7 +1243,7 @@ EXTERN_C const IID IID_IActiveScriptDebug64;
         CONST_VTBL struct IActiveScriptDebug64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -1274,7 +1274,7 @@ EXTERN_C const IID IID_IActiveScriptDebug64;
 
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptDebug64_GetScriptTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptDebug64_GetScriptTextAttributes_Proxy(
     IActiveScriptDebug64 * This,
     /* [size_is][in] */ LPCOLESTR pstrCode,
     /* [in] */ ULONG uNumCodeChars,
@@ -1290,7 +1290,7 @@ void __RPC_STUB IActiveScriptDebug64_GetScriptTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptDebug64_GetScriptletTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptDebug64_GetScriptletTextAttributes_Proxy(
     IActiveScriptDebug64 * This,
     /* [size_is][in] */ LPCOLESTR pstrCode,
     /* [in] */ ULONG uNumCodeChars,
@@ -1306,7 +1306,7 @@ void __RPC_STUB IActiveScriptDebug64_GetScriptletTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptDebug64_EnumCodeContextsOfPosition_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptDebug64_EnumCodeContextsOfPosition_Proxy(
     IActiveScriptDebug64 * This,
     /* [in] */ DWORDLONG dwSourceContext,
     /* [in] */ ULONG uCharacterOffset,
@@ -1326,7 +1326,7 @@ void __RPC_STUB IActiveScriptDebug64_EnumCodeContextsOfPosition_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0305 */
-/* [local] */ 
+/* [local] */
 
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
 #ifdef _WIN64
@@ -1346,74 +1346,74 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0305_v0_0_s_ifspec;
 #define __IActiveScriptSiteDebug32_INTERFACE_DEFINED__
 
 /* interface IActiveScriptSiteDebug32 */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IActiveScriptSiteDebug32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C11-CB0C-11d0-B5C9-00A0244A0E7A")
     IActiveScriptSiteDebug32 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocumentContextFromPosition( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocumentContextFromPosition(
             /* [in] */ DWORD dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IDebugDocumentContext **ppsc) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetApplication(
             /* [out] */ IDebugApplication32 **ppda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetRootApplicationNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetRootApplicationNode(
             /* [out] */ IDebugApplicationNode **ppdanRoot) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnScriptErrorDebug( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnScriptErrorDebug(
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [out] */ BOOL *pfEnterDebugger,
             /* [out] */ BOOL *pfCallOnScriptErrorWhenContinuing) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IActiveScriptSiteDebug32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IActiveScriptSiteDebug32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IActiveScriptSiteDebug32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IActiveScriptSiteDebug32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentContextFromPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentContextFromPosition )(
             IActiveScriptSiteDebug32 * This,
             /* [in] */ DWORD dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IDebugDocumentContext **ppsc);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetApplication )(
             IActiveScriptSiteDebug32 * This,
             /* [out] */ IDebugApplication32 **ppda);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetRootApplicationNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetRootApplicationNode )(
             IActiveScriptSiteDebug32 * This,
             /* [out] */ IDebugApplicationNode **ppdanRoot);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnScriptErrorDebug )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnScriptErrorDebug )(
             IActiveScriptSiteDebug32 * This,
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [out] */ BOOL *pfEnterDebugger,
             /* [out] */ BOOL *pfCallOnScriptErrorWhenContinuing);
-        
+
         END_INTERFACE
     } IActiveScriptSiteDebug32Vtbl;
 
@@ -1422,7 +1422,7 @@ EXTERN_C const IID IID_IActiveScriptSiteDebug32;
         CONST_VTBL struct IActiveScriptSiteDebug32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -1456,7 +1456,7 @@ EXTERN_C const IID IID_IActiveScriptSiteDebug32;
 
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_GetDocumentContextFromPosition_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_GetDocumentContextFromPosition_Proxy(
     IActiveScriptSiteDebug32 * This,
     /* [in] */ DWORD dwSourceContext,
     /* [in] */ ULONG uCharacterOffset,
@@ -1471,7 +1471,7 @@ void __RPC_STUB IActiveScriptSiteDebug32_GetDocumentContextFromPosition_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_GetApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_GetApplication_Proxy(
     IActiveScriptSiteDebug32 * This,
     /* [out] */ IDebugApplication32 **ppda);
 
@@ -1483,7 +1483,7 @@ void __RPC_STUB IActiveScriptSiteDebug32_GetApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_GetRootApplicationNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_GetRootApplicationNode_Proxy(
     IActiveScriptSiteDebug32 * This,
     /* [out] */ IDebugApplicationNode **ppdanRoot);
 
@@ -1495,7 +1495,7 @@ void __RPC_STUB IActiveScriptSiteDebug32_GetRootApplicationNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_OnScriptErrorDebug_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug32_OnScriptErrorDebug_Proxy(
     IActiveScriptSiteDebug32 * This,
     /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
     /* [out] */ BOOL *pfEnterDebugger,
@@ -1517,74 +1517,74 @@ void __RPC_STUB IActiveScriptSiteDebug32_OnScriptErrorDebug_Stub(
 #define __IActiveScriptSiteDebug64_INTERFACE_DEFINED__
 
 /* interface IActiveScriptSiteDebug64 */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IActiveScriptSiteDebug64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("d6b96b0a-7463-402c-92ac-89984226942f")
     IActiveScriptSiteDebug64 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocumentContextFromPosition( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocumentContextFromPosition(
             /* [in] */ DWORDLONG dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IDebugDocumentContext **ppsc) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetApplication(
             /* [out] */ IDebugApplication64 **ppda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetRootApplicationNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetRootApplicationNode(
             /* [out] */ IDebugApplicationNode **ppdanRoot) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnScriptErrorDebug( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnScriptErrorDebug(
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [out] */ BOOL *pfEnterDebugger,
             /* [out] */ BOOL *pfCallOnScriptErrorWhenContinuing) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IActiveScriptSiteDebug64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IActiveScriptSiteDebug64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IActiveScriptSiteDebug64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IActiveScriptSiteDebug64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentContextFromPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentContextFromPosition )(
             IActiveScriptSiteDebug64 * This,
             /* [in] */ DWORDLONG dwSourceContext,
             /* [in] */ ULONG uCharacterOffset,
             /* [in] */ ULONG uNumChars,
             /* [out] */ IDebugDocumentContext **ppsc);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetApplication )(
             IActiveScriptSiteDebug64 * This,
             /* [out] */ IDebugApplication64 **ppda);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetRootApplicationNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetRootApplicationNode )(
             IActiveScriptSiteDebug64 * This,
             /* [out] */ IDebugApplicationNode **ppdanRoot);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnScriptErrorDebug )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnScriptErrorDebug )(
             IActiveScriptSiteDebug64 * This,
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [out] */ BOOL *pfEnterDebugger,
             /* [out] */ BOOL *pfCallOnScriptErrorWhenContinuing);
-        
+
         END_INTERFACE
     } IActiveScriptSiteDebug64Vtbl;
 
@@ -1593,7 +1593,7 @@ EXTERN_C const IID IID_IActiveScriptSiteDebug64;
         CONST_VTBL struct IActiveScriptSiteDebug64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -1627,7 +1627,7 @@ EXTERN_C const IID IID_IActiveScriptSiteDebug64;
 
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_GetDocumentContextFromPosition_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_GetDocumentContextFromPosition_Proxy(
     IActiveScriptSiteDebug64 * This,
     /* [in] */ DWORDLONG dwSourceContext,
     /* [in] */ ULONG uCharacterOffset,
@@ -1642,7 +1642,7 @@ void __RPC_STUB IActiveScriptSiteDebug64_GetDocumentContextFromPosition_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_GetApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_GetApplication_Proxy(
     IActiveScriptSiteDebug64 * This,
     /* [out] */ IDebugApplication64 **ppda);
 
@@ -1654,7 +1654,7 @@ void __RPC_STUB IActiveScriptSiteDebug64_GetApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_GetRootApplicationNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_GetRootApplicationNode_Proxy(
     IActiveScriptSiteDebug64 * This,
     /* [out] */ IDebugApplicationNode **ppdanRoot);
 
@@ -1666,7 +1666,7 @@ void __RPC_STUB IActiveScriptSiteDebug64_GetRootApplicationNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_OnScriptErrorDebug_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptSiteDebug64_OnScriptErrorDebug_Proxy(
     IActiveScriptSiteDebug64 * This,
     /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
     /* [out] */ BOOL *pfEnterDebugger,
@@ -1688,64 +1688,64 @@ void __RPC_STUB IActiveScriptSiteDebug64_OnScriptErrorDebug_Stub(
 #define __IActiveScriptErrorDebug_INTERFACE_DEFINED__
 
 /* interface IActiveScriptErrorDebug */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IActiveScriptErrorDebug;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C12-CB0C-11d0-B5C9-00A0244A0E7A")
     IActiveScriptErrorDebug : public IActiveScriptError
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocumentContext( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocumentContext(
             /* [out] */ IDebugDocumentContext **ppssc) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetStackFrame( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetStackFrame(
             /* [out] */ IDebugStackFrame **ppdsf) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IActiveScriptErrorDebugVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IActiveScriptErrorDebug * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IActiveScriptErrorDebug * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IActiveScriptErrorDebug * This);
-        
-        /* [local] */ HRESULT ( STDMETHODCALLTYPE *GetExceptionInfo )( 
+
+        /* [local] */ HRESULT ( STDMETHODCALLTYPE *GetExceptionInfo )(
             IActiveScriptErrorDebug * This,
             /* [out] */ EXCEPINFO *pexcepinfo);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSourcePosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSourcePosition )(
             IActiveScriptErrorDebug * This,
             /* [out] */ DWORD *pdwSourceContext,
             /* [out] */ ULONG *pulLineNumber,
             /* [out] */ LONG *plCharacterPosition);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSourceLineText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSourceLineText )(
             IActiveScriptErrorDebug * This,
             /* [out] */ BSTR *pbstrSourceLine);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentContext )(
             IActiveScriptErrorDebug * This,
             /* [out] */ IDebugDocumentContext **ppssc);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetStackFrame )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetStackFrame )(
             IActiveScriptErrorDebug * This,
             /* [out] */ IDebugStackFrame **ppdsf);
-        
+
         END_INTERFACE
     } IActiveScriptErrorDebugVtbl;
 
@@ -1754,7 +1754,7 @@ EXTERN_C const IID IID_IActiveScriptErrorDebug;
         CONST_VTBL struct IActiveScriptErrorDebugVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -1792,7 +1792,7 @@ EXTERN_C const IID IID_IActiveScriptErrorDebug;
 
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptErrorDebug_GetDocumentContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptErrorDebug_GetDocumentContext_Proxy(
     IActiveScriptErrorDebug * This,
     /* [out] */ IDebugDocumentContext **ppssc);
 
@@ -1804,7 +1804,7 @@ void __RPC_STUB IActiveScriptErrorDebug_GetDocumentContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IActiveScriptErrorDebug_GetStackFrame_Proxy( 
+HRESULT STDMETHODCALLTYPE IActiveScriptErrorDebug_GetStackFrame_Proxy(
     IActiveScriptErrorDebug * This,
     /* [out] */ IDebugStackFrame **ppdsf);
 
@@ -1824,50 +1824,50 @@ void __RPC_STUB IActiveScriptErrorDebug_GetStackFrame_Stub(
 #define __IDebugCodeContext_INTERFACE_DEFINED__
 
 /* interface IDebugCodeContext */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugCodeContext;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C13-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugCodeContext : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocumentContext( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocumentContext(
             /* [out] */ IDebugDocumentContext **ppsc) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetBreakPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetBreakPoint(
             /* [in] */ BREAKPOINT_STATE bps) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugCodeContextVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugCodeContext * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugCodeContext * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugCodeContext * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentContext )(
             IDebugCodeContext * This,
             /* [out] */ IDebugDocumentContext **ppsc);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetBreakPoint )(
             IDebugCodeContext * This,
             /* [in] */ BREAKPOINT_STATE bps);
-        
+
         END_INTERFACE
     } IDebugCodeContextVtbl;
 
@@ -1876,7 +1876,7 @@ EXTERN_C const IID IID_IDebugCodeContext;
         CONST_VTBL struct IDebugCodeContextVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -1904,7 +1904,7 @@ EXTERN_C const IID IID_IDebugCodeContext;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugCodeContext_GetDocumentContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugCodeContext_GetDocumentContext_Proxy(
     IDebugCodeContext * This,
     /* [out] */ IDebugDocumentContext **ppsc);
 
@@ -1916,7 +1916,7 @@ void __RPC_STUB IDebugCodeContext_GetDocumentContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugCodeContext_SetBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugCodeContext_SetBreakPoint_Proxy(
     IDebugCodeContext * This,
     /* [in] */ BREAKPOINT_STATE bps);
 
@@ -1936,71 +1936,71 @@ void __RPC_STUB IDebugCodeContext_SetBreakPoint_Stub(
 #define __IDebugExpression_INTERFACE_DEFINED__
 
 /* interface IDebugExpression */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugExpression;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C14-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugExpression : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Start( 
+        virtual HRESULT STDMETHODCALLTYPE Start(
             /* [in] */ IDebugExpressionCallBack *pdecb) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Abort( void) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryIsComplete( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetResultAsString( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetResultAsString(
             /* [out] */ HRESULT *phrResult,
             /* [out] */ BSTR *pbstrResult) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetResultAsDebugProperty( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetResultAsDebugProperty(
             /* [out] */ HRESULT *phrResult,
             /* [out] */ IDebugProperty **ppdp) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugExpressionVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugExpression * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugExpression * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugExpression * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Start )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Start )(
             IDebugExpression * This,
             /* [in] */ IDebugExpressionCallBack *pdecb);
-        
-        HRESULT ( STDMETHODCALLTYPE *Abort )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Abort )(
             IDebugExpression * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryIsComplete )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryIsComplete )(
             IDebugExpression * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetResultAsString )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetResultAsString )(
             IDebugExpression * This,
             /* [out] */ HRESULT *phrResult,
             /* [out] */ BSTR *pbstrResult);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetResultAsDebugProperty )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetResultAsDebugProperty )(
             IDebugExpression * This,
             /* [out] */ HRESULT *phrResult,
             /* [out] */ IDebugProperty **ppdp);
-        
+
         END_INTERFACE
     } IDebugExpressionVtbl;
 
@@ -2009,7 +2009,7 @@ EXTERN_C const IID IID_IDebugExpression;
         CONST_VTBL struct IDebugExpressionVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2046,7 +2046,7 @@ EXTERN_C const IID IID_IDebugExpression;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpression_Start_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpression_Start_Proxy(
     IDebugExpression * This,
     /* [in] */ IDebugExpressionCallBack *pdecb);
 
@@ -2058,7 +2058,7 @@ void __RPC_STUB IDebugExpression_Start_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpression_Abort_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpression_Abort_Proxy(
     IDebugExpression * This);
 
 
@@ -2069,7 +2069,7 @@ void __RPC_STUB IDebugExpression_Abort_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpression_QueryIsComplete_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpression_QueryIsComplete_Proxy(
     IDebugExpression * This);
 
 
@@ -2080,7 +2080,7 @@ void __RPC_STUB IDebugExpression_QueryIsComplete_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpression_GetResultAsString_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpression_GetResultAsString_Proxy(
     IDebugExpression * This,
     /* [out] */ HRESULT *phrResult,
     /* [out] */ BSTR *pbstrResult);
@@ -2093,7 +2093,7 @@ void __RPC_STUB IDebugExpression_GetResultAsString_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpression_GetResultAsDebugProperty_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpression_GetResultAsDebugProperty_Proxy(
     IDebugExpression * This,
     /* [out] */ HRESULT *phrResult,
     /* [out] */ IDebugProperty **ppdp);
@@ -2114,60 +2114,60 @@ void __RPC_STUB IDebugExpression_GetResultAsDebugProperty_Stub(
 #define __IDebugExpressionContext_INTERFACE_DEFINED__
 
 /* interface IDebugExpressionContext */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugExpressionContext;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C15-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugExpressionContext : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE ParseLanguageText( 
+        virtual HRESULT STDMETHODCALLTYPE ParseLanguageText(
             /* [in] */ LPCOLESTR pstrCode,
             /* [in] */ UINT nRadix,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [out] */ IDebugExpression **ppe) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetLanguageInfo( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetLanguageInfo(
             /* [out] */ BSTR *pbstrLanguageName,
             /* [out] */ GUID *pLanguageID) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugExpressionContextVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugExpressionContext * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugExpressionContext * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugExpressionContext * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ParseLanguageText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ParseLanguageText )(
             IDebugExpressionContext * This,
             /* [in] */ LPCOLESTR pstrCode,
             /* [in] */ UINT nRadix,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [out] */ IDebugExpression **ppe);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetLanguageInfo )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetLanguageInfo )(
             IDebugExpressionContext * This,
             /* [out] */ BSTR *pbstrLanguageName,
             /* [out] */ GUID *pLanguageID);
-        
+
         END_INTERFACE
     } IDebugExpressionContextVtbl;
 
@@ -2176,7 +2176,7 @@ EXTERN_C const IID IID_IDebugExpressionContext;
         CONST_VTBL struct IDebugExpressionContextVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2204,7 +2204,7 @@ EXTERN_C const IID IID_IDebugExpressionContext;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpressionContext_ParseLanguageText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpressionContext_ParseLanguageText_Proxy(
     IDebugExpressionContext * This,
     /* [in] */ LPCOLESTR pstrCode,
     /* [in] */ UINT nRadix,
@@ -2220,7 +2220,7 @@ void __RPC_STUB IDebugExpressionContext_ParseLanguageText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpressionContext_GetLanguageInfo_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpressionContext_GetLanguageInfo_Proxy(
     IDebugExpressionContext * This,
     /* [out] */ BSTR *pbstrLanguageName,
     /* [out] */ GUID *pLanguageID);
@@ -2241,41 +2241,41 @@ void __RPC_STUB IDebugExpressionContext_GetLanguageInfo_Stub(
 #define __IDebugExpressionCallBack_INTERFACE_DEFINED__
 
 /* interface IDebugExpressionCallBack */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugExpressionCallBack;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C16-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugExpressionCallBack : public IUnknown
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE onComplete( void) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugExpressionCallBackVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugExpressionCallBack * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugExpressionCallBack * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugExpressionCallBack * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onComplete )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onComplete )(
             IDebugExpressionCallBack * This);
-        
+
         END_INTERFACE
     } IDebugExpressionCallBackVtbl;
 
@@ -2284,7 +2284,7 @@ EXTERN_C const IID IID_IDebugExpressionCallBack;
         CONST_VTBL struct IDebugExpressionCallBackVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2309,7 +2309,7 @@ EXTERN_C const IID IID_IDebugExpressionCallBack;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugExpressionCallBack_onComplete_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugExpressionCallBack_onComplete_Proxy(
     IDebugExpressionCallBack * This);
 
 
@@ -2328,75 +2328,75 @@ void __RPC_STUB IDebugExpressionCallBack_onComplete_Stub(
 #define __IDebugStackFrame_INTERFACE_DEFINED__
 
 /* interface IDebugStackFrame */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugStackFrame;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C17-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugStackFrame : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetCodeContext( 
+        virtual HRESULT STDMETHODCALLTYPE GetCodeContext(
             /* [out] */ IDebugCodeContext **ppcc) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDescriptionString( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDescriptionString(
             /* [in] */ BOOL fLong,
             /* [out] */ BSTR *pbstrDescription) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetLanguageString( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetLanguageString(
             /* [in] */ BOOL fLong,
             /* [out] */ BSTR *pbstrLanguage) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetThread(
             /* [out] */ IDebugApplicationThread **ppat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDebugProperty( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDebugProperty(
             /* [out] */ IDebugProperty **ppDebugProp) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugStackFrameVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugStackFrame * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugStackFrame * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugStackFrame * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetCodeContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetCodeContext )(
             IDebugStackFrame * This,
             /* [out] */ IDebugCodeContext **ppcc);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDescriptionString )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDescriptionString )(
             IDebugStackFrame * This,
             /* [in] */ BOOL fLong,
             /* [out] */ BSTR *pbstrDescription);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetLanguageString )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetLanguageString )(
             IDebugStackFrame * This,
             /* [in] */ BOOL fLong,
             /* [out] */ BSTR *pbstrLanguage);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetThread )(
             IDebugStackFrame * This,
             /* [out] */ IDebugApplicationThread **ppat);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDebugProperty )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDebugProperty )(
             IDebugStackFrame * This,
             /* [out] */ IDebugProperty **ppDebugProp);
-        
+
         END_INTERFACE
     } IDebugStackFrameVtbl;
 
@@ -2405,7 +2405,7 @@ EXTERN_C const IID IID_IDebugStackFrame;
         CONST_VTBL struct IDebugStackFrameVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2442,7 +2442,7 @@ EXTERN_C const IID IID_IDebugStackFrame;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetCodeContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetCodeContext_Proxy(
     IDebugStackFrame * This,
     /* [out] */ IDebugCodeContext **ppcc);
 
@@ -2454,7 +2454,7 @@ void __RPC_STUB IDebugStackFrame_GetCodeContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetDescriptionString_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetDescriptionString_Proxy(
     IDebugStackFrame * This,
     /* [in] */ BOOL fLong,
     /* [out] */ BSTR *pbstrDescription);
@@ -2467,7 +2467,7 @@ void __RPC_STUB IDebugStackFrame_GetDescriptionString_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetLanguageString_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetLanguageString_Proxy(
     IDebugStackFrame * This,
     /* [in] */ BOOL fLong,
     /* [out] */ BSTR *pbstrLanguage);
@@ -2480,7 +2480,7 @@ void __RPC_STUB IDebugStackFrame_GetLanguageString_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetThread_Proxy(
     IDebugStackFrame * This,
     /* [out] */ IDebugApplicationThread **ppat);
 
@@ -2492,7 +2492,7 @@ void __RPC_STUB IDebugStackFrame_GetThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetDebugProperty_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrame_GetDebugProperty_Proxy(
     IDebugStackFrame * This,
     /* [out] */ IDebugProperty **ppDebugProp);
 
@@ -2512,43 +2512,43 @@ void __RPC_STUB IDebugStackFrame_GetDebugProperty_Stub(
 #define __IDebugStackFrameSniffer_INTERFACE_DEFINED__
 
 /* interface IDebugStackFrameSniffer */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugStackFrameSniffer;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C18-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugStackFrameSniffer : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE EnumStackFrames( 
+        virtual HRESULT STDMETHODCALLTYPE EnumStackFrames(
             /* [out] */ IEnumDebugStackFrames **ppedsf) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugStackFrameSnifferVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugStackFrameSniffer * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugStackFrameSniffer * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugStackFrameSniffer * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )(
             IDebugStackFrameSniffer * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
+
         END_INTERFACE
     } IDebugStackFrameSnifferVtbl;
 
@@ -2557,7 +2557,7 @@ EXTERN_C const IID IID_IDebugStackFrameSniffer;
         CONST_VTBL struct IDebugStackFrameSnifferVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2582,7 +2582,7 @@ EXTERN_C const IID IID_IDebugStackFrameSniffer;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrameSniffer_EnumStackFrames_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrameSniffer_EnumStackFrames_Proxy(
     IDebugStackFrameSniffer * This,
     /* [out] */ IEnumDebugStackFrames **ppedsf);
 
@@ -2599,7 +2599,7 @@ void __RPC_STUB IDebugStackFrameSniffer_EnumStackFrames_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0314 */
-/* [local] */ 
+/* [local] */
 
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
 #ifdef _WIN64
@@ -2621,49 +2621,49 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0314_v0_0_s_ifspec;
 #define __IDebugStackFrameSnifferEx32_INTERFACE_DEFINED__
 
 /* interface IDebugStackFrameSnifferEx32 */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugStackFrameSnifferEx32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C19-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugStackFrameSnifferEx32 : public IDebugStackFrameSniffer
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE EnumStackFramesEx32( 
+        virtual HRESULT STDMETHODCALLTYPE EnumStackFramesEx32(
             /* [in] */ DWORD dwSpMin,
             /* [out] */ IEnumDebugStackFrames **ppedsf) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugStackFrameSnifferEx32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugStackFrameSnifferEx32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugStackFrameSnifferEx32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugStackFrameSnifferEx32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )(
             IDebugStackFrameSnifferEx32 * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFramesEx32 )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFramesEx32 )(
             IDebugStackFrameSnifferEx32 * This,
             /* [in] */ DWORD dwSpMin,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
+
         END_INTERFACE
     } IDebugStackFrameSnifferEx32Vtbl;
 
@@ -2672,7 +2672,7 @@ EXTERN_C const IID IID_IDebugStackFrameSnifferEx32;
         CONST_VTBL struct IDebugStackFrameSnifferEx32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2701,7 +2701,7 @@ EXTERN_C const IID IID_IDebugStackFrameSnifferEx32;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrameSnifferEx32_EnumStackFramesEx32_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrameSnifferEx32_EnumStackFramesEx32_Proxy(
     IDebugStackFrameSnifferEx32 * This,
     /* [in] */ DWORD dwSpMin,
     /* [out] */ IEnumDebugStackFrames **ppedsf);
@@ -2722,49 +2722,49 @@ void __RPC_STUB IDebugStackFrameSnifferEx32_EnumStackFramesEx32_Stub(
 #define __IDebugStackFrameSnifferEx64_INTERFACE_DEFINED__
 
 /* interface IDebugStackFrameSnifferEx64 */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugStackFrameSnifferEx64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("8cd12af4-49c1-4d52-8d8a-c146f47581aa")
     IDebugStackFrameSnifferEx64 : public IDebugStackFrameSniffer
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE EnumStackFramesEx64( 
+        virtual HRESULT STDMETHODCALLTYPE EnumStackFramesEx64(
             /* [in] */ DWORDLONG dwSpMin,
             /* [out] */ IEnumDebugStackFrames64 **ppedsf) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugStackFrameSnifferEx64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugStackFrameSnifferEx64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugStackFrameSnifferEx64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugStackFrameSnifferEx64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )(
             IDebugStackFrameSnifferEx64 * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFramesEx64 )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFramesEx64 )(
             IDebugStackFrameSnifferEx64 * This,
             /* [in] */ DWORDLONG dwSpMin,
             /* [out] */ IEnumDebugStackFrames64 **ppedsf);
-        
+
         END_INTERFACE
     } IDebugStackFrameSnifferEx64Vtbl;
 
@@ -2773,7 +2773,7 @@ EXTERN_C const IID IID_IDebugStackFrameSnifferEx64;
         CONST_VTBL struct IDebugStackFrameSnifferEx64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2802,7 +2802,7 @@ EXTERN_C const IID IID_IDebugStackFrameSnifferEx64;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugStackFrameSnifferEx64_EnumStackFramesEx64_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugStackFrameSnifferEx64_EnumStackFramesEx64_Proxy(
     IDebugStackFrameSnifferEx64 * This,
     /* [in] */ DWORDLONG dwSpMin,
     /* [out] */ IEnumDebugStackFrames64 **ppedsf);
@@ -2823,55 +2823,55 @@ void __RPC_STUB IDebugStackFrameSnifferEx64_EnumStackFramesEx64_Stub(
 #define __IDebugSyncOperation_INTERFACE_DEFINED__
 
 /* interface IDebugSyncOperation */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugSyncOperation;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C1a-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugSyncOperation : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetTargetThread( 
+        virtual HRESULT STDMETHODCALLTYPE GetTargetThread(
             /* [out] */ IDebugApplicationThread **ppatTarget) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Execute( 
+
+        virtual HRESULT STDMETHODCALLTYPE Execute(
             /* [out] */ IUnknown **ppunkResult) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE InProgressAbort( void) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugSyncOperationVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugSyncOperation * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugSyncOperation * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugSyncOperation * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetTargetThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetTargetThread )(
             IDebugSyncOperation * This,
             /* [out] */ IDebugApplicationThread **ppatTarget);
-        
-        HRESULT ( STDMETHODCALLTYPE *Execute )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Execute )(
             IDebugSyncOperation * This,
             /* [out] */ IUnknown **ppunkResult);
-        
-        HRESULT ( STDMETHODCALLTYPE *InProgressAbort )( 
+
+        HRESULT ( STDMETHODCALLTYPE *InProgressAbort )(
             IDebugSyncOperation * This);
-        
+
         END_INTERFACE
     } IDebugSyncOperationVtbl;
 
@@ -2880,7 +2880,7 @@ EXTERN_C const IID IID_IDebugSyncOperation;
         CONST_VTBL struct IDebugSyncOperationVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -2911,7 +2911,7 @@ EXTERN_C const IID IID_IDebugSyncOperation;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugSyncOperation_GetTargetThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugSyncOperation_GetTargetThread_Proxy(
     IDebugSyncOperation * This,
     /* [out] */ IDebugApplicationThread **ppatTarget);
 
@@ -2923,7 +2923,7 @@ void __RPC_STUB IDebugSyncOperation_GetTargetThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugSyncOperation_Execute_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugSyncOperation_Execute_Proxy(
     IDebugSyncOperation * This,
     /* [out] */ IUnknown **ppunkResult);
 
@@ -2935,7 +2935,7 @@ void __RPC_STUB IDebugSyncOperation_Execute_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugSyncOperation_InProgressAbort_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugSyncOperation_InProgressAbort_Proxy(
     IDebugSyncOperation * This);
 
 
@@ -2954,69 +2954,69 @@ void __RPC_STUB IDebugSyncOperation_InProgressAbort_Stub(
 #define __IDebugAsyncOperation_INTERFACE_DEFINED__
 
 /* interface IDebugAsyncOperation */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugAsyncOperation;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C1b-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugAsyncOperation : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetSyncDebugOperation( 
+        virtual HRESULT STDMETHODCALLTYPE GetSyncDebugOperation(
             /* [out] */ IDebugSyncOperation **ppsdo) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Start( 
+
+        virtual HRESULT STDMETHODCALLTYPE Start(
             IDebugAsyncOperationCallBack *padocb) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Abort( void) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryIsComplete( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetResult( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetResult(
             /* [out] */ HRESULT *phrResult,
             /* [out] */ IUnknown **ppunkResult) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugAsyncOperationVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugAsyncOperation * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugAsyncOperation * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugAsyncOperation * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSyncDebugOperation )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSyncDebugOperation )(
             IDebugAsyncOperation * This,
             /* [out] */ IDebugSyncOperation **ppsdo);
-        
-        HRESULT ( STDMETHODCALLTYPE *Start )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Start )(
             IDebugAsyncOperation * This,
             IDebugAsyncOperationCallBack *padocb);
-        
-        HRESULT ( STDMETHODCALLTYPE *Abort )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Abort )(
             IDebugAsyncOperation * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryIsComplete )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryIsComplete )(
             IDebugAsyncOperation * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetResult )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetResult )(
             IDebugAsyncOperation * This,
             /* [out] */ HRESULT *phrResult,
             /* [out] */ IUnknown **ppunkResult);
-        
+
         END_INTERFACE
     } IDebugAsyncOperationVtbl;
 
@@ -3025,7 +3025,7 @@ EXTERN_C const IID IID_IDebugAsyncOperation;
         CONST_VTBL struct IDebugAsyncOperationVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3062,7 +3062,7 @@ EXTERN_C const IID IID_IDebugAsyncOperation;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_GetSyncDebugOperation_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_GetSyncDebugOperation_Proxy(
     IDebugAsyncOperation * This,
     /* [out] */ IDebugSyncOperation **ppsdo);
 
@@ -3074,7 +3074,7 @@ void __RPC_STUB IDebugAsyncOperation_GetSyncDebugOperation_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_Start_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_Start_Proxy(
     IDebugAsyncOperation * This,
     IDebugAsyncOperationCallBack *padocb);
 
@@ -3086,7 +3086,7 @@ void __RPC_STUB IDebugAsyncOperation_Start_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_Abort_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_Abort_Proxy(
     IDebugAsyncOperation * This);
 
 
@@ -3097,7 +3097,7 @@ void __RPC_STUB IDebugAsyncOperation_Abort_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_QueryIsComplete_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_QueryIsComplete_Proxy(
     IDebugAsyncOperation * This);
 
 
@@ -3108,7 +3108,7 @@ void __RPC_STUB IDebugAsyncOperation_QueryIsComplete_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_GetResult_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugAsyncOperation_GetResult_Proxy(
     IDebugAsyncOperation * This,
     /* [out] */ HRESULT *phrResult,
     /* [out] */ IUnknown **ppunkResult);
@@ -3129,41 +3129,41 @@ void __RPC_STUB IDebugAsyncOperation_GetResult_Stub(
 #define __IDebugAsyncOperationCallBack_INTERFACE_DEFINED__
 
 /* interface IDebugAsyncOperationCallBack */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugAsyncOperationCallBack;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C1c-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugAsyncOperationCallBack : public IUnknown
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE onComplete( void) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugAsyncOperationCallBackVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugAsyncOperationCallBack * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugAsyncOperationCallBack * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugAsyncOperationCallBack * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onComplete )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onComplete )(
             IDebugAsyncOperationCallBack * This);
-        
+
         END_INTERFACE
     } IDebugAsyncOperationCallBackVtbl;
 
@@ -3172,7 +3172,7 @@ EXTERN_C const IID IID_IDebugAsyncOperationCallBack;
         CONST_VTBL struct IDebugAsyncOperationCallBackVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3197,7 +3197,7 @@ EXTERN_C const IID IID_IDebugAsyncOperationCallBack;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugAsyncOperationCallBack_onComplete_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugAsyncOperationCallBack_onComplete_Proxy(
     IDebugAsyncOperationCallBack * This);
 
 
@@ -3216,66 +3216,66 @@ void __RPC_STUB IDebugAsyncOperationCallBack_onComplete_Stub(
 #define __IEnumDebugCodeContexts_INTERFACE_DEFINED__
 
 /* interface IEnumDebugCodeContexts */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumDebugCodeContexts;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C1d-CB0C-11d0-B5C9-00A0244A0E7A")
     IEnumDebugCodeContexts : public IUnknown
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next( 
+        virtual /* [local] */ HRESULT __stdcall Next(
             /* [in] */ ULONG celt,
             /* [out] */ IDebugCodeContext **pscc,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Skip( 
+
+        virtual HRESULT STDMETHODCALLTYPE Skip(
             /* [in] */ ULONG celt) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Clone( 
+
+        virtual HRESULT STDMETHODCALLTYPE Clone(
             /* [out] */ IEnumDebugCodeContexts **ppescc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumDebugCodeContextsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumDebugCodeContexts * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumDebugCodeContexts * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumDebugCodeContexts * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumDebugCodeContexts * This,
             /* [in] */ ULONG celt,
             /* [out] */ IDebugCodeContext **pscc,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumDebugCodeContexts * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumDebugCodeContexts * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumDebugCodeContexts * This,
             /* [out] */ IEnumDebugCodeContexts **ppescc);
-        
+
         END_INTERFACE
     } IEnumDebugCodeContextsVtbl;
 
@@ -3284,7 +3284,7 @@ EXTERN_C const IID IID_IEnumDebugCodeContexts;
         CONST_VTBL struct IEnumDebugCodeContextsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3318,7 +3318,7 @@ EXTERN_C const IID IID_IEnumDebugCodeContexts;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugCodeContexts_RemoteNext_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugCodeContexts_RemoteNext_Proxy(
     IEnumDebugCodeContexts * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IDebugCodeContext **pscc,
@@ -3332,7 +3332,7 @@ void __RPC_STUB IEnumDebugCodeContexts_RemoteNext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugCodeContexts_Skip_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugCodeContexts_Skip_Proxy(
     IEnumDebugCodeContexts * This,
     /* [in] */ ULONG celt);
 
@@ -3344,7 +3344,7 @@ void __RPC_STUB IEnumDebugCodeContexts_Skip_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugCodeContexts_Reset_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugCodeContexts_Reset_Proxy(
     IEnumDebugCodeContexts * This);
 
 
@@ -3355,7 +3355,7 @@ void __RPC_STUB IEnumDebugCodeContexts_Reset_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugCodeContexts_Clone_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugCodeContexts_Clone_Proxy(
     IEnumDebugCodeContexts * This,
     /* [out] */ IEnumDebugCodeContexts **ppescc);
 
@@ -3372,7 +3372,7 @@ void __RPC_STUB IEnumDebugCodeContexts_Clone_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0320 */
-/* [local] */ 
+/* [local] */
 
 typedef struct tagDebugStackFrameDescriptor
     {
@@ -3401,66 +3401,66 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0320_v0_0_s_ifspec;
 #define __IEnumDebugStackFrames_INTERFACE_DEFINED__
 
 /* interface IEnumDebugStackFrames */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumDebugStackFrames;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C1e-CB0C-11d0-B5C9-00A0244A0E7A")
     IEnumDebugStackFrames : public IUnknown
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next( 
+        virtual /* [local] */ HRESULT __stdcall Next(
             /* [in] */ ULONG celt,
             /* [out] */ DebugStackFrameDescriptor *prgdsfd,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Skip( 
+
+        virtual HRESULT STDMETHODCALLTYPE Skip(
             /* [in] */ ULONG celt) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Clone( 
+
+        virtual HRESULT STDMETHODCALLTYPE Clone(
             /* [out] */ IEnumDebugStackFrames **ppedsf) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumDebugStackFramesVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumDebugStackFrames * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumDebugStackFrames * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumDebugStackFrames * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumDebugStackFrames * This,
             /* [in] */ ULONG celt,
             /* [out] */ DebugStackFrameDescriptor *prgdsfd,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumDebugStackFrames * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumDebugStackFrames * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumDebugStackFrames * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
+
         END_INTERFACE
     } IEnumDebugStackFramesVtbl;
 
@@ -3469,7 +3469,7 @@ EXTERN_C const IID IID_IEnumDebugStackFrames;
         CONST_VTBL struct IEnumDebugStackFramesVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3503,7 +3503,7 @@ EXTERN_C const IID IID_IEnumDebugStackFrames;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames_RemoteNext_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames_RemoteNext_Proxy(
     IEnumDebugStackFrames * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ DebugStackFrameDescriptor *prgdsfd,
@@ -3517,7 +3517,7 @@ void __RPC_STUB IEnumDebugStackFrames_RemoteNext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugStackFrames_Skip_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugStackFrames_Skip_Proxy(
     IEnumDebugStackFrames * This,
     /* [in] */ ULONG celt);
 
@@ -3529,7 +3529,7 @@ void __RPC_STUB IEnumDebugStackFrames_Skip_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugStackFrames_Reset_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugStackFrames_Reset_Proxy(
     IEnumDebugStackFrames * This);
 
 
@@ -3540,7 +3540,7 @@ void __RPC_STUB IEnumDebugStackFrames_Reset_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugStackFrames_Clone_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugStackFrames_Clone_Proxy(
     IEnumDebugStackFrames * This,
     /* [out] */ IEnumDebugStackFrames **ppedsf);
 
@@ -3560,64 +3560,64 @@ void __RPC_STUB IEnumDebugStackFrames_Clone_Stub(
 #define __IEnumDebugStackFrames64_INTERFACE_DEFINED__
 
 /* interface IEnumDebugStackFrames64 */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumDebugStackFrames64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("0dc38853-c1b0-4176-a984-b298361027af")
     IEnumDebugStackFrames64 : public IEnumDebugStackFrames
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next64( 
+        virtual /* [local] */ HRESULT __stdcall Next64(
             /* [in] */ ULONG celt,
             /* [out] */ DebugStackFrameDescriptor64 *prgdsfd,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumDebugStackFrames64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumDebugStackFrames64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumDebugStackFrames64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumDebugStackFrames64 * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumDebugStackFrames64 * This,
             /* [in] */ ULONG celt,
             /* [out] */ DebugStackFrameDescriptor *prgdsfd,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumDebugStackFrames64 * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumDebugStackFrames64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumDebugStackFrames64 * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
-        /* [local] */ HRESULT ( __stdcall *Next64 )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next64 )(
             IEnumDebugStackFrames64 * This,
             /* [in] */ ULONG celt,
             /* [out] */ DebugStackFrameDescriptor64 *prgdsfd,
             /* [out] */ ULONG *pceltFetched);
-        
+
         END_INTERFACE
     } IEnumDebugStackFrames64Vtbl;
 
@@ -3626,7 +3626,7 @@ EXTERN_C const IID IID_IEnumDebugStackFrames64;
         CONST_VTBL struct IEnumDebugStackFrames64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3664,7 +3664,7 @@ EXTERN_C const IID IID_IEnumDebugStackFrames64;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames64_RemoteNext64_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames64_RemoteNext64_Proxy(
     IEnumDebugStackFrames64 * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ DebugStackFrameDescriptor64 *prgdsfd,
@@ -3686,52 +3686,52 @@ void __RPC_STUB IEnumDebugStackFrames64_RemoteNext64_Stub(
 #define __IDebugDocumentInfo_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentInfo */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentInfo;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C1f-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentInfo : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetName( 
+        virtual HRESULT STDMETHODCALLTYPE GetName(
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDocumentClassId( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDocumentClassId(
             /* [out] */ CLSID *pclsidDocument) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentInfoVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentInfo * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentInfo * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentInfo * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugDocumentInfo * This,
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )(
             IDebugDocumentInfo * This,
             /* [out] */ CLSID *pclsidDocument);
-        
+
         END_INTERFACE
     } IDebugDocumentInfoVtbl;
 
@@ -3740,7 +3740,7 @@ EXTERN_C const IID IID_IDebugDocumentInfo;
         CONST_VTBL struct IDebugDocumentInfoVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3768,7 +3768,7 @@ EXTERN_C const IID IID_IDebugDocumentInfo;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentInfo_GetName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentInfo_GetName_Proxy(
     IDebugDocumentInfo * This,
     /* [in] */ DOCUMENTNAMETYPE dnt,
     /* [out] */ BSTR *pbstrName);
@@ -3781,7 +3781,7 @@ void __RPC_STUB IDebugDocumentInfo_GetName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentInfo_GetDocumentClassId_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentInfo_GetDocumentClassId_Proxy(
     IDebugDocumentInfo * This,
     /* [out] */ CLSID *pclsidDocument);
 
@@ -3801,52 +3801,52 @@ void __RPC_STUB IDebugDocumentInfo_GetDocumentClassId_Stub(
 #define __IDebugDocumentProvider_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentProvider */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentProvider;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C20-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentProvider : public IDebugDocumentInfo
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocument( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocument(
             /* [out] */ IDebugDocument **ppssd) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentProviderVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentProvider * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentProvider * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentProvider * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugDocumentProvider * This,
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )(
             IDebugDocumentProvider * This,
             /* [out] */ CLSID *pclsidDocument);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocument )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocument )(
             IDebugDocumentProvider * This,
             /* [out] */ IDebugDocument **ppssd);
-        
+
         END_INTERFACE
     } IDebugDocumentProviderVtbl;
 
@@ -3855,7 +3855,7 @@ EXTERN_C const IID IID_IDebugDocumentProvider;
         CONST_VTBL struct IDebugDocumentProviderVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3887,7 +3887,7 @@ EXTERN_C const IID IID_IDebugDocumentProvider;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentProvider_GetDocument_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentProvider_GetDocument_Proxy(
     IDebugDocumentProvider * This,
     /* [out] */ IDebugDocument **ppssd);
 
@@ -3907,45 +3907,45 @@ void __RPC_STUB IDebugDocumentProvider_GetDocument_Stub(
 #define __IDebugDocument_INTERFACE_DEFINED__
 
 /* interface IDebugDocument */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocument;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C21-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocument : public IDebugDocumentInfo
     {
     public:
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocument * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocument * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocument * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugDocument * This,
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )(
             IDebugDocument * This,
             /* [out] */ CLSID *pclsidDocument);
-        
+
         END_INTERFACE
     } IDebugDocumentVtbl;
 
@@ -3954,7 +3954,7 @@ EXTERN_C const IID IID_IDebugDocument;
         CONST_VTBL struct IDebugDocumentVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -3991,118 +3991,118 @@ EXTERN_C const IID IID_IDebugDocument;
 #define __IDebugDocumentText_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentText */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentText;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C22-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentText : public IDebugDocument
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocumentAttributes( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocumentAttributes(
             /* [out] */ TEXT_DOC_ATTR *ptextdocattr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetSize( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetSize(
             /* [out] */ ULONG *pcNumLines,
             /* [out] */ ULONG *pcNumChars) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetPositionOfLine( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetPositionOfLine(
             /* [in] */ ULONG cLineNumber,
             /* [out] */ ULONG *pcCharacterPosition) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetLineOfPosition( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetLineOfPosition(
             /* [in] */ ULONG cCharacterPosition,
             /* [out] */ ULONG *pcLineNumber,
             /* [out] */ ULONG *pcCharacterOffsetInLine) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetText( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetText(
             /* [in] */ ULONG cCharacterPosition,
             /* [size_is][length_is][out][in] */ WCHAR *pcharText,
             /* [full][size_is][length_is][out][in] */ SOURCE_TEXT_ATTR *pstaTextAttr,
             /* [out][in] */ ULONG *pcNumChars,
             /* [in] */ ULONG cMaxChars) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetPositionOfContext( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetPositionOfContext(
             /* [in] */ IDebugDocumentContext *psc,
             /* [out] */ ULONG *pcCharacterPosition,
             /* [out] */ ULONG *cNumChars) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetContextOfPosition( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetContextOfPosition(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumChars,
             /* [out] */ IDebugDocumentContext **ppsc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentTextVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentText * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentText * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentText * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugDocumentText * This,
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )(
             IDebugDocumentText * This,
             /* [out] */ CLSID *pclsidDocument);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentAttributes )(
             IDebugDocumentText * This,
             /* [out] */ TEXT_DOC_ATTR *ptextdocattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSize )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSize )(
             IDebugDocumentText * This,
             /* [out] */ ULONG *pcNumLines,
             /* [out] */ ULONG *pcNumChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetPositionOfLine )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetPositionOfLine )(
             IDebugDocumentText * This,
             /* [in] */ ULONG cLineNumber,
             /* [out] */ ULONG *pcCharacterPosition);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetLineOfPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetLineOfPosition )(
             IDebugDocumentText * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [out] */ ULONG *pcLineNumber,
             /* [out] */ ULONG *pcCharacterOffsetInLine);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetText )(
             IDebugDocumentText * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [size_is][length_is][out][in] */ WCHAR *pcharText,
             /* [full][size_is][length_is][out][in] */ SOURCE_TEXT_ATTR *pstaTextAttr,
             /* [out][in] */ ULONG *pcNumChars,
             /* [in] */ ULONG cMaxChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetPositionOfContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetPositionOfContext )(
             IDebugDocumentText * This,
             /* [in] */ IDebugDocumentContext *psc,
             /* [out] */ ULONG *pcCharacterPosition,
             /* [out] */ ULONG *cNumChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetContextOfPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetContextOfPosition )(
             IDebugDocumentText * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumChars,
             /* [out] */ IDebugDocumentContext **ppsc);
-        
+
         END_INTERFACE
     } IDebugDocumentTextVtbl;
 
@@ -4111,7 +4111,7 @@ EXTERN_C const IID IID_IDebugDocumentText;
         CONST_VTBL struct IDebugDocumentTextVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -4162,7 +4162,7 @@ EXTERN_C const IID IID_IDebugDocumentText;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetDocumentAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetDocumentAttributes_Proxy(
     IDebugDocumentText * This,
     /* [out] */ TEXT_DOC_ATTR *ptextdocattr);
 
@@ -4174,7 +4174,7 @@ void __RPC_STUB IDebugDocumentText_GetDocumentAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetSize_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetSize_Proxy(
     IDebugDocumentText * This,
     /* [out] */ ULONG *pcNumLines,
     /* [out] */ ULONG *pcNumChars);
@@ -4187,7 +4187,7 @@ void __RPC_STUB IDebugDocumentText_GetSize_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetPositionOfLine_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetPositionOfLine_Proxy(
     IDebugDocumentText * This,
     /* [in] */ ULONG cLineNumber,
     /* [out] */ ULONG *pcCharacterPosition);
@@ -4200,7 +4200,7 @@ void __RPC_STUB IDebugDocumentText_GetPositionOfLine_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetLineOfPosition_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetLineOfPosition_Proxy(
     IDebugDocumentText * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [out] */ ULONG *pcLineNumber,
@@ -4214,7 +4214,7 @@ void __RPC_STUB IDebugDocumentText_GetLineOfPosition_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetText_Proxy(
     IDebugDocumentText * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [size_is][length_is][out][in] */ WCHAR *pcharText,
@@ -4230,7 +4230,7 @@ void __RPC_STUB IDebugDocumentText_GetText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetPositionOfContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetPositionOfContext_Proxy(
     IDebugDocumentText * This,
     /* [in] */ IDebugDocumentContext *psc,
     /* [out] */ ULONG *pcCharacterPosition,
@@ -4244,7 +4244,7 @@ void __RPC_STUB IDebugDocumentText_GetPositionOfContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetContextOfPosition_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentText_GetContextOfPosition_Proxy(
     IDebugDocumentText * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumChars,
@@ -4266,84 +4266,84 @@ void __RPC_STUB IDebugDocumentText_GetContextOfPosition_Stub(
 #define __IDebugDocumentTextEvents_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentTextEvents */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentTextEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C23-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentTextEvents : public IUnknown
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE onDestroy( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onInsertText( 
+
+        virtual HRESULT STDMETHODCALLTYPE onInsertText(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToInsert) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onRemoveText( 
+
+        virtual HRESULT STDMETHODCALLTYPE onRemoveText(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToRemove) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onReplaceText( 
+
+        virtual HRESULT STDMETHODCALLTYPE onReplaceText(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToReplace) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onUpdateTextAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE onUpdateTextAttributes(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToUpdate) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onUpdateDocumentAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE onUpdateDocumentAttributes(
             /* [in] */ TEXT_DOC_ATTR textdocattr) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentTextEventsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentTextEvents * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentTextEvents * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentTextEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onDestroy )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onDestroy )(
             IDebugDocumentTextEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onInsertText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onInsertText )(
             IDebugDocumentTextEvents * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToInsert);
-        
-        HRESULT ( STDMETHODCALLTYPE *onRemoveText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onRemoveText )(
             IDebugDocumentTextEvents * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToRemove);
-        
-        HRESULT ( STDMETHODCALLTYPE *onReplaceText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onReplaceText )(
             IDebugDocumentTextEvents * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToReplace);
-        
-        HRESULT ( STDMETHODCALLTYPE *onUpdateTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onUpdateTextAttributes )(
             IDebugDocumentTextEvents * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToUpdate);
-        
-        HRESULT ( STDMETHODCALLTYPE *onUpdateDocumentAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onUpdateDocumentAttributes )(
             IDebugDocumentTextEvents * This,
             /* [in] */ TEXT_DOC_ATTR textdocattr);
-        
+
         END_INTERFACE
     } IDebugDocumentTextEventsVtbl;
 
@@ -4352,7 +4352,7 @@ EXTERN_C const IID IID_IDebugDocumentTextEvents;
         CONST_VTBL struct IDebugDocumentTextEventsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -4392,7 +4392,7 @@ EXTERN_C const IID IID_IDebugDocumentTextEvents;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onDestroy_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onDestroy_Proxy(
     IDebugDocumentTextEvents * This);
 
 
@@ -4403,7 +4403,7 @@ void __RPC_STUB IDebugDocumentTextEvents_onDestroy_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onInsertText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onInsertText_Proxy(
     IDebugDocumentTextEvents * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToInsert);
@@ -4416,7 +4416,7 @@ void __RPC_STUB IDebugDocumentTextEvents_onInsertText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onRemoveText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onRemoveText_Proxy(
     IDebugDocumentTextEvents * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToRemove);
@@ -4429,7 +4429,7 @@ void __RPC_STUB IDebugDocumentTextEvents_onRemoveText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onReplaceText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onReplaceText_Proxy(
     IDebugDocumentTextEvents * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToReplace);
@@ -4442,7 +4442,7 @@ void __RPC_STUB IDebugDocumentTextEvents_onReplaceText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onUpdateTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onUpdateTextAttributes_Proxy(
     IDebugDocumentTextEvents * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToUpdate);
@@ -4455,7 +4455,7 @@ void __RPC_STUB IDebugDocumentTextEvents_onUpdateTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onUpdateDocumentAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextEvents_onUpdateDocumentAttributes_Proxy(
     IDebugDocumentTextEvents * This,
     /* [in] */ TEXT_DOC_ATTR textdocattr);
 
@@ -4475,116 +4475,116 @@ void __RPC_STUB IDebugDocumentTextEvents_onUpdateDocumentAttributes_Stub(
 #define __IDebugDocumentTextAuthor_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentTextAuthor */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentTextAuthor;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C24-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentTextAuthor : public IDebugDocumentText
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE InsertText( 
+        virtual HRESULT STDMETHODCALLTYPE InsertText(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToInsert,
             /* [size_is][in] */ OLECHAR pcharText[  ]) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveText( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveText(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToRemove) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE ReplaceText( 
+
+        virtual HRESULT STDMETHODCALLTYPE ReplaceText(
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToReplace,
             /* [size_is][in] */ OLECHAR pcharText[  ]) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentTextAuthorVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentTextAuthor * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentTextAuthor * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )(
             IDebugDocumentTextAuthor * This,
             /* [out] */ CLSID *pclsidDocument);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentAttributes )(
             IDebugDocumentTextAuthor * This,
             /* [out] */ TEXT_DOC_ATTR *ptextdocattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSize )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSize )(
             IDebugDocumentTextAuthor * This,
             /* [out] */ ULONG *pcNumLines,
             /* [out] */ ULONG *pcNumChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetPositionOfLine )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetPositionOfLine )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cLineNumber,
             /* [out] */ ULONG *pcCharacterPosition);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetLineOfPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetLineOfPosition )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [out] */ ULONG *pcLineNumber,
             /* [out] */ ULONG *pcCharacterOffsetInLine);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetText )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [size_is][length_is][out][in] */ WCHAR *pcharText,
             /* [full][size_is][length_is][out][in] */ SOURCE_TEXT_ATTR *pstaTextAttr,
             /* [out][in] */ ULONG *pcNumChars,
             /* [in] */ ULONG cMaxChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetPositionOfContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetPositionOfContext )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ IDebugDocumentContext *psc,
             /* [out] */ ULONG *pcCharacterPosition,
             /* [out] */ ULONG *cNumChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetContextOfPosition )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetContextOfPosition )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumChars,
             /* [out] */ IDebugDocumentContext **ppsc);
-        
-        HRESULT ( STDMETHODCALLTYPE *InsertText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *InsertText )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToInsert,
             /* [size_is][in] */ OLECHAR pcharText[  ]);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveText )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToRemove);
-        
-        HRESULT ( STDMETHODCALLTYPE *ReplaceText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ReplaceText )(
             IDebugDocumentTextAuthor * This,
             /* [in] */ ULONG cCharacterPosition,
             /* [in] */ ULONG cNumToReplace,
             /* [size_is][in] */ OLECHAR pcharText[  ]);
-        
+
         END_INTERFACE
     } IDebugDocumentTextAuthorVtbl;
 
@@ -4593,7 +4593,7 @@ EXTERN_C const IID IID_IDebugDocumentTextAuthor;
         CONST_VTBL struct IDebugDocumentTextAuthorVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -4654,7 +4654,7 @@ EXTERN_C const IID IID_IDebugDocumentTextAuthor;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextAuthor_InsertText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextAuthor_InsertText_Proxy(
     IDebugDocumentTextAuthor * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToInsert,
@@ -4668,7 +4668,7 @@ void __RPC_STUB IDebugDocumentTextAuthor_InsertText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextAuthor_RemoveText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextAuthor_RemoveText_Proxy(
     IDebugDocumentTextAuthor * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToRemove);
@@ -4681,7 +4681,7 @@ void __RPC_STUB IDebugDocumentTextAuthor_RemoveText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextAuthor_ReplaceText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextAuthor_ReplaceText_Proxy(
     IDebugDocumentTextAuthor * This,
     /* [in] */ ULONG cCharacterPosition,
     /* [in] */ ULONG cNumToReplace,
@@ -4703,57 +4703,57 @@ void __RPC_STUB IDebugDocumentTextAuthor_ReplaceText_Stub(
 #define __IDebugDocumentTextExternalAuthor_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentTextExternalAuthor */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentTextExternalAuthor;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C25-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentTextExternalAuthor : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetPathName( 
+        virtual HRESULT STDMETHODCALLTYPE GetPathName(
             /* [out] */ BSTR *pbstrLongName,
             /* [out] */ BOOL *pfIsOriginalFile) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetFileName( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetFileName(
             /* [out] */ BSTR *pbstrShortName) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE NotifyChanged( void) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentTextExternalAuthorVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentTextExternalAuthor * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentTextExternalAuthor * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentTextExternalAuthor * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetPathName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetPathName )(
             IDebugDocumentTextExternalAuthor * This,
             /* [out] */ BSTR *pbstrLongName,
             /* [out] */ BOOL *pfIsOriginalFile);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetFileName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetFileName )(
             IDebugDocumentTextExternalAuthor * This,
             /* [out] */ BSTR *pbstrShortName);
-        
-        HRESULT ( STDMETHODCALLTYPE *NotifyChanged )( 
+
+        HRESULT ( STDMETHODCALLTYPE *NotifyChanged )(
             IDebugDocumentTextExternalAuthor * This);
-        
+
         END_INTERFACE
     } IDebugDocumentTextExternalAuthorVtbl;
 
@@ -4762,7 +4762,7 @@ EXTERN_C const IID IID_IDebugDocumentTextExternalAuthor;
         CONST_VTBL struct IDebugDocumentTextExternalAuthorVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -4793,7 +4793,7 @@ EXTERN_C const IID IID_IDebugDocumentTextExternalAuthor;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextExternalAuthor_GetPathName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextExternalAuthor_GetPathName_Proxy(
     IDebugDocumentTextExternalAuthor * This,
     /* [out] */ BSTR *pbstrLongName,
     /* [out] */ BOOL *pfIsOriginalFile);
@@ -4806,7 +4806,7 @@ void __RPC_STUB IDebugDocumentTextExternalAuthor_GetPathName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextExternalAuthor_GetFileName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextExternalAuthor_GetFileName_Proxy(
     IDebugDocumentTextExternalAuthor * This,
     /* [out] */ BSTR *pbstrShortName);
 
@@ -4818,7 +4818,7 @@ void __RPC_STUB IDebugDocumentTextExternalAuthor_GetFileName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentTextExternalAuthor_NotifyChanged_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentTextExternalAuthor_NotifyChanged_Proxy(
     IDebugDocumentTextExternalAuthor * This);
 
 
@@ -4834,7 +4834,7 @@ void __RPC_STUB IDebugDocumentTextExternalAuthor_NotifyChanged_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0329 */
-/* [local] */ 
+/* [local] */
 
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
 #ifdef _WIN64
@@ -4854,188 +4854,188 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0329_v0_0_s_ifspec;
 #define __IDebugDocumentHelper32_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentHelper32 */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentHelper32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C26-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentHelper32 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Init( 
+        virtual HRESULT STDMETHODCALLTYPE Init(
             /* [in] */ IDebugApplication32 *pda,
             /* [string][in] */ LPCOLESTR pszShortName,
             /* [string][in] */ LPCOLESTR pszLongName,
             /* [in] */ TEXT_DOC_ATTR docAttr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Attach( 
+
+        virtual HRESULT STDMETHODCALLTYPE Attach(
             /* [in] */ IDebugDocumentHelper32 *pddhParent) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Detach( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddUnicodeText( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddUnicodeText(
             /* [string][in] */ LPCOLESTR pszText) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddDBCSText( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddDBCSText(
             /* [string][in] */ LPCSTR pszText) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDebugDocumentHost( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDebugDocumentHost(
             /* [in] */ IDebugDocumentHost *pddh) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddDeferredText( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddDeferredText(
             /* [in] */ ULONG cChars,
             /* [in] */ DWORD dwTextStartCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE DefineScriptBlock( 
+
+        virtual HRESULT STDMETHODCALLTYPE DefineScriptBlock(
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [in] */ IActiveScript *pas,
             /* [in] */ BOOL fScriptlet,
             /* [out] */ DWORD *pdwSourceContext) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDefaultTextAttr( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDefaultTextAttr(
             SOURCE_TEXT_ATTR staTextAttr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetTextAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetTextAttributes(
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [size_is][length_is][in] */ SOURCE_TEXT_ATTR *pstaTextAttr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetLongName( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetLongName(
             /* [string][in] */ LPCOLESTR pszLongName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetShortName( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetShortName(
             /* [string][in] */ LPCOLESTR pszShortName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDocumentAttr( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDocumentAttr(
             /* [in] */ TEXT_DOC_ATTR pszAttributes) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDebugApplicationNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDebugApplicationNode(
             /* [out] */ IDebugApplicationNode **ppdan) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetScriptBlockInfo( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetScriptBlockInfo(
             /* [in] */ DWORD dwSourceContext,
             /* [out] */ IActiveScript **ppasd,
             /* [out] */ ULONG *piCharPos,
             /* [out] */ ULONG *pcChars) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentContext( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentContext(
             /* [in] */ ULONG iCharPos,
             /* [in] */ ULONG cChars,
             /* [out] */ IDebugDocumentContext **ppddc) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE BringDocumentToTop( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE BringDocumentContextToTop( 
+
+        virtual HRESULT STDMETHODCALLTYPE BringDocumentContextToTop(
             IDebugDocumentContext *pddc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentHelper32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentHelper32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentHelper32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentHelper32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Init )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Init )(
             IDebugDocumentHelper32 * This,
             /* [in] */ IDebugApplication32 *pda,
             /* [string][in] */ LPCOLESTR pszShortName,
             /* [string][in] */ LPCOLESTR pszLongName,
             /* [in] */ TEXT_DOC_ATTR docAttr);
-        
-        HRESULT ( STDMETHODCALLTYPE *Attach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Attach )(
             IDebugDocumentHelper32 * This,
             /* [in] */ IDebugDocumentHelper32 *pddhParent);
-        
-        HRESULT ( STDMETHODCALLTYPE *Detach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Detach )(
             IDebugDocumentHelper32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddUnicodeText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddUnicodeText )(
             IDebugDocumentHelper32 * This,
             /* [string][in] */ LPCOLESTR pszText);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddDBCSText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddDBCSText )(
             IDebugDocumentHelper32 * This,
             /* [string][in] */ LPCSTR pszText);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDebugDocumentHost )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDebugDocumentHost )(
             IDebugDocumentHelper32 * This,
             /* [in] */ IDebugDocumentHost *pddh);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddDeferredText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddDeferredText )(
             IDebugDocumentHelper32 * This,
             /* [in] */ ULONG cChars,
             /* [in] */ DWORD dwTextStartCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *DefineScriptBlock )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DefineScriptBlock )(
             IDebugDocumentHelper32 * This,
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [in] */ IActiveScript *pas,
             /* [in] */ BOOL fScriptlet,
             /* [out] */ DWORD *pdwSourceContext);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDefaultTextAttr )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDefaultTextAttr )(
             IDebugDocumentHelper32 * This,
             SOURCE_TEXT_ATTR staTextAttr);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetTextAttributes )(
             IDebugDocumentHelper32 * This,
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [size_is][length_is][in] */ SOURCE_TEXT_ATTR *pstaTextAttr);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetLongName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetLongName )(
             IDebugDocumentHelper32 * This,
             /* [string][in] */ LPCOLESTR pszLongName);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetShortName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetShortName )(
             IDebugDocumentHelper32 * This,
             /* [string][in] */ LPCOLESTR pszShortName);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDocumentAttr )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDocumentAttr )(
             IDebugDocumentHelper32 * This,
             /* [in] */ TEXT_DOC_ATTR pszAttributes);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDebugApplicationNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDebugApplicationNode )(
             IDebugDocumentHelper32 * This,
             /* [out] */ IDebugApplicationNode **ppdan);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptBlockInfo )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptBlockInfo )(
             IDebugDocumentHelper32 * This,
             /* [in] */ DWORD dwSourceContext,
             /* [out] */ IActiveScript **ppasd,
             /* [out] */ ULONG *piCharPos,
             /* [out] */ ULONG *pcChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentContext )(
             IDebugDocumentHelper32 * This,
             /* [in] */ ULONG iCharPos,
             /* [in] */ ULONG cChars,
             /* [out] */ IDebugDocumentContext **ppddc);
-        
-        HRESULT ( STDMETHODCALLTYPE *BringDocumentToTop )( 
+
+        HRESULT ( STDMETHODCALLTYPE *BringDocumentToTop )(
             IDebugDocumentHelper32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *BringDocumentContextToTop )( 
+
+        HRESULT ( STDMETHODCALLTYPE *BringDocumentContextToTop )(
             IDebugDocumentHelper32 * This,
             IDebugDocumentContext *pddc);
-        
+
         END_INTERFACE
     } IDebugDocumentHelper32Vtbl;
 
@@ -5044,7 +5044,7 @@ EXTERN_C const IID IID_IDebugDocumentHelper32;
         CONST_VTBL struct IDebugDocumentHelper32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -5120,7 +5120,7 @@ EXTERN_C const IID IID_IDebugDocumentHelper32;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_Init_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_Init_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ IDebugApplication32 *pda,
     /* [string][in] */ LPCOLESTR pszShortName,
@@ -5135,7 +5135,7 @@ void __RPC_STUB IDebugDocumentHelper32_Init_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_Attach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_Attach_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ IDebugDocumentHelper32 *pddhParent);
 
@@ -5147,7 +5147,7 @@ void __RPC_STUB IDebugDocumentHelper32_Attach_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_Detach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_Detach_Proxy(
     IDebugDocumentHelper32 * This);
 
 
@@ -5158,7 +5158,7 @@ void __RPC_STUB IDebugDocumentHelper32_Detach_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_AddUnicodeText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_AddUnicodeText_Proxy(
     IDebugDocumentHelper32 * This,
     /* [string][in] */ LPCOLESTR pszText);
 
@@ -5170,7 +5170,7 @@ void __RPC_STUB IDebugDocumentHelper32_AddUnicodeText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_AddDBCSText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_AddDBCSText_Proxy(
     IDebugDocumentHelper32 * This,
     /* [string][in] */ LPCSTR pszText);
 
@@ -5182,7 +5182,7 @@ void __RPC_STUB IDebugDocumentHelper32_AddDBCSText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetDebugDocumentHost_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetDebugDocumentHost_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ IDebugDocumentHost *pddh);
 
@@ -5194,7 +5194,7 @@ void __RPC_STUB IDebugDocumentHelper32_SetDebugDocumentHost_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_AddDeferredText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_AddDeferredText_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ ULONG cChars,
     /* [in] */ DWORD dwTextStartCookie);
@@ -5207,7 +5207,7 @@ void __RPC_STUB IDebugDocumentHelper32_AddDeferredText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_DefineScriptBlock_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_DefineScriptBlock_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ ULONG ulCharOffset,
     /* [in] */ ULONG cChars,
@@ -5223,7 +5223,7 @@ void __RPC_STUB IDebugDocumentHelper32_DefineScriptBlock_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetDefaultTextAttr_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetDefaultTextAttr_Proxy(
     IDebugDocumentHelper32 * This,
     SOURCE_TEXT_ATTR staTextAttr);
 
@@ -5235,7 +5235,7 @@ void __RPC_STUB IDebugDocumentHelper32_SetDefaultTextAttr_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetTextAttributes_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ ULONG ulCharOffset,
     /* [in] */ ULONG cChars,
@@ -5249,7 +5249,7 @@ void __RPC_STUB IDebugDocumentHelper32_SetTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetLongName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetLongName_Proxy(
     IDebugDocumentHelper32 * This,
     /* [string][in] */ LPCOLESTR pszLongName);
 
@@ -5261,7 +5261,7 @@ void __RPC_STUB IDebugDocumentHelper32_SetLongName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetShortName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetShortName_Proxy(
     IDebugDocumentHelper32 * This,
     /* [string][in] */ LPCOLESTR pszShortName);
 
@@ -5273,7 +5273,7 @@ void __RPC_STUB IDebugDocumentHelper32_SetShortName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetDocumentAttr_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_SetDocumentAttr_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ TEXT_DOC_ATTR pszAttributes);
 
@@ -5285,7 +5285,7 @@ void __RPC_STUB IDebugDocumentHelper32_SetDocumentAttr_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_GetDebugApplicationNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_GetDebugApplicationNode_Proxy(
     IDebugDocumentHelper32 * This,
     /* [out] */ IDebugApplicationNode **ppdan);
 
@@ -5297,7 +5297,7 @@ void __RPC_STUB IDebugDocumentHelper32_GetDebugApplicationNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_GetScriptBlockInfo_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_GetScriptBlockInfo_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ DWORD dwSourceContext,
     /* [out] */ IActiveScript **ppasd,
@@ -5312,7 +5312,7 @@ void __RPC_STUB IDebugDocumentHelper32_GetScriptBlockInfo_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_CreateDebugDocumentContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_CreateDebugDocumentContext_Proxy(
     IDebugDocumentHelper32 * This,
     /* [in] */ ULONG iCharPos,
     /* [in] */ ULONG cChars,
@@ -5326,7 +5326,7 @@ void __RPC_STUB IDebugDocumentHelper32_CreateDebugDocumentContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_BringDocumentToTop_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_BringDocumentToTop_Proxy(
     IDebugDocumentHelper32 * This);
 
 
@@ -5337,7 +5337,7 @@ void __RPC_STUB IDebugDocumentHelper32_BringDocumentToTop_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_BringDocumentContextToTop_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper32_BringDocumentContextToTop_Proxy(
     IDebugDocumentHelper32 * This,
     IDebugDocumentContext *pddc);
 
@@ -5357,188 +5357,188 @@ void __RPC_STUB IDebugDocumentHelper32_BringDocumentContextToTop_Stub(
 #define __IDebugDocumentHelper64_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentHelper64 */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentHelper64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("c4c7363c-20fd-47f9-bd82-4855e0150871")
     IDebugDocumentHelper64 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE Init( 
+        virtual HRESULT STDMETHODCALLTYPE Init(
             /* [in] */ IDebugApplication64 *pda,
             /* [string][in] */ LPCOLESTR pszShortName,
             /* [string][in] */ LPCOLESTR pszLongName,
             /* [in] */ TEXT_DOC_ATTR docAttr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Attach( 
+
+        virtual HRESULT STDMETHODCALLTYPE Attach(
             /* [in] */ IDebugDocumentHelper64 *pddhParent) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Detach( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddUnicodeText( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddUnicodeText(
             /* [string][in] */ LPCOLESTR pszText) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddDBCSText( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddDBCSText(
             /* [string][in] */ LPCSTR pszText) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDebugDocumentHost( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDebugDocumentHost(
             /* [in] */ IDebugDocumentHost *pddh) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddDeferredText( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddDeferredText(
             /* [in] */ ULONG cChars,
             /* [in] */ DWORD dwTextStartCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE DefineScriptBlock( 
+
+        virtual HRESULT STDMETHODCALLTYPE DefineScriptBlock(
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [in] */ IActiveScript *pas,
             /* [in] */ BOOL fScriptlet,
             /* [out] */ DWORDLONG *pdwSourceContext) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDefaultTextAttr( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDefaultTextAttr(
             SOURCE_TEXT_ATTR staTextAttr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetTextAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetTextAttributes(
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [size_is][length_is][in] */ SOURCE_TEXT_ATTR *pstaTextAttr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetLongName( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetLongName(
             /* [string][in] */ LPCOLESTR pszLongName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetShortName( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetShortName(
             /* [string][in] */ LPCOLESTR pszShortName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDocumentAttr( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDocumentAttr(
             /* [in] */ TEXT_DOC_ATTR pszAttributes) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDebugApplicationNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDebugApplicationNode(
             /* [out] */ IDebugApplicationNode **ppdan) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetScriptBlockInfo( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetScriptBlockInfo(
             /* [in] */ DWORDLONG dwSourceContext,
             /* [out] */ IActiveScript **ppasd,
             /* [out] */ ULONG *piCharPos,
             /* [out] */ ULONG *pcChars) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentContext( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentContext(
             /* [in] */ ULONG iCharPos,
             /* [in] */ ULONG cChars,
             /* [out] */ IDebugDocumentContext **ppddc) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE BringDocumentToTop( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE BringDocumentContextToTop( 
+
+        virtual HRESULT STDMETHODCALLTYPE BringDocumentContextToTop(
             IDebugDocumentContext *pddc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentHelper64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentHelper64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentHelper64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentHelper64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Init )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Init )(
             IDebugDocumentHelper64 * This,
             /* [in] */ IDebugApplication64 *pda,
             /* [string][in] */ LPCOLESTR pszShortName,
             /* [string][in] */ LPCOLESTR pszLongName,
             /* [in] */ TEXT_DOC_ATTR docAttr);
-        
-        HRESULT ( STDMETHODCALLTYPE *Attach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Attach )(
             IDebugDocumentHelper64 * This,
             /* [in] */ IDebugDocumentHelper64 *pddhParent);
-        
-        HRESULT ( STDMETHODCALLTYPE *Detach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Detach )(
             IDebugDocumentHelper64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddUnicodeText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddUnicodeText )(
             IDebugDocumentHelper64 * This,
             /* [string][in] */ LPCOLESTR pszText);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddDBCSText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddDBCSText )(
             IDebugDocumentHelper64 * This,
             /* [string][in] */ LPCSTR pszText);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDebugDocumentHost )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDebugDocumentHost )(
             IDebugDocumentHelper64 * This,
             /* [in] */ IDebugDocumentHost *pddh);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddDeferredText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddDeferredText )(
             IDebugDocumentHelper64 * This,
             /* [in] */ ULONG cChars,
             /* [in] */ DWORD dwTextStartCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *DefineScriptBlock )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DefineScriptBlock )(
             IDebugDocumentHelper64 * This,
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [in] */ IActiveScript *pas,
             /* [in] */ BOOL fScriptlet,
             /* [out] */ DWORDLONG *pdwSourceContext);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDefaultTextAttr )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDefaultTextAttr )(
             IDebugDocumentHelper64 * This,
             SOURCE_TEXT_ATTR staTextAttr);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetTextAttributes )(
             IDebugDocumentHelper64 * This,
             /* [in] */ ULONG ulCharOffset,
             /* [in] */ ULONG cChars,
             /* [size_is][length_is][in] */ SOURCE_TEXT_ATTR *pstaTextAttr);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetLongName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetLongName )(
             IDebugDocumentHelper64 * This,
             /* [string][in] */ LPCOLESTR pszLongName);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetShortName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetShortName )(
             IDebugDocumentHelper64 * This,
             /* [string][in] */ LPCOLESTR pszShortName);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDocumentAttr )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDocumentAttr )(
             IDebugDocumentHelper64 * This,
             /* [in] */ TEXT_DOC_ATTR pszAttributes);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDebugApplicationNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDebugApplicationNode )(
             IDebugDocumentHelper64 * This,
             /* [out] */ IDebugApplicationNode **ppdan);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptBlockInfo )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptBlockInfo )(
             IDebugDocumentHelper64 * This,
             /* [in] */ DWORDLONG dwSourceContext,
             /* [out] */ IActiveScript **ppasd,
             /* [out] */ ULONG *piCharPos,
             /* [out] */ ULONG *pcChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentContext )(
             IDebugDocumentHelper64 * This,
             /* [in] */ ULONG iCharPos,
             /* [in] */ ULONG cChars,
             /* [out] */ IDebugDocumentContext **ppddc);
-        
-        HRESULT ( STDMETHODCALLTYPE *BringDocumentToTop )( 
+
+        HRESULT ( STDMETHODCALLTYPE *BringDocumentToTop )(
             IDebugDocumentHelper64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *BringDocumentContextToTop )( 
+
+        HRESULT ( STDMETHODCALLTYPE *BringDocumentContextToTop )(
             IDebugDocumentHelper64 * This,
             IDebugDocumentContext *pddc);
-        
+
         END_INTERFACE
     } IDebugDocumentHelper64Vtbl;
 
@@ -5547,7 +5547,7 @@ EXTERN_C const IID IID_IDebugDocumentHelper64;
         CONST_VTBL struct IDebugDocumentHelper64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -5623,7 +5623,7 @@ EXTERN_C const IID IID_IDebugDocumentHelper64;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_Init_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_Init_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ IDebugApplication64 *pda,
     /* [string][in] */ LPCOLESTR pszShortName,
@@ -5638,7 +5638,7 @@ void __RPC_STUB IDebugDocumentHelper64_Init_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_Attach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_Attach_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ IDebugDocumentHelper64 *pddhParent);
 
@@ -5650,7 +5650,7 @@ void __RPC_STUB IDebugDocumentHelper64_Attach_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_Detach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_Detach_Proxy(
     IDebugDocumentHelper64 * This);
 
 
@@ -5661,7 +5661,7 @@ void __RPC_STUB IDebugDocumentHelper64_Detach_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_AddUnicodeText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_AddUnicodeText_Proxy(
     IDebugDocumentHelper64 * This,
     /* [string][in] */ LPCOLESTR pszText);
 
@@ -5673,7 +5673,7 @@ void __RPC_STUB IDebugDocumentHelper64_AddUnicodeText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_AddDBCSText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_AddDBCSText_Proxy(
     IDebugDocumentHelper64 * This,
     /* [string][in] */ LPCSTR pszText);
 
@@ -5685,7 +5685,7 @@ void __RPC_STUB IDebugDocumentHelper64_AddDBCSText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetDebugDocumentHost_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetDebugDocumentHost_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ IDebugDocumentHost *pddh);
 
@@ -5697,7 +5697,7 @@ void __RPC_STUB IDebugDocumentHelper64_SetDebugDocumentHost_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_AddDeferredText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_AddDeferredText_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ ULONG cChars,
     /* [in] */ DWORD dwTextStartCookie);
@@ -5710,7 +5710,7 @@ void __RPC_STUB IDebugDocumentHelper64_AddDeferredText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_DefineScriptBlock_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_DefineScriptBlock_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ ULONG ulCharOffset,
     /* [in] */ ULONG cChars,
@@ -5726,7 +5726,7 @@ void __RPC_STUB IDebugDocumentHelper64_DefineScriptBlock_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetDefaultTextAttr_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetDefaultTextAttr_Proxy(
     IDebugDocumentHelper64 * This,
     SOURCE_TEXT_ATTR staTextAttr);
 
@@ -5738,7 +5738,7 @@ void __RPC_STUB IDebugDocumentHelper64_SetDefaultTextAttr_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetTextAttributes_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ ULONG ulCharOffset,
     /* [in] */ ULONG cChars,
@@ -5752,7 +5752,7 @@ void __RPC_STUB IDebugDocumentHelper64_SetTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetLongName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetLongName_Proxy(
     IDebugDocumentHelper64 * This,
     /* [string][in] */ LPCOLESTR pszLongName);
 
@@ -5764,7 +5764,7 @@ void __RPC_STUB IDebugDocumentHelper64_SetLongName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetShortName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetShortName_Proxy(
     IDebugDocumentHelper64 * This,
     /* [string][in] */ LPCOLESTR pszShortName);
 
@@ -5776,7 +5776,7 @@ void __RPC_STUB IDebugDocumentHelper64_SetShortName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetDocumentAttr_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_SetDocumentAttr_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ TEXT_DOC_ATTR pszAttributes);
 
@@ -5788,7 +5788,7 @@ void __RPC_STUB IDebugDocumentHelper64_SetDocumentAttr_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_GetDebugApplicationNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_GetDebugApplicationNode_Proxy(
     IDebugDocumentHelper64 * This,
     /* [out] */ IDebugApplicationNode **ppdan);
 
@@ -5800,7 +5800,7 @@ void __RPC_STUB IDebugDocumentHelper64_GetDebugApplicationNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_GetScriptBlockInfo_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_GetScriptBlockInfo_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ DWORDLONG dwSourceContext,
     /* [out] */ IActiveScript **ppasd,
@@ -5815,7 +5815,7 @@ void __RPC_STUB IDebugDocumentHelper64_GetScriptBlockInfo_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_CreateDebugDocumentContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_CreateDebugDocumentContext_Proxy(
     IDebugDocumentHelper64 * This,
     /* [in] */ ULONG iCharPos,
     /* [in] */ ULONG cChars,
@@ -5829,7 +5829,7 @@ void __RPC_STUB IDebugDocumentHelper64_CreateDebugDocumentContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_BringDocumentToTop_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_BringDocumentToTop_Proxy(
     IDebugDocumentHelper64 * This);
 
 
@@ -5840,7 +5840,7 @@ void __RPC_STUB IDebugDocumentHelper64_BringDocumentToTop_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_BringDocumentContextToTop_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHelper64_BringDocumentContextToTop_Proxy(
     IDebugDocumentHelper64 * This,
     IDebugDocumentContext *pddc);
 
@@ -5860,94 +5860,94 @@ void __RPC_STUB IDebugDocumentHelper64_BringDocumentContextToTop_Stub(
 #define __IDebugDocumentHost_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentHost */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentHost;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C27-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentHost : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDeferredText( 
+        virtual HRESULT STDMETHODCALLTYPE GetDeferredText(
             /* [in] */ DWORD dwTextStartCookie,
             /* [size_is][length_is][out][in] */ WCHAR *pcharText,
             /* [size_is][length_is][out][in] */ SOURCE_TEXT_ATTR *pstaTextAttr,
             /* [out][in] */ ULONG *pcNumChars,
             /* [in] */ ULONG cMaxChars) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetScriptTextAttributes( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetScriptTextAttributes(
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnCreateDocumentContext( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnCreateDocumentContext(
             /* [out] */ IUnknown **ppunkOuter) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetPathName( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetPathName(
             /* [out] */ BSTR *pbstrLongName,
             /* [out] */ BOOL *pfIsOriginalFile) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetFileName( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetFileName(
             /* [out] */ BSTR *pbstrShortName) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE NotifyChanged( void) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentHostVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentHost * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentHost * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentHost * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDeferredText )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDeferredText )(
             IDebugDocumentHost * This,
             /* [in] */ DWORD dwTextStartCookie,
             /* [size_is][length_is][out][in] */ WCHAR *pcharText,
             /* [size_is][length_is][out][in] */ SOURCE_TEXT_ATTR *pstaTextAttr,
             /* [out][in] */ ULONG *pcNumChars,
             /* [in] */ ULONG cMaxChars);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetScriptTextAttributes )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetScriptTextAttributes )(
             IDebugDocumentHost * This,
             /* [size_is][in] */ LPCOLESTR pstrCode,
             /* [in] */ ULONG uNumCodeChars,
             /* [in] */ LPCOLESTR pstrDelimiter,
             /* [in] */ DWORD dwFlags,
             /* [size_is][out][in] */ SOURCE_TEXT_ATTR *pattr);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnCreateDocumentContext )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnCreateDocumentContext )(
             IDebugDocumentHost * This,
             /* [out] */ IUnknown **ppunkOuter);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetPathName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetPathName )(
             IDebugDocumentHost * This,
             /* [out] */ BSTR *pbstrLongName,
             /* [out] */ BOOL *pfIsOriginalFile);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetFileName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetFileName )(
             IDebugDocumentHost * This,
             /* [out] */ BSTR *pbstrShortName);
-        
-        HRESULT ( STDMETHODCALLTYPE *NotifyChanged )( 
+
+        HRESULT ( STDMETHODCALLTYPE *NotifyChanged )(
             IDebugDocumentHost * This);
-        
+
         END_INTERFACE
     } IDebugDocumentHostVtbl;
 
@@ -5956,7 +5956,7 @@ EXTERN_C const IID IID_IDebugDocumentHost;
         CONST_VTBL struct IDebugDocumentHostVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -5996,7 +5996,7 @@ EXTERN_C const IID IID_IDebugDocumentHost;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetDeferredText_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetDeferredText_Proxy(
     IDebugDocumentHost * This,
     /* [in] */ DWORD dwTextStartCookie,
     /* [size_is][length_is][out][in] */ WCHAR *pcharText,
@@ -6012,7 +6012,7 @@ void __RPC_STUB IDebugDocumentHost_GetDeferredText_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetScriptTextAttributes_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetScriptTextAttributes_Proxy(
     IDebugDocumentHost * This,
     /* [size_is][in] */ LPCOLESTR pstrCode,
     /* [in] */ ULONG uNumCodeChars,
@@ -6028,7 +6028,7 @@ void __RPC_STUB IDebugDocumentHost_GetScriptTextAttributes_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHost_OnCreateDocumentContext_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHost_OnCreateDocumentContext_Proxy(
     IDebugDocumentHost * This,
     /* [out] */ IUnknown **ppunkOuter);
 
@@ -6040,7 +6040,7 @@ void __RPC_STUB IDebugDocumentHost_OnCreateDocumentContext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetPathName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetPathName_Proxy(
     IDebugDocumentHost * This,
     /* [out] */ BSTR *pbstrLongName,
     /* [out] */ BOOL *pfIsOriginalFile);
@@ -6053,7 +6053,7 @@ void __RPC_STUB IDebugDocumentHost_GetPathName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetFileName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHost_GetFileName_Proxy(
     IDebugDocumentHost * This,
     /* [out] */ BSTR *pbstrShortName);
 
@@ -6065,7 +6065,7 @@ void __RPC_STUB IDebugDocumentHost_GetFileName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentHost_NotifyChanged_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentHost_NotifyChanged_Proxy(
     IDebugDocumentHost * This);
 
 
@@ -6084,50 +6084,50 @@ void __RPC_STUB IDebugDocumentHost_NotifyChanged_Stub(
 #define __IDebugDocumentContext_INTERFACE_DEFINED__
 
 /* interface IDebugDocumentContext */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugDocumentContext;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C28-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugDocumentContext : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetDocument( 
+        virtual HRESULT STDMETHODCALLTYPE GetDocument(
             /* [out] */ IDebugDocument **ppsd) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumCodeContexts( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumCodeContexts(
             /* [out] */ IEnumDebugCodeContexts **ppescc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugDocumentContextVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugDocumentContext * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugDocumentContext * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugDocumentContext * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocument )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocument )(
             IDebugDocumentContext * This,
             /* [out] */ IDebugDocument **ppsd);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumCodeContexts )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumCodeContexts )(
             IDebugDocumentContext * This,
             /* [out] */ IEnumDebugCodeContexts **ppescc);
-        
+
         END_INTERFACE
     } IDebugDocumentContextVtbl;
 
@@ -6136,7 +6136,7 @@ EXTERN_C const IID IID_IDebugDocumentContext;
         CONST_VTBL struct IDebugDocumentContextVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6164,7 +6164,7 @@ EXTERN_C const IID IID_IDebugDocumentContext;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentContext_GetDocument_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentContext_GetDocument_Proxy(
     IDebugDocumentContext * This,
     /* [out] */ IDebugDocument **ppsd);
 
@@ -6176,7 +6176,7 @@ void __RPC_STUB IDebugDocumentContext_GetDocument_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugDocumentContext_EnumCodeContexts_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugDocumentContext_EnumCodeContexts_Proxy(
     IDebugDocumentContext * This,
     /* [out] */ IEnumDebugCodeContexts **ppescc);
 
@@ -6196,43 +6196,43 @@ void __RPC_STUB IDebugDocumentContext_EnumCodeContexts_Stub(
 #define __IDebugSessionProvider_INTERFACE_DEFINED__
 
 /* interface IDebugSessionProvider */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugSessionProvider;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C29-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugSessionProvider : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE StartDebugSession( 
+        virtual HRESULT STDMETHODCALLTYPE StartDebugSession(
             /* [in] */ IRemoteDebugApplication *pda) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugSessionProviderVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugSessionProvider * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugSessionProvider * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugSessionProvider * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *StartDebugSession )( 
+
+        HRESULT ( STDMETHODCALLTYPE *StartDebugSession )(
             IDebugSessionProvider * This,
             /* [in] */ IRemoteDebugApplication *pda);
-        
+
         END_INTERFACE
     } IDebugSessionProviderVtbl;
 
@@ -6241,7 +6241,7 @@ EXTERN_C const IID IID_IDebugSessionProvider;
         CONST_VTBL struct IDebugSessionProviderVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6266,7 +6266,7 @@ EXTERN_C const IID IID_IDebugSessionProvider;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugSessionProvider_StartDebugSession_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugSessionProvider_StartDebugSession_Proxy(
     IDebugSessionProvider * This,
     /* [in] */ IRemoteDebugApplication *pda);
 
@@ -6286,88 +6286,88 @@ void __RPC_STUB IDebugSessionProvider_StartDebugSession_Stub(
 #define __IApplicationDebugger_INTERFACE_DEFINED__
 
 /* interface IApplicationDebugger */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IApplicationDebugger;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C2a-CB0C-11d0-B5C9-00A0244A0E7A")
     IApplicationDebugger : public IUnknown
     {
     public:
         virtual HRESULT STDMETHODCALLTYPE QueryAlive( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateInstanceAtDebugger( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateInstanceAtDebugger(
             /* [in] */ REFCLSID rclsid,
             /* [in] */ IUnknown *pUnkOuter,
             /* [in] */ DWORD dwClsContext,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ IUnknown **ppvObject) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onDebugOutput( 
+
+        virtual HRESULT STDMETHODCALLTYPE onDebugOutput(
             /* [in] */ LPCOLESTR pstr) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onHandleBreakPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE onHandleBreakPoint(
             /* [in] */ IRemoteDebugApplicationThread *prpt,
             /* [in] */ BREAKREASON br,
             /* [in] */ IActiveScriptErrorDebug *pError) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE onClose( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onDebuggerEvent( 
+
+        virtual HRESULT STDMETHODCALLTYPE onDebuggerEvent(
             /* [in] */ REFIID riid,
             /* [in] */ IUnknown *punk) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IApplicationDebuggerVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IApplicationDebugger * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IApplicationDebugger * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IApplicationDebugger * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryAlive )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryAlive )(
             IApplicationDebugger * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtDebugger )(
             IApplicationDebugger * This,
             /* [in] */ REFCLSID rclsid,
             /* [in] */ IUnknown *pUnkOuter,
             /* [in] */ DWORD dwClsContext,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ IUnknown **ppvObject);
-        
-        HRESULT ( STDMETHODCALLTYPE *onDebugOutput )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onDebugOutput )(
             IApplicationDebugger * This,
             /* [in] */ LPCOLESTR pstr);
-        
-        HRESULT ( STDMETHODCALLTYPE *onHandleBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onHandleBreakPoint )(
             IApplicationDebugger * This,
             /* [in] */ IRemoteDebugApplicationThread *prpt,
             /* [in] */ BREAKREASON br,
             /* [in] */ IActiveScriptErrorDebug *pError);
-        
-        HRESULT ( STDMETHODCALLTYPE *onClose )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onClose )(
             IApplicationDebugger * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onDebuggerEvent )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onDebuggerEvent )(
             IApplicationDebugger * This,
             /* [in] */ REFIID riid,
             /* [in] */ IUnknown *punk);
-        
+
         END_INTERFACE
     } IApplicationDebuggerVtbl;
 
@@ -6376,7 +6376,7 @@ EXTERN_C const IID IID_IApplicationDebugger;
         CONST_VTBL struct IApplicationDebuggerVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6416,7 +6416,7 @@ EXTERN_C const IID IID_IApplicationDebugger;
 
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebugger_QueryAlive_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebugger_QueryAlive_Proxy(
     IApplicationDebugger * This);
 
 
@@ -6427,7 +6427,7 @@ void __RPC_STUB IApplicationDebugger_QueryAlive_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebugger_CreateInstanceAtDebugger_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebugger_CreateInstanceAtDebugger_Proxy(
     IApplicationDebugger * This,
     /* [in] */ REFCLSID rclsid,
     /* [in] */ IUnknown *pUnkOuter,
@@ -6443,7 +6443,7 @@ void __RPC_STUB IApplicationDebugger_CreateInstanceAtDebugger_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebugger_onDebugOutput_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebugger_onDebugOutput_Proxy(
     IApplicationDebugger * This,
     /* [in] */ LPCOLESTR pstr);
 
@@ -6455,7 +6455,7 @@ void __RPC_STUB IApplicationDebugger_onDebugOutput_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebugger_onHandleBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebugger_onHandleBreakPoint_Proxy(
     IApplicationDebugger * This,
     /* [in] */ IRemoteDebugApplicationThread *prpt,
     /* [in] */ BREAKREASON br,
@@ -6469,7 +6469,7 @@ void __RPC_STUB IApplicationDebugger_onHandleBreakPoint_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebugger_onClose_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebugger_onClose_Proxy(
     IApplicationDebugger * This);
 
 
@@ -6480,7 +6480,7 @@ void __RPC_STUB IApplicationDebugger_onClose_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebugger_onDebuggerEvent_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebugger_onDebuggerEvent_Proxy(
     IApplicationDebugger * This,
     /* [in] */ REFIID riid,
     /* [in] */ IUnknown *punk);
@@ -6501,50 +6501,50 @@ void __RPC_STUB IApplicationDebugger_onDebuggerEvent_Stub(
 #define __IApplicationDebuggerUI_INTERFACE_DEFINED__
 
 /* interface IApplicationDebuggerUI */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IApplicationDebuggerUI;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C2b-CB0C-11d0-B5C9-00A0244A0E7A")
     IApplicationDebuggerUI : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE BringDocumentToTop( 
+        virtual HRESULT STDMETHODCALLTYPE BringDocumentToTop(
             /* [in] */ IDebugDocumentText *pddt) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE BringDocumentContextToTop( 
+
+        virtual HRESULT STDMETHODCALLTYPE BringDocumentContextToTop(
             /* [in] */ IDebugDocumentContext *pddc) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IApplicationDebuggerUIVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IApplicationDebuggerUI * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IApplicationDebuggerUI * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IApplicationDebuggerUI * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *BringDocumentToTop )( 
+
+        HRESULT ( STDMETHODCALLTYPE *BringDocumentToTop )(
             IApplicationDebuggerUI * This,
             /* [in] */ IDebugDocumentText *pddt);
-        
-        HRESULT ( STDMETHODCALLTYPE *BringDocumentContextToTop )( 
+
+        HRESULT ( STDMETHODCALLTYPE *BringDocumentContextToTop )(
             IApplicationDebuggerUI * This,
             /* [in] */ IDebugDocumentContext *pddc);
-        
+
         END_INTERFACE
     } IApplicationDebuggerUIVtbl;
 
@@ -6553,7 +6553,7 @@ EXTERN_C const IID IID_IApplicationDebuggerUI;
         CONST_VTBL struct IApplicationDebuggerUIVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6581,7 +6581,7 @@ EXTERN_C const IID IID_IApplicationDebuggerUI;
 
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebuggerUI_BringDocumentToTop_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebuggerUI_BringDocumentToTop_Proxy(
     IApplicationDebuggerUI * This,
     /* [in] */ IDebugDocumentText *pddt);
 
@@ -6593,7 +6593,7 @@ void __RPC_STUB IApplicationDebuggerUI_BringDocumentToTop_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IApplicationDebuggerUI_BringDocumentContextToTop_Proxy( 
+HRESULT STDMETHODCALLTYPE IApplicationDebuggerUI_BringDocumentContextToTop_Proxy(
     IApplicationDebuggerUI * This,
     /* [in] */ IDebugDocumentContext *pddc);
 
@@ -6610,7 +6610,7 @@ void __RPC_STUB IApplicationDebuggerUI_BringDocumentContextToTop_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0336 */
-/* [local] */ 
+/* [local] */
 
 EXTERN_C const CLSID CLSID_MachineDebugManager;
 
@@ -6622,59 +6622,59 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0336_v0_0_s_ifspec;
 #define __IMachineDebugManager_INTERFACE_DEFINED__
 
 /* interface IMachineDebugManager */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IMachineDebugManager;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C2c-CB0C-11d0-B5C9-00A0244A0E7A")
     IMachineDebugManager : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE AddApplication( 
+        virtual HRESULT STDMETHODCALLTYPE AddApplication(
             /* [in] */ IRemoteDebugApplication *pda,
             /* [out] */ DWORD *pdwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveApplication(
             /* [in] */ DWORD dwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumApplications( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumApplications(
             /* [out] */ IEnumRemoteDebugApplications **ppeda) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IMachineDebugManagerVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IMachineDebugManager * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IMachineDebugManager * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IMachineDebugManager * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddApplication )(
             IMachineDebugManager * This,
             /* [in] */ IRemoteDebugApplication *pda,
             /* [out] */ DWORD *pdwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )(
             IMachineDebugManager * This,
             /* [in] */ DWORD dwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumApplications )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumApplications )(
             IMachineDebugManager * This,
             /* [out] */ IEnumRemoteDebugApplications **ppeda);
-        
+
         END_INTERFACE
     } IMachineDebugManagerVtbl;
 
@@ -6683,7 +6683,7 @@ EXTERN_C const IID IID_IMachineDebugManager;
         CONST_VTBL struct IMachineDebugManagerVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6714,7 +6714,7 @@ EXTERN_C const IID IID_IMachineDebugManager;
 
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManager_AddApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManager_AddApplication_Proxy(
     IMachineDebugManager * This,
     /* [in] */ IRemoteDebugApplication *pda,
     /* [out] */ DWORD *pdwAppCookie);
@@ -6727,7 +6727,7 @@ void __RPC_STUB IMachineDebugManager_AddApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManager_RemoveApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManager_RemoveApplication_Proxy(
     IMachineDebugManager * This,
     /* [in] */ DWORD dwAppCookie);
 
@@ -6739,7 +6739,7 @@ void __RPC_STUB IMachineDebugManager_RemoveApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManager_EnumApplications_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManager_EnumApplications_Proxy(
     IMachineDebugManager * This,
     /* [out] */ IEnumRemoteDebugApplications **ppeda);
 
@@ -6759,63 +6759,63 @@ void __RPC_STUB IMachineDebugManager_EnumApplications_Stub(
 #define __IMachineDebugManagerCookie_INTERFACE_DEFINED__
 
 /* interface IMachineDebugManagerCookie */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IMachineDebugManagerCookie;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C2d-CB0C-11d0-B5C9-00A0244A0E7A")
     IMachineDebugManagerCookie : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE AddApplication( 
+        virtual HRESULT STDMETHODCALLTYPE AddApplication(
             /* [in] */ IRemoteDebugApplication *pda,
             /* [in] */ DWORD dwDebugAppCookie,
             /* [out] */ DWORD *pdwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveApplication(
             /* [in] */ DWORD dwDebugAppCookie,
             /* [in] */ DWORD dwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumApplications( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumApplications(
             /* [out] */ IEnumRemoteDebugApplications **ppeda) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IMachineDebugManagerCookieVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IMachineDebugManagerCookie * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IMachineDebugManagerCookie * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IMachineDebugManagerCookie * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddApplication )(
             IMachineDebugManagerCookie * This,
             /* [in] */ IRemoteDebugApplication *pda,
             /* [in] */ DWORD dwDebugAppCookie,
             /* [out] */ DWORD *pdwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )(
             IMachineDebugManagerCookie * This,
             /* [in] */ DWORD dwDebugAppCookie,
             /* [in] */ DWORD dwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumApplications )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumApplications )(
             IMachineDebugManagerCookie * This,
             /* [out] */ IEnumRemoteDebugApplications **ppeda);
-        
+
         END_INTERFACE
     } IMachineDebugManagerCookieVtbl;
 
@@ -6824,7 +6824,7 @@ EXTERN_C const IID IID_IMachineDebugManagerCookie;
         CONST_VTBL struct IMachineDebugManagerCookieVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6855,7 +6855,7 @@ EXTERN_C const IID IID_IMachineDebugManagerCookie;
 
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManagerCookie_AddApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManagerCookie_AddApplication_Proxy(
     IMachineDebugManagerCookie * This,
     /* [in] */ IRemoteDebugApplication *pda,
     /* [in] */ DWORD dwDebugAppCookie,
@@ -6869,7 +6869,7 @@ void __RPC_STUB IMachineDebugManagerCookie_AddApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManagerCookie_RemoveApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManagerCookie_RemoveApplication_Proxy(
     IMachineDebugManagerCookie * This,
     /* [in] */ DWORD dwDebugAppCookie,
     /* [in] */ DWORD dwAppCookie);
@@ -6882,7 +6882,7 @@ void __RPC_STUB IMachineDebugManagerCookie_RemoveApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManagerCookie_EnumApplications_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManagerCookie_EnumApplications_Proxy(
     IMachineDebugManagerCookie * This,
     /* [out] */ IEnumRemoteDebugApplications **ppeda);
 
@@ -6902,54 +6902,54 @@ void __RPC_STUB IMachineDebugManagerCookie_EnumApplications_Stub(
 #define __IMachineDebugManagerEvents_INTERFACE_DEFINED__
 
 /* interface IMachineDebugManagerEvents */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IMachineDebugManagerEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C2e-CB0C-11d0-B5C9-00A0244A0E7A")
     IMachineDebugManagerEvents : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE onAddApplication( 
+        virtual HRESULT STDMETHODCALLTYPE onAddApplication(
             /* [in] */ IRemoteDebugApplication *pda,
             /* [in] */ DWORD dwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onRemoveApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE onRemoveApplication(
             /* [in] */ IRemoteDebugApplication *pda,
             /* [in] */ DWORD dwAppCookie) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IMachineDebugManagerEventsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IMachineDebugManagerEvents * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IMachineDebugManagerEvents * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IMachineDebugManagerEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onAddApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onAddApplication )(
             IMachineDebugManagerEvents * This,
             /* [in] */ IRemoteDebugApplication *pda,
             /* [in] */ DWORD dwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *onRemoveApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onRemoveApplication )(
             IMachineDebugManagerEvents * This,
             /* [in] */ IRemoteDebugApplication *pda,
             /* [in] */ DWORD dwAppCookie);
-        
+
         END_INTERFACE
     } IMachineDebugManagerEventsVtbl;
 
@@ -6958,7 +6958,7 @@ EXTERN_C const IID IID_IMachineDebugManagerEvents;
         CONST_VTBL struct IMachineDebugManagerEventsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -6986,7 +6986,7 @@ EXTERN_C const IID IID_IMachineDebugManagerEvents;
 
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManagerEvents_onAddApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManagerEvents_onAddApplication_Proxy(
     IMachineDebugManagerEvents * This,
     /* [in] */ IRemoteDebugApplication *pda,
     /* [in] */ DWORD dwAppCookie);
@@ -6999,7 +6999,7 @@ void __RPC_STUB IMachineDebugManagerEvents_onAddApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IMachineDebugManagerEvents_onRemoveApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IMachineDebugManagerEvents_onRemoveApplication_Proxy(
     IMachineDebugManagerEvents * This,
     /* [in] */ IRemoteDebugApplication *pda,
     /* [in] */ DWORD dwAppCookie);
@@ -7017,7 +7017,7 @@ void __RPC_STUB IMachineDebugManagerEvents_onRemoveApplication_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0339 */
-/* [local] */ 
+/* [local] */
 
 EXTERN_C const CLSID CLSID_ProcessDebugManager;
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
@@ -7038,75 +7038,75 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0339_v0_0_s_ifspec;
 #define __IProcessDebugManager32_INTERFACE_DEFINED__
 
 /* interface IProcessDebugManager32 */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IProcessDebugManager32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C2f-CB0C-11d0-B5C9-00A0244A0E7A")
     IProcessDebugManager32 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE CreateApplication( 
+        virtual HRESULT STDMETHODCALLTYPE CreateApplication(
             /* [out] */ IDebugApplication32 **ppda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDefaultApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDefaultApplication(
             /* [out] */ IDebugApplication32 **ppda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddApplication(
             /* [in] */ IDebugApplication32 *pda,
             /* [out] */ DWORD *pdwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveApplication(
             /* [in] */ DWORD dwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentHelper( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentHelper(
             /* [in] */ IUnknown *punkOuter,
             /* [out] */ IDebugDocumentHelper32 **pddh) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IProcessDebugManager32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IProcessDebugManager32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IProcessDebugManager32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IProcessDebugManager32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateApplication )(
             IProcessDebugManager32 * This,
             /* [out] */ IDebugApplication32 **ppda);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDefaultApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDefaultApplication )(
             IProcessDebugManager32 * This,
             /* [out] */ IDebugApplication32 **ppda);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddApplication )(
             IProcessDebugManager32 * This,
             /* [in] */ IDebugApplication32 *pda,
             /* [out] */ DWORD *pdwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )(
             IProcessDebugManager32 * This,
             /* [in] */ DWORD dwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentHelper )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentHelper )(
             IProcessDebugManager32 * This,
             /* [in] */ IUnknown *punkOuter,
             /* [out] */ IDebugDocumentHelper32 **pddh);
-        
+
         END_INTERFACE
     } IProcessDebugManager32Vtbl;
 
@@ -7115,7 +7115,7 @@ EXTERN_C const IID IID_IProcessDebugManager32;
         CONST_VTBL struct IProcessDebugManager32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -7152,7 +7152,7 @@ EXTERN_C const IID IID_IProcessDebugManager32;
 
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager32_CreateApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager32_CreateApplication_Proxy(
     IProcessDebugManager32 * This,
     /* [out] */ IDebugApplication32 **ppda);
 
@@ -7164,7 +7164,7 @@ void __RPC_STUB IProcessDebugManager32_CreateApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager32_GetDefaultApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager32_GetDefaultApplication_Proxy(
     IProcessDebugManager32 * This,
     /* [out] */ IDebugApplication32 **ppda);
 
@@ -7176,7 +7176,7 @@ void __RPC_STUB IProcessDebugManager32_GetDefaultApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager32_AddApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager32_AddApplication_Proxy(
     IProcessDebugManager32 * This,
     /* [in] */ IDebugApplication32 *pda,
     /* [out] */ DWORD *pdwAppCookie);
@@ -7189,7 +7189,7 @@ void __RPC_STUB IProcessDebugManager32_AddApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager32_RemoveApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager32_RemoveApplication_Proxy(
     IProcessDebugManager32 * This,
     /* [in] */ DWORD dwAppCookie);
 
@@ -7201,7 +7201,7 @@ void __RPC_STUB IProcessDebugManager32_RemoveApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager32_CreateDebugDocumentHelper_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager32_CreateDebugDocumentHelper_Proxy(
     IProcessDebugManager32 * This,
     /* [in] */ IUnknown *punkOuter,
     /* [out] */ IDebugDocumentHelper32 **pddh);
@@ -7222,75 +7222,75 @@ void __RPC_STUB IProcessDebugManager32_CreateDebugDocumentHelper_Stub(
 #define __IProcessDebugManager64_INTERFACE_DEFINED__
 
 /* interface IProcessDebugManager64 */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IProcessDebugManager64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("56b9fc1c-63a9-4cc1-ac21-087d69a17fab")
     IProcessDebugManager64 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE CreateApplication( 
+        virtual HRESULT STDMETHODCALLTYPE CreateApplication(
             /* [out] */ IDebugApplication64 **ppda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDefaultApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDefaultApplication(
             /* [out] */ IDebugApplication64 **ppda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddApplication(
             /* [in] */ IDebugApplication64 *pda,
             /* [out] */ DWORD *pdwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveApplication(
             /* [in] */ DWORD dwAppCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentHelper( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateDebugDocumentHelper(
             /* [in] */ IUnknown *punkOuter,
             /* [out] */ IDebugDocumentHelper64 **pddh) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IProcessDebugManager64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IProcessDebugManager64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IProcessDebugManager64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IProcessDebugManager64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateApplication )(
             IProcessDebugManager64 * This,
             /* [out] */ IDebugApplication64 **ppda);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDefaultApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDefaultApplication )(
             IProcessDebugManager64 * This,
             /* [out] */ IDebugApplication64 **ppda);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddApplication )(
             IProcessDebugManager64 * This,
             /* [in] */ IDebugApplication64 *pda,
             /* [out] */ DWORD *pdwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveApplication )(
             IProcessDebugManager64 * This,
             /* [in] */ DWORD dwAppCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentHelper )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateDebugDocumentHelper )(
             IProcessDebugManager64 * This,
             /* [in] */ IUnknown *punkOuter,
             /* [out] */ IDebugDocumentHelper64 **pddh);
-        
+
         END_INTERFACE
     } IProcessDebugManager64Vtbl;
 
@@ -7299,7 +7299,7 @@ EXTERN_C const IID IID_IProcessDebugManager64;
         CONST_VTBL struct IProcessDebugManager64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -7336,7 +7336,7 @@ EXTERN_C const IID IID_IProcessDebugManager64;
 
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager64_CreateApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager64_CreateApplication_Proxy(
     IProcessDebugManager64 * This,
     /* [out] */ IDebugApplication64 **ppda);
 
@@ -7348,7 +7348,7 @@ void __RPC_STUB IProcessDebugManager64_CreateApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager64_GetDefaultApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager64_GetDefaultApplication_Proxy(
     IProcessDebugManager64 * This,
     /* [out] */ IDebugApplication64 **ppda);
 
@@ -7360,7 +7360,7 @@ void __RPC_STUB IProcessDebugManager64_GetDefaultApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager64_AddApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager64_AddApplication_Proxy(
     IProcessDebugManager64 * This,
     /* [in] */ IDebugApplication64 *pda,
     /* [out] */ DWORD *pdwAppCookie);
@@ -7373,7 +7373,7 @@ void __RPC_STUB IProcessDebugManager64_AddApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager64_RemoveApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager64_RemoveApplication_Proxy(
     IProcessDebugManager64 * This,
     /* [in] */ DWORD dwAppCookie);
 
@@ -7385,7 +7385,7 @@ void __RPC_STUB IProcessDebugManager64_RemoveApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IProcessDebugManager64_CreateDebugDocumentHelper_Proxy( 
+HRESULT STDMETHODCALLTYPE IProcessDebugManager64_CreateDebugDocumentHelper_Proxy(
     IProcessDebugManager64 * This,
     /* [in] */ IUnknown *punkOuter,
     /* [out] */ IDebugDocumentHelper64 **pddh);
@@ -7406,119 +7406,119 @@ void __RPC_STUB IProcessDebugManager64_CreateDebugDocumentHelper_Stub(
 #define __IRemoteDebugApplication_INTERFACE_DEFINED__
 
 /* interface IRemoteDebugApplication */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IRemoteDebugApplication;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C30-CB0C-11d0-B5C9-00A0244A0E7A")
     IRemoteDebugApplication : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE ResumeFromBreakPoint( 
+        virtual HRESULT STDMETHODCALLTYPE ResumeFromBreakPoint(
             /* [in] */ IRemoteDebugApplicationThread *prptFocus,
             /* [in] */ BREAKRESUMEACTION bra,
             /* [in] */ ERRORRESUMEACTION era) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE CauseBreak( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE ConnectDebugger( 
+
+        virtual HRESULT STDMETHODCALLTYPE ConnectDebugger(
             /* [in] */ IApplicationDebugger *pad) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE DisconnectDebugger( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDebugger( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDebugger(
             /* [out] */ IApplicationDebugger **pad) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateInstanceAtApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateInstanceAtApplication(
             /* [in] */ REFCLSID rclsid,
             /* [in] */ IUnknown *pUnkOuter,
             /* [in] */ DWORD dwClsContext,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ IUnknown **ppvObject) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryAlive( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumThreads( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumThreads(
             /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetName( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetName(
             /* [out] */ BSTR *pbstrName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetRootNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetRootNode(
             /* [out] */ IDebugApplicationNode **ppdanRoot) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumGlobalExpressionContexts( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumGlobalExpressionContexts(
             /* [out] */ IEnumDebugExpressionContexts **ppedec) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IRemoteDebugApplicationVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IRemoteDebugApplication * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IRemoteDebugApplication * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IRemoteDebugApplication * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ResumeFromBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ResumeFromBreakPoint )(
             IRemoteDebugApplication * This,
             /* [in] */ IRemoteDebugApplicationThread *prptFocus,
             /* [in] */ BREAKRESUMEACTION bra,
             /* [in] */ ERRORRESUMEACTION era);
-        
-        HRESULT ( STDMETHODCALLTYPE *CauseBreak )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CauseBreak )(
             IRemoteDebugApplication * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ConnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ConnectDebugger )(
             IRemoteDebugApplication * This,
             /* [in] */ IApplicationDebugger *pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *DisconnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DisconnectDebugger )(
             IRemoteDebugApplication * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDebugger )(
             IRemoteDebugApplication * This,
             /* [out] */ IApplicationDebugger **pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtApplication )(
             IRemoteDebugApplication * This,
             /* [in] */ REFCLSID rclsid,
             /* [in] */ IUnknown *pUnkOuter,
             /* [in] */ DWORD dwClsContext,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ IUnknown **ppvObject);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryAlive )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryAlive )(
             IRemoteDebugApplication * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumThreads )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumThreads )(
             IRemoteDebugApplication * This,
             /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IRemoteDebugApplication * This,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetRootNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetRootNode )(
             IRemoteDebugApplication * This,
             /* [out] */ IDebugApplicationNode **ppdanRoot);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumGlobalExpressionContexts )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumGlobalExpressionContexts )(
             IRemoteDebugApplication * This,
             /* [out] */ IEnumDebugExpressionContexts **ppedec);
-        
+
         END_INTERFACE
     } IRemoteDebugApplicationVtbl;
 
@@ -7527,7 +7527,7 @@ EXTERN_C const IID IID_IRemoteDebugApplication;
         CONST_VTBL struct IRemoteDebugApplicationVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -7582,7 +7582,7 @@ EXTERN_C const IID IID_IRemoteDebugApplication;
 
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_ResumeFromBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_ResumeFromBreakPoint_Proxy(
     IRemoteDebugApplication * This,
     /* [in] */ IRemoteDebugApplicationThread *prptFocus,
     /* [in] */ BREAKRESUMEACTION bra,
@@ -7596,7 +7596,7 @@ void __RPC_STUB IRemoteDebugApplication_ResumeFromBreakPoint_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_CauseBreak_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_CauseBreak_Proxy(
     IRemoteDebugApplication * This);
 
 
@@ -7607,7 +7607,7 @@ void __RPC_STUB IRemoteDebugApplication_CauseBreak_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_ConnectDebugger_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_ConnectDebugger_Proxy(
     IRemoteDebugApplication * This,
     /* [in] */ IApplicationDebugger *pad);
 
@@ -7619,7 +7619,7 @@ void __RPC_STUB IRemoteDebugApplication_ConnectDebugger_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_DisconnectDebugger_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_DisconnectDebugger_Proxy(
     IRemoteDebugApplication * This);
 
 
@@ -7630,7 +7630,7 @@ void __RPC_STUB IRemoteDebugApplication_DisconnectDebugger_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_GetDebugger_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_GetDebugger_Proxy(
     IRemoteDebugApplication * This,
     /* [out] */ IApplicationDebugger **pad);
 
@@ -7642,7 +7642,7 @@ void __RPC_STUB IRemoteDebugApplication_GetDebugger_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_CreateInstanceAtApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_CreateInstanceAtApplication_Proxy(
     IRemoteDebugApplication * This,
     /* [in] */ REFCLSID rclsid,
     /* [in] */ IUnknown *pUnkOuter,
@@ -7658,7 +7658,7 @@ void __RPC_STUB IRemoteDebugApplication_CreateInstanceAtApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_QueryAlive_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_QueryAlive_Proxy(
     IRemoteDebugApplication * This);
 
 
@@ -7669,7 +7669,7 @@ void __RPC_STUB IRemoteDebugApplication_QueryAlive_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_EnumThreads_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_EnumThreads_Proxy(
     IRemoteDebugApplication * This,
     /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat);
 
@@ -7681,7 +7681,7 @@ void __RPC_STUB IRemoteDebugApplication_EnumThreads_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_GetName_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_GetName_Proxy(
     IRemoteDebugApplication * This,
     /* [out] */ BSTR *pbstrName);
 
@@ -7693,7 +7693,7 @@ void __RPC_STUB IRemoteDebugApplication_GetName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_GetRootNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_GetRootNode_Proxy(
     IRemoteDebugApplication * This,
     /* [out] */ IDebugApplicationNode **ppdanRoot);
 
@@ -7705,7 +7705,7 @@ void __RPC_STUB IRemoteDebugApplication_GetRootNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_EnumGlobalExpressionContexts_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplication_EnumGlobalExpressionContexts_Proxy(
     IRemoteDebugApplication * This,
     /* [out] */ IEnumDebugExpressionContexts **ppedec);
 
@@ -7722,7 +7722,7 @@ void __RPC_STUB IRemoteDebugApplication_EnumGlobalExpressionContexts_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0342 */
-/* [local] */ 
+/* [local] */
 
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
 #ifdef _WIN64
@@ -7742,237 +7742,237 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0342_v0_0_s_ifspec;
 #define __IDebugApplication32_INTERFACE_DEFINED__
 
 /* interface IDebugApplication32 */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugApplication32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C32-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugApplication32 : public IRemoteDebugApplication
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SetName( 
+        virtual HRESULT STDMETHODCALLTYPE SetName(
             /* [in] */ LPCOLESTR pstrName) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE StepOutComplete( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE DebugOutput( 
+
+        virtual HRESULT STDMETHODCALLTYPE DebugOutput(
             /* [in] */ LPCOLESTR pstr) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE StartDebugSession( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE HandleBreakPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE HandleBreakPoint(
             /* [in] */ BREAKREASON br,
             /* [out] */ BREAKRESUMEACTION *pbra) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Close( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetBreakFlags( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetBreakFlags(
             /* [out] */ APPBREAKFLAGS *pabf,
             /* [out] */ IRemoteDebugApplicationThread **pprdatSteppingThread) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetCurrentThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetCurrentThread(
             /* [out] */ IDebugApplicationThread **pat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateAsyncDebugOperation( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateAsyncDebugOperation(
             /* [in] */ IDebugSyncOperation *psdo,
             /* [out] */ IDebugAsyncOperation **ppado) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddStackFrameSniffer( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddStackFrameSniffer(
             /* [in] */ IDebugStackFrameSniffer *pdsfs,
             /* [out] */ DWORD *pdwCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveStackFrameSniffer( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveStackFrameSniffer(
             /* [in] */ DWORD dwCookie) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryCurrentThreadIsDebuggerThread( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SynchronousCallInDebuggerThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE SynchronousCallInDebuggerThread(
             /* [in] */ IDebugThreadCall32 *pptc,
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateApplicationNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateApplicationNode(
             /* [out] */ IDebugApplicationNode **ppdanNew) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE FireDebuggerEvent( 
+
+        virtual HRESULT STDMETHODCALLTYPE FireDebuggerEvent(
             /* [in] */ REFGUID riid,
             /* [in] */ IUnknown *punk) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE HandleRuntimeError( 
+
+        virtual HRESULT STDMETHODCALLTYPE HandleRuntimeError(
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [in] */ IActiveScriptSite *pScriptSite,
             /* [out] */ BREAKRESUMEACTION *pbra,
             /* [out] */ ERRORRESUMEACTION *perra,
             /* [out] */ BOOL *pfCallOnScriptError) = 0;
-        
+
         virtual BOOL STDMETHODCALLTYPE FCanJitDebug( void) = 0;
-        
+
         virtual BOOL STDMETHODCALLTYPE FIsAutoJitDebugEnabled( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddGlobalExpressionContextProvider( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddGlobalExpressionContextProvider(
             /* [in] */ IProvideExpressionContexts *pdsfs,
             /* [out] */ DWORD *pdwCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveGlobalExpressionContextProvider( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveGlobalExpressionContextProvider(
             /* [in] */ DWORD dwCookie) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugApplication32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugApplication32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugApplication32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ResumeFromBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ResumeFromBreakPoint )(
             IDebugApplication32 * This,
             /* [in] */ IRemoteDebugApplicationThread *prptFocus,
             /* [in] */ BREAKRESUMEACTION bra,
             /* [in] */ ERRORRESUMEACTION era);
-        
-        HRESULT ( STDMETHODCALLTYPE *CauseBreak )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CauseBreak )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ConnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ConnectDebugger )(
             IDebugApplication32 * This,
             /* [in] */ IApplicationDebugger *pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *DisconnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DisconnectDebugger )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDebugger )(
             IDebugApplication32 * This,
             /* [out] */ IApplicationDebugger **pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtApplication )(
             IDebugApplication32 * This,
             /* [in] */ REFCLSID rclsid,
             /* [in] */ IUnknown *pUnkOuter,
             /* [in] */ DWORD dwClsContext,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ IUnknown **ppvObject);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryAlive )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryAlive )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumThreads )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumThreads )(
             IDebugApplication32 * This,
             /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugApplication32 * This,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetRootNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetRootNode )(
             IDebugApplication32 * This,
             /* [out] */ IDebugApplicationNode **ppdanRoot);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumGlobalExpressionContexts )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumGlobalExpressionContexts )(
             IDebugApplication32 * This,
             /* [out] */ IEnumDebugExpressionContexts **ppedec);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetName )(
             IDebugApplication32 * This,
             /* [in] */ LPCOLESTR pstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *StepOutComplete )( 
+
+        HRESULT ( STDMETHODCALLTYPE *StepOutComplete )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *DebugOutput )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DebugOutput )(
             IDebugApplication32 * This,
             /* [in] */ LPCOLESTR pstr);
-        
-        HRESULT ( STDMETHODCALLTYPE *StartDebugSession )( 
+
+        HRESULT ( STDMETHODCALLTYPE *StartDebugSession )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *HandleBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *HandleBreakPoint )(
             IDebugApplication32 * This,
             /* [in] */ BREAKREASON br,
             /* [out] */ BREAKRESUMEACTION *pbra);
-        
-        HRESULT ( STDMETHODCALLTYPE *Close )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Close )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetBreakFlags )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetBreakFlags )(
             IDebugApplication32 * This,
             /* [out] */ APPBREAKFLAGS *pabf,
             /* [out] */ IRemoteDebugApplicationThread **pprdatSteppingThread);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetCurrentThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetCurrentThread )(
             IDebugApplication32 * This,
             /* [out] */ IDebugApplicationThread **pat);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateAsyncDebugOperation )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateAsyncDebugOperation )(
             IDebugApplication32 * This,
             /* [in] */ IDebugSyncOperation *psdo,
             /* [out] */ IDebugAsyncOperation **ppado);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddStackFrameSniffer )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddStackFrameSniffer )(
             IDebugApplication32 * This,
             /* [in] */ IDebugStackFrameSniffer *pdsfs,
             /* [out] */ DWORD *pdwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveStackFrameSniffer )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveStackFrameSniffer )(
             IDebugApplication32 * This,
             /* [in] */ DWORD dwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryCurrentThreadIsDebuggerThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryCurrentThreadIsDebuggerThread )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *SynchronousCallInDebuggerThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SynchronousCallInDebuggerThread )(
             IDebugApplication32 * This,
             /* [in] */ IDebugThreadCall32 *pptc,
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateApplicationNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateApplicationNode )(
             IDebugApplication32 * This,
             /* [out] */ IDebugApplicationNode **ppdanNew);
-        
-        HRESULT ( STDMETHODCALLTYPE *FireDebuggerEvent )( 
+
+        HRESULT ( STDMETHODCALLTYPE *FireDebuggerEvent )(
             IDebugApplication32 * This,
             /* [in] */ REFGUID riid,
             /* [in] */ IUnknown *punk);
-        
-        HRESULT ( STDMETHODCALLTYPE *HandleRuntimeError )( 
+
+        HRESULT ( STDMETHODCALLTYPE *HandleRuntimeError )(
             IDebugApplication32 * This,
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [in] */ IActiveScriptSite *pScriptSite,
             /* [out] */ BREAKRESUMEACTION *pbra,
             /* [out] */ ERRORRESUMEACTION *perra,
             /* [out] */ BOOL *pfCallOnScriptError);
-        
-        BOOL ( STDMETHODCALLTYPE *FCanJitDebug )( 
+
+        BOOL ( STDMETHODCALLTYPE *FCanJitDebug )(
             IDebugApplication32 * This);
-        
-        BOOL ( STDMETHODCALLTYPE *FIsAutoJitDebugEnabled )( 
+
+        BOOL ( STDMETHODCALLTYPE *FIsAutoJitDebugEnabled )(
             IDebugApplication32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddGlobalExpressionContextProvider )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddGlobalExpressionContextProvider )(
             IDebugApplication32 * This,
             /* [in] */ IProvideExpressionContexts *pdsfs,
             /* [out] */ DWORD *pdwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveGlobalExpressionContextProvider )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveGlobalExpressionContextProvider )(
             IDebugApplication32 * This,
             /* [in] */ DWORD dwCookie);
-        
+
         END_INTERFACE
     } IDebugApplication32Vtbl;
 
@@ -7981,7 +7981,7 @@ EXTERN_C const IID IID_IDebugApplication32;
         CONST_VTBL struct IDebugApplication32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -8097,7 +8097,7 @@ EXTERN_C const IID IID_IDebugApplication32;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_SetName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_SetName_Proxy(
     IDebugApplication32 * This,
     /* [in] */ LPCOLESTR pstrName);
 
@@ -8109,7 +8109,7 @@ void __RPC_STUB IDebugApplication32_SetName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_StepOutComplete_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_StepOutComplete_Proxy(
     IDebugApplication32 * This);
 
 
@@ -8120,7 +8120,7 @@ void __RPC_STUB IDebugApplication32_StepOutComplete_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_DebugOutput_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_DebugOutput_Proxy(
     IDebugApplication32 * This,
     /* [in] */ LPCOLESTR pstr);
 
@@ -8132,7 +8132,7 @@ void __RPC_STUB IDebugApplication32_DebugOutput_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_StartDebugSession_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_StartDebugSession_Proxy(
     IDebugApplication32 * This);
 
 
@@ -8143,7 +8143,7 @@ void __RPC_STUB IDebugApplication32_StartDebugSession_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_HandleBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_HandleBreakPoint_Proxy(
     IDebugApplication32 * This,
     /* [in] */ BREAKREASON br,
     /* [out] */ BREAKRESUMEACTION *pbra);
@@ -8156,7 +8156,7 @@ void __RPC_STUB IDebugApplication32_HandleBreakPoint_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_Close_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_Close_Proxy(
     IDebugApplication32 * This);
 
 
@@ -8167,7 +8167,7 @@ void __RPC_STUB IDebugApplication32_Close_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_GetBreakFlags_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_GetBreakFlags_Proxy(
     IDebugApplication32 * This,
     /* [out] */ APPBREAKFLAGS *pabf,
     /* [out] */ IRemoteDebugApplicationThread **pprdatSteppingThread);
@@ -8180,7 +8180,7 @@ void __RPC_STUB IDebugApplication32_GetBreakFlags_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_GetCurrentThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_GetCurrentThread_Proxy(
     IDebugApplication32 * This,
     /* [out] */ IDebugApplicationThread **pat);
 
@@ -8192,7 +8192,7 @@ void __RPC_STUB IDebugApplication32_GetCurrentThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_CreateAsyncDebugOperation_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_CreateAsyncDebugOperation_Proxy(
     IDebugApplication32 * This,
     /* [in] */ IDebugSyncOperation *psdo,
     /* [out] */ IDebugAsyncOperation **ppado);
@@ -8205,7 +8205,7 @@ void __RPC_STUB IDebugApplication32_CreateAsyncDebugOperation_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_AddStackFrameSniffer_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_AddStackFrameSniffer_Proxy(
     IDebugApplication32 * This,
     /* [in] */ IDebugStackFrameSniffer *pdsfs,
     /* [out] */ DWORD *pdwCookie);
@@ -8218,7 +8218,7 @@ void __RPC_STUB IDebugApplication32_AddStackFrameSniffer_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_RemoveStackFrameSniffer_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_RemoveStackFrameSniffer_Proxy(
     IDebugApplication32 * This,
     /* [in] */ DWORD dwCookie);
 
@@ -8230,7 +8230,7 @@ void __RPC_STUB IDebugApplication32_RemoveStackFrameSniffer_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_QueryCurrentThreadIsDebuggerThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_QueryCurrentThreadIsDebuggerThread_Proxy(
     IDebugApplication32 * This);
 
 
@@ -8241,7 +8241,7 @@ void __RPC_STUB IDebugApplication32_QueryCurrentThreadIsDebuggerThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_SynchronousCallInDebuggerThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_SynchronousCallInDebuggerThread_Proxy(
     IDebugApplication32 * This,
     /* [in] */ IDebugThreadCall32 *pptc,
     /* [in] */ DWORD dwParam1,
@@ -8256,7 +8256,7 @@ void __RPC_STUB IDebugApplication32_SynchronousCallInDebuggerThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_CreateApplicationNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_CreateApplicationNode_Proxy(
     IDebugApplication32 * This,
     /* [out] */ IDebugApplicationNode **ppdanNew);
 
@@ -8268,7 +8268,7 @@ void __RPC_STUB IDebugApplication32_CreateApplicationNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_FireDebuggerEvent_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_FireDebuggerEvent_Proxy(
     IDebugApplication32 * This,
     /* [in] */ REFGUID riid,
     /* [in] */ IUnknown *punk);
@@ -8281,7 +8281,7 @@ void __RPC_STUB IDebugApplication32_FireDebuggerEvent_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_HandleRuntimeError_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_HandleRuntimeError_Proxy(
     IDebugApplication32 * This,
     /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
     /* [in] */ IActiveScriptSite *pScriptSite,
@@ -8297,7 +8297,7 @@ void __RPC_STUB IDebugApplication32_HandleRuntimeError_Stub(
     DWORD *_pdwStubPhase);
 
 
-BOOL STDMETHODCALLTYPE IDebugApplication32_FCanJitDebug_Proxy( 
+BOOL STDMETHODCALLTYPE IDebugApplication32_FCanJitDebug_Proxy(
     IDebugApplication32 * This);
 
 
@@ -8308,7 +8308,7 @@ void __RPC_STUB IDebugApplication32_FCanJitDebug_Stub(
     DWORD *_pdwStubPhase);
 
 
-BOOL STDMETHODCALLTYPE IDebugApplication32_FIsAutoJitDebugEnabled_Proxy( 
+BOOL STDMETHODCALLTYPE IDebugApplication32_FIsAutoJitDebugEnabled_Proxy(
     IDebugApplication32 * This);
 
 
@@ -8319,7 +8319,7 @@ void __RPC_STUB IDebugApplication32_FIsAutoJitDebugEnabled_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_AddGlobalExpressionContextProvider_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_AddGlobalExpressionContextProvider_Proxy(
     IDebugApplication32 * This,
     /* [in] */ IProvideExpressionContexts *pdsfs,
     /* [out] */ DWORD *pdwCookie);
@@ -8332,7 +8332,7 @@ void __RPC_STUB IDebugApplication32_AddGlobalExpressionContextProvider_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication32_RemoveGlobalExpressionContextProvider_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication32_RemoveGlobalExpressionContextProvider_Proxy(
     IDebugApplication32 * This,
     /* [in] */ DWORD dwCookie);
 
@@ -8352,237 +8352,237 @@ void __RPC_STUB IDebugApplication32_RemoveGlobalExpressionContextProvider_Stub(
 #define __IDebugApplication64_INTERFACE_DEFINED__
 
 /* interface IDebugApplication64 */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugApplication64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("4dedc754-04c7-4f10-9e60-16a390fe6e62")
     IDebugApplication64 : public IRemoteDebugApplication
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SetName( 
+        virtual HRESULT STDMETHODCALLTYPE SetName(
             /* [in] */ LPCOLESTR pstrName) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE StepOutComplete( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE DebugOutput( 
+
+        virtual HRESULT STDMETHODCALLTYPE DebugOutput(
             /* [in] */ LPCOLESTR pstr) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE StartDebugSession( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE HandleBreakPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE HandleBreakPoint(
             /* [in] */ BREAKREASON br,
             /* [out] */ BREAKRESUMEACTION *pbra) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Close( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetBreakFlags( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetBreakFlags(
             /* [out] */ APPBREAKFLAGS *pabf,
             /* [out] */ IRemoteDebugApplicationThread **pprdatSteppingThread) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetCurrentThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetCurrentThread(
             /* [out] */ IDebugApplicationThread **pat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateAsyncDebugOperation( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateAsyncDebugOperation(
             /* [in] */ IDebugSyncOperation *psdo,
             /* [out] */ IDebugAsyncOperation **ppado) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddStackFrameSniffer( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddStackFrameSniffer(
             /* [in] */ IDebugStackFrameSniffer *pdsfs,
             /* [out] */ DWORD *pdwCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveStackFrameSniffer( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveStackFrameSniffer(
             /* [in] */ DWORD dwCookie) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryCurrentThreadIsDebuggerThread( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SynchronousCallInDebuggerThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE SynchronousCallInDebuggerThread(
             /* [in] */ IDebugThreadCall64 *pptc,
             /* [in] */ DWORDLONG dwParam1,
             /* [in] */ DWORDLONG dwParam2,
             /* [in] */ DWORDLONG dwParam3) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateApplicationNode( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateApplicationNode(
             /* [out] */ IDebugApplicationNode **ppdanNew) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE FireDebuggerEvent( 
+
+        virtual HRESULT STDMETHODCALLTYPE FireDebuggerEvent(
             /* [in] */ REFGUID riid,
             /* [in] */ IUnknown *punk) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE HandleRuntimeError( 
+
+        virtual HRESULT STDMETHODCALLTYPE HandleRuntimeError(
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [in] */ IActiveScriptSite *pScriptSite,
             /* [out] */ BREAKRESUMEACTION *pbra,
             /* [out] */ ERRORRESUMEACTION *perra,
             /* [out] */ BOOL *pfCallOnScriptError) = 0;
-        
+
         virtual BOOL STDMETHODCALLTYPE FCanJitDebug( void) = 0;
-        
+
         virtual BOOL STDMETHODCALLTYPE FIsAutoJitDebugEnabled( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE AddGlobalExpressionContextProvider( 
+
+        virtual HRESULT STDMETHODCALLTYPE AddGlobalExpressionContextProvider(
             /* [in] */ IProvideExpressionContexts *pdsfs,
             /* [out] */ DWORDLONG *pdwCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE RemoveGlobalExpressionContextProvider( 
+
+        virtual HRESULT STDMETHODCALLTYPE RemoveGlobalExpressionContextProvider(
             /* [in] */ DWORDLONG dwCookie) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugApplication64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugApplication64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugApplication64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ResumeFromBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ResumeFromBreakPoint )(
             IDebugApplication64 * This,
             /* [in] */ IRemoteDebugApplicationThread *prptFocus,
             /* [in] */ BREAKRESUMEACTION bra,
             /* [in] */ ERRORRESUMEACTION era);
-        
-        HRESULT ( STDMETHODCALLTYPE *CauseBreak )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CauseBreak )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ConnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ConnectDebugger )(
             IDebugApplication64 * This,
             /* [in] */ IApplicationDebugger *pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *DisconnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DisconnectDebugger )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDebugger )(
             IDebugApplication64 * This,
             /* [out] */ IApplicationDebugger **pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateInstanceAtApplication )(
             IDebugApplication64 * This,
             /* [in] */ REFCLSID rclsid,
             /* [in] */ IUnknown *pUnkOuter,
             /* [in] */ DWORD dwClsContext,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ IUnknown **ppvObject);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryAlive )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryAlive )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumThreads )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumThreads )(
             IDebugApplication64 * This,
             /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugApplication64 * This,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetRootNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetRootNode )(
             IDebugApplication64 * This,
             /* [out] */ IDebugApplicationNode **ppdanRoot);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumGlobalExpressionContexts )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumGlobalExpressionContexts )(
             IDebugApplication64 * This,
             /* [out] */ IEnumDebugExpressionContexts **ppedec);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetName )(
             IDebugApplication64 * This,
             /* [in] */ LPCOLESTR pstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *StepOutComplete )( 
+
+        HRESULT ( STDMETHODCALLTYPE *StepOutComplete )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *DebugOutput )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DebugOutput )(
             IDebugApplication64 * This,
             /* [in] */ LPCOLESTR pstr);
-        
-        HRESULT ( STDMETHODCALLTYPE *StartDebugSession )( 
+
+        HRESULT ( STDMETHODCALLTYPE *StartDebugSession )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *HandleBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *HandleBreakPoint )(
             IDebugApplication64 * This,
             /* [in] */ BREAKREASON br,
             /* [out] */ BREAKRESUMEACTION *pbra);
-        
-        HRESULT ( STDMETHODCALLTYPE *Close )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Close )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetBreakFlags )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetBreakFlags )(
             IDebugApplication64 * This,
             /* [out] */ APPBREAKFLAGS *pabf,
             /* [out] */ IRemoteDebugApplicationThread **pprdatSteppingThread);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetCurrentThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetCurrentThread )(
             IDebugApplication64 * This,
             /* [out] */ IDebugApplicationThread **pat);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateAsyncDebugOperation )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateAsyncDebugOperation )(
             IDebugApplication64 * This,
             /* [in] */ IDebugSyncOperation *psdo,
             /* [out] */ IDebugAsyncOperation **ppado);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddStackFrameSniffer )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddStackFrameSniffer )(
             IDebugApplication64 * This,
             /* [in] */ IDebugStackFrameSniffer *pdsfs,
             /* [out] */ DWORD *pdwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveStackFrameSniffer )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveStackFrameSniffer )(
             IDebugApplication64 * This,
             /* [in] */ DWORD dwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryCurrentThreadIsDebuggerThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryCurrentThreadIsDebuggerThread )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *SynchronousCallInDebuggerThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SynchronousCallInDebuggerThread )(
             IDebugApplication64 * This,
             /* [in] */ IDebugThreadCall64 *pptc,
             /* [in] */ DWORDLONG dwParam1,
             /* [in] */ DWORDLONG dwParam2,
             /* [in] */ DWORDLONG dwParam3);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateApplicationNode )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateApplicationNode )(
             IDebugApplication64 * This,
             /* [out] */ IDebugApplicationNode **ppdanNew);
-        
-        HRESULT ( STDMETHODCALLTYPE *FireDebuggerEvent )( 
+
+        HRESULT ( STDMETHODCALLTYPE *FireDebuggerEvent )(
             IDebugApplication64 * This,
             /* [in] */ REFGUID riid,
             /* [in] */ IUnknown *punk);
-        
-        HRESULT ( STDMETHODCALLTYPE *HandleRuntimeError )( 
+
+        HRESULT ( STDMETHODCALLTYPE *HandleRuntimeError )(
             IDebugApplication64 * This,
             /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
             /* [in] */ IActiveScriptSite *pScriptSite,
             /* [out] */ BREAKRESUMEACTION *pbra,
             /* [out] */ ERRORRESUMEACTION *perra,
             /* [out] */ BOOL *pfCallOnScriptError);
-        
-        BOOL ( STDMETHODCALLTYPE *FCanJitDebug )( 
+
+        BOOL ( STDMETHODCALLTYPE *FCanJitDebug )(
             IDebugApplication64 * This);
-        
-        BOOL ( STDMETHODCALLTYPE *FIsAutoJitDebugEnabled )( 
+
+        BOOL ( STDMETHODCALLTYPE *FIsAutoJitDebugEnabled )(
             IDebugApplication64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *AddGlobalExpressionContextProvider )( 
+
+        HRESULT ( STDMETHODCALLTYPE *AddGlobalExpressionContextProvider )(
             IDebugApplication64 * This,
             /* [in] */ IProvideExpressionContexts *pdsfs,
             /* [out] */ DWORDLONG *pdwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *RemoveGlobalExpressionContextProvider )( 
+
+        HRESULT ( STDMETHODCALLTYPE *RemoveGlobalExpressionContextProvider )(
             IDebugApplication64 * This,
             /* [in] */ DWORDLONG dwCookie);
-        
+
         END_INTERFACE
     } IDebugApplication64Vtbl;
 
@@ -8591,7 +8591,7 @@ EXTERN_C const IID IID_IDebugApplication64;
         CONST_VTBL struct IDebugApplication64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -8707,7 +8707,7 @@ EXTERN_C const IID IID_IDebugApplication64;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_SetName_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_SetName_Proxy(
     IDebugApplication64 * This,
     /* [in] */ LPCOLESTR pstrName);
 
@@ -8719,7 +8719,7 @@ void __RPC_STUB IDebugApplication64_SetName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_StepOutComplete_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_StepOutComplete_Proxy(
     IDebugApplication64 * This);
 
 
@@ -8730,7 +8730,7 @@ void __RPC_STUB IDebugApplication64_StepOutComplete_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_DebugOutput_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_DebugOutput_Proxy(
     IDebugApplication64 * This,
     /* [in] */ LPCOLESTR pstr);
 
@@ -8742,7 +8742,7 @@ void __RPC_STUB IDebugApplication64_DebugOutput_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_StartDebugSession_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_StartDebugSession_Proxy(
     IDebugApplication64 * This);
 
 
@@ -8753,7 +8753,7 @@ void __RPC_STUB IDebugApplication64_StartDebugSession_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_HandleBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_HandleBreakPoint_Proxy(
     IDebugApplication64 * This,
     /* [in] */ BREAKREASON br,
     /* [out] */ BREAKRESUMEACTION *pbra);
@@ -8766,7 +8766,7 @@ void __RPC_STUB IDebugApplication64_HandleBreakPoint_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_Close_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_Close_Proxy(
     IDebugApplication64 * This);
 
 
@@ -8777,7 +8777,7 @@ void __RPC_STUB IDebugApplication64_Close_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_GetBreakFlags_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_GetBreakFlags_Proxy(
     IDebugApplication64 * This,
     /* [out] */ APPBREAKFLAGS *pabf,
     /* [out] */ IRemoteDebugApplicationThread **pprdatSteppingThread);
@@ -8790,7 +8790,7 @@ void __RPC_STUB IDebugApplication64_GetBreakFlags_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_GetCurrentThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_GetCurrentThread_Proxy(
     IDebugApplication64 * This,
     /* [out] */ IDebugApplicationThread **pat);
 
@@ -8802,7 +8802,7 @@ void __RPC_STUB IDebugApplication64_GetCurrentThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_CreateAsyncDebugOperation_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_CreateAsyncDebugOperation_Proxy(
     IDebugApplication64 * This,
     /* [in] */ IDebugSyncOperation *psdo,
     /* [out] */ IDebugAsyncOperation **ppado);
@@ -8815,7 +8815,7 @@ void __RPC_STUB IDebugApplication64_CreateAsyncDebugOperation_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_AddStackFrameSniffer_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_AddStackFrameSniffer_Proxy(
     IDebugApplication64 * This,
     /* [in] */ IDebugStackFrameSniffer *pdsfs,
     /* [out] */ DWORD *pdwCookie);
@@ -8828,7 +8828,7 @@ void __RPC_STUB IDebugApplication64_AddStackFrameSniffer_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_RemoveStackFrameSniffer_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_RemoveStackFrameSniffer_Proxy(
     IDebugApplication64 * This,
     /* [in] */ DWORD dwCookie);
 
@@ -8840,7 +8840,7 @@ void __RPC_STUB IDebugApplication64_RemoveStackFrameSniffer_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_QueryCurrentThreadIsDebuggerThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_QueryCurrentThreadIsDebuggerThread_Proxy(
     IDebugApplication64 * This);
 
 
@@ -8851,7 +8851,7 @@ void __RPC_STUB IDebugApplication64_QueryCurrentThreadIsDebuggerThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_SynchronousCallInDebuggerThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_SynchronousCallInDebuggerThread_Proxy(
     IDebugApplication64 * This,
     /* [in] */ IDebugThreadCall64 *pptc,
     /* [in] */ DWORDLONG dwParam1,
@@ -8866,7 +8866,7 @@ void __RPC_STUB IDebugApplication64_SynchronousCallInDebuggerThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_CreateApplicationNode_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_CreateApplicationNode_Proxy(
     IDebugApplication64 * This,
     /* [out] */ IDebugApplicationNode **ppdanNew);
 
@@ -8878,7 +8878,7 @@ void __RPC_STUB IDebugApplication64_CreateApplicationNode_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_FireDebuggerEvent_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_FireDebuggerEvent_Proxy(
     IDebugApplication64 * This,
     /* [in] */ REFGUID riid,
     /* [in] */ IUnknown *punk);
@@ -8891,7 +8891,7 @@ void __RPC_STUB IDebugApplication64_FireDebuggerEvent_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_HandleRuntimeError_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_HandleRuntimeError_Proxy(
     IDebugApplication64 * This,
     /* [in] */ IActiveScriptErrorDebug *pErrorDebug,
     /* [in] */ IActiveScriptSite *pScriptSite,
@@ -8907,7 +8907,7 @@ void __RPC_STUB IDebugApplication64_HandleRuntimeError_Stub(
     DWORD *_pdwStubPhase);
 
 
-BOOL STDMETHODCALLTYPE IDebugApplication64_FCanJitDebug_Proxy( 
+BOOL STDMETHODCALLTYPE IDebugApplication64_FCanJitDebug_Proxy(
     IDebugApplication64 * This);
 
 
@@ -8918,7 +8918,7 @@ void __RPC_STUB IDebugApplication64_FCanJitDebug_Stub(
     DWORD *_pdwStubPhase);
 
 
-BOOL STDMETHODCALLTYPE IDebugApplication64_FIsAutoJitDebugEnabled_Proxy( 
+BOOL STDMETHODCALLTYPE IDebugApplication64_FIsAutoJitDebugEnabled_Proxy(
     IDebugApplication64 * This);
 
 
@@ -8929,7 +8929,7 @@ void __RPC_STUB IDebugApplication64_FIsAutoJitDebugEnabled_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_AddGlobalExpressionContextProvider_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_AddGlobalExpressionContextProvider_Proxy(
     IDebugApplication64 * This,
     /* [in] */ IProvideExpressionContexts *pdsfs,
     /* [out] */ DWORDLONG *pdwCookie);
@@ -8942,7 +8942,7 @@ void __RPC_STUB IDebugApplication64_AddGlobalExpressionContextProvider_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplication64_RemoveGlobalExpressionContextProvider_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplication64_RemoveGlobalExpressionContextProvider_Proxy(
     IDebugApplication64 * This,
     /* [in] */ DWORDLONG dwCookie);
 
@@ -8962,104 +8962,104 @@ void __RPC_STUB IDebugApplication64_RemoveGlobalExpressionContextProvider_Stub(
 #define __IRemoteDebugApplicationEvents_INTERFACE_DEFINED__
 
 /* interface IRemoteDebugApplicationEvents */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IRemoteDebugApplicationEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C33-CB0C-11d0-B5C9-00A0244A0E7A")
     IRemoteDebugApplicationEvents : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE OnConnectDebugger( 
+        virtual HRESULT STDMETHODCALLTYPE OnConnectDebugger(
             /* [in] */ IApplicationDebugger *pad) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE OnDisconnectDebugger( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnSetName( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnSetName(
             /* [in] */ LPCOLESTR pstrName) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnDebugOutput( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnDebugOutput(
             /* [in] */ LPCOLESTR pstr) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE OnClose( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnEnterBreakPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnEnterBreakPoint(
             /* [in] */ IRemoteDebugApplicationThread *prdat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnLeaveBreakPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnLeaveBreakPoint(
             /* [in] */ IRemoteDebugApplicationThread *prdat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnCreateThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnCreateThread(
             /* [in] */ IRemoteDebugApplicationThread *prdat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnDestroyThread( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnDestroyThread(
             /* [in] */ IRemoteDebugApplicationThread *prdat) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE OnBreakFlagChange( 
+
+        virtual HRESULT STDMETHODCALLTYPE OnBreakFlagChange(
             /* [in] */ APPBREAKFLAGS abf,
             /* [in] */ IRemoteDebugApplicationThread *prdatSteppingThread) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IRemoteDebugApplicationEventsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IRemoteDebugApplicationEvents * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IRemoteDebugApplicationEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnConnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnConnectDebugger )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ IApplicationDebugger *pad);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnDisconnectDebugger )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnDisconnectDebugger )(
             IRemoteDebugApplicationEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnSetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnSetName )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ LPCOLESTR pstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnDebugOutput )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnDebugOutput )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ LPCOLESTR pstr);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnClose )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnClose )(
             IRemoteDebugApplicationEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnEnterBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnEnterBreakPoint )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ IRemoteDebugApplicationThread *prdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnLeaveBreakPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnLeaveBreakPoint )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ IRemoteDebugApplicationThread *prdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnCreateThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnCreateThread )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ IRemoteDebugApplicationThread *prdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnDestroyThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnDestroyThread )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ IRemoteDebugApplicationThread *prdat);
-        
-        HRESULT ( STDMETHODCALLTYPE *OnBreakFlagChange )( 
+
+        HRESULT ( STDMETHODCALLTYPE *OnBreakFlagChange )(
             IRemoteDebugApplicationEvents * This,
             /* [in] */ APPBREAKFLAGS abf,
             /* [in] */ IRemoteDebugApplicationThread *prdatSteppingThread);
-        
+
         END_INTERFACE
     } IRemoteDebugApplicationEventsVtbl;
 
@@ -9068,7 +9068,7 @@ EXTERN_C const IID IID_IRemoteDebugApplicationEvents;
         CONST_VTBL struct IRemoteDebugApplicationEventsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -9120,7 +9120,7 @@ EXTERN_C const IID IID_IRemoteDebugApplicationEvents;
 
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnConnectDebugger_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnConnectDebugger_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ IApplicationDebugger *pad);
 
@@ -9132,7 +9132,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnConnectDebugger_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnDisconnectDebugger_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnDisconnectDebugger_Proxy(
     IRemoteDebugApplicationEvents * This);
 
 
@@ -9143,7 +9143,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnDisconnectDebugger_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnSetName_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnSetName_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ LPCOLESTR pstrName);
 
@@ -9155,7 +9155,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnSetName_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnDebugOutput_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnDebugOutput_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ LPCOLESTR pstr);
 
@@ -9167,7 +9167,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnDebugOutput_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnClose_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnClose_Proxy(
     IRemoteDebugApplicationEvents * This);
 
 
@@ -9178,7 +9178,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnClose_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnEnterBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnEnterBreakPoint_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ IRemoteDebugApplicationThread *prdat);
 
@@ -9190,7 +9190,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnEnterBreakPoint_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnLeaveBreakPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnLeaveBreakPoint_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ IRemoteDebugApplicationThread *prdat);
 
@@ -9202,7 +9202,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnLeaveBreakPoint_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnCreateThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnCreateThread_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ IRemoteDebugApplicationThread *prdat);
 
@@ -9214,7 +9214,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnCreateThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnDestroyThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnDestroyThread_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ IRemoteDebugApplicationThread *prdat);
 
@@ -9226,7 +9226,7 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnDestroyThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnBreakFlagChange_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationEvents_OnBreakFlagChange_Proxy(
     IRemoteDebugApplicationEvents * This,
     /* [in] */ APPBREAKFLAGS abf,
     /* [in] */ IRemoteDebugApplicationThread *prdatSteppingThread);
@@ -9247,87 +9247,87 @@ void __RPC_STUB IRemoteDebugApplicationEvents_OnBreakFlagChange_Stub(
 #define __IDebugApplicationNode_INTERFACE_DEFINED__
 
 /* interface IDebugApplicationNode */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugApplicationNode;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C34-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugApplicationNode : public IDebugDocumentProvider
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE EnumChildren( 
+        virtual HRESULT STDMETHODCALLTYPE EnumChildren(
             /* [out] */ IEnumDebugApplicationNodes **pperddp) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetParent( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetParent(
             /* [out] */ IDebugApplicationNode **pprddp) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDocumentProvider( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDocumentProvider(
             /* [in] */ IDebugDocumentProvider *pddp) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Close( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Attach( 
+
+        virtual HRESULT STDMETHODCALLTYPE Attach(
             /* [in] */ IDebugApplicationNode *pdanParent) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Detach( void) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugApplicationNodeVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugApplicationNode * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugApplicationNode * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugApplicationNode * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetName )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetName )(
             IDebugApplicationNode * This,
             /* [in] */ DOCUMENTNAMETYPE dnt,
             /* [out] */ BSTR *pbstrName);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocumentClassId )(
             IDebugApplicationNode * This,
             /* [out] */ CLSID *pclsidDocument);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDocument )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDocument )(
             IDebugApplicationNode * This,
             /* [out] */ IDebugDocument **ppssd);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumChildren )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumChildren )(
             IDebugApplicationNode * This,
             /* [out] */ IEnumDebugApplicationNodes **pperddp);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetParent )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetParent )(
             IDebugApplicationNode * This,
             /* [out] */ IDebugApplicationNode **pprddp);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDocumentProvider )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDocumentProvider )(
             IDebugApplicationNode * This,
             /* [in] */ IDebugDocumentProvider *pddp);
-        
-        HRESULT ( STDMETHODCALLTYPE *Close )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Close )(
             IDebugApplicationNode * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Attach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Attach )(
             IDebugApplicationNode * This,
             /* [in] */ IDebugApplicationNode *pdanParent);
-        
-        HRESULT ( STDMETHODCALLTYPE *Detach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Detach )(
             IDebugApplicationNode * This);
-        
+
         END_INTERFACE
     } IDebugApplicationNodeVtbl;
 
@@ -9336,7 +9336,7 @@ EXTERN_C const IID IID_IDebugApplicationNode;
         CONST_VTBL struct IDebugApplicationNodeVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -9387,7 +9387,7 @@ EXTERN_C const IID IID_IDebugApplicationNode;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNode_EnumChildren_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNode_EnumChildren_Proxy(
     IDebugApplicationNode * This,
     /* [out] */ IEnumDebugApplicationNodes **pperddp);
 
@@ -9399,7 +9399,7 @@ void __RPC_STUB IDebugApplicationNode_EnumChildren_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNode_GetParent_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNode_GetParent_Proxy(
     IDebugApplicationNode * This,
     /* [out] */ IDebugApplicationNode **pprddp);
 
@@ -9411,7 +9411,7 @@ void __RPC_STUB IDebugApplicationNode_GetParent_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNode_SetDocumentProvider_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNode_SetDocumentProvider_Proxy(
     IDebugApplicationNode * This,
     /* [in] */ IDebugDocumentProvider *pddp);
 
@@ -9423,7 +9423,7 @@ void __RPC_STUB IDebugApplicationNode_SetDocumentProvider_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNode_Close_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNode_Close_Proxy(
     IDebugApplicationNode * This);
 
 
@@ -9434,7 +9434,7 @@ void __RPC_STUB IDebugApplicationNode_Close_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNode_Attach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNode_Attach_Proxy(
     IDebugApplicationNode * This,
     /* [in] */ IDebugApplicationNode *pdanParent);
 
@@ -9446,7 +9446,7 @@ void __RPC_STUB IDebugApplicationNode_Attach_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNode_Detach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNode_Detach_Proxy(
     IDebugApplicationNode * This);
 
 
@@ -9465,62 +9465,62 @@ void __RPC_STUB IDebugApplicationNode_Detach_Stub(
 #define __IDebugApplicationNodeEvents_INTERFACE_DEFINED__
 
 /* interface IDebugApplicationNodeEvents */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugApplicationNodeEvents;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C35-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugApplicationNodeEvents : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE onAddChild( 
+        virtual HRESULT STDMETHODCALLTYPE onAddChild(
             /* [in] */ IDebugApplicationNode *prddpChild) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onRemoveChild( 
+
+        virtual HRESULT STDMETHODCALLTYPE onRemoveChild(
             /* [in] */ IDebugApplicationNode *prddpChild) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE onDetach( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE onAttach( 
+
+        virtual HRESULT STDMETHODCALLTYPE onAttach(
             /* [in] */ IDebugApplicationNode *prddpParent) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugApplicationNodeEventsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugApplicationNodeEvents * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugApplicationNodeEvents * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugApplicationNodeEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onAddChild )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onAddChild )(
             IDebugApplicationNodeEvents * This,
             /* [in] */ IDebugApplicationNode *prddpChild);
-        
-        HRESULT ( STDMETHODCALLTYPE *onRemoveChild )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onRemoveChild )(
             IDebugApplicationNodeEvents * This,
             /* [in] */ IDebugApplicationNode *prddpChild);
-        
-        HRESULT ( STDMETHODCALLTYPE *onDetach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onDetach )(
             IDebugApplicationNodeEvents * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *onAttach )( 
+
+        HRESULT ( STDMETHODCALLTYPE *onAttach )(
             IDebugApplicationNodeEvents * This,
             /* [in] */ IDebugApplicationNode *prddpParent);
-        
+
         END_INTERFACE
     } IDebugApplicationNodeEventsVtbl;
 
@@ -9529,7 +9529,7 @@ EXTERN_C const IID IID_IDebugApplicationNodeEvents;
         CONST_VTBL struct IDebugApplicationNodeEventsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -9563,7 +9563,7 @@ EXTERN_C const IID IID_IDebugApplicationNodeEvents;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onAddChild_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onAddChild_Proxy(
     IDebugApplicationNodeEvents * This,
     /* [in] */ IDebugApplicationNode *prddpChild);
 
@@ -9575,7 +9575,7 @@ void __RPC_STUB IDebugApplicationNodeEvents_onAddChild_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onRemoveChild_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onRemoveChild_Proxy(
     IDebugApplicationNodeEvents * This,
     /* [in] */ IDebugApplicationNode *prddpChild);
 
@@ -9587,7 +9587,7 @@ void __RPC_STUB IDebugApplicationNodeEvents_onRemoveChild_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onDetach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onDetach_Proxy(
     IDebugApplicationNodeEvents * This);
 
 
@@ -9598,7 +9598,7 @@ void __RPC_STUB IDebugApplicationNodeEvents_onDetach_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onAttach_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationNodeEvents_onAttach_Proxy(
     IDebugApplicationNodeEvents * This,
     /* [in] */ IDebugApplicationNode *prddpParent);
 
@@ -9615,7 +9615,7 @@ void __RPC_STUB IDebugApplicationNodeEvents_onAttach_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0347 */
-/* [local] */ 
+/* [local] */
 
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
 #ifdef _WIN64
@@ -9635,47 +9635,47 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0347_v0_0_s_ifspec;
 #define __IDebugThreadCall32_INTERFACE_DEFINED__
 
 /* interface IDebugThreadCall32 */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugThreadCall32;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C36-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugThreadCall32 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE ThreadCallHandler( 
+        virtual HRESULT STDMETHODCALLTYPE ThreadCallHandler(
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugThreadCall32Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugThreadCall32 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugThreadCall32 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugThreadCall32 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ThreadCallHandler )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ThreadCallHandler )(
             IDebugThreadCall32 * This,
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3);
-        
+
         END_INTERFACE
     } IDebugThreadCall32Vtbl;
 
@@ -9684,7 +9684,7 @@ EXTERN_C const IID IID_IDebugThreadCall32;
         CONST_VTBL struct IDebugThreadCall32Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -9709,7 +9709,7 @@ EXTERN_C const IID IID_IDebugThreadCall32;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugThreadCall32_ThreadCallHandler_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugThreadCall32_ThreadCallHandler_Proxy(
     IDebugThreadCall32 * This,
     /* [in] */ DWORD dwParam1,
     /* [in] */ DWORD dwParam2,
@@ -9731,47 +9731,47 @@ void __RPC_STUB IDebugThreadCall32_ThreadCallHandler_Stub(
 #define __IDebugThreadCall64_INTERFACE_DEFINED__
 
 /* interface IDebugThreadCall64 */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugThreadCall64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("cb3fa335-e979-42fd-9fcf-a7546a0f3905")
     IDebugThreadCall64 : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE ThreadCallHandler( 
+        virtual HRESULT STDMETHODCALLTYPE ThreadCallHandler(
             /* [in] */ DWORDLONG dwParam1,
             /* [in] */ DWORDLONG dwParam2,
             /* [in] */ DWORDLONG dwParam3) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugThreadCall64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugThreadCall64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugThreadCall64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugThreadCall64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *ThreadCallHandler )( 
+
+        HRESULT ( STDMETHODCALLTYPE *ThreadCallHandler )(
             IDebugThreadCall64 * This,
             /* [in] */ DWORDLONG dwParam1,
             /* [in] */ DWORDLONG dwParam2,
             /* [in] */ DWORDLONG dwParam3);
-        
+
         END_INTERFACE
     } IDebugThreadCall64Vtbl;
 
@@ -9780,7 +9780,7 @@ EXTERN_C const IID IID_IDebugThreadCall64;
         CONST_VTBL struct IDebugThreadCall64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -9805,7 +9805,7 @@ EXTERN_C const IID IID_IDebugThreadCall64;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugThreadCall64_ThreadCallHandler_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugThreadCall64_ThreadCallHandler_Proxy(
     IDebugThreadCall64 * This,
     /* [in] */ DWORDLONG dwParam1,
     /* [in] */ DWORDLONG dwParam2,
@@ -9827,7 +9827,7 @@ void __RPC_STUB IDebugThreadCall64_ThreadCallHandler_Stub(
 #define __IRemoteDebugApplicationThread_INTERFACE_DEFINED__
 
 /* interface IRemoteDebugApplicationThread */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 typedef DWORD THREAD_STATE;
 
@@ -9843,97 +9843,97 @@ typedef DWORD THREAD_STATE;
 EXTERN_C const IID IID_IRemoteDebugApplicationThread;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C37-CB0C-11d0-B5C9-00A0244A0E7A")
     IRemoteDebugApplicationThread : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetSystemThreadId( 
+        virtual HRESULT STDMETHODCALLTYPE GetSystemThreadId(
             /* [out] */ DWORD *dwThreadId) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetApplication( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetApplication(
             /* [out] */ IRemoteDebugApplication **pprda) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE EnumStackFrames( 
+
+        virtual HRESULT STDMETHODCALLTYPE EnumStackFrames(
             /* [out] */ IEnumDebugStackFrames **ppedsf) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetDescription( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetDescription(
             /* [out] */ BSTR *pbstrDescription,
             /* [out] */ BSTR *pbstrState) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetNextStatement( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetNextStatement(
             /* [in] */ IDebugStackFrame *pStackFrame,
             /* [in] */ IDebugCodeContext *pCodeContext) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetState( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetState(
             /* [out] */ DWORD *pState) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Suspend( 
+
+        virtual HRESULT STDMETHODCALLTYPE Suspend(
             /* [out] */ DWORD *pdwCount) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Resume( 
+
+        virtual HRESULT STDMETHODCALLTYPE Resume(
             /* [out] */ DWORD *pdwCount) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetSuspendCount( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetSuspendCount(
             /* [out] */ DWORD *pdwCount) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IRemoteDebugApplicationThreadVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IRemoteDebugApplicationThread * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IRemoteDebugApplicationThread * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IRemoteDebugApplicationThread * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSystemThreadId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSystemThreadId )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ DWORD *dwThreadId);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetApplication )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ IRemoteDebugApplication **pprda);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDescription )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDescription )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ BSTR *pbstrDescription,
             /* [out] */ BSTR *pbstrState);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetNextStatement )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetNextStatement )(
             IRemoteDebugApplicationThread * This,
             /* [in] */ IDebugStackFrame *pStackFrame,
             /* [in] */ IDebugCodeContext *pCodeContext);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetState )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetState )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ DWORD *pState);
-        
-        HRESULT ( STDMETHODCALLTYPE *Suspend )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Suspend )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *Resume )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Resume )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSuspendCount )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSuspendCount )(
             IRemoteDebugApplicationThread * This,
             /* [out] */ DWORD *pdwCount);
-        
+
         END_INTERFACE
     } IRemoteDebugApplicationThreadVtbl;
 
@@ -9942,7 +9942,7 @@ EXTERN_C const IID IID_IRemoteDebugApplicationThread;
         CONST_VTBL struct IRemoteDebugApplicationThreadVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -9991,7 +9991,7 @@ EXTERN_C const IID IID_IRemoteDebugApplicationThread;
 
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetSystemThreadId_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetSystemThreadId_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ DWORD *dwThreadId);
 
@@ -10003,7 +10003,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_GetSystemThreadId_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetApplication_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetApplication_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ IRemoteDebugApplication **pprda);
 
@@ -10015,7 +10015,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_GetApplication_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_EnumStackFrames_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_EnumStackFrames_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ IEnumDebugStackFrames **ppedsf);
 
@@ -10027,7 +10027,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_EnumStackFrames_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetDescription_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetDescription_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ BSTR *pbstrDescription,
     /* [out] */ BSTR *pbstrState);
@@ -10040,7 +10040,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_GetDescription_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_SetNextStatement_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_SetNextStatement_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [in] */ IDebugStackFrame *pStackFrame,
     /* [in] */ IDebugCodeContext *pCodeContext);
@@ -10053,7 +10053,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_SetNextStatement_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetState_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetState_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ DWORD *pState);
 
@@ -10065,7 +10065,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_GetState_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_Suspend_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_Suspend_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ DWORD *pdwCount);
 
@@ -10077,7 +10077,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_Suspend_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_Resume_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_Resume_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ DWORD *pdwCount);
 
@@ -10089,7 +10089,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_Resume_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetSuspendCount_Proxy( 
+HRESULT STDMETHODCALLTYPE IRemoteDebugApplicationThread_GetSuspendCount_Proxy(
     IRemoteDebugApplicationThread * This,
     /* [out] */ DWORD *pdwCount);
 
@@ -10106,7 +10106,7 @@ void __RPC_STUB IRemoteDebugApplicationThread_GetSuspendCount_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0350 */
-/* [local] */ 
+/* [local] */
 
 #ifndef DISABLE_ACTIVDBG_INTERFACE_WRAPPERS
 #ifdef _WIN64
@@ -10124,111 +10124,111 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0350_v0_0_s_ifspec;
 #define __IDebugApplicationThread_INTERFACE_DEFINED__
 
 /* interface IDebugApplicationThread */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugApplicationThread;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C38-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugApplicationThread : public IRemoteDebugApplicationThread
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SynchronousCallIntoThread32( 
+        virtual HRESULT STDMETHODCALLTYPE SynchronousCallIntoThread32(
             /* [in] */ IDebugThreadCall32 *pstcb,
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryIsCurrentThread( void) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE QueryIsDebuggerThread( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetDescription( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetDescription(
             /* [in] */ LPCOLESTR pstrDescription) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE SetStateString( 
+
+        virtual HRESULT STDMETHODCALLTYPE SetStateString(
             /* [in] */ LPCOLESTR pstrState) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugApplicationThreadVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugApplicationThread * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugApplicationThread * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugApplicationThread * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSystemThreadId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSystemThreadId )(
             IDebugApplicationThread * This,
             /* [out] */ DWORD *dwThreadId);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetApplication )(
             IDebugApplicationThread * This,
             /* [out] */ IRemoteDebugApplication **pprda);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )(
             IDebugApplicationThread * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDescription )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDescription )(
             IDebugApplicationThread * This,
             /* [out] */ BSTR *pbstrDescription,
             /* [out] */ BSTR *pbstrState);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetNextStatement )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetNextStatement )(
             IDebugApplicationThread * This,
             /* [in] */ IDebugStackFrame *pStackFrame,
             /* [in] */ IDebugCodeContext *pCodeContext);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetState )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetState )(
             IDebugApplicationThread * This,
             /* [out] */ DWORD *pState);
-        
-        HRESULT ( STDMETHODCALLTYPE *Suspend )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Suspend )(
             IDebugApplicationThread * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *Resume )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Resume )(
             IDebugApplicationThread * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSuspendCount )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSuspendCount )(
             IDebugApplicationThread * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *SynchronousCallIntoThread32 )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SynchronousCallIntoThread32 )(
             IDebugApplicationThread * This,
             /* [in] */ IDebugThreadCall32 *pstcb,
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryIsCurrentThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryIsCurrentThread )(
             IDebugApplicationThread * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryIsDebuggerThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryIsDebuggerThread )(
             IDebugApplicationThread * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDescription )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDescription )(
             IDebugApplicationThread * This,
             /* [in] */ LPCOLESTR pstrDescription);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetStateString )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetStateString )(
             IDebugApplicationThread * This,
             /* [in] */ LPCOLESTR pstrState);
-        
+
         END_INTERFACE
     } IDebugApplicationThreadVtbl;
 
@@ -10237,7 +10237,7 @@ EXTERN_C const IID IID_IDebugApplicationThread;
         CONST_VTBL struct IDebugApplicationThreadVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -10302,7 +10302,7 @@ EXTERN_C const IID IID_IDebugApplicationThread;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationThread_SynchronousCallIntoThread32_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationThread_SynchronousCallIntoThread32_Proxy(
     IDebugApplicationThread * This,
     /* [in] */ IDebugThreadCall32 *pstcb,
     /* [in] */ DWORD dwParam1,
@@ -10317,7 +10317,7 @@ void __RPC_STUB IDebugApplicationThread_SynchronousCallIntoThread32_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationThread_QueryIsCurrentThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationThread_QueryIsCurrentThread_Proxy(
     IDebugApplicationThread * This);
 
 
@@ -10328,7 +10328,7 @@ void __RPC_STUB IDebugApplicationThread_QueryIsCurrentThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationThread_QueryIsDebuggerThread_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationThread_QueryIsDebuggerThread_Proxy(
     IDebugApplicationThread * This);
 
 
@@ -10339,7 +10339,7 @@ void __RPC_STUB IDebugApplicationThread_QueryIsDebuggerThread_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationThread_SetDescription_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationThread_SetDescription_Proxy(
     IDebugApplicationThread * This,
     /* [in] */ LPCOLESTR pstrDescription);
 
@@ -10351,7 +10351,7 @@ void __RPC_STUB IDebugApplicationThread_SetDescription_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationThread_SetStateString_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationThread_SetStateString_Proxy(
     IDebugApplicationThread * This,
     /* [in] */ LPCOLESTR pstrState);
 
@@ -10371,108 +10371,108 @@ void __RPC_STUB IDebugApplicationThread_SetStateString_Stub(
 #define __IDebugApplicationThread64_INTERFACE_DEFINED__
 
 /* interface IDebugApplicationThread64 */
-/* [local][unique][uuid][object] */ 
+/* [local][unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugApplicationThread64;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("9dac5886-dbad-456d-9dee-5dec39ab3dda")
     IDebugApplicationThread64 : public IDebugApplicationThread
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SynchronousCallIntoThread64( 
+        virtual HRESULT STDMETHODCALLTYPE SynchronousCallIntoThread64(
             /* [in] */ IDebugThreadCall64 *pstcb,
             /* [in] */ DWORDLONG dwParam1,
             /* [in] */ DWORDLONG dwParam2,
             /* [in] */ DWORDLONG dwParam3) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugApplicationThread64Vtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugApplicationThread64 * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugApplicationThread64 * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugApplicationThread64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSystemThreadId )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSystemThreadId )(
             IDebugApplicationThread64 * This,
             /* [out] */ DWORD *dwThreadId);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetApplication )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetApplication )(
             IDebugApplicationThread64 * This,
             /* [out] */ IRemoteDebugApplication **pprda);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumStackFrames )(
             IDebugApplicationThread64 * This,
             /* [out] */ IEnumDebugStackFrames **ppedsf);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetDescription )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetDescription )(
             IDebugApplicationThread64 * This,
             /* [out] */ BSTR *pbstrDescription,
             /* [out] */ BSTR *pbstrState);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetNextStatement )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetNextStatement )(
             IDebugApplicationThread64 * This,
             /* [in] */ IDebugStackFrame *pStackFrame,
             /* [in] */ IDebugCodeContext *pCodeContext);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetState )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetState )(
             IDebugApplicationThread64 * This,
             /* [out] */ DWORD *pState);
-        
-        HRESULT ( STDMETHODCALLTYPE *Suspend )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Suspend )(
             IDebugApplicationThread64 * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *Resume )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Resume )(
             IDebugApplicationThread64 * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetSuspendCount )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetSuspendCount )(
             IDebugApplicationThread64 * This,
             /* [out] */ DWORD *pdwCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *SynchronousCallIntoThread32 )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SynchronousCallIntoThread32 )(
             IDebugApplicationThread64 * This,
             /* [in] */ IDebugThreadCall32 *pstcb,
             /* [in] */ DWORD dwParam1,
             /* [in] */ DWORD dwParam2,
             /* [in] */ DWORD dwParam3);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryIsCurrentThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryIsCurrentThread )(
             IDebugApplicationThread64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryIsDebuggerThread )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryIsDebuggerThread )(
             IDebugApplicationThread64 * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDescription )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDescription )(
             IDebugApplicationThread64 * This,
             /* [in] */ LPCOLESTR pstrDescription);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetStateString )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetStateString )(
             IDebugApplicationThread64 * This,
             /* [in] */ LPCOLESTR pstrState);
-        
-        HRESULT ( STDMETHODCALLTYPE *SynchronousCallIntoThread64 )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SynchronousCallIntoThread64 )(
             IDebugApplicationThread64 * This,
             /* [in] */ IDebugThreadCall64 *pstcb,
             /* [in] */ DWORDLONG dwParam1,
             /* [in] */ DWORDLONG dwParam2,
             /* [in] */ DWORDLONG dwParam3);
-        
+
         END_INTERFACE
     } IDebugApplicationThread64Vtbl;
 
@@ -10481,7 +10481,7 @@ EXTERN_C const IID IID_IDebugApplicationThread64;
         CONST_VTBL struct IDebugApplicationThread64Vtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -10550,7 +10550,7 @@ EXTERN_C const IID IID_IDebugApplicationThread64;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugApplicationThread64_SynchronousCallIntoThread64_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugApplicationThread64_SynchronousCallIntoThread64_Proxy(
     IDebugApplicationThread64 * This,
     /* [in] */ IDebugThreadCall64 *pstcb,
     /* [in] */ DWORDLONG dwParam1,
@@ -10573,43 +10573,43 @@ void __RPC_STUB IDebugApplicationThread64_SynchronousCallIntoThread64_Stub(
 #define __IDebugCookie_INTERFACE_DEFINED__
 
 /* interface IDebugCookie */
-/* [unique][helpstring][uuid][local][object] */ 
+/* [unique][helpstring][uuid][local][object] */
 
 
 EXTERN_C const IID IID_IDebugCookie;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C39-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugCookie : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE SetDebugCookie( 
+        virtual HRESULT STDMETHODCALLTYPE SetDebugCookie(
             /* [in] */ DWORD dwDebugAppCookie) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugCookieVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugCookie * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugCookie * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugCookie * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *SetDebugCookie )( 
+
+        HRESULT ( STDMETHODCALLTYPE *SetDebugCookie )(
             IDebugCookie * This,
             /* [in] */ DWORD dwDebugAppCookie);
-        
+
         END_INTERFACE
     } IDebugCookieVtbl;
 
@@ -10618,7 +10618,7 @@ EXTERN_C const IID IID_IDebugCookie;
         CONST_VTBL struct IDebugCookieVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -10643,7 +10643,7 @@ EXTERN_C const IID IID_IDebugCookie;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugCookie_SetDebugCookie_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugCookie_SetDebugCookie_Proxy(
     IDebugCookie * This,
     /* [in] */ DWORD dwDebugAppCookie);
 
@@ -10663,66 +10663,66 @@ void __RPC_STUB IDebugCookie_SetDebugCookie_Stub(
 #define __IEnumDebugApplicationNodes_INTERFACE_DEFINED__
 
 /* interface IEnumDebugApplicationNodes */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumDebugApplicationNodes;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C3a-CB0C-11d0-B5C9-00A0244A0E7A")
     IEnumDebugApplicationNodes : public IUnknown
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next( 
+        virtual /* [local] */ HRESULT __stdcall Next(
             /* [in] */ ULONG celt,
             /* [out] */ IDebugApplicationNode **pprddp,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Skip( 
+
+        virtual HRESULT STDMETHODCALLTYPE Skip(
             /* [in] */ ULONG celt) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Clone( 
+
+        virtual HRESULT STDMETHODCALLTYPE Clone(
             /* [out] */ IEnumDebugApplicationNodes **pperddp) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumDebugApplicationNodesVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumDebugApplicationNodes * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumDebugApplicationNodes * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumDebugApplicationNodes * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumDebugApplicationNodes * This,
             /* [in] */ ULONG celt,
             /* [out] */ IDebugApplicationNode **pprddp,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumDebugApplicationNodes * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumDebugApplicationNodes * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumDebugApplicationNodes * This,
             /* [out] */ IEnumDebugApplicationNodes **pperddp);
-        
+
         END_INTERFACE
     } IEnumDebugApplicationNodesVtbl;
 
@@ -10731,7 +10731,7 @@ EXTERN_C const IID IID_IEnumDebugApplicationNodes;
         CONST_VTBL struct IEnumDebugApplicationNodesVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -10765,7 +10765,7 @@ EXTERN_C const IID IID_IEnumDebugApplicationNodes;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugApplicationNodes_RemoteNext_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugApplicationNodes_RemoteNext_Proxy(
     IEnumDebugApplicationNodes * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IDebugApplicationNode **pprddp,
@@ -10779,7 +10779,7 @@ void __RPC_STUB IEnumDebugApplicationNodes_RemoteNext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugApplicationNodes_Skip_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugApplicationNodes_Skip_Proxy(
     IEnumDebugApplicationNodes * This,
     /* [in] */ ULONG celt);
 
@@ -10791,7 +10791,7 @@ void __RPC_STUB IEnumDebugApplicationNodes_Skip_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugApplicationNodes_Reset_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugApplicationNodes_Reset_Proxy(
     IEnumDebugApplicationNodes * This);
 
 
@@ -10802,7 +10802,7 @@ void __RPC_STUB IEnumDebugApplicationNodes_Reset_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugApplicationNodes_Clone_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugApplicationNodes_Clone_Proxy(
     IEnumDebugApplicationNodes * This,
     /* [out] */ IEnumDebugApplicationNodes **pperddp);
 
@@ -10822,66 +10822,66 @@ void __RPC_STUB IEnumDebugApplicationNodes_Clone_Stub(
 #define __IEnumRemoteDebugApplications_INTERFACE_DEFINED__
 
 /* interface IEnumRemoteDebugApplications */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumRemoteDebugApplications;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C3b-CB0C-11d0-B5C9-00A0244A0E7A")
     IEnumRemoteDebugApplications : public IUnknown
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next( 
+        virtual /* [local] */ HRESULT __stdcall Next(
             /* [in] */ ULONG celt,
             /* [out] */ IRemoteDebugApplication **ppda,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Skip( 
+
+        virtual HRESULT STDMETHODCALLTYPE Skip(
             /* [in] */ ULONG celt) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Clone( 
+
+        virtual HRESULT STDMETHODCALLTYPE Clone(
             /* [out] */ IEnumRemoteDebugApplications **ppessd) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumRemoteDebugApplicationsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumRemoteDebugApplications * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumRemoteDebugApplications * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumRemoteDebugApplications * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumRemoteDebugApplications * This,
             /* [in] */ ULONG celt,
             /* [out] */ IRemoteDebugApplication **ppda,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumRemoteDebugApplications * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumRemoteDebugApplications * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumRemoteDebugApplications * This,
             /* [out] */ IEnumRemoteDebugApplications **ppessd);
-        
+
         END_INTERFACE
     } IEnumRemoteDebugApplicationsVtbl;
 
@@ -10890,7 +10890,7 @@ EXTERN_C const IID IID_IEnumRemoteDebugApplications;
         CONST_VTBL struct IEnumRemoteDebugApplicationsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -10924,7 +10924,7 @@ EXTERN_C const IID IID_IEnumRemoteDebugApplications;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplications_RemoteNext_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplications_RemoteNext_Proxy(
     IEnumRemoteDebugApplications * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IRemoteDebugApplication **ppda,
@@ -10938,7 +10938,7 @@ void __RPC_STUB IEnumRemoteDebugApplications_RemoteNext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplications_Skip_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplications_Skip_Proxy(
     IEnumRemoteDebugApplications * This,
     /* [in] */ ULONG celt);
 
@@ -10950,7 +10950,7 @@ void __RPC_STUB IEnumRemoteDebugApplications_Skip_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplications_Reset_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplications_Reset_Proxy(
     IEnumRemoteDebugApplications * This);
 
 
@@ -10961,7 +10961,7 @@ void __RPC_STUB IEnumRemoteDebugApplications_Reset_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplications_Clone_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplications_Clone_Proxy(
     IEnumRemoteDebugApplications * This,
     /* [out] */ IEnumRemoteDebugApplications **ppessd);
 
@@ -10981,66 +10981,66 @@ void __RPC_STUB IEnumRemoteDebugApplications_Clone_Stub(
 #define __IEnumRemoteDebugApplicationThreads_INTERFACE_DEFINED__
 
 /* interface IEnumRemoteDebugApplicationThreads */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumRemoteDebugApplicationThreads;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C3c-CB0C-11d0-B5C9-00A0244A0E7A")
     IEnumRemoteDebugApplicationThreads : public IUnknown
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next( 
+        virtual /* [local] */ HRESULT __stdcall Next(
             /* [in] */ ULONG celt,
             /* [out] */ IRemoteDebugApplicationThread **pprdat,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Skip( 
+
+        virtual HRESULT STDMETHODCALLTYPE Skip(
             /* [in] */ ULONG celt) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Clone( 
+
+        virtual HRESULT STDMETHODCALLTYPE Clone(
             /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumRemoteDebugApplicationThreadsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumRemoteDebugApplicationThreads * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumRemoteDebugApplicationThreads * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumRemoteDebugApplicationThreads * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumRemoteDebugApplicationThreads * This,
             /* [in] */ ULONG celt,
             /* [out] */ IRemoteDebugApplicationThread **pprdat,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumRemoteDebugApplicationThreads * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumRemoteDebugApplicationThreads * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumRemoteDebugApplicationThreads * This,
             /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat);
-        
+
         END_INTERFACE
     } IEnumRemoteDebugApplicationThreadsVtbl;
 
@@ -11049,7 +11049,7 @@ EXTERN_C const IID IID_IEnumRemoteDebugApplicationThreads;
         CONST_VTBL struct IEnumRemoteDebugApplicationThreadsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -11083,7 +11083,7 @@ EXTERN_C const IID IID_IEnumRemoteDebugApplicationThreads;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplicationThreads_RemoteNext_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplicationThreads_RemoteNext_Proxy(
     IEnumRemoteDebugApplicationThreads * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IRemoteDebugApplicationThread **ppdat,
@@ -11097,7 +11097,7 @@ void __RPC_STUB IEnumRemoteDebugApplicationThreads_RemoteNext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplicationThreads_Skip_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplicationThreads_Skip_Proxy(
     IEnumRemoteDebugApplicationThreads * This,
     /* [in] */ ULONG celt);
 
@@ -11109,7 +11109,7 @@ void __RPC_STUB IEnumRemoteDebugApplicationThreads_Skip_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplicationThreads_Reset_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplicationThreads_Reset_Proxy(
     IEnumRemoteDebugApplicationThreads * This);
 
 
@@ -11120,7 +11120,7 @@ void __RPC_STUB IEnumRemoteDebugApplicationThreads_Reset_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplicationThreads_Clone_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumRemoteDebugApplicationThreads_Clone_Proxy(
     IEnumRemoteDebugApplicationThreads * This,
     /* [out] */ IEnumRemoteDebugApplicationThreads **pperdat);
 
@@ -11140,67 +11140,67 @@ void __RPC_STUB IEnumRemoteDebugApplicationThreads_Clone_Stub(
 #define __IDebugFormatter_INTERFACE_DEFINED__
 
 /* interface IDebugFormatter */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugFormatter;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C05-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugFormatter : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetStringForVariant( 
+        virtual HRESULT STDMETHODCALLTYPE GetStringForVariant(
             /* [in] */ VARIANT *pvar,
             /* [in] */ ULONG nRadix,
             /* [out] */ BSTR *pbstrValue) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetVariantForString( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetVariantForString(
             /* [in] */ LPCOLESTR pwstrValue,
             /* [out] */ VARIANT *pvar) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE GetStringForVarType( 
+
+        virtual HRESULT STDMETHODCALLTYPE GetStringForVarType(
             /* [in] */ VARTYPE vt,
             /* [in] */ TYPEDESC *ptdescArrayType,
             /* [out] */ BSTR *pbstr) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugFormatterVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugFormatter * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugFormatter * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugFormatter * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetStringForVariant )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetStringForVariant )(
             IDebugFormatter * This,
             /* [in] */ VARIANT *pvar,
             /* [in] */ ULONG nRadix,
             /* [out] */ BSTR *pbstrValue);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetVariantForString )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetVariantForString )(
             IDebugFormatter * This,
             /* [in] */ LPCOLESTR pwstrValue,
             /* [out] */ VARIANT *pvar);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetStringForVarType )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetStringForVarType )(
             IDebugFormatter * This,
             /* [in] */ VARTYPE vt,
             /* [in] */ TYPEDESC *ptdescArrayType,
             /* [out] */ BSTR *pbstr);
-        
+
         END_INTERFACE
     } IDebugFormatterVtbl;
 
@@ -11209,7 +11209,7 @@ EXTERN_C const IID IID_IDebugFormatter;
         CONST_VTBL struct IDebugFormatterVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -11240,7 +11240,7 @@ EXTERN_C const IID IID_IDebugFormatter;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugFormatter_GetStringForVariant_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugFormatter_GetStringForVariant_Proxy(
     IDebugFormatter * This,
     /* [in] */ VARIANT *pvar,
     /* [in] */ ULONG nRadix,
@@ -11254,7 +11254,7 @@ void __RPC_STUB IDebugFormatter_GetStringForVariant_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugFormatter_GetVariantForString_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugFormatter_GetVariantForString_Proxy(
     IDebugFormatter * This,
     /* [in] */ LPCOLESTR pwstrValue,
     /* [out] */ VARIANT *pvar);
@@ -11267,7 +11267,7 @@ void __RPC_STUB IDebugFormatter_GetVariantForString_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugFormatter_GetStringForVarType_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugFormatter_GetStringForVarType_Proxy(
     IDebugFormatter * This,
     /* [in] */ VARTYPE vt,
     /* [in] */ TYPEDESC *ptdescArrayType,
@@ -11289,74 +11289,74 @@ void __RPC_STUB IDebugFormatter_GetStringForVarType_Stub(
 #define __ISimpleConnectionPoint_INTERFACE_DEFINED__
 
 /* interface ISimpleConnectionPoint */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_ISimpleConnectionPoint;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C3e-CB0C-11d0-B5C9-00A0244A0E7A")
     ISimpleConnectionPoint : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE GetEventCount( 
+        virtual HRESULT STDMETHODCALLTYPE GetEventCount(
             /* [out] */ ULONG *pulCount) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE DescribeEvents( 
+
+        virtual HRESULT STDMETHODCALLTYPE DescribeEvents(
             /* [in] */ ULONG iEvent,
             /* [in] */ ULONG cEvents,
             /* [length_is][size_is][out] */ DISPID *prgid,
             /* [length_is][size_is][out] */ BSTR *prgbstr,
             /* [out] */ ULONG *pcEventsFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Advise( 
+
+        virtual HRESULT STDMETHODCALLTYPE Advise(
             /* [in] */ IDispatch *pdisp,
             /* [out] */ DWORD *pdwCookie) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Unadvise( 
+
+        virtual HRESULT STDMETHODCALLTYPE Unadvise(
             /* [in] */ DWORD dwCookie) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct ISimpleConnectionPointVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             ISimpleConnectionPoint * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             ISimpleConnectionPoint * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             ISimpleConnectionPoint * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *GetEventCount )( 
+
+        HRESULT ( STDMETHODCALLTYPE *GetEventCount )(
             ISimpleConnectionPoint * This,
             /* [out] */ ULONG *pulCount);
-        
-        HRESULT ( STDMETHODCALLTYPE *DescribeEvents )( 
+
+        HRESULT ( STDMETHODCALLTYPE *DescribeEvents )(
             ISimpleConnectionPoint * This,
             /* [in] */ ULONG iEvent,
             /* [in] */ ULONG cEvents,
             /* [length_is][size_is][out] */ DISPID *prgid,
             /* [length_is][size_is][out] */ BSTR *prgbstr,
             /* [out] */ ULONG *pcEventsFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Advise )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Advise )(
             ISimpleConnectionPoint * This,
             /* [in] */ IDispatch *pdisp,
             /* [out] */ DWORD *pdwCookie);
-        
-        HRESULT ( STDMETHODCALLTYPE *Unadvise )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Unadvise )(
             ISimpleConnectionPoint * This,
             /* [in] */ DWORD dwCookie);
-        
+
         END_INTERFACE
     } ISimpleConnectionPointVtbl;
 
@@ -11365,7 +11365,7 @@ EXTERN_C const IID IID_ISimpleConnectionPoint;
         CONST_VTBL struct ISimpleConnectionPointVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -11399,7 +11399,7 @@ EXTERN_C const IID IID_ISimpleConnectionPoint;
 
 
 
-HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_GetEventCount_Proxy( 
+HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_GetEventCount_Proxy(
     ISimpleConnectionPoint * This,
     /* [out] */ ULONG *pulCount);
 
@@ -11411,7 +11411,7 @@ void __RPC_STUB ISimpleConnectionPoint_GetEventCount_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_DescribeEvents_Proxy( 
+HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_DescribeEvents_Proxy(
     ISimpleConnectionPoint * This,
     /* [in] */ ULONG iEvent,
     /* [in] */ ULONG cEvents,
@@ -11427,7 +11427,7 @@ void __RPC_STUB ISimpleConnectionPoint_DescribeEvents_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_Advise_Proxy( 
+HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_Advise_Proxy(
     ISimpleConnectionPoint * This,
     /* [in] */ IDispatch *pdisp,
     /* [out] */ DWORD *pdwCookie);
@@ -11440,7 +11440,7 @@ void __RPC_STUB ISimpleConnectionPoint_Advise_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_Unadvise_Proxy( 
+HRESULT STDMETHODCALLTYPE ISimpleConnectionPoint_Unadvise_Proxy(
     ISimpleConnectionPoint * This,
     /* [in] */ DWORD dwCookie);
 
@@ -11457,7 +11457,7 @@ void __RPC_STUB ISimpleConnectionPoint_Unadvise_Stub(
 
 
 /* interface __MIDL_itf_activdbg_0358 */
-/* [local] */ 
+/* [local] */
 
 EXTERN_C const CLSID CLSID_DebugHelper;
 
@@ -11469,73 +11469,73 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0358_v0_0_s_ifspec;
 #define __IDebugHelper_INTERFACE_DEFINED__
 
 /* interface IDebugHelper */
-/* [local][unique][helpstring][uuid][object] */ 
+/* [local][unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IDebugHelper;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C3f-CB0C-11d0-B5C9-00A0244A0E7A")
     IDebugHelper : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE CreatePropertyBrowser( 
+        virtual HRESULT STDMETHODCALLTYPE CreatePropertyBrowser(
             /* [in] */ VARIANT *pvar,
             /* [in] */ LPCOLESTR bstrName,
             /* [in] */ IDebugApplicationThread *pdat,
             /* [out] */ IDebugProperty **ppdob) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreatePropertyBrowserEx( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreatePropertyBrowserEx(
             /* [in] */ VARIANT *pvar,
             /* [in] */ LPCOLESTR bstrName,
             /* [in] */ IDebugApplicationThread *pdat,
             /* [in] */ IDebugFormatter *pdf,
             /* [out] */ IDebugProperty **ppdob) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE CreateSimpleConnectionPoint( 
+
+        virtual HRESULT STDMETHODCALLTYPE CreateSimpleConnectionPoint(
             /* [in] */ IDispatch *pdisp,
             /* [out] */ ISimpleConnectionPoint **ppscp) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IDebugHelperVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IDebugHelper * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IDebugHelper * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IDebugHelper * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreatePropertyBrowser )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreatePropertyBrowser )(
             IDebugHelper * This,
             /* [in] */ VARIANT *pvar,
             /* [in] */ LPCOLESTR bstrName,
             /* [in] */ IDebugApplicationThread *pdat,
             /* [out] */ IDebugProperty **ppdob);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreatePropertyBrowserEx )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreatePropertyBrowserEx )(
             IDebugHelper * This,
             /* [in] */ VARIANT *pvar,
             /* [in] */ LPCOLESTR bstrName,
             /* [in] */ IDebugApplicationThread *pdat,
             /* [in] */ IDebugFormatter *pdf,
             /* [out] */ IDebugProperty **ppdob);
-        
-        HRESULT ( STDMETHODCALLTYPE *CreateSimpleConnectionPoint )( 
+
+        HRESULT ( STDMETHODCALLTYPE *CreateSimpleConnectionPoint )(
             IDebugHelper * This,
             /* [in] */ IDispatch *pdisp,
             /* [out] */ ISimpleConnectionPoint **ppscp);
-        
+
         END_INTERFACE
     } IDebugHelperVtbl;
 
@@ -11544,7 +11544,7 @@ EXTERN_C const IID IID_IDebugHelper;
         CONST_VTBL struct IDebugHelperVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -11575,7 +11575,7 @@ EXTERN_C const IID IID_IDebugHelper;
 
 
 
-HRESULT STDMETHODCALLTYPE IDebugHelper_CreatePropertyBrowser_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugHelper_CreatePropertyBrowser_Proxy(
     IDebugHelper * This,
     /* [in] */ VARIANT *pvar,
     /* [in] */ LPCOLESTR bstrName,
@@ -11590,7 +11590,7 @@ void __RPC_STUB IDebugHelper_CreatePropertyBrowser_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugHelper_CreatePropertyBrowserEx_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugHelper_CreatePropertyBrowserEx_Proxy(
     IDebugHelper * This,
     /* [in] */ VARIANT *pvar,
     /* [in] */ LPCOLESTR bstrName,
@@ -11606,7 +11606,7 @@ void __RPC_STUB IDebugHelper_CreatePropertyBrowserEx_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IDebugHelper_CreateSimpleConnectionPoint_Proxy( 
+HRESULT STDMETHODCALLTYPE IDebugHelper_CreateSimpleConnectionPoint_Proxy(
     IDebugHelper * This,
     /* [in] */ IDispatch *pdisp,
     /* [out] */ ISimpleConnectionPoint **ppscp);
@@ -11627,66 +11627,66 @@ void __RPC_STUB IDebugHelper_CreateSimpleConnectionPoint_Stub(
 #define __IEnumDebugExpressionContexts_INTERFACE_DEFINED__
 
 /* interface IEnumDebugExpressionContexts */
-/* [unique][helpstring][uuid][object] */ 
+/* [unique][helpstring][uuid][object] */
 
 
 EXTERN_C const IID IID_IEnumDebugExpressionContexts;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C40-CB0C-11d0-B5C9-00A0244A0E7A")
     IEnumDebugExpressionContexts : public IUnknown
     {
     public:
-        virtual /* [local] */ HRESULT __stdcall Next( 
+        virtual /* [local] */ HRESULT __stdcall Next(
             /* [in] */ ULONG celt,
             /* [out] */ IDebugExpressionContext **ppdec,
             /* [out] */ ULONG *pceltFetched) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Skip( 
+
+        virtual HRESULT STDMETHODCALLTYPE Skip(
             /* [in] */ ULONG celt) = 0;
-        
+
         virtual HRESULT STDMETHODCALLTYPE Reset( void) = 0;
-        
-        virtual HRESULT STDMETHODCALLTYPE Clone( 
+
+        virtual HRESULT STDMETHODCALLTYPE Clone(
             /* [out] */ IEnumDebugExpressionContexts **ppedec) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IEnumDebugExpressionContextsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IEnumDebugExpressionContexts * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IEnumDebugExpressionContexts * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IEnumDebugExpressionContexts * This);
-        
-        /* [local] */ HRESULT ( __stdcall *Next )( 
+
+        /* [local] */ HRESULT ( __stdcall *Next )(
             IEnumDebugExpressionContexts * This,
             /* [in] */ ULONG celt,
             /* [out] */ IDebugExpressionContext **ppdec,
             /* [out] */ ULONG *pceltFetched);
-        
-        HRESULT ( STDMETHODCALLTYPE *Skip )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Skip )(
             IEnumDebugExpressionContexts * This,
             /* [in] */ ULONG celt);
-        
-        HRESULT ( STDMETHODCALLTYPE *Reset )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Reset )(
             IEnumDebugExpressionContexts * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *Clone )( 
+
+        HRESULT ( STDMETHODCALLTYPE *Clone )(
             IEnumDebugExpressionContexts * This,
             /* [out] */ IEnumDebugExpressionContexts **ppedec);
-        
+
         END_INTERFACE
     } IEnumDebugExpressionContextsVtbl;
 
@@ -11695,7 +11695,7 @@ EXTERN_C const IID IID_IEnumDebugExpressionContexts;
         CONST_VTBL struct IEnumDebugExpressionContextsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -11729,7 +11729,7 @@ EXTERN_C const IID IID_IEnumDebugExpressionContexts;
 
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugExpressionContexts_RemoteNext_Proxy( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugExpressionContexts_RemoteNext_Proxy(
     IEnumDebugExpressionContexts * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IDebugExpressionContext **pprgdec,
@@ -11743,7 +11743,7 @@ void __RPC_STUB IEnumDebugExpressionContexts_RemoteNext_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugExpressionContexts_Skip_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugExpressionContexts_Skip_Proxy(
     IEnumDebugExpressionContexts * This,
     /* [in] */ ULONG celt);
 
@@ -11755,7 +11755,7 @@ void __RPC_STUB IEnumDebugExpressionContexts_Skip_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugExpressionContexts_Reset_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugExpressionContexts_Reset_Proxy(
     IEnumDebugExpressionContexts * This);
 
 
@@ -11766,7 +11766,7 @@ void __RPC_STUB IEnumDebugExpressionContexts_Reset_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT STDMETHODCALLTYPE IEnumDebugExpressionContexts_Clone_Proxy( 
+HRESULT STDMETHODCALLTYPE IEnumDebugExpressionContexts_Clone_Proxy(
     IEnumDebugExpressionContexts * This,
     /* [out] */ IEnumDebugExpressionContexts **ppedec);
 
@@ -11786,43 +11786,43 @@ void __RPC_STUB IEnumDebugExpressionContexts_Clone_Stub(
 #define __IProvideExpressionContexts_INTERFACE_DEFINED__
 
 /* interface IProvideExpressionContexts */
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 EXTERN_C const IID IID_IProvideExpressionContexts;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     MIDL_INTERFACE("51973C41-CB0C-11d0-B5C9-00A0244A0E7A")
     IProvideExpressionContexts : public IUnknown
     {
     public:
-        virtual HRESULT STDMETHODCALLTYPE EnumExpressionContexts( 
+        virtual HRESULT STDMETHODCALLTYPE EnumExpressionContexts(
             /* [out] */ IEnumDebugExpressionContexts **ppedec) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IProvideExpressionContextsVtbl
     {
         BEGIN_INTERFACE
-        
-        HRESULT ( STDMETHODCALLTYPE *QueryInterface )( 
+
+        HRESULT ( STDMETHODCALLTYPE *QueryInterface )(
             IProvideExpressionContexts * This,
             /* [in] */ REFIID riid,
             /* [iid_is][out] */ void **ppvObject);
-        
-        ULONG ( STDMETHODCALLTYPE *AddRef )( 
+
+        ULONG ( STDMETHODCALLTYPE *AddRef )(
             IProvideExpressionContexts * This);
-        
-        ULONG ( STDMETHODCALLTYPE *Release )( 
+
+        ULONG ( STDMETHODCALLTYPE *Release )(
             IProvideExpressionContexts * This);
-        
-        HRESULT ( STDMETHODCALLTYPE *EnumExpressionContexts )( 
+
+        HRESULT ( STDMETHODCALLTYPE *EnumExpressionContexts )(
             IProvideExpressionContexts * This,
             /* [out] */ IEnumDebugExpressionContexts **ppedec);
-        
+
         END_INTERFACE
     } IProvideExpressionContextsVtbl;
 
@@ -11831,7 +11831,7 @@ EXTERN_C const IID IID_IProvideExpressionContexts;
         CONST_VTBL struct IProvideExpressionContextsVtbl *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -11856,7 +11856,7 @@ EXTERN_C const IID IID_IProvideExpressionContexts;
 
 
 
-HRESULT STDMETHODCALLTYPE IProvideExpressionContexts_EnumExpressionContexts_Proxy( 
+HRESULT STDMETHODCALLTYPE IProvideExpressionContexts_EnumExpressionContexts_Proxy(
     IProvideExpressionContexts * This,
     /* [out] */ IEnumDebugExpressionContexts **ppedec);
 
@@ -11877,7 +11877,7 @@ void __RPC_STUB IProvideExpressionContexts_EnumExpressionContexts_Stub(
 #define __ProcessDebugManagerLib_LIBRARY_DEFINED__
 
 /* library ProcessDebugManagerLib */
-/* [helpstring][version][uuid] */ 
+/* [helpstring][version][uuid] */
 
 
 
@@ -11982,7 +11982,7 @@ DefaultDebugSessionProvider;
 #endif /* __ProcessDebugManagerLib_LIBRARY_DEFINED__ */
 
 /* interface __MIDL_itf_activdbg_0361 */
-/* [local] */ 
+/* [local] */
 
 
 #endif  // __ActivDbg_h
@@ -11994,97 +11994,97 @@ extern RPC_IF_HANDLE __MIDL_itf_activdbg_0361_v0_0_s_ifspec;
 
 /* Additional Prototypes for ALL interfaces */
 
-unsigned long             __RPC_USER  BSTR_UserSize(     unsigned long *, unsigned long            , BSTR * ); 
-unsigned char * __RPC_USER  BSTR_UserMarshal(  unsigned long *, unsigned char *, BSTR * ); 
-unsigned char * __RPC_USER  BSTR_UserUnmarshal(unsigned long *, unsigned char *, BSTR * ); 
-void                      __RPC_USER  BSTR_UserFree(     unsigned long *, BSTR * ); 
+unsigned long             __RPC_USER  BSTR_UserSize(     unsigned long *, unsigned long            , BSTR * );
+unsigned char * __RPC_USER  BSTR_UserMarshal(  unsigned long *, unsigned char *, BSTR * );
+unsigned char * __RPC_USER  BSTR_UserUnmarshal(unsigned long *, unsigned char *, BSTR * );
+void                      __RPC_USER  BSTR_UserFree(     unsigned long *, BSTR * );
 
-/* [local] */ HRESULT __stdcall IEnumDebugCodeContexts_Next_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumDebugCodeContexts_Next_Proxy(
     IEnumDebugCodeContexts * This,
     /* [in] */ ULONG celt,
     /* [out] */ IDebugCodeContext **pscc,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugCodeContexts_Next_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugCodeContexts_Next_Stub(
     IEnumDebugCodeContexts * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IDebugCodeContext **pscc,
     /* [out] */ ULONG *pceltFetched);
 
-/* [local] */ HRESULT __stdcall IEnumDebugStackFrames_Next_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumDebugStackFrames_Next_Proxy(
     IEnumDebugStackFrames * This,
     /* [in] */ ULONG celt,
     /* [out] */ DebugStackFrameDescriptor *prgdsfd,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames_Next_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames_Next_Stub(
     IEnumDebugStackFrames * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ DebugStackFrameDescriptor *prgdsfd,
     /* [out] */ ULONG *pceltFetched);
 
-/* [local] */ HRESULT __stdcall IEnumDebugStackFrames64_Next64_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumDebugStackFrames64_Next64_Proxy(
     IEnumDebugStackFrames64 * This,
     /* [in] */ ULONG celt,
     /* [out] */ DebugStackFrameDescriptor64 *prgdsfd,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames64_Next64_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugStackFrames64_Next64_Stub(
     IEnumDebugStackFrames64 * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ DebugStackFrameDescriptor64 *prgdsfd,
     /* [out] */ ULONG *pceltFetched);
 
-/* [local] */ HRESULT __stdcall IEnumDebugApplicationNodes_Next_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumDebugApplicationNodes_Next_Proxy(
     IEnumDebugApplicationNodes * This,
     /* [in] */ ULONG celt,
     /* [out] */ IDebugApplicationNode **pprddp,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugApplicationNodes_Next_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugApplicationNodes_Next_Stub(
     IEnumDebugApplicationNodes * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IDebugApplicationNode **pprddp,
     /* [out] */ ULONG *pceltFetched);
 
-/* [local] */ HRESULT __stdcall IEnumRemoteDebugApplications_Next_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumRemoteDebugApplications_Next_Proxy(
     IEnumRemoteDebugApplications * This,
     /* [in] */ ULONG celt,
     /* [out] */ IRemoteDebugApplication **ppda,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplications_Next_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplications_Next_Stub(
     IEnumRemoteDebugApplications * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IRemoteDebugApplication **ppda,
     /* [out] */ ULONG *pceltFetched);
 
-/* [local] */ HRESULT __stdcall IEnumRemoteDebugApplicationThreads_Next_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumRemoteDebugApplicationThreads_Next_Proxy(
     IEnumRemoteDebugApplicationThreads * This,
     /* [in] */ ULONG celt,
     /* [out] */ IRemoteDebugApplicationThread **pprdat,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplicationThreads_Next_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumRemoteDebugApplicationThreads_Next_Stub(
     IEnumRemoteDebugApplicationThreads * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IRemoteDebugApplicationThread **ppdat,
     /* [out] */ ULONG *pceltFetched);
 
-/* [local] */ HRESULT __stdcall IEnumDebugExpressionContexts_Next_Proxy( 
+/* [local] */ HRESULT __stdcall IEnumDebugExpressionContexts_Next_Proxy(
     IEnumDebugExpressionContexts * This,
     /* [in] */ ULONG celt,
     /* [out] */ IDebugExpressionContext **ppdec,
     /* [out] */ ULONG *pceltFetched);
 
 
-/* [call_as] */ HRESULT __stdcall IEnumDebugExpressionContexts_Next_Stub( 
+/* [call_as] */ HRESULT __stdcall IEnumDebugExpressionContexts_Next_Stub(
     IEnumDebugExpressionContexts * This,
     /* [in] */ ULONG celt,
     /* [length_is][size_is][out] */ IDebugExpressionContext **pprgdec,

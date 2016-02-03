@@ -48,7 +48,7 @@ protected:
 	STDMETHOD(GetRootApplicationNode)(
 		IDebugApplicationNode **ppdanRoot);
 
-    STDMETHOD(OnScriptErrorDebug)( 
+    STDMETHOD(OnScriptErrorDebug)(
             /* [in] */ IActiveScriptErrorDebug __RPC_FAR *pErrorDebug,
             /* [out] */ BOOL __RPC_FAR *pfEnterDebugger,
             /* [out] */ BOOL __RPC_FAR *pfCallOnScriptErrorWhenContinuing);

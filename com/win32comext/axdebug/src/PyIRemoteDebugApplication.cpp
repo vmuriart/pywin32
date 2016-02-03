@@ -77,7 +77,7 @@ PyObject *PyIRemoteDebugApplication::CauseBreak(PyObject *self, PyObject *args)
 // @pymethod |PyIRemoteDebugApplication|ConnectDebugger|Connects a debugger to the application.
 PyObject *PyIRemoteDebugApplication::ConnectDebugger(PyObject *self, PyObject *args)
 {
-	// @comm Only one debugger may be connected at a  
+	// @comm Only one debugger may be connected at a
 	// time; this method fails if there is already a debugger connected.
 	IRemoteDebugApplication *pIRDA = GetI(self);
 	if ( pIRDA == NULL )
@@ -139,9 +139,9 @@ PyObject *PyIRemoteDebugApplication::GetDebugger(PyObject *self, PyObject *args)
 // @pymethod <o PyIUnknown>|PyIRemoteDebugApplication|CreateInstanceAtApplication|Create objects in the application process address space.
 PyObject *PyIRemoteDebugApplication::CreateInstanceAtApplication(PyObject *self, PyObject *args)
 {
-	// @comm Provides a mechanism for the debugger IDE, running out-of-process to the  
-	// application, to create objects in the application process.  
-	// This method simply delegates to CoCreateInstance.  
+	// @comm Provides a mechanism for the debugger IDE, running out-of-process to the
+	// application, to create objects in the application process.
+	// This method simply delegates to CoCreateInstance.
 	IRemoteDebugApplication *pIRDA = GetI(self);
 	if ( pIRDA == NULL )
 		return NULL;
@@ -193,7 +193,7 @@ PyObject *PyIRemoteDebugApplication::QueryAlive(PyObject *self, PyObject *args)
 // @pymethod <o PyIEnumRemoteDebugApplicationThreads>|PyIRemoteDebugApplication|EnumThreads|Enumerates all threads known to be associated with the application.
 PyObject *PyIRemoteDebugApplication::EnumThreads(PyObject *self, PyObject *args)
 {
-	// @comm New threads may be added at any time.  
+	// @comm New threads may be added at any time.
 	IRemoteDebugApplication *pIRDA = GetI(self);
 	if ( pIRDA == NULL )
 		return NULL;

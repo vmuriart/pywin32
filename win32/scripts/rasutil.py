@@ -5,14 +5,14 @@ import win32ras
 # The error raised if we can not
 class ConnectionError(Exception):
 	pass
-	
+
 def Connect(rasEntryName, numRetries = 5):
 	"""Make a connection to the specified RAS entry.
-	
+
 	Returns a tuple of (bool, handle) on success.
 	- bool is 1 if a new connection was established, or 0 is a connection already existed.
 	- handle is a RAS HANDLE that can be passed to Disconnect() to end the connection.
-	
+
 	Raises a ConnectionError if the connection could not be established.
 	"""
 	assert numRetries > 0
@@ -37,7 +37,7 @@ def Connect(rasEntryName, numRetries = 5):
 		print "Retrying..."
 		win32api.Sleep(5000)
 		retryCount = retryCount - 1
-	
+
 	if errCode:
 		raise ConnectionError(errCode, win32ras.GetErrorString(errCode))
 	return 1, rasHandle
@@ -57,7 +57,7 @@ usage="""rasutil.py - Utilities for using RAS
 
 Usage:
   rasutil [-r retryCount] [-c rasname] [-d rasname]
-  
+
   -r retryCount - Number of times to retry the RAS connection
   -c rasname - Connect to the phonebook entry specified by rasname
   -d rasname - Disconnect from the phonebook entry specified by rasname
@@ -67,7 +67,7 @@ def Usage(why):
 	print why
 	print usage
 	sys.exit(1)
-	
+
 if __name__=='__main__':
 	import getopt
 	try:

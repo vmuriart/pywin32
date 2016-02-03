@@ -40,16 +40,16 @@ def LoadDefaultEditor():
 ##				restorePrefModule = prefModule
 ##			WriteDefaultEditorModule("")
 ##			del rc
-##	
+##
 ##	try:
-##		# Try and load the default one - dont catch errors here.		
+##		# Try and load the default one - dont catch errors here.
 ##		if mod is None:
 ##			prefModule = "pywin.framework.editor.color.coloreditor"
 ##			mod = __import__(prefModule)
-##	
+##
 ##		# Get at the real module.
 ##		mod = sys.modules[prefModule]
-##	
+##
 ##		# Do a "from mod import *"
 ##		globals().update(mod.__dict__)
 ##
@@ -83,7 +83,7 @@ def GetEditorFontOption(option, default = None):
 	except:
 		print "WARNING: Invalid font setting in registry - setting ignored"
 		return default
-		
+
 def SetEditorFontOption(option, newValue):
 	SetEditorOption(option, str(newValue))
 

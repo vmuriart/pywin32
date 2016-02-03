@@ -30,7 +30,7 @@
 ##  +			default = "sgrepmdi,mdi_pychecker"
 ## 			moduleNames=win32ui.GetProfileVal('Python','Startup Modules',default)
 ## 		self.DoLoadModules(moduleNames)
-## 
+##
 ######################################################################
 
 import win32ui
@@ -147,7 +147,7 @@ class TheTemplate(docview.RichEditDocTemplate):
         doc = self.FindOpenDocument(fileName)
         if doc: return doc
         ext = os.path.splitext(fileName)[1].lower()
-        if ext =='.pychecker': 
+        if ext =='.pychecker':
             return win32ui.CDocTemplate_Confidence_yesAttemptNative
         return win32ui.CDocTemplate_Confidence_noAttempt
 
@@ -213,13 +213,13 @@ class TheDocument(docview.RichEditDoc):
         self.verbose = int(params[5])
         # setup some reasonable defaults.
         if not self.dirpattern:
-            try: 
+            try:
                 editor=win32ui.GetMainFrame().MDIGetActive()[0].GetEditorView()
                 self.dirpattern=os.path.abspath(os.path.dirname(editor.GetDocument().GetPathName()))
             except (AttributeError,win32ui.error):
                 self.dirpattern = os.getcwd()
         if not self.filpattern:
-            try: 
+            try:
                 editor=win32ui.GetMainFrame().MDIGetActive()[0].GetEditorView()
                 self.filpattern=editor.GetDocument().GetPathName()
             except AttributeError:
@@ -284,7 +284,7 @@ class TheDocument(docview.RichEditDoc):
         try:
             options = self.greppattern
             files= ' '.join(self.flist)
-            # Recently MarkH has failed to run pychecker without it having 
+            # Recently MarkH has failed to run pychecker without it having
             # been explicitly installed - so we assume it is and locate it
             # from its default location.
             # Step1 - get python.exe
@@ -459,8 +459,8 @@ class TheView(docview.RichEditView):
                 view.ReplaceSel( addspecific  and cmnt % locals()
                                  or cmnt )
         return 0
-        
-        
+
+
     def OnCmdOpenFile(self, cmd, code):
         doc = win32ui.GetApp().OpenDocumentFile(self.fnm)
         if doc:
@@ -479,21 +479,21 @@ class TheView(docview.RichEditView):
         greptemplate.setParams('\t'.join(params))
         greptemplate.OpenDocumentFile()
         return 0
-    
+
     def OnTryAgain(self, cmd, code):
         greptemplate.setParams(self.GetDocument().GetParams())
         greptemplate.OpenDocumentFile()
         return 0
 
     def OnCmdSave(self, cmd, code):
-        flags = win32con.OFN_OVERWRITEPROMPT 
+        flags = win32con.OFN_OVERWRITEPROMPT
         dlg = win32ui.CreateFileDialog(0, None, None, flags, "Text Files (*.txt)|*.txt||", self)
         dlg.SetOFNTitle("Save Results As")
         if dlg.DoModal() == win32con.IDOK:
             pn = dlg.GetPathName()
             self._obj_.SaveFile(pn)
         return 0
-        
+
     def Append(self, strng):
         numlines = self.GetLineCount()
         endpos = self.LineIndex(numlines-1) + len(self.GetLine(numlines-1))
@@ -510,10 +510,10 @@ class TheDialog(dialog.Dialog):
         tmp.append([EDIT,   gp,                    103, (52,  7, 144,  11), CS | win32con.WS_TABSTOP | win32con.ES_AUTOHSCROLL | win32con.WS_BORDER])
         tmp.append([STATIC, "Directories:",         -1, (7,  20,  50,  9), CS ])
         tmp.append([EDIT,   dp,                    102, (52, 20, 128,  11), CS | win32con.WS_TABSTOP | win32con.ES_AUTOHSCROLL | win32con.WS_BORDER])
-        tmp.append([BUTTON, '...',                 110, (182,20,  16,  11), CS | win32con.BS_PUSHBUTTON | win32con.WS_TABSTOP]) 
+        tmp.append([BUTTON, '...',                 110, (182,20,  16,  11), CS | win32con.BS_PUSHBUTTON | win32con.WS_TABSTOP])
         tmp.append([STATIC, "Options:",            -1, (7,  33,  50,  9), CS ])
         tmp.append([EDIT,   fp,                    101, (52, 33, 128,  11), CS | win32con.WS_TABSTOP | win32con.ES_AUTOHSCROLL | win32con.WS_BORDER ])
-        tmp.append([BUTTON, '...',                 111, (182,33,  16,  11), CS | win32con.BS_PUSHBUTTON | win32con.WS_TABSTOP]) 
+        tmp.append([BUTTON, '...',                 111, (182,33,  16,  11), CS | win32con.BS_PUSHBUTTON | win32con.WS_TABSTOP])
         #tmp.append([BUTTON,'Case sensitive',       104, (7,  45,  72,  9), CS | win32con.BS_AUTOCHECKBOX | win32con.BS_LEFTTEXT| win32con.WS_TABSTOP])
         #tmp.append([BUTTON,'Subdirectories',       105, (7,  56,  72,  9), CS | win32con.BS_AUTOCHECKBOX | win32con.BS_LEFTTEXT| win32con.WS_TABSTOP])
         #tmp.append([BUTTON,'Verbose',              106, (7,  67,  72,  9), CS | win32con.BS_AUTOCHECKBOX | win32con.BS_LEFTTEXT| win32con.WS_TABSTOP])
@@ -540,7 +540,7 @@ class TheDialog(dialog.Dialog):
 
     def OnMoreFiles(self, cmd, code):
         self.getMore('Pychecker\\File Types', 'filpattern')
-        
+
     def getMore(self, section, key):
         self.UpdateData(1)
         #get the items out of the ini file
@@ -585,7 +585,7 @@ class TheParamsDialog(dialog.Dialog):
         tmp.append([BUTTON,'Cancel', win32con.IDCANCEL, (167,23,  32, 12), CS | win32con.BS_PUSHBUTTON| win32con.WS_TABSTOP])
         tmp.append([STATIC,'New:',                  -1, (2,  83,  15,  12), CS])
         tmp.append([EDIT,  '',                     108, (18, 83,  139,  12), CS | win32con.WS_TABSTOP | win32con.ES_AUTOHSCROLL | win32con.WS_BORDER])
-        tmp.append([BUTTON,'Add',                  109, (167,83,  32, 12), CS | win32con.BS_PUSHBUTTON| win32con.WS_TABSTOP]) 
+        tmp.append([BUTTON,'Add',                  109, (167,83,  32, 12), CS | win32con.BS_PUSHBUTTON| win32con.WS_TABSTOP])
         dialog.Dialog.__init__(self, tmp)
         self.HookCommand(self.OnAddItem, 109)
         self.HookCommand(self.OnListDoubleClick, 107)
@@ -626,4 +626,4 @@ try:
 except NameError:
     pass
 
-greptemplate = TheTemplate() 
+greptemplate = TheTemplate()

@@ -47,7 +47,7 @@ class FileOperationProgressSink(DesignatedWrapPolicy):
 			newfile = 'not renamed, HRESULT ' + str(hrRename)
 		print ('PostRenameItem: renamed ' + \
 			Item.GetDisplayName(shellcon.SHGDN_FORPARSING) + ' to ' + newfile)
-		
+
 	def PreMoveItem(self, Flags, Item, DestinationFolder, NewName):
 		print ('PreMoveItem: Moving ' + \
 			Item.GetDisplayName(shellcon.SHGDN_FORPARSING) + ' to ' + \
@@ -60,7 +60,7 @@ class FileOperationProgressSink(DesignatedWrapPolicy):
 			newfile = 'not copied, HRESULT ' + str(hrMove)
 		print ('PostMoveItem: Moved ' + \
 			Item.GetDisplayName(shellcon.SHGDN_FORPARSING) + ' to ' + newfile)
-	
+
 	def PreCopyItem(self, Flags, Item, DestinationFolder, NewName):
 		if not NewName:
 			NewName = ''

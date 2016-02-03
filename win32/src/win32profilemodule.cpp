@@ -78,7 +78,7 @@ PyObject * PyWinObject_FromEnvironmentBlock(WCHAR *multistring)
 		}
 	return ret;
 }
-		
+
 
 void PyWinObject_FreePROFILEINFO(LPPROFILEINFO pi)
 {
@@ -95,7 +95,7 @@ void PyWinObject_FreePROFILEINFO(LPPROFILEINFO pi)
 // @pyseeapi PROFILEINFO
 // @prop <o PyUnicode>|UserName|Name of user for which to load profile
 // @prop int|Flags|Combination of PI_* flags
-// @prop <o PyUnicode>|ProfilePath|Path to roaming profile, can be None.  Use <om win32net.NetUserGetInfo> to retrieve user's profile path 
+// @prop <o PyUnicode>|ProfilePath|Path to roaming profile, can be None.  Use <om win32net.NetUserGetInfo> to retrieve user's profile path
 // @prop <o PyUnicode>|DefaultPath|Path to Default user profile, can be None
 // @prop <o PyUnicode>|ServerName|Domain controller, can be None
 // @prop <o PyUnicode>|PolicyPath|Location of policy file, can be None
@@ -117,8 +117,8 @@ BOOL PyWinObject_AsPROFILEINFO(PyObject *ob, LPPROFILEINFO pi)
 	dummy_args=PyTuple_New(0);
 	if (dummy_args==NULL)
 		return FALSE;
-	ret=PyArg_ParseTupleAndKeywords(dummy_args, ob, "O|kOOOOO:LoadUserProfile", elements, 
-			&obUserName, &pi->dwFlags, &obProfilePath, &obDefaultPath, 
+	ret=PyArg_ParseTupleAndKeywords(dummy_args, ob, "O|kOOOOO:LoadUserProfile", elements,
+			&obUserName, &pi->dwFlags, &obProfilePath, &obDefaultPath,
 			&obServerName, &obPolicyPath, &obhProfile)
 		&&PyWinObject_AsWCHAR(obUserName,&pi->lpUserName, FALSE)
 		&&PyWinObject_AsWCHAR(obProfilePath, &pi->lpProfilePath,TRUE)
@@ -169,8 +169,8 @@ PyObject *PyUnloadUserProfile(PyObject *self, PyObject *args, PyObject *kwargs)
 	CHECK_PFN(UnloadUserProfile);
 	PyObject *obhToken=NULL, *obhProfile=NULL;
 	HANDLE hToken, hProfile;
-	
-	
+
+
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:UnloadUserProfile", keywords,
 		&obhToken,		// @pyparm <o PyHANDLE>|Token||Logon token as returned by <om win32security.LogonUser>, <om win32security.OpenProcessToken>, etc
 		&obhProfile))	// @pyparm <o PyHKEY>|Profile||Registry handle as returned by <om win32profile.LoadUserProfile>
@@ -312,7 +312,7 @@ PyObject *PyDeleteProfile(PyObject *self, PyObject *args, PyObject *kwargs)
 		&obprofile_path,	// @pyparm <o PyUnicode>|ProfilePath|None|Profile directory, value queried from registry if not specified
 		&obmachine))		// @pyparm <o PyUnicode>|ComputerName|None|Name of computer from which to delete profile, local machine assumed if not specified
 		return NULL;
-	if (PyWinObject_AsWCHAR(obstrsid, &strsid, FALSE)					
+	if (PyWinObject_AsWCHAR(obstrsid, &strsid, FALSE)
 		&&PyWinObject_AsWCHAR(obprofile_path, &profile_path, TRUE)
 		&&PyWinObject_AsWCHAR(obmachine, &machine, TRUE)){
 		if ((*pfnDeleteProfile)(strsid, profile_path, machine)){
@@ -328,7 +328,7 @@ PyObject *PyDeleteProfile(PyObject *self, PyObject *args, PyObject *kwargs)
 	return ret;
 }
 
-// @pymethod int|win32profile|GetProfileType|Returns type of current user's profile 
+// @pymethod int|win32profile|GetProfileType|Returns type of current user's profile
 // @rdesc Returns a combination of PT_* flags
 PyObject *PyGetProfileType(PyObject *self, PyObject *args, PyObject *kwargs)
 {
@@ -433,7 +433,7 @@ PyObject *PyExpandEnvironmentStringsForUser(PyObject *self, PyObject *args, PyOb
 }
 
 
-// @module win32profile|Wraps functions for dealing with user profiles 
+// @module win32profile|Wraps functions for dealing with user profiles
 static struct PyMethodDef win32profile_functions[] = {
 
 	//@pymeth CreateEnvironmentBlock|Retrieves environment variables for a user
@@ -443,7 +443,7 @@ static struct PyMethodDef win32profile_functions[] = {
 	// @pymeth ExpandEnvironmentStringsForUser|Replaces environment variables in a string with per-user values
 	{"ExpandEnvironmentStringsForUser",	(PyCFunction)PyExpandEnvironmentStringsForUser,  METH_VARARGS|METH_KEYWORDS ,"Replaces environment variables in a string with per-user values"},
 	//@pymeth GetAllUsersProfileDirectory|Retrieve All Users profile directory
-	{"GetAllUsersProfileDirectory",	(PyCFunction)PyGetAllUsersProfileDirectory,METH_VARARGS|METH_KEYWORDS, "Retrieve All Users profile directory"},	
+	{"GetAllUsersProfileDirectory",	(PyCFunction)PyGetAllUsersProfileDirectory,METH_VARARGS|METH_KEYWORDS, "Retrieve All Users profile directory"},
 	//@pymeth GetDefaultUserProfileDirectory|Retrieve profile path for Default user
 	{"GetDefaultUserProfileDirectory",	(PyCFunction)PyGetDefaultUserProfileDirectory,METH_VARARGS|METH_KEYWORDS, "Retrieve profile path for Default user"},
 	//@pymeth GetEnvironmentStrings|Retrieves environment variables for current process

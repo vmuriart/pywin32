@@ -8,7 +8,7 @@
  its documentation for any purpose and without fee is hereby
  granted, provided that the above copyright notice appear in all
  copies and that both that copyright notice and this permission
- notice appear in supporting documentation, and that the name of 
+ notice appear in supporting documentation, and that the name of
  Blackdog Software not be used in advertising or publicity pertaining to
  distribution of the software without specific, written prior
  permission.
@@ -99,13 +99,13 @@ char *FormatSysError(const DWORD nErrNo)
 	if (nLen > 2) {
 		if ( result[nLen - 1] == '\n')
 			result[nLen - 1] = 0;
-		if (result[nLen - 2] == '\r') 
+		if (result[nLen - 2] == '\r')
 			result[nLen - 2] = 0;
 	}
 	return result;
 }
 
-// format an error 
+// format an error
 char *HTMLErrorResp(const char *msg)
 {
 	const char *htmlBody =  "<html><head><title>Python ISAPI Error</title></head>"
@@ -140,15 +140,15 @@ static void CheckRegisterEventSourceFile()
 	wcscat(keyName, source_name);
 
 	BOOL rc = FALSE;
-	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE, 
-		               keyName, 
-		               0, 
-		               NULL, 
-		               REG_OPTION_NON_VOLATILE, 
-		               KEY_WRITE, NULL, 
-		               &hkey, 
+	if (RegCreateKeyExW(HKEY_LOCAL_MACHINE,
+		               keyName,
+		               0,
+		               NULL,
+		               REG_OPTION_NON_VOLATILE,
+		               KEY_WRITE, NULL,
+		               &hkey,
 		               NULL) == ERROR_SUCCESS) {
-		RegSetValueExW(hkey, L"EventMessageFile", 0, REG_SZ, 
+		RegSetValueExW(hkey, L"EventMessageFile", 0, REG_SZ,
 		               (const BYTE *)mod_name,
 		               wcslen(mod_name)*sizeof(WCHAR));
 		DWORD types = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;

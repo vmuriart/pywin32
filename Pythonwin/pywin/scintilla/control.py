@@ -26,7 +26,7 @@ if win32ui.debug: # If running _d version of Pythonwin...
 if dllid is None:
 	try:
 		dllid = win32api.LoadLibrary(os.path.join(os.path.split(win32ui.__file__)[0], "Scintilla.DLL"))
-	except win32api.error: 
+	except win32api.error:
 		pass
 if dllid is None:
 	# Still not there - lets see if Windows can find it by searching?
@@ -103,7 +103,7 @@ class ScintillaControlInterface:
 	####################################
 	# Styling
 #	def SCIColourise(self, start=0, end=-1):
-#   NOTE - dependent on of we use builtin lexer, so handled below.		
+#   NOTE - dependent on of we use builtin lexer, so handled below.
 	def SCIGetEndStyled(self):
 		return self.SendScintilla(scintillacon.SCI_GETENDSTYLED)
 	def SCIStyleSetFore(self, num, v):
@@ -312,7 +312,7 @@ class CScintillaEditInterface(ScintillaControlInterface):
 		if type(start)==type(()):
 			assert end is None, "If you pass a point in the first param, the second must be None"
 			start, end = start
-		elif end is None: 
+		elif end is None:
 			end = start
 		if start < 0: start = self.GetTextLength()
 		if end < 0: end = self.GetTextLength()
@@ -332,7 +332,7 @@ class CScintillaEditInterface(ScintillaControlInterface):
 		#return self.SendScintilla(EM_EXLINEFROMCHAR, charPos)
 		# EM_EXLINEFROMCHAR puts charPos in lParam, not wParam
 		return self.SendScintilla(EM_EXLINEFROMCHAR, 0, charPos)
-		
+
 	def LineIndex(self, line):
 		return self.SendScintilla(win32con.EM_LINEINDEX, line)
 
@@ -341,7 +341,7 @@ class CScintillaEditInterface(ScintillaControlInterface):
 
 	def GetCurLineNumber(self):
 		return self.LineFromChar(self.SCIGetCurrentPos())
-		
+
 	def GetTextLength(self):
 		return self.SendScintilla(scintillacon.SCI_GETTEXTLENGTH)
 
@@ -365,7 +365,7 @@ class CScintillaEditInterface(ScintillaControlInterface):
 	def ReplaceSel(self, str):
 		buff = (str + "\0").encode(default_scintilla_encoding)
 		self.SendScintilla(scintillacon.SCI_REPLACESEL, 0, buff)
-	
+
 	def GetLine(self, line=-1):
 		if line == -1: line = self.GetCurLineNumber()
 		start = self.LineIndex(line)
@@ -374,7 +374,7 @@ class CScintillaEditInterface(ScintillaControlInterface):
 
 	def SetReadOnly(self, flag = 1):
 		return self.SendScintilla(win32con.EM_SETREADONLY, flag)
-		
+
 	def LineScroll(self, lines, cols=0):
 		return self.SendScintilla(win32con.EM_LINESCROLL, cols, lines)
 

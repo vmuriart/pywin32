@@ -66,10 +66,10 @@ PyObject *PyIQueryAssociations::GetKey(PyObject *self, PyObject *args)
 	IQueryAssociations *pIQA = GetI(self);
 	if ( pIQA == NULL )
 		return NULL;
-	// @pyparm int|flags||Used to control the search. 
+	// @pyparm int|flags||Used to control the search.
 	// @pyparm int|assocKey||Specifies the type of key that is to be returned.
     // @pyparm string||extra|Optional string with information about the location of the key.
-    // It is normally set to a shell verb such as 'open'. Set this parameter to None if it is not used. 
+    // It is normally set to a shell verb such as 'open'. Set this parameter to None if it is not used.
     int flags, assoc;
     PyObject *obExtra = Py_None;
     HKEY ret = NULL;
@@ -96,10 +96,10 @@ PyObject *PyIQueryAssociations::GetString(PyObject *self, PyObject *args)
 	IQueryAssociations *pIQA = GetI(self);
 	if ( pIQA == NULL )
 		return NULL;
-	// @pyparm int|flags||Used to control the search. 
+	// @pyparm int|flags||Used to control the search.
 	// @pyparm int|assocStr||Specifies the type of string that is to be returned.
     // @pyparm string||extra|Optional string with information about the location of the key.
-    // It is normally set to a shell verb such as 'open'. Set this parameter to None if it is not used. 
+    // It is normally set to a shell verb such as 'open'. Set this parameter to None if it is not used.
     int flags, assoc;
     PyObject *obExtra = Py_None;
     HKEY *ret = NULL;
@@ -115,7 +115,7 @@ PyObject *PyIQueryAssociations::GetString(PyObject *self, PyObject *args)
         return PyErr_Format(PyExc_ValueError, "Can not set ASSOCF_NOTRUNCATE - these semantics are not supported");
 	if (!PyWinObject_AsWCHAR(obExtra, &pszExtra, TRUE))
         return NULL;
-    
+
 	HRESULT hr;
 	PY_INTERFACE_PRECALL;
 	hr = pIQA->GetString( flags, (ASSOCSTR)assoc, pszExtra, result_buf, &result_size);

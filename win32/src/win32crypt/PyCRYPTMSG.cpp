@@ -116,7 +116,7 @@ PyCRYPTMSG::PyCRYPTMSG(HCRYPTMSG h)
 
 // @pymethod |PyCRYPTMSG|CryptMsgClose|Closes the message handle
 PyObject *PyCRYPTMSG::PyCryptMsgClose(PyObject *self, PyObject *args)
-{	
+{
 	HCRYPTMSG h=((PyCRYPTMSG *)self)->GetHCRYPTMSG();
 	if(!CryptMsgClose(h))
 		return PyWin_SetAPIError("CryptMsgClose");

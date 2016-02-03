@@ -172,7 +172,7 @@ PyCeRegEnumKeyEx( PyObject *self, PyObject *args )
 	long rc;
 	TCHAR *retBuf;
     DWORD len;
-    
+
 	// @pyparm <o PyHKEY>/int|key||An already open key, or any one of the following win32con constants:<nl>HKEY_CLASSES_ROOT<nl>HKEY_CURRENT_USER<nl>HKEY_LOCAL_MACHINE<nl>HKEY_USERS
 	// @pyparm int|index||The index of the key to retrieve.
 	if (!PyArg_ParseTuple(args, "Oi:CeRegEnumKey", &obKey, &index))
@@ -180,7 +180,7 @@ PyCeRegEnumKeyEx( PyObject *self, PyObject *args )
 	if (!PyWinObject_AsCEHKEY(obKey, &hKey))
 		return NULL;
 
-	if ((rc=CeRegQueryInfoKey( hKey, NULL, NULL, NULL, NULL, &len, 
+	if ((rc=CeRegQueryInfoKey( hKey, NULL, NULL, NULL, NULL, &len,
 		                           NULL, NULL, NULL, NULL, NULL, NULL))!=ERROR_SUCCESS)
 		return PyWin_SetAPIError("CeRegQueryInfoKey", rc);
 	++len;	// include null terminator
@@ -204,7 +204,7 @@ PyCeRegEnumKeyEx( PyObject *self, PyObject *args )
 // made to support "incorrect strings".  The registry specification
 // calls for strings to be terminated with 2 null bytes.  It seems
 // some commercial packages install strings which dont conform,
-// causing this code to fail - however, "regedit" etc still work 
+// causing this code to fail - however, "regedit" etc still work
 // with these strings (ie only we dont!).
 static void
 fixupMultiSZ(TCHAR **str, TCHAR *data, int len)
@@ -237,7 +237,7 @@ countStrings(TCHAR *data, int len)
 	return strings;
 }
 
-/* Convert PyObject into Registry data. 
+/* Convert PyObject into Registry data.
    Allocates space as needed. */
 static int
 Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
@@ -252,7 +252,7 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 			if (value==Py_None) {
 				DWORD zero = 0;
 				memcpy(*retDataBuf, &zero, sizeof(DWORD));
-			} 
+			}
 			else
 				memcpy(*retDataBuf, &PyInt_AS_LONG((PyIntObject *)value), sizeof(DWORD));
 			break;
@@ -297,7 +297,7 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 					cch += _tcslen(temp) + 1;
 					PyWinObject_FreeTCHAR(temp);
 				}
-			
+
 				cch++; // extra null.
 				*retDataSize=cch * sizeof(TCHAR);
 				*retDataBuf=(BYTE *)PyMem_NEW(TCHAR, *retDataSize);
@@ -319,7 +319,7 @@ Py2Reg(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
 		case REG_BINARY:
 		// ALSO handle ALL unknown data types here.  Even if we cant support
 		// it natively, we should handle the bits.
-		default: 
+		default:
 			if (value==Py_None)
 				*retDataSize = 0;
 			else {
@@ -510,8 +510,8 @@ static double LI2double(LARGE_INTEGER *li)
   return d;
 }
 
-// @pymethod (int, int, long)|wincerapi|CeRegQueryInfoKey|Returns the number of 
-// subkeys, the number of values a key has, 
+// @pymethod (int, int, long)|wincerapi|CeRegQueryInfoKey|Returns the number of
+// subkeys, the number of values a key has,
 // and if available the last time the key was modified as
 // 100's of nanoseconds since Jan 1, 1600.
 PyObject *
@@ -546,7 +546,7 @@ PyCeRegQueryInfoKey( PyObject *self, PyObject *args)
   return Py_BuildValue("iiO",nSubKeys,nValues,l);
 }
 
-// @pymethod (object,type)|wincerapi|CeRegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key. 
+// @pymethod (object,type)|wincerapi|CeRegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key.
 PyObject *
 PyCeRegQueryValueEx( PyObject *self, PyObject *args )
 {
@@ -564,7 +564,7 @@ PyCeRegQueryValueEx( PyObject *self, PyObject *args )
 	if (!PyArg_ParseTuple(args, "OO:CeRegQueryValueEx", &obKey, &obValueName))
 		return NULL;
 	// @pyseeapi CeRegQueryValueEx
-	
+
 	if (!PyWinObject_AsCEHKEY(obKey, &hKey))
 		return NULL;
 	TCHAR *valueName;
@@ -617,21 +617,21 @@ PyCeRegSetValueEx( PyObject *self, PyObject *args )
 	// If a value with this name is not already present in the key, the method adds it to the key.
 	// <nl>If this parameter is None or an empty string and the type parameter is the wincerapi.REG_SZ type, this function sets the same value the <om wincerapi.CeRegSetValue> method would set.
 	// @pyparm any|reserved||Place holder for reserved argument.  Zero will always be passed to the API function.
-	// @pyparm int|type||Type of data. 
-	// @flagh Value|Meaning 
-	// @flag REG_BINARY|Binary data in any form. 
-	// @flag REG_DWORD|A 32-bit number. 
-	// @flag REG_DWORD_LITTLE_ENDIAN|A 32-bit number in little-endian format. This is equivalent to REG_DWORD.<nl>In little-endian format, a multi-byte value is stored in memory from the lowest byte (the little end) to the highest byte. For example, the value 0x12345678 is stored as (0x78 0x56 0x34 0x12) in little-endian format. 
-	// Windows NT and Windows 95 are designed to run on little-endian computer architectures. A user may connect to computers that have big-endian architectures, such as some UNIX systems. 
+	// @pyparm int|type||Type of data.
+	// @flagh Value|Meaning
+	// @flag REG_BINARY|Binary data in any form.
+	// @flag REG_DWORD|A 32-bit number.
+	// @flag REG_DWORD_LITTLE_ENDIAN|A 32-bit number in little-endian format. This is equivalent to REG_DWORD.<nl>In little-endian format, a multi-byte value is stored in memory from the lowest byte (the little end) to the highest byte. For example, the value 0x12345678 is stored as (0x78 0x56 0x34 0x12) in little-endian format.
+	// Windows NT and Windows 95 are designed to run on little-endian computer architectures. A user may connect to computers that have big-endian architectures, such as some UNIX systems.
 	// @flag REG_DWORD_BIG_ENDIAN|A 32-bit number in big-endian format.
-	// In big-endian format, a multi-byte value is stored in memory from the highest byte (the big end) to the lowest byte. For example, the value 0x12345678 is stored as (0x12 0x34 0x56 0x78) in big-endian format. 
-	// @flag REG_EXPAND_SZ|A null-terminated string that contains unexpanded references to environment variables (for example, %PATH%). It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions. 
-	// @flag REG_LINK|A Unicode symbolic link. 
-	// @flag REG_MULTI_SZ|An array of null-terminated strings, terminated by two null characters. 
+	// In big-endian format, a multi-byte value is stored in memory from the highest byte (the big end) to the lowest byte. For example, the value 0x12345678 is stored as (0x12 0x34 0x56 0x78) in big-endian format.
+	// @flag REG_EXPAND_SZ|A null-terminated string that contains unexpanded references to environment variables (for example, %PATH%). It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions.
+	// @flag REG_LINK|A Unicode symbolic link.
+	// @flag REG_MULTI_SZ|An array of null-terminated strings, terminated by two null characters.
 	// @flag REG_NONE|No defined value type.
-	// @flag REG_RESOURCE_LIST|A device-driver resource list. 
+	// @flag REG_RESOURCE_LIST|A device-driver resource list.
 	// @flag REG_SZ|A null-terminated string. It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions
- 
+
 
 	// @pyparm registry data|value||The value to be stored with the specified value name.
 	if (!PyArg_ParseTuple(args, "OOOiO:CeRegSetValueEx", &obKey, &obValueName, &obRes, &typ, &value))
@@ -659,7 +659,7 @@ PyCeRegSetValueEx( PyObject *self, PyObject *args )
 	// @comm  This method can also set additional value and type information for the specified key.
 	// <nl>The key identified by the key parameter must have been opened with KEY_SET_VALUE access.
 	// To open the key, use the <om wincerapi.CeRegCreateKeyEx> or <om wincerapi.CeRegOpenKeyEx> methods.
-	// <nl>Value lengths are limited by available memory. 
+	// <nl>Value lengths are limited by available memory.
 	// Long values (more than 2048 bytes) should be stored as files with the filenames stored in the configuration registry.
 	// This helps the registry perform efficiently.
 	// <nl>The key identified by the key parameter must have been opened with KEY_SET_VALUE access.

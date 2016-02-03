@@ -1,6 +1,6 @@
 // Scintilla source code edit control
 /** @file LexFlagShip.cxx
- ** Lexer for FlagShip 
+ ** Lexer for FlagShip
  ** (Syntactically compatible to other XBase dialects, like dBase, Clipper, Fox etc.)
  **/
 // Copyright 2005 by Randy Butler

@@ -154,7 +154,7 @@ def _FindIt(control, searchParams):
 		else:
 			del searchHistory[ix]
 		searchHistory.insert(0, searchParams.findText)
-		
+
 	return rc
 
 def _ReplaceIt(control):
@@ -221,7 +221,7 @@ class FindReplaceDialog(dialog.Dialog):
 		params.acrossFiles = self.butAcrossFiles.GetCheck()
 		params.remember = self.butRemember.GetCheck()
 		return _FindIt(None, params)
-	
+
 	def OnFindNext(self, id, code):
 		if not self.editFindText.GetWindowText():
 			win32api.MessageBeep()
@@ -271,7 +271,7 @@ class ReplaceDialog(FindReplaceDialog):
 			["Button", "Replace &All", 111, (185, 41, 50, 14), visible | win32con.WS_TABSTOP],
 			["Button", "Cancel", win32con.IDCANCEL, (185, 59, 50, 14), visible | win32con.WS_TABSTOP],
 
-			
+
 		]
 		return dt
 
@@ -306,7 +306,7 @@ class ReplaceDialog(FindReplaceDialog):
 		fActive = win32api.LOWORD(wparam)
 		if fActive != win32con.WA_INACTIVE:
 			self.CheckButtonStates()
-		
+
 	def OnFindNext(self, id, code):
 		self.DoFindNext()
 		self.CheckButtonStates()

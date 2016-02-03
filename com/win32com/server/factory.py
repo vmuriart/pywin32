@@ -3,7 +3,7 @@ import pythoncom
 
 def RegisterClassFactories(clsids, flags = None, clsctx = None):
 	"""Given a list of CLSID, create and register class factories.
-	
+
 	   Returns a list, which should be passed to RevokeClassFactories
 	"""
 	if flags is None:	flags = pythoncom.REGCLS_MULTIPLEUSE|pythoncom.REGCLS_SUSPENDED

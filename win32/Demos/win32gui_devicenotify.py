@@ -47,8 +47,8 @@ def TestDeviceNotifications(dir_names):
     hdevs.append(hdev)
     # and create handles for all specified directories
     for d in dir_names:
-        hdir = win32file.CreateFile(d, 
-                                    winnt.FILE_LIST_DIRECTORY, 
+        hdir = win32file.CreateFile(d,
+                                    winnt.FILE_LIST_DIRECTORY,
                                     winnt.FILE_SHARE_READ | winnt.FILE_SHARE_WRITE | winnt.FILE_SHARE_DELETE,
                                     None, # security attributes
                                     win32con.OPEN_EXISTING,

@@ -201,7 +201,7 @@ protected:
 	// Pointer to variable length DEVMODE with dmDriverExtra bytes allocated at end, always use this externally
 	PDEVMODEA pdevmode;
 	// copy of fixed portion of DEVMODE for structmember api to access
-	DEVMODEA  devmode;   
+	DEVMODEA  devmode;
 	~PyDEVMODEA();
 };
 
@@ -234,7 +234,7 @@ protected:
 	// Pointer to variable length DEVMODE with dmDriverExtra bytes allocated at end, always use this externally
 	PDEVMODEW pdevmode;
 	// copy of fixed portion of DEVMODE for structmember api to access
-	DEVMODEW devmode;   
+	DEVMODEW devmode;
 	~PyDEVMODEW();
 };
 

@@ -8,7 +8,7 @@
  its documentation for any purpose and without fee is hereby
  granted, provided that the above copyright notice appear in all
  copies and that both that copyright notice and this permission
- notice appear in supporting documentation, and that the name of 
+ notice appear in supporting documentation, and that the name of
  Blackdog Software not be used in advertising or publicity pertaining to
  distribution of the software without specific, written prior
  permission.
@@ -63,7 +63,7 @@ public:
 	PyObject *Callback(HANDLER_TYPE typ, const char *szFormat, ...);
 protected:
 	PyObject *DoCallback(HANDLER_TYPE typ, PyObject *args);
-	
+
 	bool LoadHandler(bool reload);
 	bool CPythonHandler::CheckCallback(const char *cbname, PyObject **cb);
 	const char *m_namefactory;

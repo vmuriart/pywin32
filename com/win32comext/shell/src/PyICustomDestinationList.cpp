@@ -82,7 +82,7 @@ PyObject *PyICustomDestinationList::AppendCategory(PyObject *self, PyObject *arg
 	ICustomDestinationList *pICDL = GetI(self);
 	if ( pICDL == NULL )
 		return NULL;
-	
+
 	TmpWCHAR Category;
 	PyObject *obCategory, *obItems;
 	IObjectArray *Items;

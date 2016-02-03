@@ -41,7 +41,7 @@ PyObject *PyIPersistFile::IsDirty(PyObject *self, PyObject *args)
 	PY_INTERFACE_POSTCALL;
 
 	// @rdesc This method returns the raw COM error code without raising the normal COM exception.
-	// You should treat any error return codes as an indication that the object has changed. 
+	// You should treat any error return codes as an indication that the object has changed.
 	// Unless this method explicitly returns S_FALSE, assume that the object must be saved.
 	return PyInt_FromLong(hr);
 }

@@ -333,7 +333,7 @@ static PyObject *PyCRichEditCtrl_limit_text(PyObject *self, PyObject *args)
 	if (!pEdit)
 		return NULL;
 	int nChars = 0;
-	// @pyparm int|nChars|0|Specifies the length (in bytes) of the text that the user can enter. If this parameter is 0, the text length is set to 
+	// @pyparm int|nChars|0|Specifies the length (in bytes) of the text that the user can enter. If this parameter is 0, the text length is set to
 	// UINT_MAX bytes. This is the default behavior.
 	if (!PyArg_ParseTuple(args, "|i:LimitText", &nChars))
 		return NULL;
@@ -351,7 +351,7 @@ PyCRichEditCtrl_line_index(PyObject *self, PyObject *args)
 	CRichEditCtrl *pEdit = GetRichEditCtrl(self);
 	if (!pEdit)
 		return NULL;
-	// @pyparm int|lineNo|-1|Contains the index value for the desired line in the text 
+	// @pyparm int|lineNo|-1|Contains the index value for the desired line in the text
 	// of the edit control, or contains -1.  If -1, then it specifies the current line.
 	int lineNo = -1;
 	if (!PyArg_ParseTuple(args, "|i:LineIndex", &lineNo))
@@ -360,8 +360,8 @@ PyCRichEditCtrl_line_index(PyObject *self, PyObject *args)
 	int rc = pEdit->LineIndex(lineNo);
 	GUI_END_SAVE;
 	return Py_BuildValue("i", rc); // @pyseemfc CRichEditCtrl|LineIndex
-	// @rdesc The character index of the line specified in lineNo, or -1 if 
-	// the specified line number is greater then the number of lines in 
+	// @rdesc The character index of the line specified in lineNo, or -1 if
+	// the specified line number is greater then the number of lines in
 	// the edit control.
 }
 // @pymethod int|PyCRichEditCtrl|LineScroll|Scroll the control vertically and horizontally
@@ -392,7 +392,7 @@ PyCRichEditCtrl_line_from_char(PyObject *self, PyObject *args)
 	if (!pEdit)
 		return NULL;
 	int charNo=-1;
-	// @pyparm int|charNo|-1|Contains the zero-based index value for the desired character in the text of the edit 
+	// @pyparm int|charNo|-1|Contains the zero-based index value for the desired character in the text of the edit
 	// control, or -1.  If -1, then it specifies the current line.
 	if (!PyArg_ParseTuple(args, "|i:LineFromChar", &charNo))
 		return NULL;
@@ -400,7 +400,7 @@ PyCRichEditCtrl_line_from_char(PyObject *self, PyObject *args)
 	int rc = pEdit->LineFromChar(charNo);
 	GUI_END_SAVE;
 	return Py_BuildValue("i", rc); // @pyseemfc CRichEditCtrl|LineFromChar
-	// @rdesc The zero-based line number of the line containing the character index specified by charNo. 
+	// @rdesc The zero-based line number of the line containing the character index specified by charNo.
 	// If charNo is -1, the number of the line that contains the first character of the selection is returned.
 	// If there is no selection, the current line number is returned.
 }
@@ -543,7 +543,7 @@ PyCRichEditCtrl_set_default_char_format(PyObject *self, PyObject *args)
 	GUI_END_SAVE;
 	if (!ok)	// @pyseemfc CRichEditCtrl|SetDefaultCharFornmat
 		RETURN_ERR("SetDefaultCharFormat failed");
-	RETURN_NONE;	
+	RETURN_NONE;
 }
 
 // @pymethod |PyCRichEditCtrl|SetWordCharFormat|Sets the currently selected word's character formatting attributes.
@@ -567,7 +567,7 @@ PyCRichEditCtrl_set_word_char_format(PyObject *self, PyObject *args)
 	GUI_END_SAVE;
 	if (!ok)	// @pyseemfc CRichEditCtrl|SetWordCharFormat
 		RETURN_ERR("SetWordCharFormat failed");
-	RETURN_NONE;	
+	RETURN_NONE;
 }
 
 
@@ -618,7 +618,7 @@ PyCRichEditCtrl_set_selection_char_format(PyObject *self, PyObject *args)
 	GUI_END_SAVE;
 	if (!ok)	// @pyseemfc CRichEditCtrl|SetSelectionCharFormat
 		RETURN_ERR("SetSelectionCharFormat failed");
-	RETURN_NONE;	
+	RETURN_NONE;
 }
 
 // @pymethod |PyCRichEditCtrl|SetSelAndCharFormat|Sets the selection and char format.
@@ -657,7 +657,7 @@ PyCRichEditCtrl_set_sel_and_char_format(PyObject *self, PyObject *args)
 	// @pyseemfc CRichEditCtrl|SetSel
 	if (!ok)
 		RETURN_ERR("SetSelectionCharFormat failed");
-	RETURN_NONE;	
+	RETURN_NONE;
 }
 
 // @pymethod |PyCRichEditCtrl|SetOptions|Sets options for the control.
@@ -693,7 +693,7 @@ PyCRichEditCtrl_set_readonly(PyObject *self, PyObject *args)
 	GUI_BGN_SAVE;
 	pEdit->SetReadOnly(bState);	// @pyseemfc CRichEditCtrl|SetReadOnly
 	GUI_END_SAVE;
-	RETURN_NONE;	
+	RETURN_NONE;
 }
 
 // @pymethod |PyCRichEditCtrl|SetSel|Sets the selection in the edit control.
@@ -703,15 +703,15 @@ static PyObject *PyCRichEditCtrl_set_sel(PyObject *self, PyObject *args)
 	int start=0,end=0;
 	if (!pEdit)
 		return NULL;
-	if (!PyArg_ParseTuple(args, "i|i:SetSel", 
-	                &start, // @pyparm int|start||Specifies the starting position. 
-	                        // If start is 0 and end is -1, all the text in the edit control is selected. 
+	if (!PyArg_ParseTuple(args, "i|i:SetSel",
+	                &start, // @pyparm int|start||Specifies the starting position.
+	                        // If start is 0 and end is -1, all the text in the edit control is selected.
 	                        // If start is -1, any current selection is removed.
-	                &end)){  // @pyparm int|end|start|Specifies the ending position. 
+	                &end)){  // @pyparm int|end|start|Specifies the ending position.
 		PyErr_Clear();
-		if (!PyArg_ParseTuple(args, "(ii):SetSel", 
+		if (!PyArg_ParseTuple(args, "(ii):SetSel",
 							&start, // @pyparmalt2 (int, int)|start,end)||As for normal start, end args.
-							&end))  
+							&end))
 			return NULL;
 	}
 	if (start!=end && end==0)

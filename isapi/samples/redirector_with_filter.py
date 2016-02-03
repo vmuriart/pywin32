@@ -108,14 +108,14 @@ class Filter(SimpleFilter):
             return isapicon.SF_STATUS_REQ_HANDLED_NOTIFICATION
         else:
             print "Filter ignoring URL '%s'" % (url,)
-            
+
             # Some older code that handled SF_NOTIFY_URL_MAP.
             #~ print "Have URL_MAP notify"
             #~ urlmap = fc.GetData()
             #~ print "URI is", urlmap.URL
             #~ print "Path is", urlmap.PhysicalPath
             #~ if urlmap.URL.startswith("/UC/"):
-                #~ # Find the /UC/ in the physical path, and nuke it (except 
+                #~ # Find the /UC/ in the physical path, and nuke it (except
                 #~ # as the path is physical, it is \)
                 #~ p = urlmap.PhysicalPath
                 #~ pos = p.index("\\UC\\")

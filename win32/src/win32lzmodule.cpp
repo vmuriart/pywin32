@@ -104,13 +104,13 @@ static PyObject *
 PyLZCopy(PyObject *self, PyObject *args)
 {
 	int hSrc, hDest;
-	if (!PyArg_ParseTuple(args, "ii:Copy", &hSrc, &hDest )) 
+	if (!PyArg_ParseTuple(args, "ii:Copy", &hSrc, &hDest ))
 		// @pyparm int|hSrc||The handle of the source file to copy.
 		// @pyparm int|hDest||The handle of the destination file.
 		return NULL;
 	// @comm If the source file is compressed with the Microsoft File Compression Utility
 	// (COMPRESS.EXE), this function creates a decompressed destination file.
-	// If the source file is not compressed, this function duplicates the original file. 
+	// If the source file is not compressed, this function duplicates the original file.
 	// @pyseeapi LZCopy
 	long ret = LZCopy( hSrc, hDest);
 	if (ret < 0)
@@ -118,7 +118,7 @@ PyLZCopy(PyObject *self, PyObject *args)
 	return PyInt_FromLong(ret);
 }
 
-// @pymethod |win32lz|Init|Allocates memory for the internal data structures required to decompress files, and then creates and initializes them. 
+// @pymethod |win32lz|Init|Allocates memory for the internal data structures required to decompress files, and then creates and initializes them.
 static PyObject *
 PyLZInit(PyObject *self, PyObject *args)
 {
@@ -133,7 +133,7 @@ PyLZInit(PyObject *self, PyObject *args)
 	return PyInt_FromLong(ret);
 }
 
-// @pymethod int,(tuple)|win32lz|OpenFile|Creates, opens, reopens, or deletes the specified file. 
+// @pymethod int,(tuple)|win32lz|OpenFile|Creates, opens, reopens, or deletes the specified file.
 static PyObject *
 PyLZOpenFile(PyObject *self, PyObject *args)
 {
@@ -163,8 +163,8 @@ static struct PyMethodDef win32lz_functions[] = {
 	{"GetExpandedName",             PyGetExpandedName,  METH_VARARGS}, // @pymeth GetExpandedName|Retrieves the original name of an expanded file,
 	{"Close",                       PyLZClose,  METH_VARARGS}, // @pymeth Close|Closes a handle to an LZ file.
 	{"Copy",                        PyLZCopy,  METH_VARARGS}, // @pymeth Copy|Copies a source file to a destination file.
-	{"Init",                        PyLZInit,  METH_VARARGS}, // @pymeth Init|Allocates memory for the internal data structures required to decompress files, and then creates and initializes them. 
-	{"OpenFile",                    PyLZOpenFile,  METH_VARARGS}, // @pymeth OpenFile|Creates, opens, reopens, or deletes the specified file. 
+	{"Init",                        PyLZInit,  METH_VARARGS}, // @pymeth Init|Allocates memory for the internal data structures required to decompress files, and then creates and initializes them.
+	{"OpenFile",                    PyLZOpenFile,  METH_VARARGS}, // @pymeth OpenFile|Creates, opens, reopens, or deletes the specified file.
 	{NULL,			NULL}
 };
 

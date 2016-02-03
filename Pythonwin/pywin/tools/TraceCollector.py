@@ -42,7 +42,7 @@ class WindowOutput(winout.WindowOutput):
 #	def Create(self, title=None, style = None):
 #		rc = winout.WindowOutput.Create(self, title, style)
 		return rc
-		
+
 
 def MakeOutputWindow():
 	# Note that it will not show until the first string written or

@@ -43,7 +43,7 @@ def profile(fn, *args):
 	import profile
 	prof = profile.Profile()
 	try:
-# roll on 1.6 :-)		
+# roll on 1.6 :-)
 #		return prof.runcall(fn, *args)
 		return prof.runcall(*(fn,) + args)
 	finally:
@@ -307,7 +307,7 @@ class ScriptItem:
 #				return
 #			print "**** Made dispatch"
 		self.isRegistered = 1
-		# Register the sub-items.				
+		# Register the sub-items.
 		for item in self.subItems.itervalues():
 			if not item.isRegistered:
 				item.Register()
@@ -332,7 +332,7 @@ class ScriptItem:
 			except AttributeError:
 				pass
 		return ret
-	
+
 	def GetSubItemClass(self):
 		return self.__class__
 
@@ -354,7 +354,7 @@ class ScriptItem:
 		except KeyError:
 			rc = self.subItems[keyName] = self.GetSubItemClass()(parentItem, name, dispatch, flags)
 		return rc
-#		if self.dispatch is None: 
+#		if self.dispatch is None:
 #			RaiseAssert(winerror.E_UNEXPECTED, "??")
 
 	def CreateConnections(self):
@@ -373,7 +373,7 @@ class ScriptItem:
 			self.eventSink.Connect()
 		for subItem in self.subItems.itervalues():
 			subItem.Connect()
-			
+
 	def Disconnect(self):
 		# Disconnect from the connection points.
 		if self.eventSink:
@@ -385,7 +385,7 @@ class ScriptItem:
 	def BuildEvents(self):
 		if self.eventSink is not None or self.dispatch is None:
 			RaiseAssert(winerror.E_UNEXPECTED, "Item already has built events, or no dispatch available?")
-		
+
 #		trace("BuildEvents for named item", self._GetFullItemName())
 		self.eventSink = EventSink(self, self.dispatch)
 		self.eventSink.BuildEvents()
@@ -577,7 +577,7 @@ class COMScript:
 			self.debugManager = None
 
 		try:
-			self.lcid = site.GetLCID() 
+			self.lcid = site.GetLCID()
 		except pythoncom.com_error:
 			self.lcid = win32api.GetUserDefaultLCID()
 		self.Reset()
@@ -720,7 +720,7 @@ class COMScript:
 			raise Exception(scode=winerror.E_NOINTERFACE)
 
 	def _GetSupportedInterfaceSafetyOptions(self):
-		return 0 
+		return 0
 
 	def GetInterfaceSafetyOptions(self, iid):
 		if iid in [pythoncom.IID_IPersist, pythoncom.IID_IPersistStream, pythoncom.IID_IPersistStreamInit,
@@ -801,7 +801,7 @@ class COMScript:
 			self.DisconnectEventHandlers()
 		except pythoncom.com_error:
 			# Ignore errors when disconnecting.
-			pass 
+			pass
 
 		self.ChangeScriptState(axscript.SCRIPTSTATE_DISCONNECTED)
 
@@ -843,7 +843,7 @@ class COMScript:
 				return fn(*args)
 		else:
 			return fn(*args)
-	
+
 	def ApplyInScriptedSection(self, codeBlock, fn, args):
 		self.BeginScriptedSection()
 		try:
@@ -855,7 +855,7 @@ class COMScript:
 				self.EndScriptedSection()
 		except:
 			self.HandleException(codeBlock)
-			
+
 	# This stack frame is debugged - therefore we do as little as possible in it.
 	def _CompileInScriptedSection(self, code, name, type):
 		if self.debugManager: self.debugManager.OnEnterScript()
@@ -880,7 +880,7 @@ class COMScript:
 				self.EndScriptedSection()
 		except:
 			self.HandleException(codeBlock)
-	
+
 	# This stack frame is debugged - therefore we do as little as possible in it.
 	def _ExecInScriptedSection(self, codeObject, globals, locals = None):
 		if self.debugManager:
@@ -915,7 +915,7 @@ class COMScript:
 				return eval(codeBlock, globals, locals)
 		else:
 			return eval(codeBlock, globals, locals)
-		
+
 	def EvalInScriptedSection(self, codeBlock, globals, locals = None):
 		if locals is None: locals = globals
 		assert not codeBlock.beenExecuted, "This code block should not have been executed"
@@ -945,7 +945,7 @@ class COMScript:
 			# Ensure the traceback doesnt cause a cycle.
 			exc_traceback = None
 			raise Exception(scode=exc_value.hresult)
-		
+
 		exception = error.AXScriptException(self, \
 		                       codeBlock, exc_type, exc_value, exc_traceback)
 
@@ -972,7 +972,7 @@ class COMScript:
 		if self.scriptSite is None:
 			raise Exception(scode=winerror.E_UNEXPECTED)
 		self.scriptSite.OnLeaveScript()
-	
+
 	def DisableInterrupts(self):
 		pass
 	def EnableInterrupts(self):

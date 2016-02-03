@@ -29,8 +29,8 @@ PyIMAPISession::~PyIMAPISession()
 
 %native(OpenEntry) OpenEntry; // OpenEntry manually done :-(
 %{
-// @pyswig <o PyIInterface>|OpenEntry|Opens an object and returns an interface object for further access. 
-PyObject *PyIMAPISession::OpenEntry(PyObject *self, PyObject *args) 
+// @pyswig <o PyIInterface>|OpenEntry|Opens an object and returns an interface object for further access.
+PyObject *PyIMAPISession::OpenEntry(PyObject *self, PyObject *args)
 {
     HRESULT  _result;
     char *entryString;
@@ -48,7 +48,7 @@ PyObject *PyIMAPISession::OpenEntry(PyObject *self, PyObject *args)
     // @pyparm string|entryId||The EntryID to open.
     // @pyparm <o PyIID>|iid||The IID of the returned interface, or None for the default interface.
     // @pyparm int|flags||Flags for the call.  May include MAPI_BEST_ACCESS, MAPI_DEFERRED_ERRORS, MAPI_MODIFY and possibly others (see the MAPI documentation)
-    if(!PyArg_ParseTuple(args,"OOl:OpenEntry", &obEntry, &objIID, &flags)) 
+    if(!PyArg_ParseTuple(args,"OOl:OpenEntry", &obEntry, &objIID, &flags))
         return NULL;
 	if (obEntry==Py_None) {
 		entryString = NULL;
@@ -80,7 +80,7 @@ PyObject *PyIMAPISession::OpenEntry(PyObject *self, PyObject *args)
 %native(OpenMsgStore) OpenMsgStore;
 %{
 // @pyswig <o PyIUnknown>|OpenMsgStore|Opens a message store.
-PyObject *PyIMAPISession::OpenMsgStore(PyObject *self, PyObject *args) 
+PyObject *PyIMAPISession::OpenMsgStore(PyObject *self, PyObject *args)
 {
     HRESULT  _result;
     char * entryString;
@@ -98,7 +98,7 @@ PyObject *PyIMAPISession::OpenMsgStore(PyObject *self, PyObject *args)
     // @pyparm string|entryId||The entry ID of the message store to open.
     // @pyparm <o PyIID>|iid||The IID of the interface returned, or None
     // @pyparm int|flags||Options for the call.
-    if(!PyArg_ParseTuple(args,"ls#Ol:OpenMsgStore",&ulParm,&entryString,&entryStrLen, &objIID,&flags)) 
+    if(!PyArg_ParseTuple(args,"ls#Ol:OpenMsgStore",&ulParm,&entryString,&entryStrLen, &objIID,&flags))
         return NULL;
 	if (objIID==Py_None)
 		pIID = NULL;
@@ -122,13 +122,13 @@ PyObject *PyIMAPISession::OpenMsgStore(PyObject *self, PyObject *args)
 %native(QueryIdentity) QueryIdentity;
 %{
 // @pyswig string|QueryIdentity|Returns the entry identifier of the object that provides the primary identity for the session.
-PyObject *PyIMAPISession::QueryIdentity(PyObject *self, PyObject *args) 
+PyObject *PyIMAPISession::QueryIdentity(PyObject *self, PyObject *args)
 {
 	ULONG cb;
 	LPENTRYID peid;
 	IMAPISession *_swig_self;
 	if ((_swig_self=GetI(self))==NULL) return NULL;
-    if(!PyArg_ParseTuple(args,":QueryIdentity")) 
+    if(!PyArg_ParseTuple(args,":QueryIdentity"))
         return NULL;
 
 	HRESULT _result;
@@ -185,7 +185,7 @@ PyObject *PyIMAPISession::Advise(PyObject *self, PyObject *args)
 	PyObject *rc;
 	Py_BEGIN_ALLOW_THREADS
 	_result = _swig_self->Advise(entryStrLen, (LPENTRYID)entryString,
-	                             mask, psink, &connection); 
+	                             mask, psink, &connection);
 	Py_END_ALLOW_THREADS
 	if (FAILED(_result))
 		rc = OleSetOleError(_result);
@@ -202,11 +202,11 @@ PyObject *PyIMAPISession::Advise(PyObject *self, PyObject *args)
 
 // @pyswig |Unadvise|
 // @pyparm int|connection||Value returned from <om PyIMAPISession.Advise>
-HRESULT Unadvise(unsigned long connection); 
+HRESULT Unadvise(unsigned long connection);
 
 
 // @pyswig int|CompareEntryIDs|Compares two entry identifiers belonging to a particular address book provider to determine if they refer to the same address book object
-// @rdesc The result is set to TRUE if the two entry identifiers refer to the same object, and FALSE otherwise. 
+// @rdesc The result is set to TRUE if the two entry identifiers refer to the same object, and FALSE otherwise.
 %native(CompareEntryIDs) CompareEntryIDs;
 %{
 PyObject *PyIMAPISession::CompareEntryIDs(PyObject *self, PyObject *args)
@@ -220,7 +220,7 @@ PyObject *PyIMAPISession::CompareEntryIDs(PyObject *self, PyObject *args)
 	IMAPISession *_swig_self;
 	PyObject *obE1, *obE2;
 	if ((_swig_self=GetI(self))==NULL) return NULL;
-    if(!PyArg_ParseTuple(args,"OO|i:CompareEntryIDs", 
+    if(!PyArg_ParseTuple(args,"OO|i:CompareEntryIDs",
 		&obE1, // @pyparm string|entryId||The first entry ID to be compared
 		&obE2, // @pyparm string|entryId||The second entry ID to be compared
 		&flags)) // @pyparm int|flags|0|Reserved - must be zero.
@@ -252,20 +252,20 @@ HRESULT GetLastError(HRESULT hr, unsigned long flags, MAPIERROR **OUTPUT);
 // @pyswig <o PyIMAPITable>|GetMsgStoresTable|Provides access to the message store table - a table with information about all of the message stores in the session profile.
 HRESULT GetMsgStoresTable(
     unsigned long ulFlags, // @pyparm int|flags||Flags that control the opening.
-    IMAPITable **OUTPUT 
+    IMAPITable **OUTPUT
 );
 
 // @pyswig <o PyIMAPITable>|GetStatusTable|Provides access to the status table - a table with information about all of the MAPI resources in the session.
 HRESULT GetStatusTable(
     unsigned long ulFlags, // @pyparm int|flags||Flags that control the opening.
-    IMAPITable **OUTPUT 
+    IMAPITable **OUTPUT
 );
 
 // @pyswig |Logoff|Ends a MAPI session.
-HRESULT Logoff( 
+HRESULT Logoff(
     unsigned long ulUIParam,  // @pyparm int|uiParm||hwnd of a dialog is to be displayed.
     unsigned long ulFlags,    // @pyparm int|flags||Bitmask of flags that control the logoff operation.
-    unsigned long ulReserved ); // @pyparm int|reserved||Reserved; must be zero. 
+    unsigned long ulReserved ); // @pyparm int|reserved||Reserved; must be zero.
 
 // @pyswig <o PyIAddrBook>|OpenAddressBook|Opens the integrated address book.
 HRESULT OpenAddressBook(

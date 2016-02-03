@@ -108,7 +108,7 @@ def import_all():
         import win32ui
     except ImportError:
         pass # 'what-ev-a....'
-    
+
     import win32api
     dir = os.path.dirname(win32api.__file__)
     num = 0

@@ -9,7 +9,7 @@
 *
 * CISCO SYSTEMS, INC. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
 * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-* FITNESS. IN NO EVENT SHALL CISCO SYSTEMS BE LIABLE FOR ANY LOST REVENUE, 
+* FITNESS. IN NO EVENT SHALL CISCO SYSTEMS BE LIABLE FOR ANY LOST REVENUE,
 * PROFIT OR DATA, OR FOR SPECIAL, INDIRECT, CONSEQUENTIAL OR INCIDENTAL
 * DAMAGES OR ANY OTHER DAMAGES WHATSOEVER, HOWEVER CAUSED AND REGARDLESS
 * OF THE THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION
@@ -124,7 +124,7 @@ BOOL PyNETENUMHANDLE::Close(void)
 
 ****************************************************************************/
 
-// @pymethod |win32wnet|WNetAddConnection2|Creates a connection to a network resource. The function can redirect 
+// @pymethod |win32wnet|WNetAddConnection2|Creates a connection to a network resource. The function can redirect
 // a local device to the network resource.
 // @comm This function also accepts backwards-compatible, positional-only
 // arguments of (dwType, lpLocalName, lpRemoteName[, lpProviderName, Username, Password, flags])
@@ -316,7 +316,7 @@ PyWNetCloseEnum(PyObject *self, PyObject *args)
 
 	if (!PyNETENUMObject_CloseHANDLE(ob_nr))
 		return NULL;
-	
+
 	Py_INCREF(Py_None);
 	return Py_None;
 };
@@ -346,7 +346,7 @@ PyWNetEnumResource(PyObject *self, PyObject *args)
 	// @pyparm int|maxExtries|64|The maximum number of entries to return.
 	if (!PyArg_ParseTuple(args, "O!|i", &PyHANDLEType, &Eob, &dwMaxCount)) // enforce the PyHANDLEType, Count is optional
 		return NULL;
-	
+
 	if (!PyWinObject_AsHANDLE(Eob, &hEnum))	// shouldn't fail unless out of memory?
 		return NULL;
 
@@ -361,7 +361,7 @@ PyWNetEnumResource(PyObject *self, PyObject *args)
 	if (pRetlist == NULL)               // did we err?
 		return NULL;
 
-	
+
 	do	// start the enumeration
 	{
 	dwRefsize = dwBuffsize = 64*1024;	// set size of buffer to request at 64K
@@ -413,7 +413,7 @@ PyWNetEnumResource(PyObject *self, PyObject *args)
 
 		dwCount = dwMaxCount;	// reset to how many left
 	}
-		
+
 	VirtualFree(lpBuffer, 0, MEM_RELEASE);	// free the working buffer
 
 	}while ((Errno == NO_ERROR) && (dwMaxCount != 0));	// No more because EnumResource returned "ERROR_NO_MORE_DATA"
@@ -433,7 +433,7 @@ PyWNetGetUser(PyObject *self, PyObject *args)
 	TCHAR *szConnection = NULL;
 	TCHAR *buf = NULL;
 
-	// @pyparm string|connection|None|A string that specifies either the name of a local device that has been redirected to a network resource, or the remote name of a network resource to which a connection has been made without redirecting a local device. 
+	// @pyparm string|connection|None|A string that specifies either the name of a local device that has been redirected to a network resource, or the remote name of a network resource to which a connection has been made without redirecting a local device.
 	// If this parameter is None, the system returns the name of the current user for the process.
 	if (!PyArg_ParseTuple(args, "|O", &obConnection))
 		return NULL;
@@ -485,13 +485,13 @@ PyWNetGetUniversalName(PyObject *self, PyObject *args)
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obLocalPath, &szLocalPath, FALSE))
 		return NULL;
-	// @pyparm string|localPath||A string that is a drive-based path for a network resource. 
-	// <nl>For example, if drive H has been mapped to a network drive share, and the network 
-	// resource of interest is a file named SAMPLE.DOC in the directory \WIN32\EXAMPLES on 
-	// that share, the drive-based path is H:\WIN32\EXAMPLES\SAMPLE.DOC. 
-	// @pyparm int|infoLevel|UNIVERSAL_NAME_INFO_LEVEL|Specifies the type of structure that the function stores in the buffer pointed to by the lpBuffer parameter. 
+	// @pyparm string|localPath||A string that is a drive-based path for a network resource.
+	// <nl>For example, if drive H has been mapped to a network drive share, and the network
+	// resource of interest is a file named SAMPLE.DOC in the directory \WIN32\EXAMPLES on
+	// that share, the drive-based path is H:\WIN32\EXAMPLES\SAMPLE.DOC.
+	// @pyparm int|infoLevel|UNIVERSAL_NAME_INFO_LEVEL|Specifies the type of structure that the function stores in the buffer pointed to by the lpBuffer parameter.
 	// This parameter can be one of the following values.
-	// @flagh Value|Meaning 
+	// @flagh Value|Meaning
 	// @flag UNIVERSAL_NAME_INFO_LEVEL (=1)|The function returns a simple string with the UNC name.
 	// @flag REMOTE_NAME_INFO_LEVEL (=2)|The function returns a tuple based in the Win32 REMOTE_NAME_INFO data structure.
 	// @rdesc If the infoLevel parameter is REMOTE_NAME_INFO_LEVEL, the result is a tuple of 3 strings: (UNCName, connectionName, remainingPath)
@@ -551,7 +551,7 @@ PyWNetGetResourceInformation(PyObject *self, PyObject *args)
 	bufsize=sizeof(NETRESOURCE);	// make sure it loops thru again in debug mode
 #endif
 
-	if (!PyArg_ParseTuple(args, "O!", &PyNETRESOURCEType, 
+	if (!PyArg_ParseTuple(args, "O!", &PyNETRESOURCEType,
 		&NRT))	// @pyparm <o PyNETRESOURCE>|NetResource||Describes a network resource.  lpRemoteName is required, dwType and lpProvider can be supplied if known
 		return NULL;
 
@@ -637,7 +637,7 @@ PyObject *PyWNetGetResourceParent(PyObject *self, PyObject *args)
 	bufsize=sizeof(NETRESOURCE);
 #endif
 	PyObject *obnr, *ret=NULL;
-	if (!PyArg_ParseTuple(args, "O:WNetGetResourceParent", 
+	if (!PyArg_ParseTuple(args, "O:WNetGetResourceParent",
 		&obnr))		// @pyparm <o PyNETRESOURCE>|NetResource||Describes a network resource.  lpRemoteName and lpProvider are required, dwType is recommended for efficiency
 		return NULL;
 	if (!PyWinObject_AsNETRESOURCE(obnr, &nr, FALSE))
@@ -680,7 +680,7 @@ PyWNetGetConnection(PyObject *self, PyObject *args)
 	TCHAR *szConnection = NULL;
 	TCHAR *buf = NULL;
 
-	// @pyparm string|connection|None|A string that is a drive-based path for a network resource. 
+	// @pyparm string|connection|None|A string that is a drive-based path for a network resource.
 	// For example, if drive H has been mapped to a network drive share, and the network resource of interest is a file named Sample.doc in the directory \Win32\Examples on that share, the drive-based path is H:\Win32\Examples\Sample.doc.
 	if (!PyArg_ParseTuple(args, "|O", &obConnection))
 		return NULL;

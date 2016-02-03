@@ -101,7 +101,7 @@ void CPythonListViewImpl::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 	PyObject *args = Py_BuildValue("iiiiiiO(iiii)O",
 			lpDIS->CtlType, lpDIS->CtlID, lpDIS->itemID,
 			lpDIS->itemAction, lpDIS->itemState, lpDIS->hwndItem,
-			obDC, 
+			obDC,
 			lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right, lpDIS->rcItem.bottom,
 			obData);
 	ASSERT(args);
@@ -155,7 +155,7 @@ void CPythonTreeViewImpl::DrawItem( LPDRAWITEMSTRUCT lpDIS )
 	PyObject *args = Py_BuildValue("iiiiiiO(iiii)O",
 			lpDIS->CtlType, lpDIS->CtlID, lpDIS->itemID,
 			lpDIS->itemAction, lpDIS->itemState, lpDIS->hwndItem,
-			obDC, 
+			obDC,
 			lpDIS->rcItem.left, lpDIS->rcItem.top, lpDIS->rcItem.right, lpDIS->rcItem.bottom,
 			obData);
 	ASSERT(args);

@@ -4,7 +4,7 @@
 
   Donated to the Python community by EShop, who can not
   support it!
-  
+
   Note that this can be built on non-Windows systems by a C (not C++)
   compiler, so should avoid C++ constructs and comments.
 
@@ -227,17 +227,17 @@ static void odbcPrintError
 )
 {
 	TCHAR  sqlState[256];
-	long  nativeError;    
-	short   pcbErrorMsg;  
+	long  nativeError;
+	short   pcbErrorMsg;
 	TCHAR    errorMsg[1000];
 	PyObject *error;
 
 	if (unsuccessful(SQLError(
 		env,
 		conn ? conn->hdbc : 0,
-		cur, 
+		cur,
 		(SQLTCHAR *)sqlState,
-		&nativeError, 
+		&nativeError,
 		(SQLTCHAR *)errorMsg,
 		sizeof(errorMsg)/sizeof(errorMsg[0]), &pcbErrorMsg)))
 	{
@@ -258,7 +258,7 @@ static void odbcPrintError
 		}
 
         /* internal is the default */
-		int errn = errorType ? errorType->index : 5 ;  
+		int errn = errorType ? errorType->index : 5 ;
 		error = dbiErrors[errn];
 	}
 
@@ -309,7 +309,7 @@ static int attemptReconnect(cursorObject *cur)
 		/* ie the cursor was made on an old connection */
 		/* Do not need to free HSTMT here, since any statements attached to the connection
 			are automatically invalidated when SQLDisconnect is called in odbcPrintError.
-			(only place where connected is set to 0) 
+			(only place where connected is set to 0)
 			SQLFreeStmt(cur->hstmt, SQL_DROP);
 		*/
 		cur->hstmt=NULL;
@@ -563,7 +563,7 @@ static BOOL bindOutputVar
 	ob->pos = pos;
 	ob->vtype = vtype;
 	ob->vsize = vsize;
-	
+
 	/* Stick the new column on the end of the linked list.
 	   We do this because we call SQLGetData() while walking the linked list.
 	   Some ODBC drivers require all BLOB columns to be at the end of the column list.
@@ -582,7 +582,7 @@ static BOOL bindOutputVar
 		}
 		current->next = ob;
 	}
-	
+
 	ob->copy_fcn = fcn;
 	ob->bind_area = malloc(vsize);
 	if (ob->bind_area == NULL){
@@ -671,7 +671,7 @@ static void initParseContext(parseContext *ct, const TCHAR *c)
   ct->parmCount = 0;
 }
 
-static TCHAR doParse(parseContext *ct) 
+static TCHAR doParse(parseContext *ct)
 {
 	ct->isParm = 0;
 	if (ct->state == *ct->ptr)
@@ -736,7 +736,7 @@ static InputBinding *initInputBinding(cursorObject *cur, Py_ssize_t len)
 }
 
 
-static int ibindInt(cursorObject *cur, int column, PyObject *item) 
+static int ibindInt(cursorObject *cur, int column, PyObject *item)
 {
 	int len = sizeof(long);
 	long val = PyInt_AsLong(item);
@@ -754,7 +754,7 @@ static int ibindInt(cursorObject *cur, int column, PyObject *item)
 		SQL_C_LONG,
 		SQL_INTEGER,
 		len,
-		0, 
+		0,
 		ib->bind_area,
 		len,
 		&ib->len)))
@@ -794,7 +794,7 @@ static int ibindLong(cursorObject*cur,int column, PyObject *item)
 		if (!ib)
 			return 0;
 		memcpy(ib->bind_area, &longlongval, len);
-		}	
+		}
 
 	if (unsuccessful(SQLBindParameter(
 		cur->hstmt,
@@ -803,7 +803,7 @@ static int ibindLong(cursorObject*cur,int column, PyObject *item)
 		CType,
 		SqlType,
 		len,
-		0, 
+		0,
 		ib->bind_area,
 		len,
 		&ib->len)))
@@ -817,7 +817,7 @@ static int ibindLong(cursorObject*cur,int column, PyObject *item)
 
 static int ibindNull(cursorObject*cur, int column)
 {
-  static SQLLEN nl; 
+  static SQLLEN nl;
   /* apparently, ODBC does not read the last parameter
      until EXEC time, i.e., after this function is
      out of scope, hence nl must be static */
@@ -833,7 +833,7 @@ static int ibindNull(cursorObject*cur, int column)
 	  SQL_C_CHAR,
 	  SQL_CHAR,
 	  0,
-	  0, 
+	  0,
 	  0,
 	  0,
 	  &nl)))
@@ -846,7 +846,7 @@ static int ibindNull(cursorObject*cur, int column)
 }
 
 
-static int ibindDate(cursorObject*cur, int column, PyObject *item) 
+static int ibindDate(cursorObject*cur, int column, PyObject *item)
 {
 	/* Sql server apparently determines the precision and type of date based
 		on length of input, according to the character size required for column
@@ -941,7 +941,7 @@ static int ibindRaw(cursorObject *cur, int column, PyObject *item)
   if (!ib)
       return 0;
   ib->bPutData = true;
-  
+
   memcpy(ib->bind_area, val, len);
 
   RETCODE rc = SQL_SUCCESS;
@@ -953,7 +953,7 @@ static int ibindRaw(cursorObject *cur, int column, PyObject *item)
 	  SQL_C_BINARY,
 	  SQL_LONGVARBINARY,
 	  len,
-	  0, 
+	  0,
 	  ib->bind_area,
 	  len,
 	  &ib->len);
@@ -1022,10 +1022,10 @@ static int ibindString(cursorObject *cur, int column, PyObject *item)
 	  cur->hstmt,
 	  column,
 	  SQL_PARAM_INPUT,
-	  SQL_C_CHAR, 
+	  SQL_C_CHAR,
 	  sqlType,
 	  len,
-	  0, 
+	  0,
 	  ib->bind_area,
 	  len,
 	  &NTS);
@@ -1067,10 +1067,10 @@ static int ibindUnicode(cursorObject *cur, int column, PyObject *item)
 	  cur->hstmt,
 	  column,
 	  SQL_PARAM_INPUT,
-	  SQL_C_WCHAR, 
+	  SQL_C_WCHAR,
 	  sqlType,
 	  nchars,
-	  0, 
+	  0,
 	  ib->bind_area,
 	  nbytes,
 	  &NTS);
@@ -1090,7 +1090,7 @@ static int rewriteQuery
 )
 {
 	parseContext ctx;
-	
+
 	initParseContext(&ctx, in);
 	while (*out++ = doParse(&ctx))
 		;
@@ -1100,7 +1100,7 @@ static int rewriteQuery
 static int bindInput
 (
 	cursorObject *cur,
-	PyObject *vars, 
+	PyObject *vars,
 	int columns
 )
 {
@@ -1108,7 +1108,7 @@ static int bindInput
 	PyObject *item;
 	int rv;
 	int iCol;
-	
+
 	if (columns == 0)
 	{
 		return 1;
@@ -1153,7 +1153,7 @@ static int bindInput
 		#endif
 		{
 			rv = ibindRaw(cur, iCol, item);
-		}		
+		}
 		else
 		{
 			OutputDebugString(_T("bindInput - using repr conversion for type: '"));
@@ -1178,11 +1178,11 @@ static int bindInput
 			return 0;
 		}
 	}
-	
+
 	return 1;
 }
 
-static int display_size(short coltype, int collen, const TCHAR *colname) 
+static int display_size(short coltype, int collen, const TCHAR *colname)
 {
 
   switch (coltype)
@@ -1211,7 +1211,7 @@ static int display_size(short coltype, int collen, const TCHAR *colname)
     case SQL_LONGVARCHAR:
     default:
       return (0);
-    } 
+    }
 }
 
 
@@ -1223,7 +1223,7 @@ static BOOL bindOutput(cursorObject *cur)
 	int pos = 1;
 	short n_columns;
 	SQLNumResultCols(cur->hstmt, &n_columns);
-	cur->n_columns = n_columns; 
+	cur->n_columns = n_columns;
 	for (pos = 1; pos <= cur->n_columns; pos++)
 	{
 		PyObject *typeOf;
@@ -1351,10 +1351,10 @@ static RETCODE sendSQLInputData
 {
 	RETCODE rc = SQL_SUCCESS;
 	char   *pIndx;
-	
+
 	Py_BEGIN_ALLOW_THREADS
 	rc = SQLParamData(cur->hstmt, (void **)&pIndx);
-	while (rc == SQL_NEED_DATA) 
+	while (rc == SQL_NEED_DATA)
 	{
 		InputBinding* pInputBinding = cur->inputVars;
 
@@ -1376,7 +1376,7 @@ static RETCODE sendSQLInputData
 			size_t   putTimes = pInputBinding->len / 1024;
 			size_t   remainder = pInputBinding->len % 1024;
 			rc = SQL_SUCCESS;
-					
+
 			if (!putTimes && !remainder)
 			{
 				rc = SQLPutData(cur->hstmt, pInputBinding->bind_area, 0);
@@ -1390,14 +1390,14 @@ static RETCODE sendSQLInputData
 			if (remainder && rc == SQL_SUCCESS)
 			{
 				rc = SQLPutData(cur->hstmt, (void*)(&pInputBinding->bind_area[i *  1024]), remainder);
-			}                    
+			}
 		}
-				
+
 		/* see if additional data is needed. */
 		rc = SQLParamData(cur->hstmt, (void **)&pIndx);
 	}
 	Py_END_ALLOW_THREADS
-	
+
 	return rc;
 }
 
@@ -1567,7 +1567,7 @@ static PyObject *odbcCurExec(PyObject *self, PyObject *args)
 			SQLRowCount(cur->hstmt, &n_rows);
 		}
 	}
-	
+
 	rv = PyLong_FromLongLong(n_rows);
 Cleanup:
 	PyWinObject_FreeTCHAR(sql);
@@ -1659,9 +1659,9 @@ static PyObject *processOutput(cursorObject *cur)
 						cbRead -= sizeof(WCHAR) + ob->vsize%sizeof(WCHAR);
 				}
 
-			} while (rc == SQL_SUCCESS_WITH_INFO); 
+			} while (rc == SQL_SUCCESS_WITH_INFO);
 		}
-		
+
 		PyObject *v;
 		if (ob->rcode == SQL_NULL_DATA)
 		{
@@ -1692,7 +1692,7 @@ static PyObject *processOutput(cursorObject *cur)
 
 		PyTuple_SET_ITEM(row, column++, v);
 		ob = ob->next;
-		
+
 	}
 	return row;
 }
@@ -2181,12 +2181,12 @@ static odbcErrorDesc *lookupError(const TCHAR *sqlState)
 	odbcErrorDesc key;
 
 	key.state = sqlState;
-	return (odbcErrorDesc*) 
+	return (odbcErrorDesc*)
 		bsearch(
-			&key, 
-			errorTable, 
+			&key,
+			errorTable,
 			sizeof(errorTable)/ sizeof(odbcErrorDesc), /* number of elems */
-			sizeof(odbcErrorDesc), 
+			sizeof(odbcErrorDesc),
 			odbcCompare);
 }
 

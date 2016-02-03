@@ -107,7 +107,7 @@ struct PyMethodDef PyFUNCDESC::methods[] = {
 // @object FUNCDESC|A FUNCDESC object represents a COM TYPEATTR structure.
 
 // Sequence stuff to provide compatibility with tuples.
-static PySequenceMethods PyFUNCDESC_Sequence = 
+static PySequenceMethods PyFUNCDESC_Sequence =
 {
 	PyFUNCDESC::getlength, // sq_length;
 	NULL, // sq_concat;

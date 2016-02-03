@@ -31,12 +31,12 @@ public:
 //	BOOL RegisterModule(const char *fileName, const char *moduleName);
 
 	// These must be called by Host Application at the relevant time.
-	BOOL InitInstance() 
+	BOOL InitInstance()
 		{return pfnInitInstance ? (*pfnInitInstance)() : FALSE;}
 	int ExitInstance(void) \
 		{return pfnExitInstance ? (*pfnExitInstance)() : -1;}
 	BOOL OnCmdMsg(CCmdTarget *pT, UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO*pHandlerInfo ) \
-		{return pfnOnCmdMsg ? (*pfnOnCmdMsg)(pT, nID, nCode, pExtra, pHandlerInfo) : FALSE;}	
+		{return pfnOnCmdMsg ? (*pfnOnCmdMsg)(pT, nID, nCode, pExtra, pHandlerInfo) : FALSE;}
 	BOOL PreTranslateMessage(MSG *pMsg) \
 		{return pfnPreTranslateMessage ? (*pfnPreTranslateMessage)(pMsg) : FALSE;}
 	BOOL OnIdle( LONG lCount ) \
@@ -84,7 +84,7 @@ inline 	Win32uiHostGlue::Win32uiHostGlue()
 	bShouldFinalizePython = false;
 	bShouldAbandonThreadState = true; // Depends on how embedded.
 	bWantStatusBarText = false; // We can handle it by default.
-	bDebugBuild = 
+	bDebugBuild =
 #ifdef _DEBUG
 		true;
 #else
@@ -131,7 +131,7 @@ inline BOOL Win32uiHostGlue::DynamicApplicationInit(const TCHAR *cmd, const TCHA
 	TCHAR fname[MAX_PATH*2];
 
 	HMODULE hModCore = NULL;
-	// There are 2 cases we care about: 
+	// There are 2 cases we care about:
 	// * pythonwin.exe next to win32ui, in lib\site-packages\pythonwin
 	// * pythonwin.exe next to python.exe, in sys.home - this is for
 	//   older style installs and for custom layouts.
@@ -185,11 +185,11 @@ inline BOOL Win32uiHostGlue::DynamicApplicationInit(const TCHAR *cmd, const TCHA
 	if (!hModCore) {
 		// No Python, no win32ui :(
 		TCHAR buf[256];
-		wsprintf(buf, _T("The application can not locate %s (or Python) (%d)\n"), szWinui_Name, GetLastError()); 
+		wsprintf(buf, _T("The application can not locate %s (or Python) (%d)\n"), szWinui_Name, GetLastError());
 		Py_ssize_t len = _tcslen(buf);
 		Py_ssize_t bufLeft = sizeof(buf)/sizeof(TCHAR) - len;
-		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), 
-			MAKELANGID(LANG_NEUTRAL,SUBLANG_NEUTRAL), 
+		FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(),
+			MAKELANGID(LANG_NEUTRAL,SUBLANG_NEUTRAL),
 			buf+len, PyWin_SAFE_DOWNCAST(bufLeft, Py_ssize_t, DWORD),
 			NULL);
 		AfxMessageBox(buf);

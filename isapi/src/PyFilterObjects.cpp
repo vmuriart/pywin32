@@ -8,7 +8,7 @@
  its documentation for any purpose and without fee is hereby
  granted, provided that the above copyright notice appear in all
  copies and that both that copyright notice and this permission
- notice appear in supporting documentation, and that the name of 
+ notice appear in supporting documentation, and that the name of
  Blackdog Software not be used in advertising or publicity pertaining to
  distribution of the software without specific, written prior
  permission.
@@ -180,7 +180,7 @@ PyObject * PyHFC::GetData(PyObject *self, PyObject *args)
 		// todo:
 		// SF_NOTIFY_ACCESS_DENIED HTTP_FILTER_ACCESS_DENIED
 		// SF_NOTIFY_SEND_RESPONSE HTTP_FILTER_SEND_RESPONSE
-		// SF_NOTIFY_AUTH_COMPLETE HTTP_FILTER_AUTH_COMPLETE_INFO 
+		// SF_NOTIFY_AUTH_COMPLETE HTTP_FILTER_AUTH_COMPLETE_INFO
 		default:
 			PyErr_Format(PyExc_ValueError, "Don't understand data of type 0x%x", me->m_notificationType);
 			return NULL;
@@ -284,7 +284,7 @@ PyObject * PyHFC::GetServerVariable(PyObject *self, PyObject *args)
 			}
 		}
 		if (!bufUse)
-			return PyErr_NoMemory();		
+			return PyErr_NoMemory();
 		if (!bRes) {
 			if (bufUse != buf)
 				free(bufUse);
@@ -367,11 +367,11 @@ static struct PyMethodDef PyHFC_methods[] = {
 
 struct PyMemberDef PyHFC::members[] = {
 	// @prop int|Revision|(read-only)
-	{"Revision",			T_INT,ECBOFF(m_revision), READONLY}, 
+	{"Revision",			T_INT,ECBOFF(m_revision), READONLY},
 	// @prop bool|fIsSecurePort|(read-only)
-	{"fIsSecurePort",			T_INT,	   ECBOFF(m_isSecurePort), READONLY}, 
+	{"fIsSecurePort",			T_INT,	   ECBOFF(m_isSecurePort), READONLY},
 	// @prop int|NotificationType|(read-only)
-	{"NotificationType",			T_INT,ECBOFF(m_notificationType), READONLY}, 
+	{"NotificationType",			T_INT,ECBOFF(m_notificationType), READONLY},
 	{NULL}
 };
 
@@ -852,7 +852,7 @@ PyObject *PyRAW_DATA::getattro(PyObject *self, PyObject *obname)
 		return PyString_FromStringAndSize((const char *)pRD->pvInData,
 						  pRD->cbInData);
 	}
-	
+
 	return PyObject_GenericGetAttr(self, obname);
 }
 

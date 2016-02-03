@@ -38,7 +38,7 @@ def ob2memory(ob):
 
 
 # Note: no str2unicode: we use u'' literals or unicode() function, and 2to3
-# 
+#
 
 ##
 ## unittest related stuff
@@ -104,7 +104,7 @@ class LeakTestCase(unittest.TestCase):
             if result.shouldStop:
                 break
         del i # created after we remembered the refcount!
-        # int division here means one or 2 stray references won't force 
+        # int division here means one or 2 stray references won't force
         # failure, but one per loop
         gc.collect()
         lost = (gtrc() - trc) // self.num_leak_iters

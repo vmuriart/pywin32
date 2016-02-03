@@ -40,7 +40,7 @@ public:
 	static PyObject *GetScriptThreadState(PyObject *self, PyObject *args);
 	static PyObject *InterruptScriptThread(PyObject *self, PyObject *args);
 	static PyObject *Clone(PyObject *self, PyObject *args);
-	
+
 protected:
 	PyIActiveScript(IUnknown *pdisp);
 	~PyIActiveScript();
@@ -57,7 +57,7 @@ public:
 	static PyObject *InitNew(PyObject *self, PyObject *args);
 	static PyObject *AddScriptlet(PyObject *self, PyObject *args);
 	static PyObject *ParseScriptText(PyObject *self, PyObject *args);
-	
+
 protected:
 	PyIActiveScriptParse(IUnknown *pdisp);
 	~PyIActiveScriptParse();
@@ -79,7 +79,7 @@ public:
 	static PyObject *OnLeaveScript(PyObject *self, PyObject *args);
 	static PyObject *OnScriptError(PyObject *self, PyObject *args);
 	static PyObject *OnScriptTerminate(PyObject *self, PyObject *args);
-	
+
 protected:
 	PyIActiveScriptSite(IUnknown *pdisp);
 	~PyIActiveScriptSite();
@@ -92,9 +92,9 @@ class PYAXSCRIPT_EXPORT PyGActiveScript : public PyGatewayBase, public IActiveSc
 protected:
 	PyGActiveScript(PyObject *instance) : PyGatewayBase(instance) {;}
 /*
-	public: 
-		static HRESULT PyGActiveScript::PyGatewayConstruct(PyObject *pPyInstance, void **ppResult, REFIID iid) { 
-			if (ppResult==NULL) return E_INVALIDARG; 
+	public:
+		static HRESULT PyGActiveScript::PyGatewayConstruct(PyObject *pPyInstance, void **ppResult, REFIID iid) {
+			if (ppResult==NULL) return E_INVALIDARG;
 			PyGActiveScript *newob = new PyGActiveScript(pPyInstance);
 			*ppResult = (IActiveScript *)newob;
 			char buf[128];
@@ -102,14 +102,14 @@ protected:
 			OutputDebugString(buf);
 			return *ppResult ? S_OK : E_OUTOFMEMORY;
 		}
-	protected: 
+	protected:
 #ifdef GW_USE_VIRTUAL
-		virtual IID GetIID(void) { return IID_IActiveScript; } 
+		virtual IID GetIID(void) { return IID_IActiveScript; }
 		virtual void *ThisAsIID(IID iid)
 		{
-			if (iid==IID_IActiveScript) 
-				return (IActiveScript *)this; 
-			else 
+			if (iid==IID_IActiveScript)
+				return (IActiveScript *)this;
+			else
 				return (IDispatch *)this; // Assumption is must be IDispatch or IUnknown
 		}
 #endif
@@ -180,7 +180,7 @@ protected:
 };
 
 
-class PYAXSCRIPT_EXPORT PyGActiveScriptParse : 
+class PYAXSCRIPT_EXPORT PyGActiveScriptParse :
 	public PyGatewayBase,
 	public IActiveScriptParse
 {
@@ -188,8 +188,8 @@ class PYAXSCRIPT_EXPORT PyGActiveScriptParse :
 	PYGATEWAY_MAKE_SUPPORT(PyGActiveScriptParse,IActiveScriptParse, IID_IActiveScriptParse)
 	// IActiveScriptParse
         STDMETHOD(InitNew)( void);
-        
-        STDMETHOD(AddScriptlet)( 
+
+        STDMETHOD(AddScriptlet)(
             /* [in] */ LPCOLESTR pstrDefaultName,
             /* [in] */ LPCOLESTR pstrCode,
             /* [in] */ LPCOLESTR pstrItemName,
@@ -201,8 +201,8 @@ class PYAXSCRIPT_EXPORT PyGActiveScriptParse :
             /* [in] */ DWORD dwFlags,
             /* [out] */ BSTR __RPC_FAR *pbstrName,
             /* [out] */ EXCEPINFO __RPC_FAR *pexcepinfo);
-        
-        STDMETHOD(ParseScriptText)( 
+
+        STDMETHOD(ParseScriptText)(
             /* [in] */ LPCOLESTR pstrCode,
             /* [in] */ LPCOLESTR pstrItemName,
             /* [in] */ IUnknown __RPC_FAR *punkContext,
@@ -223,26 +223,26 @@ protected:
 	PYGATEWAY_MAKE_SUPPORT(PyGActiveScriptSite, IActiveScriptSite, IID_IActiveScriptSite)
 
 	// IActiveScriptSite
-	STDMETHOD(GetLCID)( 
+	STDMETHOD(GetLCID)(
             /* [out] */ LCID FAR *plcid);
 
-	STDMETHOD(GetItemInfo)( 
+	STDMETHOD(GetItemInfo)(
             /* [in] */ LPCOLESTR pstrName,
             /* [in] */ DWORD dwReturnMask,
             /* [out] */ IUnknown FAR *FAR *ppiunkItem,
             /* [out] */ ITypeInfo FAR *FAR *ppti);
 
-	STDMETHOD(GetDocVersionString)( 
+	STDMETHOD(GetDocVersionString)(
             /* [out] */ BSTR FAR *pbstrVersion);
 
-	STDMETHOD(OnScriptTerminate)( 
+	STDMETHOD(OnScriptTerminate)(
             /* [in] */ const VARIANT FAR *pvarResult,
             /* [in] */ const EXCEPINFO FAR *pexcepinfo);
 
-	STDMETHOD(OnStateChange)( 
+	STDMETHOD(OnStateChange)(
             /* [in] */ SCRIPTSTATE ssScriptState);
 
-	STDMETHOD(OnScriptError)( 
+	STDMETHOD(OnScriptError)(
             /* [in] */ IActiveScriptError FAR *pscripterror);
 
 	STDMETHOD(OnEnterScript)(void);

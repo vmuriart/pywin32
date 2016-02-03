@@ -74,7 +74,7 @@ PyObject *ui_splitter_create_static( PyObject *self, PyObject *args )
 	DWORD dwStyle = WS_CHILD | WS_VISIBLE;
 	UINT nID = AFX_IDW_PANE_FIRST;
 	PyObject *ob;
-	if (!PyArg_ParseTuple(args,"Oii|ii", 
+	if (!PyArg_ParseTuple(args,"Oii|ii",
 	          &ob,     // @pyparm <o PyCFrameWnd> or <o PyCSplitter>|parent||The parent window.
 	          &rows,   // @pyparm int|rows||The number of rows in the splitter.
 	          &cols,   // @pyparm int|cols||The number of columns in the splitter.
@@ -109,7 +109,7 @@ PyObject *ui_splitter_create_view( PyObject *self, PyObject *args )
 		return NULL;
 	int row, col, width, height;
 	PyObject *ob;
-	if (!PyArg_ParseTuple(args,"Oii(ii)", 
+	if (!PyArg_ParseTuple(args,"Oii(ii)",
 	          &ob,     // @pyparm <o PyCView>|view||The view to place in the splitter pane.
 	          &row,    // @pyparm int|row||The row in the splitter to place the view.
 	          &col,    // @pyparm int|col||The column in the splitter to place the view.
@@ -241,12 +241,12 @@ static struct PyMethodDef ui_splitter_window_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCSplitterWnd::type("PyCSplitterWnd", 
-									 &PyCWnd::type, 
+ui_type_CObject PyCSplitterWnd::type("PyCSplitterWnd",
+									 &PyCWnd::type,
 									 RUNTIME_CLASS(CSplitterWnd),
-									 sizeof(PyCSplitterWnd), 
-									 PYOBJ_OFFSET(PyCSplitterWnd), 
-									 ui_splitter_window_methods, 
+									 sizeof(PyCSplitterWnd),
+									 PYOBJ_OFFSET(PyCSplitterWnd),
+									 ui_splitter_window_methods,
 									 GET_PY_CTOR(PyCSplitterWnd));
 
 /////////////////////////////////////////////////////////////////////

@@ -50,7 +50,7 @@ BOOL PyObject_AsLOGPALETTE(PyObject *obLogPal, LOGPALETTE **ppLogPal)
 		PyObject *subOb = PySequence_GetItem(obLogPal, i);
 		if (subOb==NULL)
 			goto done;
-		if (!PyArg_ParseTuple(subOb, "bbbb", 
+		if (!PyArg_ParseTuple(subOb, "bbbb",
 			&pPal->palPalEntry[i].peRed, &pPal->palPalEntry[i].peGreen, &pPal->palPalEntry[i].peBlue, &pPal->palPalEntry[i].peFlags)) {
 			Py_XDECREF(subOb);
 			goto done;
@@ -74,7 +74,7 @@ PyObject *PyObject_FromLOGPALETTE( LOGPALETTE *pLP)
 {
 	PyObject *entries = PyTuple_New(pLP->palNumEntries);
 	for (int i=0;i<pLP->palNumEntries;i++) {
-		PyTuple_SET_ITEM(entries, i, Py_BuildValue("bbbb", 
+		PyTuple_SET_ITEM(entries, i, Py_BuildValue("bbbb",
 			pLP->palPalEntry[i].peRed,
 			pLP->palPalEntry[i].peGreen,
 			pLP->palPalEntry[i].peBlue,
@@ -154,7 +154,7 @@ PyObject *ui_create_dc_from_handle (PyObject *self, PyObject *args)
 }
 
 
-// @pymethod |PyCDC|BitBlt|Copies a bitmap from the source device context to this device context. 
+// @pymethod |PyCDC|BitBlt|Copies a bitmap from the source device context to this device context.
 static PyObject *
 ui_dc_bitblt (PyObject *self, PyObject *args)
 {
@@ -164,7 +164,7 @@ ui_dc_bitblt (PyObject *self, PyObject *args)
 	int x, y, width, height, xsrc, ysrc;
 	DWORD rop;
 	PyObject *dc_ob;
-	if (!PyArg_ParseTuple (args, "(ii)(ii)O(ii)i", 
+	if (!PyArg_ParseTuple (args, "(ii)(ii)O(ii)i",
 	          &x, &y,          // @pyparm (x,y)-ints|destPos||The logical x,y coordinates of the upper-left corner of the destination rectangle.
 	          &width, &height, // @pyparm (width, height)-ints|size||Specifies the width and height (in logical units) of the destination rectangle and source bitmap.
 	          &dc_ob,          // @pyparm <o PyCDC>|dc||Specifies the PyCDC object from which the bitmap will be copied. It must be None if rop specifies a raster operation that does not include a source.
@@ -196,7 +196,7 @@ ui_dc_patblt (PyObject *self, PyObject *args)
 		return NULL;
 	int x, y, width, height;
 	DWORD rop;
-	if (!PyArg_ParseTuple (args, "(ii)(ii)i", 
+	if (!PyArg_ParseTuple (args, "(ii)(ii)i",
 	          &x, &y,          // @pyparm (x,y)-ints|destPos||The logical x,y coordinates of the upper-left corner of the destination rectangle.
 	          &width, &height, // @pyparm (width, height)-ints|size||Specifies the width and height (in logical units) of the destination rectangle and source bitmap.
 			  &rop))           // @pyparm int|rop||Specifies the raster operation to be performed. See the win32 api documentation for details.
@@ -312,7 +312,7 @@ ui_dc_pie (PyObject *self, PyObject *args)
 	GUI_END_SAVE;
 	return Py_BuildValue ("i", rc);
 }
-		
+
 // @pymethod |PyCDC|CreateCompatibleDC|Creates a memory device context that is compatible with this DC.
 PyObject *ui_dc_object::create_compatible_dc( PyObject *self, PyObject *args )
 {
@@ -408,7 +408,7 @@ PyObject *ui_dc_object::create_printer_dc( PyObject *self, PyObject *args )
 		GUI_END_SAVE;
 		delete [] buffer;
 	}
-	
+
 	if (!result)
 		RETURN_ERR("CreateDC failed");
 	RETURN_NONE;
@@ -428,8 +428,8 @@ ui_dc_delete_dc (PyObject *self, PyObject *args)
   if (!ok)
 	  RETURN_ERR("DeleteDC failed");
   RETURN_NONE;
-  // @comm In general, do not call this function; the destructor will do it for you. 
-  // <nl>An application should not call DeleteDC if objects have been selected into the device context. Objects must first be selected out of the device context before it it is deleted. 
+  // @comm In general, do not call this function; the destructor will do it for you.
+  // <nl>An application should not call DeleteDC if objects have been selected into the device context. Objects must first be selected out of the device context before it it is deleted.
   // <nl>An application must not delete a device context whose handle was obtained by calling CWnd::GetDC. Instead, it must call CWnd::ReleaseDC to free the device context.
   // <nl>The DeleteDC function is generally used to delete device contexts created with CreateDC, CreateIC, or CreateCompatibleDC.
 }
@@ -442,15 +442,15 @@ ui_dc_draw_icon (PyObject *self, PyObject *args)
   if (!pDC)
 	return NULL;
 
-  
-  
+
+
   int x, y;
   HICON hIcon;
   if (!PyArg_ParseTuple (args, "(ii)O&:DrawIcon",
 	  &x, &y,	// @pyparm (x,y)|point||The point coordinate to draw to.
 	  PyWinObject_AsHANDLE, &hIcon))	// @pyparm <o PyHANDLE>|hIcon||The handle of the icon to draw.
     return NULL;
-  
+
   GUI_BGN_SAVE;
   BOOL ok = pDC->DrawIcon (x,y, hIcon);
   GUI_END_SAVE;
@@ -459,10 +459,10 @@ ui_dc_draw_icon (PyObject *self, PyObject *args)
   else
  	RETURN_NONE;
 }
-// @pymethod |PyCDC|DrawFocusRect|Draws a rectangle in the style used to 
+// @pymethod |PyCDC|DrawFocusRect|Draws a rectangle in the style used to
 // indicate the rectangle has focus
 static PyObject *
-ui_dc_draw_focus_rect (PyObject *self, PyObject *args) 
+ui_dc_draw_focus_rect (PyObject *self, PyObject *args)
 {
 	CDC *pDC = ui_dc_object::GetDC(self);
 	CRect rect;
@@ -497,7 +497,7 @@ static PyObject *ui_dc_ext_text_out (PyObject *self, PyObject *args)
 	PyObject *obtext, *rectObject, *widthObject = NULL;
 	RECT rect, *rectPtr;
 	int *widths = NULL;
-	if (!PyArg_ParseTuple (args, "iiiOO|O:ExtTextOut", 
+	if (!PyArg_ParseTuple (args, "iiiOO|O:ExtTextOut",
 		&x,		// @pyparm x|int||The x coordinate to write the text to.
 		&y,		// @pyparm y|int||The y coordinate to write the text to.
 		&options,	// @pyparm nOptions|int||Specifies the rectangle type. This parameter can be one, both, or neither of ETO_CLIPPED and ETO_OPAQUE
@@ -532,7 +532,7 @@ static PyObject *ui_dc_ext_text_out (PyObject *self, PyObject *args)
 					PyObject *item = PyTuple_GetItem(widthObject, i);
 					if (!PyInt_Check(item))
 						error = TRUE;
-					else 
+					else
 						widths[i] = PyInt_AsLong(item);
 				}
 			}
@@ -574,7 +574,7 @@ static PyObject *ui_dc_rect_visible( PyObject *self, PyObject *args )
 	// @rdesc Non zero if any part of the rectangle lies within the clipping region, else zero.
 }
 
-// @pymethod |PyCDC|Arc|Draws an eliptical arc. 
+// @pymethod |PyCDC|Arc|Draws an eliptical arc.
 static PyObject *ui_dc_arc (PyObject *self, PyObject *args)
 {
 	CDC *pDC = ui_dc_object::GetDC(self);
@@ -582,7 +582,7 @@ static PyObject *ui_dc_arc (PyObject *self, PyObject *args)
 		return NULL;
 	CRect rect;
 	POINT pts, pte;
-	if (!PyArg_ParseTuple(args,"(iiii)(ii)(ii):Arc", 
+	if (!PyArg_ParseTuple(args,"(iiii)(ii)(ii):Arc",
  	           // @pyparm (left, top, right, bottom)|rect||Specifies the ellipse's bounding rectangle
 	           &rect.left, &rect.top, &rect.right, &rect.bottom,
 			   // @pyparm (x,y)|pointStart||Specifies the x- and y-coordinates
@@ -612,7 +612,7 @@ static PyObject *ui_dc_arc (PyObject *self, PyObject *args)
 	// than 2 units and less than 32,767 units.
 }
 
-// @pymethod |PyCDC|Chord|Draws a chord. 
+// @pymethod |PyCDC|Chord|Draws a chord.
 static PyObject *ui_dc_chord (PyObject *self, PyObject *args)
 {
 	CDC *pDC = ui_dc_object::GetDC(self);
@@ -620,7 +620,7 @@ static PyObject *ui_dc_chord (PyObject *self, PyObject *args)
 		return NULL;
 	CRect rect;
 	POINT pts, pte;
-	if (!PyArg_ParseTuple(args,"(iiii)(ii)(ii):Chord", 
+	if (!PyArg_ParseTuple(args,"(iiii)(ii)(ii):Chord",
  	           // @pyparm (left, top, right, bottom)|rect||Specifies the ellipse's bounding rectangle
 	           &rect.left, &rect.top, &rect.right, &rect.bottom,
 			   // @pyparm (x,y)|pointStart||Specifies the x- and y-coordinates
@@ -646,7 +646,7 @@ static PyObject *ui_dc_chord (PyObject *self, PyObject *args)
 	// The pointStart and pointEnd parameters specify
 	// the endpoints of a line that intersects the ellipse.
 	// The chord is drawn by using the selected pen and filled
-	// by using the selected brush. 
+	// by using the selected brush.
 }
 
 // @pymethod |PyCDC|Ellipse|Draws an Ellipse.
@@ -668,7 +668,7 @@ static PyObject *ui_dc_ellipse (PyObject *self, PyObject *args)
 	// @rdesc Always none.  If the function fails, an exception is raised.
 	// @comm The center of the ellipse is the center of the bounding rectangle
 	// specified by rect. The ellipse is drawn with the current pen, and its
-	// interior is filled with the current brush. 
+	// interior is filled with the current brush.
 }
 
 
@@ -808,7 +808,7 @@ ui_dc_fillrect (PyObject *self, PyObject *args)
 		return NULL;
 	RECT rect;
 	PyObject *obBrush;
-	if (!PyArg_ParseTuple (args, "(iiii)O:FillRect", 
+	if (!PyArg_ParseTuple (args, "(iiii)O:FillRect",
 	          &rect.left, &rect.top, &rect.right, &rect.bottom,
 			  // @pyparm (left, top, right, bottom|rect||Specifies the bounding rectangle, in logical units.
 	          &obBrush)) // @pyparm <o PyCBrush>|brush||Specifies the brush to use.
@@ -834,7 +834,7 @@ ui_dc_fillsolidrect (PyObject *self, PyObject *args)
 		return NULL;
 	RECT rect;
 	int col;
-	if (!PyArg_ParseTuple (args, "(iiii)i:FillSolidRect", 
+	if (!PyArg_ParseTuple (args, "(iiii)i:FillSolidRect",
 	          &rect.left, &rect.top, &rect.right, &rect.bottom,
 			  // @pyparm (left, top, right, bottom|rect||Specifies the bounding rectangle, in logical units.
 	          &col)) // @pyparm int|color||Specifies the color to use.
@@ -855,7 +855,7 @@ ui_dc_framerect (PyObject *self, PyObject *args)
 		return NULL;
 	RECT rect;
 	PyObject *obBrush;
-	if (!PyArg_ParseTuple (args, "(iiii)O:FrameRect", 
+	if (!PyArg_ParseTuple (args, "(iiii)O:FrameRect",
 	          &rect.left, &rect.top, &rect.right, &rect.bottom,
 			  // @pyparm (left, top, right, bottom|rect||Specifies the bounding rectangle, in logical units.
 	          &obBrush)) // @pyparm <o PyCBrush>|brush||Specifies the brush to use.
@@ -881,7 +881,7 @@ ui_dc_draw3drect(PyObject *self, PyObject *args)
 		return NULL;
 	RECT rect;
 	int ctl, cbr;
-	if (!PyArg_ParseTuple (args, "(iiii)ii:Draw3dRect", 
+	if (!PyArg_ParseTuple (args, "(iiii)ii:Draw3dRect",
 	          &rect.left, &rect.top, &rect.right, &rect.bottom,
 			  // @pyparm (left, top, right, bottom|rect||Specifies the bounding rectangle, in logical units.
 	          &ctl, // @pyparm int|colorTopLeft||Specifies the color of the top and left sides of the three-dimensional rectangle.
@@ -910,13 +910,13 @@ static PyObject *ui_dc_get_nearest_color (PyObject *self, PyObject *args)
 	return Py_BuildValue ("i", rc);
 }
 
-// @pymethod (x,y)|PyCDC|GetTextExtentPoint|An alias for <om PyCDC.GetTextExtent>. 
+// @pymethod (x,y)|PyCDC|GetTextExtentPoint|An alias for <om PyCDC.GetTextExtent>.
 // GetTextExtentPoint is the preferred win32api name, but GetTextExtent is the MFC name.<nl>
-// Calculates the width and height of a line of text using the current font to determine the dimensions. 
+// Calculates the width and height of a line of text using the current font to determine the dimensions.
 // @pyparm string|text||The text to calculate for.
 // @rdesc A tuple of integers with the size of the string, in logical units.
 
-// @pymethod (x,y)|PyCDC|GetTextExtent|Calculates the width and height of a line of text using the current font to determine the dimensions. 
+// @pymethod (x,y)|PyCDC|GetTextExtent|Calculates the width and height of a line of text using the current font to determine the dimensions.
 static PyObject *ui_dc_get_text_extent (PyObject *self, PyObject *args)
 {
 	CDC *pDC = ui_dc_object::GetDC(self);
@@ -943,7 +943,7 @@ static PyObject *ui_dc_get_text_extent (PyObject *self, PyObject *args)
 static PyObject *
 ui_dc_set_text_color (PyObject *self, PyObject *args)
 {
-	// @comm This text color is used when writing text to this device context and also when converting bitmaps between color and monochrome device contexts. 
+	// @comm This text color is used when writing text to this device context and also when converting bitmaps between color and monochrome device contexts.
 	// If the device cannot represent the specified color, the system sets the text color to the nearest physical color.
 	// The background color for a character is specified by the SetBkColor and SetBkMode member functions.
   CDC *pDC = ui_dc_object::GetDC(self);
@@ -966,11 +966,11 @@ ui_dc_set_text_color (PyObject *self, PyObject *args)
 static PyObject *
 ui_dc_set_bk_color (PyObject *self, PyObject *args)
 {
-  // @comm If the background mode is OPAQUE, the system uses the background color 
-  // to fill the gaps in styled lines, the gaps between hatched lines in brushes, and 
+  // @comm If the background mode is OPAQUE, the system uses the background color
+  // to fill the gaps in styled lines, the gaps between hatched lines in brushes, and
   // the background in character cells.
-  // The system also uses the background color when converting bitmaps between color and 
-  // monochrome device contexts. 
+  // The system also uses the background color when converting bitmaps between color and
+  // monochrome device contexts.
   CDC *pDC = ui_dc_object::GetDC(self);
   if (!pDC)
 	return NULL;
@@ -988,7 +988,7 @@ ui_dc_set_bk_color (PyObject *self, PyObject *args)
 static PyObject *
 ui_dc_set_bk_mode (PyObject *self, PyObject *args)
 {
-  // @comm Specifies the mode to be set.  This parameter can be either OPAQUE or TRANSPARENT 
+  // @comm Specifies the mode to be set.  This parameter can be either OPAQUE or TRANSPARENT
   CDC *pDC = ui_dc_object::GetDC(self);
   if (!pDC)
 	return NULL;
@@ -1020,7 +1020,7 @@ ui_dc_set_brush_org (PyObject *self, PyObject *args)
   // @rdesc The previous origin in device units.
 }
 
-// @pymethod (int,int)|PyCDC|GetBrushOrg|Retrieves the origin (in device units) of the brush currently selected for the device context. 
+// @pymethod (int,int)|PyCDC|GetBrushOrg|Retrieves the origin (in device units) of the brush currently selected for the device context.
 static PyObject *
 ui_dc_get_brush_org(PyObject *self, PyObject *args)
 {
@@ -1063,7 +1063,7 @@ ui_dc_set_map_mode (PyObject *self, PyObject *args)
 	return NULL;
   int new_mode;
   if (!PyArg_ParseTuple (args, "i", &new_mode))
-  // @pyparm int|newMode||The new mode.  Can be one of 
+  // @pyparm int|newMode||The new mode.  Can be one of
   // MM_ANISOTROPIC, MM_HIENGLISH, MM_HIMETRIC, MM_ISOTROPIC, MM_LOENGLISH, MM_LOMETRIC, MM_TEXT, MM_TWIPS
 	return NULL;
   GUI_BGN_SAVE;
@@ -1406,9 +1406,9 @@ ui_dc_realize_palette (PyObject *self, PyObject *args)
   UINT ret = pDC->RealizePalette();
   GUI_END_SAVE;
   return Py_BuildValue ("i", ret);
-  // @rdesc Indicates how many entries in the logical palette were mapped to different entries 
-  // in the system palette. This represents the number of entries that this function 
-  // remapped to accommodate changes in the system palette since the logical palette 
+  // @rdesc Indicates how many entries in the logical palette were mapped to different entries
+  // in the system palette. This represents the number of entries that this function
+  // remapped to accommodate changes in the system palette since the logical palette
   // was last realized.
 }
 
@@ -1443,7 +1443,7 @@ static PyObject *ui_dc_text_out (PyObject *self, PyObject *args)
 	PyObject *obtext;
 	DWORD strLen;
 	int x, y;
-	if (!PyArg_ParseTuple (args, "iiO:TextOut", 
+	if (!PyArg_ParseTuple (args, "iiO:TextOut",
 	          &x,        // @pyparm x|int||The x coordinate to write the text to.
 	          &y,        // @pyparm y|int||The y coordinate to write the text to.
 	          &obtext))     // @pyparm text|string||The text to write.
@@ -1451,7 +1451,7 @@ static PyObject *ui_dc_text_out (PyObject *self, PyObject *args)
 	if (!PyWinObject_AsTCHAR(obtext, &text, FALSE, &strLen))
 		return NULL;
     GUI_BGN_SAVE;
-	BOOL ret = pDC->TextOut (x, y, text, strLen); 
+	BOOL ret = pDC->TextOut (x, y, text, strLen);
 	// @pyseemfc CDC|TextOut
     GUI_END_SAVE;
 	PyWinObject_FreeTCHAR(text);
@@ -1503,7 +1503,7 @@ ui_dc_get_text_metrics (PyObject *self, PyObject *args)
   DICTADD (d, tm, tmOverhang, "i"); // tmOverhang<nl>
   DICTADD (d, tm, tmDigitizedAspectX, "i"); // tmDigitizedAspectX<nl>
   DICTADD (d, tm, tmDigitizedAspectY, "i"); // tmDigitizedAspectY<nl>
-  
+
   return d;
 }
 
@@ -1759,7 +1759,7 @@ ui_dc_begin_path (PyObject *self, PyObject *args)
 	}
   }
 }
-	
+
 // @pymethod |PyCDC|EndPath|Closes a path bracket and selects the path defined by the bracket into the specified device context
 static PyObject *
 ui_dc_end_path (PyObject *self, PyObject *args)
@@ -1780,7 +1780,7 @@ ui_dc_end_path (PyObject *self, PyObject *args)
 	}
   }
 }
-	
+
 // @pymethod |PyCDC|FillPath|Closes any open figures in the current path and fills the path's interior by using the current brush and polygon-filling mode. After its interior is filled, the path is discarded from the device context.
 static PyObject *
 ui_dc_fill_path (PyObject *self, PyObject *args)
@@ -1823,7 +1823,7 @@ ui_dc_stroke_path (PyObject *self, PyObject *args)
   }
 }
 
-// @pymethod |PyCDC|StrokeAndFillPath|Closes any open figures in a path, strokes the outline of the path by using the current pen, and fills its interior by using the current brush. The device context must contain a closed path. 
+// @pymethod |PyCDC|StrokeAndFillPath|Closes any open figures in a path, strokes the outline of the path by using the current pen, and fills its interior by using the current brush. The device context must contain a closed path.
 static PyObject *
 ui_dc_stroke_and_fill_path (PyObject *self, PyObject *args)
 {
@@ -2022,10 +2022,10 @@ ui_dc_intersect_clip_rect(PyObject *self, PyObject *args)
 	if (!pDC) return NULL;
 
 	RECT rect;
-	if (!PyArg_ParseTuple (args, "(iiii):IntersectClipRect", 
+	if (!PyArg_ParseTuple (args, "(iiii):IntersectClipRect",
 	          &rect.left, &rect.top, &rect.right, &rect.bottom
 			  // @pyparm (left, top, right, bottom)|rect||Specifies the bounding rectangle, in logical units.
-	          )) 
+	          ))
 		return NULL;
 	GUI_BGN_SAVE;
 	int type=pDC->IntersectClipRect(&rect);
@@ -2035,7 +2035,7 @@ ui_dc_intersect_clip_rect(PyObject *self, PyObject *args)
 	}
 
 
-// @pymethod (int)|PyCDC|SetPolyFillMode|Sets the polygon-filling mode. 
+// @pymethod (int)|PyCDC|SetPolyFillMode|Sets the polygon-filling mode.
 // @rdesc The previous PolyFillMode as integer
 static PyObject *
 ui_dc_set_poly_fill_mode(PyObject *self, PyObject *args)
@@ -2174,7 +2174,7 @@ ui_dc_select_clip_rgn(PyObject *self, PyObject *args)
 	return Py_BuildValue("i",r);
 }
 
-// @pymethod rc|PyCDC|Rectangle|Draws a rectangle using the current pen. The interior of the rectangle is filled using the current brush. 
+// @pymethod rc|PyCDC|Rectangle|Draws a rectangle using the current pen. The interior of the rectangle is filled using the current brush.
 static PyObject *
 ui_dc_rectangle(PyObject *self, PyObject *args)
 {
@@ -2184,7 +2184,7 @@ ui_dc_rectangle(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args,
 						"(iiii)",
 						&rect.left,&rect.top,
-						&rect.right,&rect.bottom)) 
+						&rect.right,&rect.bottom))
 		return NULL;
 
 	BOOL b=pDC->Rectangle(rect.left,rect.top,rect.right,rect.bottom);
@@ -2208,20 +2208,20 @@ ui_dc_draw_text(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args,
 						"s(iiii)|i",&psz, // @pyparm string|s||The desired output string
 						// @pyparm (int, int, int, int)|tuple||The bounding rectangle in the form:
-						// (left, top, right, bottom) expressed in logical units (depending on 
+						// (left, top, right, bottom) expressed in logical units (depending on
 						// selected coordinate system - see <om PyCDC.SetMapMode>)
-						&rect.left,&rect.top, 
+						&rect.left,&rect.top,
 						&rect.right,&rect.bottom,
 						// @pyparm int|format||Specifies one or more bit-or'd format values, such as
-						// DT_BOTTOM, DT_CENTERDT_RIGHT, DT_VCENTER. For a complete list, see 
+						// DT_BOTTOM, DT_CENTERDT_RIGHT, DT_VCENTER. For a complete list, see
 						// the Microsoft Win32 API documentation.
-						&nFormat)) 
+						&nFormat))
 		return NULL;
 
 	CString str(psz);
 	int height=pDC->DrawText(str,&rect,nFormat);
-	// @rdesc The return value is the height of the text, in logical units. 
-	// If DT_VCENTER or DT_BOTTOM is specified, the return value is the 
+	// @rdesc The return value is the height of the text, in logical units.
+	// If DT_VCENTER or DT_BOTTOM is specified, the return value is the
 	// offset from rect.top to the bottom of the drawn text.
 	// If the function fails, the return value is zero (no Python exception is thrown)
 	return Py_BuildValue("i",height);
@@ -2245,7 +2245,7 @@ ui_dc_draw_text(PyObject *self, PyObject *args)
 	//     del dc<nl>
 }
 
-// @pymethod |PyCDC|StretchBlt|Copies a bitmap from the source device context to this device context. 
+// @pymethod |PyCDC|StretchBlt|Copies a bitmap from the source device context to this device context.
 static PyObject *
 ui_dc_stretch_blt (PyObject *self, PyObject *args)
 {
@@ -2255,7 +2255,7 @@ ui_dc_stretch_blt (PyObject *self, PyObject *args)
 	int x, y, width, height, xsrc, ysrc,widthsrc, heightsrc;
 	DWORD rop;
 	PyObject *dc_ob;
-	if (!PyArg_ParseTuple (args, "(ii)(ii)O(ii)(ii)i", 
+	if (!PyArg_ParseTuple (args, "(ii)(ii)O(ii)(ii)i",
 	          &x, &y,          // @pyparm (x,y)-ints|destPos||The logical x,y coordinates of the upper-left corner of the destination rectangle.
 	          &width, &height, // @pyparm (width, height)-ints|size||Specifies the width and height (in logical units) of the destination rectangle and source bitmap.
 	          &dc_ob,          // @pyparm <o PyCDC>|dc||Specifies the PyCDC object from which the bitmap will be copied. It must be None if rop specifies a raster operation that does not include a source.
@@ -2290,12 +2290,12 @@ ui_dc_draw_frame_control(PyObject *self, PyObject *args)
 
 	RECT rect;
 	int typ, state;
-	if (!PyArg_ParseTuple (args, "(iiii)ii:DrawFrameControl", 
+	if (!PyArg_ParseTuple (args, "(iiii)ii:DrawFrameControl",
 	          &rect.left, &rect.top, &rect.right, &rect.bottom,
 			  // @pyparm (left, top, right, bottom)|rect||Specifies the bounding rectangle, in logical units.
 			  &typ, // @pyparm int|typ||
 			  &state // @pyparm int|state||
-	          )) 
+	          ))
 		return NULL;
 	GUI_BGN_SAVE;
 	BOOL ok=pDC->DrawFrameControl(&rect, typ, state);
@@ -2333,7 +2333,7 @@ static struct PyMethodDef ui_dc_methods[] = {
 	{"FillRect",            ui_dc_fillrect, 1}, // @pymeth FillRect|Fills a given rectangle with the specified brush
 	{"FillSolidRect",       ui_dc_fillsolidrect, 1}, // @pymeth FillSolidRect|Fills the given rectangle with the specified solid color.
 	{"FrameRect",           ui_dc_framerect, 1}, // @pymeth FrameRect|Draws a border around the rectangle specified by rect
-	{"GetBrushOrg",         ui_dc_get_brush_org, 1}, // @pymeth GetBrushOrg|Retrieves the origin (in device units) of the brush currently selected for the device context. 
+	{"GetBrushOrg",         ui_dc_get_brush_org, 1}, // @pymeth GetBrushOrg|Retrieves the origin (in device units) of the brush currently selected for the device context.
 	{"GetClipBox",			ui_dc_get_clip_box,	1}, // @pymeth GetClipBox|Retrives the current clipping region.
 	{"GetCurrentPosition",	ui_dc_get_current_position, 1}, // @pymeth GetCurrentPosition|Retrieves the current position (in logical coordinates).
 	{"GetDeviceCaps",		ui_dc_get_device_caps,	1}, // @pymeth GetDeviceCaps|Retrieves current device capabilities.
@@ -2364,12 +2364,12 @@ static struct PyMethodDef ui_dc_methods[] = {
 	{"Polygon",				ui_dc_polygon,				1}, // @pymeth Polygon|Draws an Polygon.
 	{"Polyline",            ui_dc_polyline,             1}, // @pymeth Polyline|Draws a Polyline.
 	{"RealizePalette",		ui_dc_realize_palette,	1}, // @pymeth RealizePalette|Maps palette entries in the current logical palette to the system palette.
-	{"Rectangle",           ui_dc_rectangle,1}, // @pymeth Rectangle|Draws a rectangle using the current pen. The interior of the rectangle is filled using the current brush. 
+	{"Rectangle",           ui_dc_rectangle,1}, // @pymeth Rectangle|Draws a rectangle using the current pen. The interior of the rectangle is filled using the current brush.
 	{"RectVisible",			ui_dc_rect_visible,	1}, // @pymeth RectVisible|Determines if a rectangle is currently visisble in the viewport.
 	{"RestoreDC",			ui_dc_restore_dc,	1}, // @pymeth RestoreDC|Restores a saved DC.
 	{"SaveDC",				ui_dc_save_dc,	1}, // @pymeth SaveDC|Saves a DC.
-	{"ScaleWindowExt",		ui_dc_scale_window_ext,		1}, // @pymeth ScaleWindowExt|Modifies the window extents relative to the current values. 
-	{"ScaleViewportExt",	ui_dc_scale_viewport_ext,	1}, // @pymeth ScaleViewportExt|Modifies the viewport extents relative to the current values. 
+	{"ScaleWindowExt",		ui_dc_scale_window_ext,		1}, // @pymeth ScaleWindowExt|Modifies the window extents relative to the current values.
+	{"ScaleViewportExt",	ui_dc_scale_viewport_ext,	1}, // @pymeth ScaleViewportExt|Modifies the viewport extents relative to the current values.
 	{"SelectClipRgn",       ui_dc_select_clip_rgn,1}, // @pymeth SelectClipRgn|Selects the given region as the current clipping region for the device context
 	{"SelectObject",		ui_dc_select_object,	1}, // @pymeth SelectObject|Selects an object into the DC.
 	{"SelectPalette",		ui_dc_select_palette,	1}, // @pymeth SelectObject|Selects the logical palette.
@@ -2390,18 +2390,18 @@ static struct PyMethodDef ui_dc_methods[] = {
 	{"SetWorldTransform",	ui_dc_set_world_transform,	1}, // @pymeth SetWorldTransform|sets a two-dimensional linear transformation between world space and page space for the specified device context.
 	{"StartDoc",			ui_dc_start_doc,		1}, // @pymeth StartDoc|Starts spooling a document to a printer DC
 	{"StartPage",			ui_dc_start_page,		1}, // @pymeth StartPage|Starts a new page on a printer DC
-	{"StretchBlt",          ui_dc_stretch_blt,1}, // @pymeth StretchBlt|Copies a bitmap from the source device context to this device context. 
-	{"StrokeAndFillPath",	ui_dc_stroke_and_fill_path,	1}, // @pymeth StrokeAndFillPath|Closes any open figures in a path, strokes the outline of the path by using the current pen, and fills its interior by using the current brush. The device context must contain a closed path. 
+	{"StretchBlt",          ui_dc_stretch_blt,1}, // @pymeth StretchBlt|Copies a bitmap from the source device context to this device context.
+	{"StrokeAndFillPath",	ui_dc_stroke_and_fill_path,	1}, // @pymeth StrokeAndFillPath|Closes any open figures in a path, strokes the outline of the path by using the current pen, and fills its interior by using the current brush. The device context must contain a closed path.
 	{"StrokePath",			ui_dc_stroke_path,			1}, // @pymeth StrokePath|Renders the specified path by using the current pen.
 	{"TextOut",				ui_dc_text_out,	1}, // @pymeth TextOut|Writes text to the DC.
 	{NULL,			NULL}
 };
 
-ui_type_CObject ui_dc_object::type("PyCDC", 
+ui_type_CObject ui_dc_object::type("PyCDC",
 						   &ui_assoc_object::type,
 						   RUNTIME_CLASS(CDC),
-						   sizeof(ui_dc_object), 
-						   PYOBJ_OFFSET(ui_dc_object), 
-						   ui_dc_methods, 
+						   sizeof(ui_dc_object),
+						   PYOBJ_OFFSET(ui_dc_object),
+						   ui_dc_methods,
 						   GET_PY_CTOR(ui_dc_object));
 

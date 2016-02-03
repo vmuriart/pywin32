@@ -63,17 +63,17 @@ class PySourceModuleDebugDocumentHost(gateways.DebugDocumentHost):
 			return cont.text, attr
 		except:
 			traceback.print_exc()
-  
+
 	def GetScriptTextAttributes(self, codeText, delimterText, flags):
-		# Result must be an attribute sequence of same "length" as the code.	
+		# Result must be an attribute sequence of same "length" as the code.
 		trace("GetScriptTextAttributes", delimterText, flags)
 		raise Exception(scode=winerror.E_NOTIMPL)
-  
-	def OnCreateDocumentContext( self ): 
+
+	def OnCreateDocumentContext( self ):
 		# Result must be a PyIUnknown
 		trace("OnCreateDocumentContext")
 		raise Exception(scode=winerror.E_NOTIMPL)
-  
+
 	def GetPathName( self ):
 		# Result must be (string, int) where the int is a BOOL
 		# - TRUE if the path refers to the original file for the document.
@@ -84,12 +84,12 @@ class PySourceModuleDebugDocumentHost(gateways.DebugDocumentHost):
 			return win32api.GetFullPathName(self.module.__file__), 1
 		except (AttributeError, win32api.error):
 			raise Exception(scode==E_FAIL)
-  
+
 	def GetFileName(self):
 		# Result is a string with just the name of the document, no path information.
 		trace("GetFileName")
 		return os.path.split(module.__file__)
-  
+
 	def NotifyChanged():
 		trace("NotifyChanged")
 		raise Exception(scode=winerror.E_NOTIMPL)
@@ -106,7 +106,7 @@ def TestSmartHelper():
 	all_real_nodes = CreateDebugDocumentHelperNodes(pdm, app, nodes)
 	root = app.GetRootNode()
 	AttachParentNodes(root, nodes, all_real_nodes)
-	
+
 	pydebugger.AttachApp(app)
 	cookie = pdm.AddApplication(app)
 	raw_input("Waiting...")
@@ -123,7 +123,7 @@ def testdumb():
 	all_real_nodes = CreateDebugDocumentHelperNodes(pdm, app, nodes)
 	AttachParentNodes(None, nodes, all_real_nodes)
 
-	parentNode = None	
+	parentNode = None
 	all_real_nodes = {}
 	raw_input("Waiting...")
 	print "Done"
@@ -131,8 +131,8 @@ def testdumb():
 def TestSmartProvider():
 	from win32com.axdebug import debugger
 	import ttest
-	
-	d = debugger.AXDebugger()	
+
+	d = debugger.AXDebugger()
 #	d.StartDebugger()
 #	d.Attach()
 	d.Break()
@@ -140,7 +140,7 @@ def TestSmartProvider():
 	ttest.test()
 	d.Close()
 	print "Done"
-	
+
 def test():
 	try:
 #		app = TestSmartHelper()
@@ -151,10 +151,10 @@ def test():
 
 #	_wrap_remove(externalConnectionManager)
 #	wrappedExternalConnectionManager = None
-	
+
 if __name__=='__main__':
 	test()
 	import win32com.axdebug.util
-	
+
 	win32com.axdebug.util._dump_wrapped()
 	print " %d/%d com objects still alive" % (pythoncom._GetInterfaceCount(), pythoncom._GetGatewayCount())

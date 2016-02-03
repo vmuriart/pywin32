@@ -24,7 +24,7 @@ ui_pen_object::create (PyObject *self, PyObject *args)
   int n_width;
   long cr_color;
   LOGPEN lp;
-  
+
   if (!PyArg_ParseTuple (args, "iil",
 						 &n_pen_style, // @pyparm int|style||The pen style.
 						 &n_width,     // @pyparm int|width||The pen width.

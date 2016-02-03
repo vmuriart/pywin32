@@ -81,7 +81,7 @@ protected:
 		BSTR __RPC_FAR * pbstrName);
 
 	STDMETHOD (GetRootNode)(
-		IDebugApplicationNode __RPC_FAR * __RPC_FAR * ppdanRoot);  
+		IDebugApplicationNode __RPC_FAR * __RPC_FAR * ppdanRoot);
 
     STDMETHOD(EnumGlobalExpressionContexts)(
         /* [out] */ IEnumDebugExpressionContexts __RPC_FAR *__RPC_FAR *ppedec);
@@ -108,7 +108,7 @@ protected:
 
 	STDMETHOD(GetBreakFlags)(
 		APPBREAKFLAGS __RPC_FAR * pabf,
-		IRemoteDebugApplicationThread __RPC_FAR* __RPC_FAR* pprdatSteppingThread); 
+		IRemoteDebugApplicationThread __RPC_FAR* __RPC_FAR* pprdatSteppingThread);
 
 	STDMETHOD(GetCurrentThread)(
 		IDebugApplicationThread __RPC_FAR *__RPC_FAR * pat);
@@ -140,7 +140,7 @@ protected:
 #endif
 
 	STDMETHOD(CreateApplicationNode)(
-		IDebugApplicationNode __RPC_FAR * __RPC_FAR *ppdanNew);  
+		IDebugApplicationNode __RPC_FAR * __RPC_FAR *ppdanNew);
 
 	STDMETHOD(FireDebuggerEvent)(
 		REFGUID riid,

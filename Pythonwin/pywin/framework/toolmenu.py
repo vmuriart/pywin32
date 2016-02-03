@@ -32,7 +32,7 @@ def LoadToolMenuItems():
 		items.append((menu, cmd))
 		lookNo = lookNo + 1
 
-	if len(items)==0: 
+	if len(items)==0:
 		items = defaultToolMenuItems
 	return items
 
@@ -60,15 +60,15 @@ def WriteToolMenuItems( items ):
 		win32ui.WriteProfileVal("Tools Menu\\%s" % itemNo, "", menu)
 		win32ui.WriteProfileVal("Tools Menu\\%s" % itemNo, "Command", cmd)
 		itemNo = itemNo + 1
-	
+
 def SetToolsMenu(menu, menuPos = None):
 	global tools
 	global idPos
-	
+
 	# todo - check the menu does not already exist.
 	# Create the new menu
 	toolsMenu = win32ui.CreatePopupMenu()
-	
+
 	# Load from the ini file.
 	items = LoadToolMenuItems()
 	for menuString, cmd in items:
@@ -98,7 +98,7 @@ def HandleToolCommand(cmd, code):
 		sys.stdout.template.writeQueueing = 0
 	except (NameError, AttributeError):
 		pass
-	
+
 	try:
 		exec "%s\n" % pyCmd
 		worked=1
@@ -135,14 +135,14 @@ class ToolMenuPropPage(dialog.PropertyPage):
 	def OnInitDialog(self):
 		self.editMenuCommand = self.GetDlgItem(win32ui.IDC_EDIT2)
 		self.butNew = self.GetDlgItem(win32ui.IDC_BUTTON3)
-		
+
 		# Now hook the change notification messages for the edit controls.
 		self.HookCommand(self.OnCommandEditControls, win32ui.IDC_EDIT1)
 		self.HookCommand(self.OnCommandEditControls, win32ui.IDC_EDIT2)
 
 		self.HookNotify(self.OnNotifyListControl, commctrl.LVN_ITEMCHANGED)
 		self.HookNotify(self.OnNotifyListControlEndLabelEdit, commctrl.LVN_ENDLABELEDIT)
-		
+
 		# Hook the button clicks.
 		self.HookCommand(self.OnButtonNew, win32ui.IDC_BUTTON3) # New Item
 		self.HookCommand(self.OnButtonDelete, win32ui.IDC_BUTTON4) # Delete item
@@ -196,7 +196,7 @@ class ToolMenuPropPage(dialog.PropertyPage):
 			self.listControl.SetItemText(itemNo, 1, newText)
 
 		return 0
-		
+
 	def OnNotifyListControlEndLabelEdit(self, id, cmd):
 		newText = self.listControl.GetEditControl().GetWindowText()
 		itemNo = self.listControl.GetNextItem(-1, commctrl.LVNI_SELECTED)
@@ -215,7 +215,7 @@ class ToolMenuPropPage(dialog.PropertyPage):
 			self.editMenuCommand.SetWindowText(item[4])
 		finally:
 			self.bImChangingEditControls = 0
-		
+
 		return 0 # we have handled this!
 
 	def OnButtonNew(self, id, cmd):

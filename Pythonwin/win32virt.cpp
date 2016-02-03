@@ -63,7 +63,7 @@ CVirtualHelper::~CVirtualHelper()
 	// This is called for each window message, so should be as fast
 	// as possible - but DECREF is not atomic on multi-core CPU's, so
 	// take the reliable option...
-	if (py_ob || handler || retVal) { 
+	if (py_ob || handler || retVal) {
 		CEnterLeavePython _celp;
 		XDODECREF(retVal);
 		XDODECREF(handler);
@@ -101,7 +101,7 @@ BOOL CVirtualHelper::do_call(PyObject *args)
 				PyErr_Clear();
 
 			LPTSTR HandlerName=csHandlerName.GetBuffer(csHandlerName.GetLength());
-			snprintf(msg, sizeof(msg)/sizeof(msg[0]),  "%s() virtual handler (%s) raised an exception", 
+			snprintf(msg, sizeof(msg)/sizeof(msg[0]),  "%s() virtual handler (%s) raised an exception",
 				T2A(HandlerName),
 				szRepr);
 			csHandlerName.ReleaseBuffer();

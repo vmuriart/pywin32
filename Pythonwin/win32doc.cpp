@@ -80,7 +80,7 @@ ui_doc_do_save(PyObject *self, PyObject *args)
 	TCHAR *fileName;
 	PyObject *obfileName;
 	int bReplace = TRUE;
-	if (!PyArg_ParseTuple(args,"O|i", 
+	if (!PyArg_ParseTuple(args,"O|i",
 			&obfileName, 	// @pyparm string|fileName||The name of the file to save to.
 			&bReplace)) // @pyparm int|bReplace|1|Should an existing file be silently replaced?.
 		return NULL;
@@ -376,7 +376,7 @@ ui_doc_update_all_views(PyObject *self, PyObject *args)
 	CDocument *pDoc;
 	if (!(pDoc=PyCDocument::GetDoc(self)))
 		return NULL;
-	if (!PyArg_ParseTuple(args, "O|O:UpdateAllViews", 
+	if (!PyArg_ParseTuple(args, "O|O:UpdateAllViews",
 		       &obSender,  // @pyparm <o PyCView>|sender||The view who initiated the update
 			   &obHint)) // @pyparm object|hint|None|A hint for the update.
 		return NULL;
@@ -438,10 +438,10 @@ static struct PyMethodDef ui_doc_methods[] = {
 	{"UpdateAllViews",		ui_doc_update_all_views, 1}, // @pymeth UpdateAllViews|Informs each view when a document changes.
 	{NULL,			NULL}		/* sentinel */
 };
-ui_type_CObject PyCDocument::type("PyCDocument", 
+ui_type_CObject PyCDocument::type("PyCDocument",
 								  &PyCCmdTarget::type, // @base PyCDocument|PyCCmdTarget
-								  RUNTIME_CLASS(CDocument), 
-								  sizeof(PyCDocument), 
-								  PYOBJ_OFFSET(PyCDocument), 
-								  ui_doc_methods, 
+								  RUNTIME_CLASS(CDocument),
+								  sizeof(PyCDocument),
+								  PYOBJ_OFFSET(PyCDocument),
+								  ui_doc_methods,
 								  GET_PY_CTOR(PyCDocument) );

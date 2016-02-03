@@ -33,7 +33,7 @@ PyIDirectSoundNotify::~PyIDirectSoundNotify()
 
 static BOOL unpack(PyObject *tuple, DSBPOSITIONNOTIFY *&notify, int pos)
 {
-	if (!PyTuple_Check(tuple) || PyTuple_Size(tuple) < 2) 
+	if (!PyTuple_Check(tuple) || PyTuple_Size(tuple) < 2)
 		return FALSE;
 
 	PyObject *o0 = PyTuple_GET_ITEM(tuple, 0);
@@ -65,7 +65,7 @@ PyObject *PyIDirectSoundNotify::SetNotificationPositions(PyObject *self, PyObjec
 
 	if (PyTuple_Check(obPos)){
 		size = PyTuple_Size(obPos);
-		if (size < 1) 
+		if (size < 1)
 			goto argerror;
 
 		if (PyTuple_Check(PyTuple_GET_ITEM(obPos, 0))) {
@@ -85,7 +85,7 @@ PyObject *PyIDirectSoundNotify::SetNotificationPositions(PyObject *self, PyObjec
 	}
 	else if (PyList_Check(obPos)) {
 		size = PyList_Size(obPos);
-		if (size < 1) 
+		if (size < 1)
 			goto argerror;
 
 		notify = new DSBPOSITIONNOTIFY[size];

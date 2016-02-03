@@ -43,8 +43,8 @@ protected:
 		IEnumDebugStackFrames __RPC_FAR *__RPC_FAR * ppedsf);
 
 	STDMETHOD(GetDescription)(
-		BSTR __RPC_FAR *pbstrDescription,  
-		BSTR __RPC_FAR *pbstrState);  
+		BSTR __RPC_FAR *pbstrDescription,
+		BSTR __RPC_FAR *pbstrState);
 
 	STDMETHOD(SetNextStatement)(
 		IDebugStackFrame __RPC_FAR * pStackFrame,
@@ -76,7 +76,7 @@ protected:
 		void);
 
 	STDMETHOD(SetDescription)(
-		LPCOLESTR pstrDescription);  
+		LPCOLESTR pstrDescription);
 	STDMETHOD(SetStateString)(
-		LPCOLESTR pstrState);  
+		LPCOLESTR pstrState);
 };

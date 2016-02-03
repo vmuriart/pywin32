@@ -227,7 +227,7 @@ BOOL PyWinObject_AsTRUSTEE(PyObject *obtrustee, TRUSTEE_W *ptrustee)
 	ptrustee->MultipleTrusteeOperation=NO_MULTIPLE_TRUSTEE;
 	ptrustee->pMultipleTrustee=NULL;
 	PyObject *dummy_tuple=PyTuple_New(0);
-	bsuccess=PyArg_ParseTupleAndKeywords(dummy_tuple, trustee_dict, "llO|Ol", trustee_items, 
+	bsuccess=PyArg_ParseTupleAndKeywords(dummy_tuple, trustee_dict, "llO|Ol", trustee_items,
 		&ptrustee->TrusteeForm, &ptrustee->TrusteeType, &obIdentifier, &obMultipleTrustee, &ptrustee->MultipleTrusteeOperation);
 	Py_DECREF(dummy_tuple);
 	if (!bsuccess)
@@ -291,7 +291,7 @@ PyObject *PyWinObject_FromTRUSTEE(TRUSTEE_W *ptrustee)
 		case TRUSTEE_IS_NAME:{
 			obIdentifier=PyWinObject_FromWCHAR(ptrustee->ptstrName);
 			break;
-			}		
+			}
 #if WINVER >= 0x0501
 		case TRUSTEE_IS_OBJECTS_AND_SID:
 		case TRUSTEE_IS_OBJECTS_AND_NAME:{
@@ -325,7 +325,7 @@ BOOL PyWinObject_AsEXPLICIT_ACCESS(PyObject *ob, PEXPLICIT_ACCESS_W pexpl)
 	if (expl_dict==NULL)
 		return FALSE;
 	PyObject *dummy_tuple=PyTuple_New(0);
-	bsuccess=PyArg_ParseTupleAndKeywords(dummy_tuple, expl_dict, "lllO", expl_items, 
+	bsuccess=PyArg_ParseTupleAndKeywords(dummy_tuple, expl_dict, "lllO", expl_items,
 		&pexpl->grfAccessPermissions, &pexpl->grfAccessMode, &pexpl->grfInheritance, &obtrustee);
 	Py_DECREF(dummy_tuple);
 	if (!bsuccess)
@@ -412,8 +412,8 @@ PyObject * addaceorig(addacefunc addfunc, CHAR *funcname, PyACL *This, DWORD rev
 				bsuccess=This->SetACL(pdacl_padded);
 			}
 		else
-			PyWin_SetAPIError(funcname);	
-		}		
+			PyWin_SetAPIError(funcname);
+		}
 
 	if (pdacl_padded)
 		free(pdacl_padded);
@@ -431,16 +431,16 @@ PyObject *PyACL::AddAccessAllowedAce(PyObject *self, PyObject *args)
 	PyObject *obSID;
 	// Need to support 2 arg styles for b/w compat.
 	if (PyArg_ParseTuple(args, "lO:AddAccessAllowedAce", &access, &obSID)) {
-		// We worked - is old style 
+		// We worked - is old style
 		// @pyparmalt1 int|access||Specifies the mask of access rights to be denied to the specified SID.
-		// @pyparmalt1 <o PySID>|sid||A SID object representing a user, group, or logon account being denied access. 
+		// @pyparmalt1 <o PySID>|sid||A SID object representing a user, group, or logon account being denied access.
 		revision = ACL_REVISION;
 	} else {
 		// Try new style (we use new style last so that
 		// exceptions report the new style rather than old
 		// @pyparm int|revision||Pre-win2k, must be ACL_REVISION, otherwise also may be ACL_REVISION_DS.
 		// @pyparm int|access||Specifies the mask of access rights to be denied to the specified SID.
-		// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being denied access. 
+		// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being denied access.
 		PyErr_Clear();
 		if (!PyArg_ParseTuple(args, "llO:AddAccessAllowedAce", &revision, &access, &obSID))
 			return NULL;
@@ -460,16 +460,16 @@ PyObject *PyACL::AddAccessDeniedAce(PyObject *self, PyObject *args)
 	PyObject *obSID;
 	// Need to support 2 arg styles for b/w compat.
 	if (PyArg_ParseTuple(args, "lO:AddAccessDeniedAce", &access, &obSID)) {
-		// We worked - is old style 
+		// We worked - is old style
 		// @pyparmalt1 int|access||Specifies the mask of access rights to be denied to the specified SID.
-		// @pyparmalt1 <o PySID>|sid||A SID object representing a user, group, or logon account being denied access. 
+		// @pyparmalt1 <o PySID>|sid||A SID object representing a user, group, or logon account being denied access.
 		revision = ACL_REVISION;
 	} else {
 		// Try new style (we use new style last so that
 		// exceptions report the new style rather than old
 		// @pyparm int|revision||Pre-win2k, must be ACL_REVISION, otherwise also may be ACL_REVISION_DS.
 		// @pyparm int|access||Specifies the mask of access rights to be denied to the specified SID.
-		// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being denied access. 
+		// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being denied access.
 		PyErr_Clear();
 		if (!PyArg_ParseTuple(args, "llO:AddAccessDeniedAce", &revision, &access, &obSID))
 			return NULL;
@@ -497,7 +497,7 @@ PyObject * addaceex(addaceexfunc addfunc, CHAR *funcname, PyACL *This,
 
 	bsuccess=(*addfunc)(pacl, revision, aceflags, access, psid);
 	if (bsuccess)
-		bsuccess=_ReorderACL(pacl);	
+		bsuccess=_ReorderACL(pacl);
 	else{
 		DWORD err=GetLastError();
 		if (err != ERROR_ALLOTTED_SPACE_EXCEEDED)
@@ -536,9 +536,9 @@ PyObject *PyACL::AddAccessAllowedAceEx(PyObject *self, PyObject *args)
 	DWORD access,revision,aceflags;
 	PyObject *obSID;
 	// @pyparm int|revision||Must be at least ACL_REVISION_DS
-	// @pyparm int|aceflags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE) 
+	// @pyparm int|aceflags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE)
 	// @pyparm int|access||Specifies the mask of access rights to be granted to the specified SID.
-	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being granted access. 
+	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being granted access.
 	if (!PyArg_ParseTuple(args, "lllO:AddAccessAllowedAceEx", &revision, &aceflags, &access, &obSID))
 			return NULL;
 	return addaceex(addaccessallowedaceex, "AddAccessAllowedAceEx", (PyACL *) self,
@@ -551,9 +551,9 @@ PyObject *PyACL::AddAccessDeniedAceEx(PyObject *self, PyObject *args)
 	DWORD access,revision,aceflags;
 	PyObject *obSID;
 	// @pyparm int|revision||Must be at least ACL_REVISION_DS
-	// @pyparm int|aceflags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE) 
+	// @pyparm int|aceflags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE)
 	// @pyparm int|access||Specifies the mask of access rights to be denied to the specified SID.
-	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being denied access. 
+	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being denied access.
 	if (!PyArg_ParseTuple(args, "lllO:AddAccessDeniedAceEx", &revision, &aceflags, &access, &obSID))
 			return NULL;
 	return addaceex(addaccessdeniedaceex, "AddAccessDeniedAceEx", (PyACL *) self,
@@ -566,7 +566,7 @@ PyObject *PyACL::AddMandatoryAce(PyObject *self, PyObject *args)
 	DWORD access,revision,aceflags;
 	PyObject *obSID;
 	// @pyparm int|AceRevision||ACL_REVISION or ACL_REVISION_DS
-	// @pyparm int|AceFlags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE) 
+	// @pyparm int|AceFlags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE)
 	// @pyparm int|MandatoryPolicy||Access policy for processes with lower integrity level, combination of SYSTEM_MANDATORY_LABEL_* flags
 	// @pyparm <o PySID>|LabelSid||Integrity level SID.  This can be created using CreateWellKnownSid with Win*LabelSid.
 	//	<nl>Also can be constructed manually using SECURITY_MANDATORY_LABEL_AUTHORITY and a SECURITY_MANDATORY_*_RID
@@ -648,12 +648,12 @@ PyObject *PyACL::AddAccessAllowedObjectAce(PyObject *self, PyObject *args)
 	PyObject *obSID;
 	PyObject *obObjectTypeGuid, *obInheritedObjectTypeGuid;
 	// @pyparm int|AceRevision||Must be at least ACL_REVISION_DS
-	// @pyparm int|AceFlags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE) 
+	// @pyparm int|AceFlags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE)
 	// @pyparm int|AccessMask||Specifies the mask of access rights to be granted to the specified SID
 	// @pyparm <o PyIID>|ObjectTypeGuid||GUID of object type or property set to which ace applies, can be None
 	// @pyparm <o PyIID>|InheritedObjectTypeGuid||GUID of object type or property that will inherit ACE, can be None
-	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being granted access. 
-	if (!PyArg_ParseTuple(args, "lllOOO:AddAccessAllowedObjectAce", &revision, &aceflags, &access, 
+	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account being granted access.
+	if (!PyArg_ParseTuple(args, "lllOOO:AddAccessAllowedObjectAce", &revision, &aceflags, &access,
 		&obObjectTypeGuid, &obInheritedObjectTypeGuid, &obSID))
 			return NULL;
 
@@ -668,12 +668,12 @@ PyObject *PyACL::AddAccessDeniedObjectAce(PyObject *self, PyObject *args)
 	PyObject *obSID;
 	PyObject *obObjectTypeGuid, *obInheritedObjectTypeGuid;
 	// @pyparm int|AceRevision||Must be at least ACL_REVISION_DS
-	// @pyparm int|AceFlags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE) 
+	// @pyparm int|AceFlags||Combination of ACE inheritance flags (CONTAINER_INHERIT_ACE,INHERIT_ONLY_ACE,INHERITED_ACE,NO_PROPAGATE_INHERIT_ACE, and OBJECT_INHERIT_ACE)
 	// @pyparm int|AccessMask||Specifies the mask of access rights to be granted to the specified SID
 	// @pyparm <o PyIID>|ObjectTypeGuid||GUID of object type or property set to which ace applies, can be None
 	// @pyparm <o PyIID>|InheritedObjectTypeGuid||GUID of object type or property that will inherit ACE, can be None
-	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account that will be denied access. 
-	if (!PyArg_ParseTuple(args, "lllOOO:AddAccessDeniedObjectAce", &revision, &aceflags, &access, 
+	// @pyparm <o PySID>|sid||A SID object representing a user, group, or logon account that will be denied access.
+	if (!PyArg_ParseTuple(args, "lllOOO:AddAccessDeniedObjectAce", &revision, &aceflags, &access,
 		&obObjectTypeGuid, &obInheritedObjectTypeGuid, &obSID))
 			return NULL;
 
@@ -776,7 +776,7 @@ PyObject *PyACL::AddAuditAccessAceEx(PyObject *self, PyObject *args)
 		ZeroMemory (psacl_padded, required_size);
 		memcpy(psacl_padded,psacl,psacl->AclSize);
 		psacl_padded->AclSize = required_size;
-		bsuccess=(*addauditaccessaceex)(psacl_padded, acerevision, aceflags, accessmask,  
+		bsuccess=(*addauditaccessaceex)(psacl_padded, acerevision, aceflags, accessmask,
 			psid, bAuditSuccess, bAuditFailure);
 		if (bsuccess)
 			bsuccess=This->SetACL(psacl_padded);
@@ -820,7 +820,7 @@ PyObject *PyACL::AddAuditAccessObjectAce(PyObject *self, PyObject *args)
 	// @pyparm int|bAuditSuccess||Set to 1 if access success should be audited, else 0
 	// @pyparm int|bAuditFailure||Set to 1 if access failure should be audited, else 0
 
-	if (!PyArg_ParseTuple(args, "lllOOOii:AddAuditAccessObjectAce", &acerevision, &aceflags, &accessmask, 
+	if (!PyArg_ParseTuple(args, "lllOOOii:AddAuditAccessObjectAce", &acerevision, &aceflags, &accessmask,
 		&obObjectTypeGuid, &obInheritedObjectTypeGuid, &obSID, &bAuditSuccess, &bAuditFailure))
 		return NULL;
 	if (obObjectTypeGuid!=Py_None){
@@ -836,7 +836,7 @@ PyObject *PyACL::AddAuditAccessObjectAce(PyObject *self, PyObject *args)
 	if (!PyWinObject_AsSID(obSID, &psid, FALSE))
 		return NULL;
 
-	bsuccess=(*addauditaccessobjectace)(psacl, acerevision, aceflags, accessmask,  
+	bsuccess=(*addauditaccessobjectace)(psacl, acerevision, aceflags, accessmask,
 			pObjectTypeGuid, pInheritedObjectTypeGuid, psid, bAuditSuccess, bAuditFailure);
 	if (!bsuccess){
 		DWORD err=GetLastError();
@@ -976,7 +976,7 @@ PyObject *PyACL::GetAce(PyObject *self, PyObject *args)
 				else
 					obInheritedObjectType=PyWinObject_FromIID(pObjectAce->ObjectType);
 				}
-			return Py_BuildValue("(ll)lNNN", pAceHeader->AceType, pAceHeader->AceFlags, pObjectAce->Mask, 
+			return Py_BuildValue("(ll)lNNN", pAceHeader->AceType, pAceHeader->AceFlags, pObjectAce->Mask,
 				obObjectType, obInheritedObjectType, obSID);
 			}
 		default:
@@ -1188,7 +1188,7 @@ PyACL::PyACL(PACL pacl)
 	ob_type = &PyACLType;
 	_Py_NewReference(this);
 	buf = malloc(pacl->AclSize);
-	memcpy(buf, (void *)pacl, pacl->AclSize);	
+	memcpy(buf, (void *)pacl, pacl->AclSize);
 }
 
 PyACL::~PyACL()

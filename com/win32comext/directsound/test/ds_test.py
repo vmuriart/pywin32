@@ -15,13 +15,13 @@ WAV_FORMAT_PCM = 1
 WAV_HEADER_SIZE = struct.calcsize('<4sl4s4slhhllhh4sl')
 
 def wav_header_unpack(data):
-    (riff, riffsize, wave, fmt, fmtsize, format, nchannels, samplespersecond, 
+    (riff, riffsize, wave, fmt, fmtsize, format, nchannels, samplespersecond,
      datarate, blockalign, bitspersample, data, datalength) \
      = struct.unpack('<4sl4s4slhhllhh4sl', data)
 
     if riff != str2bytes('RIFF'):
         raise ValueError('invalid wav header')
-    
+
     if fmtsize != 16 or fmt != str2bytes('fmt ') or str2bytes(data) != 'data':
         # fmt chuck is not first chunk, directly followed by data chuck
         # It is nowhere required that they are, it is just very common
@@ -246,7 +246,7 @@ class DSCBUFFERDESCTest(unittest.TestCase):
 
 class DirectSoundTest(unittest.TestCase):
     # basic tests - mostly just exercise the functions
-    
+
     def testEnumerate(self):
         '''DirectSoundEnumerate() sanity tests'''
 
@@ -255,7 +255,7 @@ class DirectSoundTest(unittest.TestCase):
         self.failUnless(len(devices))
         # if we have an entry, it must be a tuple of size 3
         self.failUnless(len(devices[0]) == 3)
-        
+
     def testCreate(self):
         '''DirectSoundCreate()'''
         d = ds.DirectSoundCreate(None, None)
@@ -305,7 +305,7 @@ class DirectSoundTest(unittest.TestCase):
 
 class DirectSoundCaptureTest(unittest.TestCase):
     # basic tests - mostly just exercise the functions
-    
+
     def testEnumerate(self):
         '''DirectSoundCaptureEnumerate() sanity tests'''
 
@@ -314,7 +314,7 @@ class DirectSoundCaptureTest(unittest.TestCase):
         self.failUnless(len(devices))
         # if we have an entry, it must be a tuple of size 3
         self.failUnless(len(devices[0]) == 3)
-        
+
     def testCreate(self):
         '''DirectSoundCreate()'''
         d = ds.DirectSoundCaptureCreate(None, None)

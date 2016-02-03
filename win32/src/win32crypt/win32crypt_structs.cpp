@@ -33,7 +33,7 @@ BOOL PyWinObject_AsCRYPTPROTECT_PROMPTSTRUCT(PyObject *ob, CRYPTPROTECT_PROMPTST
 
 	if (!PyArg_ParseTuple(ob, "k|O&O",
 		&PromptStruct->dwPromptFlags,
-		PyWinObject_AsHANDLE, &PromptStruct->hwndApp, 
+		PyWinObject_AsHANDLE, &PromptStruct->hwndApp,
 		&obPrompt))
 		return FALSE;
 	return PyWinObject_AsWCHAR(obPrompt, (WCHAR **)(&PromptStruct->szPrompt), TRUE);
@@ -85,7 +85,7 @@ PyObject *PyWinObject_FromCRYPT_INTEGER_BLOB(PCRYPT_INTEGER_BLOB pcib)
 
 PyObject *PyWinObject_FromCRYPT_KEY_PROV_INFO(PCRYPT_KEY_PROV_INFO pckpi)
 {
-	// CRYPT_KEY_PROV_INFO.rgProvParam is an array of CRYPT_KEY_PROV_PARAM structs 
+	// CRYPT_KEY_PROV_INFO.rgProvParam is an array of CRYPT_KEY_PROV_PARAM structs
 	PyObject *obProvParam=PyTuple_New(pckpi->cProvParam);
 	if (obProvParam==NULL)
 		return NULL;
@@ -112,7 +112,7 @@ PyObject *PyWinObject_FromCRYPT_KEY_PROV_INFO(PCRYPT_KEY_PROV_INFO pckpi)
 				// Anything not handled specifically is dumped out as raw bytes
 				PyErr_Warn(PyExc_RuntimeWarning,"Unsupported PP_ parameter returned as raw data"),
 				data=PyString_FromStringAndSize((char *)pckpi->rgProvParam[i].pbData, pckpi->rgProvParam[i].cbData);
-				break;		
+				break;
 			}
 		if (data==NULL){
 			Py_DECREF(obProvParam);
@@ -147,7 +147,7 @@ PyObject *PyWinObject_FromCERT_OTHER_NAME(PCERT_OTHER_NAME pcon)
 	/* CERT_OTHER_NAME - struct isn't in the documentation anywhere
 	from wincrypt.h:
 		typedef struct _CERT_OTHER_NAME {LPSTR pszObjId; CRYPT_OBJID_BLOB Value;} CERT_OTHER_NAME
-		Value blob is an encoded CERT_NAME_VALUE (according to a post in microsoft.public.platformsdk.security) 
+		Value blob is an encoded CERT_NAME_VALUE (according to a post in microsoft.public.platformsdk.security)
 		- to be decoded with X509_UNICODE_NAME_VALUE
 	*/
 	return Py_BuildValue("{s:s,s:N}",
@@ -157,7 +157,7 @@ PyObject *PyWinObject_FromCERT_OTHER_NAME(PCERT_OTHER_NAME pcon)
 
 // @object PyCERT_ALT_NAME_ENTRY|Represented as a 2-tuple
 // @comm First item is one of the CERT_ALT_NAME_* constants indicating the type.
-// <nl>Second item is either a string, or for CERT_ALT_NAME_OTHER_NAME a <o PyCERT_OTHER_NAME> 
+// <nl>Second item is either a string, or for CERT_ALT_NAME_OTHER_NAME a <o PyCERT_OTHER_NAME>
 PyObject *PyWinObject_FromCERT_ALT_NAME_ENTRY(PCERT_ALT_NAME_ENTRY pcane)
 {
 	switch(pcane->dwAltNameChoice){
@@ -207,10 +207,10 @@ PyObject *PyWinObject_FromCRYPT_ALGORITHM_IDENTIFIER(PCRYPT_ALGORITHM_IDENTIFIER
 {
 	/*
 	???? to do: Call CryptDecodeObject to decode 	pcai->Parameters if ObjId is one of the following:
-		szOID_OIWSEC_dsa		X509_DSS_PARAMETERS 
-		szOID_RSA_RC2CBC		PKCS_RC2_CBC_PARAMETERS 
-		szOID_OIWSEC_desCBC		X509_OCTET_STRING 
-		szOID_RSA_DES_EDE3_CBC	X509_OCTET_STRING 
+		szOID_OIWSEC_dsa		X509_DSS_PARAMETERS
+		szOID_RSA_RC2CBC		PKCS_RC2_CBC_PARAMETERS
+		szOID_OIWSEC_desCBC		X509_OCTET_STRING
+		szOID_RSA_DES_EDE3_CBC	X509_OCTET_STRING
 		szOID_RSA_RC4			X509_OCTET_STRING
 	????
 	void *buf=NULL;
@@ -287,13 +287,13 @@ BOOL PyWinObject_AsCRYPT_BIT_BLOB(PyObject *obcbb, PCRYPT_BIT_BLOB pcbb)
 		&& PyWinObject_AsReadBuffer(obdata, (void **)&pcbb->pbData, &pcbb->cbData, FALSE);
 }
 
-// @object PyCERT_NAME_VALUE|Dict containing type (CERT_RDN_*) and a unicode string 
+// @object PyCERT_NAME_VALUE|Dict containing type (CERT_RDN_*) and a unicode string
 PyObject * PyWinObject_FromCERT_NAME_VALUE(PCERT_NAME_VALUE pcnv)
 {
 	/* ???? Need some additional interpretation here, some of the CERT_RDN_* values can mean 8-bit characters
 		or even an array of 32-bit ints */
-	PyObject *ret=Py_BuildValue("{s:k,s:u#}", 
-		"ValueType", pcnv->dwValueType, 
+	PyObject *ret=Py_BuildValue("{s:k,s:u#}",
+		"ValueType", pcnv->dwValueType,
 		"Value", pcnv->Value.pbData, pcnv->Value.cbData/sizeof(WCHAR));
 	return ret;
 }
@@ -374,7 +374,7 @@ PyObject *PyWinObject_FromCERT_NAME_INFO(PCERT_NAME_INFO pcni)
 
 PyObject *PyWinObject_FromCRYPT_OID_INFO(PCCRYPT_OID_INFO oid_info)
 {
-	return Py_BuildValue("{s:s,s:u,s:k,s:k,s:N}", 
+	return Py_BuildValue("{s:s,s:u,s:k,s:k,s:N}",
 		"OID", oid_info->pszOID,
 		"Name", oid_info->pwszName,
 		"GroupId", oid_info->dwGroupId,
@@ -399,7 +399,7 @@ void PyWinObject_FreeCRYPT_DECRYPT_MESSAGE_PARA(PCRYPT_DECRYPT_MESSAGE_PARA pcdm
 // @object PyCRYPT_DECRYPT_MESSAGE_PARA|Dict containing message decryption parameters,
 //	used with <om cryptoapi.CryptDecodeMessage> and <om cryptoapi.CryptDecryptMessage>
 // @prop (<o PyCERT_STORE>,...)|CertStores|Sequence of certificate stores to be searched for a certificate
-//		with a private key that can be used to decrypt the message 
+//		with a private key that can be used to decrypt the message
 // @prop int|MsgAndCertEncodingType|Encoding types, optional. Defaults to X509_ASN_ENCODING combined with PKCS_7_ASN_ENCODING
 // @prop int|Flags|Optional.  CRYPT_MESSAGE_SILENT_KEYSET_FLAG can be used to suppress any dialogs that might be triggered by
 //	accessing a key container, such as a request for a PIN.
@@ -595,7 +595,7 @@ BOOL PyWinObject_AsCRYPT_SIGN_MESSAGE_PARA(PyObject *obcsmp, PCRYPT_SIGN_MESSAGE
 		&obAuthAttr,		// @prop (<o PyCRYPT_ATTRIBUTE>,...)|AuthAttr|Sequence of canonical attributes to be added to the message
 		&obUnauthAttr,		// @prop (<o PyCRYPT_ATTRIBUTE>,...)|UnauthAttr|Sequence of arbitrary attributes
 		&pcsmp->dwFlags,			// @prop int|Flags|Optional CRYPT_MESSAGE_*_FLAG that indicates content type if output is to be further encoded.
-		&pcsmp->dwInnerContentType,	// @prop int|InnerContentType|Optional, one of the CMSG_* content types if message is already encoded, . 
+		&pcsmp->dwInnerContentType,	// @prop int|InnerContentType|Optional, one of the CMSG_* content types if message is already encoded, .
 		&pcsmp->dwMsgEncodingType))	// @prop int|MsgEncodingType|Encoding types, optional. Defaults to X509_ASN_ENCODING combined with PKCS_7_ASN_ENCODING
 		return NULL;
 
@@ -779,7 +779,7 @@ void PyWinObject_FreePBYTEArray(PBYTE *pbyte_array, DWORD *byte_lens, DWORD str_
 		free(byte_lens);
 }
 
-// Converts a sequence of strings into an array of PBYTE pointers and array of lengths 
+// Converts a sequence of strings into an array of PBYTE pointers and array of lengths
 BOOL PyWinObject_AsPBYTEArray(PyObject *str_seq, PBYTE **pbyte_array, DWORD **byte_lens, DWORD *str_cnt)
 {
 	BOOL ret=FALSE;
@@ -993,7 +993,7 @@ PyObject *PyWinObject_FromCERT_POLICY_INFO(PCERT_POLICY_INFO pcpi)
 	for (DWORD qual_ind=0; qual_ind<pcpi->cPolicyQualifier; qual_ind++){
 		PyObject *qual=Py_BuildValue("{s:s,s:N}",
 			"PolicyQualifierId", pcpi->rgPolicyQualifier[qual_ind].pszPolicyQualifierId,
-			"Qualifier", PyString_FromStringAndSize((char *)pcpi->rgPolicyQualifier[qual_ind].Qualifier.pbData, 
+			"Qualifier", PyString_FromStringAndSize((char *)pcpi->rgPolicyQualifier[qual_ind].Qualifier.pbData,
 							pcpi->rgPolicyQualifier[qual_ind].Qualifier.cbData));
 		if (qual==NULL){
 			Py_DECREF(quals);

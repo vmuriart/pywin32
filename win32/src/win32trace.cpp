@@ -1,4 +1,4 @@
-/* A debugging module for Python. 
+/* A debugging module for Python.
 
 The design is for a set of functions that can be "printed" to from
 one Python process, and the output read by another process.  Using different
@@ -46,14 +46,14 @@ const TCHAR *EVENT_EMPTY_OBJECT_NAME = _T("Global\\PythonTraceOutputEmptyEvent")
 // On NT4/9x, 'Global\\' is not understood and will fail.
 // On 2k/XP, anyone can create 'global' objects.
 // On Vista, you need elavated perms to create global objects - however, once
-// it has been created and permissions adjusted, a user with normal 
+// it has been created and permissions adjusted, a user with normal
 // permissions can open these global objects.
-// As a service generally will be able to create global objects, we want a 
+// As a service generally will be able to create global objects, we want a
 // non-elevated Python to be capable of automatically using the global space
-// if it exists, but coping when it can't create such an object (a local 
+// if it exists, but coping when it can't create such an object (a local
 // one is probably fine in such cases).
-// [Why bother?: without the Global namespace, a 'win32traceutil' running in 
-// a 'Remote Desktop' session would not be able to see output from a 
+// [Why bother?: without the Global namespace, a 'win32traceutil' running in
+// a 'Remote Desktop' session would not be able to see output from a
 // service - they have different local namespaces]
 
 // This means:
@@ -184,7 +184,7 @@ static PyObject* PyTraceObject_isatty(PyObject *self, PyObject *args)
 
 static PyMethodDef PyTraceObject_methods[] = {
     {"blockingread", PyTraceObject_blockingread, METH_VARARGS}, // @pymeth blockingread
-    {"read",    PyTraceObject_read, METH_VARARGS }, // @pymeth read|    
+    {"read",    PyTraceObject_read, METH_VARARGS }, // @pymeth read|
     {"write",   PyTraceObject_write, METH_VARARGS }, // @pymeth write|
     {"flush",   PyTraceObject_flush, METH_VARARGS }, // @pymeth flush|Does nothing, but included to better emulate file semantics.
     {"isatty",  PyTraceObject_isatty, METH_VARARGS}, // @pymeth isatty | returns false
@@ -296,7 +296,7 @@ BOOL DoCloseMap( HANDLE *pHandle, VOID **ppPtr)
     //
     // Explanation, there was code that closed the mutex and event
     // here before
-        
+
     return TRUE;
 }
 
@@ -374,7 +374,7 @@ BOOL PyTraceObject::WriteData(const char *data, unsigned len)
     return rc;
 }
 
-BOOL PyTraceObject::ReadData(char **ppResult, int *retSize, int waitMilliseconds) 
+BOOL PyTraceObject::ReadData(char **ppResult, int *retSize, int waitMilliseconds)
 {
     if (pMapBaseRead == NULL) {
         ReturnError("The module has not been setup for reading");
@@ -438,7 +438,7 @@ BOOL PyTraceObject::CloseReadMap()
 }
 
 
-BOOL PyTraceObject::CloseWriteMap() 
+BOOL PyTraceObject::CloseWriteMap()
 {
     return DoCloseMap( &hMapFileWrite, &pMapBaseWrite);
 }
@@ -461,7 +461,7 @@ static PyObject *win32trace_InitRead(PyObject *self, PyObject *args)
 {
     BOOL ok;
     PyObject* traceObject = win32trace_GetTracer(NULL, NULL);
-    ok = static_cast<PyTraceObject*>(traceObject)->OpenReadMap(); 
+    ok = static_cast<PyTraceObject*>(traceObject)->OpenReadMap();
     Py_DECREF(traceObject);
     if (!ok)
 	return NULL;
@@ -473,7 +473,7 @@ static PyObject *win32trace_InitWrite(PyObject *self, PyObject *args)
 {
     BOOL ok;
     PyObject* traceObject = win32trace_GetTracer(NULL, NULL);
-    ok = static_cast<PyTraceObject*>(traceObject)->OpenWriteMap(); 
+    ok = static_cast<PyTraceObject*>(traceObject)->OpenWriteMap();
     Py_DECREF(traceObject);
     if (!ok)
 	return NULL;
@@ -505,7 +505,7 @@ static PyObject *win32trace_TermWrite(PyObject *self, PyObject *args)
     if (traceObject == NULL) {
         // can't terminate something that you haven't started
         return ReturnError("The module has not been setup for writing");
-    }        
+    }
     Py_BEGIN_ALLOW_THREADS
     ok = static_cast<PyTraceObject*>(traceObject)->CloseWriteMap();
     Py_END_ALLOW_THREADS
@@ -520,7 +520,7 @@ static PyObject* win32trace_write(PyObject*, PyObject* args)
     PyObject* traceObject = PySys_GetObject(TRACEOBJECT_NAME);
     if (traceObject == NULL) {
         return ReturnError("The module has not been setup for writing");
-    }            
+    }
     PyObject* method = PyObject_GetAttrString(traceObject, "write");
     if (method == NULL) {
         return NULL;
@@ -535,14 +535,14 @@ static PyObject* win32trace_read(PyObject*, PyObject* args)
     PyObject* traceObject = PySys_GetObject(TRACEOBJECT_NAME);
     if (traceObject == NULL) {
         return ReturnError("The module has not been setup for reading");
-    }            
+    }
     PyObject* method = PyObject_GetAttrString(traceObject, "read");
     if (method == NULL) {
         return NULL;
     }
     PyObject* result = PyObject_CallObject(method, args);
     Py_DECREF(method);
-    return result;    
+    return result;
 }
 
 static PyObject* win32trace_blockingread(PyObject*, PyObject* args)
@@ -550,22 +550,22 @@ static PyObject* win32trace_blockingread(PyObject*, PyObject* args)
     PyObject* traceObject = PySys_GetObject(TRACEOBJECT_NAME);
     if (traceObject == NULL) {
         return ReturnError("The module has not been setup for reading");
-    }            
+    }
     PyObject* method = PyObject_GetAttrString(traceObject, "blockingread");
     if (method == NULL) {
         return NULL;
     }
     PyObject* result = PyObject_CallObject(method, args);
     Py_DECREF(method);
-    return result;    
-}    
+    return result;
+}
 
 static PyObject *win32trace_setprint(PyObject *self, PyObject *args)
 {
     PyObject* traceObject = PySys_GetObject(TRACEOBJECT_NAME);
     if (traceObject == NULL) {
         return ReturnError("The module has not been setup for writing");
-    }            
+    }
     PySys_SetObject("stdout", traceObject);
     PySys_SetObject("stderr", traceObject);
     Py_INCREF(Py_None);
@@ -640,8 +640,8 @@ PYWIN_MODULE_INIT_FUNC(win32trace)
 
     assert(hMutex == NULL);
 
-    // See comments re global namespace above - the problem child is 
-    // CreateFileMapping - so we temporarily use that just to work out what 
+    // See comments re global namespace above - the problem child is
+    // CreateFileMapping - so we temporarily use that just to work out what
     // namespace to use for our objects.
 
     // is the "Global\" namespace even possible?
@@ -651,10 +651,10 @@ PYWIN_MODULE_INIT_FUNC(win32trace)
     BOOL global_ok = info.dwMajorVersion > 4;
     if (global_ok) {
         // see comments at top of file - if it exists locally, stick with
-        // local - use_global_namespace is still FALSE now, so that is the 
+        // local - use_global_namespace is still FALSE now, so that is the
         // name we get.
-        HANDLE h = CreateFileMapping((HANDLE)-1, &sa, PAGE_READWRITE, 0, 
-                                     BUFFER_SIZE, 
+        HANDLE h = CreateFileMapping((HANDLE)-1, &sa, PAGE_READWRITE, 0,
+                                     BUFFER_SIZE,
                                      FixupObjectName(MAP_OBJECT_NAME));
         if (GetLastError() != ERROR_ALREADY_EXISTS) {
             // no local one exists - see if we can create it globally - if

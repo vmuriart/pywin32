@@ -86,13 +86,13 @@ PyTypeObject PyDSCCAPSType =
 #define OFF(e) offsetof(PyDSCCAPS, e)
 
 /*static*/ struct PyMemberDef PyDSCCAPS::members[] = {
-	{"dwFlags",  T_INT,  OFF(m_caps.dwFlags), 0, "Specifies device capabilities. Can be 0 or DSCCAPS_EMULDRIVER (indicates that no DirectSoundCapture device is available and standard wave audio functions are being used)"}, 
+	{"dwFlags",  T_INT,  OFF(m_caps.dwFlags), 0, "Specifies device capabilities. Can be 0 or DSCCAPS_EMULDRIVER (indicates that no DirectSoundCapture device is available and standard wave audio functions are being used)"},
 	// @prop integer|dwFlags|Specifies device capabilities. Can be zero or the following flag:
 		// @flagh Flag|Description
 		// @flag DSCCAPS_EMULDRIVER|Indicates that no DirectSound Device is available and standard wave audio functions are being used.
-	{"dwFormats",  T_INT,  OFF(m_caps.dwFormats), 0, "Supported WAVE_FORMAT formats."}, 
+	{"dwFormats",  T_INT,  OFF(m_caps.dwFormats), 0, "Supported WAVE_FORMAT formats."},
 	// @prop integer|dwFormats|Bitset of supported WAVE_FORMAT formats.
-	{"dwChannels",  T_INT,  OFF(m_caps.dwChannels), 0, "Number of channels supported by the device."}, 
+	{"dwChannels",  T_INT,  OFF(m_caps.dwChannels), 0, "Number of channels supported by the device."},
 	// @prop integer|dwChannels|Number of channels supported by the device.
 	{NULL}
 };

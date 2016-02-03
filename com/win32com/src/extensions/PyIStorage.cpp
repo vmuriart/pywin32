@@ -27,7 +27,7 @@ PyIStorage::~PyIStorage()
 	return (IStorage *)PyIUnknown::GetI(self);
 }
 
-// @pymethod <o PyIStream>|PyIStorage|CreateStream|Creates and opens a stream object with the specified name contained in this storage object. All elements within a storage object — both streams and other storage objects — are kept in the same name space.
+// @pymethod <o PyIStream>|PyIStorage|CreateStream|Creates and opens a stream object with the specified name contained in this storage object. All elements within a storage object â€” both streams and other storage objects â€” are kept in the same name space.
 PyObject *PyIStorage::CreateStream(PyObject *self, PyObject *args)
 {
 	IStorage *pIS = GetI(self);
@@ -126,9 +126,9 @@ PyObject *PyIStorage::OpenStorage(PyObject *self, PyObject *args)
 	if ( pIS == NULL )
 		return NULL;
 	// @pyparm str|Name||Name of the storage, or None.
-	// @pyparm <o PyIStorage>|Priority||If the pstgPriority parameter is not None, it is a <o PyIStorage> object to a previous opening of an element of the storage object, 
-	// usually one that was opened in priority mode. The storage object should be closed and re-opened 
-	// according to grfMode. When the <om PyIStorage.OpenStorage> method returns, pstgPriority is no longer valid - use the result value. 
+	// @pyparm <o PyIStorage>|Priority||If the pstgPriority parameter is not None, it is a <o PyIStorage> object to a previous opening of an element of the storage object,
+	// usually one that was opened in priority mode. The storage object should be closed and re-opened
+	// according to grfMode. When the <om PyIStorage.OpenStorage> method returns, pstgPriority is no longer valid - use the result value.
 	// If the pstgPriority parameter is None, it is ignored.
 	// @pyparm int|Mode||Access mode - combination of storagecon.STGM_* flags (must include STGM_SHARE_EXCLUSIVE)
 	// @pyparm <o SNB>|snbExclude||Reserved for later - Must be None
@@ -167,10 +167,10 @@ PyObject *PyIStorage::CopyTo(PyObject *self, PyObject *args)
 		return NULL;
 	// @pyparm [<o PyIID>,]|rgiidExclude||List of IID's to be excluded.  Use empty seq to exclude all objects, or None to indicate no excludes.
 	// @pyparm <o SNB>|snbExclude||Reserved for later - Must be None
-	// @pyparm <o PyIStorage>|stgDest||The open storage object into which this storage object is to be copied. 
-	// The destination storage object can be a different implementation of the <o PyIStorage> interface from the source storage object. 
-	// Thus, <om IStorage::CopyTo> can only use publicly available methods of the destination storage object. 
-	// If stgDest is open in transacted mode, it can be reverted by calling its <om PyIStorage::Revert> method. 
+	// @pyparm <o PyIStorage>|stgDest||The open storage object into which this storage object is to be copied.
+	// The destination storage object can be a different implementation of the <o PyIStorage> interface from the source storage object.
+	// Thus, <om IStorage::CopyTo> can only use publicly available methods of the destination storage object.
+	// If stgDest is open in transacted mode, it can be reverted by calling its <om PyIStorage::Revert> method.
 	PyObject *obSeqExclude;
 	PyObject *obpstgDest;
 	char *temp;
@@ -234,15 +234,15 @@ PyObject *PyIStorage::MoveElementTo(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-// @pymethod |PyIStorage|Commit|Ensures that any changes made to a storage object open in transacted mode are reflected in the parent storage; 
-// for a root storage, reflects the changes in the actual device, for example, a file on disk. 
+// @pymethod |PyIStorage|Commit|Ensures that any changes made to a storage object open in transacted mode are reflected in the parent storage;
+// for a root storage, reflects the changes in the actual device, for example, a file on disk.
 // For a root storage object opened in direct mode, this method has no effect except to flush all memory buffers to the disk. For non-root storage objects in direct mode, this method has no effect.
 PyObject *PyIStorage::Commit(PyObject *self, PyObject *args)
 {
 	IStorage *pIS = GetI(self);
 	if ( pIS == NULL )
 		return NULL;
-	// @pyparm int|grfCommitFlags||Controls how the changes are committed to the storage object. See the STGC enumeration for a definition of these values. 
+	// @pyparm int|grfCommitFlags||Controls how the changes are committed to the storage object. See the STGC enumeration for a definition of these values.
 	DWORD grfCommitFlags;
 	if ( !PyArg_ParseTuple(args, "i:Commit", &grfCommitFlags) )
 		return NULL;
@@ -352,7 +352,7 @@ PyObject *PyIStorage::SetElementTimes(PyObject *self, PyObject *args)
 	IStorage *pIS = GetI(self);
 	if ( pIS == NULL )
 		return NULL;
-	// @pyparm str|name||The name of the storage object element whose times are to be modified. If NULL, the time is set on the root storage rather than one of its elements. 
+	// @pyparm str|name||The name of the storage object element whose times are to be modified. If NULL, the time is set on the root storage rather than one of its elements.
 	// @pyparm <o PyTime>|ctime||Either the new creation time for the element or None if the creation time is not to be modified.
 	// @pyparm <o PyTime>|atime||Either the new access time for the element or None if the access time is not to be modified.
 	// @pyparm <o PyTime>|mtime||Either the new modification time for the element or None if the modification time is not to be modified.
@@ -422,7 +422,7 @@ PyObject *PyIStorage::SetStateBits(PyObject *self, PyObject *args)
 	if ( pIS == NULL )
 		return NULL;
 	// @pyparm int|grfStateBits||Specifies the new values of the bits to set. No legal values are defined for these bits; they are all reserved for future use and must not be used by applications.
-	// @pyparm int|grfMask||A binary mask indicating which bits in grfStateBits are significant in this call. 
+	// @pyparm int|grfMask||A binary mask indicating which bits in grfStateBits are significant in this call.
 	DWORD grfStateBits;
 	DWORD grfMask;
 	if ( !PyArg_ParseTuple(args, "ii:SetStateBits", &grfStateBits, &grfMask) )
@@ -443,7 +443,7 @@ PyObject *PyIStorage::Stat(PyObject *self, PyObject *args)
 	IStorage *pIS = GetI(self);
 	if ( pIS == NULL )
 		return NULL;
-	// @pyparm int|grfStatFlag||Specifies that some of the fields in the STATSTG structure are not returned, thus saving a memory allocation operation. Values are taken from the STATFLAG enumeration. 
+	// @pyparm int|grfStatFlag||Specifies that some of the fields in the STATSTG structure are not returned, thus saving a memory allocation operation. Values are taken from the STATFLAG enumeration.
 	DWORD grfStatFlag = 0;
 	if ( !PyArg_ParseTuple(args, "|i:Stat", &grfStatFlag) )
 		return NULL;

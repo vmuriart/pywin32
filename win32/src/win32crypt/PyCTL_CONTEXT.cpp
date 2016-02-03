@@ -115,7 +115,7 @@ PyCTL_CONTEXT::PyCTL_CONTEXT(PCCTL_CONTEXT pcc)
 
 // @pymethod |PyCTL_CONTEXT|CertFreeCTLContext|Closes the CTL handle
 PyObject *PyCTL_CONTEXT::PyCertFreeCTLContext(PyObject *self, PyObject *args)
-{	
+{
 	PCCTL_CONTEXT pcc=((PyCTL_CONTEXT *)self)->GetCTL_CONTEXT();
 	if(!CertFreeCTLContext(pcc))
 		return PyWin_SetAPIError("CertFreeCTLContext");

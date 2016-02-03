@@ -120,7 +120,7 @@ PyPROPVARIANT::~PyPROPVARIANT()
 BOOL PyWinObject_AsPROPVARIANT(PyObject *ob, PROPVARIANT **pppv)
 {
 	if (ob->ob_type!=&PyPROPVARIANTType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyPROPVARIANT");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyPROPVARIANT");
 		return FALSE;
 		}
 	*pppv=&((PyPROPVARIANT *)ob)->Py_propvariant;
@@ -343,13 +343,13 @@ BOOL PyWin_NewPROPVARIANT(PyObject *ob, VARTYPE vt, PROPVARIANT *ppv)
 			ret = PyWinObject_AsSHORT(ob, &ppv->iVal);
 			break;
 		case VT_I2|VT_VECTOR:
-			ret = SeqToVector(ob, &ppv->cai.pElems, &ppv->cai.cElems, PyWinObject_AsSHORT); 
+			ret = SeqToVector(ob, &ppv->cai.pElems, &ppv->cai.cElems, PyWinObject_AsSHORT);
 			break;
 		case VT_UI2:
 			ret = PyWinObject_AsUSHORT(ob, &ppv->uiVal);
 			break;
 		case VT_UI2|VT_VECTOR:
-			ret = SeqToVector(ob, &ppv->caui.pElems, &ppv->caui.cElems, PyWinObject_AsUSHORT); 
+			ret = SeqToVector(ob, &ppv->caui.pElems, &ppv->caui.cElems, PyWinObject_AsUSHORT);
 			break;
 		case VT_INT:
 			ppv->intVal = PyLong_AsLong(ob);
@@ -399,7 +399,7 @@ BOOL PyWin_NewPROPVARIANT(PyObject *ob, VARTYPE vt, PROPVARIANT *ppv)
 				TmpPyObject seq = PyWinSequence_Tuple(ob, &ppv->calpwstr.cElems);
 				if (seq == NULL)
 					break;
-				// For VT_VECTOR, PropVariantClear deallocates pointer arrays using CoTaskMemFree 
+				// For VT_VECTOR, PropVariantClear deallocates pointer arrays using CoTaskMemFree
 				ppv->calpwstr.pElems = (LPWSTR *)CoTaskMemAlloc(ppv->calpwstr.cElems * sizeof(LPWSTR));
 				if (ppv->calpwstr.pElems == NULL){
 					PyErr_NoMemory();

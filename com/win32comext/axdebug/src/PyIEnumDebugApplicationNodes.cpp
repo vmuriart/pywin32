@@ -163,7 +163,7 @@ PyComTypeObject PyIEnumDebugApplicationNodes::type("PyIEnumDebugApplicationNodes
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumDebugApplicationNodes::Next( 
+STDMETHODIMP PyGEnumDebugApplicationNodes::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IDebugApplicationNode __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -212,7 +212,7 @@ STDMETHODIMP PyGEnumDebugApplicationNodes::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumDebugApplicationNodes);
 }
 
-STDMETHODIMP PyGEnumDebugApplicationNodes::Skip( 
+STDMETHODIMP PyGEnumDebugApplicationNodes::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -225,7 +225,7 @@ STDMETHODIMP PyGEnumDebugApplicationNodes::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumDebugApplicationNodes::Clone( 
+STDMETHODIMP PyGEnumDebugApplicationNodes::Clone(
             /* [out] */ IEnumDebugApplicationNodes __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

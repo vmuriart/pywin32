@@ -32,7 +32,7 @@ def demo():
 		except win32api.error:
 			print "The InstallPath can not be located, and the Demos directory is not on the path"
 			instPath="."
-			
+
 		demosDir = win32ui.FullPath(instPath + "\\Demos")
 		for path in sys.path:
 			if win32ui.FullPath(path)==demosDir:
@@ -43,7 +43,7 @@ def demo():
 
 	import sys
 	if "/go" in sys.argv:
-		for name, cmd in demos:		
+		for name, cmd in demos:
 			try:
 				exec cmd
 			except:

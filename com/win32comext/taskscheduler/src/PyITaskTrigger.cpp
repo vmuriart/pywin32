@@ -123,8 +123,8 @@ static struct PyMemberDef PyTASK_TRIGGER_members[] = {
 	{"StartMinute", T_USHORT, OFF(task_trigger.wStartMinute), 0, NULL},
 	{"MinutesDuration", T_ULONG, OFF(task_trigger.MinutesDuration), 0, NULL},
 	{"MinutesInterval", T_ULONG, OFF(task_trigger.MinutesInterval), 0, NULL},
-	{"RandomMinutesInterval", T_USHORT, OFF(task_trigger.wRandomMinutesInterval), 0, NULL},	
-	{"Flags", T_ULONG, OFF(task_trigger.rgFlags), 0, "Combination of TASK_TRIGGER_FLAG_HAS_END_DATE,TASK_TRIGGER_FLAG_KILL_AT_DURATION_END,TASK_TRIGGER_FLAG_DISABLED"}, 
+	{"RandomMinutesInterval", T_USHORT, OFF(task_trigger.wRandomMinutesInterval), 0, NULL},
+	{"Flags", T_ULONG, OFF(task_trigger.rgFlags), 0, "Combination of TASK_TRIGGER_FLAG_HAS_END_DATE,TASK_TRIGGER_FLAG_KILL_AT_DURATION_END,TASK_TRIGGER_FLAG_DISABLED"},
 	{"TriggerType", T_ULONG, OFF(task_trigger.TriggerType), 0, "Value from TASK_TRIGGER_TYPE enum:\n"
 			"TASK_TIME_TRIGGER_ONCE,TASK_TIME_TRIGGER_DAILY,\n"
 			"TASK_TIME_TRIGGER_WEEKLY,TASK_TIME_TRIGGER_MONTHLYDATE,\n"
@@ -199,7 +199,7 @@ PyTASK_TRIGGER::~PyTASK_TRIGGER()
 BOOL PyTASK_TRIGGER_check(PyObject *ob)
 {
 	if (ob->ob_type!=&PyTASK_TRIGGERType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyTASK_TRIGGER");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyTASK_TRIGGER");
 		return FALSE;
 		}
 	return TRUE;

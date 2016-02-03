@@ -11,7 +11,7 @@ public:
                 m_data(data)
 	{
 	}
-	
+
 	~CFilterContext()
 	{
 	}

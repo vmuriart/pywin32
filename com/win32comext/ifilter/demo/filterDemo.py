@@ -14,22 +14,22 @@ class FileParser:
     PIDH_DESCRIPTION         = "DESCRIPTION"
     PIDH_HREF                = "A.HREF"
     PIDH_IMGSRC              = "IMG.SRC"
-    
+
     # conversion map to convert ifilter properties to more user friendly names
     propertyToName = {PSGUID_STORAGE            : {PIDS_BODY      : 'body'},
-                      
+
                       PSGUID_SUMMARYINFORMATION : {PIDSI_TITLE    : 'title',
                                                    PIDSI_SUBJECT  : 'description',
                                                    PIDSI_AUTHOR   : 'author',
                                                    PIDSI_KEYWORDS : 'keywords',
                                                    PIDSI_COMMENTS : 'comments'},
-                      
+
                       PSGUID_HTMLINFORMATION    : {PIDH_DESCRIPTION : 'description'},
 
                       PSGUID_HTML2_INFORMATION  : {PIDH_HREF : 'href',
-                                                   PIDH_IMGSRC : 'img'}      
+                                                   PIDH_IMGSRC : 'img'}
                       }
-    
+
     def __init__(self, verbose=False):
         self.f = None
         self.stg = None
@@ -38,10 +38,10 @@ class FileParser:
     def Close(self):
         self.f = None
         self.stg = None
-        
-    def Parse(self, fileName, maxErrors=10):        
+
+    def Parse(self, fileName, maxErrors=10):
         properties = {}
-        
+
         try:
             self._bind_to_filter(fileName)
             try:
@@ -65,7 +65,7 @@ class FileParser:
                         # startSource   = The offset from which the source text for a derived chunk starts in the source chunk
                         # lenSource     = The length in characters of the source text from which the current chunk was derived.
                         #                 A zero value signifies character-by-character correspondence between the source text and the derived text.
-                        
+
                         idChunk, breakType, flags, locale, attr, idChunkSource,	startSource,lenSource = self.f.GetChunk()
                         self._trace("Chunk details:", idChunk, breakType, flags, locale, attr, idChunkSource, startSource,lenSource)
 
@@ -76,11 +76,11 @@ class FileParser:
                             propName = propSet.get(attr[1], '%s:%s' % attr)
                         else:
                             propName = '%s:%s' % attr
-                            
+
                     except pythoncom.com_error, e:
                         if e[0] == FILTER_E_END_OF_CHUNKS:
                             # we have read all the chunks
-                            break 
+                            break
                         elif e[0] in [FILTER_E_EMBEDDING_UNAVAILABLE, FILTER_E_LINK_UNAVAILABLE]:
                             # the next chunk can't be read. Also keep track of the number of times we
                             # fail as some filters (ie. the Msoft office ones can get stuck here)
@@ -98,27 +98,27 @@ class FileParser:
                         else:
                             # any other type of error really can't be recovered from
                             raise
-                            
-                    # reset consecutive errors (some filters may get stuck in a lopp if embedding or link failures occurs    
-                    errCnt = 0 
-                    
+
+                    # reset consecutive errors (some filters may get stuck in a lopp if embedding or link failures occurs
+                    errCnt = 0
+
                     if flags == CHUNK_TEXT:
                         # its a text segment - get all available text for this chunk.
                         body_chunks = properties.setdefault(propName, [])
                         self._get_text(body_chunks)
                     elif flags == CHUNK_VALUE:
-                        # its a data segment - get the value 
-                        properties[propName] =  self.f.GetValue()  
+                        # its a data segment - get the value
+                        properties[propName] =  self.f.GetValue()
                     else:
                         self._trace("Unknown flag returned by GetChunk:", flags)
             finally:
                 self.Close()
-                
+
         except pythoncom.com_error, e:
             self._trace("ERROR processing file", e)
             raise
 
-        return properties    
+        return properties
 
     def _bind_to_filter(self, fileName):
         """
@@ -151,7 +151,7 @@ class FileParser:
                      break
                 else:
                     raise # not one of the values we were expecting
-                    
+
 
     def _get_properties(self, properties):
         """
@@ -172,15 +172,15 @@ class FileParser:
             properties['title'] = title
         if subject is not None:
             properties['description'] = subject
-        if author is not None:    
+        if author is not None:
             properties['author'] = author
-        if keywords is not None:    
+        if keywords is not None:
             properties['keywords'] = keywords
         if comments is not None:
             properties['comments'] = comments
-                
+
     def _trace(self, *args):
-        
+
         if self.verbose:
             ret = ' '.join([str(arg) for arg in args])
             try:
@@ -207,8 +207,8 @@ def _usage():
     print "This extension is only supported on win2000 & winXP - because thats the only"
     print "place the ifilter stuff is supported. For more info on the API check out "
     print "MSDN under ifilters"
-    
-        
+
+
 if __name__ == "__main__":
     import sys
     import operator
@@ -219,7 +219,7 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         _usage()
         sys.exit(1)
-        
+
     try:
         fName = sys.argv[1]
         verbose = (sys.argv[2]!="0")
@@ -227,7 +227,7 @@ if __name__ == "__main__":
     except:
         pass
 
-    p = FileParser(verbose) 
+    p = FileParser(verbose)
     propMap = p.Parse(fName)
 
     if bDumpBody:
@@ -239,7 +239,7 @@ if __name__ == "__main__":
             print ch.encode('iso8859-1','ignore')
 
     print "Properties"
-    for propName, propValue in propMap.iteritems():            
+    for propName, propValue in propMap.iteritems():
         print propName,":",
         if propName == 'body':
             print "<%s length: %d>" % (propName, reduce(operator.add, [len(p) for p in propValue]),)

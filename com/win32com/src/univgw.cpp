@@ -24,7 +24,7 @@ typedef struct gw_vtbl
 #define GW_VTBL_MAGIC	0x20534A47
 
 	PyObject *	dispatcher;	// dispatcher from the COM2Py thunk definition
-	
+
 	IID			iid;		// the IID of this interface
 	UINT		cMethod;	// count of methods
 	UINT		cReservedMethods;	// number of reserved methods; 3 for IUnknown, 7 for IDispatch.
@@ -244,7 +244,7 @@ static pfnGWMethod make_method(DWORD index, UINT argsize, UINT argc)
 	 0x48, 0x83, 0xec, 0x28, /* sub rsp, 40 - we have to keep stack 16-byte aligned */
 	 0x48, 0xc7, 0xc1, 0x00, 0x00, 0x00, 0x00, /* mov rcx, imm32 */
 	 0x48, 0xb8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* mov rax, imm64, target address */
-	 0xff, 0xd0, /* call rax */ 
+	 0xff, 0xd0, /* call rax */
 	 0x48, 0x83, 0xc4, 0x28, /* add rsp, 40 */
 	 0xc3 /* ret */
 	};
@@ -258,12 +258,12 @@ static pfnGWMethod make_method(DWORD index, UINT argsize, UINT argc)
 
 	for (int i=0; i < 3; i++)
 	{
-		if (i < argc) 
+		if (i < argc)
 			continue;
-		for (int j = 0; j < 5; j++) 
+		for (int j = 0; j < 5; j++)
 			code[i*5+j] = 0x90;
 	}
-	
+
 	*(int*)(code+30) = index;
 	*(void**)(code+36) = &univgw_dispatch;
 
@@ -322,14 +322,14 @@ static STDMETHODIMP_(ULONG) univgw_Release(gw_object * _this)
 }
 
 /* The IDispatch delegation when necessary */
-static STDMETHODIMP univgw_GetIDsOfNames( gw_object * _this, REFIID riid, 
-	OLECHAR FAR* FAR* rgszNames, unsigned int cNames, LCID lcid, 
+static STDMETHODIMP univgw_GetIDsOfNames( gw_object * _this, REFIID riid,
+	OLECHAR FAR* FAR* rgszNames, unsigned int cNames, LCID lcid,
 	DISPID FAR* rgDispId )
 {
 	return ((PyGatewayBase *)_this->punk)->GetIDsOfNames(riid, rgszNames, cNames, lcid, rgDispId);
 }
 
-static STDMETHODIMP univgw_GetTypeInfo( gw_object *_this, unsigned int iTInfo, LCID lcid, 
+static STDMETHODIMP univgw_GetTypeInfo( gw_object *_this, unsigned int iTInfo, LCID lcid,
 	ITypeInfo FAR* FAR* ppTInfo )
 {
 	return ((PyGatewayBase *)_this->punk)->GetTypeInfo(iTInfo, lcid, ppTInfo);
@@ -340,9 +340,9 @@ static STDMETHODIMP univgw_GetTypeInfoCount( gw_object *_this, unsigned int FAR*
 	return ((PyGatewayBase *)_this->punk)->GetTypeInfoCount(pctinfo);
 }
 
-static STDMETHODIMP univgw_Invoke( gw_object *_this, DISPID dispIdMember, REFIID riid, LCID lcid, 
-	WORD wFlags, DISPPARAMS FAR* pDispParams, 
-	VARIANT FAR* pVarResult, EXCEPINFO FAR* pExcepInfo, 
+static STDMETHODIMP univgw_Invoke( gw_object *_this, DISPID dispIdMember, REFIID riid, LCID lcid,
+	WORD wFlags, DISPPARAMS FAR* pDispParams,
+	VARIANT FAR* pVarResult, EXCEPINFO FAR* pExcepInfo,
 	unsigned int FAR* puArgErr)
 {
 	return ((PyGatewayBase *)_this->punk)->Invoke(dispIdMember, riid, lcid, wFlags, pDispParams, pVarResult, pExcepInfo, puArgErr);
@@ -459,7 +459,7 @@ static PyObject * univgw_CreateVTable(PyObject *self, PyObject *args)
 		return NULL;
 
 	int numReservedVtables = 3;	// the methods list should not specify IUnknown methods
-	
+
 	if (isDispatch) // or IDispatch if this interface uses it.
 		numReservedVtables+= 4;
 
@@ -530,7 +530,7 @@ static PyObject * univgw_CreateVTable(PyObject *self, PyObject *args)
 	}
 	Py_DECREF(methods);
 	Py_DECREF(methodsArgc);
-	
+
 	DWORD oldprotect;
 	if (!VirtualProtect(vtbl, size, PAGE_EXECUTE, &oldprotect)) {
 		free_vtbl(vtbl);
@@ -586,7 +586,7 @@ static IUnknown *CreateTearOff
 	Py_INCREF(obVTable);
 	// we start with one reference (the object we return)
 	punk->cRef = 1;
-	return (IUnknown *)punk;	
+	return (IUnknown *)punk;
 }
 
 static PyObject * univgw_CreateTearOff(PyObject *self, PyObject *args)
@@ -612,7 +612,7 @@ static PyObject * univgw_CreateTearOff(PyObject *self, PyObject *args)
 
 	PyGatewayBase *base = NULL;
 	PY_INTERFACE_PRECALL;
-	HRESULT hr = PyCom_MakeRegisteredGatewayObject(IID_IUnknown, 
+	HRESULT hr = PyCom_MakeRegisteredGatewayObject(IID_IUnknown,
 		                                           obInstance,
 		                                           NULL,
 		                                           (void **)&base);
@@ -669,7 +669,7 @@ static HRESULT CreateRegisteredTearOff(PyObject *pPyInstance, PyGatewayBase *bas
 	BOOL bCreatedBase = FALSE;
 	if (base == NULL) {
 		PY_INTERFACE_PRECALL;
-		HRESULT hr = PyCom_MakeRegisteredGatewayObject(IID_IUnknown, 
+		HRESULT hr = PyCom_MakeRegisteredGatewayObject(IID_IUnknown,
 		                                               pPyInstance,
 		                                               NULL,
 		                                               (void **)&base);
@@ -730,7 +730,7 @@ static PyObject * univgw_RegisterVTable(PyObject *self, PyObject *args)
 		if (FAILED(hr))
 			goto done;
 	}
-	
+
 	Py_INCREF(Py_None);
 	ret = Py_None;
 done:
@@ -803,7 +803,7 @@ BOOL initunivgw(PyObject *parentDict)
 //	HRESULT hr;
 
 	PyObject *module;
-	
+
 #if (PY_VERSION_HEX < 0x03000000)
 	module = Py_InitModule("pythoncom.__univgw", univgw_functions);
 #else

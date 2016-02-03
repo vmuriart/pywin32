@@ -76,9 +76,9 @@ class CommonDBTests(unittest.TestCase):
 
     def getEngine(self):
         return self.engine
-    
+
     def getConnection(self):
-        raise NotImplementedError #"This method must be overriden by a subclass"  
+        raise NotImplementedError #"This method must be overriden by a subclass"
 
     def getCursor(self):
         return self.getConnection().cursor()
@@ -106,17 +106,17 @@ class CommonDBTests(unittest.TestCase):
                 assert len(conn.messages)==1
                 assert len(conn.messages[0])==2
                 assert conn.messages[0][0]==api.ProgrammingError
-            
+
     def testOwnErrorHandlerConnection(self):
         if self.remote:  # ToDo: use "skip"
             return
         mycallable=lambda connection,cursor,errorclass,errorvalue: 1 #does not raise anything
-        conn=self.getConnection()        
+        conn=self.getConnection()
         conn.errorhandler=mycallable
         conn.close()
-        conn.commit() #Should not be able to use connection after it is closed        
+        conn.commit() #Should not be able to use connection after it is closed
         assert len(conn.messages)==0
-       
+
         conn.errorhandler=None #This should bring back the standard error handler
         try:
             conn.close()
@@ -137,7 +137,7 @@ class CommonDBTests(unittest.TestCase):
                 assert len(crsr.messages)==1
                 assert len(crsr.messages[0])==2
                 assert crsr.messages[0][0]==api.DatabaseError
-            
+
     def testOwnErrorHandlerCursor(self):
         if self.remote:   # ToDo: should be a "skip"
             return
@@ -146,7 +146,7 @@ class CommonDBTests(unittest.TestCase):
         crsr.errorhandler=mycallable
         crsr.execute("SELECT abbtytddrf FROM dasdasd")
         assert len(crsr.messages)==0
-        
+
         crsr.errorhandler=None #This should bring back the standard error handler
         try:
             crsr.execute("SELECT abbtytddrf FROM dasdasd")
@@ -234,7 +234,7 @@ class CommonDBTests(unittest.TestCase):
                          compareAlmostEqual=None,
                          allowedReturnValues=None):
         self.helpForceDropOnTblTemp()
-        conn=self.getConnection()       
+        conn=self.getConnection()
         crsr=conn.cursor()
         tabdef= """
             CREATE TABLE xx_%s (
@@ -242,16 +242,16 @@ class CommonDBTests(unittest.TestCase):
                 fldData """ % config.tmp + sqlDataTypeString + ")\n"
 
         crsr.execute(tabdef)
-        
+
         #Test Null values mapped to None
         crsr.execute("INSERT INTO xx_%s (fldId) VALUES (1)" % config.tmp)
-        
+
         crsr.execute("SELECT fldId,fldData FROM xx_%s" % config.tmp)
         rs=crsr.fetchone()
         self.assertEquals(rs[1],None) #Null should be mapped to None
         assert rs[0]==1
 
-        #Test description related 
+        #Test description related
         descTuple=crsr.description[1]
         assert descTuple[0] in ['fldData','flddata'], 'was "%s" expected "%s"'%(descTuple[0],'fldData')
 
@@ -316,7 +316,7 @@ class CommonDBTests(unittest.TestCase):
                     self.assertEquals(rs[0], pyData,
                         'Values are not equal recvd="%s", expected="%s"' %(rs[0],pyData))
 
-    def testDataTypeFloat(self):       
+    def testDataTypeFloat(self):
         self.helpTestDataType("real",'NUMBER',3.45,compareAlmostEqual=True)
         self.helpTestDataType("float",'NUMBER',1.79e37,compareAlmostEqual=True)
 
@@ -341,7 +341,7 @@ class CommonDBTests(unittest.TestCase):
                                   allowedReturnValues=[-922337203685477.5808,
                                                        decimal.Decimal('-922337203685477.5808')])
         else:
-            self.helpTestDataType("smallmoney",'NUMBER',decimal.Decimal('214748.02'))        
+            self.helpTestDataType("smallmoney",'NUMBER',decimal.Decimal('214748.02'))
             self.helpTestDataType("money",'NUMBER',decimal.Decimal('-922337203685477.5808'))
 
     def testDataTypeInt(self):
@@ -349,7 +349,7 @@ class CommonDBTests(unittest.TestCase):
             self.helpTestDataType("tinyint",'NUMBER',115)
         self.helpTestDataType("smallint",'NUMBER',-32768)
         if self.getEngine() not in ['ACCESS','PostgreSQL']:
-            self.helpTestDataType("bit",'NUMBER',1) #Does not work correctly with access        
+            self.helpTestDataType("bit",'NUMBER',1) #Does not work correctly with access
         if self.getEngine() in ['MSSQL','PostgreSQL']:
             self.helpTestDataType("bigint",'NUMBER',3000000000,
                       allowedReturnValues=[3000000000, long(3000000000)])
@@ -369,7 +369,7 @@ class CommonDBTests(unittest.TestCase):
 
         for sqlDataType in stringKinds:
             self.helpTestDataType(sqlDataType,'STRING',u'spam',['spam'])
-            
+
     def testDataTypeDate(self):
         if self.getEngine() == 'PostgreSQL':
             dt = "timestamp"
@@ -401,7 +401,7 @@ class CommonDBTests(unittest.TestCase):
 
     def helpRollbackTblTemp(self):
         self.helpForceDropOnTblTemp()
-        
+
     def helpForceDropOnTblTemp(self):
         conn=self.getConnection()
         with conn.cursor() as crsr:
@@ -459,14 +459,14 @@ class CommonDBTests(unittest.TestCase):
         assert len(rs)==9
         assert rs[2][0]==2
         self.helpRollbackTblTemp()
-    def testIterator(self):      
+    def testIterator(self):
         crsr=self.getCursor()
         self.helpCreateAndPopulateTableTemp(crsr)
         crsr.execute("SELECT fldData FROM xx_%s" % config.tmp)
         for i,row in enumerate(crsr): # using cursor rather than fetchxxx
             assert row[0]==i
         self.helpRollbackTblTemp()
-        
+
     def testExecuteMany(self):
         crsr=self.getCursor()
         self.helpCreateAndPopulateTableTemp(crsr)
@@ -480,9 +480,9 @@ class CommonDBTests(unittest.TestCase):
         rs=crsr.fetchall()
         assert len(rs)==11
         self.helpRollbackTblTemp()
-        
 
-    def testRowCount(self):      
+
+    def testRowCount(self):
         crsr=self.getCursor()
         self.helpCreateAndPopulateTableTemp(crsr)
         crsr.execute("SELECT fldData FROM xx_%s" % config.tmp)
@@ -492,8 +492,8 @@ class CommonDBTests(unittest.TestCase):
         else:
             self.assertEquals( crsr.rowcount,9)
         self.helpRollbackTblTemp()
-        
-    def testRowCountNoRecordset(self):      
+
+    def testRowCountNoRecordset(self):
         crsr=self.getCursor()
         self.helpCreateAndPopulateTableTemp(crsr)
         crsr.execute("DELETE FROM xx_%s WHERE fldData >= 5" % config.tmp)
@@ -501,8 +501,8 @@ class CommonDBTests(unittest.TestCase):
             print(self.getEngine()+" Provider does not support rowcount (on DELETE)")
         else:
             self.assertEquals( crsr.rowcount,4)
-        self.helpRollbackTblTemp()        
-        
+        self.helpRollbackTblTemp()
+
     def testFetchMany(self):
         crsr=self.getCursor()
         self.helpCreateAndPopulateTableTemp(crsr)
@@ -513,7 +513,7 @@ class CommonDBTests(unittest.TestCase):
         assert len(rs)==5
         rs=crsr.fetchmany(5)
         assert len(rs)==1 #Ask for five, but there is only one left
-        self.helpRollbackTblTemp()        
+        self.helpRollbackTblTemp()
 
     def testFetchManyWithArraySize(self):
         crsr=self.getCursor()
@@ -527,7 +527,7 @@ class CommonDBTests(unittest.TestCase):
         rs=crsr.fetchmany()
         assert len(rs)==4
         rs=crsr.fetchmany()
-        assert len(rs)==0 
+        assert len(rs)==0
         self.helpRollbackTblTemp()
 
     def testErrorConnect(self):
@@ -899,7 +899,7 @@ class TestADOwithSQLServer(CommonDBTests):
         except:
             pass
         self.conn=None
-            
+
     def getConnection(self):
         return self.conn
 
@@ -931,11 +931,11 @@ class TestADOwithSQLServer(CommonDBTests):
         assert retvalues[1]=='Anne','%s is not "Anne"'%repr(retvalues[1])
         assert retvalues[2]=='DodsworthAnne','%s is not "DodsworthAnne"'%repr(retvalues[2])
         self.conn.rollback()
-       
+
     def testMultipleSetReturn(self):
         crsr=self.getCursor()
         self.helpCreateAndPopulateTableTemp(crsr)
-        
+
         spdef= """
             CREATE PROCEDURE sp_DeleteMe_OnlyForTesting
             AS
@@ -952,12 +952,12 @@ class TestADOwithSQLServer(CommonDBTests):
 
         retvalues=crsr.callproc('sp_DeleteMe_OnlyForTesting')
         row=crsr.fetchone()
-        self.assertEquals(row[0], 0) 
+        self.assertEquals(row[0], 0)
         assert crsr.nextset() == True, 'Operation should succeed'
         assert not crsr.fetchall(), 'Should be an empty second set'
         assert crsr.nextset() == True, 'third set should be present'
         rowdesc=crsr.fetchall()
-        self.assertEquals(rowdesc[0][0],8) 
+        self.assertEquals(rowdesc[0][0],8)
         assert crsr.nextset() == None,'No more return sets, should return None'
 
         self.helpRollbackTblTemp()
@@ -1034,7 +1034,7 @@ class TestADOwithAccessDB(CommonDBTests):
         except:
             pass
         self.conn=None
-            
+
     def getConnection(self):
         return self.conn
 
@@ -1045,7 +1045,7 @@ class TestADOwithAccessDB(CommonDBTests):
         c = self.db(*config.connStrAccess[0], **config.connStrAccess[1])
         assert c != None
         c.close()
-        
+
 class TestADOwithMySql(CommonDBTests):
     def setUp(self):
         self.conn = config.dbMySqlconnect(*config.connStrMySql[0], **config.connStrMySql[1])
@@ -1187,13 +1187,13 @@ class TimeConverterInterfaceTest(unittest.TestCase):
         comDate=self.tc.COMDate(d)
         correct=34653.0
         assert comDate == correct,comDate
-        
+
     def testExactTimestamp(self):
         d=self.tc.Timestamp(1994,11,15,12,0,0)
         comDate=self.tc.COMDate(d)
         correct=34653.5
         self.assertEquals( comDate ,correct)
-        
+
         d=self.tc.Timestamp(2003,5,6,14,15,17)
         comDate=self.tc.COMDate(d)
         correct=37747.593946759262
@@ -1203,28 +1203,28 @@ class TimeConverterInterfaceTest(unittest.TestCase):
         d=self.tc.Timestamp(1994,11,15,12,3,10)
         iso=self.tc.DateObjectToIsoFormatString(d)
         self.assertEquals(str(iso[:19]) , '1994-11-15 12:03:10')
-        
+
         dt=self.tc.Date(2003,5,2)
         iso=self.tc.DateObjectToIsoFormatString(dt)
         self.assertEquals(str(iso[:10]), '2003-05-02')
-        
+
 if config.doMxDateTimeTest:
-    import mx.DateTime    
+    import mx.DateTime
 class TestMXDateTimeConverter(TimeConverterInterfaceTest):
-    def setUp(self):     
+    def setUp(self):
         self.tc = api.mxDateTimeConverter()
-  
-    def testCOMDate(self):       
-        t=mx.DateTime.DateTime(2002,6,28,18,15,2)       
-        cmd=self.tc.COMDate(t)       
+
+    def testCOMDate(self):
+        t=mx.DateTime.DateTime(2002,6,28,18,15,2)
+        cmd=self.tc.COMDate(t)
         assert cmd == t.COMDate()
-    
+
     def testDateObjectFromCOMDate(self):
         cmd=self.tc.DateObjectFromCOMDate(37435.7604282)
         t=mx.DateTime.DateTime(2002,6,28,18,15,0)
         t2=mx.DateTime.DateTime(2002,6,28,18,15,2)
         assert t2>cmd>t
-    
+
     def testDate(self):
         assert mx.DateTime.Date(1980,11,4)==self.tc.Date(1980,11,4)
 
@@ -1232,7 +1232,7 @@ class TestMXDateTimeConverter(TimeConverterInterfaceTest):
         assert mx.DateTime.Time(13,11,4)==self.tc.Time(13,11,4)
 
     def testTimestamp(self):
-        t=mx.DateTime.DateTime(2002,6,28,18,15,1)   
+        t=mx.DateTime.DateTime(2002,6,28,18,15,1)
         obj=self.tc.Timestamp(2002,6,28,18,15,1)
         assert t == obj
 
@@ -1240,7 +1240,7 @@ import time
 class TestPythonTimeConverter(TimeConverterInterfaceTest):
     def setUp(self):
         self.tc=api.pythonTimeConverter()
-    
+
     def testCOMDate(self):
         mk = time.mktime((2002,6,28,18,15,1, 4,31+28+31+30+31+28,-1))
         t=time.localtime(mk)
@@ -1254,7 +1254,7 @@ class TestPythonTimeConverter(TimeConverterInterfaceTest):
         #there are errors in the implementation of gmtime which we ignore
         t2=time.gmtime(time.mktime((2002,6,29,12,14,2, 4,31+28+31+30+31+28,-1)))
         assert t1<cmd<t2, '"%s" should be about 2002-6-28 12:15:01'%repr(cmd)
-    
+
     def testDate(self):
         t1=time.mktime((2002,6,28,18,15,1, 4,31+28+31+30+31+30,0))
         t2=time.mktime((2002,6,30,18,15,1, 4,31+28+31+30+31+28,0))
@@ -1273,13 +1273,13 @@ class TestPythonTimeConverter(TimeConverterInterfaceTest):
 class TestPythonDateTimeConverter(TimeConverterInterfaceTest):
     def setUp(self):
         self.tc = api.pythonDateTimeConverter()
-    
+
     def testCOMDate(self):
         t=datetime.datetime( 2002,6,28,18,15,1)
         # Fri, 28 Jun 2002 18:15:01 +0000
         cmd=self.tc.COMDate(t)
         assert abs(cmd - 37435.7604282) < 1.0/24,"more than an hour wrong"
-        
+
     def testDateObjectFromCOMDate(self):
         cmd = self.tc.DateObjectFromCOMDate(37435.7604282)
         t1 = datetime.datetime(2002,6,28,18,14,1)
@@ -1314,7 +1314,7 @@ if config.doTimeTest:
 
 if config.doAccessTest:
     suites.append( unittest.makeSuite(TestADOwithAccessDB,'test'))
-if config.doSqlServerTest:    
+if config.doSqlServerTest:
     suites.append( unittest.makeSuite(TestADOwithSQLServer,'test'))
 if config.doMySqlTest:
     suites.append( unittest.makeSuite(TestADOwithMySql,'test'))

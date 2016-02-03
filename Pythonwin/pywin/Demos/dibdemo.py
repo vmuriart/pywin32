@@ -29,7 +29,7 @@ class DIBView:
 		#self.dib.Paint(dc, (0,0,self.width, self.height),dibRect)
 		# non stretch.
 		self.dib.Paint(dc)
-	
+
 class DIBDemo:
 	def __init__(self, filename, * bPBM):
 		# init data members
@@ -56,14 +56,14 @@ class DIBDemo:
 		self.frame.LoadFrame()	# this will force OnCreateClient
 		self.doc.SetTitle ('DIB Demo')
 		self.frame.ShowWindow()
-		
+
 		# display the sucka
 		self.frame.ActivateFrame()
 
 	def OnCreateClient( self, createparams, context ):
 		self.dibView.view.CreateWindow(self.frame)
 		return 1
-	
+
 if __name__=='__main__':
 	import demoutils
 	demoutils.NotAScript()

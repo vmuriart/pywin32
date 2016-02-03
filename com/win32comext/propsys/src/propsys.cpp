@@ -256,7 +256,7 @@ static PyObject *PyPSGetItemPropertyHandler(PyObject *self, PyObject *args)
 	PyObject *obitem;
 	BOOL writeable=FALSE;
 	IID riid = IID_IPropertyStore;
-	
+
 	// @pyparm <o PyIShellItem>|Item||A shell item
 	// @pyparm bool|ReadWrite|False|Pass True for a writeable property store
 	// @pyparm <o PyIID>|riid|IID_IPropertyStore|Interface to return
@@ -349,7 +349,7 @@ static PyObject *PyPSCreatePropertyStoreFromPropertySetStorage(PyObject *self, P
 	IID riid = IID_IPropertyStore;
 	void *ret;
 	// @pyparm <o PyIPropertySetStorage>|pss||Property container to be adapted
-	// @pyparm int|Mode||Read or write mode, shellcon.STGM_*.  Must match mode used to open input interface. 
+	// @pyparm int|Mode||Read or write mode, shellcon.STGM_*.  Must match mode used to open input interface.
 	// @pyparm <o PyIID>|riid|IID_IPropertyStore|The interface to create
 	if (!PyArg_ParseTuple(args, "Ok|O&:PSCreatePropertyStoreFromPropertySetStorage",
 		&obpss, &mode,
@@ -530,14 +530,14 @@ static PyObject *PySHSetDefaultProperties(PyObject *self, PyObject *args)
 		PyWinObject_AsHANDLE, &hwnd,
 		&obItem, &flags, &obSink))
 		return NULL;
-		
+
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obItem, IID_IShellItem, (void **)&pItem, FALSE))
 		return NULL;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obSink, IID_IFileOperationProgressSink, (void **)&pSink, TRUE)){
 		PYCOM_RELEASE(pItem);
 		return NULL;
 		}
-		
+
 	HRESULT hr;
 	PY_INTERFACE_PRECALL;
 	hr = SHSetDefaultProperties(hwnd, pItem, flags, pSink);

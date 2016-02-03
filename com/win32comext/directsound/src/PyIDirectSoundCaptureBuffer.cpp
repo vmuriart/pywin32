@@ -44,10 +44,10 @@ PyIDirectSoundCaptureBuffer::~PyIDirectSoundCaptureBuffer()
 	// Special treatment for PyIDirectSoundNotify
 
 	// This is a workaround for a reference counting bug in IDirectSound:
-	// If IDirectSound::Release() is called before IDirectSoundCaptureBuffer::Release() 
+	// If IDirectSound::Release() is called before IDirectSoundCaptureBuffer::Release()
 	// or IDirectSoundNotify::Release(), we will get an Access Violation
 
-	// We work around this by manipulating the reference count on the Python objects 
+	// We work around this by manipulating the reference count on the Python objects
 	// that encapsulate them
 	if (PyIBase::is_object(rc, &PyIDirectSoundNotify::type))
 	{
@@ -107,7 +107,7 @@ PyObject *PyIDirectSoundCaptureBuffer::GetFormat(PyObject *self, PyObject *args)
 		PyWin_SetAPIError("GetFormat", hr);
 		return NULL;
 	}
-	
+
 	Py_INCREF(wfx);
 	return wfx;
 }
@@ -204,8 +204,8 @@ PyObject *PyIDirectSoundCaptureBuffer::GetCurrentPosition(PyObject *self, PyObje
 // @pymethod |PyIDirectSoundCaptureBuffer|Start|The PyIDirectSoundCaptureBuffer::Start method puts the capture buffer into the capture state and begins capturing data into the buffer. If the capture buffer is already in the capture state then the method has no effect.
 PyObject *PyIDirectSoundCaptureBuffer::Start(PyObject *self, PyObject *args)
 {
-	// @pyparm int|dwFlags|0|Flags that specify the behavior for the capture buffer when capturing sound data. Possible values for dwFlags can be one of the following: 
-	// DSCBSTART_LOOPING 
+	// @pyparm int|dwFlags|0|Flags that specify the behavior for the capture buffer when capturing sound data. Possible values for dwFlags can be one of the following:
+	// DSCBSTART_LOOPING
 
 	DWORD dwFlags;
 	IDirectSoundCaptureBuffer *pIDSCB = GetI(self);
@@ -256,10 +256,10 @@ PyObject *PyIDirectSoundCaptureBuffer::Update(PyObject *self, PyObject *args)
 {
   // @pyparm int|dwReadCursor||Offset, in bytes, from the start of the buffer to where the update begins.
 
-  // @pyparm int|dwReadBytes||Size, in bytes, of the portion of the buffer to update. 
+  // @pyparm int|dwReadBytes||Size, in bytes, of the portion of the buffer to update.
 
-  // @pyparm int|dwFlags|0|Flags modifying the update event. This value can be 0 or the following flag: DSCBLOCK_ENTIREBUFFER  
-  // The dwReadBytes parameter is to be ignored and the entire capture buffer is to be locked. 
+  // @pyparm int|dwFlags|0|Flags modifying the update event. This value can be 0 or the following flag: DSCBLOCK_ENTIREBUFFER
+  // The dwReadBytes parameter is to be ignored and the entire capture buffer is to be locked.
 
 	DWORD dwReadCursor = 0;
 	DWORD dwReadBytes = 0;
@@ -286,7 +286,7 @@ PyObject *PyIDirectSoundCaptureBuffer::Update(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
-	// The capture buffer is circular, so we may get two pointers and have to 
+	// The capture buffer is circular, so we may get two pointers and have to
 	// do the wrap-around ourselves.
 
 	PyObject *obData = PyString_FromStringAndSize((char*)lpAudioPtr1, dwAudioBytes1);
@@ -298,9 +298,9 @@ PyObject *PyIDirectSoundCaptureBuffer::Update(PyObject *self, PyObject *args)
 	if (lpAudioPtr2)
 	{
 		PyObject *obData2 = PyString_FromStringAndSize((char*)lpAudioPtr2, dwAudioBytes2);
-		
+
 		PyString_Concat(&obData, obData2);
-	
+
 		if (!obData)
 		{
 			PyErr_SetString(PyExc_MemoryError, "Update: could not append to result string");

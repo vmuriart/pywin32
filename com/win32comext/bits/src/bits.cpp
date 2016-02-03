@@ -31,7 +31,7 @@ BOOL PyObject_AsBG_FILE_RANGE_LIST(PyObject *ob, DWORD *pnum, BG_FILE_RANGE **fr
 }
 void PyObject_FreeBG_FILE_RANGE_LIST(DWORD num, BG_FILE_RANGE *fr)
 {
-  
+
 }
 
 PyObject *PyObject_FromBG_FILE_PROGRESS(BG_FILE_PROGRESS *fp)

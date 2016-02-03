@@ -1,12 +1,12 @@
-/* File : PyIProviderAdmin.i */ 
-   
+/* File : PyIProviderAdmin.i */
+
 %module IProviderAdmin // A COM interface to MAPI
 
 %include "typemaps.i"
 %include "pywin32.i"
 %include "pythoncom.i"
 %include "mapilib.i"
-  
+
 %{
 
 #include "PyIProviderAdmin.h"
@@ -28,7 +28,7 @@ PyIProviderAdmin::~PyIProviderAdmin()
 
 %}
 
-// @pyswig |GetLastError|Returns a MAPIERROR structure containing information about the previous error on the table. 
+// @pyswig |GetLastError|Returns a MAPIERROR structure containing information about the previous error on the table.
 HRESULT GetLastError(HRESULT hr, unsigned long flags, MAPIERROR **OUTPUT);
 
 // @pyswig <o PyIMAPITable>|GetProviderTable|Retrieves a table of service providers.
@@ -54,9 +54,9 @@ HRESULT OpenProfileSection(
 %{
 
 // as defined in MSDN, exerything [in] except last arg is [out]
-//  HRESULT CreateProvider(LPTSTR lpszProvider,ULONG cValues,LPSPropValue lpProps,ULONG ulUIParam,ULONG ulFlags,MAPIUID FAR * lpUID);    
+//  HRESULT CreateProvider(LPTSTR lpszProvider,ULONG cValues,LPSPropValue lpProps,ULONG ulUIParam,ULONG ulFlags,MAPIUID FAR * lpUID);
 // @pyswig <o PyIID>|CreateProvider|Add a service provider to a message service.
-PyObject *PyIProviderAdmin::CreateProvider(PyObject *self, PyObject *args) 
+PyObject *PyIProviderAdmin::CreateProvider(PyObject *self, PyObject *args)
 {
     HRESULT hr;IProviderAdmin *_swig_self;
     //Handle the 5 input variables
@@ -65,7 +65,7 @@ PyObject *PyIProviderAdmin::CreateProvider(PyObject *self, PyObject *args)
     if(!PyArg_ParseTuple(args,"slOll",&lpszProvider,&cValues,&py_props,&ulUIParam,&ulFlags)) { return NULL; }
 
     //handle spropvalue structure
-    SPropValue *pPropValue;ULONG len;  
+    SPropValue *pPropValue;ULONG len;
     if (py_props==Py_None) {
         pPropValue = NULL;
         cValues = 0;

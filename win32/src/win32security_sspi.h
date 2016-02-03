@@ -87,7 +87,7 @@ public:
 	unsigned long max_buffers;
 	static PyObject *append(PyObject *self, PyObject *args);
 	void modify_in_place(void);
-	
+
 protected:
 	SecBufferDesc secbufferdesc;
 };
@@ -155,7 +155,7 @@ protected:
 	CredHandle credhandle;
 };
 
-// functions implemented in win32security_sspi.cpp and wrapped as %native with SWIG 
+// functions implemented in win32security_sspi.cpp and wrapped as %native with SWIG
 PyObject *PyDsGetSpn(PyObject *self, PyObject *args);
 PyObject *PyDsWriteAccountSpn(PyObject *self, PyObject *args);
 PyObject *PyDsBind(PyObject *self, PyObject *args);

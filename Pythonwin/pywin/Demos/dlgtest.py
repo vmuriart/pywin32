@@ -87,7 +87,7 @@ class TestPage(dialog.PropertyPage):
 # Some code that actually uses these objects.
 def demo(modal = 0):
 	TestDialog(modal)
-	
+
 	# property sheet/page demo
 	ps=win32ui.CreatePropertySheet('Property Sheet/Page Demo')
 	# Create a completely standard PropertyPage.
@@ -102,8 +102,8 @@ def demo(modal = 0):
 		style = win32con.WS_SYSMENU|win32con.WS_POPUP|win32con.WS_CAPTION|win32con.DS_MODALFRAME|win32con.WS_VISIBLE
 		styleex = win32con.WS_EX_DLGMODALFRAME | win32con.WS_EX_PALETTEWINDOW
 		ps.CreateWindow(win32ui.GetMainFrame(), style, styleex)
-	
-	
+
+
 def test(modal=1):
 
 #	dlg=dialog.Dialog(1010)

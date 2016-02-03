@@ -7,27 +7,27 @@
   These are implemented using CPrintInfo, CPrintDialog and PRINTDLG.
 
   NOT implemented:
-        CPrintDialog::GetDevMode 
-        typedef struct tagPD {  // pd 
-           DWORD     lStructSize; 
-           HWND      hwndOwner; 
-           HANDLE    hDevMode; 
-           HANDLE    hDevNames; 
-           ... 
-           HINSTANCE hInstance; 
-           DWORD     lCustData; 
-           LPPRINTHOOKPROC lpfnPrintHook; 
-           LPSETUPHOOKPROC lpfnSetupHook; 
-           LPCTSTR    lpPrintTemplateName; 
-           LPCTSTR    lpSetupTemplateName; 
-           HANDLE    hPrintTemplate; 
-           HANDLE    hSetupTemplate; 
-        } PRINTDLG; 
- 
+        CPrintDialog::GetDevMode
+        typedef struct tagPD {  // pd
+           DWORD     lStructSize;
+           HWND      hwndOwner;
+           HANDLE    hDevMode;
+           HANDLE    hDevNames;
+           ...
+           HINSTANCE hInstance;
+           DWORD     lCustData;
+           LPPRINTHOOKPROC lpfnPrintHook;
+           LPSETUPHOOKPROC lpfnSetupHook;
+           LPCTSTR    lpPrintTemplateName;
+           LPCTSTR    lpSetupTemplateName;
+           HANDLE    hPrintTemplate;
+           HANDLE    hSetupTemplate;
+        } PRINTDLG;
+
   Note:  If you use the custom print dialog, see the Knowledge Base article,
 
       HOWTO: Customize the Common Print Dialog Box
-      Article ID: Q132909 
+      Article ID: Q132909
 
       And, you MUST NOT change the control ID's in this dialog.
 
@@ -151,7 +151,7 @@ static PyObject *ui_set_doc_offset_page(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|SetPrintDialog|Set a pointer to the CPrintDialog object used to display the Print dialog box for the print job. 
+// @pymethod |PyCPrintInfo|SetPrintDialog|Set a pointer to the CPrintDialog object used to display the Print dialog box for the print job.
 // @pyseemfc CPrintInfo|m_pPD
 static PyObject *ui_set_print_dialog(PyObject * self, PyObject * args)
 {
@@ -180,7 +180,7 @@ static PyObject *ui_set_print_dialog(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetDirect|TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise. 
+// @pymethod |PyCPrintInfo|GetDirect|TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise.
 // @pyseemfc CPrintInfo|m_bDirect
 static PyObject *ui_get_direct(PyObject * self, PyObject * args)
 {
@@ -191,7 +191,7 @@ static PyObject *ui_get_direct(PyObject * self, PyObject * args)
   return Py_BuildValue ("i", pInfo->m_bDirect);
 }
 
-// @pymethod |PyCPrintInfo|SetDirect|Sets to TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise. 
+// @pymethod |PyCPrintInfo|SetDirect|Sets to TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise.
 // @pyseemfc CPrintInfo|m_bDirect
 static PyObject *ui_set_direct(PyObject * self, PyObject * args)
 {
@@ -205,7 +205,7 @@ static PyObject *ui_set_direct(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetPreview|A flag indicating whether the document is being previewed. 
+// @pymethod |PyCPrintInfo|GetPreview|A flag indicating whether the document is being previewed.
 // @pyseemfc CPrintInfo|m_bPreview
 static PyObject *ui_get_preview(PyObject * self, PyObject * args)
 {
@@ -216,7 +216,7 @@ static PyObject *ui_get_preview(PyObject * self, PyObject * args)
   return Py_BuildValue ("i", pInfo->m_bPreview);
 }
 
-// @pymethod |PyCPrintInfo|SetPreview|Set whether the document is being previewed. 
+// @pymethod |PyCPrintInfo|SetPreview|Set whether the document is being previewed.
 // @pyseemfc CPrintInfo|m_bPreview
 static PyObject *ui_set_preview(PyObject * self, PyObject * args)
 {
@@ -230,7 +230,7 @@ static PyObject *ui_set_preview(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetContinuePrinting|A flag indicating whether the framework should continue the print loop. 
+// @pymethod |PyCPrintInfo|GetContinuePrinting|A flag indicating whether the framework should continue the print loop.
 // @pyseemfc CPrintInfo|m_bContinuePrinting
 static PyObject *ui_get_continue_printing(PyObject * self, PyObject * args)
 {
@@ -241,7 +241,7 @@ static PyObject *ui_get_continue_printing(PyObject * self, PyObject * args)
   return Py_BuildValue ("i", pInfo->m_bContinuePrinting);
 }
 
-// @pymethod |PyCPrintInfo|SetContinuePrinting|Set whether the framework should continue the print loop. 
+// @pymethod |PyCPrintInfo|SetContinuePrinting|Set whether the framework should continue the print loop.
 // @pyseemfc CPrintInfo|m_bContinuePrinting
 static PyObject *ui_set_continue_printing(PyObject * self, PyObject * args)
 {
@@ -255,7 +255,7 @@ static PyObject *ui_set_continue_printing(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetCurPage|Get the number of the current page. 
+// @pymethod |PyCPrintInfo|GetCurPage|Get the number of the current page.
 // @pyseemfc CPrintInfo|m_nCurPage
 static PyObject *ui_get_cur_page(PyObject * self, PyObject * args)
 {
@@ -336,7 +336,7 @@ static PyObject *ui_set_user_data(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetDraw|Get the usable drawing area of the page in logical coordinates. 
+// @pymethod |PyCPrintInfo|GetDraw|Get the usable drawing area of the page in logical coordinates.
 // @pyseemfc CPrintInfo|m_rectDraw
 static PyObject *ui_get_draw(PyObject * self, PyObject * args)
 {
@@ -351,7 +351,7 @@ static PyObject *ui_get_draw(PyObject * self, PyObject * args)
                         pInfo->m_rectDraw.bottom);
 }
 
-// @pymethod |PyCPrintInfo|SetDraw|Set the usable drawing area of the page in logical coordinates. 
+// @pymethod |PyCPrintInfo|SetDraw|Set the usable drawing area of the page in logical coordinates.
 // @pyseemfc CPrintInfo|m_rectDraw
 static PyObject *ui_set_draw(PyObject * self, PyObject * args)
 {
@@ -462,7 +462,7 @@ static PyObject *ui_get_offset_page(PyObject * self, PyObject * args)
   if (!pInfo)
     return NULL;
   GUI_BGN_SAVE;
-  UINT ret = 0; /* pInfo->GetOffsetPage() */ 
+  UINT ret = 0; /* pInfo->GetOffsetPage() */
   GUI_END_SAVE;
   return Py_BuildValue ("i", ret);
 }
@@ -724,7 +724,7 @@ static PyObject *ui_set_to_page(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetPRINTDLGMinPage|Get the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled. 
+// @pymethod |PyCPrintInfo|GetPRINTDLGMinPage|Get the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled.
 // @pyseemfc PRINTDLG|nMinPage
 static PyObject *ui_get_printdlg_min_page(PyObject * self, PyObject * args)
 {
@@ -736,7 +736,7 @@ static PyObject *ui_get_printdlg_min_page(PyObject * self, PyObject * args)
   return Py_BuildValue ("i", res);
 }
 
-// @pymethod |PyCPrintInfo|SetPRINTDLGMinPage|Set the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled. 
+// @pymethod |PyCPrintInfo|SetPRINTDLGMinPage|Set the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled.
 // @pyseemfc PRINTDLG|nMinPage
 static PyObject *ui_set_printdlg_min_page(PyObject * self, PyObject * args)
 {
@@ -750,7 +750,7 @@ static PyObject *ui_set_printdlg_min_page(PyObject * self, PyObject * args)
   RETURN_NONE;
 }
 
-// @pymethod |PyCPrintInfo|GetPRINTDLGCopies|Get the initial number of copies for the Copies edit control if hDevMode is NULL; otherwise, the dmCopies member of theDEVMODE structure contains the initial value. When PrintDlg returns, nCopies contains the actual number of copies to print. This value depends on whether the application or the printer driver is responsible for printing multiple copies. If the PD_USEDEVMODECOPIESANDCOLLATE flag is set in the Flags member, nCopies is always 1 on return, and the printer driver is responsible for printing multiple copies. If the flag is not set, the application is responsible for printing the number of copies specified by nCopies. For more information, see the description of the PD_USEDEVMODECOPIESANDCOLLATE flag. 
+// @pymethod |PyCPrintInfo|GetPRINTDLGCopies|Get the initial number of copies for the Copies edit control if hDevMode is NULL; otherwise, the dmCopies member of theDEVMODE structure contains the initial value. When PrintDlg returns, nCopies contains the actual number of copies to print. This value depends on whether the application or the printer driver is responsible for printing multiple copies. If the PD_USEDEVMODECOPIESANDCOLLATE flag is set in the Flags member, nCopies is always 1 on return, and the printer driver is responsible for printing multiple copies. If the flag is not set, the application is responsible for printing the number of copies specified by nCopies. For more information, see the description of the PD_USEDEVMODECOPIESANDCOLLATE flag.
 // @pyseemfc PRINTDLG|nCopies
 static PyObject *ui_get_printdlg_copies(PyObject * self, PyObject * args)
 {
@@ -762,7 +762,7 @@ static PyObject *ui_get_printdlg_copies(PyObject * self, PyObject * args)
   return Py_BuildValue ("i", res);
 }
 
-// @pymethod |PyCPrintInfo|SetPRINTDLGCopies|Set the initial number of copies for the Copies edit control if hDevMode is NULL; otherwise, the dmCopies member of theDEVMODE structure contains the initial value. When PrintDlg returns, nCopies contains the actual number of copies to print. This value depends on whether the application or the printer driver is responsible for printing multiple copies. If the PD_USEDEVMODECOPIESANDCOLLATE flag is set in the Flags member, nCopies is always 1 on return, and the printer driver is responsible for printing multiple copies. If the flag is not set, the application is responsible for printing the number of copies specified by nCopies. For more information, see the description of the PD_USEDEVMODECOPIESANDCOLLATE flag. 
+// @pymethod |PyCPrintInfo|SetPRINTDLGCopies|Set the initial number of copies for the Copies edit control if hDevMode is NULL; otherwise, the dmCopies member of theDEVMODE structure contains the initial value. When PrintDlg returns, nCopies contains the actual number of copies to print. This value depends on whether the application or the printer driver is responsible for printing multiple copies. If the PD_USEDEVMODECOPIESANDCOLLATE flag is set in the Flags member, nCopies is always 1 on return, and the printer driver is responsible for printing multiple copies. If the flag is not set, the application is responsible for printing the number of copies specified by nCopies. For more information, see the description of the PD_USEDEVMODECOPIESANDCOLLATE flag.
 // @pyseemfc PRINTDLG|nCopies
 static PyObject *ui_set_printdlg_copies(PyObject * self, PyObject * args)
 {
@@ -781,35 +781,35 @@ static PyObject *ui_set_printdlg_copies(PyObject * self, PyObject * args)
 // @object PyCPrintInfo|Encapsulates an MFC CPrintInfo class, its member <c CPrintDialog> class, and the <c PRINTDLG> structure member of the CPrintDialog.
 static struct PyMethodDef ui_prinfo_methods[] = {
 
-  // CPrintInfo 
+  // CPrintInfo
 
-  {"DocObject",             ui_is_doc_object,         1}, // @pymeth DocObject|A flag indicating whether the document being printed is a DocObject. 
+  {"DocObject",             ui_is_doc_object,         1}, // @pymeth DocObject|A flag indicating whether the document being printed is a DocObject.
   {"GetDwFlags",            ui_get_dwflags,           1}, // @pymeth GetDwFlags|A flags specifying DocObject printing operations. Valid only if data member m_bDocObject is TRUE.
   {"SetDwFlags",            ui_set_dwflags,           1}, // @pymeth SetDwFlags|Set a flag specifying DocObject printing operations. Valid only if data member m_bDocObject is TRUE.
   {"GetDocOffsetPage",      ui_get_doc_offset_page,   1}, // @pymeth GetDocOffsetPage|Get the number of pages preceding the first page of a particular DocObject in a combined DocObject print job.
   {"SetDocOffsetPage",      ui_set_doc_offset_page,   1}, // @pymeth SetDocOffsetPage|Set the number of pages preceding the first page of a particular DocObject in a combined DocObject print job.
-  {"SetPrintDialog",        ui_set_print_dialog,      1}, // @pymeth SetPrintDialog|Set a pointer to the CPrintDialog object used to display the Print dialog box for the print job. 
-  {"GetDirect",             ui_get_direct,            1}, // @pymeth GetDirect|TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise. 
-  {"SetDirect",             ui_set_direct,            1}, // @pymeth SetDirect|Sets to TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise. 
-  {"GetPreview",            ui_get_preview,           1}, // @pymeth GetPreview|A flag indicating whether the document is being previewed. 
-  {"SetPreview",            ui_set_preview,           1}, // @pymeth SetPreview|Set whether the document is being previewed. 
-  {"GetContinuePrinting",   ui_get_continue_printing, 1}, // @pymeth GetContinuePrinting|A flag indicating whether the framework should continue the print loop. 
-  {"SetContinuePrinting",   ui_set_continue_printing, 1}, // @pymeth SetContinuePrinting|Set whether the framework should continue the print loop. 
-  {"GetCurPage",            ui_get_cur_page,          1}, // @pymeth GetCurPage|Get the number of the current page. 
-  {"SetCurPage",            ui_set_cur_page,          1}, // @pymeth SetCurPage|Set the number of the current page. 
+  {"SetPrintDialog",        ui_set_print_dialog,      1}, // @pymeth SetPrintDialog|Set a pointer to the CPrintDialog object used to display the Print dialog box for the print job.
+  {"GetDirect",             ui_get_direct,            1}, // @pymeth GetDirect|TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise.
+  {"SetDirect",             ui_set_direct,            1}, // @pymeth SetDirect|Sets to TRUE if the Print dialog box will be bypassed for direct printing; FALSE otherwise.
+  {"GetPreview",            ui_get_preview,           1}, // @pymeth GetPreview|A flag indicating whether the document is being previewed.
+  {"SetPreview",            ui_set_preview,           1}, // @pymeth SetPreview|Set whether the document is being previewed.
+  {"GetContinuePrinting",   ui_get_continue_printing, 1}, // @pymeth GetContinuePrinting|A flag indicating whether the framework should continue the print loop.
+  {"SetContinuePrinting",   ui_set_continue_printing, 1}, // @pymeth SetContinuePrinting|Set whether the framework should continue the print loop.
+  {"GetCurPage",            ui_get_cur_page,          1}, // @pymeth GetCurPage|Get the number of the current page.
+  {"SetCurPage",            ui_set_cur_page,          1}, // @pymeth SetCurPage|Set the number of the current page.
   {"GetNumPreviewPages",    ui_get_num_preview_pages, 1}, // @pymeth GetNumPreviewPages|Get the number of pages displayed in preview mode.
   {"SetNumPreviewPages",    ui_set_num_preview_pages, 1}, // @pymeth SetNumPreviewPages|Set the number of pages displayed in preview mode.
   {"GetUserData",           ui_get_user_data,         1}, // @pymeth GetUserData|Get a user-created structure.
   {"SetUserData",           ui_set_user_data,         1}, // @pymeth SetUserData|Set a user-created structure.
-  {"GetDraw",               ui_get_draw,              1}, // @pymeth GetDraw|Get the usable drawing area of the page in logical coordinates. 
-  {"SetDraw",               ui_set_draw,              1}, // @pymeth SetDraw|Set the usable drawing area of the page in logical coordinates. 
+  {"GetDraw",               ui_get_draw,              1}, // @pymeth GetDraw|Get the usable drawing area of the page in logical coordinates.
+  {"SetDraw",               ui_set_draw,              1}, // @pymeth SetDraw|Set the usable drawing area of the page in logical coordinates.
   {"GetPageDesc",           ui_get_page_desc,         1}, // @pymeth GetPageDesc|Get the format string used to display the page numbers during print preview
   {"SetPageDesc",           ui_set_page_desc,         1}, // @pymeth SetPageDesc|Set the format string used to display the page numbers during print preview
   {"GetMinPage",            ui_get_min_page,          1}, // @pymeth GetMinPage|Get the number of the first page of the document.
   {"SetMinPage",            ui_set_min_page,          1}, // @pymeth SetMinPage|Set the number of the first page of the document.
   {"GetMaxPage",            ui_get_max_page,          1}, // @pymeth GetMaxPage|Get the number of the last page of the document.
   {"SetMaxPage",            ui_set_max_page,          1}, // @pymeth SetMaxPage|Set the number of the last page of the document.
-  {"GetOffsetPage",         ui_get_offset_page,       1}, // @pymeth GetOffsetPage|Get the number of pages preceding the first page of a DocObject item being printed in a combined DocObject print job. 
+  {"GetOffsetPage",         ui_get_offset_page,       1}, // @pymeth GetOffsetPage|Get the number of pages preceding the first page of a DocObject item being printed in a combined DocObject print job.
   {"GetFromPage",           ui_get_from_page,         1}, // @pymeth GetFromPage|The number of the first page to be printed.
   {"GetToPage",             ui_get_to_page,           1}, // @pymeth GetToPage|The number of the last page to be printed.
 
@@ -834,23 +834,23 @@ static struct PyMethodDef ui_prinfo_methods[] = {
 
   // PRINTDLG (CPrintInfo->CPrintDialog->m_pd)
 
-  {"GetHDC",                ui_get_hdc,               1}, // @pymeth GetHDC|Identifies a device context or an information context, depending on whether the Flags member specifies the PD_RETURNDC or PC_RETURNIC flag. If neither flag is specified, the value of this member is undefined. If both flags are specified, PD_RETURNDC has priority. 
+  {"GetHDC",                ui_get_hdc,               1}, // @pymeth GetHDC|Identifies a device context or an information context, depending on whether the Flags member specifies the PD_RETURNDC or PC_RETURNIC flag. If neither flag is specified, the value of this member is undefined. If both flags are specified, PD_RETURNDC has priority.
   {"GetFlags",              ui_get_flags,             1}, // @pymeth GetFlags|A set of bit flags that you can use to initialize the Print common dialog box. When the dialog box returns, it sets these flags to indicate the user's input.
   {"SetFlags",              ui_set_flags,             1}, // @pymeth SetFlags|A set of bit flags that you can use to initialize the Print common dialog box. When the dialog box returns, it sets these flags to indicate the user's input.
   {"SetFromPage",           ui_set_from_page,         1}, // @pymeth SetFromPage|The number of the first page to be printed.
   {"SetToPage",             ui_set_to_page,           1}, // @pymeth SetToPage|The number of the first page to be printed.
-  {"GetPRINTDLGMinPage",    ui_get_printdlg_min_page, 1}, // @pymeth GetPRINTDLGMinPage|Get the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled. 
-  {"SetPRINTDLGMinPage",    ui_set_printdlg_min_page, 1}, // @pymeth SetPRINTDLGMinPage|Set the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled. 
+  {"GetPRINTDLGMinPage",    ui_get_printdlg_min_page, 1}, // @pymeth GetPRINTDLGMinPage|Get the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled.
+  {"SetPRINTDLGMinPage",    ui_set_printdlg_min_page, 1}, // @pymeth SetPRINTDLGMinPage|Set the minimum value for the page range specified in the From and To page edit controls. If nMinPage equals nMaxPage, the Pages radio button and the starting and ending page edit controls are disabled.
   {"GetPRINTDLGCopies",     ui_get_printdlg_copies,   1}, // @pymeth GetPRINTDLGCopies|Gets the initial number of copies for the Copies edit control if hDevMode is NULL; otherwise, the dmCopies member of the DEVMODE structure contains the initial value.
   {"SetPRINTDLGCopies",     ui_set_printdlg_copies,   1}, // @pymeth SetPRINTDLGCopies|Sets the initial number of copies for the Copies edit control if hDevMode is NULL; otherwise, the dmCopies member of the DEVMODE structure contains the initial value.
   {NULL, NULL}
 };
 
 ui_type ui_prinfo_object::type(
-                               "PyCPrintInfo", 
-                               &ui_assoc_object::type, 
-                               sizeof(ui_prinfo_object), 
-                               PYOBJ_OFFSET(ui_prinfo_object), 
-                               ui_prinfo_methods, 
+                               "PyCPrintInfo",
+                               &ui_assoc_object::type,
+                               sizeof(ui_prinfo_object),
+                               PYOBJ_OFFSET(ui_prinfo_object),
+                               ui_prinfo_methods,
                                GET_PY_CTOR(ui_prinfo_object));
 

@@ -62,7 +62,7 @@ class FontView(docview.ScrollView):
 			self.height = bottom - top
 		x, y = self.width // 2, self.height // 2
 		dc.TextOut (x, y, self.text)
-	
+
 def FontDemo():
 	# create doc/view
 	template = docview.DocTemplate(win32ui.IDR_PYTHONTYPE, None, None, FontView)

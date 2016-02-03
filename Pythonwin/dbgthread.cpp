@@ -15,7 +15,7 @@ void ProcessShellMessage( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
         case WM_LBUTTONUP:
 			cmdId = ID_SHELL_ACTIVATE;
 			break;
-        case WM_RBUTTONUP: 
+        case WM_RBUTTONUP:
 		{
 
 			CMenu menu;
@@ -25,14 +25,14 @@ void ProcessShellMessage( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 			HMENU hMenuTrackPopup = *menu.GetSubMenu (0); // convert to a HMENU
 			POINT pt;
 			GetCursorPos(&pt);
-			// This is required when using a notify icon -- see KB article 
-			// PRB: Menus for Notification Icons Don't Work Correctly 
+			// This is required when using a notify icon -- see KB article
+			// PRB: Menus for Notification Icons Don't Work Correctly
 			SetForegroundWindow (hWnd);
 			SetMenuDefaultItem(hMenuTrackPopup, 0, MF_BYPOSITION);
 			cmdId = TrackPopupMenu(hMenuTrackPopup, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_RIGHTBUTTON, pt.x, pt.y, 0, hWnd, NULL);
 
-			// This is required when using a notify icon -- see KB article 
-			// PRB: Menus for Notification Icons Don't Work Correctly 
+			// This is required when using a notify icon -- see KB article
+			// PRB: Menus for Notification Icons Don't Work Correctly
 			::PostMessage (hWnd, WM_USER, 0, 0);
 			break;
 		}
@@ -40,7 +40,7 @@ void ProcessShellMessage( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 	}
 
 	switch (cmdId) {
-		case ID_SHELL_ACTIVATE: 
+		case ID_SHELL_ACTIVATE:
 		{
 			HWND hwndMain = AfxGetMainWnd()->GetSafeHwnd();
 			BOOL ok = (hwndMain != NULL);
@@ -130,8 +130,8 @@ DWORD DebuggerThreadFunc( LPDWORD lpdwWhatever )
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	RegisterClass( &wc );
-	hwndDebug = ::CreateWindowEx( 0, className, _T("Python"), WS_OVERLAPPEDWINDOW, 
-				14, 8, 70, 60, 
+	hwndDebug = ::CreateWindowEx( 0, className, _T("Python"), WS_OVERLAPPEDWINDOW,
+				14, 8, 70, 60,
 				NULL, NULL, AfxGetInstanceHandle(),   NULL );
 
 	AddIcons(hwndDebug);

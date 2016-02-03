@@ -3,7 +3,7 @@
 #include "PythonCOMServer.h"
 #include "PyIEnumVARIANT.h"
 
-STDMETHODIMP PyGEnumVARIANT::Next( 
+STDMETHODIMP PyGEnumVARIANT::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ VARIANT __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -53,7 +53,7 @@ STDMETHODIMP PyGEnumVARIANT::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumVARIANT, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumVARIANT::Skip( 
+STDMETHODIMP PyGEnumVARIANT::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -66,7 +66,7 @@ STDMETHODIMP PyGEnumVARIANT::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumVARIANT::Clone( 
+STDMETHODIMP PyGEnumVARIANT::Clone(
             /* [out] */ IEnumVARIANT __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

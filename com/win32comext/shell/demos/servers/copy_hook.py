@@ -19,13 +19,13 @@ class ShellExtension:
     _reg_clsid_ = "{1845b6ba-2bbd-4197-b930-46d8651497c1}"
     _com_interfaces_ = [shell.IID_ICopyHook]
     _public_methods_ = ["CopyCallBack"]
-    
+
     def CopyCallBack(self, hwnd, func, flags,
                      srcName, srcAttr, destName, destAttr):
         # This function should return:
-        # IDYES Allows the operation. 
-        # IDNO Prevents the operation on this folder but continues with any other operations that have been approved (for example, a batch copy operation).  
-        # IDCANCEL Prevents the current operation and cancels any pending operations.  
+        # IDYES Allows the operation.
+        # IDNO Prevents the operation on this folder but continues with any other operations that have been approved (for example, a batch copy operation).
+        # IDCANCEL Prevents the current operation and cancels any pending operations.
         print "CopyCallBack", hwnd, func, flags, srcName, srcAttr, destName, destAttr
         return win32gui.MessageBox(hwnd, "Allow operation?", "CopyHook",
                                    win32con.MB_YESNO)

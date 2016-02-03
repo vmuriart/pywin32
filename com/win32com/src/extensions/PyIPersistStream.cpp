@@ -42,8 +42,8 @@ PyObject *PyIPersistStream::IsDirty(PyObject *self, PyObject *args)
 
 	// anything but S_FALSE means dirty.
 	return PyInt_FromLong(hr != S_FALSE);
-	// @rvalue S_OK (ie, 0)|The object has changed since it was last saved. 
-	// @rvalue S_FALSE (ie, 1)|The object has not changed since the last save. 
+	// @rvalue S_OK (ie, 0)|The object has changed since it was last saved.
+	// @rvalue S_FALSE (ie, 1)|The object has not changed since the last save.
 }
 
 // @pymethod |PyIPersistStream|Load|Initializes an object from the stream where it was previously saved.
@@ -124,7 +124,7 @@ static struct PyMethodDef PyIPersistStream_methods[] =
 	{"Load",            PyIPersistStream::Load, 1}, // @pymeth Load|Initializes an object from the stream where it was previously saved.
 	{"Save",            PyIPersistStream::Save, 1}, // @pymeth Save|Saves an object to the specified stream.
 	{"GetSizeMax",      PyIPersistStream::GetSizeMax, 1}, // @pymeth GetSizeMax|Returns the size in bytes of the stream needed to save the object.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIPersistStream::type("PyIPersistStream",

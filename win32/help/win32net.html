@@ -67,7 +67,7 @@ functions documented in the msdn.  This makes it convenient to look at
 the <a href="http://msdn.microsoft.com">Microsoft MSDN </a>
 for further information if necessary. There is a sister module to
 win32net called win32netcon that houses all of the constants needed by
-the win32net modules.  
+the win32net modules.
 <p>
 Because of unicode support in python2.0, some of the string handling
 done w/the examples are no longer necessary. Before one needed to
@@ -99,18 +99,18 @@ The traceback and sys modules are used to extract the error information.
 <H3><A NAME="list">Listing Logins on a workstation</A></H3>
 
 <p>If you want to get the logins currently present on a workstation you
-need to use NetWkstaUserEnum api call.  
+need to use NetWkstaUserEnum api call.
 
 In c++ the call looks like this: |
 
 NET_API_STATUS NetWkstaUserEnum(
-  LPWSTR servername,    
-  DWORD level,          
-  LPBYTE *bufptr,       
-  DWORD prefmaxlen,     
-  LPDWORD entriesread,  
-  LPDWORD totalentries, 
-  LPDWORD resumehandle  
+  LPWSTR servername,
+  DWORD level,
+  LPBYTE *bufptr,
+  DWORD prefmaxlen,
+  LPDWORD entriesread,
+  LPDWORD totalentries,
+  LPDWORD resumehandle
 );
 
 The python documentation says this: | ([dict, ...], total, resumeHandle)
@@ -127,10 +127,10 @@ returned which trivial to parse and if resumeHandel is true you make
 the win32 call again.
 
 Now for some code:
- 
+
 def getusers(server):
   res=1  #initially set it to true
-  pref=win32netcon.MAX_PREFERRED_LENGTH 
+  pref=win32netcon.MAX_PREFERRED_LENGTH
   level=0 #setting it to 1 will provide more detailed info
   total_list=[]
   try:
@@ -148,7 +148,7 @@ print getusers(r'\\betty')
 
 </pre>
 
-<H3><A NAME="accounts">Listing all user accounts</A></H3> 
+<H3><A NAME="accounts">Listing all user accounts</A></H3>
 
 Sometimes it can be handy to get a list of everyone in your
 domain. Python exposes NetUserEnum which returns among other things a
@@ -220,19 +220,19 @@ Selecting that link will show a number of different PySHARE_INFO
 structures; lets assume we want to use the PySHARE_INFO_2 structure.
 
 
-So do you create this PySHARE_INFO_2 Object? It is really quite simple: 
+So do you create this PySHARE_INFO_2 Object? It is really quite simple:
 
-In c++, for example, the SHARE_INFO_2 structure looks like: 
-typedef struct _SHARE_INFO_2 { 
-LPWSTR shi2_netname; 
-DWORD shi2_type; 
-LPWSTR shi2_remark; 
-DWORD shi2_permissions; 
-DWORD shi2_max_uses; 
-DWORD shi2_current_uses; 
-LPWSTR shi2_path; 
-LPWSTR shi2_passwd; 
-} SHARE_INFO_2, *PSHARE_INFO_2, *LPSHARE_INFO_2; 
+In c++, for example, the SHARE_INFO_2 structure looks like:
+typedef struct _SHARE_INFO_2 {
+LPWSTR shi2_netname;
+DWORD shi2_type;
+LPWSTR shi2_remark;
+DWORD shi2_permissions;
+DWORD shi2_max_uses;
+DWORD shi2_current_uses;
+LPWSTR shi2_path;
+LPWSTR shi2_passwd;
+} SHARE_INFO_2, *PSHARE_INFO_2, *LPSHARE_INFO_2;
 
 What does that mean in python?
 
@@ -345,7 +345,7 @@ want to change flags for a user, you need to have all of the
 appropriate flags bitwise OR'ed together. The second example below
 will better explain what is happening.
 
-Now for some code: 
+Now for some code:
 
 In the example below, you will notice a couple of things. First,
 win32net.NetGetDCName returns the primary domain controller already in
@@ -448,8 +448,8 @@ the simple access python gives one to the underlying api.
 </ul>
 </p>
 <HR><H1><A NAME="Author">Author</A></H1>
-John Nielsen, <A HREF="mailto:jn@who.net,">jn@who.net</A> 
-<br>-- Have a great time with programming with python! 
+John Nielsen, <A HREF="mailto:jn@who.net,">jn@who.net</A>
+<br>-- Have a great time with programming with python!
 		<!-- beginning of leaf footer-->
 		<p>&nbsp;</p>
 		<TABLE border=0  cellpadding=0 cellspacing=0 width=100%>
@@ -467,7 +467,7 @@ John Nielsen, <A HREF="mailto:jn@who.net,">jn@who.net</A>
 
 
 
- 
+
 
 
 

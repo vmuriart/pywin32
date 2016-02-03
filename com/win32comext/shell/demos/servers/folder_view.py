@@ -1,7 +1,7 @@
 # This is a port of the Vista SDK "FolderView" sample, and associated
 # notes at http://shellrevealed.com/blogs/shellblog/archive/2007/03/15/Shell-Namespace-Extension_3A00_-Creating-and-Using-the-System-Folder-View-Object.aspx
-# A key difference to shell_view.py is that this version uses the default 
-# IShellView provided by the shell (via SHCreateShellFolderView) rather 
+# A key difference to shell_view.py is that this version uses the default
+# IShellView provided by the shell (via SHCreateShellFolderView) rather
 # than our own.
 # XXX - sadly, it doesn't work quite like the original sample.  Oh well,
 # another day...
@@ -35,7 +35,7 @@ def NewEnum(seq, iid):
 
 # The sample makes heavy use of "string ids" (ie, integer IDs defined in .h
 # files, loaded at runtime from a (presumably localized) DLL.  We cheat.
-_sids = {} # strings, indexed bystring_id, 
+_sids = {} # strings, indexed bystring_id,
 def LoadString(sid):
     return _sids[sid]
 
@@ -96,7 +96,7 @@ GUID_Setting3=GUID("{4d6c2fe1-c689-11dc-ba21-005056c00008}")
 PKEY_ItemNameDisplay = ("{B725F130-47EF-101A-A5F1-02608C9EEBAC}", 10)
 PKEY_PropList_PreviewDetails = ("{C9944A21-A406-48FE-8225-AEC7E24C211B}", 8)
 
-# Not sure what the "3" here refers to - docs say PID_FIRST_USABLE (2) be 
+# Not sure what the "3" here refers to - docs say PID_FIRST_USABLE (2) be
 # used.  Presumably it is the 'propID' value in the .propdesc file!
 # note that the following GUIDs are also references in the .propdesc file
 PID_SOMETHING=3
@@ -109,7 +109,7 @@ PKEY_Sample_NumberOfSides = ("{d6f5e342-c65c-11dc-ba21-005056c00008}", PID_SOMET
 PKEY_Sample_DirectoryLevel = ("{d6f5e343-c65c-11dc-ba21-005056c00008}", PID_SOMETHING)
 
 # We construct a PIDL from a pickle of a dict - turn it back into a
-# dict (we should *never* be called with a PIDL that the last elt is not 
+# dict (we should *never* be called with a PIDL that the last elt is not
 # ours, so it is safe to assume we created it (assume->"ass" = "u" + "me" :)
 def pidl_to_item(pidl):
     # Note that only the *last* elt in the PIDL is certainly ours,
@@ -242,7 +242,7 @@ class FolderViewCategorizer:
     def CompareCategory(self, flags, cat1, cat2):
         return cat1-cat2
 
-    #  Retrieves the name of a categorizer, such as "Group By Device 
+    #  Retrieves the name of a categorizer, such as "Group By Device
     #  Type", that can be displayed in the user interface.
     def GetDescription(self, cch):
         return self.description
@@ -331,7 +331,7 @@ class ViewCategoryProvider:
         self.shell_folder = shell_folder
 
     def CanCategorizeOnSCID(self, pkey):
-        return pkey in [PKEY_ItemNameDisplay, PKEY_Sample_AreaSize, 
+        return pkey in [PKEY_ItemNameDisplay, PKEY_Sample_AreaSize,
                         PKEY_Sample_NumberOfSides, PKEY_Sample_DirectoryLevel]
 
     #  Creates a category object.
@@ -374,7 +374,7 @@ class ViewCategoryProvider:
             # format ID. This will happen if you have a category,
             # not based on a column, that gets stored in the
             # property bag. When a return is made to this item,
-            # it will call this function with a NULL format id. 
+            # it will call this function with a NULL format id.
             guid = CAT_GUID_VALUE
         else:
             raise COMException(hresult=winerror.E_INVALIDARG)
@@ -530,7 +530,7 @@ class ShellFolder:
             flags |= shellcon.SFGAO_HASSUBFOLDER
         return flags
 
-    #  Retrieves an OLE interface that can be used to carry out 
+    #  Retrieves an OLE interface that can be used to carry out
     #  actions on the specified file objects or folders.
     def GetUIObjectOf(self, hwndOwner, pidls, iid, inout):
         assert len(pidls)==1, "oops - arent expecting more than one!"
@@ -562,7 +562,7 @@ class ShellFolder:
 
         raise COMException(hresult=winerror.E_NOINTERFACE)
 
-    #  Retrieves the display name for the specified file object or subfolder. 
+    #  Retrieves the display name for the specified file object or subfolder.
     def GetDisplayNameOf(self, pidl, flags):
         item = pidl_to_item(pidl)
         if flags & shellcon.SHGDN_FORPARSING:
@@ -623,8 +623,8 @@ class ShellFolder:
             val = ''
         return val
 
-    #  Retrieves detailed information, identified by a 
-    #  property set ID (FMTID) and property ID (PID), 
+    #  Retrieves detailed information, identified by a
+    #  property set ID (FMTID) and property ID (PID),
     #  on an item in a Shell folder.
     def GetDetailsEx(self, pidl, pkey):
         item = pidl_to_item(pidl)
@@ -633,7 +633,7 @@ class ShellFolder:
             return "prop:Sample.AreaSize;Sample.NumberOfSides;Sample.DirectoryLevel"
         return self._GetColumnDisplayName(pidl, pkey)
 
-    #  Retrieves detailed information, identified by a 
+    #  Retrieves detailed information, identified by a
     #  column index, on an item in a Shell folder.
     def GetDetailsOf(self, pidl, iCol):
         key = self.MapColumnToSCID(iCol);
@@ -651,17 +651,17 @@ class ShellFolder:
         cxChar = 24
         return fmt, cxChar, val
 
-    #  Converts a column name to the appropriate  
+    #  Converts a column name to the appropriate
     #  property set ID (FMTID) and property ID (PID).
     def MapColumnToSCID(self, iCol):
-        data = [PKEY_ItemNameDisplay, PKEY_Sample_AreaSize, 
+        data = [PKEY_ItemNameDisplay, PKEY_Sample_AreaSize,
                 PKEY_Sample_NumberOfSides, PKEY_Sample_DirectoryLevel]
         if iCol >= len(data):
             raise COMException(hresult=winerror.E_FAIL)
         return data[iCol]
 
     #  IPersistFolder2 methods
-    #  Retrieves the PIDLIST_ABSOLUTE for the folder object. 
+    #  Retrieves the PIDLIST_ABSOLUTE for the folder object.
     def GetCurFolder(self):
         # The docs say this is OK, but I suspect its a problem in this case :)
         #assert self.pidl, "haven't been initialized?"

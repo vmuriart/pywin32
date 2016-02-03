@@ -1,4 +1,4 @@
-MV_FLAG         = 4096          # Multi-value flag 
+MV_FLAG         = 4096          # Multi-value flag
 
 PT_UNSPECIFIED  = 0
 PT_NULL         = 1

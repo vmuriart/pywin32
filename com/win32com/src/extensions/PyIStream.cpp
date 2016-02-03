@@ -150,7 +150,7 @@ PyObject *PyIStream::CopyTo(PyObject *self, PyObject *args)
 	return PyWinObject_FromULARGE_INTEGER(written);
 }
 
-// @pymethod |PyIStream|Commit|Ensures that any changes made to a stream object open in transacted mode are reflected in the parent storage. 
+// @pymethod |PyIStream|Commit|Ensures that any changes made to a stream object open in transacted mode are reflected in the parent storage.
 PyObject *PyIStream::Commit(PyObject *self, PyObject *args)
 {
 	DWORD flags = STGC_DEFAULT;
@@ -242,7 +242,7 @@ PyObject *PyIStream::UnlockRegion(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-// @pymethod <o PyIStream>|PyIStream|Clone|Creates a new stream object with its own seek pointer that references the same bytes as the original stream. 
+// @pymethod <o PyIStream>|PyIStream|Clone|Creates a new stream object with its own seek pointer that references the same bytes as the original stream.
 PyObject *PyIStream::Clone(PyObject *self, PyObject *args)
 {
 	if (!PyArg_ParseTuple(args, ":Clone"))
@@ -294,13 +294,13 @@ static struct PyMethodDef PyIStream_methods[] =
 	{"Seek",          PyIStream::Seek,  1}, // @pymeth Seek|Changes the seek pointer to a new location.
 	{"SetSize",       PyIStream::SetSize,  1}, // @pymeth SetSize|Changes the size of the stream object.
 	{"CopyTo",        PyIStream::CopyTo,  1}, // @pymeth CopyTo|Copies a specified number of bytes from the current seek pointer in the stream to the current seek pointer in another stream.
-	{"Commit",        PyIStream::Commit,  1}, // @pymeth Commit|Ensures that any changes made to a stream object open in transacted mode are reflected in the parent storage. 
+	{"Commit",        PyIStream::Commit,  1}, // @pymeth Commit|Ensures that any changes made to a stream object open in transacted mode are reflected in the parent storage.
 	{"Revert",        PyIStream::Revert,  1}, // @pymeth Revert|Discards all changes that have been made to a transacted stream since the last <om PyIStream::Commit> call.
 	{"LockRegion",    PyIStream::LockRegion,  1}, // @pymeth LockRegion|Restricts access to a specified range of bytes in the stream.
 	{"UnlockRegion",  PyIStream::UnlockRegion,  1}, // @pymeth UnLockRegion|Removes the access restriction on a range of bytes previously restricted with <om PyIStream::LockRegion>.
-	{"Clone",         PyIStream::Clone,  1}, // @pymeth Clone|Creates a new stream object with its own seek pointer that references the same bytes as the original stream. 
+	{"Clone",         PyIStream::Clone,  1}, // @pymeth Clone|Creates a new stream object with its own seek pointer that references the same bytes as the original stream.
 	{"Stat",	      PyIStream::Stat, 1 }, // @pymeth Stat|Returns information about a stream
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIStream::type("PyIStream",

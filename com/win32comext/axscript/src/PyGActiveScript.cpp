@@ -72,7 +72,7 @@ STDMETHODIMP PyGActiveScript::AddNamedItem(
 {
 	PY_GATEWAY_METHOD;
 	PyObject *obName = PyWinObject_FromOLECHAR(pstrName);
-	return InvokeViaPolicy(	"AddNamedItem", NULL, 
+	return InvokeViaPolicy(	"AddNamedItem", NULL,
 											"Ni",
 											obName,
 											dwFlags);
@@ -124,7 +124,7 @@ STDMETHODIMP PyGActiveScript::GetCurrentScriptThreadID(
 {
 	PY_GATEWAY_METHOD;
 	PyObject *result;
-	HRESULT hr = InvokeViaPolicy("GetCurrentScriptThreadID",&result, 
+	HRESULT hr = InvokeViaPolicy("GetCurrentScriptThreadID",&result,
 											NULL);
 	if (FAILED(hr))	return hr;
 
@@ -200,7 +200,7 @@ STDMETHODIMP PyGActiveScript::Clone(
 {
 	PY_GATEWAY_METHOD;
 	PyObject *result;
-	HRESULT hr = InvokeViaPolicy("Clone", &result, 
+	HRESULT hr = InvokeViaPolicy("Clone", &result,
 											NULL);
 	if (FAILED(hr)) return hr;
 	if (!PyCom_InterfaceFromPyObject(result, IID_IActiveScript, (void **)ppscript, FALSE))

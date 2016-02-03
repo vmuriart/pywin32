@@ -213,8 +213,8 @@ STDMETHODIMP PyGOleClientSite::GetContainer(
 	if (ppContainer==NULL) return E_POINTER;
 	PyObject *result;
 	HRESULT hr=InvokeViaPolicy("GetContainer", &result);
-	
-	
+
+
 	return E_NOINTERFACE;  /* TODO: change this as soon as we support IOleContainer */
 
 

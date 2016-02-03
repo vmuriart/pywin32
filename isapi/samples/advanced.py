@@ -29,9 +29,9 @@ if hasattr(sys, "isapidllhandle"):
 # return code from the terminate function is ignored.
 #
 # This is all the framework does to help you.  It is up to your code
-# when you raise this exception.  This sample uses a Win32 "find 
-# notification".  Whenever windows tells us one of the files in the 
-# directory has changed, we check if the time of our source-file has 
+# when you raise this exception.  This sample uses a Win32 "find
+# notification".  Whenever windows tells us one of the files in the
+# directory has changed, we check if the time of our source-file has
 # changed, and set a flag.  Next imcoming request, we check the flag and
 # raise the special exception if set.
 #
@@ -80,7 +80,7 @@ class ReloadWatcherThread(threading.Thread):
         last_time = os.stat(self.filename)[stat.ST_MTIME]
         while 1:
             try:
-                rc = win32event.WaitForSingleObject(self.handle, 
+                rc = win32event.WaitForSingleObject(self.handle,
                                                     win32event.INFINITE)
                 win32file.FindNextChangeNotification(self.handle)
             except win32event.error, details:
@@ -93,10 +93,10 @@ class ReloadWatcherThread(threading.Thread):
                 print "Detected file change - flagging for reload."
                 self.change_detected = True
                 last_time = this_time
-    
+
     def stop(self):
         win32file.FindCloseChangeNotification(self.handle)
-        
+
 # The ISAPI extension - handles requests in our virtual dir, and sends the
 # response to the client.
 class Extension(SimpleExtension):
@@ -135,7 +135,7 @@ class Extension(SimpleExtension):
         print >> ecb, "</BODY></HTML>"
         ecb.close()
         return isapicon.HSE_STATUS_SUCCESS
-    
+
     def TerminateExtension(self, status):
         self.reload_watcher.stop()
 
@@ -191,6 +191,6 @@ if __name__=='__main__':
     parser.add_option("", "--description",
                       action="store",
                       help="custom description to use for the virtual directory")
-    
-    HandleCommandLine(params, opt_parser=parser, 
+
+    HandleCommandLine(params, opt_parser=parser,
                               custom_arg_handlers = custom_arg_handlers)

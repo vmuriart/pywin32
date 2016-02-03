@@ -190,14 +190,14 @@ void DumpAssocPyObject( CDumpContext &dc , void *object );
 // must call a module method to do so, so it is totally C++'s responsibility
 // to enforce this.  To this end, all constructors are protected.
 
-class PYW_EXPORT ui_base_class : 
+class PYW_EXPORT ui_base_class :
 #ifdef _DEBUG
 			// In debug mode, we use MI!!  This gives us the ability
 			// to dump these objects as MFC objects, aiding in leak detection
 			// (now all we need do is track all those leaks :-)
 			public CObject,
 #endif
-			public PyObject 
+			public PyObject
 {
 public:
 	static ui_base_class *make( ui_type &type );

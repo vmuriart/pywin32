@@ -79,7 +79,7 @@ PyObject *PyWinObject_FromRECT(const RECT &r)
 	return new PyCRect(r);
 }
 // Sequence stuff to provide compatibility with tuples.
-static PySequenceMethods PyCRect_Sequence = 
+static PySequenceMethods PyCRect_Sequence =
 {
 	PyCRect::getlength, // sq_length;
 	NULL, // sq_concat;
@@ -164,7 +164,7 @@ int PyCRect::setattro(PyObject *obname, PyObject *v)
 	return PyObject_GenericSetAttr(this, obname, v);
 }
 
-static struct PyMethodDef 
+static struct PyMethodDef
 PyCRect_methods[] =
 {
 	{ NULL,			NULL }
@@ -184,7 +184,7 @@ PyCRectType PyCRect::type("PyCRect",
 							 NULL);
 
 // The CREATESTRUCT just has pointers (no buffers) for the name
-// and classname.  Therefore, I dont treat them as strings, just 
+// and classname.  Therefore, I dont treat them as strings, just
 // pointers (via long casts)
 // @object CREATESTRUCT|A representation of a Windows CREATESTRUCT structure.
 PyObject *PyObjectFromCreateStruct(LPCREATESTRUCT lpcs)
@@ -195,7 +195,7 @@ PyObject *PyObjectFromCreateStruct(LPCREATESTRUCT lpcs)
    		lpcs->hMenu, // @pyparm int|hMenu||
    		lpcs->hwndParent, // @pyparm int|hwndParent||
    		lpcs->cy, // @pyparm (int, int, int, int)|cy, cx, y, x||
-   		lpcs->cx, 
+   		lpcs->cx,
    		lpcs->y,
    		lpcs->x,
    		lpcs->style,// @pyparm int|style||
@@ -218,7 +218,7 @@ BOOL CreateStructFromPyObject(LPCREATESTRUCT lpcs, PyObject *ob, const char *fnN
 	PyObject *obname, *obclassName;
 	BOOL ret =  PyArg_ParseTuple(ob, argBuf,
 	    &lpcs->lpCreateParams,
-   		&lpcs->hInstance, 
+   		&lpcs->hInstance,
    		&lpcs->hMenu,
    		&lpcs->hwndParent,
    		&lpcs->cy,
@@ -230,7 +230,7 @@ BOOL CreateStructFromPyObject(LPCREATESTRUCT lpcs, PyObject *ob, const char *fnN
    		&obclassName,
    		&lpcs->dwExStyle);
 	// CCreateStruct
-	if (!ret || !PyWinLong_AsVoidPtr(obname, (void **)&lpcs->lpszName) || 
+	if (!ret || !PyWinLong_AsVoidPtr(obname, (void **)&lpcs->lpszName) ||
 	    !PyWinLong_AsVoidPtr(obclassName, (void **)&lpcs->lpszClass))
 		return FALSE;
 	return ret;
@@ -312,7 +312,7 @@ BOOL DictToLogFont(PyObject *font_props, LOGFONT *pLF)
 		return FALSE;
 	if (FontName==NULL)
 		return TRUE;
-	
+
 	if (len > LF_FACESIZE-1){	// Must have room for terminating NULL
 		PyErr_Format(PyExc_ValueError, "Font name can be at most %d characters", LF_FACESIZE-1);
 		PyWinObject_FreeTCHAR(FontName);
@@ -502,7 +502,7 @@ void PyWinObject_FreeLV_COLUMN(LV_COLUMN *pCol){
 // @tupleitem 0|int|fmt|Alignment of the column header and the subitem text in the column.
 // @tupleitem 1|int|cx|Width of the column.
 // @tupleitem 2|string|text|Column header text.
-// @tupleitem 3|int|subItem|Index of subitem associated with the column. 
+// @tupleitem 3|int|subItem|Index of subitem associated with the column.
 // <nl>When passed to Python, will always be a tuple of size 4, and items may be None if not available.
 // <nl>When passed from Python, the tuple may be any length up to 4, and any item may be None.
 BOOL PyWinObject_AsLV_COLUMN( PyObject *args, LV_COLUMN *pCol)
@@ -564,7 +564,7 @@ BOOL PyWinObject_AsLV_COLUMN( PyObject *args, LV_COLUMN *pCol)
 //  TreeView conversion utilities
 //
 //
-// TV_ITEM 
+// TV_ITEM
 PyObject *PyWinObject_FromTV_ITEM(TV_ITEM *item)
 {
 	PyObject *ret = PyTuple_New(8);
@@ -740,7 +740,7 @@ BOOL PyWinObject_AsTV_ITEM( PyObject *args, TV_ITEM *pItem)
 //  Header Control conversion utilities
 //
 //
-// HD_ITEM 
+// HD_ITEM
 //HDI_BITMAP, HDI_FORMAT, HDI_HEIGHT, HDI_LPARAM, HDI_TEXT, HDI_WIDTH
 //fmt is HDF_CENTER, HDF_LEFT, HDF_RIGHT, HDF_BITMAP, HDF_OWNERDRAW, HDF_STRING
 PyObject *MakeHD_ITEMTuple(HD_ITEM *item)
@@ -751,7 +751,7 @@ PyObject *MakeHD_ITEMTuple(HD_ITEM *item)
 		PyTuple_SET_ITEM(ret, 0, PyInt_FromLong((long)0));
 	else if (item->mask & HDI_WIDTH)
 		PyTuple_SET_ITEM(ret, 0, PyInt_FromLong((long)1));
-	if ((item->mask & HDI_HEIGHT) || (item->mask & HDI_WIDTH)) 
+	if ((item->mask & HDI_HEIGHT) || (item->mask & HDI_WIDTH))
 		PyTuple_SET_ITEM(ret, 1, PyInt_FromLong((long)item->cxy));
 	else {
 		Py_INCREF(Py_None);
@@ -790,7 +790,7 @@ PyObject *MakeHD_ITEMTuple(HD_ITEM *item)
 
 /**** NOT USED: No current callers of this - and when there are, we need to
  * ensure we PyWinObject_FreeTCHAR() pItem->pszText - see '????' below
- * 
+ *
 // *** When PyCHeaderCtrl is implemented, return the '@' to the next line _and_ the parm!
 // pymethod |PyCHeaderCtrl|HD_ITEM tuple|Describes a HD_ITEM tuple, used by the <o PyCHeaderCtrl> object.
 // A tuple of 6 items:
@@ -828,7 +828,7 @@ BOOL ParseHD_ITEMTuple( PyObject *args, HD_ITEM *pItem)
 		//mask updated above
 	}
 	// 2 - cxy (measurement of width or height depending on previous arg)
-	
+
 	// 3 - pszText address of item string
 	if (len<3) return TRUE;
 	ob=PyTuple_GET_ITEM(args, 2);
@@ -941,7 +941,7 @@ BOOL ParseParaFormatTuple( PyObject *args, PARAFORMAT *pFmt)
 	PyObject *obTabStops = Py_None;
 	pFmt->cTabCount = 0;
 	// ??? This format needs work, several of these are WORDs. ???
-	BOOL rc = PyArg_ParseTuple(args, "|iiiiiiiO:PARAFORMAT tuple", 
+	BOOL rc = PyArg_ParseTuple(args, "|iiiiiiiO:PARAFORMAT tuple",
 		       &pFmt->dwMask, // @tupleitem 0|int|mask|The mask to use.  Bits in this mask indicate which of the following parameters are interpreted.  Must be a combination the win32con.PFM_* constants.
 			   &pFmt->wNumbering, // @tupleitem 1|int|numbering|The numbering style to use.
 			   &pFmt->wEffects, // @tupleitem 2|int|yHeight|Reserved
@@ -976,7 +976,7 @@ PyObject *MakeParaFormatTuple(PARAFORMAT *pFmt)
 		for (int i=0;i<pFmt->cTabCount;i++)
 			PyTuple_SetItem( obTabs, i, PyInt_FromLong(pFmt->rgxTabs[i]));
 	}
-	PyObject *ret = Py_BuildValue("iiiiiiiO", 
+	PyObject *ret = Py_BuildValue("iiiiiiiO",
 		       pFmt->dwMask,
 			   pFmt->wNumbering,
 			   pFmt->wEffects,
@@ -995,7 +995,7 @@ PyObject *MakeParaFormatTuple(PARAFORMAT *pFmt)
 // Other utilities
 //
 //
-// Given a long that holds a pointer, return 
+// Given a long that holds a pointer, return
 // a Python object.  Used by listboxes and tree
 // controls etc that keep a pointer to a Python object,
 // but due to difficulties managing the lifetimes,
@@ -1078,7 +1078,7 @@ ui_type_CObject &UITypeFromCObject( CObject *ob )
 	CRuntimeClass *prt = ob->GetRuntimeClass();
 	while (prt) {
 		// If we get here, and we only have a CWnd, then we use other tricks!!
-		if (prt==prtCWnd) 
+		if (prt==prtCWnd)
 			return UITypeFromHWnd(((CWnd *)ob)->GetSafeHwnd());
 		if (ui_type_CObject::typemap->Lookup(prt, ret))
 			return *ret;

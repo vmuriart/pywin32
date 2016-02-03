@@ -64,34 +64,34 @@ class TestSimpleOps(unittest.TestCase):
         # Set a flag to delete the file automatically when it is closed.
         fileFlags = win32file.FILE_FLAG_DELETE_ON_CLOSE
         h = win32file.CreateFile( testName, desiredAccess, win32file.FILE_SHARE_READ, None, win32file.CREATE_ALWAYS, fileFlags, 0)
-    
+
         # Write a known number of bytes to the file.
         data = str2bytes("z") * 1025
-    
+
         win32file.WriteFile(h, data)
-    
+
         self.failUnless(win32file.GetFileSize(h) == len(data), "WARNING: Written file does not have the same size as the length of the data in it!")
-    
+
         # Ensure we can read the data back.
         win32file.SetFilePointer(h, 0, win32file.FILE_BEGIN)
         hr, read_data = win32file.ReadFile(h, len(data)+10) # + 10 to get anything extra
         self.failUnless(hr==0, "Readfile returned %d" % hr)
 
         self.failUnless(read_data == data, "Read data is not what we wrote!")
-    
+
         # Now truncate the file at 1/2 its existing size.
         newSize = len(data)//2
         win32file.SetFilePointer(h, newSize, win32file.FILE_BEGIN)
         win32file.SetEndOfFile(h)
         self.failUnlessEqual(win32file.GetFileSize(h), newSize)
-    
+
         # GetFileAttributesEx/GetFileAttributesExW tests.
         self.failUnlessEqual(win32file.GetFileAttributesEx(testName), win32file.GetFileAttributesExW(testName))
 
         attr, ct, at, wt, size = win32file.GetFileAttributesEx(testName)
-        self.failUnless(size==newSize, 
+        self.failUnless(size==newSize,
                         "Expected GetFileAttributesEx to return the same size as GetFileSize()")
-        self.failUnless(attr==win32file.GetFileAttributes(testName), 
+        self.failUnless(attr==win32file.GetFileAttributes(testName),
                         "Expected GetFileAttributesEx to return the same attributes as GetFileAttributes")
 
         h = None # Close the file by removing the last reference to the handle!
@@ -115,21 +115,21 @@ class TestSimpleOps(unittest.TestCase):
             #Write some data
             data = str2bytes('Some data')
             (res, written) = win32file.WriteFile(f, data)
-            
+
             self.failIf(res)
             self.assertEqual(written, len(data))
-            
+
             #Move at the beginning and read the data
             win32file.SetFilePointer(f, 0, win32file.FILE_BEGIN)
             (res, s) = win32file.ReadFile(f, len(data))
-            
+
             self.failIf(res)
             self.assertEqual(s, data)
-            
+
             #Move at the end and read the data
             win32file.SetFilePointer(f, -len(data), win32file.FILE_END)
             (res, s) = win32file.ReadFile(f, len(data))
-            
+
             self.failIf(res)
             self.failUnlessEqual(s, data)
         finally:
@@ -323,7 +323,7 @@ class TestOverlapped(unittest.TestCase):
                           1, BUFSIZE, BUFSIZE,
                           win32pipe.NMPWAIT_WAIT_FOREVER,
                           None)
-        # Create an IOCP and associate it with the handle.        
+        # Create an IOCP and associate it with the handle.
         port = win32file.CreateIoCompletionPort(-1, 0, 0, 0)
         win32file.CreateIoCompletionPort(handle, port, 1, 0)
 
@@ -489,7 +489,7 @@ class TestDirectoryChanges(unittest.TestCase):
             td = tempfile.mktemp("-test-directory-changes-%d" % i)
             os.mkdir(td)
             self.dir_names.append(td)
-            hdir = win32file.CreateFile(td, 
+            hdir = win32file.CreateFile(td,
                                         ntsecuritycon.FILE_LIST_DIRECTORY,
                                         win32con.FILE_SHARE_READ,
                                         None, # security desc
@@ -740,7 +740,7 @@ class TestTransmit(unittest.TestCase):
         time.sleep(0.5)
         s2 = socket.socket()
         s2.connect(self.addr)
-        
+
         length = 0
         aaa = str2bytes("[AAA]")
         bbb = str2bytes("[BBB]")
@@ -751,27 +751,27 @@ class TestTransmit(unittest.TestCase):
         f.seek(0)
         win32file.TransmitFile(s2, win32file._get_osfhandle(f.fileno()), val_length, 0, ol, 0)
         length += win32file.GetOverlappedResult(s2.fileno(), ol, 1)
-        
+
         ol = pywintypes.OVERLAPPED()
         f.seek(0)
         win32file.TransmitFile(s2, win32file._get_osfhandle(f.fileno()), val_length, 0, ol, 0, aaa, bbb)
         length += win32file.GetOverlappedResult(s2.fileno(), ol, 1)
-        
+
         ol = pywintypes.OVERLAPPED()
         f.seek(0)
         win32file.TransmitFile(s2, win32file._get_osfhandle(f.fileno()), val_length, 0, ol, 0, empty, empty)
         length += win32file.GetOverlappedResult(s2.fileno(), ol, 1)
-        
+
         ol = pywintypes.OVERLAPPED()
         f.seek(0)
         win32file.TransmitFile(s2, win32file._get_osfhandle(f.fileno()), val_length, 0, ol, 0, None, ccc)
         length += win32file.GetOverlappedResult(s2.fileno(), ol, 1)
-        
+
         ol = pywintypes.OVERLAPPED()
         f.seek(0)
         win32file.TransmitFile(s2, win32file._get_osfhandle(f.fileno()), val_length, 0, ol, 0, ddd)
         length += win32file.GetOverlappedResult(s2.fileno(), ol, 1)
-        
+
         s2.close()
         th.join()
         buf = str2bytes('').join(self.request)

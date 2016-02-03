@@ -148,7 +148,7 @@ PYWIN_MODULE_INIT_FUNC(axscript)
 	// Register all of our interfaces, gateways and IIDs.
 	PyCom_RegisterExtensionSupport(dict, g_interfaceSupportData, sizeof(g_interfaceSupportData)/sizeof(PyCom_InterfaceSupportInfo));
 
-	// Add some symbolic constants to the module   
+	// Add some symbolic constants to the module
 	ADD_CONSTANT(SCRIPTITEM_ISVISIBLE);
 	ADD_CONSTANT(SCRIPTITEM_ISSOURCE);
 	ADD_CONSTANT(SCRIPTITEM_GLOBALMEMBERS);

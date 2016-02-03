@@ -162,7 +162,7 @@ PyComTypeObject PyIEnumDebugCodeContexts::type("PyIEnumDebugCodeContexts",
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumDebugCodeContexts::Next( 
+STDMETHODIMP PyGEnumDebugCodeContexts::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IDebugCodeContext __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -211,7 +211,7 @@ STDMETHODIMP PyGEnumDebugCodeContexts::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumDebugCodeContexts, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumDebugCodeContexts::Skip( 
+STDMETHODIMP PyGEnumDebugCodeContexts::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -224,7 +224,7 @@ STDMETHODIMP PyGEnumDebugCodeContexts::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumDebugCodeContexts::Clone( 
+STDMETHODIMP PyGEnumDebugCodeContexts::Clone(
             /* [out] */ IEnumDebugCodeContexts __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

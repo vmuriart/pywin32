@@ -21,7 +21,7 @@ class ThreadWriter:
 		self.writers[thread.get_ident()] = writer
 		if self.origStdOut is None:
 			self.origStdOut = sys.stdout
-			sys.stdout = self		
+			sys.stdout = self
 
 	def unregister(self):
 		"Remove the writer for the current thread, if any"
@@ -56,7 +56,7 @@ class flags:
 	SERVER_IMMEDIATE = 1
 	SERVER_THREAD = 2
 	SERVER_PROCESS = 3
-	
+
 def StartServer( cmd, title=None, bCloseOnEnd=0, serverFlags = flags.SERVER_BEST ):
 	out = winout.WindowOutput( title, None, winout.flags.WQ_IDLE )
 	if not title:
@@ -105,4 +105,4 @@ def ServerThread(myout, cmd, title, bCloseOnEnd):
 if __name__=='__main__':
 	import demoutils
 	demoutils.NotAScript()
-	
+

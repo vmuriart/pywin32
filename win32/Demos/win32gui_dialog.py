@@ -91,7 +91,7 @@ class _WIN32MASKEDSTRUCT:
         return struct.pack(*(full_fmt,) + tuple(vals))
 
 
-# NOTE: See the win32gui_struct module for an alternative way of dealing 
+# NOTE: See the win32gui_struct module for an alternative way of dealing
 # with these structures
 class LVITEM(_WIN32MASKEDSTRUCT):
     _struct_items_ = [
@@ -367,7 +367,7 @@ def DemoCreateWindow():
     w.CreateWindow()
     # PumpMessages runs until PostQuitMessage() is called by someone.
     win32gui.PumpMessages()
-    
+
 if __name__=='__main__':
     DemoModal()
     DemoCreateWindow()

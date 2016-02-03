@@ -6,7 +6,7 @@
 # include "PyITask.h"
 # include "PyITaskTrigger.h"
 # include "PyIProvideTaskPage.h"
- 
+
 static struct PyMethodDef taskscheduler_methods[]=
 {
 NULL

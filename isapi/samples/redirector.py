@@ -70,7 +70,7 @@ class Extension(threaded_extension.ThreadPoolExtension):
         print "Opening %s" % new_url
         fp = urlopen(new_url)
         headers = fp.info()
-        # subtle py3k breakage: in py3k, str(headers) has normalized \r\n 
+        # subtle py3k breakage: in py3k, str(headers) has normalized \r\n
         # back to \n and also stuck an extra \n term.  py2k leaves the
         # \r\n from the server in tact and finishes with a single term.
         if sys.version_info < (3,0):

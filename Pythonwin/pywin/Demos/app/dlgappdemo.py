@@ -14,7 +14,7 @@ class TestDialogApp(dlgappcore.DialogApp):
 	def CreateDialog(self):
 		return TestAppDialog()
 
-	
+
 class TestAppDialog(dlgappcore.AppDialog):
 	def __init__(self):
 		self.edit = None
@@ -23,7 +23,7 @@ class TestAppDialog(dlgappcore.AppDialog):
 		self.SetWindowText('Test dialog application')
 		self.edit = self.GetDlgItem(win32ui.IDC_EDIT1)
 		print "Hello from Python"
-		print "args are:", 
+		print "args are:",
 		for arg in sys.argv:
 			print arg
 		return 1

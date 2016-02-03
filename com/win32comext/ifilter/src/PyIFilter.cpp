@@ -41,12 +41,12 @@ PyObject *PyIFilter::Init(PyObject *self, PyObject *args)
 
 	const FULLPROPSPEC * aAttributes=NULL;
 	ULONG cAttributes=0;
-	
+
 	ULONG grfFlags=0;
 	ULONG flags = 0;
 	if ( !PyArg_ParseTuple(args, "l:Init", &grfFlags) )
 		return NULL;
-	
+
 	HRESULT hr;
 	PY_INTERFACE_PRECALL;
 	hr = pIF->Init( grfFlags, cAttributes, aAttributes, &flags );
@@ -84,7 +84,7 @@ PyObject *PyIFilter::GetChunk(PyObject *self, PyObject *args)
 		obProp = Py_BuildValue("i", stat.attribute.psProperty.propid);
 	}
 
-	PyObject * obAttr = Py_BuildValue("NN", 
+	PyObject * obAttr = Py_BuildValue("NN",
 									  PyWinObject_FromIID(stat.attribute.guidPropSet),
 									  obProp);
 
@@ -106,7 +106,7 @@ PyObject *PyIFilter::GetText(PyObject *self, PyObject *args)
 		return NULL;
 
 	// @pyparm <int>|nBufSize|size of text buffer to create
-	ULONG nBufSize = 0; 
+	ULONG nBufSize = 0;
 	if ( !PyArg_ParseTuple(args, "|i:GetText", &nBufSize) )
 		return NULL;
 
@@ -143,7 +143,7 @@ PyObject *PyIFilter::GetValue(PyObject *self, PyObject *args)
 
 	if ( !PyArg_ParseTuple(args, ":GetValue") )
 		return NULL;
-	
+
 	HRESULT hr;
 	PROPVARIANT * pPropValue = 0;
 	PY_INTERFACE_PRECALL;
@@ -161,7 +161,7 @@ PyObject *PyIFilter::GetValue(PyObject *self, PyObject *args)
 		CoTaskMemFree(pPropValue);
 		return obRet;
 	}
-	
+
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -172,19 +172,19 @@ static PyObject *pyLoadIFilter(PyObject *self, PyObject *args)
 	HRESULT hr;
 	IUnknown *pOb = NULL;
 	PyObject *obPath;
-	
+
 	PyObject *ret;
 	long lres = 0;
-	if (!PyArg_ParseTuple(args, "O:LoadIFilter", &obPath)) 
+	if (!PyArg_ParseTuple(args, "O:LoadIFilter", &obPath))
 		return NULL;
 
 	WCHAR *path;
 	if (!PyWinObject_AsWCHAR(obPath, &path, FALSE))
 		goto done;
 
-	
+
 	Py_BEGIN_ALLOW_THREADS;
-    hr = LoadIFilter( path , NULL , (void**)&pOb ); 
+    hr = LoadIFilter( path , NULL , (void**)&pOb );
 	Py_END_ALLOW_THREADS;
 	if (FAILED(hr))
 		ret = OleSetOleError(hr);
@@ -202,10 +202,10 @@ static PyObject *pyBindIFilterFromStorage(PyObject *self, PyObject *args)
 	HRESULT hr;
 	IUnknown *pOb = NULL;
 	PyObject *obStg;
-	
+
 	PyObject *ret;
 	long lres = 0;
-	if (!PyArg_ParseTuple(args, "O:BindIFilterFromStorage", &obStg)) 
+	if (!PyArg_ParseTuple(args, "O:BindIFilterFromStorage", &obStg))
 		return NULL;
 
 	IStorage *pstgDest;
@@ -217,7 +217,7 @@ static PyObject *pyBindIFilterFromStorage(PyObject *self, PyObject *args)
 		return NULL;
 
 	Py_BEGIN_ALLOW_THREADS;
-    hr = BindIFilterFromStorage( pstgDest , NULL , (void**)&pOb ); 
+    hr = BindIFilterFromStorage( pstgDest , NULL , (void**)&pOb );
 	pstgDest->Release();
 	Py_END_ALLOW_THREADS;
 	if (FAILED(hr))
@@ -234,10 +234,10 @@ static PyObject *pyBindIFilterFromStream(PyObject *self, PyObject *args)
 	HRESULT hr;
 	IUnknown *pOb = NULL;
 	PyObject *obStg;
-	
+
 	PyObject *ret;
 	long lres = 0;
-	if (!PyArg_ParseTuple(args, "O:BindIFilterFromStream", &obStg)) 
+	if (!PyArg_ParseTuple(args, "O:BindIFilterFromStream", &obStg))
 		return NULL;
 
 	IStream *pstm;
@@ -249,7 +249,7 @@ static PyObject *pyBindIFilterFromStream(PyObject *self, PyObject *args)
 		return NULL;
 
 	Py_BEGIN_ALLOW_THREADS;
-	hr = BindIFilterFromStream( pstm , NULL , (void**)&pOb ); 
+	hr = BindIFilterFromStream( pstm , NULL , (void**)&pOb );
 	pstm->Release();
 	Py_END_ALLOW_THREADS;
 	if (FAILED(hr))
@@ -332,23 +332,23 @@ PYWIN_MODULE_INIT_FUNC(ifilter)
 	// NOTE: New constants should go in ifiltercon.py
 	// IFilter Init functions
 	ADD_CONSTANT(IFILTER_INIT_CANON_PARAGRAPHS);
-	ADD_CONSTANT(IFILTER_INIT_HARD_LINE_BREAKS); 
+	ADD_CONSTANT(IFILTER_INIT_HARD_LINE_BREAKS);
 	ADD_CONSTANT(IFILTER_INIT_CANON_HYPHENS);
 	ADD_CONSTANT(IFILTER_INIT_CANON_SPACES);
 	ADD_CONSTANT(IFILTER_INIT_APPLY_INDEX_ATTRIBUTES);
 	ADD_CONSTANT(IFILTER_INIT_APPLY_OTHER_ATTRIBUTES);
-	ADD_CONSTANT(IFILTER_INIT_INDEXING_ONLY); 
+	ADD_CONSTANT(IFILTER_INIT_INDEXING_ONLY);
 	ADD_CONSTANT(IFILTER_INIT_SEARCH_LINKS);
 
 	// IFilter return code
 	ADD_CONSTANT(IFILTER_FLAGS_OLE_PROPERTIES);
 
 	// Get Chunk Error codes
-	ADD_CONSTANT(FILTER_E_END_OF_CHUNKS); 
-	ADD_CONSTANT(FILTER_E_EMBEDDING_UNAVAILABLE); 
-	ADD_CONSTANT(FILTER_E_LINK_UNAVAILABLE); 
-	ADD_CONSTANT(FILTER_E_PASSWORD); 
-	ADD_CONSTANT(FILTER_E_ACCESS); 
+	ADD_CONSTANT(FILTER_E_END_OF_CHUNKS);
+	ADD_CONSTANT(FILTER_E_EMBEDDING_UNAVAILABLE);
+	ADD_CONSTANT(FILTER_E_LINK_UNAVAILABLE);
+	ADD_CONSTANT(FILTER_E_PASSWORD);
+	ADD_CONSTANT(FILTER_E_ACCESS);
 
 	// Chunk Break (ret item index 1)
 	ADD_CONSTANT(CHUNK_NO_BREAK);
@@ -362,13 +362,13 @@ PYWIN_MODULE_INIT_FUNC(ifilter)
 	ADD_CONSTANT(CHUNK_VALUE);
 
 	// Get Value error codes
-	ADD_CONSTANT(FILTER_E_NO_MORE_VALUES); 
-	ADD_CONSTANT(FILTER_E_NO_VALUES); 
+	ADD_CONSTANT(FILTER_E_NO_MORE_VALUES);
+	ADD_CONSTANT(FILTER_E_NO_VALUES);
 
 	// Get Text error codes
-	ADD_CONSTANT(FILTER_E_NO_TEXT); 
+	ADD_CONSTANT(FILTER_E_NO_TEXT);
 	ADD_CONSTANT(FILTER_E_NO_MORE_TEXT);
-	ADD_CONSTANT(FILTER_S_LAST_TEXT); 
+	ADD_CONSTANT(FILTER_S_LAST_TEXT);
 	// NOTE: New constants should go in ifiltercon.py
 
 	PYWIN_MODULE_INIT_RETURN_SUCCESS;

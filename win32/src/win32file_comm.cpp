@@ -9,11 +9,11 @@
 
 // Small enough we can use a tuple!
 // @object COMMTIMEOUTS|A tuple representing a COMMTIMEOUTS structure.
-// @tupleitem 0|int|ReadIntervalTimeout| 
-// @tupleitem 1|int|ReadTotalTimeoutMultiplier| 
-// @tupleitem 2|int|ReadTotalTimeoutConstant| 
-// @tupleitem 3|int|WriteTotalTimeoutMultiplier| 
-// @tupleitem 4|int|WriteTotalTimeoutConstant| 
+// @tupleitem 0|int|ReadIntervalTimeout|
+// @tupleitem 1|int|ReadTotalTimeoutMultiplier|
+// @tupleitem 2|int|ReadTotalTimeoutConstant|
+// @tupleitem 3|int|WriteTotalTimeoutMultiplier|
+// @tupleitem 4|int|WriteTotalTimeoutConstant|
 PyObject *PyWinObject_FromCOMMTIMEOUTS( COMMTIMEOUTS *p)
 {
 	return Py_BuildValue("kkkkk",
@@ -45,7 +45,7 @@ PyObject *PyWinMethod_NewDCB(PyObject *self, PyObject *args)
 }
 
 // @object PyDCB|A Python object, representing an DCB structure
-// @comm Typically you query a device for its DCB using 
+// @comm Typically you query a device for its DCB using
 // <om win32file.GetCommState>, change any setting necessary, then
 // call <om win32file.SetCommState> with the new structure.
 BOOL PyWinObject_AsDCB(PyObject *ob, DCB **ppDCB, BOOL bNoneOK /*= TRUE*/)
@@ -123,36 +123,36 @@ PyTypeObject PyDCB::type =
 
 /*static*/ struct PyMemberDef PyDCB::members[] = {
 // NOTE - bitfields missing.
-  {"BaudRate", T_DWORD, OFF(m_DCB.BaudRate)},            // @prop integer|BaudRate|current baud rate 
-  {"wReserved", T_WORD, OFF(m_DCB.wReserved)},          // @prop integer|wReserved|not currently used 
-  {"XonLim", T_WORD, OFF(m_DCB.XonLim)},             // @prop integer|XonLim|transmit XON threshold 
-  {"XoffLim", T_WORD, OFF(m_DCB.XoffLim)},            // @prop integer|XoffLim|transmit XOFF threshold 
-  {"ByteSize", T_BYTE, OFF(m_DCB.ByteSize)},           // @prop integer|ByteSize|number of bits/byte, 4-8 
-  {"Parity", T_BYTE, OFF(m_DCB.Parity)},             // @prop integer|Parity|0-4=no,odd,even,mark,space 
-  {"StopBits", T_BYTE, OFF(m_DCB.StopBits)},           // @prop integer|StopBits|0,1,2 = 1, 1.5, 2 
-  {"XonChar", T_CHAR, OFF(m_DCB.XonChar)},            // @prop character|XonChar|Tx and Rx XON character 
-  {"XoffChar", T_CHAR, OFF(m_DCB.XoffChar)},           // @prop character|XoffChar|Tx and Rx XOFF character 
-  {"ErrorChar", T_CHAR, OFF(m_DCB.ErrorChar)},          // @prop character|ErrorChar|error replacement character 
-  {"EofChar", T_CHAR, OFF(m_DCB.EofChar)},            // @prop character|EofChar|end of input character 
-  {"EvtChar", T_CHAR, OFF(m_DCB.EvtChar)},            // @prop character|EvtChar|received event character 
-  {"wReserved1", T_WORD, OFF(m_DCB.wReserved1)},         // @prop integer|wReserved1|reserved; do not use 
+  {"BaudRate", T_DWORD, OFF(m_DCB.BaudRate)},            // @prop integer|BaudRate|current baud rate
+  {"wReserved", T_WORD, OFF(m_DCB.wReserved)},          // @prop integer|wReserved|not currently used
+  {"XonLim", T_WORD, OFF(m_DCB.XonLim)},             // @prop integer|XonLim|transmit XON threshold
+  {"XoffLim", T_WORD, OFF(m_DCB.XoffLim)},            // @prop integer|XoffLim|transmit XOFF threshold
+  {"ByteSize", T_BYTE, OFF(m_DCB.ByteSize)},           // @prop integer|ByteSize|number of bits/byte, 4-8
+  {"Parity", T_BYTE, OFF(m_DCB.Parity)},             // @prop integer|Parity|0-4=no,odd,even,mark,space
+  {"StopBits", T_BYTE, OFF(m_DCB.StopBits)},           // @prop integer|StopBits|0,1,2 = 1, 1.5, 2
+  {"XonChar", T_CHAR, OFF(m_DCB.XonChar)},            // @prop character|XonChar|Tx and Rx XON character
+  {"XoffChar", T_CHAR, OFF(m_DCB.XoffChar)},           // @prop character|XoffChar|Tx and Rx XOFF character
+  {"ErrorChar", T_CHAR, OFF(m_DCB.ErrorChar)},          // @prop character|ErrorChar|error replacement character
+  {"EofChar", T_CHAR, OFF(m_DCB.EofChar)},            // @prop character|EofChar|end of input character
+  {"EvtChar", T_CHAR, OFF(m_DCB.EvtChar)},            // @prop character|EvtChar|received event character
+  {"wReserved1", T_WORD, OFF(m_DCB.wReserved1)},         // @prop integer|wReserved1|reserved; do not use
   {NULL}
 };
 
-// @prop integer|fBinary|binary mode, no EOF check 
-// @prop integer|fParity|enable parity checking 
-// @prop integer|fOutxCtsFlow|CTS output flow control 
-// @prop integer|fOutxDsrFlow|DSR output flow control 
-// @prop integer|fDtrControl|DTR flow control type 
-// @prop integer|fDsrSensitivity|DSR sensitivity 
-// @prop integer|fTXContinueOnXoff|XOFF continues Tx 
-// @prop integer|fOutX|XON/XOFF out flow control 
-// @prop integer|fInX|XON/XOFF in flow control 
-// @prop integer|fErrorChar|enable error replacement 
-// @prop integer|fNull|enable null stripping 
-// @prop integer|fRtsControl|RTS flow control 
-// @prop integer|fAbortOnError|abort on error 
-// @prop integer|fDummy2|reserved 
+// @prop integer|fBinary|binary mode, no EOF check
+// @prop integer|fParity|enable parity checking
+// @prop integer|fOutxCtsFlow|CTS output flow control
+// @prop integer|fOutxDsrFlow|DSR output flow control
+// @prop integer|fDtrControl|DTR flow control type
+// @prop integer|fDsrSensitivity|DSR sensitivity
+// @prop integer|fTXContinueOnXoff|XOFF continues Tx
+// @prop integer|fOutX|XON/XOFF out flow control
+// @prop integer|fInX|XON/XOFF in flow control
+// @prop integer|fErrorChar|enable error replacement
+// @prop integer|fNull|enable null stripping
+// @prop integer|fRtsControl|RTS flow control
+// @prop integer|fAbortOnError|abort on error
+// @prop integer|fDummy2|reserved
 
 PyDCB::PyDCB(void)
 {
@@ -335,18 +335,18 @@ PyTypeObject PyCOMSTAT::type =
 /*static*/ struct PyMemberDef PyCOMSTAT::members[] = {
 // NOTE - bitfields missing.
   {"cbInQue", T_DWORD, OFF(m_COMSTAT.cbInQue)},            // @prop integer|cbInQue|Specifies the number of bytes received by the serial provider but not yet read by a <om win32file.ReadFile> operation
-  {"cbOutQue", T_WORD, OFF(m_COMSTAT.cbOutQue)},          // @prop integer|cbOutQue|Specifies the number of bytes of user data remaining to be transmitted for all write operations. This value will be zero for a nonoverlapped write. 
+  {"cbOutQue", T_WORD, OFF(m_COMSTAT.cbOutQue)},          // @prop integer|cbOutQue|Specifies the number of bytes of user data remaining to be transmitted for all write operations. This value will be zero for a nonoverlapped write.
   {NULL}
 };
 
-// @prop integer|fCtsHold|Specifies whether transmission is waiting for the CTS (clear-to-send) signal to be sent. If this member is TRUE, transmission is waiting. 
-// @prop integer|fDsrHold|Specifies whether transmission is waiting for the DSR (data-set-ready) signal to be sent. If this member is TRUE, transmission is waiting. 
-// @prop integer|fRlsdHold|Specifies whether transmission is waiting for the RLSD (receive-line-signal-detect) signal to be sent. If this member is TRUE, transmission is waiting. 
-// @prop integer|fXoffHold|Specifies whether transmission is waiting because the XOFF character was received. If this member is TRUE, transmission is waiting. 
-// @prop integer|fXoffSent|Specifies whether transmission is waiting because the XOFF character was transmitted. If this member is TRUE, transmission is waiting. Transmission halts when the XOFF character is transmitted to a system that takes the next character as XON, regardless of the actual character. 
-// @prop integer|fEof|Specifies whether the end-of-file (EOF) character has been received. If this member is TRUE, the EOF character has been received. 
-// @prop integer|fTxim|If this member is TRUE, there is a character queued for transmission that has come to the communications device by way of the TransmitCommChar function. The communications device transmits such a character ahead of other characters in the device's output buffer. 
-// @prop integer|fReserved|Reserved; do not use. 
+// @prop integer|fCtsHold|Specifies whether transmission is waiting for the CTS (clear-to-send) signal to be sent. If this member is TRUE, transmission is waiting.
+// @prop integer|fDsrHold|Specifies whether transmission is waiting for the DSR (data-set-ready) signal to be sent. If this member is TRUE, transmission is waiting.
+// @prop integer|fRlsdHold|Specifies whether transmission is waiting for the RLSD (receive-line-signal-detect) signal to be sent. If this member is TRUE, transmission is waiting.
+// @prop integer|fXoffHold|Specifies whether transmission is waiting because the XOFF character was received. If this member is TRUE, transmission is waiting.
+// @prop integer|fXoffSent|Specifies whether transmission is waiting because the XOFF character was transmitted. If this member is TRUE, transmission is waiting. Transmission halts when the XOFF character is transmitted to a system that takes the next character as XON, regardless of the actual character.
+// @prop integer|fEof|Specifies whether the end-of-file (EOF) character has been received. If this member is TRUE, the EOF character has been received.
+// @prop integer|fTxim|If this member is TRUE, there is a character queued for transmission that has come to the communications device by way of the TransmitCommChar function. The communications device transmits such a character ahead of other characters in the device's output buffer.
+// @prop integer|fReserved|Reserved; do not use.
 
 PyCOMSTAT::PyCOMSTAT(void)
 {

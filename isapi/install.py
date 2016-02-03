@@ -76,12 +76,12 @@ class VirtualDirParameters:
 
     def __init__(self, **kw):
         self.__dict__.update(kw)
-    
+
     def is_root(self):
         "This virtual directory is a root directory if parent and name are blank"
         parent, name = self.split_path()
         return not parent and not name
-    
+
     def split_path(self):
         return split_path(self.Name)
 
@@ -147,11 +147,11 @@ def LocateWebServerPath(description):
     """
     Find an IIS web server whose name or comment matches the provided
     description (case-insensitive).
-    
+
     >>> LocateWebServerPath('Default Web Site') # doctest: +SKIP
-    
+
     or
-    
+
     >>> LocateWebServerPath('1') #doctest: +SKIP
     """
     assert len(description) >= 1, "Server name or comment is required"
@@ -165,7 +165,7 @@ def LocateWebServerPath(description):
             return site.AdsPath
     msg = "No web sites match the description '%s'" % description
     raise ItemNotFound(msg)
-    
+
 def GetWebServer(description = None):
     """
     Load the web server instance (COM object) for a given instance
@@ -200,7 +200,7 @@ def FindWebServer(options, server_desc):
     #  sys.argv).
     if server_desc and not isinstance(server_desc, unicode):
         server_desc = server_desc.decode('mbcs')
-    
+
     # get the server (if server_desc is None, the default site is acquired)
     server = GetWebServer(server_desc)
     return server.adsPath
@@ -208,26 +208,26 @@ def FindWebServer(options, server_desc):
 def split_path(path):
     """
     Get the parent path and basename.
-    
+
     >>> split_path('/')
     ['', '']
-    
+
     >>> split_path('')
     ['', '']
-    
+
     >>> split_path('foo')
     ['', 'foo']
-    
+
     >>> split_path('/foo')
     ['', 'foo']
-    
+
     >>> split_path('/foo/bar')
     ['/foo', 'bar']
-    
+
     >>> split_path('foo/bar')
     ['/foo', 'bar']
     """
-    
+
     if not path.startswith('/'): path = '/' + path
     return path.rsplit('/', 1)
 
@@ -248,7 +248,7 @@ def _CreateDirectory(iis_dir, name, params):
 
     newDir = iis_dir.Create(params.Type, name)
     log(2, "Creating new directory '%s' in %s..." % (name,iis_dir.Name))
-    
+
     friendly = params.Description or params.Name
     newDir.AppFriendlyName = friendly
 
@@ -292,7 +292,7 @@ def CreateDirectory(params, options):
         target_dir = _CreateDirectory(target_dir, name, params)
 
     AssignScriptMaps(params.ScriptMaps, target_dir, params.ScriptMapUpdate)
-    
+
     _CallHook(params, "PostInstall", options, target_dir)
     log(1, "Configured Virtual Directory: %s" % (params.Name,))
     return target_dir
@@ -326,7 +326,7 @@ def get_unique_items(sequence, reference):
 
 def _AssignScriptMapsReplace(target, script_maps):
     target.ScriptMaps = script_maps
-    
+
 def _AssignScriptMapsEnd(target, script_maps):
     unique_new_maps = get_unique_items(script_maps, target.ScriptMaps)
     target.ScriptMaps = target.ScriptMaps + unique_new_maps
@@ -492,7 +492,7 @@ def Install(params, options):
     _CallHook(params, "PreInstall", options)
     for vd in params.VirtualDirs:
         CreateDirectory(vd, options)
-        
+
     for filter_def in params.Filters:
         CreateISAPIFilter(filter_def, options)
 
@@ -540,12 +540,12 @@ def RemoveScriptMaps(vd_params, options):
 
 def Uninstall(params, options):
     _CallHook(params, "PreRemove", options)
-    
+
     DeleteExtensionFileRecords(params, options)
-    
+
     for vd in params.VirtualDirs:
         _CallHook(vd, "PreRemove", options)
-        
+
         RemoveDirectory(vd, options)
         if vd.is_root():
             # if this is installed to the root virtual directory, we can't delete it
@@ -660,11 +660,11 @@ def HandleCommandLine(params, argv=None, conf_module_name = None,
                       default_arg = "install",
                       opt_parser = None, custom_arg_handlers = {}):
     """Perform installation or removal of an ISAPI filter or extension.
-    
+
     This module handles standard command-line options and configuration
     information, and installs, removes or updates the configuration of an
     ISAPI filter or extension.
-    
+
     You must pass your configuration information in params - all other
     arguments are optional, and allow you to configure the installation
     process.
@@ -698,7 +698,7 @@ def HandleCommandLine(params, argv=None, conf_module_name = None,
         all_handlers = standard_arguments.copy()
         all_handlers.update(custom_arg_handlers)
         parser.set_usage(build_usage(all_handlers))
-    
+
     # allow the user to use uninstall as a synonym for remove if it wasn't
     #  defined by the custom arg handlers.
     all_handlers.setdefault('uninstall', all_handlers['remove'])

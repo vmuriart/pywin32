@@ -8,7 +8,7 @@
  its documentation for any purpose and without fee is hereby
  granted, provided that the above copyright notice appear in all
  copies and that both that copyright notice and this permission
- notice appear in supporting documentation, and that the name of 
+ notice appear in supporting documentation, and that the name of
  Blackdog Software not be used in advertising or publicity pertaining to
  distribution of the software without specific, written prior
  permission.
@@ -35,9 +35,9 @@ class PyFILTER_VERSION :public PyObject
 public:
 	PyFILTER_VERSION(HTTP_FILTER_VERSION* pfv);
 	~PyFILTER_VERSION();
-public:	
+public:
 	void Reset() {m_pfv = NULL;}
-	// Python support 
+	// Python support
 	static void deallocFunc(PyObject *ob);
 	static PyObject *getattro(PyObject *self, PyObject *ob);
 	static int setattro(PyObject *self, PyObject *obname, PyObject *v);
@@ -52,16 +52,16 @@ public:
 	~PyHFC();
 	void Reset() {m_pfc = NULL;}
 	CFilterContext *GetFilterContext() {return m_pfc;}
-public:	
-	// Python support 
+public:
+	// Python support
 	static void deallocFunc(PyObject *ob);
 	static PyObject *getattro(PyObject *self, PyObject *obname);
 	static int setattro(PyObject *self, PyObject *obname, PyObject *v);
 
 	// class methods
-	static PyObject * GetData(PyObject *self, PyObject *args); 
-	static PyObject * WriteClient(PyObject *self, PyObject *args); 
-	static PyObject * AddResponseHeaders(PyObject *self, PyObject *args); 
+	static PyObject * GetData(PyObject *self, PyObject *args);
+	static PyObject * WriteClient(PyObject *self, PyObject *args);
+	static PyObject * AddResponseHeaders(PyObject *self, PyObject *args);
 	static PyObject * GetServerVariable(PyObject *self, PyObject *args);
 	// ServerSupportFunction implemented functions.
 	static PyObject * SendResponseHeader(PyObject *self, PyObject *args);
@@ -83,8 +83,8 @@ public:
 	PyURL_MAP(PyHFC *);
 	~PyURL_MAP();
 	HTTP_FILTER_URL_MAP *GetURLMap();
-public:	
-	// Python support 
+public:
+	// Python support
 	static void deallocFunc(PyObject *ob);
 	static PyObject *getattro(PyObject *self, PyObject *obname);
 	static int setattro(PyObject *self, PyObject *obname, PyObject *v);
@@ -99,8 +99,8 @@ public:
 	~PyPREPROC_HEADERS();
 	HTTP_FILTER_CONTEXT *GetFILTER_CONTEXT();
 	HTTP_FILTER_PREPROC_HEADERS *GetPREPROC_HEADERS();
-public:	
-	// Python support 
+public:
+	// Python support
 	static void deallocFunc(PyObject *ob);
 };
 
@@ -113,8 +113,8 @@ public:
 	~PyRAW_DATA();
 	HTTP_FILTER_CONTEXT *GetFILTER_CONTEXT();
 	HTTP_FILTER_RAW_DATA *GetRAW_DATA();
-public:	
-	// Python support 
+public:
+	// Python support
 	static void deallocFunc(PyObject *ob);
 	static PyObject *getattro(PyObject *self, PyObject *obname);
 	static int setattro(PyObject *self, PyObject *obname, PyObject *v);
@@ -129,8 +129,8 @@ public:
 	~PyAUTHENT();
 	HTTP_FILTER_CONTEXT *GetFILTER_CONTEXT();
 	HTTP_FILTER_AUTHENT *GetAUTHENT();
-public:	
-	// Python support 
+public:
+	// Python support
 	static void deallocFunc(PyObject *ob);
 	static PyObject *getattro(PyObject *self, PyObject *obname);
 	static int setattro(PyObject *self, PyObject *obname, PyObject *v);
@@ -144,8 +144,8 @@ public:
 	PyFILTER_LOG(PyHFC *);
 	~PyFILTER_LOG();
 	HTTP_FILTER_LOG *GetFilterLog();
-public:	
-	// Python support 
+public:
+	// Python support
 	static void deallocFunc(PyObject *ob);
 	static PyObject *getattro(PyObject *self, PyObject *obname);
 	static int setattro(PyObject *self, PyObject *obname, PyObject *v);

@@ -20,7 +20,7 @@ class GenericFrame(window.MDIChildWnd):
 		# will not be called.
 		self.HookNotify(self.GetTTText, commctrl.TTN_NEEDTEXT)
 		self.HookNotify(self.GetTTText, commctrl.TTN_NEEDTEXTW)
-	
+
 #		parent = win32ui.GetMainFrame()
 		parent = self
 		style = win32con.WS_CHILD | win32con.WS_VISIBLE | \
@@ -32,7 +32,7 @@ class GenericFrame(window.MDIChildWnd):
 		self.toolbar = tb = win32ui.CreateToolBar (parent, style, tbid)
 		tb.LoadBitmap(bitmap)
 		tb.SetButtons(buttons)
-		    
+
 		tb.EnableDocking(afxres.CBRS_ALIGN_ANY)
 		tb.SetWindowText("Test")
 		parent.EnableDocking(afxres.CBRS_ALIGN_ANY)
@@ -43,7 +43,7 @@ class GenericFrame(window.MDIChildWnd):
 
 	def OnDestroy(self, msg):
 		self.SaveBarState("ToolbarTest")
-		
+
 	def GetTTText(self, std, extra):
 		(hwndFrom, idFrom, code) = std
 		text, hinst, flags = extra
@@ -56,7 +56,7 @@ class GenericFrame(window.MDIChildWnd):
 			# the value'
 			return 0, ("It works!", None, None)
 		return None # not handled.
-			
+
 	def GetMessageString(self, id):
 		if id==win32ui.ID_APP_ABOUT:
 			return "Dialog Test\nTest"
@@ -68,10 +68,10 @@ class GenericFrame(window.MDIChildWnd):
 
 	def OnNext (self, id, cmd):
 		print 'OnNext called'
-	
+
 	def OnPrevious (self, id, cmd):
 		print 'OnPrevious called'
-	
+
 msg = """\
 This toolbar was dynamically created.\r
 \r

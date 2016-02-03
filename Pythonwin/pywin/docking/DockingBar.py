@@ -220,7 +220,7 @@ class DockingBar(window.Wnd):
 		return 0 # Dont pass on
 
 	def OnLButtonDown(self, msg):
-		# UINT nFlags, CPoint point) 
+		# UINT nFlags, CPoint point)
 		# only start dragging if clicked in "void" space
 		if self.dockBar is not None:
 			# start the drag
@@ -257,7 +257,7 @@ class DockingBar(window.Wnd):
 
 	def OnNcLButtonDblClk(self, msg):
 		nHitTest = wparam = msg[2]
-		# UINT nHitTest, CPoint point) 
+		# UINT nHitTest, CPoint point)
 		if self.dockBar is not None and nHitTest == win32con.HTCAPTION:
 			# toggle docking
 			self.dockContext.ToggleDocking()
@@ -330,7 +330,7 @@ class DockingBar(window.Wnd):
 			self.rectBorder = self.rectBorder[0], self.rectBorder[1], self.rectBorder[0]+self.cxEdge, self.rectBorder[3]
 		else:
 			self.rectBorder = 0,0,0,0
-		
+
 		self.SetBarStyle(dwBorderStyle)
 		return 0
 
@@ -354,7 +354,7 @@ class DockingBar(window.Wnd):
 		ptOrig = pt
 		rect = self.GetWindowRect()
 		pt = pt[0] - rect[0], pt[1] - rect[1]
-		
+
 		if PtInRect(self.rectClose, pt):
 			return win32con.HTSYSMENU
 		elif PtInRect(self.rectUndock, pt):

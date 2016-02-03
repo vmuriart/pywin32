@@ -33,7 +33,7 @@ class Process:
         # Mark doesn't support wShowWindow yet.
         # StartupInfo.dwFlags = StartupInfo.dwFlags | win32process.STARTF_USESHOWWINDOW
         # StartupInfo.wShowWindow = win32con.SW_HIDE
-        
+
         # Create new output read handles and the input write handle. Set
         # the inheritance properties to FALSE. Otherwise, the child inherits
         # the these handles; resulting in non-closeable handles to the pipes
@@ -74,7 +74,7 @@ class Process:
                         # CREATE_NEW_CONSOLE here, or any subprocesses
                         # might fall victim to the problem described in:
                         # KB article: Q156755, cmd.exe requires
-                        # an NT console in order to perform redirection.. 
+                        # an NT console in order to perform redirection..
                 None,   # no new environment
                 None,   # current directory (stay where we are)
                 StartupInfo)
@@ -99,7 +99,7 @@ class Process:
 
         self.stderr = os.fdopen(msvcrt.open_osfhandle(self.hStderr_r, 0), "rb")
         print "Read on stderr: ", repr(self.stderr.read())
-        
+
 
 if __name__ == '__main__':
     p = Process()

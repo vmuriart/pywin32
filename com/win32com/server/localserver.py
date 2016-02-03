@@ -30,15 +30,15 @@ The ProgID or CLSID of the Python Server(s) to be hosted
 def serve(clsids):
 	infos = factory.RegisterClassFactories(clsids)
 
-	pythoncom.EnableQuitMessage(win32api.GetCurrentThreadId())	
+	pythoncom.EnableQuitMessage(win32api.GetCurrentThreadId())
 	pythoncom.CoResumeClassObjects()
 
 	pythoncom.PumpMessages()
-	
+
 	factory.RevokeClassFactories( infos )
-	
+
 	pythoncom.CoUninitialize()
-	
+
 def main():
 	if len(sys.argv)==1:
 		win32api.MessageBox(0, usage, "Python COM Server")

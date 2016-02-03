@@ -153,7 +153,7 @@ static struct PyNET_STRUCT group_users_infos[] = {// @flagh Level|Data
 };
 
 // @pymethod dict|win32net|NetGroupGetInfo|Retrieves information about a particular group on a server.
-PyObject *PyNetGroupGetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupGetInfo(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|groupname||The group name
@@ -165,7 +165,7 @@ PyObject *PyNetGroupGetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetGroupSetInfo|Sets information about a particular group account on a server.
-PyObject *PyNetGroupSetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupSetInfo(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|groupname||The group name
@@ -176,7 +176,7 @@ PyObject *PyNetGroupSetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetGroupAdd|Creates a new group.
-PyObject *PyNetGroupAdd(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupAdd(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The information level contained in the data
@@ -186,7 +186,7 @@ PyObject *PyNetGroupAdd(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetGroupDel|Deletes a group.
-PyObject *PyNetGroupDel(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupDel(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|groupname||The group name
@@ -195,7 +195,7 @@ PyObject *PyNetGroupDel(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetGroupAddUser|Adds a user to the group
-PyObject *PyNetGroupAddUser(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupAddUser(PyObject *self, PyObject *args)
 {
 	WCHAR *szServer = NULL;
 	WCHAR *szName = NULL;
@@ -230,7 +230,7 @@ done:
 }
 
 // @pymethod |win32net|NetGroupDelUser|Deletes a user from the group
-PyObject *PyNetGroupDelUser(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupDelUser(PyObject *self, PyObject *args)
 {
 	WCHAR *szServer = NULL;
 	WCHAR *szName = NULL;
@@ -274,7 +274,7 @@ done:
 // returned, which can be used to call the function again to fetch more data.
 // This process may repeat, each time with a new resume handle, until zero is
 // returned for the new handle, indicating all the data has been read.
-PyObject *PyNetGroupEnum(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupEnum(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The level of data required.
@@ -293,7 +293,7 @@ PyObject *PyNetGroupEnum(PyObject *self, PyObject *args)
 // returned, which can be used to call the function again to fetch more data.
 // This process may repeat, each time with a new resume handle, until zero is
 // returned for the new handle, indicating all the data has been read.
-PyObject *PyNetGroupGetUsers(PyObject *self, PyObject *args) 
+PyObject *PyNetGroupGetUsers(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|groupName||The name of the local group.
@@ -305,7 +305,7 @@ PyObject *PyNetGroupGetUsers(PyObject *self, PyObject *args)
 }
 
 PyObject *
-PyNetGroupSetUsers(PyObject *self, PyObject *args) 
+PyNetGroupSetUsers(PyObject *self, PyObject *args)
 {
 	// @pymethod |win32net|NetGroupSetUsers|Sets the members of a local group.  Any existing members not listed are removed.
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
@@ -321,7 +321,7 @@ PyNetGroupSetUsers(PyObject *self, PyObject *args)
 //
 // LocalGroup
 // @pymethod dict|win32net|NetLocalGroupGetInfo|Retrieves information about a particular group on a server.
-PyObject *PyNetLocalGroupGetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupGetInfo(PyObject *self, PyObject *args)
 {
 	return PyDoGetInfo(self, args, NetLocalGroupGetInfo, "NetLocalGroupGetInfo", localgroup_infos);
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
@@ -333,7 +333,7 @@ PyObject *PyNetLocalGroupGetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetLocalGroupSetInfo|Sets information about a particular group account on a server.
-PyObject *PyNetLocalGroupSetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupSetInfo(PyObject *self, PyObject *args)
 {
 	return PyDoSetInfo(self, args, NetLocalGroupSetInfo, "NetLocalGroupSetInfo", localgroup_infos);
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
@@ -344,7 +344,7 @@ PyObject *PyNetLocalGroupSetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetLocalGroupAdd|Creates a new group.
-PyObject *PyNetLocalGroupAdd(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupAdd(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The information level contained in the data
@@ -354,7 +354,7 @@ PyObject *PyNetLocalGroupAdd(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetLocalGroupDel|Deletes a group.
-PyObject *PyNetLocalGroupDel(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupDel(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|groupname||The group name
@@ -372,7 +372,7 @@ PyObject *PyNetLocalGroupDel(PyObject *self, PyObject *args)
 // returned, which can be used to call the function again to fetch more data.
 // This process may repeat, each time with a new resume handle, until zero is
 // returned for the new handle, indicating all the data has been read.
-PyObject *PyNetLocalGroupEnum(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupEnum(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The level of data required.
@@ -383,7 +383,7 @@ PyObject *PyNetLocalGroupEnum(PyObject *self, PyObject *args)
 }
 
 
-PyObject *PyNetLocalGroupAddMembers(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupAddMembers(PyObject *self, PyObject *args)
 {
 	// @pymethod |win32net|NetLocalGroupAddMembers|Adds users to a local group.
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
@@ -394,7 +394,7 @@ PyObject *PyNetLocalGroupAddMembers(PyObject *self, PyObject *args)
 	return PyDoGroupSet(self, args, &NetLocalGroupAddMembers, "NetLocalGroupAddMembers", localgroup_members_infos);
 }
 
-PyObject *PyNetLocalGroupSetMembers(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupSetMembers(PyObject *self, PyObject *args)
 {
 	// @pymethod |win32net|NetLocalGroupSetMembers|Sets the members of a local group. Any existing members not listed are removed.
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
@@ -414,7 +414,7 @@ PyObject *PyNetLocalGroupSetMembers(PyObject *self, PyObject *args)
 // returned, which can be used to call the function again to fetch more data.
 // This process may repeat, each time with a new resume handle, until zero is
 // returned for the new handle, indicating all the data has been read.
-PyObject *PyNetLocalGroupGetMembers(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupGetMembers(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|groupName||The name of the local group.
@@ -425,7 +425,7 @@ PyObject *PyNetLocalGroupGetMembers(PyObject *self, PyObject *args)
 	return PyDoNamedEnum(self, args, &NetLocalGroupGetMembers, "NetLocalGroupGetMembers", localgroup_members_infos);
 }
 
-PyObject *PyNetLocalGroupDelMembers(PyObject *self, PyObject *args) 
+PyObject *PyNetLocalGroupDelMembers(PyObject *self, PyObject *args)
 {
 	// @pymethod |win32net|NetLocalGroupDelMembers|Deletes users from a local group.
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.

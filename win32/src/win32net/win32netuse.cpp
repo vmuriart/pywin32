@@ -96,7 +96,7 @@ PyNetUseAdd(PyObject *self, PyObject *args)
 
 	err = NetUseAdd(szServer, level, buf, NULL);
 	if (err) {
-		ReturnNetError("NetUseAdd",err);	
+		ReturnNetError("NetUseAdd",err);
 		goto done;
 	}
 	ret= Py_None;
@@ -110,7 +110,7 @@ done:
 
 // @pymethod |win32net|NetUseDel|Ends connection to a shared resource.
 PyObject *
-PyNetUseDel(PyObject *self, PyObject *args) 
+PyNetUseDel(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|useName||The share name
@@ -132,7 +132,7 @@ PyNetUseDel(PyObject *self, PyObject *args)
 
 	err = NetUseDel(szServer, szName, (DWORD)forceCond);
 	if (err) {
-		ReturnNetError("NetUseDel",err);	
+		ReturnNetError("NetUseDel",err);
 		goto done;
 	}
 	ret = Py_None;

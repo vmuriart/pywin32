@@ -9,7 +9,7 @@ import win32api
 import sys
 from pywin.mfc import dialog
 
-error = "Dialog Application Error" 
+error = "Dialog Application Error"
 
 class AppDialog(dialog.Dialog):
 	"The dialog box for the application"
@@ -52,7 +52,7 @@ class DialogApp(app.CApp):
 		win32ui.EnableControlContainer()
 		win32ui.Enable3dControls()
 		self.dlg = self.frame = self.CreateDialog()
-	
+
 		if self.frame is None:
 			raise error("No dialog was created by CreateDialog()")
 			return

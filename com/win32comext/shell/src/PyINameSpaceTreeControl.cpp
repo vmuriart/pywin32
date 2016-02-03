@@ -37,8 +37,8 @@ PyObject *PyINameSpaceTreeControl::Initialize(PyObject *self, PyObject *args)
 	PyObject *obhwndParent;
 	HWND hwndParent;
 	DWORD nsctsFlags;
-	if ( !PyArg_ParseTuple(args, "O(iiii)l:Initialize", &obhwndParent, 
-	                       &rc.left, &rc.top, &rc.bottom, &rc.right, 
+	if ( !PyArg_ParseTuple(args, "O(iiii)l:Initialize", &obhwndParent,
+	                       &rc.left, &rc.top, &rc.bottom, &rc.right,
 	                       &nsctsFlags))
 		return NULL;
 	if (!PyWinLong_AsULONG_PTR(obhwndParent, (ULONG_PTR *)&hwndParent))

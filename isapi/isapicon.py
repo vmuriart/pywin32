@@ -1,18 +1,18 @@
 """Constants needed by ISAPI filters and extensions."""
 #  ======================================================================
 #  Copyright 2002-2003 by Blackdog Software Pty Ltd.
-# 
+#
 #                          All Rights Reserved
-# 
+#
 #  Permission to use, copy, modify, and distribute this software and
 #  its documentation for any purpose and without fee is hereby
 #  granted, provided that the above copyright notice appear in all
 #  copies and that both that copyright notice and this permission
-#  notice appear in supporting documentation, and that the name of 
+#  notice appear in supporting documentation, and that the name of
 #  Blackdog Software not be used in advertising or publicity pertaining to
 #  distribution of the software without specific, written prior
 #  permission.
-# 
+#
 #  BLACKDOG SOFTWARE DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
 #  INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN
 #  NO EVENT SHALL BLACKDOG SOFTWARE BE LIABLE FOR ANY SPECIAL, INDIRECT OR
@@ -107,7 +107,7 @@ HSE_IO_SYNC =                    0x00000001   # for WriteClient
 HSE_IO_ASYNC =                   0x00000002   # for WriteClient/TF/EU
 HSE_IO_DISCONNECT_AFTER_SEND =   0x00000004   # for TF
 HSE_IO_SEND_HEADERS =            0x00000008   # for TF
-HSE_IO_NODELAY =                 0x00001000   # turn off nagling 
+HSE_IO_NODELAY =                 0x00001000   # turn off nagling
 # These two are only used by VectorSend
 HSE_IO_FINAL_SEND =              0x00000010
 HSE_IO_CACHE_RESPONSE =          0x00000020

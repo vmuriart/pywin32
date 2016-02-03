@@ -29,7 +29,7 @@ PyIDebugApplication::~PyIDebugApplication()
 PyObject *PyIDebugApplication::SetName(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm The provided name will be returned in subsequent calls  
+	// @comm The provided name will be returned in subsequent calls
 	// to >om PyIRemoteDebugApplication.GetName>.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
@@ -56,9 +56,9 @@ PyObject *PyIDebugApplication::SetName(PyObject *self, PyObject *args)
 PyObject *PyIDebugApplication::StepOutComplete(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm The process debug manager uses this opportunity to notify all  
-	// other script engines that they should break at the first opportunity. This is how  
-	// cross language step modes are implemented. 
+	// @comm The process debug manager uses this opportunity to notify all
+	// other script engines that they should break at the first opportunity. This is how
+	// cross language step modes are implemented.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
 		return NULL;
@@ -77,8 +77,8 @@ PyObject *PyIDebugApplication::StepOutComplete(PyObject *self, PyObject *args)
 PyObject *PyIDebugApplication::DebugOutput(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm  This mechanism provides the means for a language engine to implement language  
-	// specific debugging output support. Example: Debug.writeln("Help") in JavaScript.  
+	// @comm  This mechanism provides the means for a language engine to implement language
+	// specific debugging output support. Example: Debug.writeln("Help") in JavaScript.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
 		return NULL;
@@ -100,12 +100,12 @@ PyObject *PyIDebugApplication::DebugOutput(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-// @pymethod |PyIDebugApplication|StartDebugSession|Causes a default debugger IDE to be started and a debug session to be attached to  
+// @pymethod |PyIDebugApplication|StartDebugSession|Causes a default debugger IDE to be started and a debug session to be attached to
 // this application if one does not already exist.
 PyObject *PyIDebugApplication::StartDebugSession(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm  This is used to implement just-in-time debugging. 
+	// @comm  This is used to implement just-in-time debugging.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
 		return NULL;
@@ -124,12 +124,12 @@ PyObject *PyIDebugApplication::StartDebugSession(PyObject *self, PyObject *args)
 PyObject *PyIDebugApplication::HandleBreakPoint(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm This method causes the current thread to block and a notification of the breakpoint  
-	// to be sent to the debugger IDE. When the debugger IDE resumes the application this  
-	// method returns with the action to be taken.  
-	//  
-	// Note: While in the breakpoint the language engine may be called in this thread to do  
-	// various things such as enumerating stack frames or evaluating expressions.  
+	// @comm This method causes the current thread to block and a notification of the breakpoint
+	// to be sent to the debugger IDE. When the debugger IDE resumes the application this
+	// method returns with the action to be taken.
+	//
+	// Note: While in the breakpoint the language engine may be called in this thread to do
+	// various things such as enumerating stack frames or evaluating expressions.
 
 	// @rdesc The result is the break resume action - one of the BREAKRESUMEACTION contsants.
 
@@ -155,7 +155,7 @@ PyObject *PyIDebugApplication::HandleBreakPoint(PyObject *self, PyObject *args)
 PyObject *PyIDebugApplication::Close(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm  Called by the owner of the application generally on shut down.  
+	// @comm  Called by the owner of the application generally on shut down.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
 		return NULL;
@@ -216,10 +216,10 @@ PyObject *PyIDebugApplication::GetCurrentThread(PyObject *self, PyObject *args)
 PyObject *PyIDebugApplication::CreateAsyncDebugOperation(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm This provides a mechanism for language engines to implement asynchronous expression and 
-	// evaluation, etc. without having to know the details of synchronization with the 
-	// debugger thread. See the descriptions for <o PyIDebugSyncOperation> and <o PyIDebugAsyncOperation> 
-	// for more details.  
+	// @comm This provides a mechanism for language engines to implement asynchronous expression and
+	// evaluation, etc. without having to know the details of synchronization with the
+	// debugger thread. See the descriptions for <o PyIDebugSyncOperation> and <o PyIDebugAsyncOperation>
+	// for more details.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
 		return NULL;
@@ -246,9 +246,9 @@ PyObject *PyIDebugApplication::CreateAsyncDebugOperation(PyObject *self, PyObjec
 PyObject *PyIDebugApplication::AddStackFrameSniffer(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm Generally called by a language engine  
-	// to expose its stack frames to the debugger. It is possible for other entities to  
-	// expose stack frames.  
+	// @comm Generally called by a language engine
+	// to expose its stack frames to the debugger. It is possible for other entities to
+	// expose stack frames.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
 		return NULL;
@@ -294,7 +294,7 @@ PyObject *PyIDebugApplication::RemoveStackFrameSniffer(PyObject *self, PyObject 
 	return Py_None;
 }
 
-// @pymethod |PyIDebugApplication|QueryCurrentThreadIsDebuggerThread|Determines if the current running thread is the debugger thread. 
+// @pymethod |PyIDebugApplication|QueryCurrentThreadIsDebuggerThread|Determines if the current running thread is the debugger thread.
 PyObject *PyIDebugApplication::QueryCurrentThreadIsDebuggerThread(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
@@ -309,7 +309,7 @@ PyObject *PyIDebugApplication::QueryCurrentThreadIsDebuggerThread(PyObject *self
 	if ( FAILED(hr) )
 		return SetPythonCOMError(self,hr);
 	return PyInt_FromLong(hr);
-	// @rdesc Returns S_OK if the current running thread is the debugger thread.  
+	// @rdesc Returns S_OK if the current running thread is the debugger thread.
 	// Otherwise, returns S_FALSE.
 }
 
@@ -317,8 +317,8 @@ PyObject *PyIDebugApplication::QueryCurrentThreadIsDebuggerThread(PyObject *self
 PyObject *PyIDebugApplication::SynchronousCallInDebuggerThread(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm This is generally  
-	// used so that language engines and hosts can implement free threaded objects on top  
+	// @comm This is generally
+	// used so that language engines and hosts can implement free threaded objects on top
 	// of their single threaded implementations.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
@@ -352,7 +352,7 @@ PyObject *PyIDebugApplication::SynchronousCallInDebuggerThread(PyObject *self, P
 PyObject *PyIDebugApplication::CreateApplicationNode(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm Before it is visible, the new node must be  
+	// @comm Before it is visible, the new node must be
 	// attached to a parent node.
 	IDebugApplication *pIDA = GetI(self);
 	if ( pIDA == NULL )
@@ -531,13 +531,13 @@ PyObject *PyIDebugApplication::RemoveGlobalExpressionContextProvider(PyObject *s
 
 }
 
-// @object PyIDebugApplication|This interface is an extension of <o PyIRemoteDebugApplication>, exposing 
+// @object PyIDebugApplication|This interface is an extension of <o PyIRemoteDebugApplication>, exposing
 // non-remotable methods for use by language engines and hosts.
 static struct PyMethodDef PyIDebugApplication_methods[] =
 {
 	{ "SetName", PyIDebugApplication::SetName, 1 }, // @pymeth SetName|Sets the name of the application.
 	{ "StepOutComplete", PyIDebugApplication::StepOutComplete, 1 }, // @pymeth StepOutComplete|Called by language engines, in single step mode, just before they return to their caller.
-	{ "DebugOutput", PyIDebugApplication::DebugOutput, 1 }, // @pymeth DebugOutput|Causes the given string to be displayed by the debugger IDE.  
+	{ "DebugOutput", PyIDebugApplication::DebugOutput, 1 }, // @pymeth DebugOutput|Causes the given string to be displayed by the debugger IDE.
 	{ "StartDebugSession", PyIDebugApplication::StartDebugSession, 1 }, // @pymeth StartDebugSession|Causes a default debugger IDE to be started.
 	{ "HandleBreakPoint", PyIDebugApplication::HandleBreakPoint, 1 }, // @pymeth HandleBreakPoint|Called by the language engine in the context of a thread that has hit a breakpoint.
 	{ "Close", PyIDebugApplication::Close, 1 }, // @pymeth Close|Causes this application to release all references and enter a zombie state.
@@ -546,7 +546,7 @@ static struct PyMethodDef PyIDebugApplication_methods[] =
 	{ "CreateAsyncDebugOperation", PyIDebugApplication::CreateAsyncDebugOperation, 1 }, // @pymeth CreateAsyncDebugOperation|Creates an IDebugAsyncOperation object to wrap a provided <o PyIDebugSyncOperation> object.
 	{ "AddStackFrameSniffer", PyIDebugApplication::AddStackFrameSniffer, 1 }, // @pymeth AddStackFrameSniffer|Adds a stack frame sniffer to this application.
 	{ "RemoveStackFrameSniffer", PyIDebugApplication::RemoveStackFrameSniffer, 1 }, // @pymeth RemoveStackFrameSniffer|Removes a stack frame sniffer from this application.
-	{ "QueryCurrentThreadIsDebuggerThread", PyIDebugApplication::QueryCurrentThreadIsDebuggerThread, 1 }, // @pymeth QueryCurrentThreadIsDebuggerThread|Determines if the current running thread is the debugger thread. 
+	{ "QueryCurrentThreadIsDebuggerThread", PyIDebugApplication::QueryCurrentThreadIsDebuggerThread, 1 }, // @pymeth QueryCurrentThreadIsDebuggerThread|Determines if the current running thread is the debugger thread.
 	{ "SynchronousCallInDebuggerThread", PyIDebugApplication::SynchronousCallInDebuggerThread, 1 }, // @pymeth SynchronousCallInDebuggerThread|Provides a mechanism for the caller to run code in the debugger thread.
 	{ "CreateApplicationNode", PyIDebugApplication::CreateApplicationNode, 1 }, // @pymeth CreateApplicationNode|Creates a new application node which is associated with a specific document provider.
 	{ "FireDebuggerEvent", PyIDebugApplication::FireDebuggerEvent, 1 }, // @pymeth FireDebuggerEvent|Fire a generic event to the IApplicationDebugger (if any)
@@ -755,7 +755,7 @@ STDMETHODIMP PyGDebugApplication::SynchronousCallInDebuggerThread(
 	return hr;
 }
 
-STDMETHODIMP PyGDebugApplication::CreateApplicationNode(  
+STDMETHODIMP PyGDebugApplication::CreateApplicationNode(
 		/* [out] */	IDebugApplicationNode **ppdanNew)
 {
 	PY_GATEWAY_METHOD;

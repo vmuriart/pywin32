@@ -45,10 +45,10 @@ static struct PyMethodDef ui_gdi_methods[] = {
 	{NULL,			NULL}		// sentinel
 };
 
-ui_type_CObject PyCGdiObject::type("gdi object", 
-								   &ui_assoc_CObject::type, 
-								   RUNTIME_CLASS(CGdiObject), 
-								   sizeof(PyCGdiObject), 
-								   PYOBJ_OFFSET(PyCGdiObject), 
-								   ui_gdi_methods, 
+ui_type_CObject PyCGdiObject::type("gdi object",
+								   &ui_assoc_CObject::type,
+								   RUNTIME_CLASS(CGdiObject),
+								   sizeof(PyCGdiObject),
+								   PYOBJ_OFFSET(PyCGdiObject),
+								   ui_gdi_methods,
 								   NULL);

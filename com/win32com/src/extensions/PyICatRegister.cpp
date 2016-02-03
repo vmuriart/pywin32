@@ -156,7 +156,7 @@ PyObject *PyICatRegister::UnRegisterCategories(PyObject *self, PyObject *args)
 PyObject *PyICatRegister::RegisterClassImplCategories(PyObject *self, PyObject *args)
 {
 	PyObject *obCLSID, *obCatIds;
-	if ( !PyArg_ParseTuple(args, "OO:RegisterClassImplCategories", 
+	if ( !PyArg_ParseTuple(args, "OO:RegisterClassImplCategories",
 			&obCLSID,  // @pyparm <o PyIID>|clsid||Class ID of the relevent class
 			&obCatIds) ) // @pyparm [<o PyIID>, ...]|[catId, ...]||A sequence of category IDs to be associated with the class.
 		return NULL;
@@ -192,7 +192,7 @@ PyObject *PyICatRegister::RegisterClassImplCategories(PyObject *self, PyObject *
 PyObject *PyICatRegister::UnRegisterClassImplCategories(PyObject *self, PyObject *args)
 {
 	PyObject *obCLSID, *obCatIds;
-	if ( !PyArg_ParseTuple(args, "OO:UnRegisterClassImplCategories", 
+	if ( !PyArg_ParseTuple(args, "OO:UnRegisterClassImplCategories",
 			&obCLSID, // @pyparm <o PyIID>|clsid||Class ID of the relevent class
 			&obCatIds) ) // @pyparm [<o PyIID>, ...]|[catId, ...]||A sequence of category IDs to be unregistered from the class.
 		return NULL;
@@ -228,7 +228,7 @@ PyObject *PyICatRegister::UnRegisterClassImplCategories(PyObject *self, PyObject
 PyObject *PyICatRegister::RegisterClassReqCategories(PyObject *self, PyObject *args)
 {
 	PyObject *obCLSID, *obCatIds;
-	if ( !PyArg_ParseTuple(args, "OO:RegisterClassReqCategories", 
+	if ( !PyArg_ParseTuple(args, "OO:RegisterClassReqCategories",
 			&obCLSID, // @pyparm <o PyIID>|clsid||Class ID of the relevent class
 			&obCatIds) ) // @pyparm [<o PyIID>, ...]|[catId, ...]||A sequence of category IDs to be associated with the class.
 		return NULL;
@@ -264,7 +264,7 @@ PyObject *PyICatRegister::RegisterClassReqCategories(PyObject *self, PyObject *a
 PyObject *PyICatRegister::UnRegisterClassReqCategories(PyObject *self, PyObject *args)
 {
 	PyObject *obCLSID, *obCatIds;
-	if ( !PyArg_ParseTuple(args, "OO:UnRegisterClassReqCategories", 
+	if ( !PyArg_ParseTuple(args, "OO:UnRegisterClassReqCategories",
 			&obCLSID, // @pyparm <o PyIID>|clsid||Class ID of the relevent class
 			&obCatIds) ) // @pyparm [<o PyIID>, ...]|[catId, ...]||A sequence of category IDs to be unregistered for the class.
 		return NULL;

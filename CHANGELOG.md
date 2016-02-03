@@ -1,4 +1,4 @@
-﻿A changelog for recent builds as pasted into the sourceforge page.
+A changelog for recent builds as pasted into the sourceforge page.
 
 Generally created by hand after running:
    hg log -rb2xx: > log.out
@@ -33,8 +33,8 @@ Since build 218:
  * win32com.mapi
    Addded outlook interface IConverterSession with methods MIMEToMAPI, MAPIToMIMEStm, and SetAdrBook
    Added method OpenStreamOnFile (Nick Czeczulin)
-   Ignore PT_MV_TSTRING along with PT_TSTRING (Nick Czeczulin) 
-   Bugfix to support PT_MV_BINARY properties (Nick Czeczulin via patch #37) 
+   Ignore PT_MV_TSTRING along with PT_TSTRING (Nick Czeczulin)
+   Bugfix to support PT_MV_BINARY properties (Nick Czeczulin via patch #37)
 
  * Conversions from a Python object to a variant now does a better job at
    deciding what variant type to use, taking into account the size and sign of
@@ -55,7 +55,7 @@ Since build 218:
   Ability for a Windows computer to be a database proxy for a remote (Linux or Windows) unit.
     see adodbapi/README.txt for more information.
 
-* Fix issue implementing COM objects from within a virtualenv (Kevin Smyth 
+* Fix issue implementing COM objects from within a virtualenv (Kevin Smyth
   via issue #3597965)
 
 * Fix some issues using decimal objects with Python 3.3 and later (rupole)
@@ -98,7 +98,7 @@ Since build 217:
 
 * Fix the count of replaced terms in Pythonwin's search/replace (rupole).
 
-* Fix obscure issues in the Pythonwin code browser and other uses of the 
+* Fix obscure issues in the Pythonwin code browser and other uses of the
   "hierlist" widget (rupole).
 
 * Fix a crash using a COM "record" that holds an array (rupole).
@@ -130,12 +130,12 @@ Since build 217:
 
 * pythoncom - added StgCreateStorageEx
 
-* win32com.client - 
+* win32com.client -
 	Fix iteration of objects that don't declare an enumerator in their typelib
 	Validate syntax of constants written to makepy generated files
 
 * win32file - Add GetFileInformationByHandleEx, ReOpenFile and OpenFileById,
-  SetFileInformationByHandle.  SetFileTime() has an extra param to allow UTC 
+  SetFileInformationByHandle.  SetFileTime() has an extra param to allow UTC
   time to be specified.
 
 * win32api - Allow UpdateResource to remove a resource
@@ -153,7 +153,7 @@ Since build 216:
 
 * The Pythonwin editor now remembers previous searches made in this session.
   (patch #3468280 from kxroberto).
-  
+
 * The LOGFONT struct implementation (win32util) was extended to support the
   full LOGFONT struct as published by Microsoft.  This includes changes to
   win32util.LogFontToDict and win32util.DictToLogFont.  (Feature request
@@ -177,10 +177,10 @@ Since build 216:
 
 * Fix win32com.client.WithEvents on py3k (bug 3199843)
 
-* When passing integers/unsigned integers to COM objects which did not fit 
-  into 32bits, OverflowErrors were silently discarded and -1 was silently 
-  passed.  This has been fixed for signed integers (an OverflowError is now 
-  raised) and unsigned integers now allow for values with the high-bit set to 
+* When passing integers/unsigned integers to COM objects which did not fit
+  into 32bits, OverflowErrors were silently discarded and -1 was silently
+  passed.  This has been fixed for signed integers (an OverflowError is now
+  raised) and unsigned integers now allow for values with the high-bit set to
   be passed correctly.
 
 * Fix win32com.client.WithEvents() on py3k.
@@ -188,7 +188,7 @@ Since build 216:
 * makepy may have generated syntax errors if 'helpstring' elements in typelibs
   had strange quoting or slashes (bug 3199631)
 
-* Fixed that in some cases win32file.GetOpenFileName and GetSaveFileName 
+* Fixed that in some cases win32file.GetOpenFileName and GetSaveFileName
   could have returned trailing garbage after an embedded NULL character.
   (bug 3277647)
 
@@ -199,10 +199,10 @@ Since build 216:
 
 * win32com.shell - Added SHCreateShellItem and fixed some 64bit issues.
 
-* win32evtlog - Added some of the new event log functions introduced in 
+* win32evtlog - Added some of the new event log functions introduced in
   Vista/Windows 7
 
-* win32service - Added EnumServicesStatusEx, and support startup type 
+* win32service - Added EnumServicesStatusEx, and support startup type
   "delayed" for Python services
 
 * win32net - Fix a problem with NetFileEnum on 64-bit (bug #3376041)
@@ -239,7 +239,7 @@ Since build 214:
   5. The connection has new attributes .dbms_name and .dbms_version to display the underlying database engine. (like mxODBC)
 
 * Update adodbapi to version 2.4.0 -- in this version,
-   "fetchall()" and "fetchmany()" return an SQLrows object 
+   "fetchall()" and "fetchmany()" return an SQLrows object
    ...which emulates a sequence of SQLrow objects.
    "fetchone()" or the cursor's "next()" method return an SQLrow object.
    An SQLrow object emulates a tuple of data fields.
@@ -260,9 +260,9 @@ Since build 214:
    programmer to change ado's SQL "paramstyle" at run time to select between
    'qmark', 'format' and 'named' methods of passing SQL parameters.
 ** also, in response to user requests, adodbapi will now use client-side
-   cursors by default.  This will make rowcount and stored procedure return 
+   cursors by default.  This will make rowcount and stored procedure return
    parameter values more readily available.
- 
+
 * Remove manifest for Python 2.6 and later binaries which should make things
   work much better when the VS2008 redist components aren't installed.
 
@@ -276,7 +276,7 @@ Since build 214:
 
 * Pythonwin: trim leading and trailing whitespace in calltip text (kxroberto)
 
-* Pythonwin: fix reload of package modules and support for 'pyw' and 'pyx' 
+* Pythonwin: fix reload of package modules and support for 'pyw' and 'pyx'
   extensions (kxroberto)
 
 * Pythonwin: PYTHONSTARTUP is honoured, just like when using python.exe
@@ -289,10 +289,10 @@ Since build 214:
 
 * Add win32file.WSAEnumNetworkEvents (Ziga Seilnacht via patch 3022832)
 
-* Get vtable interfaces working on 64bit windows (Nikolay Igotti via patch 
+* Get vtable interfaces working on 64bit windows (Nikolay Igotti via patch
   3002383)
 
-* Pythonwin: if the interactive window is cleared, avoid the blue color and 
+* Pythonwin: if the interactive window is cleared, avoid the blue color and
   large font on the new line (markt via patch 2813056)
 
 * Fix Python reference leak when calling MAPI/Exchange functions which
@@ -319,7 +319,7 @@ Since build 213:
 * Fix Pythonwin when backspacing over an extended character (from markt
  (metolone), via bug 2618277)
 
-* Fixed a regression which would cause an error if you compared a PyTime 
+* Fixed a regression which would cause an error if you compared a PyTime
   object to any other type, including None
 
 Since build 212:
@@ -345,18 +345,18 @@ Since build 212:
   typelib could cause Data Execution Protection (DEP) to be triggered if
   enabled.  This has been resolved and such servers now work correctly with
   DEP enabled.
-  
+
 * Fixed memory leak in win32wnet.WNetEnumResource.
 
 * Added win32wnet.WNetAddConnection3 allowing a HWND to be specified for
   authentication.
 
 * isapi:
-  * Refactored isapi.install primarily to support installing extensions into 
+  * Refactored isapi.install primarily to support installing extensions into
     the root of a site (Jason R. Coombs)
   * New IIS6-only functionality HSE_REQ_EXEC_URL which avoids the need to use
     a filter in most cases, including new demos for this.
-  * Other misc support functions (HSE_REQ_REPORT_UNHEALTHY, 
+  * Other misc support functions (HSE_REQ_REPORT_UNHEALTHY,
     HSE_REQ_GET_ANONYMOUS_TOKEN, etc)
 
 * "Modernization" changes, instigated by py3k:
@@ -385,11 +385,11 @@ Since build 212:
   See the win32com readme for more.
 
 * If you *implement* (not use) any of the following interfaces, take note:
-  IErrorLog, IPropertyBag, ICatInformation and IStorage have been upgraded 
+  IErrorLog, IPropertyBag, ICatInformation and IStorage have been upgraded
   to have unicode passed instead of strings as args to the implementation
   methods.
 
-* win32gui: RegisterDeviceNotification and EnumPropsExW didn't release the 
+* win32gui: RegisterDeviceNotification and EnumPropsExW didn't release the
   GIL, which could cause a deadlock in multi-threaded Python apps.
 
 * Fix bug in win32timezone.GetSortedTimeZoneNames() on WinNT.
@@ -398,11 +398,11 @@ Since build 212:
   and IInternetSecurityManager interfaces, and CoInternetCreateSecurityManager
   function.
 
-* win32com.axcontrol gets support for IOleControlSite, 
-  IOleInPlaceActiveObject, IOleInPlaceFrame and IOleInPlaceUIWindow 
+* win32com.axcontrol gets support for IOleControlSite,
+  IOleInPlaceActiveObject, IOleInPlaceFrame and IOleInPlaceUIWindow
   interfaces, and OleTranslateAccelerator function.
 
-* MsgWaitForMultipleObjectsEx() would crash in all cases.  Fix from 
+* MsgWaitForMultipleObjectsEx() would crash in all cases.  Fix from
   Ziga Seilnacht via [2141368].
 
 * pywintypes.error and com_error get support for attributes as
@@ -430,7 +430,7 @@ Since build 211:
   COM objects.
 
 * Add winapi.SetSystemPowerState(), win32pipe.TransactNamedPipe(),
-  win32net.NetValidatePasswordPolicy(), 
+  win32net.NetValidatePasswordPolicy(),
 
 * win32api.GetConsoleTitle() could raise win32api.error with an error
   code of 0 when the title was > 64 characters.  It now returns the
@@ -444,12 +444,12 @@ Since build 211:
 * Fix so makepy works in IDLE in non-English locales.
 
 * Pythonwin changes from Roger:
-  - Right-click menu gets "Copy code without prompts" and "Execute 
+  - Right-click menu gets "Copy code without prompts" and "Execute
     code from clipboard" options.
   - If text is selected when period key is pressed, replace text
     instead of doing autocomplete
   - Add a keyboard shortcut to fold up second level indents
-  - Allow keypad keys to perform original function when folding 
+  - Allow keypad keys to perform original function when folding
     is disabled (feature req 1798328)
 
 * Add some extra service configuration parameters introduced with Vista
@@ -458,7 +458,7 @@ Since build 211:
 Since build 210:
 ----------------
 * Support for RegisterDeviceNotification in win32gui and for packing and
-  unpacking the various structures in win32gui_struct.  Demos in 
+  unpacking the various structures in win32gui_struct.  Demos in
   win32\Demos\win32gui_devicenotify.py and service\serviceEvents.py
 
 * adodbapi added to pywin32 package CVS tree:
@@ -468,7 +468,7 @@ Since build 210:
   and maintenance of the package are by Vernon Cole.
 
 * Available for AMD64 versions of Windows for Python 2.6 and later (support
-  for Python 2.5 is just too hard, sorry).  Lots of help from Roger, 
+  for Python 2.5 is just too hard, sorry).  Lots of help from Roger,
   Steve Yin and Sidnei da Silva.
 
 * com related changes:
@@ -479,10 +479,10 @@ Since build 210:
   functionality is in place. See the demos in
   win32comext/bits/test/*.py
 
-- makepy accepts a program id to process its typelib and generates long 
+- makepy accepts a program id to process its typelib and generates long
   integer literals for constants > sys.maxint.  The way typelibs are generated
-  also changes slightly, fixing a bug with certain hex version numbers in 
-  the registry.  Fix a bug [1548903] that could cause incomplete generated 
+  also changes slightly, fixing a bug with certain hex version numbers in
+  the registry.  Fix a bug [1548903] that could cause incomplete generated
   files when a typelib was missing
 
 - win32com.client: Fix a bug [1587023] that prevented Get and Set properties
@@ -490,40 +490,40 @@ Since build 210:
   interface when using iterators [1707700]
 
 - win32com.axcontrol: Module for using ActiveX controls independently of
-  pythonwin/win32ui/MFC.  Includes a demo of embedding Internet Explorer 
+  pythonwin/win32ui/MFC.  Includes a demo of embedding Internet Explorer
   inside a win32gui window.
 
 - win32com.internet:
   * Add CoInternetIsFeatureEnabled and CoInternetSetFeatureEnabled
 
 - pythoncom:
-  * event handlers implemented in Python that were called with named params 
-    may have presented the arguments to Python in the incorrect order - this 
-    has been fixed.  
-  * Always return -1 (VARIANT_TRUE), rather than 1, when a VARIANT_BOOL is 
+  * event handlers implemented in Python that were called with named params
+    may have presented the arguments to Python in the incorrect order - this
+    has been fixed.
+  * Always return -1 (VARIANT_TRUE), rather than 1, when a VARIANT_BOOL is
     requested.
-  * When passing a Python integer, always use VT_I4 when possible, VT_UI4 
+  * When passing a Python integer, always use VT_I4 when possible, VT_UI4
     otherwise (previous versions did VT_I4 only, 209 did VT_UI4 only)
-  * New functions CoMarshalInterface, CoUnmarshalInterface, 
+  * New functions CoMarshalInterface, CoUnmarshalInterface,
     CoReleaseMarshalData, ReadClassStm, WriteClassStm, CreateStreamOnHGlobal,
     CreateILockBytesOnHGlobal.
   * Fix possible buffer overflow using IStream.
 
 - win32com.shell:
   * PyIExtractImage by Steven James.
-  * PyIEmptyVolumecache, IEmptyVolumeCache2, IEmptyVolumeCacheCallBack by 
+  * PyIEmptyVolumecache, IEmptyVolumeCache2, IEmptyVolumeCacheCallBack by
     Sidnei da Silva from Enfold Systems.
   * IsUserAnAdmin
-  * More coverage of the shell interfaces and demos, including many Vista 
+  * More coverage of the shell interfaces and demos, including many Vista
     specific functions and interfaces (see win32comext\shell\demos)
 
-* win32transaction: New module containing Kernel Transaction Manager (KTM) 
+* win32transaction: New module containing Kernel Transaction Manager (KTM)
   functions as used with transacted NTFS and transacted registry functions
 
 * win32api:
   - Transacted registry functions and demos from Roger
-  - New functions RegCopyTree, RegDeleteTree, RegSaveKeyEx, 
-    RegRestoreKey, RegCreateKeyEx, RegQueryInfoKeyW, 
+  - New functions RegCopyTree, RegDeleteTree, RegSaveKeyEx,
+    RegRestoreKey, RegCreateKeyEx, RegQueryInfoKeyW,
     RegEnumKeyExW, Get/SetSystemFileCacheSize, GlobalMemoryStatus,
     GlobalMemoryStatusEx, GetDllDirectory, SetDllDirectory,
     RegDeleteKeyEx, RegOpenCurrentUser, RegOverridePredefKey
@@ -534,20 +534,20 @@ Since build 210:
 * win32file:
   - Fixed bug in ReadDirectoryChanges that ignored 1 char filenames.
     (from Niki Spahiev)
-    Added Transactional NTFS functions, CreateSymbolicLink and other new 
-    Vista API functions, System file checker (Sfc) functions, 
-    DuplicateEncryptionInfoFile, GetVolumePathNamesForVolumeName, 
+    Added Transactional NTFS functions, CreateSymbolicLink and other new
+    Vista API functions, System file checker (Sfc) functions,
+    DuplicateEncryptionInfoFile, GetVolumePathNamesForVolumeName,
     GetFinalPathNameByHandle,
     CreateMailslot, GetMailslotInfo, SetMailslotInfo
 
   - FindFiles and FindFilesIterator now accept an optional transaction handle
     to perform a transacted search
-  - FindStreams function that calls FindFirstStream and FindNextStream to 
+  - FindStreams function that calls FindFirstStream and FindNextStream to
     enumerate a file's data streams.
   - FindFileNames using FindFirstFileName, FindFirstFileNameTransacted, and FindNextFileName
 
 * win32service:
-  - Service and service control manager handles are now returned as 
+  - Service and service control manager handles are now returned as
     self-closing PySC_HANDLEs instead of plain int handles
   - Service dependencies are returned as list of Unicode strings instead
     of a single string, which lost multiple dependencies (could break
@@ -567,7 +567,7 @@ Since build 210:
     lots of other GDI functions.
 
 * win32pipe:
-    Add GetNamedPipeClientSessionId, GetNamedPipeServerSessionId, 
+    Add GetNamedPipeClientSessionId, GetNamedPipeServerSessionId,
     GetNamedPipeInfo, GetNamedPipeClientProcessId, GetNamedPipeServerProcessId
 
 * win32process:
@@ -580,7 +580,7 @@ Since build 210:
 
 * win32security:
   - Added DuplicateTokenEx, AddMandatoryAce, IsTokenRestricted, LogonUserEx
-  - GetTokenInformation and SetTokenInformation support new Vista 
+  - GetTokenInformation and SetTokenInformation support new Vista
     information classes
 
 * win32trace works better on Vista
@@ -627,10 +627,10 @@ Build 210 - Sept. 23 2006
 * win32file.AcceptEx now indicates if the function was successful.
 * OVERLAPPED objects are now hashable [ 1408485 ]
 * Roger added win32file.ReplaceFile, CopyFileEx and MoveFileWithProgress
-* Added win32uiole.AfxOleInit, SetMessagePendingDelay, 
+* Added win32uiole.AfxOleInit, SetMessagePendingDelay,
   EnableNotRespondingDialog and EnableBusyDialog.
 * win32net gets support for USER_INFO_4 structures
-* Roger changes win32file.MoveFileEx to accept NULL for destination, added 
+* Roger changes win32file.MoveFileEx to accept NULL for destination, added
   SetFileShortName
 * Missing typelibs could cause incomplete gen_py cache file [ 1548903 ]
 * DISPIDs would sometime be incorrect when multiple typelibs used [ 1457673 ]
@@ -643,14 +643,14 @@ Build 210 - Sept. 23 2006
 Build 209
 ---------
 * Roger Upole added IEnumString, IShellLinkDataList, IUniformResourceLocator
-  and IActiveDesktop interfaces, win32gui.GetDlgItemText/GetDlgItemInt, 
+  and IActiveDesktop interfaces, win32gui.GetDlgItemText/GetDlgItemInt,
   win32process.AttachThreadInput, win32api.Get/SetHandleInformation, amongst
   others
 * Roger added a new win32ts module, wrapping Terminal Service functions
-* Roger enhanced/fixed win32api.GetLongPathName, PyIBindCtx, 
+* Roger enhanced/fixed win32api.GetLongPathName, PyIBindCtx,
   win32gui.SystemParametersInfo/SetLayeredWindowAttributes/
-  GetLayeredWindowAttributes, win32net.WNetGetResourceParent, various 
-  win32job methods, shell.SHFileOperation and added many monitor and display 
+  GetLayeredWindowAttributes, win32net.WNetGetResourceParent, various
+  win32job methods, shell.SHFileOperation and added many monitor and display
   related functions.
 * Stefan Rank and Roger enhanced DEVMODE support
 * Add asynch (overlapped) support for ReadDirectoryChangesW
@@ -661,7 +661,7 @@ Build 209
   in ODBC module.
 * Allow extended chars in comments in IE/ASP and other AXScript applications.
 * win32api.GetShortPathName now handled unicode (callingGetShortPathNameW)
-* When passing large integers via win32com, we now attempt to pass as a 64 
+* When passing large integers via win32com, we now attempt to pass as a 64
   bit integer before falling back to a float.
 * Added win32process.CreateRemoteThread, win32gui.ExtTextOut/SetBkColor/
   DrawAnimatedRects, win32api.SetLastError
@@ -677,28 +677,28 @@ Build 208
 * pywintypes: fix reference leak in PyOVERLAPPED objects.
 * isapi: fix memory leak; filter "load order" handling; error
   rendering.
-* pythonwin: Disable some old DDE hacks to prevent Data Execution Prevention 
+* pythonwin: Disable some old DDE hacks to prevent Data Execution Prevention
   (DEP) errors in Pythonwin.
-* odbc: gets support for Unicode, corrects support for BIT, and 
+* odbc: gets support for Unicode, corrects support for BIT, and
   SQLDataSources() method.
 * win32job: New win32job module for access to the win32 "job" functions
 * win32inet: Add WinHttpGetIEProxyConfigForCurrentUser()
 * pythoncom.Empty now does what it implies - passes a variant with VT_EMPTY.
   New pythoncom.ArgNotFound supports the old behaviour (of VT_ERROR with
-  DISP_E_PARAMNOTFOUND); CoInitializeEx change described in Build 206 was 
+  DISP_E_PARAMNOTFOUND); CoInitializeEx change described in Build 206 was
   not implemented - now it is!
 * win32com: large unsigned ints may previously have been returned as negative
   Python integers; makepy no longer displays a GUI progress dialog by default.
 * win32com.authorization: New package from Roger Upole.
 * win32com.mapi: New IProviderAdmin support from John Nielsen; add
   IMAPIStatus support
-* win32com.shell: Allow SHFileOperation to accept a string containing 
+* win32com.shell: Allow SHFileOperation to accept a string containing
   multiple file names, prevent Windows handle leak in IQueryAssociations.
 * win32com.adsi: Always return extended error info when available, and expose
   ADsGetLastError explicitly.
 * Leonard Ritter and Robert F�rtsch contributed some IE extension samples
   (see win32com\demos)
-* .chm documentation now includes a link to search MSDN and google for many 
+* .chm documentation now includes a link to search MSDN and google for many
   API functions
 * Many other minor fixes and enhancements.
 
@@ -711,8 +711,8 @@ Build 206
 --------
 * Prevent the "display name" of a COM object ever being Unicode and
   therefore a possible cause of unexpected Unicode decode errors.
-* Correct and document behaviour of CoInitializeEx/CoInitialize exception 
-  throwing behaviour - previously a failure would leave a stale Python 
+* Correct and document behaviour of CoInitializeEx/CoInitialize exception
+  throwing behaviour - previously a failure would leave a stale Python
   exception.
 * Fix memory leak when doing str(PySID) (Roger Upole)
 * New IE Toolbar demo contributed by Leonard Ritter, plus a few new
@@ -720,31 +720,31 @@ Build 206
 * win32timezone now works in non-English Windows versions.  timezone
   objects can now be pickled (Jason Coombs)
 * Prevent stale Windows errors causing win32api.GetConsoleTitle() to fail.
-* Remove workaround for Python bug so we again write a file encoding to 
+* Remove workaround for Python bug so we again write a file encoding to
   makepy generated files in all Python versions.
 * New win32gui function CreateIconFromResource.
 * Add win32file.QueryDosDevice (Roger Upole)
 * Fix error when using win32pipe in a "bundled" py2exe app.
 * Better support for py2exe based services, including debugging support.
 * Add support for all VARIANT types in COM arrays (a few were missing)
-* GetBitmapBits() can return a string or a list (a string being *much* 
+* GetBitmapBits() can return a string or a list (a string being *much*
   faster)
-* Fix win32gui taskbar demo to handle the fact explorer may not (yet) be 
+* Fix win32gui taskbar demo to handle the fact explorer may not (yet) be
   running.
 * win32 directory should again build on Windows CE (Luke Dunstan)
 * Support for IGlobalInterfaceTable (Stefan Schukat)
 * A number of pythonwin framework enhancements (Adal Chiriliuc)
 * Better Auto-Complete list in pythonwin for COM objects (Jerry Gamache)
-* win32api.GetVersionEx takes an optional param - if 1, we return a longer 
+* win32api.GetVersionEx takes an optional param - if 1, we return a longer
   tuple representing the OSVERSIONINFOEX structure.
 
 Build 205
 ---------
 * Introduce support for Python's 'decimal' module when working with
   COM 'currency' objects - see the included .chm for more details.
-* More reliable loading of pywintypes/pythoncom when these files are not in 
+* More reliable loading of pywintypes/pythoncom when these files are not in
   system32
-* Allow datetime objects to be passed directly to COM functions without 
+* Allow datetime objects to be passed directly to COM functions without
   requiring explicit conversion.
 * New win32crypt module for access to the windows crypto functions.
 * New win32console module (Roger Upole)
@@ -761,7 +761,7 @@ Build 205
 * win32com 'universal gateway' support did not handle byref args correctly.
 * Fix [ 1208530 ] PyBitmap.GetBitmapBits Memory Leak
 * [ 1208081 ] Fix: WaitForServiceStatus doesn't work for remote boxes
-* Pythonwin patch from Matthias Haldimann: if there is a selection, use 
+* Pythonwin patch from Matthias Haldimann: if there is a selection, use
   that as the default search string.
 * Lots of win32com.adsi enhancements.
 * Tweaks to the new isapi support.
@@ -818,7 +818,7 @@ This is a new build of the Python for Windows extensions.  Important notes:
   if you want to work only with build 204 or later (as PY_OU is correctly
   zero in that version).  Alternatively, look at using
   win32gui_struct.UnpackWMNOTIFY()
-  
+
   I apologize for this, but keeping incorrect constant values in commctrl.py
   would be the wrong thing to do.
 
@@ -851,9 +851,9 @@ Build 203
 * New 'winxpgui' module - almost identical to win32gui, but has a
   Windows XP manifest included, and a couple of extra functions not
   supported by Windows NT (AnimateWindow, FlashWindowEx, etc)
-* win32gui and win32com allow a 'logger' object to be set, so unhandled 
+* win32gui and win32com allow a 'logger' object to be set, so unhandled
   exceptions are reported to it instead of to stderr.
-* win32trace module and permon data modules now works in a terminal services 
+* win32trace module and permon data modules now works in a terminal services
   environment.
 * Thanks to Enzhou Wang, the pythoncom/pywintypes .h and .lib files
   are now installed.
@@ -886,11 +886,11 @@ Build 202
 * Add support for sorting listview controls with a sort callback.
 * A number of new win32gui methods
 * win32rc_parser handles icons and bitmaps etc, and also MSVC7 .rc files.
-* objects from the standard 'datetime' module can be used whenever a win32 
+* objects from the standard 'datetime' module can be used whenever a win32
   time object is needed.
 * Work better when frozen with py2exe.
 * Add win32file.FindFilesIterator(), which creates an iterator based
   around FindFirstFile/FindNextFile.  Useful for huge directories.
 * Fix a number of bugs relating to large integers.
-* win32api.GetFullPathName() will use GetFullPathNameW, and return a Unicode 
+* win32api.GetFullPathName() will use GetFullPathNameW, and return a Unicode
   object if passed a Unicode arg.

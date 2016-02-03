@@ -75,8 +75,8 @@ PyObject *ui_get_dialog_resource( PyObject *, PyObject *args )
 	}
 	HGLOBAL hGlob;
 	HRSRC hrsrc;
-	hrsrc = ::FindResourceEx( hMod, RT_DIALOG, 
-			MAKEINTRESOURCE(idRes), 
+	hrsrc = ::FindResourceEx( hMod, RT_DIALOG,
+			MAKEINTRESOURCE(idRes),
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL));
 	if (hrsrc)
 		hGlob = ::LoadResource( hMod, hrsrc );
@@ -99,21 +99,21 @@ CPythonDlg *GetPythonDlg(PyObject *self)
 	return (CPythonDlg *)PyCWnd::GetPythonGenericWnd(self, &PyCDialog::type);
 }
 
-CFileDialog *GetFileDialog(PyObject *self) 
+CFileDialog *GetFileDialog(PyObject *self)
 {
 	return (CFileDialog *)PyCWnd::GetPythonGenericWnd(self, &PyCFileDialog::type);
 }
-CFontDialog *GetFontDialog(PyObject *self) 
+CFontDialog *GetFontDialog(PyObject *self)
 {
 	return (CFontDialog *)PyCWnd::GetPythonGenericWnd(self, &PyCFontDialog::type);
 }
 
-CColorDialog *GetColorDialog(PyObject *self) 
+CColorDialog *GetColorDialog(PyObject *self)
 {
 	return (CColorDialog *)PyCWnd::GetPythonGenericWnd(self, &PyCColorDialog::type);
 }
 
-CPrintDialog *GetPrintDialog(PyObject *self) 
+CPrintDialog *GetPrintDialog(PyObject *self)
 {
 	return (CPrintDialog *)PyCWnd::GetPythonGenericWnd(self, &PyCPrintDialog::type);
 }
@@ -211,7 +211,7 @@ static PyObject *do_exchange_edit( int id, int index, char *type, PyObject *oldV
 	switch (type[0]) {
 		case 'i': {
 			int intVal = 0;
-			if (oldVal) 
+			if (oldVal)
 				intVal = (int)PyInt_AsLong(oldVal);
 			PyThreadState *_save = PyEval_SaveThread();
 			TRY
@@ -360,7 +360,7 @@ static PyObject *do_exchange_list_combo( int id, int index, char *type, PyObject
 				}
 			}
 			break;
-		}						
+		}
 		default:
 			return set_exchange_error("type param must be 'i','s','S' or 'l' for listbox/combo controls", index);
 	}
@@ -465,7 +465,7 @@ PyObject *PyCDialog::create( PyObject *self, PyObject *args )
 	int idRes;
 	HINSTANCE hMod = NULL, hOldRes = NULL;
 	PyObject *obDLL = NULL;
-	if (!PyArg_ParseTuple(args,"i|O:CreateDialog", 
+	if (!PyArg_ParseTuple(args,"i|O:CreateDialog",
 	          &idRes, // @pyparm int|idRes||The ID of the dialog resource to load.
 	          &obDLL))// @pyparm <o PyDLL>|dll|None|The DLL object to load the dialog from.
 		return NULL;
@@ -486,8 +486,8 @@ PyObject *PyCDialog::create( PyObject *self, PyObject *args )
 
 	HGLOBAL hGlob;
 	HRSRC hrsrc;
-	hrsrc = ::FindResourceEx( hMod, RT_DIALOG, 
-			MAKEINTRESOURCE(idRes), 
+	hrsrc = ::FindResourceEx( hMod, RT_DIALOG,
+			MAKEINTRESOURCE(idRes),
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL));
 	if (hrsrc)
 		hGlob = ::LoadResource( hMod, hrsrc );
@@ -516,7 +516,7 @@ PyObject *PyCDialog::createIndirect( PyObject *, PyObject *args )
 	// @pyparm list|obList||A list of [<o PyDLGTEMPLATE>, <o PyDLGITEMTEMPLATE>, ...], which describe the dialog to be created.
 	if (!PyArg_ParseTuple(args, "O:CreateDialogIndirect", &obList))
 		return NULL;
-	
+
 	HGLOBAL h = MakeResourceFromDlgList(obList);
 	if (h == NULL)
 		return NULL;
@@ -530,7 +530,7 @@ PyObject *PyCDialog::createIndirect( PyObject *, PyObject *args )
 	return ret;
 	// @ comm The code for Dynamic Dialogs was supplied by Curt Hagenlocher \<curt@hagenlocher.org\>.  These notes are also from Curt.<nl>
 	// Error checking is thorough but cryptic.  More intelligent error messages could be produced.<nl>
-	// obList is a list containing one or more further lists.  The first of these is a description of 
+	// obList is a list containing one or more further lists.  The first of these is a description of
 	// the dialog box itself.  The others are descriptions of the children (ie, the controls).<nl><nl>
 	// Dialog Header:<nl>
 	//  [caption (bounds) style extended-style (font) menu window-class]<nl>
@@ -738,12 +738,12 @@ static struct PyMethodDef ui_dialog_methods[] = {
 	{NULL,			NULL}		/* sentinel */
 };
 
-ui_type_CObject PyCDialog::type("PyCDialog", 
+ui_type_CObject PyCDialog::type("PyCDialog",
 								&PyCWnd::type, // @base PyCDialog|PyCWnd
-								RUNTIME_CLASS(CDialog), 
-								sizeof(PyCDialog), 
-								PYOBJ_OFFSET(PyCDialog), 
-								ui_dialog_methods, 
+								RUNTIME_CLASS(CDialog),
+								sizeof(PyCDialog),
+								PYOBJ_OFFSET(PyCDialog),
+								ui_dialog_methods,
 								GET_PY_CTOR(PyCDialog));
 
 // @object PyCCommonDialog|An abstract class which encapsulates an MFC CCommonDialog object.  Derived from a <o PyCDialog> object.
@@ -751,12 +751,12 @@ static struct PyMethodDef ui_common_dialog_methods[] = {
 	{ NULL, NULL }
 };
 
-ui_type_CObject PyCCommonDialog::type("PyCCommonDialog", 
-									&PyCDialog::type, 
+ui_type_CObject PyCCommonDialog::type("PyCCommonDialog",
+									&PyCDialog::type,
 									NULL, // CCommonDialog doesnt have RTTI???
-									sizeof(PyCCommonDialog), 
-									PYOBJ_OFFSET(PyCCommonDialog), 
-									ui_common_dialog_methods, 
+									sizeof(PyCCommonDialog),
+									PYOBJ_OFFSET(PyCCommonDialog),
+									ui_common_dialog_methods,
 									NULL);
 
 /////////////////////////////////////////////////////////////////////
@@ -787,16 +787,16 @@ PyObject *PyCFileDialog::ui_file_dialog_create( PyObject * /*self*/, PyObject *a
 	CWnd *pParent = NULL; 		// should mean same as GetApp()->m_pMainWnd
 	PyObject *obParent = Py_None;
 
-	if (!PyArg_ParseTuple(args, "i|OOiOO:CreateFileDialog", 
+	if (!PyArg_ParseTuple(args, "i|OOiOO:CreateFileDialog",
 	          &bFileOpen, // @pyparm int|bFileOpen||A flag indicating if the Dialog is a FileOpen or FileSave dialog.
 	          &obDefExt,  // @pyparm string|defExt|None|The default file extension for saved files. If None, no extension is supplied.
 	          &obFileName, // @pyparm string|fileName|None|The initial filename that appears in the filename edit box. If None, no filename initially appears.
 	          &flags,     // @pyparm int|flags|win32con.OFN_HIDEREADONLY\|win32con.OFN_OVERWRITEPROMPT|The flags for the dialog.  See the API documentation for full details.
-	          &obFilter, // @pyparm string|filter|None|A series of string pairs that specify filters you can apply to the file. 
-	                        // If you specify file filters, only selected files will appear 
-	                        // in the Files list box. The first string in the string pair describes 
-	                        // the filter; the second string indicates the file extension to use. 
-	                        // Multiple extensions may be specified using ';' as the delimiter. 
+	          &obFilter, // @pyparm string|filter|None|A series of string pairs that specify filters you can apply to the file.
+	                        // If you specify file filters, only selected files will appear
+	                        // in the Files list box. The first string in the string pair describes
+	                        // the filter; the second string indicates the file extension to use.
+	                        // Multiple extensions may be specified using ';' as the delimiter.
 	                        // The string ends with two '\|' characters.  May be None.
 	          &obParent )) // @pyparm <o PyCWnd>|parent|None|The parent or owner window of the dialog.
 		return NULL;
@@ -863,7 +863,7 @@ static PyObject *ui_file_dialog_get_path_names( PyObject *self, PyObject *args )
 
 	if (!pDlg)
 		return NULL;
-        
+
 	PyObject *newOb = PyList_New(0);
 	if (!newOb)
 		return NULL;
@@ -974,12 +974,12 @@ static struct PyMethodDef ui_file_dialog_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCFileDialog::type("PyCFileDialog", 
+ui_type_CObject PyCFileDialog::type("PyCFileDialog",
 									&PyCCommonDialog::type, // @base PyCFileDialog|PyCCommonDialog
-									RUNTIME_CLASS(CFileDialog), 
-									sizeof(PyCFileDialog), 
-									PYOBJ_OFFSET(PyCFileDialog), 
-									ui_file_dialog_methods, 
+									RUNTIME_CLASS(CFileDialog),
+									sizeof(PyCFileDialog),
+									PYOBJ_OFFSET(PyCFileDialog),
+									ui_file_dialog_methods,
 									GET_PY_CTOR(PyCFileDialog));
 
 /////////////////////////////////////////////////////////////////////
@@ -1011,7 +1011,7 @@ PyObject *PyCFontDialog::ui_font_dialog_create( PyObject * /*self*/, PyObject *a
 
 	cf.cbSize = sizeof(CHARFORMAT);
 
-	if (!PyArg_ParseTuple(args, "|OiOO:CreateFontDialog", 
+	if (!PyArg_ParseTuple(args, "|OiOO:CreateFontDialog",
 	          &obFont, // @pyparm dict/tuple|font|None|A dictionary describing a LOGFONT, or a tuple describing a CHARFORMAT.
 	          &flags,  // @pyparm int|flags|win32con.CF_EFFECTS\|win32con.CF_SCREENFONTS|The choose-font flags to use.
 			  &obDC,   // @pyparm <o PyCDC>|dcPrinter|None|Show fonts available for the specified device.
@@ -1048,7 +1048,7 @@ PyObject *PyCFontDialog::ui_font_dialog_create( PyObject * /*self*/, PyObject *a
 		delete pFont;
 		RETURN_ERR("Creating CFontDialog failed"); // pyseemfc CFontDialog|CFontDialog
 	}
-	PyCFontDialog *newObj = 
+	PyCFontDialog *newObj =
 		(PyCFontDialog *)ui_assoc_object::make( PyCFontDialog::type, pDlg, TRUE);
 	if (newObj && pFont)
 		newObj->pInitLogFont = pFont;
@@ -1146,7 +1146,7 @@ static PyObject *ui_font_dialog_get_current_font( PyObject *self, PyObject *args
 		// @pyseemfc CFontDialog|GetCurrentFont
 		return LogFontToDict(lf);
 	}
-		
+
 }
 
 // @pymethod tuple|PyCFontDialog|GetCharFormat|Returns the font selection in a CHARFORMAT tuple.
@@ -1184,12 +1184,12 @@ static struct PyMethodDef ui_font_dialog_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCFontDialog::type("PyCFontDialog", 
+ui_type_CObject PyCFontDialog::type("PyCFontDialog",
 									&PyCCommonDialog::type, // @base PyCFontDialog|PyCCommonDialog
-									RUNTIME_CLASS(CFontDialog), 
-									sizeof(PyCFontDialog), 
-									PYOBJ_OFFSET(PyCFontDialog), 
-									ui_font_dialog_methods, 
+									RUNTIME_CLASS(CFontDialog),
+									sizeof(PyCFontDialog),
+									PYOBJ_OFFSET(PyCFontDialog),
+									ui_font_dialog_methods,
 									GET_PY_CTOR(PyCFontDialog));
 
 /////////////////////////////////////////////////////////////////////
@@ -1212,7 +1212,7 @@ PyObject *PyCColorDialog::create( PyObject * /*self*/, PyObject *args )
 	PyObject *obParent = Py_None;
 	CWnd *pParent = NULL; 		// should mean same as GetApp()->m_pMainWnd
 
-	if (!PyArg_ParseTuple(args, "|iiO:CreateColorDialog", 
+	if (!PyArg_ParseTuple(args, "|iiO:CreateColorDialog",
 	          &color, // @pyparm int|initColor|0|The initial color.
 	          &flags,  // @pyparm int|flags|0|The choose-color flags to use.
 	          &obParent )) // @pyparm <o PyCWnd>|parent|None|The parent or owner window of the dialog.
@@ -1228,7 +1228,7 @@ PyObject *PyCColorDialog::create( PyObject * /*self*/, PyObject *args )
 	if (!pDlg) {
 		RETURN_ERR("Creating CColorDialog failed"); // pyseemfc CColorDialog|CColorDialog
 	}
-	PyCColorDialog *newObj = 
+	PyCColorDialog *newObj =
 		(PyCColorDialog *)ui_assoc_object::make( PyCColorDialog::type, pDlg, TRUE);
 	return newObj;
 }
@@ -1342,12 +1342,12 @@ static struct PyMethodDef ui_color_dialog_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCColorDialog::type("PyCColorDialog", 
+ui_type_CObject PyCColorDialog::type("PyCColorDialog",
 									 &PyCCommonDialog::type, // @base PyCColorDialog|PyCCommonDialog
-									 RUNTIME_CLASS(CColorDialog), 
-									 sizeof(PyCColorDialog), 
-									 PYOBJ_OFFSET(PyCColorDialog), 
-									 ui_color_dialog_methods, 
+									 RUNTIME_CLASS(CColorDialog),
+									 sizeof(PyCColorDialog),
+									 PYOBJ_OFFSET(PyCColorDialog),
+									 ui_color_dialog_methods,
 									 GET_PY_CTOR(PyCColorDialog));
 
 /////////////////////////////////////////////////////////////////////
@@ -1374,9 +1374,9 @@ PyObject *PyCPrintDialog::create( PyObject *self, PyObject *args )
     CWnd* pParentWnd = NULL;
 	HINSTANCE hMod = NULL, hOldRes = NULL;
 	PyObject *obDLL = NULL;
-	if (!PyArg_ParseTuple(args,"i|iiOO:CreatePrintDialog", 
+	if (!PyArg_ParseTuple(args,"i|iiOO:CreatePrintDialog",
 	          &idRes, // @pyparm int|idRes||The ID of the dialog resource to load.
-	          &bPrintSetupOnly,// @pyparm int|bPrintSetupOnly|FALSE|Specifies whether the standard Windows Print dialog box or Print Setup dialog box is displayed. 
+	          &bPrintSetupOnly,// @pyparm int|bPrintSetupOnly|FALSE|Specifies whether the standard Windows Print dialog box or Print Setup dialog box is displayed.
 	          &dwFlags,// @pyparm int|dwFlags|PD_ALLPAGES\|PD_USEDEVMODECOPIES\|PD_NOPAGENUMS\|PD_HIDEPRINTTOFILE\|PD_NOSELECTION|One or more flags you can use to customize the settings of the dialog box, combined using the bitwise OR operator.
 	          &obParent,// @pyparm <o PyCWnd>|parent|None|A pointer to the dialog box parent or owner window.
 	          &obDLL))// @pyparm <o PyDLL>|dll|None|The DLL object to load the dialog from.
@@ -1406,8 +1406,8 @@ PyObject *PyCPrintDialog::create( PyObject *self, PyObject *args )
 
 	HGLOBAL hGlob;
 	HRSRC hrsrc;
-	hrsrc = ::FindResourceEx( hMod, RT_DIALOG, 
-			MAKEINTRESOURCE(idRes), 
+	hrsrc = ::FindResourceEx( hMod, RT_DIALOG,
+			MAKEINTRESOURCE(idRes),
 			MAKELANGID(LANG_NEUTRAL, SUBLANG_NEUTRAL));
 	if (hrsrc)
 		hGlob = ::LoadResource( hMod, hrsrc );
@@ -1447,10 +1447,10 @@ static struct PyMethodDef ui_print_dialog_methods[] = {
 	{ NULL, NULL }
 };
 
-ui_type_CObject PyCPrintDialog::type("PyCPrintDialog", 
+ui_type_CObject PyCPrintDialog::type("PyCPrintDialog",
                                            &PyCCommonDialog::type, // @base PyCPrintDialog|PyCCommonDialog
                                            RUNTIME_CLASS(CPrintDialog),
-                                           sizeof(PyCPrintDialog), 
-                                           PYOBJ_OFFSET(PyCPrintDialog), 
-                                           ui_print_dialog_methods, 
+                                           sizeof(PyCPrintDialog),
+                                           PYOBJ_OFFSET(PyCPrintDialog),
+                                           ui_print_dialog_methods,
                                            GET_PY_CTOR(PyCPrintDialog));

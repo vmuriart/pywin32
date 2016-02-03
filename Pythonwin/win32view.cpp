@@ -107,7 +107,7 @@ PyCView_create_window(PyObject *self, PyObject *args)
 	int id= AFX_IDW_PANE_FIRST;
 	int style= AFX_WS_DEFAULT_VIEW;
 	CRect rect(0,0,0,0);
-	if (!PyArg_ParseTuple(args, "O|ii(iiii):CreateWindow", 
+	if (!PyArg_ParseTuple(args, "O|ii(iiii):CreateWindow",
 	          &parent,  // @pyparm <o PyCWnd>|parent||The parent window (usually a frame)
 	          &id,      // @pyparm int|id|win32ui.AFX_IDW_PANE_FIRST|The child ID for the view
 	          &style,   // @pyparm int|style|win32ui.AFX_WS_DEFAULT_VIEW|The style for the view
@@ -405,12 +405,12 @@ static struct PyMethodDef PyCView_methods[] = {
 };
 
 // View type
-ui_type_CObject PyCView::type("PyCView", 
+ui_type_CObject PyCView::type("PyCView",
 							  &PyCWnd::type, // @base PyCView|PyCWnd
-							  RUNTIME_CLASS(CView), 
-							  sizeof(PyCView), 
-							  PYOBJ_OFFSET(PyCView), 
-							  PyCView_methods, 
+							  RUNTIME_CLASS(CView),
+							  sizeof(PyCView),
+							  PYOBJ_OFFSET(PyCView),
+							  PyCView_methods,
 							  NULL);
 
 // @pymethod <o PyCScrollView>|win32ui|CreateView|Creates a generic view object.
@@ -502,7 +502,7 @@ ui_view_resize_parent_to_fit(PyObject *self, PyObject *args)
 	if (view == NULL)
 		return NULL;
 	BOOL bShrink = TRUE;
-	//@pyparm int|bShrinkOnly|1|The kind of resizing to perform. The default value, TRUE, shrinks the frame window if appropriate. 
+	//@pyparm int|bShrinkOnly|1|The kind of resizing to perform. The default value, TRUE, shrinks the frame window if appropriate.
 	if (!PyArg_ParseTuple(args, "|i:ResizeParentToFit", &bShrink))
 		return NULL;
 	GUI_BGN_SAVE;
@@ -541,13 +541,13 @@ ui_view_set_scroll_sizes (PyObject *self, PyObject *args)
   CSize total,
         page = CScrollView::sizeDefault,
         line = CScrollView::sizeDefault;
-  if (!PyArg_ParseTuple (args, "i(ii)|(ii)(ii):SetScrollSizes", 
+  if (!PyArg_ParseTuple (args, "i(ii)|(ii)(ii):SetScrollSizes",
                 &map_mode, // @pyparm int|mapMode||The mapping mode for this view.
                 &total.cx, &total.cy, // @pyparm (x,y)|sizeTotal||The total size of the view.  Sizes are in logical units.  Both x and y must be greater than zero.
 				&page.cx, &page.cy,   // @pyparm (x,y)|sizePage|win32ui.rectDefault|The number of untils to scroll in response to a page-down command.
 				&line.cx, &line.cy))  // @pyparm (x,y)|sizePage|win32ui.rectDefault|The number of untils to scroll in response to a line-down command.
 	return NULL;
-  
+
   GUI_BGN_SAVE;
 //  BOOL save = view->SetDynamicScrollBars (TRUE);
   view->SetScrollSizes (map_mode, total, page, line);
@@ -622,12 +622,12 @@ static struct PyMethodDef PyCScrollView_methods[] = {
 };
 
 // View type
-ui_type_CObject PyCScrollView::type("PyCScrollView", 
+ui_type_CObject PyCScrollView::type("PyCScrollView",
 							  &PyCView::type, // @base PyCScrollView|PyCView
-							  RUNTIME_CLASS(CScrollView), 
-							  sizeof(PyCScrollView), 
-							  PYOBJ_OFFSET(PyCScrollView), 
-							  PyCScrollView_methods, 
+							  RUNTIME_CLASS(CScrollView),
+							  sizeof(PyCScrollView),
+							  PYOBJ_OFFSET(PyCScrollView),
+							  PyCScrollView_methods,
 							  GET_PY_CTOR(PyCScrollView));
 
 ///////////////////////////////////////
@@ -680,13 +680,13 @@ static struct PyMethodDef PyCCtrlView_methods[] = {
 	{NULL, NULL}
 };
 
-PyCCtrlView_Type PyCCtrlView::type("PyCCtrlView", 
+PyCCtrlView_Type PyCCtrlView::type("PyCCtrlView",
 								&PyCView::type, // @base PyCCtrlView|PyCView
 								&PyCWnd::type,
-								RUNTIME_CLASS(CCtrlView), 
-								sizeof(PyCCtrlView), 
-								PYOBJ_OFFSET(PyCCtrlView), 
-								PyCCtrlView_methods, 
+								RUNTIME_CLASS(CCtrlView),
+								sizeof(PyCCtrlView),
+								PYOBJ_OFFSET(PyCCtrlView),
+								PyCCtrlView_methods,
 								GET_PY_CTOR(PyCCtrlView));
 
 
@@ -1011,13 +1011,13 @@ static struct PyMethodDef ui_list_view_methods[] = {
 	{NULL, NULL}
 };
 
-PyCCtrlView_Type PyCListView::type("PyCListView", 
+PyCCtrlView_Type PyCListView::type("PyCListView",
 								   &PyCCtrlView::type, // @base PyCListView|PyCCtrlView
 								   &PyCListCtrl::type,
-								   RUNTIME_CLASS(CListView), 
-								   sizeof(PyCListView), 
-								   PYOBJ_OFFSET(PyCListView), 
-								   ui_list_view_methods, 
+								   RUNTIME_CLASS(CListView),
+								   sizeof(PyCListView),
+								   PYOBJ_OFFSET(PyCListView),
+								   ui_list_view_methods,
 								   GET_PY_CTOR(PyCListView));
 
 /////////////////////////////////////////////////////////////////////
@@ -1093,13 +1093,13 @@ static struct PyMethodDef ui_tree_view_methods[] = {
 	{NULL, NULL}
 };
 
-PyCCtrlView_Type PyCTreeView::type("PyCTreeView", 
+PyCCtrlView_Type PyCTreeView::type("PyCTreeView",
 								   &PyCCtrlView::type, // @base PyCTreeView|PyCCtrlView
 								   &PyCTreeCtrl::type,
-								   RUNTIME_CLASS(CTreeView), 
-								   sizeof(PyCTreeView), 
-								   PYOBJ_OFFSET(PyCTreeView), 
-								   ui_tree_view_methods, 
+								   RUNTIME_CLASS(CTreeView),
+								   sizeof(PyCTreeView),
+								   PYOBJ_OFFSET(PyCTreeView),
+								   ui_tree_view_methods,
 								   GET_PY_CTOR(PyCTreeView));
 
 
@@ -1156,11 +1156,11 @@ static struct PyMethodDef PyCFormView_methods[] = {
 	{NULL, NULL}
 };
 
-ui_type_CObject PyCFormView::type("PyCFormView", 
+ui_type_CObject PyCFormView::type("PyCFormView",
 								&PyCView::type, // @base PyCFormView|PyCView
-								RUNTIME_CLASS(CFormView), 
-								sizeof(PyCFormView), 
-								PYOBJ_OFFSET(PyCFormView), 
-								PyCFormView_methods, 
+								RUNTIME_CLASS(CFormView),
+								sizeof(PyCFormView),
+								PYOBJ_OFFSET(PyCFormView),
+								PyCFormView_methods,
 								GET_PY_CTOR(PyCFormView));
 

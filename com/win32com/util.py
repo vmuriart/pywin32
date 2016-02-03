@@ -6,8 +6,8 @@ import pythoncom
 import win32api, win32con
 
 def IIDToInterfaceName(iid):
-	"""Converts an IID to a string interface name.  
-	
+	"""Converts an IID to a string interface name.
+
 	Used primarily for debugging purposes, this allows a cryptic IID to
 	be converted to a useful string name.  This will firstly look for interfaces
 	known (ie, registered) by pythoncom.  If not known, it will look in the

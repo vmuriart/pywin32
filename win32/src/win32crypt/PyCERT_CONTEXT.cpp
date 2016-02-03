@@ -67,7 +67,7 @@ struct PyMemberDef PyCERT_CONTEXT::members[] = {
 	{"CertStore", T_OBJECT, offsetof(PyCERT_CONTEXT, obdummy), READONLY},
 	// @prop str|CertEncoded|Content of the certificate as encoded bytes
 	{"CertEncoded", T_OBJECT, offsetof(PyCERT_CONTEXT, obdummy), READONLY},
-	// @prop int|CertEncodingType|Method used to encode the certifcate, usually X509_ASN_ENCODING or PKCS_7_ASN_ENCODING 
+	// @prop int|CertEncodingType|Method used to encode the certifcate, usually X509_ASN_ENCODING or PKCS_7_ASN_ENCODING
 	{"CertEncodingType", T_OBJECT, offsetof(PyCERT_CONTEXT, obdummy), READONLY},
 	// @prop int|Version|One of the CERT_V* values
 	{"Version", T_OBJECT, offsetof(PyCERT_CONTEXT, obdummy), READONLY},
@@ -118,10 +118,10 @@ PyObject *PyWinObject_FromCERT_EXTENSIONArray(PCERT_EXTENSION pce, DWORD ext_cnt
 	ret=PyTuple_New(ext_cnt);
 	if (ret==NULL)
 		return NULL;
-	
+
 	for (ext_ind=0;ext_ind<ext_cnt;ext_ind++){
 		ret_item=Py_BuildValue("{s:s,s:N,s:N}",
-			"ObjId",pce[ext_ind].pszObjId, 
+			"ObjId",pce[ext_ind].pszObjId,
 			"Critical", PyBool_FromLong(pce[ext_ind].fCritical),
 			"Value", PyString_FromStringAndSize((char *)pce[ext_ind].Value.pbData, pce[ext_ind].Value.cbData));
 		if (ret_item==NULL){
@@ -136,7 +136,7 @@ PyObject *PyWinObject_FromCERT_EXTENSIONArray(PCERT_EXTENSION pce, DWORD ext_cnt
 
 
 PyObject *PyCERT_CONTEXT::getattro(PyObject *self, PyObject *obname)
-{	
+{
 	PCCERT_CONTEXT pcc=((PyCERT_CONTEXT *)self)->GetPCCERT_CONTEXT();
 	char *name=PYWIN_ATTR_CONVERT(obname);
 	if (name==NULL)
@@ -273,7 +273,7 @@ PyObject *PyCERT_CONTEXT::PyCryptAcquireCertificatePrivateKey(PyObject *self, Py
 	BOOL callerfree;
 	PVOID reserved=NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|k:CryptAcquireCertificatePrivateKey", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|k:CryptAcquireCertificatePrivateKey", keywords,
 		&flags))	// @pyparm int|Flags|0|Combination of CRYPT_ACQUIRE_*_FLAG constants
 		return NULL;
 	BOOL bsuccess;
@@ -283,8 +283,8 @@ PyObject *PyCERT_CONTEXT::PyCryptAcquireCertificatePrivateKey(PyObject *self, Py
 	Py_END_ALLOW_THREADS
 	if (!bsuccess)
 		return PyWin_SetAPIError("CryptAcquireCertificatePrivateKey");
-	
-	/* If callerfree returns false, CSP handle shouldn't be freed, so increase its refcount since 
+
+	/* If callerfree returns false, CSP handle shouldn't be freed, so increase its refcount since
 		CryptReleaseContext is called when python object is destroyed */
 	if (!callerfree)
 		if (!CryptContextAddRef(hcryptprov, NULL, 0))
@@ -302,8 +302,8 @@ PyObject *PyCERT_CONTEXT::PyCertGetEnhancedKeyUsage(PyObject *self, PyObject *ar
 	PCERT_ENHKEY_USAGE pceu=NULL;
 	PCCERT_CONTEXT pccert_context=((PyCERT_CONTEXT *)self)->GetPCCERT_CONTEXT();
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|k:CertGetEnhancedKeyUsage", keywords, 
-		&flags))	// @pyparm int|Flags|0|CERT_FIND_EXT_ONLY_ENHKEY_USAGE_FLAG, CERT_FIND_PROP_ONLY_ENHKEY_USAGE_FLAG, or 0 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|k:CertGetEnhancedKeyUsage", keywords,
+		&flags))	// @pyparm int|Flags|0|CERT_FIND_EXT_ONLY_ENHKEY_USAGE_FLAG, CERT_FIND_PROP_ONLY_ENHKEY_USAGE_FLAG, or 0
 		return NULL;
 	BOOL bsuccess;
 	Py_BEGIN_ALLOW_THREADS
@@ -423,7 +423,7 @@ PyObject *PyCERT_CONTEXT::PyCertGetCertificateContextProperty(PyObject *self, Py
 	void *pvData=NULL;
 	CRYPT_DATA_BLOB *pcdb=NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "k:CertGetCertificateContextProperty", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "k:CertGetCertificateContextProperty", keywords,
 		&dwPropId))		// @pyparm int|PropId||One of the CERT_*_PROP_ID constants
 		return NULL;
 	BOOL bsuccess;
@@ -496,7 +496,7 @@ PyObject *PyCERT_CONTEXT::PyCertGetCertificateContextProperty(PyObject *self, Py
 		// CERT_CTL_USAGE_PROP_ID is same value as CERT_ENHKEY_USAGE_PROP_ID
 		// @flag CERT_CTL_USAGE_PROP_ID|Encoded CTL_USAGE, decode as X509_ENHANCED_KEY_USAGE (CTL_USAGE and CERT_ENHKEY_USAGE are identical)
 		// @flag CERT_ENHKEY_USAGE_PROP_ID|Encoded CTL_USAGE. Can be decoded using <om cryptoapi.CryptDecodeObjectEx> with X509_ENHANCED_KEY_USAGE
-		case CERT_ENHKEY_USAGE_PROP_ID:	
+		case CERT_ENHKEY_USAGE_PROP_ID:
 			ret=PyString_FromStringAndSize((char *)pvData, pcbData);
 			break;
 		case CERT_KEY_PROV_INFO_PROP_ID:  // @flag CERT_KEY_PROV_INFO_PROP_ID|CRYPT_KEY_PROV_INFO dict
@@ -508,7 +508,7 @@ PyObject *PyCERT_CONTEXT::PyCertGetCertificateContextProperty(PyObject *self, Py
 				"KeySpec", ((PCERT_KEY_CONTEXT)pvData)->dwKeySpec);
 			break;
 		// @flag CERT_NEXT_UPDATE_LOCATION_PROP_ID|Encoded CERT_ALT_NAME_INFO, decode using <om cryptoapi.CryptDecodeObjectEx> with szOID_NEXT_UPDATE_LOCATION
-		case CERT_NEXT_UPDATE_LOCATION_PROP_ID:	
+		case CERT_NEXT_UPDATE_LOCATION_PROP_ID:
 			ret=PyString_FromStringAndSize((char *)pvData, pcbData);
 			break;
 		// case CERT_PUBKEY_ALG_PROP_ID: // ???? This constant does not exist in my header files ????
@@ -530,7 +530,7 @@ PyObject *PyCERT_CONTEXT::PyCertSetCertificateContextProperty(PyObject *self, Py
 	PyObject *obData;
 	DWORD prop, flags=0, dwData;
 	FILETIME ftData;
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "kO|k:CertSetCertificateContextProperty", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "kO|k:CertSetCertificateContextProperty", keywords,
 		&prop,		// @pyparm int|PropId||Id of property to be set, CERT_*_PROP_ID
 		&obData,	// @pyparm object|Data||The value to be set for the property.  Type is dependent on PropId. Use None to delete a property.
 		&flags))	// @pyparm int|Flags|0|Combination of CERT_SET_* flags
@@ -564,7 +564,7 @@ PyObject *PyCERT_CONTEXT::PyCertSetCertificateContextProperty(PyObject *self, Py
 			// ???? MSDN claims that pvData should point directly to a FILETIME, but that results in an access violation ????
 			cdb.cbData=sizeof(ftData);
 			cdb.pbData=(BYTE *)&ftData;
-			pvData=&cdb;			
+			pvData=&cdb;
 			break;
 		case CERT_DESCRIPTION_PROP_ID:		// @flag CERT_DESCRIPTION_PROP_ID|Unicode string
 		case CERT_FRIENDLY_NAME_PROP_ID:	// @flag CERT_FRIENDLY_NAME_PROP_ID|Unicode string
@@ -576,12 +576,12 @@ PyObject *PyCERT_CONTEXT::PyCertSetCertificateContextProperty(PyObject *self, Py
 			cdb.cbData*=sizeof(WCHAR);
 			pvData=&cdb;
 			break;
-		
+
 		case CERT_KEY_SPEC_PROP_ID:	// @flag CERT_KEY_SPEC_PROP_ID|Int, usually AT_KEYEXCHANGE or AT_SIGNATURE
 			dwData=PyLong_AsUnsignedLong(obData);
 			if (dwData==(DWORD)-1 && PyErr_Occurred())
 				goto cleanup;
-			pvData=&dwData;		
+			pvData=&dwData;
 			break;
 		// CERT_HASH_PROP_ID is same value as CERT_SHA1_HASH_PROP_ID
 		// @flag CERT_HASH_PROP_ID|String containing the hash
@@ -611,7 +611,7 @@ PyObject *PyCERT_CONTEXT::PyCertSetCertificateContextProperty(PyObject *self, Py
 		*/
 		/*
 		case CERT_KEY_PROV_HANDLE_PROP_ID:
-		
+
 		case CERT_KEY_CONTEXT_PROP_ID:	// CERT_KEY_CONTEXT
 		case CERT_NEXT_UPDATE_LOCATION_PROP_ID:  // encoded CERT_ALT_NAME_INFO, only used with CTL
 		case CERT_ENROLLMENT_PROP_ID:  // CRYPT_DATA_BLOB, data will apparently have to be split out manually

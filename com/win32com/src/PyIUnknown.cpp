@@ -25,7 +25,7 @@ PyIUnknown::PyIUnknown(IUnknown *punk)
 
 PyIUnknown::~PyIUnknown()
 {
-	SafeRelease(this);	
+	SafeRelease(this);
 	InterlockedDecrement(&cUnknowns);
 	PyCom_DLLReleaseRef();
 }
@@ -89,7 +89,7 @@ PyObject * PyIUnknown::repr()
 								}
 							}
 
-							/* successful QI; need to release it 
+							/* successful QI; need to release it
 							pdisp->Release();
 						}
 					}
@@ -130,7 +130,7 @@ PyObject * PyIUnknown::repr()
 		return;
 	if (ob->m_obj)
 	{
-		// Safe for all objects which delete 
+		// Safe for all objects which delete
 		// itself ignoring a reference count.
 		PyThreadState *_save;
 		PYWINTYPES_TRY
@@ -196,7 +196,7 @@ PyObject *PyIUnknown::QueryInterface(PyObject *self, PyObject *args)
 	// of type useIID will be created.  If iid does not derive from useIID,
 	// then it is almost certain that using the object will cause an Access Violation.
 	// <nl>For example, this option can be used to obtain a PyIUnknown object if
-	// pythoncom does not natively support the interface. 
+	// pythoncom does not natively support the interface.
 	// Another example might be to return an unsupported persistence interface as a
 	// PyIPersist instance.<nl>
 	// For backwards compatibility: the integer 0 implies None, and the
@@ -253,7 +253,7 @@ PyObject *PyIUnknown::QueryInterface(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIUnknown_methods[] =
 {
 	{ "QueryInterface", PyIUnknown::QueryInterface, 1 }, // @pymeth QueryInterface|Queries the object for an interface.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 // @comm Note that there are no reference counting functions that are typically exposed via COM.
 // This is because COM reference counts are automatically handled by PythonCOM - each interface

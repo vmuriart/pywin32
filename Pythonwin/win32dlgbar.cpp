@@ -1,4 +1,4 @@
-/* 
+/*
 	DialogBar class for Pythonwin
 
 	Created April 1998 by Mark Hammond.
@@ -81,7 +81,7 @@ static struct PyMethodDef PyCDialogBar_methods[] =
 };
 
 ui_type_CObject PyCDialogBar::type ("PyCDialogBar",
-					&PyCControlBar::type, 
+					&PyCControlBar::type,
 					RUNTIME_CLASS(CDialogBar),
 					sizeof(PyCDialogBar),
 					PYOBJ_OFFSET(PyCDialogBar),

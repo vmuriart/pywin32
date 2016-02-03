@@ -8,7 +8,7 @@
  its documentation for any purpose and without fee is hereby
  granted, provided that the above copyright notice appear in all
  copies and that both that copyright notice and this permission
- notice appear in supporting documentation, and that the name of 
+ notice appear in supporting documentation, and that the name of
  Blackdog Software not be used in advertising or publicity pertaining to
  distribution of the software without specific, written prior
  permission.
@@ -71,15 +71,15 @@ bool CPythonEngine::InitMainInterp(void)
 			old_state = PyGILState_UNLOCKED;
 		}
 		PyEval_InitThreads();
-	
+
 		if (!g_IsFrozen) {
 			TCHAR *dll_path = GetModulePath();
 			AddToPythonPath(dll_path);
 			free(dll_path);
 			PyErr_Clear();
 			}
-	
-		// isapidllhandle to match dllhandle, frozendllhandle, etc :)  Also a 
+
+		// isapidllhandle to match dllhandle, frozendllhandle, etc :)  Also a
 		// nice way for a program to know they are in an ISAPI context.
 		PyObject *obh = PyLong_FromVoidPtr(g_hInstance);
 		PySys_SetObject("isapidllhandle", obh);
@@ -210,14 +210,14 @@ bool CPythonHandler::LoadHandler(bool reload)
 		Py_DECREF(m_orig);
 	}
 	if (!m) {
-		_snprintf(szErrBuf, sizeof(szErrBuf)/sizeof(szErrBuf[0]), 
+		_snprintf(szErrBuf, sizeof(szErrBuf)/sizeof(szErrBuf[0]),
 				  "Failed to import callback module '%s'", m_engine->m_module_name);
 		ExtensionError(NULL, szErrBuf);
 	}
 	if (m) {
 		Py_XDECREF(m_handler);
 		if (!((m_handler = PyObject_CallMethod(m, (char *)m_namefactory, NULL)))) {
-			_snprintf(szErrBuf, sizeof(szErrBuf)/sizeof(szErrBuf[0]), 
+			_snprintf(szErrBuf, sizeof(szErrBuf)/sizeof(szErrBuf[0]),
 			          "Factory function '%s' failed", m_namefactory);
 			ExtensionError(NULL, szErrBuf);
 		}
@@ -340,7 +340,7 @@ PyObject *CPythonHandler::Callback(
 			}
 			Py_XDECREF(ret);
 			// And make the original call again.
-			ret = DoCallback(typ, args);			
+			ret = DoCallback(typ, args);
 		}
 	}
 done:
@@ -376,7 +376,7 @@ void ExtensionError(CControlBlock *pcb, const char *errmsg)
 	} // end temp scope
 	if (pcb) {
 		char *htmlStream = HTMLErrorResp(errmsg);
-	
+
 		pcb->SetStatus(HSE_STATUS_ERROR);
 		pcb->SetLogMessage(errmsg);
 		HSE_SEND_HEADER_EX_INFO SendHeaderExInfo;
@@ -405,7 +405,7 @@ void FilterError(CFilterContext *pfc, const char *errmsg)
 {
 	char *windows_error = ::GetLastError() ?
 	                          ::FormatSysError(::GetLastError()) : NULL;
-	
+
 	CEnterLeavePython celp;
 	PySys_WriteStderr("Internal Filter Error: %s\n", errmsg);
 	if (PyErr_Occurred()) {

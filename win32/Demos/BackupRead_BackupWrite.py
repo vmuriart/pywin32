@@ -48,7 +48,7 @@ acl.AddAccessAllowedAce(1, ntsecuritycon.FILE_ALL_ACCESS, sid)
 new_sd.SetSecurityDescriptorDacl(True, acl, False)
 win32security.SetFileSecurity(tempfile,win32security.DACL_SECURITY_INFORMATION,new_sd)
 
-                              
+
 sa=pywintypes.SECURITY_ATTRIBUTES()
 sa.bInheritHandle=True
 h=win32file.CreateFile(tempfile, win32con.GENERIC_ALL ,win32con.FILE_SHARE_READ,

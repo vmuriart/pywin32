@@ -194,7 +194,7 @@ STDMETHODIMP PyGPropertyStore::GetValue(
 	HRESULT hr=InvokeViaPolicy("GetValue", &result, "(O)", obkey);
 	Py_DECREF(obkey);
 	if (FAILED(hr)) return hr;
- 
+
 	PROPVARIANT *pypv;
 	if (!PyWinObject_AsPROPVARIANT(result, &pypv))
 		hr=MAKE_PYCOM_GATEWAY_FAILURE_CODE("GetValue");

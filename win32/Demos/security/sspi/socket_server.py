@@ -44,7 +44,7 @@ def GetUserName():
         # is a lack of Python codecs - so printing the Unicode value fails.
         # So just return the repr(), and avoid codecs completely.
         return repr(win32api.GetUserNameEx(win32api.NameSamCompatible))
-    
+
 # Send a simple "message" over a socket - send the number of bytes first,
 # then the string.  Ditto for receive.
 def _send_msg(s, m):
@@ -75,7 +75,7 @@ class SSPISocketServer(SocketServer.TCPServer):
             except sspi.error, details:
                 print "FAILED to authorize client:", details
                 return False
-                
+
             if err==0:
                 break
             _send_msg(sock, sec_buffer[0].Buffer)
@@ -130,7 +130,7 @@ def sspi_client():
 if __name__=='__main__':
     parser = optparse.OptionParser("%prog [options] client|server",
                                    description=__doc__)
-    
+
     parser.add_option("", "--package", action="store", default="NTLM",
                       help="The SSPI package to use (eg, Kerberos) - default is NTLM")
 

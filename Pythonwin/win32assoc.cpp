@@ -139,7 +139,7 @@ ui_assoc_object *CAssocManager::GetAssocObject(void * handle)
 	PyObject *ob = PyWeakref_GetObject(weakref);
 	if (ob == NULL) {
 		// an error - but a NULL return from us just means "no assoc"
-		// so print the error and ignore it, treating it as if the 
+		// so print the error and ignore it, treating it as if the
 		// weak-ref target has died.
 		gui_print_error();
 		ob = Py_None;
@@ -191,7 +191,7 @@ bool ui_assoc_CObject::CheckCppObject(ui_type *ui_type_check) const
 {
 	if (!ui_assoc_object::CheckCppObject(ui_type_check)) return false;
 	CObject *pObj = (CObject *)assoc;
-// Assert triggers occasionally for brand new window objects - 
+// Assert triggers occasionally for brand new window objects -
 // Removing this ASSERT cant hurt too much (as I have never seen it
 // fire legitimately
 //	ASSERT_VALID(pObj); // NULL has already been handled before now.
@@ -224,7 +224,7 @@ ui_assoc_object::AttachObject(PyObject *self, PyObject *args)
 	// same instance to the same win32ui type object.
 	// decref of the instance may trigger instance delete,
 	// which may trigger AttachObject(None), which will
-	// attempt to decref etc.  
+	// attempt to decref etc.
 	// So set the instance to NULL _before_ we decref it, and only
 	// do the decref after we've incref'd the new object - if it is the
 	// same object we may otherwise transition it via a refcount of 0.
@@ -260,11 +260,11 @@ static struct PyMethodDef PyAssocObject_methods[] = {
 	{NULL, NULL}
 };
 
-ui_type ui_assoc_object::type("(abstract) PyAssocObject", 
-							  &ui_base_class::type, 
-							  sizeof(ui_assoc_object), 
-							  PYOBJ_OFFSET(ui_assoc_object), 
-							  PyAssocObject_methods, 
+ui_type ui_assoc_object::type("(abstract) PyAssocObject",
+							  &ui_base_class::type,
+							  sizeof(ui_assoc_object),
+							  PYOBJ_OFFSET(ui_assoc_object),
+							  PyAssocObject_methods,
 							  NULL);
 
 ui_assoc_object::ui_assoc_object()
@@ -373,12 +373,12 @@ static struct PyMethodDef PyAssocCObject_methods[] = {
 	{NULL, NULL}
 };
 
-ui_type_CObject ui_assoc_CObject::type("PyAssocCObject", 
-									   &ui_assoc_object::type, 
-									   RUNTIME_CLASS(CObject), 
-									   sizeof(ui_assoc_CObject), 
-									   PYOBJ_OFFSET(ui_assoc_CObject), 
-									   PyAssocCObject_methods, 
+ui_type_CObject ui_assoc_CObject::type("PyAssocCObject",
+									   &ui_assoc_object::type,
+									   RUNTIME_CLASS(CObject),
+									   sizeof(ui_assoc_CObject),
+									   PYOBJ_OFFSET(ui_assoc_CObject),
+									   PyAssocCObject_methods,
 									   NULL);
 
 ui_assoc_CObject::ui_assoc_CObject()

@@ -31,14 +31,14 @@ STDMETHODIMP PyGContextMenu3::GetCommandString(
 						pszName, cchMax);
 }
 
-STDMETHODIMP PyGContextMenu3::HandleMenuMsg( 
+STDMETHODIMP PyGContextMenu3::HandleMenuMsg(
                 UINT uMsg,
                 WPARAM wParam,
                 LPARAM lParam) {
 	return PyGContextMenu2::HandleMenuMsg(uMsg, wParam, lParam);
 }
 
-STDMETHODIMP PyGContextMenu3::HandleMenuMsg2( 
+STDMETHODIMP PyGContextMenu3::HandleMenuMsg2(
                 UINT uMsg,
                 WPARAM wParam,
                 LPARAM lParam,

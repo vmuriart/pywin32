@@ -24,7 +24,7 @@ PyIPropertyStoreCache::~PyIPropertyStoreCache()
 }
 
 // @pymethod int|PyIPropertyStoreCache|GetState|Retrieves the current state of a property
-// @rdesc A value from the PSC_STATE enum (PSC_NORMAL, PSC_NOTINSOURCE. PSC_DIRTY) 
+// @rdesc A value from the PSC_STATE enum (PSC_NORMAL, PSC_NOTINSOURCE. PSC_DIRTY)
 PyObject *PyIPropertyStoreCache::GetState(PyObject *self, PyObject *args)
 {
 	IPropertyStoreCache *pIPSC = GetI(self);

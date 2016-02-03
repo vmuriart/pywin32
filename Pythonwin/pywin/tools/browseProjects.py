@@ -18,7 +18,7 @@ class HLIErrorItem(hierlist.HierListItem):
 class HLICLBRItem(hierlist.HierListItem):
 	def __init__(self, name, file, lineno, suffix = ""):
 		# If the 'name' object itself has a .name, use it.  Not sure
-		# how this happens, but seems pyclbr related. 
+		# how this happens, but seems pyclbr related.
 		# See PyWin32 bug 817035
 		self.name = getattr(name, "name", name)
 		self.file = file
@@ -230,7 +230,7 @@ def BrowseDialog():
     root = HLIRoot()
     if not root.IsExpandable():
         raise TypeError("Browse() argument must have __dict__ attribute, or be a Browser supported type")
-        
+
     dlg = dynamic_browser (root)
     dlg.CreateWindow()
 

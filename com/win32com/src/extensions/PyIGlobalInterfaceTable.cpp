@@ -48,7 +48,7 @@ PyObject *PyIGlobalInterfaceTable::RegisterInterfaceInGlobal(PyObject *self, PyO
 	BOOL bPythonIsHappy = TRUE;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obpUnk, IID_IUnknown, (void **)&pUnk, TRUE /* bNoneOK */))
 		 bPythonIsHappy = FALSE;
-	if (!PyWinObject_AsIID(obriid, &riid)) 
+	if (!PyWinObject_AsIID(obriid, &riid))
 		bPythonIsHappy = FALSE;
 	if(!bPythonIsHappy)
 	{
@@ -110,7 +110,7 @@ PyObject *PyIGlobalInterfaceTable::GetInterfaceFromGlobal(PyObject *self, PyObje
 	}
 	BOOL bPythonIsHappy = TRUE;
 	if (!PyWinObject_AsIID(obriid, &riid)) bPythonIsHappy = FALSE;
-	
+
 	if(!bPythonIsHappy)
 	{
 		return NULL;
@@ -128,9 +128,9 @@ PyObject *PyIGlobalInterfaceTable::GetInterfaceFromGlobal(PyObject *self, PyObje
 
 static struct PyMethodDef PyIGlobalInterfaceTable_methods[] =
 {
-	{ "RegisterInterfaceInGlobal", PyIGlobalInterfaceTable::RegisterInterfaceInGlobal, 1 }, 
-	{ "RevokeInterfaceFromGlobal", PyIGlobalInterfaceTable::RevokeInterfaceFromGlobal, 1 }, 
-	{ "GetInterfaceFromGlobal", PyIGlobalInterfaceTable::GetInterfaceFromGlobal, 1 }, 
+	{ "RegisterInterfaceInGlobal", PyIGlobalInterfaceTable::RegisterInterfaceInGlobal, 1 },
+	{ "RevokeInterfaceFromGlobal", PyIGlobalInterfaceTable::RevokeInterfaceFromGlobal, 1 },
+	{ "GetInterfaceFromGlobal", PyIGlobalInterfaceTable::GetInterfaceFromGlobal, 1 },
 	{ NULL }
 };
 

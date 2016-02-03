@@ -94,7 +94,7 @@ class EditorDocument(ParentEditorDocument):
 			except TypeError: # Null byte in file.
 				win32ui.MessageBox("This file contains NULL bytes, and can not be edited")
 				rc = 0
-				
+
 			self.EndWaitCursor()
 			self.SetModifiedFlag(0) # No longer dirty
 			self._DocumentStateChanged()
@@ -108,7 +108,7 @@ class EditorDocument(ParentEditorDocument):
 			return re.sub('\r*\n','\r\n',data)
 		else:
 			return data
-		
+
 	def SaveFile(self, fileName, encoding=None):
 		if isRichText:
 			view = self.GetFirstView()
@@ -134,7 +134,7 @@ class EditorDocument(ParentEditorDocument):
 		for view in self.GetAllViews():
 			view.SetLineColor(lineNo, color)
 
-		
+
 #	def StreamTextOut(self, data): ### This seems unreliable???
 #		self.saveFileHandle.write(data)
 #		return 1 # keep em coming!
@@ -150,7 +150,7 @@ class EditorView(ParentEditorView):
 		self.addToMRU = 1
 		self.HookHandlers()
 		self.bCheckingFile = 0
-		
+
 		self.defCharFormat = GetEditorFontOption("Default Font", defaultCharacterFormat)
 
 		# Smart tabs override everything else if context can be worked out.
@@ -191,7 +191,7 @@ class EditorView(ParentEditorView):
 
 	def _UpdateUIForState(self):
 		self.SetReadOnly(self.GetDocument()._IsReadOnly())
-	
+
 	def SetAllLineColors(self, color = None):
 		if isRichText:
 			info = self._PrepareUserStateChange()
@@ -215,10 +215,10 @@ class EditorView(ParentEditorView):
 					self.SetSelectionCharFormat((win32con.CFM_COLOR, 0,0,0,color))
 			finally:
 				self._EndUserStateChange(info)
-				
+
 	def Indent(self):
 		"""Insert an indent to move the cursor to the next tab position.
-		
+
 		Honors the tab size and 'use tabs' settings.  Assumes the cursor is already at the
 		position to be indented, and the selection is a single character (ie, not a block)
 		"""
@@ -254,18 +254,18 @@ class EditorView(ParentEditorView):
 
 		# Either smart tabs off, or not smart enough!
 		# Use the "old style" settings.
-		if ins is None: 			
+		if ins is None:
 			if self.bUseTabs and nextColumn % self.tabSize==0:
 				ins = '\t'
 			else:
 				ins = ' '
-				
-		if ins == ' ': 
+
+		if ins == ' ':
 			# Calc the number of spaces to take us to the next stop
 			ins = ins * (nextColumn - curCol)
 
 		self._obj_.ReplaceSel(ins)
-		
+
 
 	def BlockDent(self, isIndent, startLine, endLine):
 		" Indent/Undent all lines specified "
@@ -299,7 +299,7 @@ class EditorView(ParentEditorView):
 			self._EndUserStateChange(info)
 		self.GetDocument().SetModifiedFlag(1) # Now dirty
 		self._obj_.SetSel(self.LineIndex(startLine), self.LineIndex(endLine))
-	
+
 	def GotoLine(self, lineNo = None):
 		try:
 			if lineNo is None:
@@ -332,7 +332,7 @@ class EditorView(ParentEditorView):
 
 	def OnRClick(self,params):
 		menu = win32ui.CreatePopupMenu()
-		
+
 		# look for a module name
 		line=self._obj_.GetLine().strip()
 		flags=win32con.MF_STRING|win32con.MF_ENABLED
@@ -365,7 +365,7 @@ class EditorView(ParentEditorView):
 			win32ui.SetStatusText("Can't locate module %s" % modName)
 		else:
 			win32ui.GetApp().OpenDocumentFile(fileName)
-		return 0	
+		return 0
 
 	# Key handlers
 	def OnKeyEnter(self, key):
@@ -403,7 +403,7 @@ class EditorView(ParentEditorView):
 		self.BlockDent(win32api.GetKeyState(win32con.VK_SHIFT)>=0, startLine, endLine)
 		return 0
 
-	
+
 	def OnEditPaste(self, id, code):
 		# Return 1 if we can make the file editable.(or it already is!)
 		return self.GetDocument().CheckMakeDocumentWritable()
@@ -447,7 +447,7 @@ class EditorTemplate(EditorTemplateBase):
 
 	def CreateWin32uiDocument(self):
 		return self.DoCreateRichEditDoc()
-	
+
 def Create(fileName = None, title=None, template = None):
 	return editorTemplate.OpenDocumentFile(fileName)
 

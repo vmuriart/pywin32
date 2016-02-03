@@ -50,7 +50,7 @@ except ImportError:
 
 _nmhdr_fmt = "PPi"
 if is64bit:
-    # When the item past the NMHDR gets aligned (eg, when it is a struct) 
+    # When the item past the NMHDR gets aligned (eg, when it is a struct)
     # we need this many bytes padding.
     _nmhdr_align_padding = "xxxx"
 else:
@@ -226,7 +226,7 @@ def EmptyMENUITEMINFO(mask = None, text_buf_size=512):
                win32con.MIIM_ID | win32con.MIIM_STATE | \
                win32con.MIIM_STRING | win32con.MIIM_SUBMENU
                # Note: No MIIM_TYPE - this screws win2k/98.
- 
+
     if mask & win32con.MIIM_STRING:
         text_buffer = _make_empty_text_buffer(text_buf_size)
         extra.append(text_buffer)
@@ -303,7 +303,7 @@ def EmptyMENUINFO(mask = None):
         mask = win32con.MIM_STYLE | win32con.MIM_MAXHEIGHT| \
                win32con.MIM_BACKGROUND | win32con.MIM_HELPID | \
                win32con.MIM_MENUDATA
- 
+
     buf = struct.pack(
                 _menuinfo_fmt,
                 struct.calcsize(_menuinfo_fmt), # cbSize
@@ -319,7 +319,7 @@ def EmptyMENUINFO(mask = None):
 ##########################################################################
 #
 # Tree View structure support - TVITEM, TVINSERTSTRUCT and TVDISPINFO
-# 
+#
 ##########################################################################
 
 # XXX - Note that the following implementation of TreeView structures is ripped
@@ -393,7 +393,7 @@ def EmptyTVITEM(hitem, mask = None, text_buf_size=512):
                       0, 0,
                       0, 0)
     return array.array("b", buf), extra
-    
+
 def UnpackTVITEM(buffer):
     item_mask, item_hItem, item_state, item_stateMask, \
         item_textptr, item_cchText, item_image, item_selimage, \
@@ -407,7 +407,7 @@ def UnpackTVITEM(buffer):
     if not (item_mask & commctrl.TVIF_PARAM): item_param = None
     if not (item_mask & commctrl.TVIF_SELECTEDIMAGE): item_selimage = None
     if not (item_mask & commctrl.TVIF_STATE): item_state = item_stateMask = None
-    
+
     if item_textptr:
         text = win32gui.PyGetString(item_textptr)
     else:
@@ -459,7 +459,7 @@ def PackLVITEM(item=None, subItem=None, state=None, stateMask=None, text=None, i
     else:
         mask |= commctrl.LVIF_STATE
         if stateMask is None: stateMask = state
-    
+
     if image is None: image = 0
     else: mask |= commctrl.LVIF_IMAGE
     if param is None: param = 0
@@ -493,7 +493,7 @@ def UnpackLVITEM(buffer):
     if not (item_mask & commctrl.LVIF_PARAM): item_param = None
     if not (item_mask & commctrl.LVIF_INDENT): item_indent = None
     if not (item_mask & commctrl.LVIF_STATE): item_state = item_stateMask = None
-    
+
     if item_textptr:
         text = win32gui.PyGetString(item_textptr)
     else:
@@ -540,7 +540,7 @@ def EmptyLVITEM(item, subitem, mask = None, text_buf_size=512):
     else:
         text_addr = text_buf_size = 0
     buf = struct.pack(_lvitem_fmt,
-                      mask, item, subitem, 
+                      mask, item, subitem,
                       0, 0,
                       text_addr, text_buf_size, # text
                       0, 0, 0)
@@ -695,7 +695,7 @@ class DEV_BROADCAST_INFO:
     def __str__(self):
         return "DEV_BROADCAST_INFO:" + str(self.__dict__)
 
-# Support for unpacking the 'lparam'    
+# Support for unpacking the 'lparam'
 def UnpackDEV_BROADCAST(lparam):
     if lparam == 0:
         return None

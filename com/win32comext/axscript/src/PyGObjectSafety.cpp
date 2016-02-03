@@ -4,7 +4,7 @@
 #include "PyIObjectSafety.h"
 
 
-STDMETHODIMP PyGObjectSafety::GetInterfaceSafetyOptions( 
+STDMETHODIMP PyGObjectSafety::GetInterfaceSafetyOptions(
         /* [in] */ REFIID riid,
         /* [out] */ DWORD __RPC_FAR *pdwSupportedOptions,
         /* [out] */ DWORD __RPC_FAR *pdwEnabledOptions)
@@ -29,8 +29,8 @@ STDMETHODIMP PyGObjectSafety::GetInterfaceSafetyOptions(
 	Py_XDECREF(result);
 	return hr;
 }
-    
-STDMETHODIMP PyGObjectSafety::SetInterfaceSafetyOptions( 
+
+STDMETHODIMP PyGObjectSafety::SetInterfaceSafetyOptions(
         /* [in] */ REFIID riid,
         /* [in] */ DWORD dwOptionSetMask,
         /* [in] */ DWORD dwEnabledOptions)

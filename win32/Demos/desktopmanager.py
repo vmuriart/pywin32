@@ -17,7 +17,7 @@ def desktop_name_dlgproc(hwnd,msg,wparam,lparam):
             print 'new desktop name: ',desktop_name
             win32gui.DestroyWindow(hwnd)
             create_desktop(desktop_name)
-            
+
         elif wparam == win32con.IDCANCEL:
             win32gui.DestroyWindow(hwnd)
 
@@ -41,9 +41,9 @@ def get_new_desktop_name(parent_hwnd):
     hcontrol=win32gui.GetDlgItem(h,72)
     win32gui.EnableWindow(hcontrol,True)
     win32gui.SetFocus(hcontrol)
-    
+
 def new_icon(hdesk,desktop_name):
-    """ Runs as a thread on each desktop to create a new tray icon and handle its messages """ 
+    """ Runs as a thread on each desktop to create a new tray icon and handle its messages """
     global id
     id=id+1
     hdesk.SetThreadDesktop()
@@ -122,7 +122,7 @@ def icon_wndproc(hwnd, msg, wp, lp):
             win32gui.AppendMenu(m, mf_flags, d, desktops[d-1])
         win32gui.AppendMenu(m, win32con.MF_STRING, desktop_cnt+1, 'Create new ...')
         win32gui.AppendMenu(m, win32con.MF_STRING, desktop_cnt+2, 'Exit')
-            
+
         x,y=win32gui.GetCursorPos()
         d=win32gui.TrackPopupMenu(m,win32con.TPM_LEFTBUTTON|win32con.TPM_RETURNCMD|win32con.TPM_NONOTIFY,
             x,y, 0, hwnd, None)

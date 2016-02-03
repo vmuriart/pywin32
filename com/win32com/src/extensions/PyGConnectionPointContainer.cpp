@@ -6,7 +6,7 @@
 
 STDMETHODIMP PyGConnectionPointContainer::EnumConnectionPoints(IEnumConnectionPoints **)
 {
-/*	
+/*
 	PY_GATEWAY_METHOD;
 	return InvokeViaPolicy("EnumConnectionPoints", NULL, NULL);
 */

@@ -35,7 +35,7 @@ _event_commands = [
 	# Edit menu
 	"afxres.ID_EDIT_UNDO", "afxres.ID_EDIT_REDO", "afxres.ID_EDIT_CUT",
 	"afxres.ID_EDIT_COPY", "afxres.ID_EDIT_PASTE", "afxres.ID_EDIT_SELECT_ALL",
-	"afxres.ID_EDIT_FIND", "afxres.ID_EDIT_REPEAT", "afxres.ID_EDIT_REPLACE", 
+	"afxres.ID_EDIT_FIND", "afxres.ID_EDIT_REPEAT", "afxres.ID_EDIT_REPLACE",
 	# View menu
 	"win32ui.ID_VIEW_WHITESPACE", "win32ui.ID_VIEW_FIXED_FONT",
 	"win32ui.ID_VIEW_BROWSE", "win32ui.ID_VIEW_INTERACTIVE",
@@ -114,7 +114,7 @@ def _get_class_attributes(ob):
 		pass
 	return items
 
-# Supposed to look like an MFC CEditView, but 
+# Supposed to look like an MFC CEditView, but
 # also supports IDLE extensions and other source code generic features.
 class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 	def __init__(self, doc):
@@ -139,7 +139,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 		import formatter
 		return formatter.BuiltinPythonSourceFormatter(self, ext)
 
-	
+
 #	def SendScintilla(self, msg, w=0, l=0):
 #		return self._obj_.SendMessage(msg, w, l)
 
@@ -211,7 +211,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 		self.SetSel()
 
 		self.GetDocument().FinalizeViewCreation(self) # is there an MFC way to grab this?
-		
+
 
 	def _GetSubConfigNames(self):
 		return None # By default we use only sections without sub-sections.
@@ -283,7 +283,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 			if cmdid is None:
 				# No event of that name - no point displaying it.
 				print 'View.AppendMenu(): Unknown event "%s" specified for menu text "%s" - ignored' % (event, text)
-				return 
+				return
 			keyname = configManager.get_key_binding( event, self._GetSubConfigNames() )
 			if keyname is not None:
 				text = text + "\t" + keyname
@@ -412,7 +412,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 						items_dict.update(list2dict(dir(ob._obj_)))
 					except AttributeError:
 						pass # object has no __dict__
-				
+
 				# normal attributes
 				try:
 					items_dict.update(list2dict(dir(ob)))
@@ -425,7 +425,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 				try:
 					# Get the automation attributes
 					items_dict.update(ob.__class__._prop_map_get_)
-					# See if there is an write only property 
+					# See if there is an write only property
 					# could be optimized
 					items_dict.update(ob.__class__._prop_map_put_)
 					# append to the already evaluated list
@@ -511,7 +511,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 					refTypeInfo = typeInfo.GetRefTypeInfo(iRefType)
 					typeInfos.append(refTypeInfo)
 
-	# TODO: This is kinda slow. Probably need some kind of cache 
+	# TODO: This is kinda slow. Probably need some kind of cache
 	# here that is flushed upon file save
 	# Or maybe we don't need the superclass methods at all ?
 	def _UpdateWithClassMethods(self,dict,classinfo):
@@ -541,7 +541,7 @@ class CScintillaView(docview.CtrlView, control.CScintillaColorEditInterface):
 		if not browser.list: return (minline,maxline,None) # Not initialized
 		path = self.GetDocument().GetPathName()
 		if not path: return (minline,maxline,None) # No current path
-		
+
 		import pywin.framework.scriptutils
 		curmodule, path = pywin.framework.scriptutils.GetPackageModuleName(path)
 		try:

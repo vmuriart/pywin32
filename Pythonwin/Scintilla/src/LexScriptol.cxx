@@ -328,7 +328,7 @@ static void ColouriseSolDoc(unsigned int startPos, int length, int initStyle,
                     state = SCE_SCRIPTOL_DEFAULT;
                  }
              }
-            
+
            }
           chPrev2 = chPrev;
           chPrev = ch;

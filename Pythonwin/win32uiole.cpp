@@ -5,7 +5,7 @@
 #include "win32uioledoc.h"
 #include "win32template.h"
 #include "PythonCOM.h"
-// not including this here causes compile errors when it *is* 
+// not including this here causes compile errors when it *is*
 // included by later headers, using MSVC6 standard headers
 // (although replacing transact.h with a later Platform SDK
 // version does *not* give the error.  Whatever.
@@ -18,7 +18,7 @@
 #include "afxocc.h"
 // Sorry about this - OLE support needs MFC private header.
 // You MUST install MFC with source-code to build this extension.
-// (and this source must be in "../src" relative to the MFC 
+// (and this source must be in "../src" relative to the MFC
 // includes, which it is by default)
 #else
 #ifndef MFC_OCC_IMPL_H

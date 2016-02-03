@@ -150,7 +150,7 @@ class IEHost:
     def __init__(self):
         self.hwnd = None
         self.ole_frame = None
-    
+
     def __del__(self):
         try:
             win32gui.UnregisterClass(self.wnd_class_name, None)
@@ -169,7 +169,7 @@ class IEHost:
         #wc.style =  win32con.CS_GLOBALCLASS|win32con.CS_VREDRAW | win32con.CS_HREDRAW
         #wc.hbrBackground = win32con.COLOR_WINDOW+1
         wc.lpfnWndProc = message_map
-        class_atom=win32gui.RegisterClass(wc)       
+        class_atom=win32gui.RegisterClass(wc)
         self.hwnd = win32gui.CreateWindow(wc.lpszClassName,
             'Embedded browser',
             win32con.WS_OVERLAPPEDWINDOW | win32con.WS_VISIBLE,

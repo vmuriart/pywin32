@@ -112,7 +112,7 @@ class Method:
         invkind = desc[4]
         arg_defs = desc[2]
         ret_def = desc[8]
-        
+
         self.dispid = dispid
         self.invkind = invkind
         # We dont use this ATM.
@@ -170,7 +170,7 @@ class Definition:
         "Dispatch a call to an interface method."
         meth = self._methods[index]
         # Infer S_OK if they don't return anything bizarre.
-        hr = 0 
+        hr = 0
         args = ReadFromInTuple(meth._gw_in_args, argPtr)
         # If ob is a dispatcher, ensure a policy
         ob = getattr(ob, "policy", ob)

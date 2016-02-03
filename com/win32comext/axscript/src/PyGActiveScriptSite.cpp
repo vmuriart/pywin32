@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-STDMETHODIMP PyGActiveScriptSite::GetLCID( 
+STDMETHODIMP PyGActiveScriptSite::GetLCID(
             /* [out] */ LCID FAR *plcid)
 {
 	PY_GATEWAY_METHOD;
@@ -147,12 +147,12 @@ STDMETHODIMP PyGActiveScriptSite::OnScriptTerminate(
 		obExcepInfo = Py_None;
 	}
 
-	HRESULT hr = InvokeViaPolicy("OnScriptTerminate", NULL, 
+	HRESULT hr = InvokeViaPolicy("OnScriptTerminate", NULL,
 										 "OO", obResult, obExcepInfo);
 	Py_DECREF(obResult);
 	Py_DECREF(obExcepInfo);
 	return hr;
-	
+
 }
 
 STDMETHODIMP PyGActiveScriptSite::OnStateChange(

@@ -9,12 +9,12 @@ def walk(folder, depth=2, indent=""):
         # no items
         return
     for pidl in pidls:
-        dn = folder.GetDisplayNameOf(pidl, 
+        dn = folder.GetDisplayNameOf(pidl,
                                      shellcon.SHGDN_NORMAL)
         print indent, dn
         if depth:
             try:
-                child = folder.BindToObject(pidl, None, 
+                child = folder.BindToObject(pidl, None,
                                       shell.IID_IShellFolder)
             except shell.error:
                 pass

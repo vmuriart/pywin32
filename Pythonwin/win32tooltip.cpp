@@ -51,7 +51,7 @@ PyCToolTipCtrl_create_window(PyObject *self, PyObject *args)
 {
 	int style;
 	PyObject *obParent;
-	if (!PyArg_ParseTuple(args, "Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "Oi:CreateWindow",
 			   &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the control.
 			   &style)) // @pyparm int|style||The style for the control.
 		return NULL;
@@ -83,15 +83,15 @@ PyCToolTipCtrl_update_tip_text(PyObject *self, PyObject *args)
 	TCHAR *pszText;
 	PyObject *obText;
 	UINT nIDTool;
-	if (!PyArg_ParseTuple(args, "OOi:UpdateTipText", 
+	if (!PyArg_ParseTuple(args, "OOi:UpdateTipText",
 			   &obText,// @pyparm string|text||The text for the tool.
 			   &obWnd, // @pyparm <o PyCWnd>|wnd||The window of the tool.
 			   &nIDTool// @pyparm int|id||The id of the tool
-			   )) 
+			   ))
 		return NULL;
 
 	CWnd *pWndToolOwner = NULL;
-	if (obWnd != Py_None) 
+	if (obWnd != Py_None)
 		{
 		if (!ui_base_class::is_uiobject(obWnd,&PyCWnd::type))
 			RETURN_TYPE_ERR("wnd argument must be a window object");
@@ -121,16 +121,16 @@ PyCToolTipCtrl_add_tool(PyObject *self, PyObject *args)
 	TCHAR *pszText;
 	PyObject *obText;
 	UINT nIDTool;
-	if (!PyArg_ParseTuple(args, "OOOi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "OOOi:CreateWindow",
 			   &obWnd, // @pyparm <o PyCWnd>|wnd||The window of the tool.
 			   &obText,// @pyparm string|text||The text for the tool.
 			   &obRect, // @pyparm int, int, int, int|rect|None|The default rectangle
 			   &nIDTool// @pyparm int|id||The id of the tool
-			   )) 
+			   ))
 		return NULL;
 
 	CWnd *pWnd = NULL;
-	if (obWnd != Py_None) 
+	if (obWnd != Py_None)
 		{
 		if (!ui_base_class::is_uiobject(obWnd,&PyCWnd::type))
 			RETURN_TYPE_ERR("wnd argument must be a window object");
@@ -141,9 +141,9 @@ PyCToolTipCtrl_add_tool(PyObject *self, PyObject *args)
 
 	RECT rect;
 	RECT *pRectTool=NULL;
-	if (obRect != Py_None) 
+	if (obRect != Py_None)
 		{
-		if (!PyArg_ParseTuple(obRect, "iiii", &rect.left,  &rect.top,  &rect.right,&rect.bottom)) 
+		if (!PyArg_ParseTuple(obRect, "iiii", &rect.left,  &rect.top,  &rect.right,&rect.bottom))
 			{
 			PyErr_Clear();
 			RETURN_TYPE_ERR("Rect must be None or a tuple of (iiii)");
@@ -171,7 +171,7 @@ static PyObject *
 PyCToolTipCtrl_set_max_tip_width(PyObject *self, PyObject *args)
 	{
 	int width;
-	if (!PyArg_ParseTuple(args, "i:SetMaxTipWidth", 
+	if (!PyArg_ParseTuple(args, "i:SetMaxTipWidth",
 			   &width)) // @pyparm int|width||The new width
 		return NULL;
 
@@ -195,10 +195,10 @@ static struct PyMethodDef PyCToolTipCtrl_methods[] = {
 	{NULL,				NULL}
 };
 
-ui_type_CObject PyCToolTipCtrl::type("PyCToolTipCtrl", 
-				       &ui_control_object::type, 
-				       RUNTIME_CLASS(CToolTipCtrl), 
-				       sizeof(PyCToolTipCtrl), 
-				       PYOBJ_OFFSET(PyCToolTipCtrl), 
-				       PyCToolTipCtrl_methods, 
+ui_type_CObject PyCToolTipCtrl::type("PyCToolTipCtrl",
+				       &ui_control_object::type,
+				       RUNTIME_CLASS(CToolTipCtrl),
+				       sizeof(PyCToolTipCtrl),
+				       PYOBJ_OFFSET(PyCToolTipCtrl),
+				       PyCToolTipCtrl_methods,
 				       GET_PY_CTOR(PyCToolTipCtrl));

@@ -66,7 +66,7 @@ if debug:
 
 # markh is toying with an implementation that allows auto reload of a module
 # if this attribute exists.
-com_auto_reload = True 
+com_auto_reload = True
 
 # Helper function to get a system IShellFolder interface, and the PIDL within
 # that folder for an existing file/directory.
@@ -140,7 +140,7 @@ class ShellFolderBase:
 # A ShellFolder for an object with CHILDREN on the file system
 # Note that this means our "File" folder is *not* a 'FileSystem' folder,
 # as it's children (functions and classes) are not on the file system.
-# 
+#
 class ShellFolderFileSystem(ShellFolderBase):
     def _GetFolderAndPIDLForPIDL(self, my_idl):
         typ, name = my_idl[0].split('\0')
@@ -174,7 +174,7 @@ class ShellFolderFileSystem(ShellFolderBase):
         for pidl in pidls:
             pidl = pidl[0] # ??
             typ, name = pidl.split('\0')
-            flags = shellcon.SHGFI_ATTRIBUTES 
+            flags = shellcon.SHGFI_ATTRIBUTES
             rc, info = shell.SHGetFileInfo(name, 0, flags)
             hIcon, iIcon, dwAttr, name, typeName = info
             # All our items, even files, have sub-items
@@ -184,7 +184,7 @@ class ShellFolderFileSystem(ShellFolderBase):
                      shellcon.SFGAO_BROWSABLE
             ret_flags &= (dwAttr | extras)
         return ret_flags
- 
+
 class ShellFolderDirectory(ShellFolderFileSystem):
     def __init__(self, path):
         self.path = os.path.abspath(path)
@@ -526,7 +526,7 @@ class FileSystemView:
         # Enumerate and store the child PIDLs
         for cid in self.folder.EnumObjects(self.hwnd, 0):
             self.children.append(cid)
-            
+
         for row_index, data in enumerate(self.children):
             assert len(data)==1, "expecting just a child PIDL"
             typ, path = data[0].split('\0')
@@ -549,7 +549,7 @@ class FileSystemView:
                                             item=row_index,
                                             subItem=col_index,
                                             text=prop_val)
-    
+
                 win32gui.SendMessage(self.hwnd_child,
                                      commctrl.LVM_SETITEM,
                                      0, data)
@@ -649,8 +649,8 @@ class FileSystemView:
                     rv = shell.ShellExecuteEx(
                                 hwnd = self.hwnd_parent,
                                 nShow=win32con.SW_NORMAL,
-                                lpClass="folder", 
-                                lpVerb="explore", 
+                                lpClass="folder",
+                                lpVerb="explore",
                                 lpIDList=sel[0])
                     print "ShellExecuteEx returned", rv
             finally:
@@ -668,7 +668,7 @@ class FileSystemView:
             if n==-1:
                 break
             pidls.append(self.children[n][-1:])
-        
+
         spt = win32api.GetCursorPos()
         if not pidls:
             print "Ignoring background click"
@@ -744,7 +744,7 @@ class ScintillaShellView:
                 win32con.WS_HSCROLL | win32con.WS_CLIPCHILDREN | \
                 win32con.WS_VISIBLE
         self.hwnd = win32gui.CreateWindow("Scintilla", "Scintilla", style,
-                              rect[0], rect[1], rect[2]-rect[0], rect[3]-rect[1], 
+                              rect[0], rect[1], rect[2]-rect[0], rect[3]-rect[1],
                               self.hwnd_parent, 1000, 0, None)
 
         message_map = {

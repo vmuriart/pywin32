@@ -10,14 +10,14 @@
 # write is executed.
 # Updating the window directly gives a jerky appearance as many writes
 # take place between commands, and the windows scrolls, and updates etc
-# Updating at idle-time may defer all output of a long process, giving the 
+# Updating at idle-time may defer all output of a long process, giving the
 # appearence nothing is happening.
 # There is a compromise "line" mode, which will output whenever
 # a complete line is available.
 
 # behaviour depends on self.writeQueueing
 
-# This module is thread safe - output can originate from any thread.  If any thread 
+# This module is thread safe - output can originate from any thread.  If any thread
 # other than the main thread attempts to print, it is always queued until next idle time
 
 import sys, string, re
@@ -68,7 +68,7 @@ class WindowOutputFrame(window.MDIChildWnd):
 	def LoadFrame( self, idResource, style, wndParent, context ):
 		self.template = context.template
 		return self._obj_.LoadFrame(idResource, style, wndParent, context)
-		
+
 	def PreCreateWindow(self, cc):
 		cc = self._obj_.PreCreateWindow(cc)
 		if self.template.defSize and self.template.defSize[0] != self.template.defSize[1]:
@@ -204,7 +204,7 @@ class WindowOutputViewRTF(docview.RichEditView, WindowOutputViewImpl):
 		if self.HandleSpecialLine():
 			return 0	# dont pass on
 		return 1	# pass it on by default.
-		
+
 	def RestoreKillBuffer(self):
 		if len(self.template.killBuffer):
 			self.StreamIn(win32con.SF_RTF, self._StreamRTFIn)
@@ -293,7 +293,7 @@ class WindowOutput(docview.DocTemplate):
 	def __init__(self, title=None, defSize=None, queueing = flags.WQ_LINE, \
 	             bAutoRestore = 1, style=None,
 	             makeDoc = None, makeFrame = None, makeView = None):
-		""" init the output window - 
+		""" init the output window -
 		Params
 		title=None -- What is the title of the window
 		defSize=None -- What is the default size for the window - if this
@@ -485,7 +485,7 @@ class WindowOutput(docview.DocTemplate):
 
 	def write(self,message):
 		self.HandleOutput(message)
-			
+
 	def flush(self):
 		self.QueueFlush()
 
@@ -501,7 +501,7 @@ def thread_test(o):
 	for i in range(5):
 		o.write("Hi from thread %d\n" % (win32api.GetCurrentThreadId()))
 		win32api.Sleep(100)
-		
+
 def test():
 	w = WindowOutput(queueing=flags.WQ_IDLE)
 	w.write("First bit of text\n")

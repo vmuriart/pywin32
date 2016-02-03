@@ -7,7 +7,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 // DSCArrayTest
-class ATL_NO_VTABLE DSCArrayTest : 
+class ATL_NO_VTABLE DSCArrayTest :
 	public CComObjectRootEx<CComSingleThreadModel>,
 	public CComCoClass<DSCArrayTest, &CLSID_ArrayTest>,
 	public ISupportErrorInfo,

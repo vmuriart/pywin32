@@ -32,7 +32,7 @@ public:
 	virtual void DrawItem( LPDRAWITEMSTRUCT lpDrawItemStruct );
 };
 
-class CPythonEditView : public CPythonViewFramework< CEditView > 
+class CPythonEditView : public CPythonViewFramework< CEditView >
 {
 	DECLARE_DYNAMIC(CPythonEditView);
 };
@@ -62,7 +62,7 @@ public:
 	DECLARE_DYNAMIC(CPythonFormView);
 };
 
-class CPythonCtrlView : public CPythonViewFramework<CCtrlView> 
+class CPythonCtrlView : public CPythonViewFramework<CCtrlView>
 {
 	DECLARE_DYNAMIC(CPythonCtrlView);
 public:

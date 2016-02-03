@@ -125,7 +125,7 @@ static PyObject *ui_bitmap_create_compatible_bitmap( PyObject *self, PyObject *a
 	int width, height;
 	PyObject *obDC;
 
-	if (!PyArg_ParseTuple(args,"Oii:CreateCompatibleBitmap", 
+	if (!PyArg_ParseTuple(args,"Oii:CreateCompatibleBitmap",
 		&obDC,      // @pyparm <o PyCDC>|dc||Specifies the device context.
 		&width, 	// @pyparm int|width||The width (in bits) of the bitmap
 		&height))	// @pyparm int|height||The height (in bits) of the bitmap.
@@ -157,7 +157,7 @@ PyObject *ui_bitmap_load_bitmap_file( PyObject *self, PyObject *args )
 	PyObject *fileObject;
 	if (!PyArg_ParseTuple(args,"O", &fileObject)) // @pyparm file[.read]|fileObject||The file object to load the .BMP format file from.
 		return NULL;
-	
+
 	PyObject *reader = PyObject_GetAttrString(fileObject, "read");
 	if (reader == NULL)
 		return NULL;
@@ -248,7 +248,7 @@ if (bmFileHeader.bfOffBits) {
 	memcpy( pBits, PyString_AsString(result), len);
 	DODECREF(result);	// dont need this.
 	DODECREF(reader); // or this.
-    
+
 	// kill old palette
 	delete pDIB->pPal;
 	// create the palette.
@@ -293,12 +293,12 @@ PyObject *ui_bitmap_load_ppm_file( PyObject *self, PyObject *args )
 	PyObject *fileObject;
 	int rows, cols;
 	const int bitsPerPixel=24;
-	if (!PyArg_ParseTuple(args,"O(ii)", 
+	if (!PyArg_ParseTuple(args,"O(ii)",
 			&fileObject, // @pyparm file[.read]|fileObject||The file object to load the PPM format file from.
 			&cols,       // @pyparm int|cols||The number of columns in the bitmap.
 			&rows))      // @pyparm int|rows||The number of rows in the bitmap.
 		return NULL;
-	
+
 	PyObject *reader = PyObject_GetAttrString(fileObject, "read");
 	if (reader == NULL)
 		return NULL;
@@ -397,11 +397,11 @@ static PyObject *ui_bitmap_paint( PyObject *self, PyObject *args )
 	CRect rSrc = CFrameWnd::rectDefault;
 	DWORD dwROP = SRCCOPY;
 	PyObject *dcobject;
-	if (!PyArg_ParseTuple(args,"O|(iiii)(iiii)i:Paint", 
+	if (!PyArg_ParseTuple(args,"O|(iiii)(iiii)i:Paint",
 						  // @pyparm <o PyCDC>|dcObject||The DC object to paint the bitmap to.
-						  &dcobject, 
+						  &dcobject,
 						  // @pyparm (left,top,right,bottom)|rectDest|(0,0,0,0)|The destination rectangle to paint to.
-						  &rDest.left, &rDest.top, &rDest.right, &rDest.bottom, 
+						  &rDest.left, &rDest.top, &rDest.right, &rDest.bottom,
 						  // @pyparm (left,top,right,bottom)|rectSrc|(0,0,0,0)|The source rectangle to paint from.
 						  &rSrc.left, &rSrc.top, &rSrc.right, &rSrc.bottom,
 						  &dwROP))
@@ -432,7 +432,7 @@ static PyObject *ui_bitmap_paint( PyObject *self, PyObject *args )
 	BOOL bRes = ::PaintDDB(pDC->m_hDC, &rDest, bitmap, &rSrc, pDIB->pPal, dwROP);
 	if (!bRes)
 		RETURN_ERR("Painting of DDB failed");
-#endif	
+#endif
 	RETURN_NONE;
 }
 
@@ -513,141 +513,141 @@ static PyObject *ui_bitmap_save_bitmap_file( PyObject *self, PyObject *args )
   CBitmap *pBitmap = ui_bitmap::GetBitmap(self);
   HBITMAP hBmp = (HBITMAP)pBitmap->GetSafeHandle();
 
-  BITMAP bmp; 
-  PBITMAPINFO pbmi; 
-  WORD    cClrBits; 
+  BITMAP bmp;
+  PBITMAPINFO pbmi;
+  WORD    cClrBits;
 
-  // Retrieve the bitmap's color format, width, and height. 
-  if (!GetObject(hBmp, sizeof(BITMAP), (LPSTR)&bmp)) 
-    RETURN_ERR("GetObject failed"); 
+  // Retrieve the bitmap's color format, width, and height.
+  if (!GetObject(hBmp, sizeof(BITMAP), (LPSTR)&bmp))
+    RETURN_ERR("GetObject failed");
 
-  // Convert the color format to a count of bits. 
-  cClrBits = (WORD)(bmp.bmPlanes * bmp.bmBitsPixel); 
-  if (cClrBits == 1) 
-    cClrBits = 1; 
-  else if (cClrBits <= 4) 
-    cClrBits = 4; 
-  else if (cClrBits <= 8) 
-    cClrBits = 8; 
-  else if (cClrBits <= 16) 
-    cClrBits = 16; 
-  else if (cClrBits <= 24) 
-    cClrBits = 24; 
-  else cClrBits = 32; 
+  // Convert the color format to a count of bits.
+  cClrBits = (WORD)(bmp.bmPlanes * bmp.bmBitsPixel);
+  if (cClrBits == 1)
+    cClrBits = 1;
+  else if (cClrBits <= 4)
+    cClrBits = 4;
+  else if (cClrBits <= 8)
+    cClrBits = 8;
+  else if (cClrBits <= 16)
+    cClrBits = 16;
+  else if (cClrBits <= 24)
+    cClrBits = 24;
+  else cClrBits = 32;
 
-  // Allocate memory for the BITMAPINFO structure. (This structure 
-  // contains a BITMAPINFOHEADER structure and an array of RGBQUAD 
-  // data structures.) 
+  // Allocate memory for the BITMAPINFO structure. (This structure
+  // contains a BITMAPINFOHEADER structure and an array of RGBQUAD
+  // data structures.)
 
-  if (cClrBits != 24) 
-    pbmi = (PBITMAPINFO) LocalAlloc(LPTR, 
-                                    sizeof(BITMAPINFOHEADER) + 
-                                    sizeof(RGBQUAD) * (1<< cClrBits)); 
+  if (cClrBits != 24)
+    pbmi = (PBITMAPINFO) LocalAlloc(LPTR,
+                                    sizeof(BITMAPINFOHEADER) +
+                                    sizeof(RGBQUAD) * (1<< cClrBits));
 
-  // There is no RGBQUAD array for the 24-bit-per-pixel format. 
+  // There is no RGBQUAD array for the 24-bit-per-pixel format.
 
-  else 
-    pbmi = (PBITMAPINFO) LocalAlloc(LPTR, 
-                                    sizeof(BITMAPINFOHEADER)); 
-  
-  // Initialize the fields in the BITMAPINFO structure. 
+  else
+    pbmi = (PBITMAPINFO) LocalAlloc(LPTR,
+                                    sizeof(BITMAPINFOHEADER));
 
-  pbmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER); 
-  pbmi->bmiHeader.biWidth = bmp.bmWidth; 
-  pbmi->bmiHeader.biHeight = bmp.bmHeight; 
-  pbmi->bmiHeader.biPlanes = bmp.bmPlanes; 
-  pbmi->bmiHeader.biBitCount = bmp.bmBitsPixel; 
-  if (cClrBits < 24) 
-    pbmi->bmiHeader.biClrUsed = (1<<cClrBits); 
+  // Initialize the fields in the BITMAPINFO structure.
 
-  // If the bitmap is not compressed, set the BI_RGB flag. 
-  pbmi->bmiHeader.biCompression = BI_RGB; 
+  pbmi->bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+  pbmi->bmiHeader.biWidth = bmp.bmWidth;
+  pbmi->bmiHeader.biHeight = bmp.bmHeight;
+  pbmi->bmiHeader.biPlanes = bmp.bmPlanes;
+  pbmi->bmiHeader.biBitCount = bmp.bmBitsPixel;
+  if (cClrBits < 24)
+    pbmi->bmiHeader.biClrUsed = (1<<cClrBits);
 
-  // Compute the number of bytes in the array of color 
-  // indices and store the result in biSizeImage. 
-  pbmi->bmiHeader.biSizeImage = (pbmi->bmiHeader.biWidth + 7) /8 
-    * pbmi->bmiHeader.biHeight * cClrBits; 
+  // If the bitmap is not compressed, set the BI_RGB flag.
+  pbmi->bmiHeader.biCompression = BI_RGB;
 
-  // Set biClrImportant to 0, indicating that all of the 
-  // device colors are important. 
-  pbmi->bmiHeader.biClrImportant = 0; 
-  
-  HANDLE hf;                 // file handle 
-  BITMAPFILEHEADER hdr;       // bitmap file-header 
-  PBITMAPINFOHEADER pbih;     // bitmap info-header 
-  LPBYTE lpBits;              // memory pointer 
-  DWORD dwTotal;              // total count of bytes 
-  DWORD cb;                   // incremental count of bytes 
-  BYTE *hp;                   // byte pointer 
-  DWORD dwTmp; 
+  // Compute the number of bytes in the array of color
+  // indices and store the result in biSizeImage.
+  pbmi->bmiHeader.biSizeImage = (pbmi->bmiHeader.biWidth + 7) /8
+    * pbmi->bmiHeader.biHeight * cClrBits;
 
-  pbih = (PBITMAPINFOHEADER) pbmi; 
+  // Set biClrImportant to 0, indicating that all of the
+  // device colors are important.
+  pbmi->bmiHeader.biClrImportant = 0;
+
+  HANDLE hf;                 // file handle
+  BITMAPFILEHEADER hdr;       // bitmap file-header
+  PBITMAPINFOHEADER pbih;     // bitmap info-header
+  LPBYTE lpBits;              // memory pointer
+  DWORD dwTotal;              // total count of bytes
+  DWORD cb;                   // incremental count of bytes
+  BYTE *hp;                   // byte pointer
+  DWORD dwTmp;
+
+  pbih = (PBITMAPINFOHEADER) pbmi;
   lpBits = (LPBYTE) GlobalAlloc(GMEM_FIXED, pbih->biSizeImage);
 
-  if (!lpBits) 
-     RETURN_ERR("GlobalAlloc failed"); 
+  if (!lpBits)
+     RETURN_ERR("GlobalAlloc failed");
 
-  // Retrieve the color table (RGBQUAD array) and the bits 
-  // (array of palette indices) from the DIB. 
-  if (!GetDIBits(hDC, hBmp, 0, (WORD) pbih->biHeight, lpBits, pbmi, 
-                 DIB_RGB_COLORS)) 
+  // Retrieve the color table (RGBQUAD array) and the bits
+  // (array of palette indices) from the DIB.
+  if (!GetDIBits(hDC, hBmp, 0, (WORD) pbih->biHeight, lpBits, pbmi,
+                 DIB_RGB_COLORS))
     {
-      RETURN_ERR("GetDIBits failed"); 
+      RETURN_ERR("GetDIBits failed");
     }
 
-  // Create the .BMP file. 
+  // Create the .BMP file.
   if (!PyWinObject_AsTCHAR(obFile, &pszFile, FALSE))
 	  return NULL;
-  hf = CreateFile(pszFile, 
-                  GENERIC_READ | GENERIC_WRITE, 
-                  (DWORD) 0, 
-                  NULL, 
-                  CREATE_ALWAYS, 
-                  FILE_ATTRIBUTE_NORMAL, 
+  hf = CreateFile(pszFile,
+                  GENERIC_READ | GENERIC_WRITE,
+                  (DWORD) 0,
+                  NULL,
+                  CREATE_ALWAYS,
+                  FILE_ATTRIBUTE_NORMAL,
                   (HANDLE) NULL);
   PyWinObject_FreeTCHAR(pszFile);
-  if (hf == INVALID_HANDLE_VALUE) 
-    RETURN_ERR("CreateFile"); 
-  hdr.bfType = 0x4d42;        // 0x42 = "B" 0x4d = "M" 
-  // Compute the size of the entire file. 
-  hdr.bfSize = (DWORD) (sizeof(BITMAPFILEHEADER) + 
-                        pbih->biSize + pbih->biClrUsed 
-                        * sizeof(RGBQUAD) + pbih->biSizeImage); 
-  hdr.bfReserved1 = 0; 
-  hdr.bfReserved2 = 0; 
+  if (hf == INVALID_HANDLE_VALUE)
+    RETURN_ERR("CreateFile");
+  hdr.bfType = 0x4d42;        // 0x42 = "B" 0x4d = "M"
+  // Compute the size of the entire file.
+  hdr.bfSize = (DWORD) (sizeof(BITMAPFILEHEADER) +
+                        pbih->biSize + pbih->biClrUsed
+                        * sizeof(RGBQUAD) + pbih->biSizeImage);
+  hdr.bfReserved1 = 0;
+  hdr.bfReserved2 = 0;
 
-  // Compute the offset to the array of color indices. 
-  hdr.bfOffBits = (DWORD) sizeof(BITMAPFILEHEADER) + 
-    pbih->biSize + pbih->biClrUsed 
-    * sizeof (RGBQUAD); 
+  // Compute the offset to the array of color indices.
+  hdr.bfOffBits = (DWORD) sizeof(BITMAPFILEHEADER) +
+    pbih->biSize + pbih->biClrUsed
+    * sizeof (RGBQUAD);
 
-  // Copy the BITMAPFILEHEADER into the .BMP file. 
-  if (!WriteFile(hf, (LPVOID) &hdr, sizeof(BITMAPFILEHEADER), 
-                 (LPDWORD) &dwTmp,  NULL)) 
+  // Copy the BITMAPFILEHEADER into the .BMP file.
+  if (!WriteFile(hf, (LPVOID) &hdr, sizeof(BITMAPFILEHEADER),
+                 (LPDWORD) &dwTmp,  NULL))
     {
-      RETURN_ERR("WriteFile failed"); 
+      RETURN_ERR("WriteFile failed");
     }
 
-  // Copy the BITMAPINFOHEADER and RGBQUAD array into the file. 
-  if (!WriteFile(hf, (LPVOID) pbih, sizeof(BITMAPINFOHEADER) 
-                 + pbih->biClrUsed * sizeof (RGBQUAD), 
+  // Copy the BITMAPINFOHEADER and RGBQUAD array into the file.
+  if (!WriteFile(hf, (LPVOID) pbih, sizeof(BITMAPINFOHEADER)
+                 + pbih->biClrUsed * sizeof (RGBQUAD),
                  (LPDWORD) &dwTmp, ( NULL)))
-    RETURN_ERR("WriteFile failed"); 
+    RETURN_ERR("WriteFile failed");
 
-  // Copy the array of color indices into the .BMP file. 
-  dwTotal = cb = pbih->biSizeImage; 
-  hp = lpBits; 
-  if (!WriteFile(hf, (LPSTR) hp, (int) cb, (LPDWORD) &dwTmp,NULL)) 
-    RETURN_ERR("WriteFile failed"); 
+  // Copy the array of color indices into the .BMP file.
+  dwTotal = cb = pbih->biSizeImage;
+  hp = lpBits;
+  if (!WriteFile(hf, (LPSTR) hp, (int) cb, (LPDWORD) &dwTmp,NULL))
+    RETURN_ERR("WriteFile failed");
 
-  // Close the .BMP file. 
-  if (!CloseHandle(hf)) 
-    RETURN_ERR("CloseHandle failed"); 
+  // Close the .BMP file.
+  if (!CloseHandle(hf))
+    RETURN_ERR("CloseHandle failed");
 
-  // Free memory. 
+  // Free memory.
   GlobalFree((HGLOBAL)lpBits);
   Py_INCREF(Py_None);
-  return Py_None;  
+  return Py_None;
 }
 
 /////////////////////////////////////////////////////////////////////
@@ -669,10 +669,10 @@ static struct PyMethodDef ui_bitmap_methods[] = {
 	{NULL,			NULL}		/* sentinel */
 };
 
-ui_type_CObject ui_bitmap::type("PyCBitmap", 
-								&PyCGdiObject::type, 
+ui_type_CObject ui_bitmap::type("PyCBitmap",
+								&PyCGdiObject::type,
 								RUNTIME_CLASS(CBitmap),
-								sizeof(ui_bitmap), 
-								PYOBJ_OFFSET(ui_bitmap), 
-								ui_bitmap_methods, 
+								sizeof(ui_bitmap),
+								PYOBJ_OFFSET(ui_bitmap),
+								ui_bitmap_methods,
 								GET_PY_CTOR(ui_bitmap));

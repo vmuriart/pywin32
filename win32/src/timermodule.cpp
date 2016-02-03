@@ -54,7 +54,7 @@ py_win32_timer_callback (HWND hwnd, UINT msg, UINT_PTR timer_id, DWORD time)
 // @pymethod int|timer|set_timer|Creates a timer that executes a callback function
 // @rdesc Returns the id of the timer, which can be passed to kill_timer to stop it.
 // @comm Uses the SetTimer function.
-static PyObject * 
+static PyObject *
 py_timer_set_timer (PyObject * self, PyObject * args)
 {
 	PyObject *callback;
@@ -126,7 +126,7 @@ py_timer_timer_map (PyObject * self, PyObject * args)
 {
 	if (!PyArg_ParseTuple (args, ""))
 		return NULL;
- 
+
 	Py_INCREF (timer_id_callback_map);
 	return (timer_id_callback_map);
 }

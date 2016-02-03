@@ -41,7 +41,7 @@ PyObject *OleSetADSIError(HRESULT hr, IUnknown *pUnk, REFIID iid)
 
 			info.bstrSource = SysAllocString(szNameBuf);
 			info.bstrDescription = SysAllocString(szErrorBuf);
-			// Technically, we probably should return DISP_E_EXCEPTION so we 
+			// Technically, we probably should return DISP_E_EXCEPTION so we
 			// appear to follow COM's rules - however, we really dont
 			// _need_ to (as only Python sees this result), and having the native
 			// HRESULT is preferable.
@@ -68,7 +68,7 @@ PyObject *OleSetADSIError(HRESULT hr, IUnknown *pUnk, REFIID iid)
 
 			info.bstrSource = SysAllocString(szNameBuf);
 			info.bstrDescription = SysAllocString(szErrorBuf);
-			// Technically, we probably should return DISP_E_EXCEPTION so we 
+			// Technically, we probably should return DISP_E_EXCEPTION so we
 			// appear to follow COM's rules - however, we really dont
 			// _need_ to (as only Python sees this result), and having the native
 			// HRESULT is preferable.
@@ -556,7 +556,7 @@ BOOL _Make_ATTR_INFO(PyObject *ob, ADS_ATTR_INFO *pBase, DWORD index)
 	PyObject *sub = PySequence_GetItem(ob, index);
 	if (!sub)
 		return FALSE;
-	
+
 	if (!PyArg_ParseTuple(sub, "OllO:ADS_ATTR_INFO tuple",
 						  &obName, &pThis->dwControlCode,
 						  &pThis->dwADsType, &obValues))
@@ -701,10 +701,10 @@ typedef struct tagADSERRMSG
     HRESULT    hr;
     LPCWSTR    pszError;
 }ADSERRMSG;
- 
+
 #define ADDADSERROR(x)   x, L ## #x
- 
-const ADSERRMSG adsErr[] = 
+
+const ADSERRMSG adsErr[] =
 {
     ADDADSERROR(E_ADS_BAD_PATHNAME),
     ADDADSERROR(E_ADS_INVALID_DOMAIN_OBJECT),
@@ -726,11 +726,11 @@ const ADSERRMSG adsErr[] =
     ADDADSERROR(E_ADS_INVALID_FILTER),
     ADDADSERROR(0),
 };
- 
- 
+
+
 /////////////////////////////////////////////
 //
-// Error message specific to ADSI 
+// Error message specific to ADSI
 //
 ////////////////////////////////////////////
 BOOL GetADSIErrorString( HRESULT hr, WCHAR *buf, int nchars )

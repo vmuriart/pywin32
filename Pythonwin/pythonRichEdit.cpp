@@ -34,7 +34,7 @@ CPythonRichEditView::OnCmdMsg (UINT nID, int nCode,
     return CRichEditView::OnCmdMsg (nID, nCode, pExtra, pHandlerInfo);
 }
 
-BOOL 
+BOOL
 CPythonRichEditView::OnNotify (WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 {
   // yield to Python first
@@ -63,7 +63,7 @@ LRESULT CPythonRichEditView::WindowProc(UINT message, WPARAM wParam, LPARAM lPar
 }
 #endif // PYWIN_WITH_WINDOWPROC
 
-void 
+void
 CPythonRichEditView::OnInitialUpdate()
 {
 	// @pyvirtual tuple|PyCRichEditView|OnInitialUpdate|Called before the first update for a view.

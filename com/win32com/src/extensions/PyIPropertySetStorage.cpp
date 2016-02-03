@@ -134,7 +134,7 @@ PyObject *PyIPropertySetStorage::Enum(PyObject *self, PyObject *args)
 }
 
 // @object PyIPropertySetStorage|Container for a collection of property sets.
-//	Can be iterated over to enumerate property sets. 
+//	Can be iterated over to enumerate property sets.
 static struct PyMethodDef PyIPropertySetStorage_methods[] =
 {
 	{ "Create", PyIPropertySetStorage::Create, 1 }, // @pymeth Create|Creates a new property set in the storage object

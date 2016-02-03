@@ -5,10 +5,10 @@
 	 To better support COM exceptions, the framework allows for an instance to be
 	 raised.  This instance may have a certain number of known attributes, which are
 	 translated into COM exception details.
-	
+
 	 This means, for example, that Python could raise a COM exception that includes details
 	 on a Help file and location, and a description for the user.
-	
+
 	 This module provides a class which provides the necessary attributes.
 
 """
@@ -18,7 +18,7 @@ import sys, pythoncom
 # Also note that we dont support "self.args", as we dont support tuple-unpacking
 class COMException(pythoncom.com_error):
 	"""An Exception object that is understood by the framework.
-	
+
 	If the framework is presented with an exception of type class,
 	it looks for certain known attributes on this class to provide rich
 	error information to the caller.

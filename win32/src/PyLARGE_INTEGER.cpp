@@ -29,7 +29,7 @@ BOOL PyWinObject_AsLARGE_INTEGER(PyObject *ob, LARGE_INTEGER *pResult)
 			return FALSE;
 		LISet32(*pResult, x);
 		return TRUE;
-	} else 
+	} else
 #endif
 	if (PyLong_Check(ob)) {
 		pResult->QuadPart=PyLong_AsLongLong(ob);

@@ -80,7 +80,7 @@ try:
     else:
         m1.seek(offset)
         m1.write(offsetdata)
-    
+
         ## When reopening an existing mapping without passing a file handle, you have
         ##  to specify a positive size even though it's ignored
         m2=mmapfile.mmapfile(File=None, Name=mapping_name, MaximumSize=1,

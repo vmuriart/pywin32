@@ -1,4 +1,4 @@
-# A Python file that can be used to start Pythonwin, instead of using 
+# A Python file that can be used to start Pythonwin, instead of using
 # pythonwin.exe
 import win32ui
 import pywin.framework.intpyapp

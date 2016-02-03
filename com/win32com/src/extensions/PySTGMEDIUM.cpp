@@ -66,7 +66,7 @@ PyObject *PySet(PyObject *self, PyObject *args)
 				cb = PyUnicode_GET_DATA_SIZE(ob) + sizeof(Py_UNICODE);
 				buf = (void *)PyUnicode_AS_UNICODE(ob);
 			} else {
-				if (PyObject_AsReadBuffer(ob,&buf,&cb)==-1) 
+				if (PyObject_AsReadBuffer(ob,&buf,&cb)==-1)
 					return PyErr_Format(PyExc_TypeError, "tymed value of %d requires a string/unicode/buffer", tymed);
 				// no extra nulls etc needed here.
 			}
@@ -76,7 +76,7 @@ PyObject *PySet(PyObject *self, PyObject *args)
 			memcpy( (void *)ps->medium.hGlobal, buf, cb);
 			break;
 		}
-		case TYMED_FILE: 
+		case TYMED_FILE:
 			if (!PyWinObject_AsTaskAllocatedWCHAR(ob, &ps->medium.lpszFileName, FALSE, NULL))
 				return FALSE;
 			break;
@@ -240,7 +240,7 @@ PyObject *PySTGMEDIUM::getattro(PyObject *self, PyObject *obname)
 	// @prop int|tymed|An integer indicating the type of data in the stgmedium
 	if (strcmp(name, "tymed")==0)
 		return PyInt_FromLong(ps->medium.tymed);
-	// @prop object|data|The data in the stgmedium.  
+	// @prop object|data|The data in the stgmedium.
 	// The result depends on the value of the 'tymed' property of the <o PySTGMEDIUM> object.
 	// @flagh tymed|Result Type
 	if (strcmp(name, "data")==0) {
@@ -268,7 +268,7 @@ PyObject *PySTGMEDIUM::getattro(PyObject *self, PyObject *obname)
 				return ret;
 			}
 			// @flag TYMED_FILE|A string/unicode filename
-			case TYMED_FILE: 
+			case TYMED_FILE:
 				return PyWinObject_FromWCHAR(ps->medium.lpszFileName);
 			// @flag TYMED_ISTREAM|A <o PyIStream> object
 			case TYMED_ISTREAM:
@@ -284,7 +284,7 @@ PyObject *PySTGMEDIUM::getattro(PyObject *self, PyObject *obname)
 				return NULL;
 		}
 	}
-	// @prop int|data_handle|The raw 'integer' representation of the data.  
+	// @prop int|data_handle|The raw 'integer' representation of the data.
 	// For TYMED_HGLOBAL, this is the handle rather than the string data.
 	// For the string and interface types, this is an integer holding the pointer.
 	if (strcmp(name, "data_handle")==0) {
@@ -297,9 +297,9 @@ PyObject *PySTGMEDIUM::getattro(PyObject *self, PyObject *obname)
 				return PyLong_FromVoidPtr(ps->medium.hEnhMetaFile);
 			case TYMED_HGLOBAL:
 				return PyLong_FromVoidPtr(ps->medium.hGlobal);
-			// and may as well hand out the pointers for these.  
+			// and may as well hand out the pointers for these.
 			// We are all consenting adults :)
-			case TYMED_FILE: 
+			case TYMED_FILE:
 				return PyLong_FromVoidPtr(ps->medium.lpszFileName);
 			case TYMED_ISTREAM:
 				return PyLong_FromVoidPtr(ps->medium.pstm);

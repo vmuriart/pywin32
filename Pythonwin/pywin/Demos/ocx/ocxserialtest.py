@@ -72,7 +72,7 @@ class TestSerDialog(dialog.Dialog):
 			self.MessageBox("The Serial Control could not be created")
 			self.olectl = None
 			self.EndDialog(win32con.IDCANCEL)
-		if self.olectl:			                        
+		if self.olectl:
 			self.olectl.Settings = SERIAL_SETTINGS
 			self.olectl.CommPort = SERIAL_PORT
 			self.olectl.RThreshold = 1

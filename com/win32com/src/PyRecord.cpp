@@ -142,7 +142,7 @@ PyObject *pythoncom_GetRecordFromGuids(PyObject *self, PyObject *args)
 	PyObject *obGuid, *obInfoGuid, *obdata=Py_None;
 	int major, minor, lcid;
 	int cb = 0;
-	if (!PyArg_ParseTuple(args, "OiiiO|O:GetRecordFromGuids", 
+	if (!PyArg_ParseTuple(args, "OiiiO|O:GetRecordFromGuids",
 		&obGuid, // @pyparm <o PyIID>|iid||The GUID of the type library
 		&major, // @pyparm int|verMajor||The major version number of the type lib.
 		&minor, // @pyparm int|verMinor||The minor version number of the type lib.
@@ -174,7 +174,7 @@ PyObject *pythoncom_GetRecordFromTypeInfo(PyObject *self, PyObject *args)
 	ITypeInfo *pITI=NULL;
 	IRecordInfo *pIRI=NULL;
 	HRESULT hr;
-	if (!PyArg_ParseTuple(args, "O:GetRecordFromTypeInfo", 
+	if (!PyArg_ParseTuple(args, "O:GetRecordFromTypeInfo",
 		&obtypeinfo)) // @pyparm <o PyITypeInfo>|TypeInfo||The type information to be converted into a PyRecord object
 		return NULL;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obtypeinfo, IID_ITypeInfo, (void **)&pITI, FALSE))
@@ -538,7 +538,7 @@ PyObject *PyRecord::getattro(PyObject *self, PyObject *obname)
 array_end:
 		if (sub)
 			sub->Release();
-		if (FAILED(hr)) 
+		if (FAILED(hr))
 			return PyCom_BuildPyException(hr, pyrec->pri, IID_IRecordInfo);
 		return ret_tuple;
 	}

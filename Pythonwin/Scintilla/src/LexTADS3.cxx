@@ -70,7 +70,7 @@ static inline bool IsEOL(const int ch, const int chNext) {
  *   - it doesn't want to admit that there's a newline until reaching the END
  *   of the sequence.  We meet both needs by saying that there's a newline
  *   when we see the CR in a CR-LF, but skipping the CR before returning so
- *   that the caller's caller will see that we've stopped at the LF.  
+ *   that the caller's caller will see that we've stopped at the LF.
  */
 static inline bool IsEOLSkip(StyleContext &sc)
 {
@@ -82,9 +82,9 @@ static inline bool IsEOLSkip(StyleContext &sc)
         return true;
     }
 
-    /* 
+    /*
      *   in other cases, we have at most a 1-character newline, so do the
-     *   normal IsEOL test 
+     *   normal IsEOL test
      */
     return IsEOL(sc.ch, sc.chNext);
 }
@@ -156,7 +156,7 @@ static void ColouriseTADSHTMLString(StyleContext &sc, int &lineState) {
                 sc.Forward();
         }
         if (chQuote == '"')
-                lineState &= ~T3_HTML_SQUOTE; 
+                lineState &= ~T3_HTML_SQUOTE;
         else
                 lineState |= T3_HTML_SQUOTE;
 

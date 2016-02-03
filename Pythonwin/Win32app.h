@@ -37,7 +37,7 @@ public:
 // It is never instantiated.  Therefore, it must not have virtual
 // functions or data items.
 // It is used purely so C++ casts can override protection.
-class CProtectedDocManager : public CDocManager 
+class CProtectedDocManager : public CDocManager
 {
 public:
 	CPtrList &GetTemplateList() {return m_templateList;}

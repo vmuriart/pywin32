@@ -67,7 +67,7 @@ BOOL MappingManager::Init(const TCHAR *szServiceName, const TCHAR *szMappingName
 		return FALSE;
 	}
     // map the section and assign the counter block pointer
-    // to this section of memory            
+    // to this section of memory
 	//
     m_pMapBlock = MapViewOfFile(m_hMappedObject,
                     FILE_MAP_ALL_ACCESS,
@@ -116,15 +116,15 @@ PyObject *PerfmonMethod_NewPerfMonManager(PyObject *self, PyObject *args)
 	MappingManager *m_pmm = NULL;
 	PyPerfMonManager *pPOT = NULL;
 
-	if (!PyArg_ParseTuple(args, "OO|OO:PerfMonManager", 
+	if (!PyArg_ParseTuple(args, "OO|OO:PerfMonManager",
 			&obServiceName, // @pyparm <o PyUnicode>|serviceName||The name of the service for which data is being provided.
 			&obPerfObTypes, // @pyparm [<o PyPERF_OBJECT_TYPE>, ...]|seqPerfObTypes||A sequence of objects to use in the performance monitor.  At this stage, len(seqPerfObTypes) must == 1.
 			&obMappingName, // @pyparm <o PyUnicode>|mappingName|None|The name of the mapping to open.  This must be the same as the DLL name providing the information.  If None, the serviceName is used.
 			&obEventSourceName)) // @pyparm <o PyUnicode>|eventSourceName|None|The name used by the DLL for error messages in the registry.  If None, the serviceName is used.
 		goto done;
-	// @comm The application need not be a service, but it must have an entry in the 
+	// @comm The application need not be a service, but it must have an entry in the
 	// Services section of the registry.  This limits the performance monitor to being able to
-	// provide only one 'counter type', but still many counters within that type.  
+	// provide only one 'counter type', but still many counters within that type.
 	// See the documentation for the Performance Monitor API for more details.
 	if (!PyWinObject_AsTCHAR(obServiceName, &szServiceName, FALSE))
 		goto done;

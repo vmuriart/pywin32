@@ -4,7 +4,7 @@
 // They also contain a pointer to an underlying PERF_COUNTER_DEFINITION
 // structure - but not immediately.
 // The user sets up all the counter information, then adds them
-// to a PERF_BLOCK structure, which allocates the underlying 
+// to a PERF_BLOCK structure, which allocates the underlying
 // PERF_COUNTER_DEFINITION memory, inline with all others in the group.
 //
 #include "PyPerfMonControl.h"
@@ -47,7 +47,7 @@ protected:
 	PyObject *m_obPerfObTypes;
 };
 
-	
+
 
 class PyPERF_COUNTER_DEFINITION : public PyObject
 {
@@ -84,7 +84,7 @@ protected:
 	// Reference kept to owner of the underlying buffer in the shared mem.
 	PyObject *m_obBufferOwner;
 	// The counter itself (ie, the raw integer!) - or NULL if not yet setup.
-	void *m_pCounterValue; 
+	void *m_pCounterValue;
 	DWORD m_DefaultScale;
 	DWORD m_DetailLevel;
 	DWORD m_CounterNameTitleIndex;

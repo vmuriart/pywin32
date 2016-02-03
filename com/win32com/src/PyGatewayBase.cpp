@@ -8,7 +8,7 @@
 #include "PythonCOMServer.h"
 
 // {25D29CD0-9B98-11d0-AE79-4CF1CF000000}
-extern const GUID IID_IInternalUnwrapPythonObject = 
+extern const GUID IID_IInternalUnwrapPythonObject =
 	{ 0x25d29cd0, 0x9b98, 0x11d0, { 0xae, 0x79, 0x4c, 0xf1, 0xcf, 0x0, 0x0, 0x0 } };
 
 extern PyObject *g_obMissing;
@@ -151,7 +151,7 @@ STDMETHODIMP PyGatewayBase::QueryInterface(
 		return S_OK;
 	}
 
-	// If we have a "base object", then we need to delegate _every_ remaining 
+	// If we have a "base object", then we need to delegate _every_ remaining
 	// QI to it.
 	if (m_pBaseObject != NULL && (m_pBaseObject->QueryInterface(iid, ppv)==S_OK))
 		return S_OK;
@@ -181,13 +181,13 @@ STDMETHODIMP PyGatewayBase::QueryInterface(
 					supports = 1;
 				}
 			}
-			PyErr_Clear(); // ignore exceptions during conversion 
+			PyErr_Clear(); // ignore exceptions during conversion
 			Py_DECREF(result);
 		}
 		else
 		{
 //			PyRun_SimpleString("import traceback;traceback.print_exc()");
-			PyErr_Clear();	// ### what to do with exceptions? ... 
+			PyErr_Clear();	// ### what to do with exceptions? ...
 		}
 	}
 
@@ -232,13 +232,13 @@ STDMETHODIMP PyGatewayBase::GetTypeInfoCount(
 		{
 			if (PyInt_Check(result))
 				*pctInfo = PyInt_AsLong(result);
-			PyErr_Clear(); // ignore exceptions during conversion 
+			PyErr_Clear(); // ignore exceptions during conversion
 			Py_DECREF(result);
 		}
 		else
 		{
 //			PyRun_SimpleString("import traceback;traceback.print_exc()");
-			PyErr_Clear();	// ### what to do with exceptions? ... 
+			PyErr_Clear();	// ### what to do with exceptions? ...
 		}
 	}
 
@@ -279,7 +279,7 @@ STDMETHODIMP PyGatewayBase::GetTypeInfo(
 	}
 	else
 	{
-		PyErr_Clear();	// ### what to do with exceptions? ... 
+		PyErr_Clear();	// ### what to do with exceptions? ...
 		hr = DISP_E_EXCEPTION;
 	}
 	return hr;
@@ -591,7 +591,7 @@ static HRESULT invoke_finish(
 	PyObject *ob = NULL;
 	PyObject *userResult = NULL;
 
-	if (bAllowHRAndArgErr) 
+	if (bAllowHRAndArgErr)
 	{
 		// We are expecting a tuple of (hresult, argErr, userResult)
 		// or a simple HRESULT.

@@ -35,7 +35,7 @@
 %typemap(python,in) IExchangeManageStore *INPUT_NULLOK {
 	if (!PyCom_InterfaceFromPyInstanceOrObject($source, IID_IExchangeManageStore, (void **)&$target, 1))
 		return NULL;
-}		
+}
 
 %{
 
@@ -62,7 +62,7 @@ PyObject *PyIExchangeManageStore::CreateStoreEntryID(PyObject *self, PyObject *a
 	char *serverDN;
 	char *userDN;
 	unsigned long flags = 0;
-	SBinary sbEID = {0, NULL};	
+	SBinary sbEID = {0, NULL};
 	PyObject *result = NULL;
 
 	IExchangeManageStore *_swig_self;
@@ -81,7 +81,7 @@ PyObject *PyIExchangeManageStore::CreateStoreEntryID(PyObject *self, PyObject *a
 		result = Py_BuildValue("s#", sbEID.lpb, sbEID.cb);
 
 	MAPIFreeBuffer((LPENTRYID)sbEID.lpb);
-	
+
 	return result;
 }
 

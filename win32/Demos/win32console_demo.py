@@ -4,7 +4,7 @@ import traceback, time
 virtual_keys={}
 for k,v in win32con.__dict__.items():
     if k.startswith('VK_'):
-        virtual_keys[v]=k 
+        virtual_keys[v]=k
 
 free_console=True
 try:
@@ -33,7 +33,7 @@ window_size.Right+=10
 window_size.Bottom+=10
 newbuffer.SetConsoleWindowInfo(Absolute=True,ConsoleWindow=window_size)
 
-## write some records to the input queue 
+## write some records to the input queue
 x=win32console.PyINPUT_RECORDType(win32console.KEY_EVENT)
 x.Char=u'X'
 x.KeyDown=True
@@ -57,7 +57,7 @@ newbuffer.WriteConsole('Press some keys, click some characters with the mouse\n'
 newbuffer.SetConsoleTextAttribute(win32console.FOREGROUND_BLUE|win32console.FOREGROUND_INTENSITY
         |win32console.BACKGROUND_RED|win32console.BACKGROUND_INTENSITY)
 newbuffer.WriteConsole('Hit "End" key to quit\n')
-                    
+
 breakout=False
 while not breakout:
     input_records=stdin.ReadConsoleInput(10)

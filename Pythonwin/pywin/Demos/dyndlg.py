@@ -39,12 +39,12 @@ def MakeDlgTemplate():
 	s = win32con.BS_PUSHBUTTON | s
 	dlg.append([128, "Cancel", win32con.IDCANCEL, (124, 22, 50, 14), s])
 	dlg.append([128, "&Help", 100, (124, 74, 50, 14), s])
-	
+
 	return dlg
 
 def test1():
 	win32ui.CreateDialogIndirect( MakeDlgTemplate() ).DoModal()
-	
+
 def test2():
 	dialog.Dialog( MakeDlgTemplate() ).DoModal()
 

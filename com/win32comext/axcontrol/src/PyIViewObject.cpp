@@ -54,8 +54,8 @@ PyObject *PyIViewObject::Draw(PyObject *self, PyObject *args)
 	HDC hdcDraw;
 	RECTL rcBounds;
 	RECTL rcWBounds;
-	if ( !PyArg_ParseTuple(args, "lllOll(llll)(llll)OO:Draw", 
-			&dwDrawAspect, &lindex, &aspect.dwFlags, &obptd, &hdcTargetDev, &hdcDraw, 
+	if ( !PyArg_ParseTuple(args, "lllOll(llll)(llll)OO:Draw",
+			&dwDrawAspect, &lindex, &aspect.dwFlags, &obptd, &hdcTargetDev, &hdcDraw,
 			&rcBounds.left, &rcBounds.right, &rcBounds.top, &rcBounds.bottom,
 			&rcWBounds.left, &rcWBounds.right, &rcWBounds.top, &rcWBounds.bottom,
 			&obfuncContinue, &obContinue ))

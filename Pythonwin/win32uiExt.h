@@ -100,9 +100,9 @@ public:
 		// in which case the MSG structure will be updated and TRUE returned
 		// from the C++ function.  If None is returned, the default handler
 		// is called.
-		if (helper.HaveHandler() && 
+		if (helper.HaveHandler() &&
 			helper.call(pMsg) &&
-			!helper.retnone() && 
+			!helper.retnone() &&
 			helper.retval(pMsg))
 				return TRUE;
 		return _BasePreTranslateMessage(pMsg);
@@ -120,7 +120,7 @@ public:
 		// handlers (hooked via <om PyCWnd.HookCommand>).
 		BOOL ret;
 		CVirtualHelper helper("OnCommand", this);
-		if (helper.HaveHandler() && 
+		if (helper.HaveHandler() &&
 			helper.call(wparam, lparam) &&
 			helper.retval(ret))
 			return ret;
@@ -159,7 +159,7 @@ public:
 		T::OnPaletteChanged(pFocusWnd);
 		// @pyvirtual |PyCWnd|OnPaletteChanged|Called to allow windows that use a color palette to realize their logical palettes and update their client areas.
 		CVirtualHelper helper( "OnPaletteChanged", this );
-		// @pyparm <o PyCWnd>|focusWnd||The window that caused the system palette to change. 
+		// @pyparm <o PyCWnd>|focusWnd||The window that caused the system palette to change.
 		helper.call(pFocusWnd);
 	}
 	afx_msg void OnPaletteIsChanging(CWnd* pRealizeWnd) {
@@ -371,12 +371,12 @@ public:
 	int _BaseOnMouseActivate(CWnd* pDesktopWnd, UINT nHitTest, UINT message) {
 		return T::OnMouseActivate(pDesktopWnd, nHitTest, message);
 	}
-	
+
 //	DECLARE_MESSAGE_MAP()
 private: \
 	static const AFX_MSGMAP_ENTRY _messageEntries[];
 protected: \
-	static AFX_DATA const AFX_MSGMAP messageMap; 
+	static AFX_DATA const AFX_MSGMAP messageMap;
 	static const AFX_MSGMAP* PASCAL _GetBaseMessageMap() {
 #if _MFC_VER >= 0x0700
 		return T::GetThisMessageMap();
@@ -391,7 +391,7 @@ protected: \
 
 template <class T>
 AFX_DATADEF const AFX_MSGMAP CPythonWndFramework<T>::messageMap =
-	{ &CPythonWndFramework<T>::_GetBaseMessageMap, &CPythonWndFramework<T>::_messageEntries[0] 
+	{ &CPythonWndFramework<T>::_GetBaseMessageMap, &CPythonWndFramework<T>::_messageEntries[0]
 };
 
 // ack - compile error in MFC9 (and not x64), and only for ON_WM_NCHITTEST!
@@ -441,7 +441,7 @@ public:
 	CPythonDlgFramework(LPCTSTR id, UINT caption) :
 		CPythonWndFramework<T>(id, caption) {;}
 	// CPrintDialog
-	CPythonDlgFramework(BOOL bPrintSetupOnly, DWORD dwFlags, CWnd* pParentWnd) :	
+	CPythonDlgFramework(BOOL bPrintSetupOnly, DWORD dwFlags, CWnd* pParentWnd) :
 		CPythonWndFramework<T>(bPrintSetupOnly, dwFlags, pParentWnd) {;}
 	// End of ctor hacks!!!!
 
@@ -459,11 +459,11 @@ public:
 				helper.retval(result);
 		}
 		return result;
-		// @rdesc Specifies whether the application has set the input focus to 
-		// one of the controls in the dialog box. If OnInitDialog returns 
-		// nonzero, Windows sets the input focus to the first control 
-		// in the dialog box. The application can return 0/None only if 
-		// it has explicitly set the input focus to one of the controls in the 
+		// @rdesc Specifies whether the application has set the input focus to
+		// one of the controls in the dialog box. If OnInitDialog returns
+		// nonzero, Windows sets the input focus to the first control
+		// in the dialog box. The application can return 0/None only if
+		// it has explicitly set the input focus to one of the controls in the
 		// dialog box.
 	}
 	virtual void OnOK() {
@@ -535,11 +535,11 @@ public:
 				helper.retval(result);
 		}
 		return result;
-		// @rdesc Specifies whether the application has set the input focus to 
-		// one of the controls in the dialog box. If OnInitDialog returns 
-		// nonzero, Windows sets the input focus to the first control 
-		// in the dialog box. The application can return 0/None only if 
-		// it has explicitly set the input focus to one of the controls in the 
+		// @rdesc Specifies whether the application has set the input focus to
+		// one of the controls in the dialog box. If OnInitDialog returns
+		// nonzero, Windows sets the input focus to the first control
+		// in the dialog box. The application can return 0/None only if
+		// it has explicitly set the input focus to one of the controls in the
 		// dialog box.
 	}
 };
@@ -586,8 +586,8 @@ public:
 
 	virtual BOOL OnApply()
 	{
-		// @pyvirtual int|PyCPropertyPage|OnApply|Called by the framework when the user chooses the OK or the Apply Now button. 
-		// @rdesc Return Nonzero if the changes are accepted; otherwise 0. 
+		// @pyvirtual int|PyCPropertyPage|OnApply|Called by the framework when the user chooses the OK or the Apply Now button.
+		// @rdesc Return Nonzero if the changes are accepted; otherwise 0.
 		// @comm Note - If you provide a handler, you must call the underlying MFC method (<om PyCPropertyPage.OnApply>) yourself
 		// @xref <om PyCPropertyPage.OnApply>
 		CVirtualHelper helper( "OnApply", this );
@@ -601,7 +601,7 @@ public:
 
 	virtual void OnReset()
 	{
-		// @pyvirtual void|PyCPropertyPage|OnReset|Called by the framework when the user chooses the Cancel button. 
+		// @pyvirtual void|PyCPropertyPage|OnReset|Called by the framework when the user chooses the Cancel button.
 		// @comm Note - If you provide a handler, you must call the underlying MFC method (<om PyCPropertyPage.OnReset>) yourself
 		// @xref <om PyCPropertyPage.OnReset>
 		CVirtualHelper helper( "OnReset", this );
@@ -614,8 +614,8 @@ public:
 
 	virtual BOOL OnQueryCancel()
 	{
-		// @pyvirtual int|PyCPropertyPage|OnQueryCancel|Called by the framework when the user clicks the Cancel button and before the cancel action has taken place. 
-		// @rdesc Return FALSE to prevent the cancel operation or TRUE to allow it. 
+		// @pyvirtual int|PyCPropertyPage|OnQueryCancel|Called by the framework when the user clicks the Cancel button and before the cancel action has taken place.
+		// @rdesc Return FALSE to prevent the cancel operation or TRUE to allow it.
 		// @comm Note - If you provide a handler, you must call the underlying MFC method (<om PyCPropertyPage.OnQueryCancel>) yourself
 		// @xref <om PyCPropertyPage.OnQueryCancel>
 		CVirtualHelper helper( "OnQueryCancel", this );
@@ -659,7 +659,7 @@ public:
 
 	virtual BOOL OnWizardFinish()
 	{
-		// @pyvirtual int|PyCPropertyPage|OnWizardFinish|Called by the framework when the user clicks on the Finish button in a wizard. 
+		// @pyvirtual int|PyCPropertyPage|OnWizardFinish|Called by the framework when the user clicks on the Finish button in a wizard.
 		// @rdesc Return nonzero if the property sheet is destroyed when the wizard finishes; otherwise zero.
 		// @comm Note - If you provide a handler, you must call the underlying MFC method (<om PyCPropertyPage.OnWizardFinish>) yourself
 		// @xref <om PyCPropertyPage.OnWizardFinish>
@@ -702,7 +702,7 @@ public:
 		// @pyparm <o PyCPrintInfo>|pInfo||The print info object.
 	}
 	virtual void OnBeginPrinting (CDC *pDC, CPrintInfo *pInfo) {
-		// @pyvirtual |PyCView|OnBeginPrinting|Called by the framework at the beginning of a print or print preview job, after OnPreparePrinting has been called. 
+		// @pyvirtual |PyCView|OnBeginPrinting|Called by the framework at the beginning of a print or print preview job, after OnPreparePrinting has been called.
 		// @xref <om PyCView.OnBeginPrinting>
 		CVirtualHelper helper ("OnBeginPrinting", this);
 		if (!helper.HaveHandler()) {
@@ -714,7 +714,7 @@ public:
 		// @pyparm <o PyCPrintInfo>|pInfo||The print info object.
 	}
 	virtual void OnEndPrinting (CDC *pDC, CPrintInfo *pInfo) {
-		// @pyvirtual |PyCView|OnEndPrinting|Called by the framework after a document has been printed or previewed. 
+		// @pyvirtual |PyCView|OnEndPrinting|Called by the framework after a document has been printed or previewed.
 		// @xref <om PyCView.OnEndPrinting>
 		CVirtualHelper helper ("OnEndPrinting", this);
 		if (!helper.HaveHandler()) {
@@ -761,10 +761,10 @@ public:
 			helper.call (bActivate, pActivateView, pDeactiveView);
 
 			// @comm If a handler exists, the base MFC implementation is not called.
-			// <nl>The activateView and deactiveView parameters are the same objects if the 
-			// application's main frame window is activated with no change in the 
-			// active view for example, if the focus is being transferred from 
-			// another application to this one, rather than from one view to 
+			// <nl>The activateView and deactiveView parameters are the same objects if the
+			// application's main frame window is activated with no change in the
+			// active view for example, if the focus is being transferred from
+			// another application to this one, rather than from one view to
 			// another within the application.
 			// This allows a view to re-realize its palette, if needed.
 		}
@@ -786,9 +786,9 @@ public:
 	}
 	virtual void OnUpdate (CView* pSender, LPARAM lHint, CObject* pHint) {
 		// @pyvirtual |PyCView|OnUpdate|Called by the framework when a view needs updating.
-		// @comm Typically you should not perform any drawing directly from OnUpdate. 
-		// Instead, determine the rectangle describing, in device coordinates, the 
-		// area that requires updating; pass this rectangle to <om PyCWnd.InvalidateRect>. 
+		// @comm Typically you should not perform any drawing directly from OnUpdate.
+		// Instead, determine the rectangle describing, in device coordinates, the
+		// area that requires updating; pass this rectangle to <om PyCWnd.InvalidateRect>.
 		// You can then paint the update next <om PyCView.OnDraw>
 		// @xref <om PyCView.OnUpdate>
 		CVirtualHelper helper ("OnUpdate", this);
@@ -811,7 +811,7 @@ protected:
 	// Operations
 	virtual BOOL OnCreateClient(LPCREATESTRUCT cs, CCreateContext* pContext) {
 		// @pyvirtual |PyCMDIChildWnd|OnCreateClient|Called by the framework during the execution of OnCreate.
-		
+
 		CVirtualHelper helper( "OnCreateClient", this );
 		PythonCreateContext *pCC = (PythonCreateContext *)pContext;
 		// @pyparm tuple|CREATESTRUCT||A tuple describing a CREATESTRUCT structure.
@@ -855,7 +855,7 @@ protected:
 #define IDC_PRINT_RANGE_SELECTION 1057
 #define IDC_PRINT_RANGE_PAGES     1058
 #define IDC_PRINT_COPIES_LABEL    1092
-#define IDC_PRINT_FROM            1152 
+#define IDC_PRINT_FROM            1152
 #define IDC_PRINT_TO              1153
 
 template <class T>
@@ -863,7 +863,7 @@ class CPythonPrtDlgFramework : public CPythonDlgFramework<T>
 {
 public:
 	// ctor hacks!
-	CPythonPrtDlgFramework(BOOL bPrintSetupOnly, DWORD dwFlags, CWnd* pParentWnd) :	
+	CPythonPrtDlgFramework(BOOL bPrintSetupOnly, DWORD dwFlags, CWnd* pParentWnd) :
           CPythonDlgFramework<T>(bPrintSetupOnly, dwFlags, pParentWnd) {;}
 	// End of ctor hacks!!!!
 
@@ -967,12 +967,12 @@ public:
 			m_pd.Flags |= PD_PAGENUMS;
 		}
 	}
-  
+
 //	DECLARE_MESSAGE_MAP()
 private: \
 	static const AFX_MSGMAP_ENTRY _messageEntries[];
 protected: \
-	static AFX_DATA const AFX_MSGMAP messageMap; 
+	static AFX_DATA const AFX_MSGMAP messageMap;
 
 	static const AFX_MSGMAP* PASCAL _GetBaseMessageMap() {
 #if _MFC_VER >= 0x0700
@@ -988,7 +988,7 @@ protected: \
 
 template <class T>
 AFX_DATADEF const AFX_MSGMAP CPythonPrtDlgFramework<T>::messageMap =
-	{ &CPythonPrtDlgFramework<T>::_GetBaseMessageMap, &CPythonPrtDlgFramework<T>::_messageEntries[0] 
+	{ &CPythonPrtDlgFramework<T>::_GetBaseMessageMap, &CPythonPrtDlgFramework<T>::_messageEntries[0]
 };
 
 template <class T>

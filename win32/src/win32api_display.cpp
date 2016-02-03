@@ -31,15 +31,15 @@ struct PyMemberDef PyDISPLAY_DEVICE::members[] = {
 	// DeviceName is a dummy so it will show up in property list, get and set handle manually
 	// same for DeviceString, DeviceID, DeviceKey
 	// @prop str|DeviceName|String of at most 32 chars
-	{"DeviceName",		T_OBJECT, OFF(obdummy), 0, "String of at most 32 chars"}, 
+	{"DeviceName",		T_OBJECT, OFF(obdummy), 0, "String of at most 32 chars"},
 	// @prop str|DeviceString|String of at most 128 chars
-	{"DeviceString",	T_OBJECT, OFF(obdummy), 0, "String of at most 128 chars"}, 
+	{"DeviceString",	T_OBJECT, OFF(obdummy), 0, "String of at most 128 chars"},
 	// @prop int|StateFlags|Bitmask of win32con.DISPLAY_DEVICE_* constants indicating current device status
 	{"StateFlags",		T_ULONG,  OFF(display_device.StateFlags), 0, "Bitmask of DISPLAY_DEVICE_* constants indicating current device status"},
 	// @prop str|DeviceID|String of at most 128 chars
-	{"DeviceID",		T_OBJECT, OFF(obdummy), 0, "String of at most 128 chars"}, 
+	{"DeviceID",		T_OBJECT, OFF(obdummy), 0, "String of at most 128 chars"},
 	// @prop str|DeviceKey|String of at most 128 chars
-	{"DeviceKey",		T_OBJECT, OFF(obdummy), 0, "String of at most 128 chars"}, 
+	{"DeviceKey",		T_OBJECT, OFF(obdummy), 0, "String of at most 128 chars"},
 	{NULL}
 };
 
@@ -110,7 +110,7 @@ PyDISPLAY_DEVICE::~PyDISPLAY_DEVICE()
 BOOL PyDISPLAY_DEVICE_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PyDISPLAY_DEVICEType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyDISPLAY_DEVICE");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyDISPLAY_DEVICE");
 		return FALSE;
 		}
 	return TRUE;
@@ -205,7 +205,7 @@ int PyDISPLAY_DEVICE::setattro(PyObject *self, PyObject *obname, PyObject *obval
 			PyWinObject_FreeTCHAR(value);
 			return -1;
 			}
-		
+
 		ZeroMemory(&pdisplay_device->DeviceString, sizeof(pdisplay_device->DeviceString));
 		memcpy(&pdisplay_device->DeviceString, value, valuelen * sizeof(TCHAR));
 		PyWinObject_FreeTCHAR(value);
@@ -221,7 +221,7 @@ int PyDISPLAY_DEVICE::setattro(PyObject *self, PyObject *obname, PyObject *obval
 			PyWinObject_FreeTCHAR(value);
 			return -1;
 			}
-		
+
 		ZeroMemory(&pdisplay_device->DeviceID, sizeof(pdisplay_device->DeviceID));
 		memcpy(&pdisplay_device->DeviceID, value, valuelen * sizeof(TCHAR));
 		PyWinObject_FreeTCHAR(value);
@@ -355,7 +355,7 @@ PyObject *PyEnumDisplayDevices(PyObject *self, PyObject *args, PyObject *kwargs)
 	// @pyparm string|Device|None|Name of device, use None to obtain information for the display adapter(s) on the machine, based on DevNum
 	// @pyparm int|DevNum|0|Index of device of interest, starting with zero
 	// @pyparm int|Flags|0|Reserved, use 0 if passed in
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|Okk:EnumDisplayDevices", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|Okk:EnumDisplayDevices", keywords,
 		&obDevice, &DevNum, &Flags))
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obDevice, &Device, TRUE))
@@ -382,7 +382,7 @@ PyObject *PyEnumDisplaySettings(PyObject *self, PyObject *args, PyObject *kwargs
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|Ok:EnumDisplaySettings", keywords,
 		&obDeviceName,	// @pyparm string|DeviceName|None|Name of device as returned by <om win32api.EnumDisplayDevices>, use None for default display device
-		&ModeNum))		// @pyparm int|ModeNum|0|Index of setting to return, or one of ENUM_CURRENT_SETTINGS, ENUM_REGISTRY_SETTINGS 
+		&ModeNum))		// @pyparm int|ModeNum|0|Index of setting to return, or one of ENUM_CURRENT_SETTINGS, ENUM_REGISTRY_SETTINGS
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obDeviceName, &DeviceName, TRUE))
 		return NULL;
@@ -459,7 +459,7 @@ PyObject *PyEnumDisplayMonitors(PyObject *self, PyObject *args, PyObject *kwargs
 	RECT rect;
 	LPRECT prect;
 	PyObject *obhdc=Py_None, *obrect=Py_None;
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OO:EnumDisplayMonitors", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OO:EnumDisplayMonitors", keywords,
 		&obhdc,		// @pyparm <o PyHANDLE>|hdc|None|Handle to device context, use None for virtual desktop
 		&obrect))	// @pyparm <o PyRECT>|rcClip|None|Clipping rectangle, can be None
 		return NULL;

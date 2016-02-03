@@ -52,7 +52,7 @@ static bool IsDoxygen(int ch) {
 }
 
 
-static void ColouriseDoc(unsigned int startPos, int length, int initStyle, 
+static void ColouriseDoc(unsigned int startPos, int length, int initStyle,
     WordList *keywordlists[], Accessor &styler, bool caseSensitive) {
 
     WordList &keywords = *keywordlists[0];
@@ -350,7 +350,7 @@ static const char * const dWordLists[] = {
             0,
         };
 
-static void ColouriseDDoc(unsigned int startPos, int length, 
+static void ColouriseDDoc(unsigned int startPos, int length,
     int initStyle, WordList *keywordlists[], Accessor &styler) {
         ColouriseDoc(startPos, length, initStyle, keywordlists, styler, true);
 }

@@ -10,7 +10,7 @@ static PyObject *PyCryptProtectData(PyObject *self, PyObject *args, PyObject *kw
 	PyObject *obDataIn, *obDataDescr=Py_None, *obOptionalEntropy=Py_None,
 		*obReserved=Py_None, *obPromptStruct=Py_None;
 	DWORD Flags=0;
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOOOk:CryptProtectData", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOOOk:CryptProtectData", keywords,
 		&obDataIn, // @pyparm bytes|DataIn||Data to be encrypted.
 		&obDataDescr, // @pyparm <o PyUnicode>|DataDescr|None|Description to add to the data
 		&obOptionalEntropy, // @pyparm bytes|OptionalEntropy|None|Extra entropy (eg password) for encryption process, can be None
@@ -71,7 +71,7 @@ static PyObject *PyCryptUnprotectData(PyObject *self, PyObject *args, PyObject *
 		"Reserved", "PromptStruct", "Flags", NULL};
 	PyObject *obDataIn, *obOptionalEntropy=Py_None, *obReserved=Py_None, *obPromptStruct=Py_None;
 	DWORD Flags=0;
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOOk:CryptUnprotectData", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|OOOk:CryptUnprotectData", keywords,
 		&obDataIn, // @pyparm bytes|DataIn||Data to be decrypted.
 		&obOptionalEntropy, // @pyparm bytes|OptionalEntropy|None|Extra entropy passed to CryptProtectData
 		&obReserved, // @pyparm None|Reserved|None|Must be None
@@ -124,7 +124,7 @@ static PyObject *PyCryptUnprotectData(PyObject *self, PyObject *args, PyObject *
 }
 
 // @pymethod string|win32crypt|CertAlgIdToOID|Converts an integer ALG_ID to it's szOID_ string representation
-// @comm If there is no corresponding OID, None is returned 
+// @comm If there is no corresponding OID, None is returned
 static PyObject *PyCertAlgIdToOID(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 	static char *keywords[]={"AlgId" ,NULL};
@@ -167,7 +167,7 @@ static PyObject *PyCryptAcquireContext(PyObject *self, PyObject *args, PyObject 
 	DWORD dwProvType=0, dwFlags=0;
 	WCHAR *container_name=NULL, *provider_name=NULL;
 	HCRYPTPROV hcryptprov;
-	// @pyparm <o PyUnicode>|Container||Name of key container, can be none to use a Provider's default key container (usually username) 
+	// @pyparm <o PyUnicode>|Container||Name of key container, can be none to use a Provider's default key container (usually username)
 	// @pyparm <o PyUnicode>|Provider||Name of cryptographic provider. (MS_*_PROV) Use None for user's default provider.
 	// @pyparm int|ProvType||One of the PROV_* constants
 	// @pyparm int|Flags||Combination of CRYPT_VERIFYCONTEXT,CRYPT_NEWKEYSET,CRYPT_MACHINE_KEYSET,CRYPT_DELETEKEYSET,CRYPT_SILENT
@@ -357,7 +357,7 @@ static PyObject *PyCryptGetDefaultProvider(PyObject *self, PyObject *args, PyObj
 	return ret;
 }
 
-// @pymethod |win32crypt|CryptSetProviderEx|Sets default provider (for machine or user) for specified type 
+// @pymethod |win32crypt|CryptSetProviderEx|Sets default provider (for machine or user) for specified type
 static PyObject *PyCryptSetProviderEx(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 	static char *keywords[]={"ProvName", "ProvType", "Flags", NULL};
@@ -414,9 +414,9 @@ static PyObject *PyCryptFindLocalizedName(PyObject *self, PyObject *args, PyObje
 }
 
 BOOL WINAPI CertEnumSystemStoreLocationCallback(
-  LPCWSTR pvszStoreLocations, 
-  DWORD dwFlags, 
-  void* pvReserved, 
+  LPCWSTR pvszStoreLocations,
+  DWORD dwFlags,
+  void* pvReserved,
   void* ret)
 {
 	CEnterLeavePython _celp;
@@ -455,10 +455,10 @@ static PyObject *PyCertEnumSystemStoreLocation(PyObject *self, PyObject *args, P
 }
 
 BOOL WINAPI CertEnumSystemStoreCallback(
-	const void* pvSystemStore, 
-	DWORD dwFlags, 
-	PCERT_SYSTEM_STORE_INFO pStoreInfo, 
-	void* pvReserved, 
+	const void* pvSystemStore,
+	DWORD dwFlags,
+	PCERT_SYSTEM_STORE_INFO pStoreInfo,
+	void* pvReserved,
 	void* ret)
 {
 	CEnterLeavePython _celp;
@@ -479,7 +479,7 @@ static PyObject *PyCertEnumSystemStore(PyObject *self, PyObject *args, PyObject 
 	void* pvSystemStoreLocationPara=NULL;
 	PyObject *ret=NULL, *obSystemStoreLocationPara=NULL;
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "k|O:CertEnumSystemStore", keywords,
-		&dwFlags,						// @pyparm int|dwFlags||CERT_SYSTEM_STORE_* location, can be combined with CERT_SYSTEM_STORE_RELOCATE_FLAG 
+		&dwFlags,						// @pyparm int|dwFlags||CERT_SYSTEM_STORE_* location, can be combined with CERT_SYSTEM_STORE_RELOCATE_FLAG
 		&obSystemStoreLocationPara))	// @pyparm <o PyCERT_SYSTEM_STORE_RELOCATE_PARA>|pvSystemStoreLocationPara|None|Optional - If flags contains CERT_SYSTEM_STORE_RELOCATE_FLAG must be a sequence (PyHkey, unicode) representing a CERT_SYSTEM_STORE_RELOCATE_PARA, otherwise should be a unicode store name
 		return NULL;
 
@@ -518,11 +518,11 @@ static PyObject *PyCertEnumSystemStore(PyObject *self, PyObject *args, PyObject 
 }
 
 BOOL WINAPI CertEnumPhysicalStoreCallback(
-  const void* pvSystemStore, 
-  DWORD dwFlags, 
-  LPCWSTR pwszStoreName, 
-  PCERT_PHYSICAL_STORE_INFO pStoreInfo, 
-  void* pvReserved, 
+  const void* pvSystemStore,
+  DWORD dwFlags,
+  LPCWSTR pwszStoreName,
+  PCERT_PHYSICAL_STORE_INFO pStoreInfo,
+  void* pvReserved,
   void* ret)
 {
 	CEnterLeavePython _celp;
@@ -546,7 +546,7 @@ static PyObject *PyCertEnumPhysicalStore(PyObject *self, PyObject *args, PyObjec
 		&obSystemStore, //@pyparm <o PyUnicode>|pvSystemStore||Name of system store to enumerate physical locations for
 		&dwFlags))   // @pyparm int|dwFlags||CERT_SYSTEM_STORE_* constant, CERT_SYSTEM_STORE_RELOCATE_FLAG  not supported yet
 		return NULL;
-	// pvSystemStore can also be a CERT_SYSTEM_STORE_RELOCATE_PARA pointer, not supported yet 
+	// pvSystemStore can also be a CERT_SYSTEM_STORE_RELOCATE_PARA pointer, not supported yet
 	if (!PyWinObject_AsWCHAR(obSystemStore, &SystemStore))
 		return NULL;
 	pvSystemStore = (WCHAR *)SystemStore;
@@ -692,7 +692,7 @@ static PyObject *PyCertRegisterSystemStore(PyObject *self, PyObject *args, PyObj
 	void* pvSystemStore=NULL;
 	CERT_SYSTEM_STORE_RELOCATE_PARA cssrp;
 	PyObject *ret=NULL, *obSystemStore=NULL;
-	// pStoreInfo and pvReserved currently must be NULL, do not accept as parms for now 
+	// pStoreInfo and pvReserved currently must be NULL, do not accept as parms for now
 	PCERT_SYSTEM_STORE_INFO pStoreInfo=NULL;
 	void *pvReserved=NULL;
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Ok:CertRegisterSystemStore", keywords,
@@ -886,7 +886,7 @@ BOOL WINAPI CryptEnumKeyIdentifierProperties_callback(
 		/* PropId can be any of the CERT_*_PROP_ID values, but usually CERT_KEY_PROV_INFO_PROP_ID
 			is the only one that matters.  Returning as a string is dangerous since many structs
 			contain pointers to other places in buffer, which are no longer valid after the callback
-			returns.  However, if an error is thrown for them, you'll never see the one that counts. */  
+			returns.  However, if an error is thrown for them, you'll never see the one that counts. */
 		if (rgdwPropId[prop_index]==CERT_KEY_PROV_INFO_PROP_ID)
 			prop_data=PyWinObject_FromCRYPT_KEY_PROV_INFO((PCRYPT_KEY_PROV_INFO)rgpvData[prop_index]);
 		else{
@@ -924,7 +924,7 @@ BOOL WINAPI CryptEnumKeyIdentifierProperties_callback(
 }
 
 
-// @pymethod list|win32crypt|CryptEnumKeyIdentifierProperties|Enumerates private keys for certificates and their properties 
+// @pymethod list|win32crypt|CryptEnumKeyIdentifierProperties|Enumerates private keys for certificates and their properties
 static PyObject *PyCryptEnumKeyIdentifierProperties(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 	static char *keywords[]={"KeyIdentifier", "PropId", "Flags", "ComputerName", NULL};
@@ -934,7 +934,7 @@ static PyObject *PyCryptEnumKeyIdentifierProperties(PyObject *self, PyObject *ar
 	PyObject *ret, *obkeyid=Py_None, *obcomputername=Py_None;
 	TmpWCHAR computername;
 	PVOID reserved=NULL;
-	
+
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|OkkO:CryptEnumKeyIdentifierProperties", keywords,
 		&obkeyid,	// @pyparm string|KeyIdentifier|None|Id of a certificate key, can be None for all keys
 		&propid,	// @pyparm int|PropId|0|CERT_*_PROP_ID constant. Limits returned values to specified propery, Use 0 for all
@@ -955,7 +955,7 @@ static PyObject *PyCryptEnumKeyIdentifierProperties(PyObject *self, PyObject *ar
 
 	BOOL bsuccess;
 	Py_BEGIN_ALLOW_THREADS
-	bsuccess = CryptEnumKeyIdentifierProperties(pchb, propid, flags, 
+	bsuccess = CryptEnumKeyIdentifierProperties(pchb, propid, flags,
 		computername, reserved, (void *)ret, CryptEnumKeyIdentifierProperties_callback);
 	Py_END_ALLOW_THREADS
 	if (!bsuccess){
@@ -987,7 +987,7 @@ static PyObject *PyCryptEnumOIDInfo(PyObject *self, PyObject *args, PyObject *kw
 {
 	static char *keywords[]={"GroupId" ,NULL};
 	PyObject *ret=NULL;
-	DWORD groupid=0, flags=0;  // Flags is reserved	
+	DWORD groupid=0, flags=0;  // Flags is reserved
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "|k:CryptEnumOIDInfo", keywords,
 		&groupid))	// @pyparm int|GroupId|0|The type of OIDs to enmerate, one of the CRYPT_*_OID_GROUP_ID constants or 0 to list all
 		return NULL;
@@ -1019,7 +1019,7 @@ static PyObject *PyCertAddSerializedElementToStore(PyObject *self, PyObject *arg
 	DWORD contexttype_out, adddisposition;
 	HCERTSTORE hcertstore;
 	const VOID *context;
-	
+
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOk|kk:CertAddSerializedElementToStore", keywords,
 		&obcertstore,		// @pyparm <o PyCERTSTORE>|CertStore||Certificate Store to which the context will be added, can be None
 		&obdata,			// @pyparm buffer|Element||Serialized data
@@ -1070,7 +1070,7 @@ static PyObject *PyCryptQueryObject(PyObject *self, PyObject *args, PyObject *kw
 	HCERTSTORE hcertstore=NULL;
 	HCRYPTMSG hcryptmsg=NULL;
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "kO|kkk:CryptQueryObject", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "kO|kkk:CryptQueryObject", keywords,
 		&objecttype,	// @pyparm int|ObjectType||Type of input, CERT_QUERY_OBJECT_BLOB or CERT_QUERY_OBJECT_FILE
 		&obinput,		// @pyparm str|Object||Raw data or a filename containing the data to be queried depending on ObjectType
 		&contenttype,	// @pyparm int|ExpectedContentTypeFlags|CERT_QUERY_CONTENT_FLAG_ALL|One of the CERT_QUERY_CONTENT_FLAG_* constants
@@ -1099,7 +1099,7 @@ static PyObject *PyCryptQueryObject(PyObject *self, PyObject *args, PyObject *kw
 	Py_END_ALLOW_THREADS
 	if (!bsuccess)
 		return PyWin_SetAPIError("CryptQueryObject");
-	
+
 	switch(formattypeout){
 		case CERT_QUERY_CONTENT_CERT:
 		case CERT_QUERY_CONTENT_SERIALIZED_CERT:
@@ -1111,7 +1111,7 @@ static PyObject *PyCryptQueryObject(PyObject *self, PyObject *args, PyObject *kw
 			obcontext=PyLong_FromVoidPtr(context);
 			break;
 		case CERT_QUERY_CONTENT_CRL:
-		case CERT_QUERY_CONTENT_SERIALIZED_CRL: 
+		case CERT_QUERY_CONTENT_SERIALIZED_CRL:
 			// obcontext=new PyCRL_CONTEXT(context);
 			obcontext=PyLong_FromVoidPtr(context);
 			break;
@@ -1119,12 +1119,12 @@ static PyObject *PyCryptQueryObject(PyObject *self, PyObject *args, PyObject *kw
 			Py_INCREF(Py_None);
 			obcontext=Py_None;
 		}
-	return Py_BuildValue("{s:k,s:k,s:k,s:N,s:N,s:N}", 
+	return Py_BuildValue("{s:k,s:k,s:k,s:N,s:N,s:N}",
 		"MsgAndCertEncodingType", encoding,
-		"ContentType", contenttypeout, 
-		"FormatType", formattypeout, 
-		"CertStore", PyWinObject_FromCERTSTORE(hcertstore), 
-		"Msg", PyWinObject_FromCRYPTMSG(hcryptmsg), 
+		"ContentType", contenttypeout,
+		"FormatType", formattypeout,
+		"CertStore", PyWinObject_FromCERTSTORE(hcertstore),
+		"Msg", PyWinObject_FromCRYPTMSG(hcryptmsg),
 		"Context", obcontext);
 }
 
@@ -1140,7 +1140,7 @@ static PyObject *PyCryptQueryObject(PyObject *self, PyObject *args, PyObject *kw
 //	and a second pass using CMSG_SIGNED_FLAG are required to recover the original message text.
 static PyObject *PyCryptDecodeMessage(PyObject *self, PyObject *args, PyObject *kwargs)
 {
-	static char *keywords[]={"EncodedBlob", "DecryptPara", "VerifyPara", "MsgTypeFlags", "SignerIndex", 
+	static char *keywords[]={"EncodedBlob", "DecryptPara", "VerifyPara", "MsgTypeFlags", "SignerIndex",
 		"PrevInnerContentType", "ReturnData", NULL};
 	BYTE *input_buf, *output_buf=NULL;
 	DWORD signer_ind=0, input_bufsize, output_bufsize=0;
@@ -1169,7 +1169,7 @@ static PyObject *PyCryptDecodeMessage(PyObject *self, PyObject *args, PyObject *
 
 	Py_BEGIN_ALLOW_THREADS
 	bsuccess = CryptDecodeMessage(msg_type_flags, &cdmp, &cvmp, signer_ind, input_buf, input_bufsize,
-		prev_inner_type, &msg_type, &inner_type, output_buf, &output_bufsize,  
+		prev_inner_type, &msg_type, &inner_type, output_buf, &output_bufsize,
 		&exchange_cert, &signer_cert);
 	Py_END_ALLOW_THREADS
 	if (!bsuccess){
@@ -1194,7 +1194,7 @@ static PyObject *PyCryptDecodeMessage(PyObject *self, PyObject *args, PyObject *
 		return PyErr_NoMemory();
 	Py_BEGIN_ALLOW_THREADS
 	bsuccess = CryptDecodeMessage(msg_type_flags, &cdmp, &cvmp, signer_ind, input_buf, input_bufsize,
-		prev_inner_type, &msg_type, &inner_type, output_buf, &output_bufsize,  
+		prev_inner_type, &msg_type, &inner_type, output_buf, &output_bufsize,
 		NULL, NULL);
 	Py_END_ALLOW_THREADS
 	if (!bsuccess){
@@ -1243,7 +1243,7 @@ static PyObject *PyCryptEncryptMessage(PyObject *self, PyObject *args, PyObject 
 	if (!PyWinObject_AsCERT_CONTEXTArray(obrecipients, &recipients, &recipient_cnt))
 		return NULL;
 	Py_BEGIN_ALLOW_THREADS
-	bsuccess = CryptEncryptMessage(&cemp, recipient_cnt, recipients, 
+	bsuccess = CryptEncryptMessage(&cemp, recipient_cnt, recipients,
 		inputbuf, input_bufsize, outputbuf, &output_bufsize);
 	Py_END_ALLOW_THREADS
 	if (!bsuccess)
@@ -1254,7 +1254,7 @@ static PyObject *PyCryptEncryptMessage(PyObject *self, PyObject *args, PyObject 
 			PyErr_Format(PyExc_MemoryError, "CryptEncryptMessage: Unable to allocate %d bytes", output_bufsize);
 		else{
 			Py_BEGIN_ALLOW_THREADS
-			bsuccess = CryptEncryptMessage(&cemp, recipient_cnt, recipients, 
+			bsuccess = CryptEncryptMessage(&cemp, recipient_cnt, recipients,
 				inputbuf, input_bufsize, outputbuf, &output_bufsize);
 			Py_END_ALLOW_THREADS
 			if (!bsuccess)
@@ -1571,7 +1571,7 @@ static PyObject *PyCryptVerifyDetachedMessageSignature(PyObject *self, PyObject 
 
 	BOOL bsuccess;
 	Py_BEGIN_ALLOW_THREADS
-	bsuccess = CryptVerifyDetachedMessageSignature(&cvmp, signer_ind, sig, sig_size, msg_cnt, 
+	bsuccess = CryptVerifyDetachedMessageSignature(&cvmp, signer_ind, sig, sig_size, msg_cnt,
 		(const BYTE **)msgs, msg_sizes, &signer_cert);
 	Py_END_ALLOW_THREADS
 	if (!bsuccess)
@@ -1585,7 +1585,7 @@ static PyObject *PyCryptVerifyDetachedMessageSignature(PyObject *self, PyObject 
 
 // @pymethod dict|win32crypt|CryptDecryptAndVerifyMessageSignature|Decrypts and decodes a signed message, and verifies its signatures
 // @comm Usage is similar to CryptDecodeMessage, except that it undoes all levels of encoding and
-//	returns the bare message.   This function is the counterpart of CryptSignAndEncryptMessage.   
+//	returns the bare message.   This function is the counterpart of CryptSignAndEncryptMessage.
 // @rdesc Output params are returned as a dict containing:
 //	<nl>Decrypted:str,					&nbsp&nbsp##The decrypted message contents
 //	<nl>XchgCert:<o PyCERT_CONTEXT>,	&nbsp&nbsp##Certificate whose private key was used to decrypt message
@@ -1797,13 +1797,13 @@ static PyObject *PyCryptDecodeObjectEx(PyObject *self, PyObject *args, PyObject 
 	else if ((structtype==X509_NAME) ||											// @flag X509_NAME|<o PyCERT_NAME_INFO>
 			(structtype==X509_UNICODE_NAME))									// @flag X509_UNICODE_NAME|<o PyCERT_NAME_INFO>
 		ret=PyWinObject_FromCERT_NAME_INFO((PCERT_NAME_INFO)output_buf);
-	else if ((oid_is_str && (strcmp(structtype, szOID_KEY_ATTRIBUTES)==0)) ||	// @flag szOID_KEY_ATTRIBUTES|<o PyCERT_KEY_ATTRIBUTES_INFO> 
+	else if ((oid_is_str && (strcmp(structtype, szOID_KEY_ATTRIBUTES)==0)) ||	// @flag szOID_KEY_ATTRIBUTES|<o PyCERT_KEY_ATTRIBUTES_INFO>
 			(structtype==X509_KEY_ATTRIBUTES))									// @flag X509_KEY_ATTRIBUTES|<o PyCERT_KEY_ATTRIBUTES_INFO>
 		ret=PyWinObject_FromCERT_KEY_ATTRIBUTES_INFO((PCERT_KEY_ATTRIBUTES_INFO)output_buf);
-	else if ((oid_is_str && (strcmp(structtype,szOID_BASIC_CONSTRAINTS)==0))||	// @flag szOID_BASIC_CONSTRAINTS|<o PyCERT_BASIC_CONSTRAINTS_INFO> 
+	else if ((oid_is_str && (strcmp(structtype,szOID_BASIC_CONSTRAINTS)==0))||	// @flag szOID_BASIC_CONSTRAINTS|<o PyCERT_BASIC_CONSTRAINTS_INFO>
 			(structtype==X509_BASIC_CONSTRAINTS))								// @flag X509_BASIC_CONSTRAINTS|<o PyCERT_BASIC_CONSTRAINTS_INFO>
 		ret=PyWinObject_FromCERT_BASIC_CONSTRAINTS_INFO((PCERT_BASIC_CONSTRAINTS_INFO)output_buf);
-	else if ((oid_is_str && (strcmp(structtype,szOID_BASIC_CONSTRAINTS2)==0))||	// @flag szOID_BASIC_CONSTRAINTS2|<o PyCERT_BASIC_CONSTRAINTS2_INFO> 
+	else if ((oid_is_str && (strcmp(structtype,szOID_BASIC_CONSTRAINTS2)==0))||	// @flag szOID_BASIC_CONSTRAINTS2|<o PyCERT_BASIC_CONSTRAINTS2_INFO>
 			(structtype==X509_BASIC_CONSTRAINTS2))								// @flag X509_BASIC_CONSTRAINTS2|<o PyCERT_BASIC_CONSTRAINTS2_INFO>
 		ret=PyWinObject_FromCERT_BASIC_CONSTRAINTS2_INFO((PCERT_BASIC_CONSTRAINTS2_INFO)output_buf);
 	else if ((oid_is_str &&
@@ -1815,7 +1815,7 @@ static PyObject *PyCryptDecodeObjectEx(PyObject *self, PyObject *args, PyObject 
 			(strcmp(structtype, szOID_SUBJECT_KEY_IDENTIFIER)==0))				// @flag szOID_SUBJECT_KEY_IDENTIFIER|Binary string containing the key identifier
 		ret=PyString_FromStringAndSize((char *)((CRYPT_DATA_BLOB *)output_buf)->pbData,
 			((CRYPT_DATA_BLOB *)output_buf)->cbData);
-	else if ((oid_is_str && (strcmp(structtype, szOID_AUTHORITY_KEY_IDENTIFIER)==0))||	// @flag szOID_AUTHORITY_KEY_IDENTIFIER|<o PyCERT_AUTHORITY_KEY_ID_INFO> 
+	else if ((oid_is_str && (strcmp(structtype, szOID_AUTHORITY_KEY_IDENTIFIER)==0))||	// @flag szOID_AUTHORITY_KEY_IDENTIFIER|<o PyCERT_AUTHORITY_KEY_ID_INFO>
 			(structtype==X509_AUTHORITY_KEY_ID))								// @flag X509_AUTHORITY_KEY_ID|<o PyCERT_AUTHORITY_KEY_ID_INFO>
 		ret=PyWinObject_FromCERT_AUTHORITY_KEY_ID_INFO((PCERT_AUTHORITY_KEY_ID_INFO)output_buf);
 	else
@@ -1830,32 +1830,32 @@ static PyObject *PyCryptDecodeObjectEx(PyObject *self, PyObject *args, PyObject 
 /*
 
 X509_CRL_DIST_POINTS CRL_DIST_POINTS_INFO
- 
+
 szOID_CRL_DIST_POINTS CRL_DIST_POINTS_INFO
 
- szOID_FRESHEST_CRL CRL_DIST_POINTS_INFO 
+ szOID_FRESHEST_CRL CRL_DIST_POINTS_INFO
 
- typedef struct _CRL_DIST_POINTS_INFO {  
-	DWORD cDistPoint;  
+ typedef struct _CRL_DIST_POINTS_INFO {
+	DWORD cDistPoint;
 	PCRL_DIST_POINT rgDistPoint;
 } CRL_DIST_POINTS_INFO, *PCRL_DIST_POINTS_INFO;
 
-typedef struct _CRL_DIST_POINT {  
-	CRL_DIST_POINT_NAME DistPointName;  
-	CRYPT_BIT_BLOB ReasonFlags;  
+typedef struct _CRL_DIST_POINT {
+	CRL_DIST_POINT_NAME DistPointName;
+	CRYPT_BIT_BLOB ReasonFlags;
 	CERT_ALT_NAME_INFO CRLIssuer;
 } CRL_DIST_POINT, *PCRL_DIST_POINT;
 
 
 X509_KEY_USAGE_RESTRICTION szOID_KEY_USAGE_RESTRICTION
-typedef struct _CERT_KEY_USAGE_RESTRICTION_INFO {  
-	DWORD cCertPolicyId;  
-	PCERT_POLICY_ID rgCertPolicyId;  
+typedef struct _CERT_KEY_USAGE_RESTRICTION_INFO {
+	DWORD cCertPolicyId;
+	PCERT_POLICY_ID rgCertPolicyId;
 	CRYPT_BIT_BLOB RestrictedKeyUsage;
 } CERT_KEY_USAGE_RESTRICTION_INFO, *PCERT_KEY_USAGE_RESTRICTION_INFO;
 
-typedef struct _CERT_POLICY_ID {  
-	DWORD cCertPolicyElementId;  
+typedef struct _CERT_POLICY_ID {
+	DWORD cCertPolicyElementId;
 	LPSTR* rgpszCertPolicyElementId;
 } CERT_POLICY_ID, *PCERT_POLICY_ID;
 
@@ -2043,7 +2043,7 @@ static PyObject *PyCryptBinaryToString(PyObject *self, PyObject *args, PyObject 
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Ok:CryptBinaryToString", keywords,
 		&obinput_buf,	// @pyparm bytes|Binary||Buffer containing raw data to be formatted
-		&flags))		// @pyparm int|Flags||Type of output desired, win32cryptcon.CRYPT_STRING_* value 
+		&flags))		// @pyparm int|Flags||Type of output desired, win32cryptcon.CRYPT_STRING_* value
 		return NULL;
 	if (!PyWinObject_AsReadBuffer(obinput_buf, (void **)&input_buf, &input_size))
 		return NULL;
@@ -2079,7 +2079,7 @@ static PyObject *PyCryptStringToBinary(PyObject *self, PyObject *args, PyObject 
 	TmpWCHAR input_buf;
 	PyObject *obinput_buf, *oboutput_buf;
 	BYTE *output_buf = NULL;
-	DWORD input_size, output_size, flags, skip, out_flags; 
+	DWORD input_size, output_size, flags, skip, out_flags;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Ok:CryptStringToBinary", keywords,
 		&obinput_buf,	// @pyparm str|String||Formatted string to be converted to raw binary data
@@ -2093,7 +2093,7 @@ static PyObject *PyCryptStringToBinary(PyObject *self, PyObject *args, PyObject 
 	Py_END_ALLOW_THREADS
 	if (!bsuccess)
 		return PyWin_SetAPIError("CryptStringToBinary");
-	oboutput_buf = PyString_FromStringAndSize(NULL, output_size);	
+	oboutput_buf = PyString_FromStringAndSize(NULL, output_size);
 	if (oboutput_buf == NULL)
 		return NULL;
 	output_buf = (BYTE *)PyString_AS_STRING(oboutput_buf);
@@ -2117,10 +2117,10 @@ static struct PyMethodDef win32crypt_functions[] = {
 	// @pymeth CryptEnumProviders|Lists available cryptographic providers
 	{"CryptEnumProviders", PyCryptEnumProviders, METH_NOARGS},
 	// @pymeth CryptEnumProviderTypes|Lists available local cryptographic provider types
-	{"CryptEnumProviderTypes", PyCryptEnumProviderTypes, METH_NOARGS}, 
+	{"CryptEnumProviderTypes", PyCryptEnumProviderTypes, METH_NOARGS},
 	// @pymeth CryptGetDefaultProvider|Returns default provider for local machine or current user
 	{"CryptGetDefaultProvider", (PyCFunction)PyCryptGetDefaultProvider, METH_VARARGS|METH_KEYWORDS},
-	// @pymeth CryptSetProviderEx|Sets default provider (for machine or user) for specified type 
+	// @pymeth CryptSetProviderEx|Sets default provider (for machine or user) for specified type
 	{"CryptSetProviderEx", (PyCFunction)PyCryptSetProviderEx, METH_VARARGS|METH_KEYWORDS},
 	// @pymeth CryptAcquireContext|Retrieve handle to a cryptographic service provider
 	{"CryptAcquireContext", (PyCFunction)PyCryptAcquireContext, METH_VARARGS|METH_KEYWORDS},

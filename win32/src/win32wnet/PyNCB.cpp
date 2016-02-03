@@ -9,7 +9,7 @@
 *
 * CISCO SYSTEMS, INC. DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS
 * SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
-* FITNESS. IN NO EVENT SHALL CISCO SYSTEMS BE LIABLE FOR ANY LOST REVENUE, 
+* FITNESS. IN NO EVENT SHALL CISCO SYSTEMS BE LIABLE FOR ANY LOST REVENUE,
 * PROFIT OR DATA, OR FOR SPECIAL, INDIRECT, CONSEQUENTIAL OR INCIDENTAL
 * DAMAGES OR ANY OTHER DAMAGES WHATSOEVER, HOWEVER CAUSED AND REGARDLESS
 * OF THE THEORY OF LIABILITY, ARISING OUT OF OR IN CONNECTION
@@ -142,7 +142,7 @@ PyNCB::PyNCB()
 /*************************************************************
 * Creates a new NCB structure from the passed in version.
 * Note: at this time it copies the Post processing
-* function pointer.  It is unclear whether support of this 
+* function pointer.  It is unclear whether support of this
 * feature could lead to reference problems.  Simlar issues with
 * the event handle.  For Future Work
 *************************************************************/
@@ -154,15 +154,15 @@ PyNCB::PyNCB(const NCB *pNCB)	// place holder
 	memset(&m_ncb, 0, sizeof(m_ncb));
 	dwStatus = 0;
 
-	m_ncb.ncb_command = pNCB->ncb_command; 
-    m_ncb.ncb_retcode = pNCB->ncb_command; 
-    m_ncb.ncb_lsn = pNCB->ncb_lsn; 
-    m_ncb.ncb_num = pNCB->ncb_num; 
-    m_ncb.ncb_buffer = pNCB->ncb_buffer; 
-    m_ncb.ncb_length = pNCB->ncb_length; 
-    m_ncb.ncb_rto = pNCB->ncb_rto; 
-    m_ncb.ncb_sto = pNCB->ncb_sto; 
-    m_ncb.ncb_lana_num = pNCB->ncb_lana_num; 
+	m_ncb.ncb_command = pNCB->ncb_command;
+    m_ncb.ncb_retcode = pNCB->ncb_command;
+    m_ncb.ncb_lsn = pNCB->ncb_lsn;
+    m_ncb.ncb_num = pNCB->ncb_num;
+    m_ncb.ncb_buffer = pNCB->ncb_buffer;
+    m_ncb.ncb_length = pNCB->ncb_length;
+    m_ncb.ncb_rto = pNCB->ncb_rto;
+    m_ncb.ncb_sto = pNCB->ncb_sto;
+    m_ncb.ncb_lana_num = pNCB->ncb_lana_num;
     m_ncb.ncb_cmd_cplt = pNCB->ncb_cmd_cplt;
 
 // should this be duplicated or just copied???
@@ -178,11 +178,11 @@ PyNCB::PyNCB(const NCB *pNCB)	// place holder
 //
 //	m_ncb.ncb_reserve[] is a string of 10 NULLs by definition
 
-    strncpy((char *)m_ncb.ncb_name, (char *)pNCB->ncb_name, NCBNAMSZ); 
+    strncpy((char *)m_ncb.ncb_name, (char *)pNCB->ncb_name, NCBNAMSZ);
     strncpy((char *)m_ncb.ncb_callname, (char *)pNCB->ncb_callname, NCBNAMSZ);
 
 // not sure about supporting this parameter!
-    m_ncb.ncb_post = pNCB->ncb_post; 
+    m_ncb.ncb_post = pNCB->ncb_post;
     m_obbuffer = NULL;
     m_obuserbuffer = NULL;
 };

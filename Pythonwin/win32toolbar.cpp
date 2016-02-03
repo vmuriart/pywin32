@@ -58,7 +58,7 @@ CDockContext *PyCDockContext::GetDockContext (PyObject *self)
 }
 
 // @pymethod int|PyCDockContext|StartDrag|
-PyObject *PyCDockContext_StartDrag( PyObject *self, PyObject *args ) 
+PyObject *PyCDockContext_StartDrag( PyObject *self, PyObject *args )
 {
 	CDockContext *pC = PyCDockContext::GetDockContext(self);
 	if (!pC) return NULL;
@@ -73,7 +73,7 @@ PyObject *PyCDockContext_StartDrag( PyObject *self, PyObject *args )
 }
 
 // @pymethod int|PyCDockContext|EndDrag|
-PyObject *PyCDockContext_EndDrag( PyObject *self, PyObject *args ) 
+PyObject *PyCDockContext_EndDrag( PyObject *self, PyObject *args )
 {
 	CDockContext *pC = PyCDockContext::GetDockContext(self);
 	if (!pC) return NULL;
@@ -85,7 +85,7 @@ PyObject *PyCDockContext_EndDrag( PyObject *self, PyObject *args )
 }
 
 // @pymethod int|PyCDockContext|StartResize|
-PyObject *PyCDockContext_StartResize( PyObject *self, PyObject *args ) 
+PyObject *PyCDockContext_StartResize( PyObject *self, PyObject *args )
 {
 	CDockContext *pC = PyCDockContext::GetDockContext(self);
 	if (!pC) return NULL;
@@ -102,7 +102,7 @@ PyObject *PyCDockContext_StartResize( PyObject *self, PyObject *args )
 }
 
 // @pymethod int|PyCDockContext|EndResize|
-PyObject *PyCDockContext_EndResize( PyObject *self, PyObject *args ) 
+PyObject *PyCDockContext_EndResize( PyObject *self, PyObject *args )
 {
 	CDockContext *pC = PyCDockContext::GetDockContext(self);
 	if (!pC) return NULL;
@@ -114,7 +114,7 @@ PyObject *PyCDockContext_EndResize( PyObject *self, PyObject *args )
 }
 
 // @pymethod int|PyCDockContext|ToggleDocking|
-PyObject *PyCDockContext_ToggleDocking( PyObject *self, PyObject *args ) 
+PyObject *PyCDockContext_ToggleDocking( PyObject *self, PyObject *args )
 {
 	CDockContext *pC = PyCDockContext::GetDockContext(self);
 	if (!pC) return NULL;
@@ -126,7 +126,7 @@ PyObject *PyCDockContext_ToggleDocking( PyObject *self, PyObject *args )
 }
 
 // @object PyCDockContext|A class which encapsulates an MFC CDockContext object
-static struct PyMethodDef 
+static struct PyMethodDef
 PyCDockContext_methods[] =
 {
 	{"EndDrag",      PyCDockContext_EndDrag, 1}, // @pymeth EndDrag|
@@ -263,7 +263,7 @@ CControlBar *PyCControlBar::GetControlBar (PyObject *self)
 }
 
 // @pymethod int|PyCControlBar|CalcDynamicLayout|The framework calls this member function to calculate the dimensions of a dynamic toolbar.
-PyObject *PyCControlBar_CalcDynamicLayout( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_CalcDynamicLayout( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -278,7 +278,7 @@ PyObject *PyCControlBar_CalcDynamicLayout( PyObject *self, PyObject *args )
 }
 
 // @pymethod int|PyCControlBar|CalcFixedLayout|Calculates the horizontal size of a control bar
-PyObject *PyCControlBar_CalcFixedLayout( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_CalcFixedLayout( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -293,7 +293,7 @@ PyObject *PyCControlBar_CalcFixedLayout( PyObject *self, PyObject *args )
 }
 
 // @pymethod |PyCControlBar|EraseNonClient|
-PyObject *PyCControlBar_EraseNonClient( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_EraseNonClient( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -305,7 +305,7 @@ PyObject *PyCControlBar_EraseNonClient( PyObject *self, PyObject *args )
 }
 
 // @pymethod <o PyCFrameWnd>|PyCControlBar|GetDockingFrame|Returns the frame window to which a control bar is docked.
-PyObject *PyCControlBar_GetDockingFrame( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_GetDockingFrame( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -319,7 +319,7 @@ PyObject *PyCControlBar_GetDockingFrame( PyObject *self, PyObject *args )
 }
 
 // @pymethod int|PyCControlBar|GetCount|Returns the number of non-HWND elements in the control bar.
-PyObject *PyCControlBar_GetCount( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_GetCount( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -330,7 +330,7 @@ PyObject *PyCControlBar_GetCount( PyObject *self, PyObject *args )
 	return Py_BuildValue("i", rc);
 }
 // @pymethod int|PyCControlBar|IsFloating|Returns a nonzero value if the control bar in question is a floating control bar.
-PyObject *PyCControlBar_IsFloating( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_IsFloating( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -343,7 +343,7 @@ PyObject *PyCControlBar_IsFloating( PyObject *self, PyObject *args )
 
 
 // @pymethod int|PyCControlBar|GetBarStyle|Retrieves the control bar style settings.
-PyObject *PyCControlBar_GetBarStyle( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_GetBarStyle( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -355,7 +355,7 @@ PyObject *PyCControlBar_GetBarStyle( PyObject *self, PyObject *args )
 }
 
 // @pymethod |PyCControlBar|SetBarStyle|Modifies the control bar style settings.
-PyObject *PyCControlBar_SetBarStyle( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_SetBarStyle( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -370,7 +370,7 @@ PyObject *PyCControlBar_SetBarStyle( PyObject *self, PyObject *args )
 }
 
 // @pymethod |PyCControlBar|EnableDocking|pecifies whether the control bar supports docking and the sides of its parent window.
-PyObject *PyCControlBar_EnableDocking( PyObject *self, PyObject *args ) 
+PyObject *PyCControlBar_EnableDocking( PyObject *self, PyObject *args )
 {
 	CControlBar *pCtlBar = PyCControlBar::GetControlBar(self);
 	if (!pCtlBar) return NULL;
@@ -411,7 +411,7 @@ PyCControlBar_ShowWindow (PyObject *self, PyObject *args)
 }
 
 // @object PyCControlBar|A class which encapsulates an MFC <o CControlBar>.  Derived from a <o PyCWnd> object.
-static struct PyMethodDef 
+static struct PyMethodDef
 PyCControlBar_methods[] =
 {
 	{"CalcDynamicLayout",PyCControlBar_CalcDynamicLayout,1}, // @pymeth CalcDynamicLayout|The framework calls this member function to calculate the dimensions of a dynamic toolbar.
@@ -482,7 +482,7 @@ int PyCControlBar::setattro(PyObject *obname, PyObject *v)
 }
 
 ui_type_CObject PyCControlBar::type ("PyCControlBar",
-					&PyCWnd::type, 
+					&PyCWnd::type,
 					RUNTIME_CLASS(CControlBar),
 					sizeof(PyCControlBar),
 					PYOBJ_OFFSET(PyCControlBar),
@@ -529,7 +529,7 @@ PyCToolBar::create (PyObject *self, PyObject *args)
   PyObject *parent;
   int style;
   int id = AFX_IDW_TOOLBAR;
-  if (!PyArg_ParseTuple (args,"Oi|i:CreateToolBar", 
+  if (!PyArg_ParseTuple (args,"Oi|i:CreateToolBar",
             &parent, 	// @pyparm <o PyCWnd>|parent||The parent window for the toolbar.
             &style,     // @pyparm int|style||The style for the toolbar.
 			&id))        // @pyparm int|windowId|afxres.AFX_IDW_TOOLBAR|The child window ID.
@@ -567,7 +567,7 @@ PyCToolBar_SetButtons(PyObject *self, PyObject *args)
 	if (!pToolBar)
 		return NULL;
 	PyObject *buttons;
-	if (!PyArg_ParseTuple (args,"O:SetButtons", 
+	if (!PyArg_ParseTuple (args,"O:SetButtons",
 			&buttons))   // @pyparm tuple|buttons||A tuple containing the ID's of the buttons.
 		return NULL;
 
@@ -576,7 +576,7 @@ PyCToolBar_SetButtons(PyObject *self, PyObject *args)
 		BOOL rc = pToolBar->SetButtons(NULL, PyInt_AsLong(buttons) );
 		if (!rc) RETURN_API_ERR("PyCToolBar.SetButtons");
 		RETURN_NONE;
-	} 
+	}
 	// Not an integer - normal tuple of buttons.
 	if (!PyTuple_Check (buttons))
 	  RETURN_TYPE_ERR("SetButtons requires a tuple of IDs");
@@ -593,7 +593,7 @@ PyCToolBar_SetButtons(PyObject *self, PyObject *args)
 		}
 		button_list[i] = PyInt_AsLong (o);
 	}
-	BOOL rc = pToolBar->SetButtons(button_list, 
+	BOOL rc = pToolBar->SetButtons(button_list,
 	                               PyWin_SAFE_DOWNCAST(num_buttons, Py_ssize_t, int));
 	delete button_list;
 	if (!rc) RETURN_API_ERR("PyCToolBar.SetButtons");
@@ -608,10 +608,10 @@ PyCToolBar_SetButtonInfo(PyObject *self, PyObject *args)
 	if (!pToolBar)return NULL;
 
 	int nIndex;
-	UINT nID; 
+	UINT nID;
 	UINT nStyle;
 	int iImage;
-	if(!PyArg_ParseTuple(args,"iiii", 
+	if(!PyArg_ParseTuple(args,"iiii",
 	          &nIndex,	// @pyparm int|index||Index of the button or separator whose information is to be set.
 			  &nID,		// @pyparm int|ID||The value to which the button's command ID is set.
 			  &nStyle,	// @pyparm int|style||The new button style
@@ -619,7 +619,7 @@ PyCToolBar_SetButtonInfo(PyObject *self, PyObject *args)
 		return NULL;
 
 	// since the info is set through msgs we must protect state
-	GUI_BGN_SAVE; 
+	GUI_BGN_SAVE;
 	pToolBar->SetButtonInfo(nIndex,nID,nStyle,iImage);
 	GUI_END_SAVE;
 
@@ -645,7 +645,7 @@ static PyObject *
 PyCToolBar_SetToolTips(PyObject *self, PyObject *args)
 {
 	PyObject *obTTC;
-	if (!PyArg_ParseTuple(args,"O", 
+	if (!PyArg_ParseTuple(args,"O",
 	          &obTTC)) // @pyparm <o PyCToolTipCtrl>|obTTC||The ToolTipCtrl ctrl to be set.
 		return NULL;
 
@@ -669,7 +669,7 @@ PyCToolBar_SetBarStyle(PyObject *self, PyObject *args)
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
 	if (!pToolBar)return NULL;
 	DWORD dwStyle;
-	if (!PyArg_ParseTuple(args,"l", 
+	if (!PyArg_ParseTuple(args,"l",
 	          &dwStyle)) // @pyparm long|style||The toolbar style to set.
 		return NULL;
 	pToolBar->SetBarStyle(dwStyle);
@@ -700,8 +700,8 @@ PyCToolBar_LoadBitmap (PyObject *self, PyObject *args)
 
 	if (!rc)
 		RETURN_ERR("LoadBitmap failed");
-	// @comm The bitmap should contain one image for each toolbar button. If the 
-	// images are not of the standard size (16 pixels wide and 15 pixels high), 
+	// @comm The bitmap should contain one image for each toolbar button. If the
+	// images are not of the standard size (16 pixels wide and 15 pixels high),
 	// call <om PyCToolBar.SetSizes> to set the button sizes and their images.
 	RETURN_NONE;
 }
@@ -729,8 +729,8 @@ PyCToolBar_LoadToolBar (PyObject *self, PyObject *args)
 	PyWinObject_FreeResourceId(szId);
 	if (!rc)
 		RETURN_ERR("LoadToolBar failed");
-	// @comm The bitmap should contain one image for each toolbar button. If the 
-	// images are not of the standard size (16 pixels wide and 15 pixels high), 
+	// @comm The bitmap should contain one image for each toolbar button. If the
+	// images are not of the standard size (16 pixels wide and 15 pixels high),
 	// call <om PyCToolBar.SetSizes> to set the button sizes and their images.
 	RETURN_NONE;
 }
@@ -749,13 +749,13 @@ MAKE_GET_INT_INT_METH(PyCToolBar_GetItemID, GetItemID )
 MAKE_GET_INT_INT_METH(PyCToolBar_GetButtonStyle, GetButtonStyle )
 
 // @pymethod |PyCToolBar|SetBitmap|Sets a bitmapped image.
-PyObject *PyCToolBar_SetBitmap( PyObject *self, PyObject *args ) 
+PyObject *PyCToolBar_SetBitmap( PyObject *self, PyObject *args )
 {
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
 	if (!pToolBar) return NULL;
 	// @pyparm int|hBitmap||The handle to a bitmap resource.
-	// @comm Call this method to set the bitmap image for the toolbar. For example, 
-	// call SetBitmap to change the bitmapped image after the user takes an action on 
+	// @comm Call this method to set the bitmap image for the toolbar. For example,
+	// call SetBitmap to change the bitmapped image after the user takes an action on
 	// a document that changes the action of a button.
 	PyObject *obval;
 	if (!PyArg_ParseTuple( args, "O:SetBitmap", &obval))
@@ -779,8 +779,8 @@ PyCToolBar_SetSizes (PyObject *self, PyObject *args)
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
 	if (!pToolBar)
 		return NULL;
-  
-	if (!PyArg_ParseTuple(args,"(ii)(ii)", 
+
+	if (!PyArg_ParseTuple(args,"(ii)(ii)",
 	          &sizeBut.cx, &sizeBut.cy,	 // @pyparm (cx, cy)|sizeButton||The size of each button.
 		      &sizeBmp.cx, &sizeBmp.cy)) // @pyparm (cx, cy)|sizeButton||The size of each bitmap.
 		return NULL;
@@ -796,7 +796,7 @@ PyCToolBar_SetButtonStyle (PyObject *self, PyObject *args)
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
 	if (!pToolBar)
 		return NULL;
-	if (!PyArg_ParseTuple(args,"ii", 
+	if (!PyArg_ParseTuple(args,"ii",
 			&index, // @pyparm int|index||Index of the item whose style is to be set
 			&style))// @pyparm int|style||The new style
 		return NULL;
@@ -805,7 +805,7 @@ PyCToolBar_SetButtonStyle (PyObject *self, PyObject *args)
 }
 
 // @pymethod string|PyCToolBar|GetButtonText|Gets the text for a button.
-PyObject *PyCToolBar_GetButtonText( PyObject *self, PyObject *args ) 
+PyObject *PyCToolBar_GetButtonText( PyObject *self, PyObject *args )
 {
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
 	if (!pToolBar) return NULL;
@@ -826,7 +826,7 @@ PyCToolBar_SetButtonText(PyObject *self, PyObject *args)
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
 	if (!pToolBar)
 		return NULL;
-	if (!PyArg_ParseTuple(args,"iO", 
+	if (!PyArg_ParseTuple(args,"iO",
 			&index, // @pyparm int|index||Index of the item whose style is to be set
 			&obtext))// @pyparm string|text||The new text
 		return NULL;
@@ -838,7 +838,7 @@ PyCToolBar_SetButtonText(PyObject *self, PyObject *args)
 }
 
 // @pymethod <o PyCToolBarCtrl>|PyCToolBar|GetToolBarCtrl|Gets the toolbar control object for the toolbar
-PyObject *PyCToolBar_GetToolBarCtrl( PyObject *self, PyObject *args ) 
+PyObject *PyCToolBar_GetToolBarCtrl( PyObject *self, PyObject *args )
 {
 	CHECK_NO_ARGS (args);
 	CToolBar *pToolBar = PyCToolBar::GetToolBar(self);
@@ -854,7 +854,7 @@ PyObject *PyCToolBar_GetToolBarCtrl( PyObject *self, PyObject *args )
 }
 
 // @object PyCToolBar|A class which encapsulates an MFC <o CToolBar>.  Derived from a <o PyCControlBar> object.
-static struct PyMethodDef 
+static struct PyMethodDef
 PyCToolBar_methods[] =
 {
 	{"GetButtonStyle",  PyCToolBar_GetButtonStyle,1}, // @pymeth GetButtonStyle|Retrieves the style for a button.
@@ -876,7 +876,7 @@ PyCToolBar_methods[] =
 };
 
 ui_type_CObject PyCToolBar::type ("PyCToolBar",
-					&PyCControlBar::type, 
+					&PyCControlBar::type,
 					RUNTIME_CLASS(CToolBar),
 					sizeof(PyCToolBar),
 					PYOBJ_OFFSET(PyCToolBar),
@@ -1044,7 +1044,7 @@ PyObject *PyCToolBarCtrl_AddStrings (PyObject *self, PyObject *args)
 	// (XXX - is this really necessary?  It seems surprising the control
 	// doesn't take its own copy???)
 	((PyCToolBarCtrl *) self)->strlist->Add(strings);
-	
+
 	// @pyparm string...|strings||Strings to add. Can give more than one string.
 	GUI_BGN_SAVE;
 	int rc = pTBC->AddStrings(strings);
@@ -1071,7 +1071,7 @@ PyObject *PyCToolBarCtrl_CheckButton (PyObject *self, PyObject *args)
 {
 	CToolBarCtrl *pTBC = GetToolBarCtrl(self);
 	if (pTBC == NULL) return NULL;
-	int nID, bCheck = 1;		
+	int nID, bCheck = 1;
 	if (!PyArg_ParseTuple( args, "i|i:CheckButton",
 			       &nID, // @pyparm int|nID||Command identifier of the button to check or clear.
 			       &bCheck)) // @pyparm int|bCheck|1|1 to check, 0 to clear the button
@@ -1107,12 +1107,12 @@ PyCToolBarCtrl_CreateWindow(PyObject *self, PyObject *args)
 	int style, id;
 	PyObject *obParent;
 	RECT rect;
-	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow", 
+	if (!PyArg_ParseTuple(args, "i(iiii)Oi:CreateWindow",
 			      &style, // @pyparm int|style||The style for the button.  Use any of the win32con.BS_* constants.
 			      &rect.left,&rect.top,&rect.right,&rect.bottom,
 			      // @pyparm (left, top, right, bottom)|rect||The size and position of the button.
 			      &obParent, // @pyparm <o PyCWnd>|parent||The parent window of the button.  Usually a <o PyCDialog>.
-			      &id )) // @pyparm int|id||The buttons control ID. 
+			      &id )) // @pyparm int|id||The buttons control ID.
 		return NULL;
 
 	if (!ui_base_class::is_uiobject(obParent, &PyCWnd::type))
@@ -1414,7 +1414,7 @@ PyObject *PyCToolBarCtrl_SetRows (PyObject *self, PyObject *args)
 
 
 // @object PyCToolBarCtrl|A class which encapsulates an MFC <o CToolBarCtrl>.  Derived from a <o PyCWnd> object. Created using <om PyCToolBar.GetToolBarCtrl>
-static struct PyMethodDef 
+static struct PyMethodDef
 PyCToolBarCtrl_methods[] =
 {
 	{"AddBitmap", PyCToolBarCtrl_AddBitmap, 1}, // @pymeth AddBitmap|Add one or more button images to the list of button images
@@ -1474,13 +1474,13 @@ PyCStatusBar::create (PyObject *self, PyObject *args)
   int style = WS_CHILD | WS_VISIBLE | CBRS_BOTTOM;
   int id = AFX_IDW_STATUS_BAR;
   int ctrlStyle = 0;
-  if (!PyArg_ParseTuple (args,"O|iii:CreateStatusBar", 
+  if (!PyArg_ParseTuple (args,"O|iii:CreateStatusBar",
             &parent,    // @pyparm <o PyCWnd>|parent||The parent window for the status bar.
             &style,     // @pyparm int|style|afxres.WS_CHILD \| afxres.WS_VISIBLE \| afxres.CBRS_BOTTOM|The style for the status bar.
             &id,        // @pyparm int|windowId|afxres.AFX_IDW_STATUS_BAR|The child window ID.
             &ctrlStyle)) // @pyparm int|ctrlStype|0|Additional styles for the creation of the embedded <o PyCStatusBarCtrl> object.
-                         // <nl>Status bar styles supported are:<nl>commctrl.SBARS_SIZEGRIP - The status bar control includes a 
-                         // sizing grip at the right end of the status bar. A sizing grip is similar to a sizing border; 
+                         // <nl>Status bar styles supported are:<nl>commctrl.SBARS_SIZEGRIP - The status bar control includes a
+                         // sizing grip at the right end of the status bar. A sizing grip is similar to a sizing border;
                          // it is a rectangular area that the user can click and drag to resize the parent window.
                          // <nl>commctrl.SBT_TOOLTIPS - The status bar supports tooltips.
     return NULL;
@@ -1554,7 +1554,7 @@ PyObject *
 PyCStatusBar_SetIndicators(PyObject *self, PyObject *args)
 {
 	PyObject *buttons;
-	if (!PyArg_ParseTuple (args,"O:SetIndicators", 
+	if (!PyArg_ParseTuple (args,"O:SetIndicators",
 			&buttons)   // @pyparm tuple|indicators||A tuple containing the ID's of the indicators.
 	    ||
 	    !PySequence_Check (buttons))
@@ -1609,7 +1609,7 @@ PyCStatusBar_SetPaneInfo( PyObject *self, PyObject *args )
 }
 
 // @object PyCStatusBar|A class which encapsulates an MFC <o CStatusBar>.  Derived from a <o PyCControlBar> object.
-static struct PyMethodDef 
+static struct PyMethodDef
 PyCStatusBar_methods[] =
 {
 	{"GetPaneInfo", PyCStatusBar_GetPaneInfo, 1}, // @pymeth GetPaneInfo|Returns indicator ID, style, and width for a given pane index.
@@ -1620,7 +1620,7 @@ PyCStatusBar_methods[] =
 };
 
 ui_type_CObject PyCStatusBar::type ("PyCStatusBar",
-					&PyCControlBar::type, 
+					&PyCControlBar::type,
 					RUNTIME_CLASS(CStatusBar),
 					sizeof(PyCStatusBar),
 					PYOBJ_OFFSET(PyCStatusBar),

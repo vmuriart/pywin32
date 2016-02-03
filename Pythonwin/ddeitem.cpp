@@ -47,10 +47,10 @@ static struct PyMethodDef PyDDEStringItem_methods[] = {
 	{NULL,			NULL}		// sentinel
 };
 
-ui_type_CObject PyDDEStringItem::type("PyDDEStringItem", 
-							   &ui_assoc_CObject::type, 
-							   RUNTIME_CLASS(CDDEStringItem), 
-							   sizeof(PyDDEStringItem), 
-							   PYOBJ_OFFSET(PyDDEStringItem), 
+ui_type_CObject PyDDEStringItem::type("PyDDEStringItem",
+							   &ui_assoc_CObject::type,
+							   RUNTIME_CLASS(CDDEStringItem),
+							   sizeof(PyDDEStringItem),
+							   PYOBJ_OFFSET(PyDDEStringItem),
 							   PyDDEStringItem_methods,
 							   GET_PY_CTOR(PyDDEStringItem));

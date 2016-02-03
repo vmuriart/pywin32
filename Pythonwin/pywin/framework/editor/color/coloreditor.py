@@ -50,7 +50,7 @@ class SyntEditView(SyntEditViewParent):
 
 		for id in [win32ui.ID_VIEW_FOLD_COLLAPSE, win32ui.ID_VIEW_FOLD_COLLAPSE_ALL,
 				   win32ui.ID_VIEW_FOLD_EXPAND, win32ui.ID_VIEW_FOLD_EXPAND_ALL]:
-		
+
 			self.HookCommand(self.OnCmdViewFold, id)
 			self.HookCommandUpdate(self.OnUpdateViewFold, id)
 		self.HookCommand(self.OnCmdViewFoldTopLevel, win32ui.ID_VIEW_FOLD_TOPLEVEL)
@@ -79,7 +79,7 @@ class SyntEditView(SyntEditViewParent):
 			self.SCIMarkerDefineAll(scintillacon.SC_MARKNUM_FOLDEREND, scintillacon.SC_MARK_CIRCLEPLUSCONNECTED, win32api.RGB(0xff, 0xff, 0xff), win32api.RGB(0, 0, 0))
 			self.SCIMarkerDefineAll(scintillacon.SC_MARKNUM_FOLDEROPENMID, scintillacon.SC_MARK_CIRCLEMINUSCONNECTED, win32api.RGB(0xff, 0xff, 0xff), win32api.RGB(0, 0, 0))
 			self.SCIMarkerDefineAll(scintillacon.SC_MARKNUM_FOLDERMIDTAIL, scintillacon.SC_MARK_TCORNERCURVE, win32api.RGB(0xff, 0xff, 0xff), win32api.RGB(0, 0, 0))
-		
+
 		self.SCIMarkerDefine(MARKER_BREAKPOINT, scintillacon.SC_MARK_CIRCLE)
 		# Marker background depends on debugger state
 		self.SCIMarkerSetFore(MARKER_BREAKPOINT, win32api.RGB(0x0, 0, 0))
@@ -514,7 +514,7 @@ class SyntEditTemplate(EditorTemplateBase):
 		"""
 		from pywin.scintilla import configui
 		return EditorTemplateBase.GetPythonPropertyPages(self) + [configui.ScintillaFormatPropertyPage()]
-		
+
 # For debugging purposes, when this module may be reloaded many times.
 try:
 	win32ui.GetApp().RemoveDocTemplate(editorTemplate)

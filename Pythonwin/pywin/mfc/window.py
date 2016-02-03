@@ -14,7 +14,7 @@ class Wnd(object.CmdTarget):
 # Note - to process all messages for your window, add the following method
 # to a derived class.  This code provides default message handling (ie, is
 # identical, except presumably in speed, as if the method did not exist at
-# all, so presumably will be modified to test for specific messages to be 
+# all, so presumably will be modified to test for specific messages to be
 # useful!
 #	def WindowProc(self, msg, wParam, lParam):
 #		rc, lResult = self._obj_.OnWndMsg(msg, wParam, lParam)

@@ -291,7 +291,7 @@ done:
 #pragma optimize ("", on)
 #endif // _MSC_VER
 
-// @pymethod |pythoncom|CoInitializeSecurity|Registers security and sets the default security values. 
+// @pymethod |pythoncom|CoInitializeSecurity|Registers security and sets the default security values.
 static PyObject *pythoncom_CoInitializeSecurity(PyObject *self, PyObject *args)
 {
 	CHECK_PFN(CoInitializeSecurity);
@@ -310,8 +310,8 @@ static PyObject *pythoncom_CoInitializeSecurity(PyObject *self, PyObject *args)
 				// <nl>If Capabilities contains EOAC_ACCESS_CONTROL, sd parameter should be an IAccessControl interface.
 		&obAuthSvc, // @pyparm object|authSvc||A value of None tells COM to choose which authentication services to use.  An empty list means use no services.
 		&obReserved1,// @pyparm object|reserved1||Must be None
-		&dwAuthnLevel, // @pyparm int|authnLevel||One of pythoncom.RPC_C_AUTHN_LEVEL_* values. The default authentication level for proxies. On the server side, COM will fail calls that arrive at a lower level. All calls to AddRef and Release are made at this level.
-		&dwImpLevel, // @pyparm int|impLevel||One of pythoncom.RPC_C_IMP_LEVEL_* values.  The default impersonation level for proxies. This value is not checked on the server side. AddRef and Release calls are made with this impersonation level so even security aware apps should set this carefully. Setting IUnknown security only affects calls to QueryInterface, not AddRef or Release. 
+		&dwAuthnLevel, // @pyparm int|authnLevel||One of pythoncom.RPC_C_AUTHN_LEVEL_* values. The default authentication level for proxies. On the server side, COM will fail calls that arrive at a lower level. All calls to AddRefÂ and Release are made at this level.
+		&dwImpLevel, // @pyparm int|impLevel||One of pythoncom.RPC_C_IMP_LEVEL_* values.  The default impersonation level for proxies. This value is not checked on the server side. AddRefÂ and ReleaseÂ calls are made with this impersonation level so even security aware apps should set this carefully. Setting IUnknownÂ security only affects calls to QueryInterface, not AddRefÂ or Release.
 		&obAuthInfo, // @pyparm object|authInfo||Must be None
 		&dwCapabilities, // @pyparm int|capabilities||Authentication capabilities, combination of pythoncom.EOAC_* flags.
 		&obReserved2)) // @pyparm object|reserved2||Must be None
@@ -406,7 +406,7 @@ static PyObject *pythoncom_CoRegisterClassObject(PyObject *self, PyObject *args)
 	// @rdesc The result is a handle which should be revoked using <om pythoncom.CoRevokeClassObject>
 	return PyInt_FromLong(reg);
 }
-// @pymethod |pythoncom|CoRevokeClassObject|Informs OLE that a class object, previously registered with the <om pythoncom.CoRegisterClassObject> method, is no longer available for use. 
+// @pymethod |pythoncom|CoRevokeClassObject|Informs OLE that a class object, previously registered with the <om pythoncom.CoRegisterClassObject> method, is no longer available for use.
 static PyObject *pythoncom_CoRevokeClassObject(PyObject *self, PyObject *args)
 {
 	DWORD reg;
@@ -446,8 +446,8 @@ static PyObject *pythoncom_CoTreatAsClass(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "O|O", &obguid1, &obguid2))
 		return NULL;
 	CLSID clsid1, clsid2 = GUID_NULL;
-	// @pyparm <o PyIID>|clsidold||CLSID of the object to be emulated. 
-	// @pyparm <o PyIID>|clsidnew|CLSID_NULL|CLSID of the object that should emulate the original object. This replaces any existing emulation for clsidOld. Can be ommitted or CLSID_NULL, in which case any existing emulation for clsidOld is removed. 
+	// @pyparm <o PyIID>|clsidold||CLSID of the object to be emulated.
+	// @pyparm <o PyIID>|clsidnew|CLSID_NULL|CLSID of the object that should emulate the original object. This replaces any existing emulation for clsidOld. Can be ommitted or CLSID_NULL, in which case any existing emulation for clsidOld is removed.
 	if (!PyWinObject_AsIID(obguid1, &clsid1))
 		return NULL;
 	if (obguid2!=NULL && !PyWinObject_AsIID(obguid2, &clsid2))
@@ -466,7 +466,7 @@ static PyObject *pythoncom_CoTreatAsClass(PyObject *self, PyObject *args)
 static PyObject *pythoncom_MakePyFactory(PyObject *self, PyObject *args)
 {
 	PyObject *obIID;
-	if (!PyArg_ParseTuple(args, "O:MakePyFactory", 
+	if (!PyArg_ParseTuple(args, "O:MakePyFactory",
 		&obIID))	// @pyparm <o PyIID>|iid||The IID of the object the class factory provides.
 		return NULL;
 	IID iid;
@@ -593,7 +593,7 @@ static PyObject *pythoncom_createguid(PyObject *self, PyObject *args)
 	PY_INTERFACE_PRECALL;
 	CoCreateGuid(&guid);
 	PY_INTERFACE_POSTCALL;
-	// @comm Use the CreateGuid function when you need an absolutely unique number that you will use as a persistent identifier in a distributed environment.To a very high degree of certainty, this function returns a unique value – no other invocation, on the same or any other system (networked or not), should return the same value.
+	// @comm Use the CreateGuid function when you need an absolutely unique number that you will use as a persistent identifier in a distributed environment.To a very high degree of certainty, this function returns a unique value â€“ no other invocation, on the same or any other system (networked or not), should return the same value.
 	return PyWinObject_FromIID(guid);
 }
 
@@ -604,7 +604,7 @@ static PyObject *pythoncom_progidfromclsid(PyObject *self, PyObject *args)
 	// @pyparm IID|clsid||A CLSID (either in a string, or in an <o PyIID> object)
 	if (!PyArg_ParseTuple(args, "O", &obCLSID))
 		return NULL;
-	
+
 	CLSID clsid;
 	if (!PyWinObject_AsIID(obCLSID, &clsid))
 		return NULL;
@@ -783,8 +783,8 @@ static PyObject *pythoncom_MkParseDisplayName(PyObject *self, PyObject *args)
 	// @comm If a binding context is not provided, then one will be created.
 	// Any binding context created or passed in will be returned to the
 	// caller.
-	if ( !PyArg_ParseTuple(args, "O|O:MkParseDisplayName", 
-			&obDisplayName, 
+	if ( !PyArg_ParseTuple(args, "O|O:MkParseDisplayName",
+			&obDisplayName,
 			&obBindCtx) )
 		return NULL;
 
@@ -893,7 +893,7 @@ static PyObject *pythoncom_CreateItemMoniker(PyObject *self, PyObject *args)
 {
 	PyObject *obDelim, *obItem;
 	// @pyparm string|delim||String containing the delimiter (typically "!") used to separate this item's display name from the display name of its containing object.
-	// @pyparm string|item||String indicating the containing object's name for the object being identified. 
+	// @pyparm string|item||String indicating the containing object's name for the object being identified.
 	if ( !PyArg_ParseTuple(args, "OO:CreateItemMoniker", &obDelim, &obItem) )
 		return NULL;
 
@@ -1078,7 +1078,7 @@ static PyObject *pythoncom_CreateBindCtx(PyObject *self, PyObject *args)
 
 // @pymethod int|pythoncom|RegisterActiveObject|Register an object as the active object for its class
 static PyObject *pythoncom_RegisterActiveObject(PyObject *self, PyObject *args)
-{    
+{
 	DWORD    dwflags=0, dwkey=0;
      HRESULT  hr;
      CLSID    clsid;
@@ -1106,12 +1106,12 @@ static PyObject *pythoncom_RegisterActiveObject(PyObject *self, PyObject *args)
 	// @rdesc The result is a handle which should be pass to <om pythoncom.RevokeActiveObject>
 }
 
-// @pymethod |pythoncom|RevokeActiveObject|Ends an object’s status as active.
+// @pymethod |pythoncom|RevokeActiveObject|Ends an objectâ€™s status as active.
 static PyObject *pythoncom_RevokeActiveObject(PyObject *self, PyObject *args)
 {
 	DWORD    dw_x=0;
     HRESULT  hr;
-     
+
 	// @pyparm int|handle||A handle obtained from <om pythoncom.RegisterActiveObject>
     if(!PyArg_ParseTuple(args,"l:RevokeActiveObject", &dw_x))
        return NULL;
@@ -1129,7 +1129,7 @@ static PyObject *pythoncom_CoMarshalInterThreadInterfaceInStream(PyObject *self,
 {
 	PyObject *obIID, *obUnk;
 	IID iid;
-    if ( !PyArg_ParseTuple(args, "OO:CoMarshalInterThreadInterfaceInStream", 
+    if ( !PyArg_ParseTuple(args, "OO:CoMarshalInterThreadInterfaceInStream",
 			&obIID, // @pyparm <o PyIID>|iid||The IID of the interface to marshal.
 			&obUnk)) // @pyparm <o PyIUnknown>|unk||The interface to marshal.
        return NULL;
@@ -1152,7 +1152,7 @@ static PyObject *pythoncom_CoMarshalInterThreadInterfaceInStream(PyObject *self,
 static PyObject *pythoncom_CoGetInterfaceAndReleaseStream(PyObject *self, PyObject*args)
 {
 	PyObject *obStream, *obIID;
-    if ( !PyArg_ParseTuple(args, "OO:CoGetInterfaceAndReleaseStream", 
+    if ( !PyArg_ParseTuple(args, "OO:CoGetInterfaceAndReleaseStream",
 			&obStream, // @pyparm <o PyIStream>|stream||The stream to unmarshal the object from.
 			&obIID )) // @pyparm <o PyIID>|iid||The IID if the interface to unmarshal.
        return NULL;
@@ -1175,11 +1175,11 @@ static PyObject *pythoncom_CoGetInterfaceAndReleaseStream(PyObject *self, PyObje
 	return PyCom_PyObjectFromIUnknown(pUnk, iid, /*BOOL bAddRef*/ FALSE);
 }
 
-// @pymethod <o PyIUnknown>|pythoncom|CoCreateFreeThreadedMarshaler|Creates an aggregatable object capable of context-dependent marshaling. 
+// @pymethod <o PyIUnknown>|pythoncom|CoCreateFreeThreadedMarshaler|Creates an aggregatable object capable of context-dependent marshaling.
 static PyObject *pythoncom_CoCreateFreeThreadedMarshaler(PyObject *self, PyObject*args)
 {
 	PyObject *obUnk;
-    if ( !PyArg_ParseTuple(args, "O:CoCreateFreeThreadedMarshaler", 
+    if ( !PyArg_ParseTuple(args, "O:CoCreateFreeThreadedMarshaler",
 			&obUnk )) // @pyparm <o PyIUnknown>|unk||The unknown object to marshal.
        return NULL;
 
@@ -1283,13 +1283,13 @@ static PyObject *pythoncom_CoReleaseMarshalData(PyObject *self, PyObject*args)
 
 #endif // MS_WINCE
 
-// @pymethod <o PyIUnknown>|pythoncom|CoGetObject|Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker. 
+// @pymethod <o PyIUnknown>|pythoncom|CoGetObject|Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker.
 static PyObject *pythoncom_CoGetObject(PyObject *self, PyObject*args)
 {
 	PyObject *obName;
 	PyObject *obBindOpts = Py_None;
 	IID iid = IID_IUnknown;
-	if (!PyArg_ParseTuple(args, "O|OO&:CoGetObject", 
+	if (!PyArg_ParseTuple(args, "O|OO&:CoGetObject",
 			&obName, // @pyparm string|name||
 			&obBindOpts, // @pyparm None|bindOpts|None|Must be None
 			PyWinObject_AsIID, &iid )) // @pyparm <o PyIID>|iid|IID_IUnknown|The IID of the interface to return.
@@ -1459,7 +1459,7 @@ static PyObject *pythoncom_PumpWaitingMessages(PyObject *self, PyObject *args)
 
     MSG msg;
 	long result = 0;
-	// Read all of the messages in this next loop, 
+	// Read all of the messages in this next loop,
 	// removing each message as we read it.
 	Py_BEGIN_ALLOW_THREADS
 	while (PeekMessage(&msg, NULL, firstMsg, lastMsg, PM_REMOVE)) {
@@ -1469,7 +1469,7 @@ static PyObject *pythoncom_PumpWaitingMessages(PyObject *self, PyObject *args)
 			break;
 		}
 		// Otherwise, dispatch the message.
-		DispatchMessage(&msg); 
+		DispatchMessage(&msg);
 	} // End of PeekMessage while loop
 	Py_END_ALLOW_THREADS
 	return PyInt_FromLong(result);
@@ -1589,7 +1589,7 @@ static PyObject *pythoncom_OleSetClipboard(PyObject *, PyObject *args)
 {
 	PyObject *obd;
 	// @pyparm <o PyIDataObject>|dataObj||The data object to place on the clipboard.
-	// This parameter can be None in which case the clipboard is emptied. 
+	// This parameter can be None in which case the clipboard is emptied.
 	if (!PyArg_ParseTuple(args, "O:OleSetClipboard", &obd))
 		return NULL;
 	IDataObject *pd;
@@ -1785,7 +1785,7 @@ static PyObject *pythoncom_ObjectFromLresult(PyObject *self, PyObject *args)
 	if (pfnObjectFromLresult==NULL)
 		return PyErr_Format(PyExc_NotImplementedError,
 				    "Not available on this platform");
-	
+
 	HRESULT hr;
 	void *ret = 0;
 	Py_BEGIN_ALLOW_THREADS
@@ -1975,19 +1975,19 @@ static struct PyMethodDef pythoncom_methods[]=
 	{ "CoInitialize",        pythoncom_CoInitialize, 1 },		   // @pymeth CoInitialize|Initialize the COM libraries for the calling thread.
 	{ "CoInitializeEx",      pythoncom_CoInitializeEx, 1 },        // @pymeth CoInitializeEx|Initialize the COM libraries for the calling thread.
 #ifndef MS_WINCE
-	{ "CoInitializeSecurity",pythoncom_CoInitializeSecurity, 1}, // @pymeth CoInitializeSecurity|Registers security and sets the default security values. 
+	{ "CoInitializeSecurity",pythoncom_CoInitializeSecurity, 1}, // @pymeth CoInitializeSecurity|Registers security and sets the default security values.
 	{ "CoGetInterfaceAndReleaseStream", pythoncom_CoGetInterfaceAndReleaseStream, 1}, // @pymeth CoGetInterfaceAndReleaseStream|Unmarshals a buffer containing an interface pointer and releases the stream when an interface pointer has been marshaled from another thread to the calling thread.
 	{ "CoMarshalInterThreadInterfaceInStream", pythoncom_CoMarshalInterThreadInterfaceInStream, 1}, // @pymeth CoMarshalInterThreadInterfaceInStream|Marshals an interface pointer from one thread to another thread in the same process.
 	{ "CoMarshalInterface", pythoncom_CoMarshalInterface, 1}, // @pymeth CoMarshalInterface|Marshals an interface into a stream
 	{ "CoUnmarshalInterface", pythoncom_CoUnmarshalInterface, 1}, // @pymeth CoUnmarshalInterface|Unmarshals an interface
 	{ "CoReleaseMarshalData", pythoncom_CoReleaseMarshalData, 1}, // @pymeth CoReleaseMarshalData|Frees resources used by a marshalled interface
 #endif // MS_WINCE
-	{ "CoGetObject",         pythoncom_CoGetObject, 1}, // @pymeth CoGetObject|Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker. 
+	{ "CoGetObject",         pythoncom_CoGetObject, 1}, // @pymeth CoGetObject|Converts a display name into a moniker that identifies the object named, and then binds to the object identified by the moniker.
 	{ "CoUninitialize",      pythoncom_CoUninitialize, 1 },		   // @pymeth CoUninitialize|Uninitialize the COM libraries.
 #ifndef MS_WINCE
 	{ "CoRegisterClassObject",pythoncom_CoRegisterClassObject, 1 },// @pymeth CoRegisterClassObject|Registers an EXE class object with OLE so other applications can connect to it.
 	{ "CoResumeClassObjects", pythoncom_CoResumeClassObjects, 1},  // @pymeth CoResumeClassObjects|Called by a server that can register multiple class objects to inform the OLE SCM about all registered classes, and permits activation requests for those class objects.
-	{ "CoRevokeClassObject",pythoncom_CoRevokeClassObject, 1 },// @pymeth CoRevokeClassObject|Informs OLE that a class object, previously registered with the <om pythoncom.CoRegisterClassObject> method, is no longer available for use. 
+	{ "CoRevokeClassObject",pythoncom_CoRevokeClassObject, 1 },// @pymeth CoRevokeClassObject|Informs OLE that a class object, previously registered with the <om pythoncom.CoRegisterClassObject> method, is no longer available for use.
 	{ "CoTreatAsClass",      pythoncom_CoTreatAsClass, 1}, // @pymeth CoTreatAsClass|Establishes or removes an emulation, in which objects of one class are treated as objects of a different class.
 	{ "CoWaitForMultipleHandles", pythoncom_CoWaitForMultipleHandles, 1}, // @pymeth CoWaitForMultipleHandles|Waits for specified handles to be signaled or for a specified timeout period to elapse.
 	{ "Connect",             pythoncom_connect, 1 },			 // @pymeth Connect|Connects to a running instance of an OLE automation server.
@@ -2056,7 +2056,7 @@ static struct PyMethodDef pythoncom_methods[]=
 	{ "UnRegisterTypeLib",     pythoncom_unregistertypelib, 1}, // @pymeth UnRegisterTypeLib|Removes a type library from the system registry.
 #ifndef MS_WINCE
 	{ "RegisterActiveObject",pythoncom_RegisterActiveObject, 1 }, // @pymeth RegisterActiveObject|Register an object as the active object for its class
-	{ "RevokeActiveObject",  pythoncom_RevokeActiveObject, 1 },   // @pymeth RevokeActiveObject|Ends an object’s status as active.
+	{ "RevokeActiveObject",  pythoncom_RevokeActiveObject, 1 },   // @pymeth RevokeActiveObject|Ends an objectâ€™s status as active.
 	{ "RegisterDragDrop",    pythoncom_RegisterDragDrop, 1}, // @pymeth RegisterDragDrop|Registers the specified window as one that can be the target of an OLE drag-and-drop operation.
 	{ "RevokeDragDrop",      pythoncom_RevokeDragDrop, 1}, // @pymeth RevokeDragDrop|Revokes the specified window as the target of an OLE drag-and-drop operation.
 	{ "DoDragDrop",          pythoncom_DoDragDrop, 1}, // @pymeth DoDragDrop|Carries out an OLE drag and drop operation.
@@ -2078,7 +2078,7 @@ static struct PyMethodDef pythoncom_methods[]=
 	{ "UnwrapObject",        pythoncom_UnwrapObject, 1 }, // @pymeth UnwrapObject|Unwraps a Python instance in a gateway object.
 	{ "FmtIdToPropStgName",	pythoncom_FmtIdToPropStgName, 1}, //@pymeth FmtIdToPropStgName|Convert a FMTID to its stream name
 	{ "PropStgNameToFmtId",	pythoncom_PropStgNameToFmtId, 1}, //@pymeth PropStgNameToFmtId|Convert property set name to FMTID
-	{ "CoGetCallContext", pythoncom_CoGetCallContext, 1},	// @pymeth CoGetCallContext|Creates interfaces used to access client security settings and perform impersonation 
+	{ "CoGetCallContext", pythoncom_CoGetCallContext, 1},	// @pymeth CoGetCallContext|Creates interfaces used to access client security settings and perform impersonation
 	{ "CoGetObjectContext", pythoncom_CoGetObjectContext, 1},	// @pymeth CoGetObjectContext|Creates an interface to interact with the context of the current object
 	{ "CoGetCancelObject", pythoncom_CoGetCancelObject, 1},	// @pymeth CoGetCancelObject|Retrieves an interface used to cancel a pending call
 	{ "CoSetCancelObject", pythoncom_CoSetCancelObject, 1},	// @pymeth CoSetCancelObject|Sets or removes a <o PyICancelMethodCalls> interface to be used on the current thread
@@ -2154,12 +2154,12 @@ PYWIN_MODULE_INIT_FUNC(pythoncom)
 	g_obArgNotFound = new PyOleArgNotFound;
 	PyDict_SetItemString(dict, "ArgNotFound", g_obArgNotFound);
 
-// code changed by ssc	
+// code changed by ssc
 	g_obNothing = new PyOleNothing;
 	PyDict_SetItemString(dict, "Nothing", g_obNothing);
 // end code changed by ssc
 
-	// Add some symbolic constants to the module   
+	// Add some symbolic constants to the module
 	// pycom_Error = PyString_FromString("pythoncom.error");
 	if (PyWinExc_COMError==NULL)
 	{
@@ -2349,19 +2349,19 @@ PYWIN_MODULE_INIT_FUNC(pythoncom)
 	// RPC
 	// Authentication Level used with CoInitializeSecurity
 	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_DEFAULT);	// RPC_C_AUTHN_LEVEL_DEFAULT|Lets DCOM negotiate the authentication level automatically. (Win2k or later)
-	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_NONE); // RPC_C_AUTHN_LEVEL_NONE|Performs no authentication. 
-	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_CONNECT); // RPC_C_AUTHN_LEVEL_CONNECT|Authenticates only when the client establishes a relationship with the server. Datagram transports always use RPC_AUTHN_LEVEL_PKT instead. 
-	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_CALL); // RPC_C_AUTHN_LEVEL_CALL|Authenticates only at the beginning of each remote procedure call when the server receives the request. Datagram transports use RPC_C_AUTHN_LEVEL_PKT instead. 
-	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_PKT); // RPC_C_AUTHN_LEVEL_PKT|Authenticates that all data received is from the expected client. 
-	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_PKT_INTEGRITY); // RPC_C_AUTHN_LEVEL_PKT_INTEGRITY|Authenticates and verifies that none of the data transferred between client and server has been modified. 
-	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_PKT_PRIVACY); // RPC_C_AUTHN_LEVEL_PKT_PRIVACY|Authenticates all previous levels and encrypts the argument value of each remote procedure call. 
+	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_NONE); // RPC_C_AUTHN_LEVEL_NONE|Performs no authentication.
+	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_CONNECT); // RPC_C_AUTHN_LEVEL_CONNECT|Authenticates only when the client establishes a relationship with the server. Datagram transports always use RPC_AUTHN_LEVEL_PKT instead.
+	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_CALL); // RPC_C_AUTHN_LEVEL_CALL|Authenticates only at the beginning of each remote procedure call when the server receives the request. Datagram transports use RPC_C_AUTHN_LEVEL_PKT instead.
+	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_PKT); // RPC_C_AUTHN_LEVEL_PKT|Authenticates that all data received is from the expected client.
+	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_PKT_INTEGRITY); // RPC_C_AUTHN_LEVEL_PKT_INTEGRITY|Authenticates and verifies that none of the data transferred between client and server has been modified.
+	ADD_CONSTANT(RPC_C_AUTHN_LEVEL_PKT_PRIVACY); // RPC_C_AUTHN_LEVEL_PKT_PRIVACY|Authenticates all previous levels and encrypts the argument value of each remote procedure call.
 
 	// Impersonation level used with CoInitializeSecurity
 	ADD_CONSTANT(RPC_C_IMP_LEVEL_DEFAULT);	// RPC_C_IMP_LEVEL_DEFAULT|Use default impersonation level (Win2k or later)
-	ADD_CONSTANT(RPC_C_IMP_LEVEL_ANONYMOUS); // RPC_C_IMP_LEVEL_ANONYMOUS|(Not supported in this release.) The client is anonymous to the server. The server process cannot obtain identification information about the client and it cannot impersonate the client. 
-	ADD_CONSTANT(RPC_C_IMP_LEVEL_IDENTIFY); // RPC_C_IMP_LEVEL_IDENTIFY|The server can obtain the client’s identity. The server can impersonate the client for ACL checking, but cannot access system objects as the client. This information is obtained when the connection is established, not on every call.<nl>Note  GetUserName will fail while impersonating at identify level. The workaround is to impersonate, OpenThreadToken, revert, call GetTokenInformation, and finally, call LookupAccountSid. 
-	ADD_CONSTANT(RPC_C_IMP_LEVEL_IMPERSONATE); // RPC_C_IMP_LEVEL_IMPERSONATE|The server process can impersonate the client's security context while acting on behalf of the client. This information is obtained when the connection is established, not on every call. 
-	ADD_CONSTANT(RPC_C_IMP_LEVEL_DELEGATE); // RPC_C_IMP_LEVEL_DELEGATE|(Not supported in this release.) The server process can impersonate the client's security context while acting on behalf of the client. The server process can also make outgoing calls to other servers while acting on behalf of the client. This information is obtained when the connection is established, not on every call. 
+	ADD_CONSTANT(RPC_C_IMP_LEVEL_ANONYMOUS); // RPC_C_IMP_LEVEL_ANONYMOUS|(Not supported in this release.) The client is anonymous to the server. The server process cannot obtain identification information about the client and it cannot impersonate the client.
+	ADD_CONSTANT(RPC_C_IMP_LEVEL_IDENTIFY); // RPC_C_IMP_LEVEL_IDENTIFY|The server can obtain the clientâ€™s identity. The server can impersonate the client for ACL checking, but cannot access system objects as the client. This information is obtained when the connection is established, not on every call.<nl>NoteÂ  GetUserNameÂ will fail while impersonating at identify level. The workaround is to impersonate, OpenThreadToken, revert, call GetTokenInformation, and finally, call LookupAccountSid.
+	ADD_CONSTANT(RPC_C_IMP_LEVEL_IMPERSONATE); // RPC_C_IMP_LEVEL_IMPERSONATE|The server process can impersonate the client's security context while acting on behalf of the client. This information is obtained when the connection is established, not on every call.
+	ADD_CONSTANT(RPC_C_IMP_LEVEL_DELEGATE); // RPC_C_IMP_LEVEL_DELEGATE|(Not supported in this release.) The server process can impersonate the client's security context while acting on behalf of the client. The server process can also make outgoing calls to other servers while acting on behalf of the client. This information is obtained when the connection is established, not on every call.
 
 	// Authentication service identifiers
 	ADD_CONSTANT(RPC_C_AUTHN_NONE);
@@ -2381,7 +2381,7 @@ PYWIN_MODULE_INIT_FUNC(pythoncom)
 	ADD_CONSTANT(RPC_C_AUTHZ_NONE);
 	ADD_CONSTANT(RPC_C_AUTHZ_NAME);
 	ADD_CONSTANT(RPC_C_AUTHZ_DCE);
-	ADD_CONSTANT(RPC_C_AUTHZ_DEFAULT); 
+	ADD_CONSTANT(RPC_C_AUTHZ_DEFAULT);
 
 	// Authentication capabilities used with CoInitializeSecurity (EOLE_AUTHENTICATION_CAPABILITIES enum)
 	ADD_CONSTANT(EOAC_NONE);
@@ -2491,7 +2491,7 @@ PYWIN_MODULE_INIT_FUNC(pythoncom)
 	ADD_CONSTANT(VT_CF);
 	ADD_CONSTANT(VT_CLSID);
 	ADD_CONSTANT(VT_BSTR_BLOB);
-	
+
 	ADD_CONSTANT(VT_VECTOR);
 	ADD_CONSTANT(VT_ARRAY);
 	ADD_CONSTANT(VT_BYREF);
@@ -2522,24 +2522,24 @@ PYWIN_MODULE_INIT_FUNC(pythoncom)
 	ADD_CONSTANT(COWAIT_ALERTABLE);
 
 #ifndef NO_PYCOM_IDISPATCHEX
-	ADD_CONSTANT(fdexNameCaseSensitive);  // Request that the name lookup be done in a case-sensitive manner. May be ignored by object that does not support case-sensitive lookup.  
-	ADD_CONSTANT(fdexNameEnsure);  // Request that the member be created if it does not already exist. The new member should be created with the value VT_EMPTY.  
-	ADD_CONSTANT(fdexNameImplicit);  // Indicates that the caller is searching object(s) for a member of a particular name, when the base object is not explicitly specified.  
-	ADD_CONSTANT(fdexNameCaseInsensitive);  // Request that the name lookup be done in a case-insensitive manner. May be ignored by object that does not support case-insensitive lookup.  
-	ADD_CONSTANT(fdexPropCanGet);  // The member can be obtained using DISPATCH_PROPERTYGET.  
-	ADD_CONSTANT(fdexPropCannotGet);  // The member cannot be obtained using DISPATCH_PROPERTYGET.  
-	ADD_CONSTANT(fdexPropCanPut);  // The member can be set using DISPATCH_PROPERTYPUT.  
-	ADD_CONSTANT(fdexPropCannotPut);  // The member cannot be set using DISPATCH_PROPERTYPUT.  
-	ADD_CONSTANT(fdexPropCanPutRef);  // The member can be set using DISPATCH_PROPERTYPUTREF.  
-	ADD_CONSTANT(fdexPropCannotPutRef);  // The member cannot be set using DISPATCH_PROPERTYPUTREF.  
-	ADD_CONSTANT(fdexPropNoSideEffects);  // The member does not have any side effects. For example, a debugger could safely get/set/call this member without changing the state of the script being debugged.  
-	ADD_CONSTANT(fdexPropDynamicType);  // The member is dynamic and can change during the lifetime of the object.  
-	ADD_CONSTANT(fdexPropCanCall);  // The member can be called as a method using DISPATCH_METHOD.  
-	ADD_CONSTANT(fdexPropCannotCall);  // The member cannot be called as a method using DISPATCH_METHOD.  
-	ADD_CONSTANT(fdexPropCanConstruct);  // The member can be called as a constructor using DISPATCH_CONSTRUCT.  
-	ADD_CONSTANT(fdexPropCannotConstruct);  // The member cannot be called as a constructor using DISPATCH_CONSTRUCT.  
-	ADD_CONSTANT(fdexPropCanSourceEvents);  // The member can fire events.  
-	ADD_CONSTANT(fdexPropCannotSourceEvents);  // The member cannot fire events.  
+	ADD_CONSTANT(fdexNameCaseSensitive);  // Request that the name lookup be done in a case-sensitive manner. May be ignored by object that does not support case-sensitive lookup.
+	ADD_CONSTANT(fdexNameEnsure);  // Request that the member be created if it does not already exist. The new member should be created with the value VT_EMPTY.
+	ADD_CONSTANT(fdexNameImplicit);  // Indicates that the caller is searching object(s) for a member of a particular name, when the base object is not explicitly specified.
+	ADD_CONSTANT(fdexNameCaseInsensitive);  // Request that the name lookup be done in a case-insensitive manner. May be ignored by object that does not support case-insensitive lookup.
+	ADD_CONSTANT(fdexPropCanGet);  // The member can be obtained using DISPATCH_PROPERTYGET.
+	ADD_CONSTANT(fdexPropCannotGet);  // The member cannot be obtained using DISPATCH_PROPERTYGET.
+	ADD_CONSTANT(fdexPropCanPut);  // The member can be set using DISPATCH_PROPERTYPUT.
+	ADD_CONSTANT(fdexPropCannotPut);  // The member cannot be set using DISPATCH_PROPERTYPUT.
+	ADD_CONSTANT(fdexPropCanPutRef);  // The member can be set using DISPATCH_PROPERTYPUTREF.
+	ADD_CONSTANT(fdexPropCannotPutRef);  // The member cannot be set using DISPATCH_PROPERTYPUTREF.
+	ADD_CONSTANT(fdexPropNoSideEffects);  // The member does not have any side effects. For example, a debugger could safely get/set/call this member without changing the state of the script being debugged.
+	ADD_CONSTANT(fdexPropDynamicType);  // The member is dynamic and can change during the lifetime of the object.
+	ADD_CONSTANT(fdexPropCanCall);  // The member can be called as a method using DISPATCH_METHOD.
+	ADD_CONSTANT(fdexPropCannotCall);  // The member cannot be called as a method using DISPATCH_METHOD.
+	ADD_CONSTANT(fdexPropCanConstruct);  // The member can be called as a constructor using DISPATCH_CONSTRUCT.
+	ADD_CONSTANT(fdexPropCannotConstruct);  // The member cannot be called as a constructor using DISPATCH_CONSTRUCT.
+	ADD_CONSTANT(fdexPropCanSourceEvents);  // The member can fire events.
+	ADD_CONSTANT(fdexPropCannotSourceEvents);  // The member cannot fire events.
 #endif // NO_PYCOM_IDISPATCHEX
 
 	// Expose the frozen flag, as Python itself doesnt!!

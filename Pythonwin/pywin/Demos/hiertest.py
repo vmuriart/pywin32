@@ -50,7 +50,7 @@ def GetTestRoot():
 def demoboth():
 	template = docview.DocTemplate(win32ui.IDR_PYTHONTYPE, TestDocument, HierListFrame, HierListView)
 	template.OpenDocumentFile(None).SetTitle("Hierlist demo")
-	
+
 	demomodeless()
 
 def demomodeless():

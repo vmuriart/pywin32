@@ -10,7 +10,7 @@ public:
 	MAKE_PY_CTOR(ui_bitmap)
 	static PyObject *create (PyObject *self, PyObject *args);
 	static PyObject *create_from_handle (PyObject *self, PyObject *args);
-	
+
 	void ClearSupportData();
 
 	CPalette *pPal;

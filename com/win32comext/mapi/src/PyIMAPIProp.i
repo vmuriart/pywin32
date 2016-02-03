@@ -46,7 +46,7 @@ PyObject *PyIMAPIProp::GetProps(PyObject *self, PyObject *args) {
 	if ((_swig_self=GetI(self))==NULL) return NULL;
 	// @pyparm <o PySPropTagArray>|propList||The list of properties
 	// @pyparm int|flags|0|
-    if(!PyArg_ParseTuple(args,"O|l:GetProps",&_obj0,&_arg1)) 
+    if(!PyArg_ParseTuple(args,"O|l:GetProps",&_obj0,&_arg1))
         return NULL;
 	if (!PyMAPIObject_AsSPropTagArray(_obj0, &_arg0))
 		return NULL;
@@ -83,7 +83,7 @@ PyObject *PyIMAPIProp::GetProps(PyObject *self, PyObject *args) {
 }
 
 // @pyswig int, [problems, ]|DeleteProps|Deletes a set of properties.
-PyObject *PyIMAPIProp::DeleteProps(PyObject *self, PyObject *args) 
+PyObject *PyIMAPIProp::DeleteProps(PyObject *self, PyObject *args)
 {
 	PyObject *obs;
     SPropTagArray * _arg0;
@@ -106,7 +106,7 @@ PyObject *PyIMAPIProp::DeleteProps(PyObject *self, PyObject *args)
 }
 
 // @pyswig int, [problems, ]|SetProps|Sets a set of properties.
-PyObject *PyIMAPIProp::SetProps(PyObject *self, PyObject *args) 
+PyObject *PyIMAPIProp::SetProps(PyObject *self, PyObject *args)
 {
 	PyObject *obs;
 	HRESULT hr;
@@ -134,7 +134,7 @@ PyObject *PyIMAPIProp::SetProps(PyObject *self, PyObject *args)
 }
 
 // @pyswig int, [problems, ]|CopyTo|Copies an object to another
-PyObject *PyIMAPIProp::CopyTo(PyObject *self, PyObject *args) 
+PyObject *PyIMAPIProp::CopyTo(PyObject *self, PyObject *args)
 {
 	IID *pExclude = NULL;
 	ULONG ciidExclude = 0;
@@ -206,7 +206,7 @@ error:
 }
 
 // @pyswig int, [problems, ]|CopyProps|Copies a set of properties to another object
-PyObject *PyIMAPIProp::CopyProps(PyObject *self, PyObject *args) 
+PyObject *PyIMAPIProp::CopyProps(PyObject *self, PyObject *args)
 {
 	IID iid;
 	IUnknown *pUnk = NULL;
@@ -251,8 +251,8 @@ error:
 	return result;
 }
 
-// @pyswig <o PyIUnknown>|OpenProperty|Returns an interface object to be used to access a property. 
-PyObject *PyIMAPIProp::OpenProperty(PyObject *self, PyObject *args) 
+// @pyswig <o PyIUnknown>|OpenProperty|Returns an interface object to be used to access a property.
+PyObject *PyIMAPIProp::OpenProperty(PyObject *self, PyObject *args)
 {
 	IID iid;
 	IUnknown *pUnk = NULL;
@@ -263,7 +263,7 @@ PyObject *PyIMAPIProp::OpenProperty(PyObject *self, PyObject *args)
 	if ((pMAPIProp=GetI(self))==NULL) return NULL;
 	// @pyparm ULONG|propTag||The property tag to open
 	// @pyparm <o PyIID>|iid||The IID of the resulting interface.
-	// @pyparm int|interfaceOptions||Data that relates to the interface identified by the lpiid parameter. 
+	// @pyparm int|interfaceOptions||Data that relates to the interface identified by the lpiid parameter.
 	// @pyparm int|flags||flags
     if(!PyArg_ParseTuple(args,"kOll:OpenProperty",&propTag, &obIID, &interfaceOptions, &flags))
 		return NULL;

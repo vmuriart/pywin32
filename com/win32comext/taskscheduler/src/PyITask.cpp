@@ -303,7 +303,7 @@ PyObject *PyITask::GetMaxRunTime(PyObject *self, PyObject *args)
 
 }
 
-// @object PyITask|Python object that encapsulates the ITask interface, inherits all the methods of PyIScheduledWorkItem 
+// @object PyITask|Python object that encapsulates the ITask interface, inherits all the methods of PyIScheduledWorkItem
 static struct PyMethodDef PyITask_methods[] =
 {
 	{ "SetApplicationName", PyITask::SetApplicationName, 1 }, // @pymeth SetApplicationName|Specify which program the task will run

@@ -47,7 +47,7 @@ def OnPaint_2(hwnd, msg, wp, lp):
     dc, ps=win32gui.BeginPaint(hwnd)
     win32gui.SetGraphicsMode(dc, win32con.GM_ADVANCED)
     l,t,r,b=win32gui.GetClientRect(hwnd)
-    
+
     for x in xrange(25):
         vertices=(
             {'x':int(random.random()*r), 'y':int(random.random()*b), 'Red':int(random.random()*0xff00), 'Green':0, 'Blue':0, 'Alpha':0},
@@ -66,7 +66,7 @@ def TestSetWorldTransform():
     wc.style =  win32con.CS_GLOBALCLASS|win32con.CS_VREDRAW | win32con.CS_HREDRAW
     wc.hbrBackground = win32con.COLOR_WINDOW+1
     wc.lpfnWndProc=wndproc_1
-    class_atom=win32gui.RegisterClass(wc)       
+    class_atom=win32gui.RegisterClass(wc)
     hwnd = win32gui.CreateWindow(wc.lpszClassName,
         'Spin the Lobster!',
         win32con.WS_CAPTION|win32con.WS_VISIBLE,
@@ -84,7 +84,7 @@ def TestGradientFill():
     wc.style =  win32con.CS_GLOBALCLASS|win32con.CS_VREDRAW | win32con.CS_HREDRAW
     wc.hbrBackground = win32con.COLOR_WINDOW+1
     wc.lpfnWndProc=wndproc_2
-    class_atom=win32gui.RegisterClass(wc)       
+    class_atom=win32gui.RegisterClass(wc)
     hwnd = win32gui.CreateWindowEx(0, class_atom,'Kaleidoscope',
         win32con.WS_CAPTION|win32con.WS_VISIBLE|win32con.WS_THICKFRAME|win32con.WS_SYSMENU,
         100,100,900,900, 0, 0, 0, None)

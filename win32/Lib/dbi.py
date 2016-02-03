@@ -14,7 +14,7 @@ warnings.warn(
 
 import datetime
 dbDate = dbiDate = datetime.datetime
-	  
+
 try:
 	dbRaw = dbiRaw = buffer
 except NameError:

@@ -328,7 +328,7 @@ PyObject *PyCom_PyObjectFromVariant(const VARIANT *var)
 		Py_INCREF(Py_None);
 		return Py_None;
 	}
-	/* skip past any variant references to a "real" variant 
+	/* skip past any variant references to a "real" variant
 	  (Why do we do this?  Why is it only a VARIANT?  whats the story, morning glory?
 	*/
 	while ( V_VT(var) == (VT_BYREF | VT_VARIANT) )
@@ -610,7 +610,7 @@ static long PyCom_CalculatePyObjectDimension(PyObject *obItemCheck, long lDimens
 
 	// Allow arbitrary sequences, but not strings or Unicode objects.
 	if (PyString_Check(obItemCheck) || PyUnicode_Check(obItemCheck)
-		||!PySequence_Check(obItemCheck)) 
+		||!PySequence_Check(obItemCheck))
 		return lDimension;
 
 	long      lReturnDimension  = lDimension;
@@ -633,7 +633,7 @@ static long PyCom_CalculatePyObjectDimension(PyObject *obItemCheck, long lDimens
 	if (lObjectSize != -1) { // A real sequence of size zero should be OK though.
 		ppyobSize   = PyInt_FromSsize_t(lObjectSize);
 
-		// Retrieve the stored size in this dimension 
+		// Retrieve the stored size in this dimension
 		ppyobDimension = PyInt_FromLong(lDimension);
 		// Note: No ref added by PyDict_GetItem
 		ppyobDimensionSize = PyDict_GetItem(ppyobDimensionDictionary, ppyobDimension);
@@ -644,7 +644,7 @@ static long PyCom_CalculatePyObjectDimension(PyObject *obItemCheck, long lDimens
 		} else {
 			// Check if stored size in this dimension equals the size of the element to check
 			Py_ssize_t lStoredSize = PyInt_AsSsize_t(ppyobDimensionSize);
-			if (lStoredSize != lObjectSize) 
+			if (lStoredSize != lObjectSize)
 			{
 				// if not the same size => no new dimension
 				Py_XDECREF(ppyobSize);
@@ -687,7 +687,7 @@ static long PyCom_CalculatePyObjectDimension(PyObject *obItemCheck, long lDimens
 				if (lReturnDimension != lActualDimension) {
 					// if not set the minimal dimension
 					lReturnDimension = lMinimalDimension;
-				} 
+				}
 			}
 			Py_XDECREF(ppyobItem);
 		}
@@ -795,9 +795,9 @@ BOOL PyCom_SAFEARRAYFromPyObject(PyObject *obj, SAFEARRAY **ppSA, VARENUM vt /*=
 ///////////////////////////
 //
 // SafeArray -> PyObject
-/* 
+/*
    Helper - Convert the current index to a Python object.
-   No iteration - returns a simple object (not a tuple) 
+   No iteration - returns a simple object (not a tuple)
 */
 static PyObject *PyCom_PyObjectFromSAFEARRAYDimensionItem(SAFEARRAY *psa, VARENUM vt, long *arrayIndices)
 {
@@ -1015,7 +1015,7 @@ PyObject *PyCom_PyObjectFromSAFEARRAYBuildDimension(SAFEARRAY *psa, VARENUM vt, 
 			// Recurse and build sub-array.
 			subItem = PyCom_PyObjectFromSAFEARRAYBuildDimension(psa, vt, dimNo+1, nDims, arrayIndices);
 		}
-	    if (subItem==NULL) { 
+	    if (subItem==NULL) {
 		    Py_DECREF(retTuple);
 		    return NULL;
 	    }
@@ -1046,7 +1046,7 @@ PyObject *PyCom_PyObjectFromSAFEARRAY(SAFEARRAY *psa, VARENUM vt /* = VT_VARIANT
 //
 // Python arg helper class
 //
-PythonOleArgHelper::PythonOleArgHelper() 
+PythonOleArgHelper::PythonOleArgHelper()
 {
 	// First wipe myself out to zero!
 	memset(this, 0, sizeof(*this));
@@ -1055,7 +1055,7 @@ PythonOleArgHelper::PythonOleArgHelper()
 	m_bParsedTypeInfo = FALSE;
 	m_convertDirection = POAH_CONVERT_UNKNOWN;
 }
-PythonOleArgHelper::~PythonOleArgHelper() 
+PythonOleArgHelper::~PythonOleArgHelper()
 {
 	Py_XDECREF(m_pyVariant);
 	// First check we actually have ownership of any buffers.
@@ -1151,7 +1151,7 @@ BOOL PythonOleArgHelper::MakeObjToVariant(PyObject *obj, VARIANT *var, PyObject 
 			m_pyVariant = obj;
 			Py_INCREF(m_pyVariant);
 			obj = newObj;
-			
+
 		}
 	}
 	BOOL bCreateBuffers = (m_convertDirection==POAH_CONVERT_UNKNOWN);
@@ -1160,7 +1160,7 @@ BOOL PythonOleArgHelper::MakeObjToVariant(PyObject *obj, VARIANT *var, PyObject 
 
 	if (obj->ob_type == &PyOleEmptyType)
 	{
-		// Quick exit - use default parameter 
+		// Quick exit - use default parameter
 		V_VT(var) = VT_ERROR;
 		V_ERROR(var) = DISP_E_PARAMNOTFOUND;
 		return TRUE;
@@ -1247,7 +1247,7 @@ BOOL PythonOleArgHelper::MakeObjToVariant(PyObject *obj, VARIANT *var, PyObject 
 			SysFreeString(*V_BSTRREF(var));
 
 		*V_BSTRREF(var) = NULL;
-		
+
 		if (!VALID_BYREF_MISSING(obj)) {
 			if ( PyString_Check(obj) || PyUnicode_Check(obj) )
 			{
@@ -1426,7 +1426,7 @@ BOOL PythonOleArgHelper::MakeObjToVariant(PyObject *obj, VARIANT *var, PyObject 
 		} else
 			*V_R4REF(var) = (float)0.0;
 		break;
-		
+
 	case VT_NULL:
 		break;
 	case VT_DISPATCH:
@@ -1495,7 +1495,7 @@ BOOL PythonOleArgHelper::MakeObjToVariant(PyObject *obj, VARIANT *var, PyObject 
 	case VT_EMPTY:
 		if (obj != Py_None) {
 			PyErr_SetString(PyExc_TypeError, "None must be used for VT_EMPTY variables.");
-			BREAK_FALSE; 
+			BREAK_FALSE;
 		}
 		// Nothing else to do - the code below sets the VT up correctly.
 		break;
@@ -1557,7 +1557,7 @@ PyObject *PythonOleArgHelper::MakeVariantToObj(VARIANT *var)
 	return ret;
 }
 
-BOOL MakePythonArgumentTuples(PyObject **ppArgs, PythonOleArgHelper **ppHelpers, 
+BOOL MakePythonArgumentTuples(PyObject **ppArgs, PythonOleArgHelper **ppHelpers,
                      PyObject **ppNamedArgs, PythonOleArgHelper **ppNamedHelpers,
                      DISPPARAMS FAR* params)
 {

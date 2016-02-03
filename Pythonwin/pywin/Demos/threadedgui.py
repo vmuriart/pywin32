@@ -31,7 +31,7 @@ class FontWindow(window.Wnd):
 		self.width = self.height = 0
 		self.ChangeAttributes()
 		# set up message handlers
-		
+
 	def Create(self, title, style, rect, parent):
 		classStyle = win32con.CS_HREDRAW | win32con.CS_VREDRAW
 		className = win32ui.RegisterWndClass(classStyle, 0, win32con.COLOR_WINDOW+1, 0)
@@ -61,7 +61,7 @@ class FontWindow(window.Wnd):
 #		print "Paint message from thread", win32api.GetCurrentThreadId()
 		dc, paintStruct = self.BeginPaint()
 		self.OnPrepareDC(dc, None)
-		
+
 		if (self.width == 0 and self.height == 0):
 			left, top, right, bottom = self.GetClientRect()
 			self.width = right - left
@@ -73,7 +73,7 @@ class FontWindow(window.Wnd):
 	def ChangeAttributes(self):
 		font_spec = {'name':'Arial', 'height':42}
 		self.font = win32ui.CreateFont (font_spec)
-		
+
 	def OnPrepareToClose(self, params):
 		self.DestroyWindow()
 
@@ -131,10 +131,10 @@ class ThreadedFontFrame(window.MDIChildWnd):
 		self._obj_.CreateWindow(None, title, style, rect, parent)
 		self._obj_.HookMessage(self.OnDestroy, win32con.WM_DESTROY)
 		self._obj_.HookMessage (self.OnSize, win32con.WM_SIZE)
-		
+
 		self.thread = TestThread(self)
 		self.thread.CreateThread()
-		
+
 	def OnSize(self, msg):
 		pass
 
@@ -145,7 +145,7 @@ class ThreadedFontFrame(window.MDIChildWnd):
 			child.SendMessage(WM_USER_PREPARE_TO_CLOSE, 0, 0)
 			win32ui.OutputDebugString("Destroyed\n")
 
-	
+
 def Demo():
 	f = FontFrame()
 	f.Create("Font Demo")

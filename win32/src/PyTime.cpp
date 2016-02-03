@@ -369,7 +369,7 @@ PyTime::PyTime(const SYSTEMTIME &t)
 	ob_type = &PyTimeType;
 	_Py_NewReference(this);
 	m_time = 0;
-	// Not declared as const systemtime - 
+	// Not declared as const systemtime -
 	// better not take the chance!
 	SYSTEMTIME nt = t;
 	(void)SystemTimeToVariantTime(&nt, &m_time);
@@ -510,7 +510,7 @@ PyObject *PyTime::repr()
 	TCHAR timeBuf[128];
 	SYSTEMTIME st;
 
-	if ( !VariantTimeToSystemTime(m_time, &st) ) 
+	if ( !VariantTimeToSystemTime(m_time, &st) )
 		_tcscpy(timeBuf, _T("!illegal internal value!"));
 	else
 	{

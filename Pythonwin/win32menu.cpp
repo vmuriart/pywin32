@@ -84,7 +84,7 @@ PyObject *PyCMenu::load_menu(PyObject *self, PyObject *args)
 
 /////////////////////////////////////////////////////////////////////
 //
-// menu 
+// menu
 //
 //////////////////////////////////////////////////////////////////////
 void PyCMenu::SetAssocInvalid()
@@ -102,7 +102,7 @@ PyObject *PyCMenu::AppendMenu(PyObject *self, PyObject *args)
 	PyObject *obvalue=Py_None;
 	int id=0;
 	int flags;
-	if (!PyArg_ParseTuple(args,"i|iO", 
+	if (!PyArg_ParseTuple(args,"i|iO",
 	                      &flags,  // @pyparm int|flags||Specifies information about the state of the new menu item when it is added to the menu.  May be a combination of the win32con.MF_* values.
 	                      &id, // @pyparm int|id|0|Specifies either the command ID of the new menu item.
 	                      &obvalue)) // @pyparm string/None|value|None|Specifies the content of the new menu item.  If used, flags must contain win32con.MF_STRING.
@@ -133,7 +133,7 @@ PyObject *PyCMenu::DeleteMenu(PyObject *self, PyObject *args)
 	RETURN_NONE;
 }
 
-// @pymethod int|PyCMenu|EnableMenuItem|Enables, disables, or dims a menu item. 
+// @pymethod int|PyCMenu|EnableMenuItem|Enables, disables, or dims a menu item.
 PyObject *PyCMenu::EnableMenuItem(PyObject *self, PyObject *args)
 {
 	// @comm The <om PyCMenu.CreateMenu>, <om PyCMenu.InsertMenu>, <om PyCMenu.ModifyMenu>,
@@ -269,7 +269,7 @@ PyObject *PyCMenu::ModifyMenu(PyObject *self, PyObject *args)
 	int id=0;
 	int flags;
 	int pos;
-	if (!PyArg_ParseTuple(args,"ii|iO", 
+	if (!PyArg_ParseTuple(args,"ii|iO",
 	                      &pos, 	// @pyparm int|pos||The position (zero-based) the item to be changed.
 	                      &flags,   // @pyparm int|flags||Flags for the item.
 	                      &id,      // @pyparm int|id|0|The ID for the item.
@@ -298,7 +298,7 @@ PyObject *PyCMenu::TrackPopupMenu(PyObject *self, PyObject *args)
 	PyObject *wndObject = NULL;
 	int flags=TPM_LEFTALIGN|TPM_LEFTBUTTON|TPM_RIGHTBUTTON;
 	int x,y;
-	if (!PyArg_ParseTuple(args,"(ii)|iO", 
+	if (!PyArg_ParseTuple(args,"(ii)|iO",
 	                      &x, &y, // @pyparm (int, int)|(x,y)||The position for the menu..
 						  &flags, // @pyparm int|flags|win32con.TPM_LEFTALIGN\|win32con.TPM_LEFTBUTTON\|win32con.TPM_RIGHTBUTTON|Flags for the menu.
 	                      &wndObject)) // @pyparm <o PyCWnd>|owner|(main application frame)|The owner of the menu.
@@ -347,10 +347,10 @@ static struct PyMethodDef ui_menu_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type PyCMenu::type("PyCMenu", 
-					  &ui_assoc_object::type, 
-					  sizeof(PyCMenu), 
-					  PYOBJ_OFFSET(PyCMenu), 
-					  ui_menu_methods, 
+ui_type PyCMenu::type("PyCMenu",
+					  &ui_assoc_object::type,
+					  sizeof(PyCMenu),
+					  PYOBJ_OFFSET(PyCMenu),
+					  ui_menu_methods,
 					  GET_PY_CTOR(PyCMenu));
 

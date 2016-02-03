@@ -42,7 +42,7 @@ class topic:
         self.contains = []
     def __str__(self):
         return str({ "context" : self.context, "name" : self.name, "contains" : self.contains })
-    
+
     def __repr__(self):
         if len(self.contains) > 0:
             return repr({ "context" : self.context, "name" : self.name, "contains" : self.contains })
@@ -206,7 +206,7 @@ def parseTopics(cat, input):
 
 def _urlescape(name):
     """Escape the given name for inclusion in a URL.
-    
+
     Escaping is done in the manner in which AutoDuck(?) seems to be doing
     it.
     """
@@ -367,7 +367,7 @@ def genTOC(cats, output, title, target):
         # Finish this category
         output.write('''
         </UL>''')
-    
+
     # Finished dumping categories - finish up
     output.write('''
 </UL>

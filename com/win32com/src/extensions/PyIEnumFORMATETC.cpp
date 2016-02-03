@@ -160,7 +160,7 @@ PyComEnumTypeObject PyIEnumFORMATETC::type("PyIEnumFORMATETC",
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumFORMATETC::Next( 
+STDMETHODIMP PyGEnumFORMATETC::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ FORMATETC *pi,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -208,7 +208,7 @@ STDMETHODIMP PyGEnumFORMATETC::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumFORMATETC, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumFORMATETC::Skip( 
+STDMETHODIMP PyGEnumFORMATETC::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -221,7 +221,7 @@ STDMETHODIMP PyGEnumFORMATETC::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumFORMATETC::Clone( 
+STDMETHODIMP PyGEnumFORMATETC::Clone(
             /* [out] */ IEnumFORMATETC __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

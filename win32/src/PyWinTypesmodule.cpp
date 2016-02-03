@@ -245,7 +245,7 @@ static PyObject *_GetLockStats(PyObject *, PyObject *)
 #endif
 
 // Support the fact that error messages can come from any number of DLLs.
-// wininet certainly does.  The win32net and MAPI modules could probably 
+// wininet certainly does.  The win32net and MAPI modules could probably
 // also take advantage of this,
 struct error_message_module {
     DWORD firstError;
@@ -275,7 +275,7 @@ HINSTANCE PyWin_GetErrorMessageModule(DWORD err)
 {
 	int i;
 	for (i=0;i<num_message_modules;i++) {
-		if ((DWORD)err >= error_message_modules[i].firstError && 
+		if ((DWORD)err >= error_message_modules[i].firstError &&
 			(DWORD)err <= error_message_modules[i].lastError) {
 			return error_message_modules[i].hmodule;
 		}
@@ -314,7 +314,7 @@ PyObject *PyWin_SetAPIError(char *fnName, long err /*= 0*/)
 		PyWinCoreString_FromString(fnName),
 		PyWinObject_FromTCHAR(buf));
 	if (free_buf && buf)
-		LocalFree(buf);		
+		LocalFree(buf);
 	if (v != NULL) {
 		PyErr_SetObject(PyWinExc_ApiError, v);
 		Py_DECREF(v);
@@ -455,7 +455,7 @@ BOOL PyWinObject_AsPOINT(PyObject *obpoint, LPPOINT ppoint)
 		PyErr_SetString(PyExc_TypeError, "POINT must be a tuple of 2 ints (x,y)");
 		return FALSE;
 		}
-	return PyArg_ParseTuple(obpoint, "ll;POINT must be a tuple of 2 ints (x,y)", 
+	return PyArg_ParseTuple(obpoint, "ll;POINT must be a tuple of 2 ints (x,y)",
 			&ppoint->x, &ppoint->y);
 }
 
@@ -674,7 +674,7 @@ BOOL PyWinObject_AsRECT(PyObject *obrect, LPRECT prect)
 		PyErr_SetString(PyExc_TypeError, "RECT must be a tuple of 4 ints (left, top, right, bottom)");
 		return FALSE;
 		}
-	return PyArg_ParseTuple(obrect, "llll;RECT must be a tuple of 4 ints (left, top, right, bottom)", 
+	return PyArg_ParseTuple(obrect, "llll;RECT must be a tuple of 4 ints (left, top, right, bottom)",
 			&prect->left, &prect->top, &prect->right, &prect->bottom);
 }
 
@@ -852,7 +852,7 @@ int PyWinGlobals_Ensure()
 			||PyDict_SetItemString(d, "__builtins__", bimod) == -1){
 			Py_XDECREF(bimod);
 			return -1;
-			}			
+			}
 		Py_DECREF(bimod);
 
 		// Note using 'super()' doesn't work as expected on py23...
@@ -1094,7 +1094,7 @@ BOOL WINAPI DllMain(HANDLE hInstance, DWORD dwReason, LPVOID lpReserved)
 			**   2) Python is importing another DLL as part of its standard
 			**      import mechanism, and that DLL is linked against pywintypes.dll
 			**      Python has been initialized already, but may _never_ call
-			**      initpywintypes(). (until the user does an explicit 
+			**      initpywintypes(). (until the user does an explicit
 			**      "import pywintypes"
 			**
 			**   3) The OLE system is loading this DLL to serve out a particular
@@ -1115,7 +1115,7 @@ BOOL WINAPI DllMain(HANDLE hInstance, DWORD dwReason, LPVOID lpReserved)
 			dwTlsIndex = TlsAlloc();
 			break;
 		}
-		case DLL_PROCESS_DETACH: 
+		case DLL_PROCESS_DETACH:
 		{
 			DeleteCriticalSection(&g_csMain);
 			TlsFree(dwTlsIndex);
@@ -1176,7 +1176,7 @@ char *GetPythonTraceback(PyObject *exc_type, PyObject *exc_value, PyObject *exc_
 	if (obFuncTB==NULL) GPEM_ERROR("cant find traceback.print_exception");
 	argsTB = Py_BuildValue("OOOOO"
 #if (PY_VERSION_HEX >= 0x03000000)
-		"i"		
+		"i"
 		// Py3k has added an undocumented 'chain' argument which defaults to True
 		//	and causes all kinds of exceptions while trying to print a goddam exception
 #endif

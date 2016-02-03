@@ -181,7 +181,7 @@ PySecBufferDesc::~PySecBufferDesc()
 BOOL PySecBufferDesc_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PySecBufferDescType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PySecBufferDesc");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PySecBufferDesc");
 		return FALSE;
 		}
 	return TRUE;
@@ -390,7 +390,7 @@ PySecBuffer::~PySecBuffer()
 BOOL PySecBuffer_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PySecBufferType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PySecBuffer");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PySecBuffer");
 		return FALSE;
 		}
 	return TRUE;
@@ -485,7 +485,7 @@ PyObject *PyWinObject_FromSecBuffer(PSecBuffer psecbuffer)
 //
 ////////////////////////////////////////////////////////////////////////
 // @object PyCtxtHandle|Security context handle, as used with sspi functions
-// @comm Create using win32security.PyCtxtHandleType().  The handle must be initialized by passing it to 
+// @comm Create using win32security.PyCtxtHandleType().  The handle must be initialized by passing it to
 // <om win32security.InitializeSecurityContext> or <om win32security.AcceptSecurityContext>
 struct PyMethodDef PyCtxtHandle::methods[] = {
 	{"Detach",     PyCtxtHandle::Detach, 1}, 	// @pymeth Detach|Disassociates object from handle and returns integer value of handle
@@ -569,7 +569,7 @@ PyCtxtHandle::~PyCtxtHandle()
 BOOL PyCtxtHandle_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PyCtxtHandleType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyCtxtHandle");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyCtxtHandle");
 		return FALSE;
 		}
 	return TRUE;
@@ -826,7 +826,7 @@ PyObject *PyCtxtHandle::QueryContextAttributes(PyObject *self, PyObject *args)
 			ret=PyWinObject_FromHANDLE(((PSecPkgContext_AccessToken)&buf)->AccessToken);
 			break;
 		// @flag SECPKG_ATTR_AUTHORITY|<o PyUnicode> - returns the name of the authenticating entity
-		case SECPKG_ATTR_AUTHORITY: 
+		case SECPKG_ATTR_AUTHORITY:
 			ret=PyWinObject_FromWCHAR(((PSecPkgContext_AuthorityW)&buf)->sAuthorityName);
 			(*psecurityfunctiontable->FreeContextBuffer)(((PSecPkgContext_AuthorityW)&buf)->sAuthorityName);
 			break;
@@ -905,7 +905,7 @@ PyObject *PyCtxtHandle::QueryContextAttributes(PyObject *self, PyObject *args)
 			pe=(PSecPkgContext_PasswordExpiry)&buf;
 			ret=PyWinObject_FromTimeStamp(pe->tsPasswordExpires);
 			break;
-		// @flag SECPKG_ATTR_LIFESPAN|(<o PyTime>,<o PyTime>) - returns time period during which context is valid 
+		// @flag SECPKG_ATTR_LIFESPAN|(<o PyTime>,<o PyTime>) - returns time period during which context is valid
 		case SECPKG_ATTR_LIFESPAN:
 			PSecPkgContext_Lifespan ls;
 			ls=(PSecPkgContext_Lifespan)&buf;
@@ -1052,7 +1052,7 @@ PyObject *PyWinObject_FromSecPkgInfo(PSecPkgInfoW psecpkginfo)
 // @comm This object is usually created using <om win32security.AcquireCredentialsHandle>.
 // An uninitialized handle can also be created using win32security.PyCredHandleType()
 struct PyMethodDef PyCredHandle::methods[] = {
-	{"Detach",     PyCredHandle::Detach, 1}, 	// @pymeth Detach|Disassociates object from handle and returns integer value of handle (prevents automatic freeing of credentials when object is deallocated), 
+	{"Detach",     PyCredHandle::Detach, 1}, 	// @pymeth Detach|Disassociates object from handle and returns integer value of handle (prevents automatic freeing of credentials when object is deallocated),
 	{"FreeCredentialsHandle", PyCredHandle::FreeCredentialsHandle,1}, // @pymeth FreeCredentialsHandle|Releases the credentials handle
 	{"QueryCredentialsAttributes", PyCredHandle::QueryCredentialsAttributes, 1}, // @pymeth QueryCredentialsAttributes|Returns information about the credentials
 	{NULL}
@@ -1124,7 +1124,7 @@ PyCredHandle::~PyCredHandle()
 BOOL PyCredHandle_Check(PyObject *ob)
 {
 	if (ob->ob_type!=&PyCredHandleType){
-		PyErr_SetString(PyExc_TypeError,"Object must be a PyCredHandle");	
+		PyErr_SetString(PyExc_TypeError,"Object must be a PyCredHandle");
 		return FALSE;
 		}
 	return TRUE;

@@ -197,7 +197,7 @@ static PyObject *PyCOleClientItem_GetDocument(PyObject *self, PyObject *args)
 	return ui_assoc_object::make( UITypeFromCObject(pDoc), pDoc )->GetGoodRet();
 }
 
-// @pymethod <o PyCWnd>|PyCOleClientItem|GetInPlaceWindow|Obtains the window in which the item has been opened for in-place editing. 
+// @pymethod <o PyCWnd>|PyCOleClientItem|GetInPlaceWindow|Obtains the window in which the item has been opened for in-place editing.
 static PyObject *PyCOleClientItem_GetInPlaceWindow(PyObject *self, PyObject *args)
 {
 	COleClientItem *pCI;
@@ -326,7 +326,7 @@ static PyObject *PyCOleClientItem_SetItemRects(PyObject *self, PyObject *args)
 	COleClientItem *pCI;
 	RECT rectPos = {-1, -1, -1, -1};
 	RECT rectClip = {-1, -1, -1, -1};
-	if (!PyArg_ParseTuple(args, "|(iiii)(iiii)", 
+	if (!PyArg_ParseTuple(args, "|(iiii)(iiii)",
 		&rectPos.left, &rectPos.top, &rectPos.right, &rectPos.bottom,
 		&rectClip.left, &rectClip.top, &rectClip.right, &rectClip.bottom))
 		return NULL;
@@ -350,7 +350,7 @@ static struct PyMethodDef PyCOleClientItem_methods[] = {
 	{"Draw",                PyCOleClientItem_Draw, 1}, // @pymeth Draw|Draws the OLE item into the specified bounding rectangle using the specified device context.
 	{"GetActiveView",       PyCOleClientItem_GetActiveView, 1}, // @pymeth GetActiveView|Obtains the active view for the item
 	{"GetDocument",         PyCOleClientItem_GetDocument, 1}, // @pymeth GetDocument|Obtains the current document for the item
-	{"GetInPlaceWindow",    PyCOleClientItem_GetInPlaceWindow, 1}, // @pymeth GetInPlaceWindow|Obtains the window in which the item has been opened for in-place editing. 
+	{"GetInPlaceWindow",    PyCOleClientItem_GetInPlaceWindow, 1}, // @pymeth GetInPlaceWindow|Obtains the window in which the item has been opened for in-place editing.
 	{"GetItemState",        PyCOleClientItem_GetItemState, 1}, // @pymeth GetItemState|Obtains the OLE item's current state
 	{"GetObject",           PyCOleClientItem_GetObject, 1}, // @pymeth GetObject|Returns the COM object to the item.  This is the m_lpObject variable in MFC.
 	{"GetStorage",          PyCOleClientItem_GetStorage, 1}, // @pymeth GetStorage|Returns the COM object used for storage
@@ -365,10 +365,10 @@ static struct PyMethodDef PyCOleClientItem_methods[] = {
 
 
 
-ui_type_CObject PyCOleClientItem::type("PyCOleClientItem", 
+ui_type_CObject PyCOleClientItem::type("PyCOleClientItem",
 								  &PyCCmdTarget::type, // should be CDocItem when we support it.
-								  RUNTIME_CLASS(COleClientItem), 
-								  sizeof(PyCOleClientItem), 
-								  PYOBJ_OFFSET(PyCOleClientItem), 
-								  PyCOleClientItem_methods, 
+								  RUNTIME_CLASS(COleClientItem),
+								  sizeof(PyCOleClientItem),
+								  PYOBJ_OFFSET(PyCOleClientItem),
+								  PyCOleClientItem_methods,
 								  GET_PY_CTOR(PyCOleClientItem) );

@@ -59,7 +59,7 @@ void ChangeDialogFont(CWnd* pWnd, CFont* pFont)
         pWnd->GetClientRect(clientRect);
         long xDiff = windowRect.Width() - clientRect.Width();
         long yDiff = windowRect.Height() - clientRect.Height();
-	
+
         newClientRect.left = newClientRect.top = 0;
         newClientRect.right = clientRect.right * tmNew.tmAveCharWidth / tmOld.tmAveCharWidth;
         newClientRect.bottom = clientRect.bottom * newHeight / oldHeight;
@@ -97,7 +97,7 @@ void ChangeDialogFont(CWnd* pWnd, CFont* pFont)
 		windowRect.top = windowRect.top * newHeight / oldHeight;
 		windowRect.bottom = windowRect.bottom * newHeight / oldHeight;
 		pChildWnd->MoveWindow(windowRect);
-		
+
 		pChildWnd = pChildWnd->GetWindow(GW_HWNDNEXT);
 	}
 }
@@ -152,7 +152,7 @@ CPythonPropertySheet::OnCmdMsg (UINT nID, int nCode,
   }
 }
 
-BOOL CPythonPropertySheet::OnCommand(WPARAM wParam, LPARAM lParam) 
+BOOL CPythonPropertySheet::OnCommand(WPARAM wParam, LPARAM lParam)
 {
 	// the sheet resizes the page whenever the Apply button is clicked so we need to size it correctly
 	if (m_customizeFont &&
@@ -160,11 +160,11 @@ BOOL CPythonPropertySheet::OnCommand(WPARAM wParam, LPARAM lParam)
              ID_WIZNEXT == wParam ||
              ID_WIZBACK == wParam))
             PostMessage (WM_RESIZEPAGE);
-	
+
 	return CPropertySheet::OnCommand(wParam, lParam);
 }
 
-BOOL 
+BOOL
 CPythonPropertySheet::OnNotify (WPARAM wParam, LPARAM lParam, LRESULT *pResult)
 {
   if (m_customizeFont) {
@@ -233,7 +233,7 @@ void CPythonPropertySheet::BuildPropPageArray()
 	// get first page
 	CPropertyPage* pPage = GetPage (0);
 	ASSERT (pPage);
-	
+
 	// dialog template class in afxpriv.h
 	CDialogTemplate dlgtemp;
 	// load the dialog template
@@ -318,15 +318,15 @@ BOOL CPythonPropertySheet::OnInitDialog()
 		pTab->AdjustRect (FALSE, &m_rctPage);
 	}
 
-	// resize the page	
+	// resize the page
 	pPage->MoveWindow (&m_rctPage);
 
 	return result;
-	// @rdesc Specifies whether the application has set the input focus to 
-	// one of the controls in the dialog box. If OnInitDialog returns 
-	// nonzero, Windows sets the input focus to the first control 
-	// in the dialog box. The application can return 0/None only if 
-	// it has explicitly set the input focus to one of the controls in the 
+	// @rdesc Specifies whether the application has set the input focus to
+	// one of the controls in the dialog box. If OnInitDialog returns
+	// nonzero, Windows sets the input focus to the first control
+	// in the dialog box. The application can return 0/None only if
+	// it has explicitly set the input focus to one of the controls in the
 	// dialog box.
 }
 
@@ -337,7 +337,7 @@ BEGIN_MESSAGE_MAP(CPythonPropertySheet, CPropertySheet)
 	ON_WM_CLOSE()
 	ON_WM_CREATE()
 	//}}AFX_MSG_MAP
-	ON_MESSAGE (WM_RESIZEPAGE, OnResizePage)	
+	ON_MESSAGE (WM_RESIZEPAGE, OnResizePage)
 END_MESSAGE_MAP()
 
 #ifdef _DEBUG

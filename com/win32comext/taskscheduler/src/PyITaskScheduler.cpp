@@ -269,7 +269,7 @@ PyObject *PyITaskScheduler::IsOfType(PyObject *self, PyObject *args)
 	if ( pITS == NULL )
 		return NULL;
 	// @pyparm <o unicode>|Name||Name of object
-	// @pyparm <o PyIID>|riid||Named object is checked that it supports the interface of this IID 
+	// @pyparm <o PyIID>|riid||Named object is checked that it supports the interface of this IID
 	PyObject *obName=NULL, *obriid=NULL, *ret=NULL;
 	LPWSTR Name=NULL;
 	IID riid;

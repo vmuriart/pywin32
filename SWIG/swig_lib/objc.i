@@ -2,7 +2,7 @@
 // Dave Beazley
 // Copyright (C) 1997
 
-// This file provides support to Objective-C parsing and 
+// This file provides support to Objective-C parsing and
 // should be included with just about any Objective-C module
 
 // Base Object class
@@ -50,7 +50,7 @@ typedef Object *id;         // Make 'id' behave like any other "Object"
 }
 
 
-  
+
 
 
 

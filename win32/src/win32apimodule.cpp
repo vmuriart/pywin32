@@ -142,17 +142,17 @@ PyBeep( PyObject *self, PyObject *args )
 	DWORD freq;
 	DWORD dur;
 
-	if (!PyArg_ParseTuple(args, "ii:Beep", 
+	if (!PyArg_ParseTuple(args, "ii:Beep",
 	          &freq,  // @pyparm int|freq||Specifies the frequency, in hertz, of the sound. This parameter must be in the range 37 through 32,767 (0x25 through 0x7FFF).
 	          &dur)) // @pyparm int|dur||Specifies the duration, in milliseconds, of the sound.~
-	                // One value has a special meaning: If dwDuration is  - 1, the function 
-	                // operates asynchronously and produces sound until called again. 
+	                // One value has a special meaning: If dwDuration is  - 1, the function
+	                // operates asynchronously and produces sound until called again.
 		return NULL;
 	PyW32_BEGIN_ALLOW_THREADS
 	BOOL ok = ::Beep(freq,dur);
 	PyW32_END_ALLOW_THREADS
 	if (!ok) // @pyseeapi Beep
-		return ReturnAPIError("Beep");		
+		return ReturnAPIError("Beep");
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -216,9 +216,9 @@ static PyObject *PyDuplicateHandle(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "OOOiii:DuplicateHandle",
 			&obSourceProcess, // @pyparm <o PyHANDLE>|hSourceProcess||Identifies the process containing the handle to duplicate.
 			&obSource, // @pyparm <o PyHANDLE>|hSource||Identifies the handle to duplicate. This is an open object handle that is valid in the context of the source process.
-			&obTarget, // @pyparm <o PyHANDLE>|hTargetProcessHandle||Identifies the process that is to receive the duplicated handle. The handle must have PROCESS_DUP_HANDLE access. 
-			&access, // @pyparm int|desiredAccess||Specifies the access requested for the new handle. This parameter is ignored if the dwOptions parameter specifies the DUPLICATE_SAME_ACCESS flag. Otherwise, the flags that can be specified depend on the type of object whose handle is being duplicated. For the flags that can be specified for each object type, see the following Remarks section. Note that the new handle can have more access than the original handle. 
-			&bInherit, // @pyparm int|bInheritHandle||Indicates whether the handle is inheritable. If TRUE, the duplicate handle can be inherited by new processes created by the target process. If FALSE, the new handle cannot be inherited. 
+			&obTarget, // @pyparm <o PyHANDLE>|hTargetProcessHandle||Identifies the process that is to receive the duplicated handle. The handle must have PROCESS_DUP_HANDLE access.
+			&access, // @pyparm int|desiredAccess||Specifies the access requested for the new handle. This parameter is ignored if the dwOptions parameter specifies the DUPLICATE_SAME_ACCESS flag. Otherwise, the flags that can be specified depend on the type of object whose handle is being duplicated. For the flags that can be specified for each object type, see the following Remarks section. Note that the new handle can have more access than the original handle.
+			&bInherit, // @pyparm int|bInheritHandle||Indicates whether the handle is inheritable. If TRUE, the duplicate handle can be inherited by new processes created by the target process. If FALSE, the new handle cannot be inherited.
 			&options)) // @pyparm int|options||Specifies optional actions. This parameter can be zero, or any combination of the following flags
 			// @flag DUPLICATE_CLOSE_SOURCE|loses the source handle. This occurs regardless of any error status returned.
 			// @flag DUPLICATE_SAME_ACCESS|Ignores the dwDesiredAccess parameter. The duplicate handle has the same access as the source handle.
@@ -243,7 +243,7 @@ static PyObject *PyGetHandleInformation(PyObject *self, PyObject *args)
 	PyObject *obObject;
 	HANDLE h;
 	DWORD Flags;
-	if (!PyArg_ParseTuple(args, "O:GetHandleInformation", 
+	if (!PyArg_ParseTuple(args, "O:GetHandleInformation",
 		&obObject))  // @pyparm <o PyHANDLE>|Object||Handle to an object
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obObject, &h))
@@ -262,7 +262,7 @@ static PyObject *PySetHandleInformation(PyObject *self, PyObject *args)
 	PyObject *obObject;
 	HANDLE h;
 	DWORD Mask, Flags;
-	if (!PyArg_ParseTuple(args, "Okk:SetHandleInformation", 
+	if (!PyArg_ParseTuple(args, "Okk:SetHandleInformation",
 		&obObject,	// @pyparm <o PyHANDLE>|Object||Handle to an object
 		&Mask,		// @pyparm int|Mask||Bitmask specifying which flags should be set
 		&Flags))	// @pyparm int|Flags||Bitmask of flag values to be set. Valid Flags are HANDLE_FLAG_INHERIT, HANDLE_FLAG_PROTECT_FROM_CLOSE
@@ -281,7 +281,7 @@ PyCopyFile( PyObject *self, PyObject *args )
 {
 	BOOL failOnExist = FALSE;
 	PyObject *obSrc, *obDest;
-	if (!PyArg_ParseTuple(args, "OO|i:CopyFile", 
+	if (!PyArg_ParseTuple(args, "OO|i:CopyFile",
 	          &obSrc,  // @pyparm string<o PyUnicode>|src||Name of an existing file.
 	          &obDest, // @pyparm string/<o PyUnicode>|dest||Name of file to copy to.
 	          &failOnExist)) // @pyparm int|bFailOnExist|0|Indicates if the operation should fail if the file exists.
@@ -299,7 +299,7 @@ PyCopyFile( PyObject *self, PyObject *args )
 	PyWinObject_FreeTCHAR(src);
 	PyWinObject_FreeTCHAR(dest);
 	if (!ok) // @pyseeapi CopyFile
-		return ReturnAPIError("CopyFile");		
+		return ReturnAPIError("CopyFile");
 	Py_INCREF(Py_None);
 	return Py_None;
 }
@@ -348,7 +348,7 @@ PyDragQueryFile( PyObject *self, PyObject *args )
 	HDROP hDrop;
 	PyObject *obhDrop;
 	int iFileNum = 0xFFFFFFFF;
-	if (!PyArg_ParseTuple(args, "O|i:DragQueryFile", 
+	if (!PyArg_ParseTuple(args, "O|i:DragQueryFile",
 	           &obhDrop, // @pyparm int|hDrop||Handle identifying the structure containing the file names.
 	           &iFileNum)) // @pyparm int|fileNum|0xFFFFFFFF|Specifies the index of the file to query.
 		return NULL;
@@ -366,7 +366,7 @@ PyDragQueryFile( PyObject *self, PyObject *args )
 			return PyWinObject_FromTCHAR(buf);
 	}
 // @rdesc If the fileNum parameter is 0xFFFFFFFF (the default) then the return value
-// is an integer with the count of files dropped.  If fileNum is between 0 and Count, 
+// is an integer with the count of files dropped.  If fileNum is between 0 and Count,
 // the return value is a string containing the filename.<nl>
 // If an error occurs, and exception is raised.
 }
@@ -395,7 +395,7 @@ PyGetEnvironmentVariable( PyObject *self, PyObject *args )
 {
 	TCHAR *szVar;
 	PyObject *obVar, *ret=NULL;
-	if (!PyArg_ParseTuple(args, "O:GetEnvironmentVariable", 
+	if (!PyArg_ParseTuple(args, "O:GetEnvironmentVariable",
 	           &obVar)) // @pyparm str|variable||The variable to get
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obVar, &szVar, FALSE))
@@ -435,7 +435,7 @@ PyGetEnvironmentVariableW( PyObject *self, PyObject *args )
 {
 	TmpWCHAR Name;
 	PyObject *obName;
-	if (!PyArg_ParseTuple(args, "O:GetEnvironmentVariableW", 
+	if (!PyArg_ParseTuple(args, "O:GetEnvironmentVariableW",
 	    &obName)) // @pyparm str|Name||The variable to retrieve
 		return NULL;
 	if (!PyWinObject_AsWCHAR(obName, &Name))
@@ -487,7 +487,7 @@ PySetEnvironmentVariable(PyObject *self, PyObject *args)
 {
 	TCHAR *key=NULL, *val=NULL;
 	PyObject *obkey, *obval, *ret=NULL;
-	if (!PyArg_ParseTuple(args, "OO:SetEnvironmentVariable", 
+	if (!PyArg_ParseTuple(args, "OO:SetEnvironmentVariable",
 		&obkey,		// @pyparm str/unicode|Name||Name of the environment variable
 		&obval))	// @pyparm str/unicode|Value||Value to be set, use None to remove variable
 		return NULL;
@@ -512,7 +512,7 @@ PySetEnvironmentVariableW(PyObject *self, PyObject *args)
 {
 	TmpWCHAR Name, Value;
 	PyObject *obName, *obValue;
-	if (!PyArg_ParseTuple(args, "OO:SetEnvironmentVariableW", 
+	if (!PyArg_ParseTuple(args, "OO:SetEnvironmentVariableW",
 		&obName,		// @pyparm str|Name||Name of the environment variable
 		&obValue))		// @pyparm str|Value||Value to be set, or None to remove variable
 		return NULL;
@@ -527,13 +527,13 @@ PySetEnvironmentVariableW(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-// @pymethod string|win32api|ExpandEnvironmentStrings|Expands environment-variable strings and replaces them with their defined values. 
+// @pymethod string|win32api|ExpandEnvironmentStrings|Expands environment-variable strings and replaces them with their defined values.
 static PyObject *
 PyExpandEnvironmentStrings( PyObject *self, PyObject *args )
 {
 	TCHAR *in;
 	PyObject *obin, *rc=NULL;
-	if (!PyArg_ParseTuple(args, "O:ExpandEnvironmentStrings", 
+	if (!PyArg_ParseTuple(args, "O:ExpandEnvironmentStrings",
 	           &obin)) // @pyparm string|in||String to expand
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obin, &in, FALSE))
@@ -569,7 +569,7 @@ PyFindExecutable( PyObject *self, PyObject *args )
 	TCHAR res[MAX_PATH];
 	PyObject *obfile, *obdir=Py_None, *ret=NULL;
 	BOOL freedir=TRUE;
-	if (!PyArg_ParseTuple(args, "O|O:FindExecutable", 
+	if (!PyArg_ParseTuple(args, "O|O:FindExecutable",
 	           &obfile, // @pyparm string|filename||A file name.  This can be either a document or executable file.
 	           &obdir)) // @pyparm string|dir||The default directory.
 		return NULL;
@@ -673,16 +673,16 @@ PyFindFirstChangeNotification(PyObject *self, PyObject *args)
 	DWORD dwFilter;
 	BOOL subDirs;
 	PyObject *obPathName;
-	// @pyparm string|pathName||Specifies the path of the directory to watch. 
+	// @pyparm string|pathName||Specifies the path of the directory to watch.
 	// @pyparm int|bSubDirs||Specifies whether the function will monitor the directory or the directory tree. If this parameter is TRUE, the function monitors the directory tree rooted at the specified directory; if it is FALSE, it monitors only the specified directory
 	// @pyparm int|filter||Specifies the filter conditions that satisfy a change notification wait. This parameter can be one or more of the following values:
 	// @flagh Value|Meaning
-	// @flag FILE_NOTIFY_CHANGE_FILE_NAME|Any file name change in the watched directory or subtree causes a change notification wait operation to return. Changes include renaming, creating, or deleting a file name. 
-	// @flag FILE_NOTIFY_CHANGE_DIR_NAME|Any directory-name change in the watched directory or subtree causes a change notification wait operation to return. Changes include creating or deleting a directory. 
-	// @flag FILE_NOTIFY_CHANGE_ATTRIBUTES|Any attribute change in the watched directory or subtree causes a change notification wait operation to return. 
-	// @flag FILE_NOTIFY_CHANGE_SIZE|Any file-size change in the watched directory or subtree causes a change notification wait operation to return. The operating system detects a change in file size only when the file is written to the disk. For operating systems that use extensive caching, detection occurs only when the cache is sufficiently flushed. 
-	// @flag FILE_NOTIFY_CHANGE_LAST_WRITE|Any change to the last write-time of files in the watched directory or subtree causes a change notification wait operation to return. The operating system detects a change to the last write-time only when the file is written to the disk. For operating systems that use extensive caching, detection occurs only when the cache is sufficiently flushed. 
-	// @flag FILE_NOTIFY_CHANGE_SECURITY|Any security-descriptor change in the watched directory or subtree causes a change notification wait operation to return 
+	// @flag FILE_NOTIFY_CHANGE_FILE_NAME|Any file name change in the watched directory or subtree causes a change notification wait operation to return. Changes include renaming, creating, or deleting a file name.
+	// @flag FILE_NOTIFY_CHANGE_DIR_NAME|Any directory-name change in the watched directory or subtree causes a change notification wait operation to return. Changes include creating or deleting a directory.
+	// @flag FILE_NOTIFY_CHANGE_ATTRIBUTES|Any attribute change in the watched directory or subtree causes a change notification wait operation to return.
+	// @flag FILE_NOTIFY_CHANGE_SIZE|Any file-size change in the watched directory or subtree causes a change notification wait operation to return. The operating system detects a change in file size only when the file is written to the disk. For operating systems that use extensive caching, detection occurs only when the cache is sufficiently flushed.
+	// @flag FILE_NOTIFY_CHANGE_LAST_WRITE|Any change to the last write-time of files in the watched directory or subtree causes a change notification wait operation to return. The operating system detects a change to the last write-time only when the file is written to the disk. For operating systems that use extensive caching, detection occurs only when the cache is sufficiently flushed.
+	// @flag FILE_NOTIFY_CHANGE_SECURITY|Any security-descriptor change in the watched directory or subtree causes a change notification wait operation to return
 	if (!PyArg_ParseTuple(args, "Oil:FindFirstChangeNotification", &obPathName, &subDirs, &dwFilter))
 		return NULL;
 	TCHAR *pathName;
@@ -763,7 +763,7 @@ PyFormatMessageA(PyObject *self, PyObject *args)
 	// Support for "full" argument list
 	//
 	// @pyparmalt1 int|flags||Flags for the call.  Note that FORMAT_MESSAGE_ALLOCATE_BUFFER and FORMAT_MESSAGE_ARGUMENT_ARRAY will always be added.
-	// @pyparmalt1 int/string|source||The source object.  If flags contain FORMAT_MESSAGE_FROM_HMODULE it should be an int; 
+	// @pyparmalt1 int/string|source||The source object.  If flags contain FORMAT_MESSAGE_FROM_HMODULE it should be an int;
 	//		if flags contain FORMAT_MESSAGE_FROM_STRING it should be a string containing the error msg;
 	//		otherwise it is ignored.
 	// @pyparmalt1 int|messageId||The message ID.
@@ -814,7 +814,7 @@ PyFormatMessageA(PyObject *self, PyObject *args)
 			}
 		}
 	flags |= (FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_ARGUMENT_ARRAY);
-	
+
 	{
 	PyW32_BEGIN_ALLOW_THREADS
 	__try{
@@ -1096,7 +1096,7 @@ PyGetComputerObjectName(PyObject *self, PyObject *args)
 	ULONG nSize=0;
 	BOOL ok;
 	// @pyseeapi GetComputerObjectName
-	if (!PyArg_ParseTuple (args, "i:GetComputerObjectName", 
+	if (!PyArg_ParseTuple (args, "i:GetComputerObjectName",
 		&fmt))	// @pyparm int|NameFormat||EXTENDED_NAME_FORMAT value, win32con.Name*
 		return NULL;
 
@@ -1111,7 +1111,7 @@ PyGetComputerObjectName(PyObject *self, PyObject *args)
 	PyW32_BEGIN_ALLOW_THREADS
 	ok = (*pfnGetComputerObjectName)(fmt,formattedname,&nSize);
 	PyW32_END_ALLOW_THREADS
-	
+
 	if (!ok){
 		PyWin_SetAPIError("GetComputerObjectName");
 		goto done;
@@ -1137,7 +1137,7 @@ PyGetUserName (PyObject *self, PyObject *args)
 		return ReturnAPIError("GetUserName");
 	return PyWinObject_FromTCHAR(buf);
 }
- 
+
 // @pymethod string|win32api|GetUserNameEx|Returns the current user name in format from EXTENDED_NAME_FORMAT enum
 static PyObject *
 PyGetUserNameEx (PyObject *self, PyObject *args)
@@ -1149,7 +1149,7 @@ PyGetUserNameEx (PyObject *self, PyObject *args)
 	ULONG nSize=0;
 	BOOL ok;
 	// @pyseeapi GetUserNameEx
-	if (!PyArg_ParseTuple (args, "i:GetUserNameEx", 
+	if (!PyArg_ParseTuple (args, "i:GetUserNameEx",
 		&fmt))	// @pyparm int|NameFormat||EXTENDED_NAME_FORMAT value, win32con.Name*
 		return NULL;
 
@@ -1277,7 +1277,7 @@ PyGetCurrentProcessId (PyObject *self, PyObject *args)
 	return PyLong_FromUnsignedLong(::GetCurrentProcessId());
 }
 
-// @pymethod int|win32api|GetFocus|Retrieves the handle of the keyboard focus window associated with the thread that called the method. 
+// @pymethod int|win32api|GetFocus|Retrieves the handle of the keyboard focus window associated with the thread that called the method.
 static PyObject *
 PyGetFocus (PyObject *self, PyObject *args)
 {
@@ -1299,7 +1299,7 @@ PyClipCursor( PyObject *self, PyObject *args )
 {
 	RECT r;
 	RECT *pRect;
-	// @pyparm (int, int, int, int)|left, top, right, bottom||contains the screen coordinates of the upper-left and lower-right corners of the confining rectangle. If this parameter is omitted or (0,0,0,0), the cursor is free to move anywhere on the screen. 
+	// @pyparm (int, int, int, int)|left, top, right, bottom||contains the screen coordinates of the upper-left and lower-right corners of the confining rectangle. If this parameter is omitted or (0,0,0,0), the cursor is free to move anywhere on the screen.
 	if (!PyArg_ParseTuple(args, "|(iiii):ClipCursor", &r.left, &r.top, &r.right, &r.bottom))
 		return NULL;
 	if (r.left == 0 && r.top == 0 && r.right == 0 && r.bottom == 0)
@@ -1346,7 +1346,7 @@ PySetCursor( PyObject *self, PyObject *args )
 		return NULL;
 	// @pyseeapi SetCursor
 	PyW32_BEGIN_ALLOW_THREADS
-	HCURSOR ret = ::SetCursor(hCursor); 
+	HCURSOR ret = ::SetCursor(hCursor);
 	PyW32_END_ALLOW_THREADS
 	return PyWinLong_FromHANDLE(ret);
 	// @rdesc The result is the previous cursor if there was one.
@@ -1391,7 +1391,7 @@ PyObject *PyGetDiskFreeSpace (PyObject *self, PyObject *args)
 {
 	TCHAR *path = NULL;
 	PyObject *obpath=Py_None;
-	// @pyparm string|rootPath||Specifies the root directory of the disk to return information about. If rootPath is None, the method uses the root of the current directory. 
+	// @pyparm string|rootPath||Specifies the root directory of the disk to return information about. If rootPath is None, the method uses the root of the current directory.
 	if (!PyArg_ParseTuple (args, "|O:GetDiskFreeSpace", &obpath))
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obpath, &path, TRUE))
@@ -1417,7 +1417,7 @@ PyObject *PyGetDiskFreeSpaceEx (PyObject *self, PyObject *args)
 {
 	TCHAR *path = NULL;
 	PyObject *obpath=Py_None;
-	// @pyparm string|rootPath||Specifies the root directory of the disk to return information about. If rootPath is None, the method uses the root of the current directory. 
+	// @pyparm string|rootPath||Specifies the root directory of the disk to return information about. If rootPath is None, the method uses the root of the current directory.
 	if (!PyArg_ParseTuple (args, "|O:GetDiskFreeSpaceEx", &obpath))
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obpath, &path, TRUE))
@@ -1529,7 +1529,7 @@ PyGetKeyState(PyObject * self, PyObject * args)
 	return Py_BuildValue("i",ret);
 	// @rdesc The return value specifies the status of
 	// the given virtual key. If the high-order bit is 1, the key is down;
-	// otherwise, it is up. If the low-order bit is 1, the key is toggled. 
+	// otherwise, it is up. If the low-order bit is 1, the key is toggled.
 	// A key, such as the CAPS LOCK key, is toggled if it is turned on.
 	// The key is off and untoggled if the low-order bit is 0. A toggle key's
 	// indicator light (if any) on the keyboard will be on when the key is
@@ -1597,13 +1597,13 @@ PyVkKeyScan(PyObject * self, PyObject * args)
 	return PyInt_FromLong(ret);
 }
 
-// @pymethod int|win32api|VkKeyScanEx|Translates a character to the corresponding virtual-key code and shift state. 
+// @pymethod int|win32api|VkKeyScanEx|Translates a character to the corresponding virtual-key code and shift state.
 static PyObject *
 PyVkKeyScanEx(PyObject * self, PyObject * args)
 {
 	PyObject *obkey;
 	HKL hkl;
-	PyObject *obhkl;	
+	PyObject *obhkl;
 	if (!PyArg_ParseTuple(args, "OO:VkKeyScanEx",
 		&obkey,	// @pyparm string or unicode|char||A byte or unicode string of length 1.  If a byte string is passed
 			// VkKeyScanExA will be called, otherwise VkKeyScanExW will be called.
@@ -1807,7 +1807,7 @@ PyGetUserDefaultLCID(PyObject * self, PyObject * args)
 	return Py_BuildValue("i",::GetUserDefaultLCID());
 }
 
-// @pymethod int|win32api|GetUserDefaultLangID|Retrieves the user default language identifier. 
+// @pymethod int|win32api|GetUserDefaultLangID|Retrieves the user default language identifier.
 static PyObject *
 PyGetUserDefaultLangID(PyObject * self, PyObject * args)
 {
@@ -1823,7 +1823,7 @@ PyGetSystemDefaultLCID(PyObject * self, PyObject * args)
 	return Py_BuildValue("i",::GetSystemDefaultLCID());
 }
 
-// @pymethod int|win32api|GetSystemDefaultLangID|Retrieves the system default language identifier. 
+// @pymethod int|win32api|GetSystemDefaultLangID|Retrieves the system default language identifier.
 static PyObject *
 PyGetSystemDefaultLangID(PyObject * self, PyObject * args)
 {
@@ -1854,7 +1854,7 @@ PyAbortSystemShutdown(PyObject * self, PyObject * args)
 	return Py_None;
 }
 
-// @pymethod |win32api|InitiateSystemShutdown|Initiates a shutdown and optional restart of the specified computer. 
+// @pymethod |win32api|InitiateSystemShutdown|Initiates a shutdown and optional restart of the specified computer.
 static PyObject *
 PyInitiateSystemShutdown(PyObject * self, PyObject * args)
 {
@@ -1865,7 +1865,7 @@ PyInitiateSystemShutdown(PyObject * self, PyObject * args)
 	BOOL bRebootAfter;
 	// @pyparm string/<o PyUnicode>|computerName||Specifies the name of the computer to shut-down, or None
 	// @pyparm string/<o PyUnicode>|message||Message to display in a dialog box
-	// @pyparm int|timeOut||Specifies the time (in seconds) that the dialog box should be displayed. While this dialog box is displayed, the shutdown can be stopped by the AbortSystemShutdown function. 
+	// @pyparm int|timeOut||Specifies the time (in seconds) that the dialog box should be displayed. While this dialog box is displayed, the shutdown can be stopped by the AbortSystemShutdown function.
 	// If dwTimeout is zero, the computer shuts down without displaying the dialog box, and the shutdown cannot be stopped by AbortSystemShutdown.
 	// @pyparm int|bForceClose||Specifies whether applications with unsaved changes are to be forcibly closed. If this parameter is TRUE, such applications are closed. If this parameter is FALSE, a dialog box is displayed prompting the user to close the applications.
 	// @pyparm int|bRebootAfterShutdown||Specifies whether the computer is to restart immediately after shutting down. If this parameter is TRUE, the computer is to restart. If this parameter is FALSE, the system flushes all caches to disk, clears the screen, and displays a message indicating that it is safe to power down.
@@ -1916,7 +1916,7 @@ PyExitWindows(PyObject * self, PyObject * args)
 static PyObject *
 PyExitWindowsEx(PyObject * self, PyObject * args)
 {
-	// @comm It sends the WM_QUERYENDSESSION message to all applications to determine if they can be terminated. 
+	// @comm It sends the WM_QUERYENDSESSION message to all applications to determine if they can be terminated.
 
 	// @pyparm int|flags||The shutdown operation
 	// @pyparm int|reserved|0|
@@ -2003,7 +2003,7 @@ PyFreeLibrary(PyObject * self, PyObject * args)
 	return Py_None;
 }
 
-// @pymethod int|win32api|GetProcAddress|Returns the address of the specified exported dynamic-link library (DLL) function. 
+// @pymethod int|win32api|GetProcAddress|Returns the address of the specified exported dynamic-link library (DLL) function.
 static PyObject *
 PyGetProcAddress(PyObject * self, PyObject * args)
 {
@@ -2090,7 +2090,7 @@ PyGetProfileVal(PyObject *self, PyObject *args)
 	PyObject *obsect, *obentry, *obDef, *obiniName=Py_None, *ret=NULL;
 	int intDef;
 	BOOL bHaveInt = TRUE;
-	if (!PyArg_ParseTuple(args, "OOO|O", 
+	if (!PyArg_ParseTuple(args, "OOO|O",
 		&obsect,		// @pyparm string|section||The section in the INI file to retrieve a value for.
 		&obentry,		// @pyparm string|entry||The entry within the section in the INI file to retrieve a value for.
 		&obDef,			// @pyparm int/string|defValue||The default value.  The type of this parameter determines the methods return type.
@@ -2109,7 +2109,7 @@ PyGetProfileVal(PyObject *self, PyObject *args)
 	if (PyWinObject_AsTCHAR(obsect, &sect, TRUE)
 		&&PyWinObject_AsTCHAR(obentry, &entry, TRUE)
 		&&PyWinObject_AsTCHAR(obiniName, &iniName, TRUE)){
-		if (iniName) {	
+		if (iniName) {
 			if (bHaveInt)
 				ret = Py_BuildValue("i",::GetPrivateProfileInt(sect, entry, intDef, iniName));
 			else {
@@ -2212,7 +2212,7 @@ PyWriteProfileSection(PyObject * self, PyObject * args)
 	if (PyWinObject_AsTCHAR(obSection, &szSection, TRUE)
 		&&PyWinObject_AsTCHAR(obdata, &data, TRUE, &datalen)
 		&&PyWinObject_AsTCHAR(obiniName, &iniName, TRUE)){
-		// Make sure buffer is terminated by double null, since function doesn't take a buffer length 
+		// Make sure buffer is terminated by double null, since function doesn't take a buffer length
 		if (data && (datalen < 2 || data[datalen-1]!=0 || data[datalen-2]!=0))
 			PyErr_SetString(PyExc_ValueError, "Section data must be terminated by double null");
 		else{
@@ -2248,7 +2248,7 @@ PyGetSystemInfo(PyObject * self, PyObject * args)
 	GetSystemInfo( &info );
 	return Py_BuildValue("iiNNNiii(HH)",
 						 info.wProcessorArchitecture,
-						 info.dwPageSize, 
+						 info.dwPageSize,
                          PyWinLong_FromVoidPtr(info.lpMinimumApplicationAddress),
 						 PyWinLong_FromVoidPtr(info.lpMaximumApplicationAddress),
                          PyLong_FromUnsignedLongLong(info.dwActiveProcessorMask),
@@ -2274,7 +2274,7 @@ PyGetNativeSystemInfo(PyObject * self, PyObject * args)
 	(*pfnGetNativeSystemInfo)( &info );
 	return Py_BuildValue("iiNNNiii(HH)",
 						 info.wProcessorArchitecture,
-						 info.dwPageSize, 
+						 info.dwPageSize,
                          PyWinLong_FromVoidPtr(info.lpMinimumApplicationAddress),
 						 PyWinLong_FromVoidPtr(info.lpMaximumApplicationAddress),
                          PyLong_FromUnsignedLongLong(info.dwActiveProcessorMask),
@@ -2289,7 +2289,7 @@ PyGetNativeSystemInfo(PyObject * self, PyObject * args)
 }
 
 
-// @pymethod int|win32api|GetSystemMetrics|Retrieves various system metrics and system configuration settings. 
+// @pymethod int|win32api|GetSystemMetrics|Retrieves various system metrics and system configuration settings.
 static PyObject *
 PyGetSystemMetrics(PyObject * self, PyObject * args)
 {
@@ -2379,7 +2379,7 @@ PyGetLongPathNameA (PyObject *self, PyObject *args)
 	DWORD bufsize=MAX_PATH, reqd_bufsize;
 	PyObject *ret=NULL;
 
-	if (!PyArg_ParseTuple (args, "s:GetLongPathName", 
+	if (!PyArg_ParseTuple (args, "s:GetLongPathName",
 		&fileName))	// @pyparm string|fileName||The file name.
 		return NULL;
 
@@ -2497,7 +2497,7 @@ PyGetTempFileName(PyObject * self, PyObject * args)
 	TCHAR *path=NULL, *prefix=NULL;
 	PyObject *obpath, *obprefix, *ret=NULL;
 	int n = 0;
-	if (!PyArg_ParseTuple(args,"OO|i:GetTempFileName", 
+	if (!PyArg_ParseTuple(args,"OO|i:GetTempFileName",
 	          &obpath,  // @pyparm string|path||Specifies the path where the method creates the temporary filename.
 	                  // Applications typically specify a period (.) or the result of the GetTempPath function for this parameter.
 	          &obprefix,// @pyparm string|prefix||Specifies the temporary filename prefix.
@@ -2533,22 +2533,22 @@ PyGetTimeZoneInformation(PyObject * self, PyObject * args)
 		return NULL;
 	TIME_ZONE_INFORMATION tzinfo;
 	DWORD rc;
-	
+
 	rc = ::GetTimeZoneInformation(&tzinfo);
 	if( rc == TIME_ZONE_ID_INVALID ) {
 		return ReturnAPIError("GetTimeZoneInformation");
 	}
 	// else ok...
-	// According to the ::GetTimezoneInformation() documentation, 
+	// According to the ::GetTimezoneInformation() documentation,
 	// it will return:
 	//    TIME_ZONE_ID_STANDARD if in standard time,
 	//    TIME_ZONE_ID_DAYLIGHT if in daylight savings time, and
-	//    TIME_ZONE_ID_UNKNOWN if the timezone in question doesn't 
-	//               use daylight savings time, (eg. indiana time).  
-	// We therefore need to add this code to the return tuple, so 
-	// the calling code can decide which part of the tzinfo data to 
-	// use.  This is now returned as the 1st element of an outer 
-	// 2-tuple; the 2nd element is the (corrected) tuple representing 
+	//    TIME_ZONE_ID_UNKNOWN if the timezone in question doesn't
+	//               use daylight savings time, (eg. indiana time).
+	// We therefore need to add this code to the return tuple, so
+	// the calling code can decide which part of the tzinfo data to
+	// use.  This is now returned as the 1st element of an outer
+	// 2-tuple; the 2nd element is the (corrected) tuple representing
 	// the tzinfo structure.
 	return Py_BuildValue("i,(lNNlNNl)",
 				  rc,
@@ -2563,24 +2563,24 @@ PyGetTimeZoneInformation(PyObject * self, PyObject * args)
 					PyTuple_FromSYSTEMTIME(tzinfo.DaylightDate) :
 					PyWinObject_FromSYSTEMTIME(tzinfo.DaylightDate),
 				  tzinfo.DaylightBias );
-	
+
 	// @rdesc The return value is a tuple of (rc, tzinfo), where rc is
 	// the integer return code from ::GetTimezoneInformation(), which may be
 	// @flagh value|description
 	// @flag TIME_ZONE_ID_STANDARD|if in standard time
 	// @flag TIME_ZONE_ID_DAYLIGHT|if in daylight savings time
-	// @flag TIME_ZONE_ID_UNKNOWN|if the timezone in question doesn't use daylight savings time, (eg. indiana time).  
+	// @flag TIME_ZONE_ID_UNKNOWN|if the timezone in question doesn't use daylight savings time, (eg. indiana time).
 	// @rdesc tzinfo is a tuple of:
 	// @tupleitem 0|int|bias|Specifies the current bias, in minutes, for local time translation on this computer. The bias is the difference, in minutes, between Coordinated Universal Time (UTC) and local time. All translations between UTC and local time are based on the following formula:<nl><nl>UTC = local time + bias <nl><nl>
 	// @tupleitem 1|unicode|standardName|Specifies a string associated with standard time on this operating system. For example, this member could contain "EST" to indicate Eastern Standard Time. This string is not used by the operating system, so anything stored there using the SetTimeZoneInformation function is returned unchanged by the GetTimeZoneInformation function. This string can be empty.
-	// @tupleitem 2|<o PyTime>/tuple|standardTime|Specifies a SYSTEMTIME object that contains a date and local time when the transition from daylight saving time to standard time occurs on this operating system. If this date is not specified, the wMonth member in the SYSTEMTIME structure must be zero. If this date is specified, the DaylightDate value in the TIME_ZONE_INFORMATION structure must also be specified. 
-	// <nl>To select the correct day in the month, set the wYear member to zero, the wDayOfWeek member to an appropriate weekday, and the wDay member to a value in the range 1 through 5. Using this notation, the first Sunday in April can be specified, as can the last Thursday in October (5 is equal to "the last"). 
-	// @tupleitem 3|int|standardBias|Specifies a bias value to be used during local time translations that occur during standard time. This member is ignored if a value for the StandardDate member is not supplied. <nl>This value is added to the value of the Bias member to form the bias used during standard time. In most time zones, the value of this member is zero. 
+	// @tupleitem 2|<o PyTime>/tuple|standardTime|Specifies a SYSTEMTIME object that contains a date and local time when the transition from daylight saving time to standard time occurs on this operating system. If this date is not specified, the wMonth member in the SYSTEMTIME structure must be zero. If this date is specified, the DaylightDate value in the TIME_ZONE_INFORMATION structure must also be specified.
+	// <nl>To select the correct day in the month, set the wYear member to zero, the wDayOfWeek member to an appropriate weekday, and the wDay member to a value in the range 1 through 5. Using this notation, the first Sunday in April can be specified, as can the last Thursday in October (5 is equal to "the last").
+	// @tupleitem 3|int|standardBias|Specifies a bias value to be used during local time translations that occur during standard time. This member is ignored if a value for the StandardDate member is not supplied. <nl>This value is added to the value of the Bias member to form the bias used during standard time. In most time zones, the value of this member is zero.
 	// @tupleitem 4|unicode|daylightName|
 	// @tupleitem 5|<o PyTime>/tuple|daylightTime|
-	// @tupleitem 6|int|daylightBias|Specifies a bias value to be used during local time translations that occur during daylight saving time. This member is ignored if a value for the DaylightDate member is not supplied. 
-	// <nl>This value is added to the value of the Bias member to form the bias used during daylight saving time. In most time zones, the value of this member is – 60. 
-	
+	// @tupleitem 6|int|daylightBias|Specifies a bias value to be used during local time translations that occur during daylight saving time. This member is ignored if a value for the DaylightDate member is not supplied.
+	// <nl>This value is added to the value of the Bias member to form the bias used during daylight saving time. In most time zones, the value of this member is â€“ 60.
+
 }
 
 // @pymethod tuple|win32api|SetTimeZoneInformation|Sets the system time-zone information.
@@ -2717,7 +2717,7 @@ static PyObject *PySetSysColors(PyObject *self, PyObject *args)
 	int *elements=NULL, *element;
 	COLORREF *rgbs=NULL, *rgb;
 	PyObject *obelements, *obelement, *obrgbs, *ret=NULL;
-	
+
 	// @pyparm tuple|Elements||A tuple of ints, COLOR_* constants indicating which window element to change
 	// @pyparm tuple|RgbValues||An equal length tuple of ints representing RGB values (see <om win32api.RGB>)
 	if (!PyArg_ParseTuple(args, "OO:SetSysColors", &obelements, &obrgbs))
@@ -2727,7 +2727,7 @@ static PyObject *PySetSysColors(PyObject *self, PyObject *args)
 		PyErr_SetString(PyExc_TypeError,"SetSysColors: Arguments must be equal length tuples of ints");
 		return NULL;
 		}
-		
+
 	elements=(int *)malloc(element_cnt*sizeof(int));
 	if (elements==NULL){
 		PyErr_Format(PyExc_MemoryError,"SetSysColors: Unable to allocate array of %d ints",element_cnt);
@@ -2879,9 +2879,9 @@ PyGetVersionEx(PyObject * self, PyObject * args)
 			ver.dwBuildNumber,  //	@tupleitem 2|int|buildNumber|Identifies the build number of the operating system in the low-order word. (The high-order word contains the major and minor version numbers.)<nl>
 			ver.dwPlatformId, // @tupleitem 3|int|platformId|Identifies the platform supported by the operating system.  May be one of VER_PLATFORM_WIN32s, VER_PLATFORM_WIN32_WINDOWS or VER_PLATFORM_WIN32_NT<nl>
 			PyWinObject_FromTCHAR(ver.szCSDVersion), // @tupleitem 4|string|version|Contains arbitrary additional information about the operating system.
-			ver.wServicePackMajor, // @tupleitem 5|int|wServicePackMajor|Major version number of the latest Service Pack installed on the system. For example, for Service Pack 3, the major version number is 3. If no Service Pack has been installed, the value is zero. 
+			ver.wServicePackMajor, // @tupleitem 5|int|wServicePackMajor|Major version number of the latest Service Pack installed on the system. For example, for Service Pack 3, the major version number is 3. If no Service Pack has been installed, the value is zero.
 			ver.wServicePackMinor, // @tupleitem 6|int|wServicePackMinor|Minor version number of the latest Service Pack installed on the system. For example, for Service Pack 3, the minor version number is 0.
-			ver.wSuiteMask, // @tupleitem 7|int|wSuiteMask|Bit flags that identify the product suites available on the system. This member can be a combination of the VER_SUITE_* values. 
+			ver.wSuiteMask, // @tupleitem 7|int|wSuiteMask|Bit flags that identify the product suites available on the system. This member can be a combination of the VER_SUITE_* values.
 			ver.wProductType, // @tupleitem 8|int|wProductType|Additional information about the system. This member can be one of the VER_NT_* values.
 			ver.wReserved); // @tupleitem 9|int|wReserved|
 
@@ -2906,15 +2906,15 @@ PyGetVolumeInformation(PyObject * self, PyObject * args)
 	DWORD sysFlags;
 	TCHAR szSysName[MAX_PATH + 1];
 	PyW32_BEGIN_ALLOW_THREADS
-	BOOL ok = ::GetVolumeInformation( pathName, 
-		szVolName, sizeof(szVolName) / sizeof(szVolName[0]), 
+	BOOL ok = ::GetVolumeInformation( pathName,
+		szVolName, sizeof(szVolName) / sizeof(szVolName[0]),
 		&serialNo, &maxCompLength, &sysFlags,
 		szSysName, sizeof(szSysName) / sizeof(szSysName[0]));
 	PyW32_END_ALLOW_THREADS
 	PyWinObject_FreeTCHAR(pathName);
 	if (!ok)
 		return ReturnAPIError("GetVolumeInformation");
-	return Py_BuildValue("NlllN", 
+	return Py_BuildValue("NlllN",
 		PyWinObject_FromTCHAR(szVolName),
 		(long)serialNo, (long)maxCompLength, (long)sysFlags,
 		PyWinObject_FromTCHAR(szSysName));
@@ -3032,7 +3032,7 @@ PyObject *PyPostMessage(PyObject *self, PyObject *args)
 	UINT message;
 	WPARAM wParam=0;
 	LPARAM lParam=0;
-	if (!PyArg_ParseTuple(args, "OI|OO:PostMessage", 
+	if (!PyArg_ParseTuple(args, "OI|OO:PostMessage",
 	          &obhwnd,    // @pyparm <o PyHANDLE>|hwnd||The hWnd of the window to receive the message.
 	          &message, // @pyparm int|idMessage||The ID of the message to post.
 	          &obwParam,  // @pyparm int|wParam|None|The wParam for the message
@@ -3062,7 +3062,7 @@ PyObject *PyPostThreadMessage(PyObject *self, PyObject *args)
 	WPARAM wParam=0;
 	LPARAM lParam=0;
 	PyObject *obwParam=Py_None, *oblParam=Py_None;
-	if (!PyArg_ParseTuple(args, "iI|OO:PostThreadMessage", 
+	if (!PyArg_ParseTuple(args, "iI|OO:PostThreadMessage",
 	          &threadId,    // @pyparm int|tid||Identifier of the thread to which the message will be posted.
 	          &message, // @pyparm int|idMessage||The ID of the message to post.
 	          &obwParam,  // @pyparm int/str|wParam|None|The wParam for the message
@@ -3087,7 +3087,7 @@ PyObject *PyPostThreadMessage(PyObject *self, PyObject *args)
 PyObject *PyPostQuitMessage(PyObject *self, PyObject *args)
 {
 	DWORD exitCode = 0;
-	if (!PyArg_ParseTuple(args, "|i:PostQuitMessage", 
+	if (!PyArg_ParseTuple(args, "|i:PostQuitMessage",
 	          &exitCode))    // @pyparm int|exitCode|0|The exit code
 		return NULL;
 	// @pyseeapi PostQuitMessage
@@ -3135,7 +3135,7 @@ PyRegConnectRegistry( PyObject *self, PyObject *args )
 	if (rc!=ERROR_SUCCESS)
 		return ReturnAPIError("RegConnectRegistry", rc);
 	return PyWinObject_FromHKEY(retKey);
-	// @rdesc The return value is the handle of the opened key. 
+	// @rdesc The return value is the handle of the opened key.
 	// If the function fails, an exception is raised.
 }
 
@@ -3150,7 +3150,7 @@ static PyObject *PyRegCopyTree(PyObject *self, PyObject *args, PyObject *kwargs)
 	PyObject *obsrc, *obsubkey, *obdst, *ret=NULL;
 	WCHAR *subkey=NULL;
 	long rc;
-	
+
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOO:RegCopyTree", keywords,
 		&obsrc,		// @pyparm <o PyHKEY>|KeySrc||Registry key to be copied
 		&obsubkey,	// @pyparm <o PyUnicode>|SubKey||Subkey to be copied, can be None
@@ -3220,7 +3220,7 @@ static PyObject *PyRegCreateKeyEx(PyObject *self, PyObject *args, PyObject *kwar
 	HANDLE htrans;
 	PVOID extparam=NULL;	// Documented as Reserved
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOk|OkOO:RegCreateKeyEx", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOk|OkOO:RegCreateKeyEx", keywords,
 		&obKey,		// @pyparm <o PyHKEY>/int|Key||Registry key or one of win32con.HKEY_* values
 		&obsubKey,	// @pyparm <o PyUnicode>|SubKey||Name of subkey to open or create.
 		&access,	// @pyparm int|samDesired||Access allowed to handle, combination of win32con.KEY_* constants.  Can also contain
@@ -3403,7 +3403,7 @@ PyRegEnumKey( PyObject *self, PyObject *args )
 	long rc;
 	TCHAR *retBuf;
     DWORD len;
-    
+
 	// @pyparm <o PyHKEY>/int|key||An already open key, or any one of the following win32con constants:<nl>HKEY_CLASSES_ROOT<nl>HKEY_CURRENT_USER<nl>HKEY_LOCAL_MACHINE<nl>HKEY_USERS
 	// @pyparm int|index||The index of the key to retrieve.
 	if (!PyArg_ParseTuple(args, "Oi:RegEnumKey", &obKey, &index))
@@ -3411,7 +3411,7 @@ PyRegEnumKey( PyObject *self, PyObject *args )
 	if (!PyWinObject_AsHKEY(obKey, &hKey))
 		return NULL;
 
-	if ((rc=RegQueryInfoKey( hKey, NULL, NULL, NULL, NULL, &len, 
+	if ((rc=RegQueryInfoKey( hKey, NULL, NULL, NULL, NULL, &len,
 		                           NULL, NULL, NULL, NULL, NULL, NULL))!=ERROR_SUCCESS)
 		return ReturnAPIError("RegQueryInfoKey", rc);
 	++len;	// include null terminator
@@ -3472,8 +3472,8 @@ PyRegEnumKeyEx( PyObject *self, PyObject *args )
 				break;
 				}
 			obretitem=Py_BuildValue("NiNN",
-				PyString_FromStringAndSize(key_name, key_len), 
-				0, 
+				PyString_FromStringAndSize(key_name, key_len),
+				0,
 				PyString_FromStringAndSize(class_name, class_len),
 				PyWinObject_FromFILETIME(timestamp));
 			if (obretitem==NULL){
@@ -3540,8 +3540,8 @@ static PyObject *PyRegEnumKeyExW(PyObject *self, PyObject *args)
 				break;
 				}
 			obretitem=Py_BuildValue("NiNN",
-				PyWinObject_FromWCHAR(key_name, key_len), 
-				0, 
+				PyWinObject_FromWCHAR(key_name, key_len),
+				0,
 				PyWinObject_FromWCHAR(class_name, class_len),
 				PyWinObject_FromFILETIME(timestamp));
 			if (obretitem==NULL){
@@ -3570,7 +3570,7 @@ PyRegNotifyChangeKeyValue( PyObject *self, PyObject *args )
 	DWORD filter=0;
 	HANDLE hevent;
 	long err=0;
-	if (!PyArg_ParseTuple(args,"OiiOi", 
+	if (!PyArg_ParseTuple(args,"OiiOi",
 		&obreghandle,			//@pyparm <o PyHKEY>/int|key||Handle to an open registry key
 		&subtree,				//@pyparm int|bWatchSubTree||Boolean, notify of changes to subkeys if True
 		&filter,				//@pyparm int|dwNotifyFilter||Combination of REG_NOTIFY_CHANGE_* constants
@@ -3613,7 +3613,7 @@ void PyWinObject_FreeRegistryValue(DWORD typ, BYTE *buf)
 	}
 }
 
-/* Convert PyObject into Registry data. 
+/* Convert PyObject into Registry data.
    Allocates space as needed. */
 static BOOL
 PyWinObject_AsRegistryValue(PyObject *value, DWORD typ, BYTE **retDataBuf, DWORD *retDataSize)
@@ -3888,7 +3888,7 @@ PyRegLoadKey( PyObject *self, PyObject *args )
 	PyWinObject_FreeTCHAR(fileName);
 	return ret;
 	// @comm A call to RegLoadKey fails if the calling process does not have the SE_RESTORE_PRIVILEGE privilege.
-	// <nl>If hkey is a handle returned by <om win32api.RegConnectRegistry>, then the path specified in fileName is relative to the remote computer. 
+	// <nl>If hkey is a handle returned by <om win32api.RegConnectRegistry>, then the path specified in fileName is relative to the remote computer.
 }
 // @pymethod |win32api|RegUnLoadKey|The RegUnLoadKey function unloads the specified registry key and its subkeys from the registry.
 // The key should have been created by a previous call to <om win32api.RegLoadKey>.
@@ -4002,7 +4002,7 @@ static PyObject *PyRegOpenKeyTransacted(PyObject *self, PyObject *args, PyObject
 	long rc;
 	static char *keywords[]={"Key","SubKey","samDesired","Transaction","Options", NULL};
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOkO|k:RegOpenKeyTransacted", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OOkO|k:RegOpenKeyTransacted", keywords,
 		&obKey,		// @pyparm <o PyHKEY>/int|Key||Registry key or one of win32con.HKEY_* values
 		&obsubKey,	// @pyparm <o PyUnicode>|SubKey||Name of subkey to open.  Can be None to reopen an existing key.
 		&access,	// @pyparm int|samDesired||Access allowed to handle, combination of win32con.KEY_* constants.  Can also contain
@@ -4049,8 +4049,8 @@ static PyObject *PyRegOverridePredefKey(PyObject *self, PyObject *args, PyObject
 	return Py_None;
 }
 
-// @pymethod (int, int, long)|win32api|RegQueryInfoKey|Returns the number of 
-// subkeys, the number of values a key has, 
+// @pymethod (int, int, long)|win32api|RegQueryInfoKey|Returns the number of
+// subkeys, the number of values a key has,
 // and if available the last time the key was modified as
 // 100's of nanoseconds since Jan 1, 1600.
 static PyObject *
@@ -4084,7 +4084,7 @@ PyRegQueryInfoKey( PyObject *self, PyObject *args)
   return ret;
 }
 
-// @pymethod dict|win32api|RegQueryInfoKeyW|Returns information about an open registry key 
+// @pymethod dict|win32api|RegQueryInfoKeyW|Returns information about an open registry key
 // @pyseeapi RegQueryInfoKeyW
 static PyObject *PyRegQueryInfoKeyW(PyObject *self, PyObject *args)
 {
@@ -4109,7 +4109,7 @@ static PyObject *PyRegQueryInfoKeyW(PyObject *self, PyObject *args)
 	if (classname==NULL)
 		return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", classlen*sizeof(WCHAR));
 
-	rc=RegQueryInfoKeyW(hKey, classname, &classlen, NULL, &SubKeys, &MaxSubKeyLen, 
+	rc=RegQueryInfoKeyW(hKey, classname, &classlen, NULL, &SubKeys, &MaxSubKeyLen,
 		&MaxClassLen, &Values, &MaxValueNameLen, &MaxValueLen, &cbSecurityDescriptor, &ft);
 	// MSDN says it should return ERROR_MORE_DATA, but I get ERROR_INSUFFICIENT_BUFFER on WinXP
 	if ((rc==ERROR_INSUFFICIENT_BUFFER) || (rc==ERROR_MORE_DATA)){
@@ -4118,7 +4118,7 @@ static PyObject *PyRegQueryInfoKeyW(PyObject *self, PyObject *args)
 		classname=(WCHAR *)malloc(classlen*sizeof(WCHAR));
 		if (classname==NULL)
 			return PyErr_Format(PyExc_MemoryError, "Unable to allocate %d bytes", classlen*sizeof(WCHAR));
-		rc=RegQueryInfoKeyW(hKey, classname, &classlen, NULL, &SubKeys, &MaxSubKeyLen, 
+		rc=RegQueryInfoKeyW(hKey, classname, &classlen, NULL, &SubKeys, &MaxSubKeyLen,
 			&MaxClassLen, &Values, &MaxValueNameLen, &MaxValueLen, &cbSecurityDescriptor, &ft);
 		}
 
@@ -4155,11 +4155,11 @@ PyRegQueryValue( PyObject *self, PyObject *args )
 	long bufSize = 0;
 	// @pyparm <o PyHKEY>/int|key||An already open key, or any one of the following win32con constants:<nl>HKEY_CLASSES_ROOT<nl>HKEY_CURRENT_USER<nl>HKEY_LOCAL_MACHINE<nl>HKEY_USERS
 	// @pyparm string|subKey||The name of the subkey with which the value is associated.
-	// If this parameter is None or empty, the function retrieves the value set by the <om win32api.RegSetValue> method for the key identified by key. 
+	// If this parameter is None or empty, the function retrieves the value set by the <om win32api.RegSetValue> method for the key identified by key.
 	if (!PyArg_ParseTuple(args, "OO:RegQueryValue", &obKey, &obsubKey))
 		return NULL;
 	// @pyseeapi RegQueryValue
-	
+
 	if (PyWinObject_AsHKEY(obKey, &hKey)
 		&&PyWinObject_AsTCHAR(obsubKey, &subKey, TRUE)){
 		if ((rc=RegQueryValue(hKey, subKey, NULL, &bufSize))!=ERROR_SUCCESS)
@@ -4177,13 +4177,13 @@ PyRegQueryValue( PyObject *self, PyObject *args )
 		}
 	PyWinObject_FreeTCHAR(subKey);
 	return ret;
-	
+
 	// @comm Values in the registry have name, type, and data components. This method
 	// retrieves the data for a key's first value that has a NULL name.
 	// But the underlying API call doesn't return the type, Lame Lame Lame, DONT USE THIS!!!
 }
 
-// @pymethod (object,type)|win32api|RegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key. 
+// @pymethod (object,type)|win32api|RegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key.
 static PyObject *
 PyRegQueryValueEx( PyObject *self, PyObject *args )
 {
@@ -4200,7 +4200,7 @@ PyRegQueryValueEx( PyObject *self, PyObject *args )
 	if (!PyArg_ParseTuple(args, "OO:RegQueryValueEx", &obKey, &obvalueName))
 		return NULL;
 	// @pyseeapi RegQueryValueEx
-	
+
 	if (!PyWinObject_AsHKEY(obKey, &hKey))
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obvalueName, &valueName, TRUE))
@@ -4255,8 +4255,8 @@ static PyObject *PyRegRestoreKey(PyObject *self, PyObject *args, PyObject *kwarg
 	DWORD flags=0;
 	PyObject *obKey, *obfilename, *ret=NULL;
 	WCHAR *filename=NULL;
-	
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO|k:RegRestoreKey", keywords, 
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO|k:RegRestoreKey", keywords,
 		&obKey,			// @pyparm <o PyHKEY>|Key||Handle to registry key to be restored.  Can also be one of win32con.HKEY_* values.
 		&obfilename,	// @pyparm <o PyUnicode>|File||File from which to restore registry data
 		&flags))		// @pyparm int|Flags|0|One of REG_FORCE_RESTORE,REG_NO_LAZY_FLUSH,REG_REFRESH_HIVE,REG_WHOLE_HIVE_VOLATILE (from winnt)
@@ -4287,7 +4287,7 @@ PyRegSaveKey( PyObject *self, PyObject *args )
 	long rc;
 	// @pyparm <o PyHKEY>/int|key||An already open key, or any one of the following win32con constants:<nl>HKEY_CLASSES_ROOT<nl>HKEY_CURRENT_USER<nl>HKEY_LOCAL_MACHINE<nl>HKEY_USERS
 	// @pyparm string|filename||The name of the file to save registry data to.
-	// This file cannot already exist. If this filename includes an extension, it cannot be used on file allocation table (FAT) file systems by the <om win32api.RegLoadKey>, <om win32api.RegReplaceKey>, or <om win32api.RegRestoreKey> methods. 
+	// This file cannot already exist. If this filename includes an extension, it cannot be used on file allocation table (FAT) file systems by the <om win32api.RegLoadKey>, <om win32api.RegReplaceKey>, or <om win32api.RegRestoreKey> methods.
 	// @pyparm <o PySECURITY_ATTRIBUTES>|sa|None|The security attributes of the created file.
 	if (!PyArg_ParseTuple(args, "OO|O:RegSaveKey", &obKey, &obfileName, &obSA))
 		return NULL;
@@ -4324,8 +4324,8 @@ static PyObject *PyRegSaveKeyEx(PyObject *self, PyObject *args, PyObject *kwargs
 	PyObject *obKey, *obfilename, *obsa=Py_None, *ret=NULL;
 	PSECURITY_ATTRIBUTES psa;
 	WCHAR *filename=NULL;
-	
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO|Ok:RegSaveKeyEx", keywords, 
+
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO|Ok:RegSaveKeyEx", keywords,
 		&obKey,			// @pyparm <o PyHKEY>|Key||Handle to a registry key or one of HKEY_CURRENT_CONFIG, HKEY_CURRENT_USER
 		&obfilename,	// @pyparm <o PyUnicode>|File||Name of file in which to save data.  File must not already exist.
 		&obsa,			// @pyparm <o PySECURITY_ATTRIBUTES>|SecurityAttributes|None|Specifies security for the file to be created
@@ -4360,7 +4360,7 @@ PyRegSetValue( PyObject *self, PyObject *args )
 	PyObject *obStrVal;
 	// @pyparm <o PyHKEY>/int|key||An already open key, or any one of the following win32con constants:<nl>HKEY_CLASSES_ROOT<nl>HKEY_CURRENT_USER<nl>HKEY_LOCAL_MACHINE<nl>HKEY_USERS
 	// @pyparm string|subKey||The name of the subkey with which the value is associated.
-	// This parameter can be None or empty, in which case the value will be added to the key identified by the key parameter. 
+	// This parameter can be None or empty, in which case the value will be added to the key identified by the key parameter.
 	// @pyparm int|type||Type of data. Must be win32con.REG_SZ
 	// @pyparm string|value||The value to associate with the key.
 	if (!PyArg_ParseTuple(args, "OOiO:RegSetValue", &obKey, &obsubKey, &typ, &obStrVal))
@@ -4414,23 +4414,23 @@ PyRegSetValueEx( PyObject *self, PyObject *args )
 	// If a value with this name is not already present in the key, the method adds it to the key.
 	// <nl>If this parameter is None or an empty string and the type parameter is the win32api.REG_SZ type, this function sets the same value the <om win32api.RegSetValue> method would set.
 	// @pyparm any|reserved||Place holder for reserved argument.  Zero will always be passed to the API function.
-	// @pyparm int|type||Type of data. 
-	// @flagh Value|Meaning 
-	// @flag REG_BINARY|Binary data in any form. 
-	// @flag REG_DWORD|A 32-bit number. 
-	// @flag REG_DWORD_LITTLE_ENDIAN|A 32-bit number in little-endian format. This is equivalent to REG_DWORD.<nl>In little-endian format, a multi-byte value is stored in memory from the lowest byte (the little end) to the highest byte. For example, the value 0x12345678 is stored as (0x78 0x56 0x34 0x12) in little-endian format. 
-	// @flag REG_QWORD|A 64-bit number. 
+	// @pyparm int|type||Type of data.
+	// @flagh Value|Meaning
+	// @flag REG_BINARY|Binary data in any form.
+	// @flag REG_DWORD|A 32-bit number.
+	// @flag REG_DWORD_LITTLE_ENDIAN|A 32-bit number in little-endian format. This is equivalent to REG_DWORD.<nl>In little-endian format, a multi-byte value is stored in memory from the lowest byte (the little end) to the highest byte. For example, the value 0x12345678 is stored as (0x78 0x56 0x34 0x12) in little-endian format.
+	// @flag REG_QWORD|A 64-bit number.
 	// @flag REG_QWORD_LITTLE_ENDIAN|A 64-bit number in little-endian format. This is equivalent to REG_QWORD.<nl>In little-endian format, a multi-byte value is stored in memory from the lowest byte (the little end) to the highest byte. For example, the value 0x12345678 is stored as (0x78 0x56 0x34 0x12) in little-endian format.
-	// Windows NT and Windows 95 are designed to run on little-endian computer architectures. A user may connect to computers that have big-endian architectures, such as some UNIX systems. 
+	// Windows NT and Windows 95 are designed to run on little-endian computer architectures. A user may connect to computers that have big-endian architectures, such as some UNIX systems.
 	// @flag REG_DWORD_BIG_ENDIAN|A 32-bit number in big-endian format.
-	// In big-endian format, a multi-byte value is stored in memory from the highest byte (the big end) to the lowest byte. For example, the value 0x12345678 is stored as (0x12 0x34 0x56 0x78) in big-endian format. 
-	// @flag REG_EXPAND_SZ|A null-terminated string that contains unexpanded references to environment variables (for example, %PATH%). It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions. 
-	// @flag REG_LINK|A Unicode symbolic link. 
-	// @flag REG_MULTI_SZ|An array of null-terminated strings, terminated by two null characters. 
+	// In big-endian format, a multi-byte value is stored in memory from the highest byte (the big end) to the lowest byte. For example, the value 0x12345678 is stored as (0x12 0x34 0x56 0x78) in big-endian format.
+	// @flag REG_EXPAND_SZ|A null-terminated string that contains unexpanded references to environment variables (for example, %PATH%). It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions.
+	// @flag REG_LINK|A Unicode symbolic link.
+	// @flag REG_MULTI_SZ|An array of null-terminated strings, terminated by two null characters.
 	// @flag REG_NONE|No defined value type.
-	// @flag REG_RESOURCE_LIST|A device-driver resource list. 
+	// @flag REG_RESOURCE_LIST|A device-driver resource list.
 	// @flag REG_SZ|A null-terminated string. It will be a Unicode or ANSI string depending on whether you use the Unicode or ANSI functions
- 
+
 
 	// @pyparm registry data|value||The value to be stored with the specified value name.
 	if (!PyArg_ParseTuple(args, "OOOiO:RegSetValueEx", &obKey, &obvalueName, &obRes, &typ, &value))
@@ -4449,7 +4449,7 @@ PyRegSetValueEx( PyObject *self, PyObject *args )
 	rc=RegSetValueEx(hKey, valueName, NULL, typ, data, len );
 	PyW32_END_ALLOW_THREADS
 	PyWinObject_FreeRegistryValue(typ, data);
-	PyWinObject_FreeTCHAR(valueName);	
+	PyWinObject_FreeTCHAR(valueName);
 	if (rc!=ERROR_SUCCESS)
 		return ReturnAPIError("RegSetValueEx", rc);
 	Py_INCREF(Py_None);
@@ -4457,7 +4457,7 @@ PyRegSetValueEx( PyObject *self, PyObject *args )
 	// @comm  This method can also set additional value and type information for the specified key.
 	// <nl>The key identified by the key parameter must have been opened with KEY_SET_VALUE access.
 	// To open the key, use the <om win32api.RegCreateKeyEx> or <om win32api.RegOpenKeyEx> methods.
-	// <nl>Value lengths are limited by available memory. 
+	// <nl>Value lengths are limited by available memory.
 	// Long values (more than 2048 bytes) should be stored as files with the filenames stored in the configuration registry.
 	// This helps the registry perform efficiently.
 	// <nl>The key identified by the key parameter must have been opened with KEY_SET_VALUE access.
@@ -4471,7 +4471,7 @@ static PyObject *PyRegSetKeySecurity(PyObject *self, PyObject *args)
 	PyObject *obKey, *obSD;
 	DWORD rc;
 	PSECURITY_DESCRIPTOR psd;
-	if (!PyArg_ParseTuple(args, "OlO:RegSetKeySecurity", 
+	if (!PyArg_ParseTuple(args, "OlO:RegSetKeySecurity",
 		&obKey, // @pyparm <o PyHKEY>/int|key||Handle to an open key for which the security descriptor is set.
 		&si, //@pyparm int|security_info||Specifies the components of the security descriptor to set. The value can be a combination of the *_SECURITY_INFORMATION constants.
 		&obSD)) // @pyparm <o PySECURITY_DESCRIPTOR>|sd||The new security descriptor for the key
@@ -4497,7 +4497,7 @@ static PyObject *PyRegGetKeySecurity(PyObject *self, PyObject *args)
 	long si;
 	HKEY hKey;
 	PyObject *obKey;
-	if (!PyArg_ParseTuple(args, "Ol:RegGetKeySecurity", 
+	if (!PyArg_ParseTuple(args, "Ol:RegGetKeySecurity",
 		&obKey, // @pyparm <o PyHKEY>/int|key||Handle to an open key for which the security descriptor is set.
 		&si)) //@pyparm int|security_info||Specifies the components of the security descriptor to retrieve. The value can be a combination of the *_SECURITY_INFORMATION constants.
 		return NULL;
@@ -4537,7 +4537,7 @@ PyRegisterWindowMessage( PyObject *self, PyObject *args )
 
 	// @pyparm string|msgString||The name of the message to register.
 	// All applications that register this message string will get the same message.
-	// ID back.  It will be unique in the system and suitable for applications to 
+	// ID back.  It will be unique in the system and suitable for applications to
 	// use to exchange messages.
 	if (!PyArg_ParseTuple(args, "O:RegisterWindowMessage", &obmsgString))
 		return NULL;
@@ -4551,12 +4551,12 @@ PyRegisterWindowMessage( PyObject *self, PyObject *args )
 	if (msgID==0)
 		return ReturnAPIError("RegisterWindowMessage", msgID);
 	return Py_BuildValue("i",msgID);
-	// @comm Only use RegisterWindowMessage when more than one application must process the 
+	// @comm Only use RegisterWindowMessage when more than one application must process the
 	// <nl> same message. For sending private messages within a window class, an application
 	// <nl> can use any integer in the range WM_USER through 0x7FFF. (Messages in this range
-	// <nl> are private to a window class, not to an application. For example, predefined 
+	// <nl> are private to a window class, not to an application. For example, predefined
 	// <nl> control classes such as BUTTON, EDIT, LISTBOX, and COMBOBOX may use values in
-	// <nl> this range.) 
+	// <nl> this range.)
 }
 
 // @pymethod int|win32api|SearchPath|Searches a path for the specified file.
@@ -4585,7 +4585,7 @@ PySearchPath (PyObject *self, PyObject *args)
 		if (rc==0)
 			PyWin_SetAPIError("SearchPath");
 		else
-			ret=Py_BuildValue("NN", 
+			ret=Py_BuildValue("NN",
 				PyWinObject_FromTCHAR(retBuf),
 				PyWinLong_FromVoidPtr((void *)(szBase-retBuf)));
 		}
@@ -4681,7 +4681,7 @@ PySetErrorMode( PyObject *self, PyObject *args )
 	return PyInt_FromLong(ret);
 }
 
-// @pymethod int|win32api|ShowCursor|The ShowCursor method displays or hides the cursor. 
+// @pymethod int|win32api|ShowCursor|The ShowCursor method displays or hides the cursor.
 static PyObject *
 PyShowCursor( PyObject *self, PyObject *args )
 {
@@ -4695,11 +4695,11 @@ PyShowCursor( PyObject *self, PyObject *args )
 	PyW32_END_ALLOW_THREADS
 	return Py_BuildValue("i", rc);
 	// @rdesc The return value specifies the new display counter
-	// @comm This function sets an internal display counter that 
-	// determines whether the cursor should be displayed. The 
-	// cursor is displayed only if the display count is greater 
-	// than or equal to 0. If a mouse is installed, the initial display 
-	// count is 0. If no mouse is installed, the display count is -1. 
+	// @comm This function sets an internal display counter that
+	// determines whether the cursor should be displayed. The
+	// cursor is displayed only if the display count is greater
+	// than or equal to 0. If a mouse is installed, the initial display
+	// count is 0. If no mouse is installed, the display count is -1.
 }
 
 
@@ -4713,7 +4713,7 @@ PyShellExecute( PyObject *self, PyObject *args )
 	PyObject *obop, *obfile, *obparams, *obdir, *ret=NULL;
 	int show;
 	BOOL bfreedir=TRUE;
-	if (!PyArg_ParseTuple(args, "OOOOOi:ShellExecute", 
+	if (!PyArg_ParseTuple(args, "OOOOOi:ShellExecute",
 		      &obhwnd, // @pyparm <o PyHANDLE>|hwnd||The handle of the parent window, or 0 for no parent.  This window receives any message boxes an application produces (for example, for error reporting).
 		      &obop,   // @pyparm string|op||The operation to perform.  May be "open", "print", or None, which defaults to "open".
 		      &obfile, // @pyparm string|file||The name of the file to open.
@@ -4765,7 +4765,7 @@ PySleep (PyObject *self, PyObject *args)
 	rc = ::SleepEx(time, bAlertable);
 	PyW32_END_ALLOW_THREADS
 	return Py_BuildValue("i", rc );
-	// @rdesc The return value is zero if the specified time interval expired. 
+	// @rdesc The return value is zero if the specified time interval expired.
 }
 // @pymethod |win32api|WinExec|Runs the specified application.
 static PyObject *
@@ -4835,7 +4835,7 @@ PyWriteProfileVal(PyObject *self, PyObject *args)
 	int intVal;
 	BOOL bHaveInt = TRUE;
 
-	if (!PyArg_ParseTuple(args, "OOO|O:WriteProfileVal", 
+	if (!PyArg_ParseTuple(args, "OOO|O:WriteProfileVal",
 		&obsect,		// @pyparm string|section||The section in the INI file to write to.
 		&obentry,		// @pyparm string|entry||The entry within the section in the INI file to write to.
 		&obVal,			// @pyparm int/string|value||The value to write.
@@ -4896,7 +4896,7 @@ PyMessageBeep(PyObject *self, PyObject *args)
 	// @comm The waveform sound for each sound type is identified by an entry in the [sounds] section of the registry.
 	int val = MB_OK;
 
-	if (!PyArg_ParseTuple(args, "|i:MessageBeep", 
+	if (!PyArg_ParseTuple(args, "|i:MessageBeep",
 	          &val)) // @pyparm int|type|win32con.MB_OK|Specifies the sound type, as
 	          // identified by an entry in the [sounds] section of the
 	          // registry. This parameter can be one of MB_ICONASTERISK,
@@ -5086,7 +5086,7 @@ static PyObject *
 PyMAKELANGID(PyObject *self, PyObject *args)
 {
 	int lang, sublang;
-	if (!PyArg_ParseTuple(args, "ii:MAKELANGID", 
+	if (!PyArg_ParseTuple(args, "ii:MAKELANGID",
 	          &lang,  // @pyparm int|PrimaryLanguage||Primary language identifier
 
 	          &sublang)) // @pyparm int|SubLanguage||The sublanguage identifier
@@ -5101,7 +5101,7 @@ PyHIWORD(PyObject *self, PyObject *args)
 {
 	int val;
 
-	if (!PyArg_ParseTuple(args, "i:HIWORD", 
+	if (!PyArg_ParseTuple(args, "i:HIWORD",
 	          &val)) // @pyparm int|val||The value to retrieve the HIWORD from.
 		return NULL;
 	return Py_BuildValue("i", (int)HIWORD(val));
@@ -5113,7 +5113,7 @@ PyLOWORD(PyObject *self, PyObject *args)
 {
 	int val;
 
-	if (!PyArg_ParseTuple(args, "i:LOWORD", 
+	if (!PyArg_ParseTuple(args, "i:LOWORD",
 	          &val)) // @pyparm int|val||The value to retrieve the LOWORD from.
 		return NULL;
 	return Py_BuildValue("i", (int)LOWORD(val));
@@ -5125,7 +5125,7 @@ PyHIBYTE(PyObject *self, PyObject *args)
 {
 	int val;
 
-	if (!PyArg_ParseTuple(args, "i:HIBYTE", 
+	if (!PyArg_ParseTuple(args, "i:HIBYTE",
 	          &val)) // @pyparm int|val||The value to retrieve the HIBYTE from.
 		return NULL;
 	return Py_BuildValue("i", (int)HIBYTE(val));
@@ -5137,7 +5137,7 @@ PyLOBYTE(PyObject *self, PyObject *args)
 {
 	int val;
 
-	if (!PyArg_ParseTuple(args, "i:LOBYTE", 
+	if (!PyArg_ParseTuple(args, "i:LOBYTE",
 	          &val)) // @pyparm int|val||The value to retrieve the LOBYTE from.
 		return NULL;
 	return Py_BuildValue("i", (int)LOBYTE(val));
@@ -5149,9 +5149,9 @@ static PyObject *
 PyMAKEWORD(PyObject *self, PyObject *args)
 {
 	int hi, lo;
-	if (!PyArg_ParseTuple(args, "ii:MAKEWORD", 
-	          &lo,  // @pyparm int|low||Specifies the low-order byte of the new value. 
-	          &hi)) // @pyparm int|high||Specifies the high-order byte of the new value. 
+	if (!PyArg_ParseTuple(args, "ii:MAKEWORD",
+	          &lo,  // @pyparm int|low||Specifies the low-order byte of the new value.
+	          &hi)) // @pyparm int|high||Specifies the high-order byte of the new value.
 		return NULL;
 	return Py_BuildValue("i", (int)MAKEWORD(lo, hi));
 	// @comm This is simply a wrapper to a C++ macro.
@@ -5162,9 +5162,9 @@ static PyObject *
 PyMAKELONG(PyObject *self, PyObject *args)
 {
 	int hi, lo;
-	if (!PyArg_ParseTuple(args, "ii:MAKELONG", 
-	          &lo,  // @pyparm int|low||Specifies the low-order byte of the new value. 
-	          &hi)) // @pyparm int|high||Specifies the high-order byte of the new value. 
+	if (!PyArg_ParseTuple(args, "ii:MAKELONG",
+	          &lo,  // @pyparm int|low||Specifies the low-order byte of the new value.
+	          &hi)) // @pyparm int|high||Specifies the high-order byte of the new value.
 		return NULL;
 	return Py_BuildValue("i", (long)MAKELONG(lo, hi));
 	// @comm This is simply a wrapper to a C++ macro.
@@ -5178,8 +5178,8 @@ PyRGB(PyObject *self, PyObject *args)
 	// @pyparm int|red||The red value
 	// @pyparm int|green||The green value
 	// @pyparm int|blue||The blue value
-	if (!PyArg_ParseTuple(args, "iii:RGB", 
-	          &r, &g, &b)) 
+	if (!PyArg_ParseTuple(args, "iii:RGB",
+	          &r, &g, &b))
 		return NULL;
 	return Py_BuildValue("i", (int)RGB(r,g,b));
 	// @comm This is simply a wrapper to a C++ macro.
@@ -5208,7 +5208,7 @@ PyGetSystemTime (PyObject * self, PyObject * args)
         t.wMilliseconds
         );
   }
-}						  
+}
 
 // @pymethod tuple|win32api|GetLocalTime|Returns the current local time
 static PyObject *
@@ -5241,7 +5241,7 @@ static PyObject *PySetLocalTime (PyObject * self, PyObject * args)
 	if (!PyArg_ParseTuple (args, "O:SetLocalTime",
 		&obst))	// @pyparm <o PyTime>|SystemTime||The local time to be set.  Can also be a time tuple.
 		return NULL;
-	if (!PyWinObject_AsSYSTEMTIME(obst, &st))		
+	if (!PyWinObject_AsSYSTEMTIME(obst, &st))
 		return NULL;
 	if (!SetLocalTime(&st))
 		return PyWin_SetAPIError("SetLocalTime");
@@ -5410,7 +5410,7 @@ static PyObject * PyLoadResource(PyObject *self, PyObject *args)
 		) )
 		return NULL;
 	if (PyWinObject_AsHANDLE(obhModule, (HANDLE *)&hModule)
-		&&PyWinObject_AsResourceId(obType, &lpType) 
+		&&PyWinObject_AsResourceId(obType, &lpType)
 		&&PyWinObject_AsResourceId(obName, &lpName)){
 		HRSRC hrsrc = FindResourceEx(hModule, lpType, lpName, wLanguage);
 		if ( hrsrc == NULL )
@@ -5484,7 +5484,7 @@ static PyObject * PyUpdateResource(PyObject *self, PyObject *args)
 		return NULL;
 
 	if (PyWinObject_AsHANDLE(obhUpdate, (HANDLE *)&hUpdate)
-		&&PyWinObject_AsResourceIdW(obType, &lpType) 
+		&&PyWinObject_AsResourceIdW(obType, &lpType)
 		&&PyWinObject_AsResourceIdW(obName, &lpName)
 		&&PyWinObject_AsReadBuffer(obData, &lpData, &cbData, TRUE)){
 		if (UpdateResourceW(hUpdate, lpType, lpName, wLanguage, lpData, cbData)){
@@ -5611,7 +5611,7 @@ PyObject *PyEnumResourceTypes(PyObject *, PyObject *args)
 	ret=PyList_New(0);
 	if (ret==NULL)
 		return NULL;
-	if(!EnumResourceTypesW(hmodule, 
+	if(!EnumResourceTypesW(hmodule,
 			reinterpret_cast<ENUMRESTYPEPROCW>(EnumResourceTypesProc),
 			reinterpret_cast<LONG_PTR>(ret))){
 		Py_DECREF(ret);
@@ -5687,7 +5687,7 @@ PyObject *MakeExceptionRecord( PEXCEPTION_RECORD pExceptionRecord )
 		return Py_None;
 	} else {
 		PyObject *obExcRecord = MakeExceptionRecord(pExceptionRecord->ExceptionRecord);
-		PyObject *ret = Py_BuildValue("llOlO", 
+		PyObject *ret = Py_BuildValue("llOlO",
 			pExceptionRecord->ExceptionCode,
 			pExceptionRecord->ExceptionFlags,
 			obExcRecord,
@@ -5697,7 +5697,7 @@ PyObject *MakeExceptionRecord( PEXCEPTION_RECORD pExceptionRecord )
 		return ret;
 	}
 }
-int PyApplyExceptionFilter( 
+int PyApplyExceptionFilter(
 	DWORD ExceptionCode,
 	PEXCEPTION_POINTERS ExceptionInfo,
 	PyObject *obHandler,
@@ -5762,7 +5762,7 @@ static PyObject *PyApply(PyObject *self, PyObject *args)
 {
 	PyObject *ret, *obHandler, *obFunc, *obArgs;
 	PyObject *exc_type = NULL, *exc_value = NULL;
-	if (!PyArg_ParseTuple(args, "OOO", 
+	if (!PyArg_ParseTuple(args, "OOO",
 		&obHandler, // @pyparm object|exceptionHandler||An object which will be called when a win32 exception occurs.
 		&obFunc, // @pyparm object|func||The function call call under the protection of the Win32 exception handler.
 		&obArgs)) // @pyparm tuple|args||Args for the function.
@@ -5805,21 +5805,21 @@ static PyObject *PyApply(PyObject *self, PyObject *args)
 		ret = NULL;
 	}
 	return ret;
-// @comm Calls the specified function in a manner similar to 
+// @comm Calls the specified function in a manner similar to
 // the built-in function apply(), but allows Win32 exceptions
 // to be handled by Python.  If a Win32 exception occurs calling
 // the function, the specified exceptionHandler is called, and its
 // return value determines the action taken.
 // @flagh Return value|Description
-// @flag Tuple of (exc_type, exc_value)|This exception is raised to the 
-// Python caller of Apply() - This is conceptually similar to 
+// @flag Tuple of (exc_type, exc_value)|This exception is raised to the
+// Python caller of Apply() - This is conceptually similar to
 // "raise exc_type, exc_value", although exception handlers must not
 // themselves raise exceptions (see below).
 // @flag Integer|Must be one of the win32 exception constants, and this
 // value is returned to Win32.  See the Win32 documentation for details.
-// @flag None|The exception is considered not handled (ie, it is as if no 
-// exception handler exists).  If a Python exception occurs in the Win32 
-// exception handler, it is as if None were returned (ie, no tracebacks 
+// @flag None|The exception is considered not handled (ie, it is as if no
+// exception handler exists).  If a Python exception occurs in the Win32
+// exception handler, it is as if None were returned (ie, no tracebacks
 // or other diagnostics are printed)
 }
 #endif // MAINWIN
@@ -5840,7 +5840,7 @@ PyObject *PyGetFileVersionInfo(PyObject *self, PyObject *args)
 	VS_FIXEDFILEINFO *fixed_info;
 	FILETIME ft;
 	BOOL success;
-	if (!PyArg_ParseTuple(args,"OO:GetFileVersionInfo", 
+	if (!PyArg_ParseTuple(args,"OO:GetFileVersionInfo",
 		&obfile_name, // @pyparm string/unicode|Filename||File to query for version info
 		&obinfo))	  // @pyparm string/unicode|SubBlock||Information to return: \ for VS_FIXEDFILEINFO, \VarFileInfo\Translation for languages/codepages available
 		return NULL;
@@ -6120,7 +6120,7 @@ PyObject *PyGetKeyboardLayout(PyObject *self, PyObject *args)
 	return PyWinLong_FromVoidPtr(hkl);
 }
 
-// @pymethod int|win32api|GetKeyboardLayoutName|Retrieves the name of the active input locale identifier (formerly called the keyboard layout). 
+// @pymethod int|win32api|GetKeyboardLayoutName|Retrieves the name of the active input locale identifier (formerly called the keyboard layout).
 PyObject *PyGetKeyboardLayoutName(PyObject *self, PyObject *args)
 {
 	if (!PyArg_ParseTuple(args,":GetKeyboardLayoutName"))
@@ -6167,7 +6167,7 @@ PyObject *PyGetKeyboardLayoutList(PyObject *self, PyObject *args)
 // @pymethod int|win32api|LoadKeyboardLayout|Loads a new locale id
 // @rdesc Returns the numeric locale id that was loaded
 PyObject *PyLoadKeyboardLayout(PyObject *self, PyObject *args)
-{	
+{
 	TCHAR *lcid_str;
 	PyObject *oblcid_str;
 	HKL lcid;
@@ -6366,7 +6366,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"AbortSystemShutdown",	PyAbortSystemShutdown,1},     // @pymeth AbortSystemShutdown|Aborts a system shutdown
 	{"InitiateSystemShutdown",  PyInitiateSystemShutdown,1}, // @pymeth InitiateSystemShutdown|Initiates a shutdown and optional restart of the specified computer.
 #endif
-#ifndef MAINWIN	
+#ifndef MAINWIN
 	{"Apply",               PyApply, 1}, // @pymeth Apply|Calls a Python function, but traps Win32 exceptions.
 #endif
 	{"Beep",				PyBeep,         1},     // @pymeth Beep|Generates a simple tone on the speaker.
@@ -6382,14 +6382,14 @@ static struct PyMethodDef win32api_functions[] = {
 	{"DragFinish",			PyDragFinish,       1}, // @pymeth DragFinish|Free memory associated with dropped files.
 	{"DuplicateHandle",     PyDuplicateHandle,  1}, // @pymeth DuplicateHandle|Duplicates a handle.
 	{"EndUpdateResource",   PyEndUpdateResource, 1 }, // @pymeth EndUpdateResource|Ends a resource update cycle of a PE file.
-	{"EnumDisplayDevices",	(PyCFunction)PyEnumDisplayDevices,	METH_VARARGS|METH_KEYWORDS}, //@pymeth EnumDisplayDevices|Obtain information about the display devices in a system 
+	{"EnumDisplayDevices",	(PyCFunction)PyEnumDisplayDevices,	METH_VARARGS|METH_KEYWORDS}, //@pymeth EnumDisplayDevices|Obtain information about the display devices in a system
 	{"EnumDisplayMonitors", (PyCFunction)PyEnumDisplayMonitors, METH_VARARGS|METH_KEYWORDS}, // @pymeth EnumDisplayMonitors|Lists monitors for a device context
-	{"EnumDisplaySettings", (PyCFunction)PyEnumDisplaySettings,	METH_VARARGS|METH_KEYWORDS}, //@pymeth EnumDisplaySettings|Lists available modes for specified device 
+	{"EnumDisplaySettings", (PyCFunction)PyEnumDisplaySettings,	METH_VARARGS|METH_KEYWORDS}, //@pymeth EnumDisplaySettings|Lists available modes for specified device
 	{"EnumDisplaySettingsEx", (PyCFunction)PyEnumDisplaySettingsEx,METH_VARARGS|METH_KEYWORDS}, //@pymeth EnumDisplaySettingsEx|Lists available modes for a display device, with optional flags
 	{"EnumResourceLanguages",   PyEnumResourceLanguages, 1 }, // @pymeth EnumResourceLanguages|List languages for specified resource
 	{"EnumResourceNames",   PyEnumResourceNames, 1 }, // @pymeth EnumResourceNames|Enumerates all the resources of the specified type from the nominated file.
 	{"EnumResourceTypes",   PyEnumResourceTypes, 1 }, // @pymeth EnumResourceTypes|Return list of all resource types contained in module
-	{"ExpandEnvironmentStrings",PyExpandEnvironmentStrings, 1}, // @pymeth ExpandEnvironmentStrings|Expands environment-variable strings and replaces them with their defined values. 
+	{"ExpandEnvironmentStrings",PyExpandEnvironmentStrings, 1}, // @pymeth ExpandEnvironmentStrings|Expands environment-variable strings and replaces them with their defined values.
 	{"ExitWindows",         PyExitWindows,      1}, // @pymeth ExitWindows|Logs off the current user
 	{"ExitWindowsEx",       PyExitWindowsEx,      1}, // @pymeth ExitWindowsEx|either logs off the current user, shuts down the system, or shuts down and restarts the system.
 	{"FindFiles",			PyFindFiles,        1}, // @pymeth FindFiles|Find files matching a file spec.
@@ -6408,7 +6408,7 @@ static struct PyMethodDef win32api_functions[] = {
 #ifndef DONT_HAVE_GENERATE_CONSOLE_CTRL_EVENT
 	{"GenerateConsoleCtrlEvent",	PyGenerateConsoleCtrlEvent,  1}, // @pymeth GenerateConsoleCtrlEvent|Send a specified signal to a console process group that shares the console associated with the calling process.
 #endif
-	
+
 	{"GetAsyncKeyState",	PyGetAsyncKeyState,1}, // @pymeth GetAsyncKeyState|Retrieves the asynch state of a virtual key code.
 	{"GetCommandLine",		PyGetCommandLine,   1}, // @pymeth GetCommandLine|Return the application's command line.
 	{"GetComputerName",     PyGetComputerName,  1}, // @pymeth GetComputerName|Returns the local computer name
@@ -6430,19 +6430,19 @@ static struct PyMethodDef win32api_functions[] = {
 	{"GetDomainName",		PyGetDomainName, 1}, 	// @pymeth GetDomainName|Returns the current domain name
 	// @pymeth GetEnvironmentVariable|Retrieves the value of an environment variable.
 #ifdef UNICODE
-	{"GetEnvironmentVariable", PyGetEnvironmentVariableW, 1}, 
+	{"GetEnvironmentVariable", PyGetEnvironmentVariableW, 1},
 #else
 	{"GetEnvironmentVariable", PyGetEnvironmentVariable, 1},
 #endif
 	{"GetEnvironmentVariableW", PyGetEnvironmentVariableW, 1}, // @pymeth GetEnvironmentVariableW|Retrieves the value of an environment variable.
 	{"GetFileAttributes",   PyGetFileAttributes,1}, // @pymeth GetFileAttributes|Retrieves the attributes for the named file.
 	{"GetFileVersionInfo",	PyGetFileVersionInfo, 1}, //@pymeth GetFileVersionInfo|Retrieves string version info
-	{"GetFocus",            PyGetFocus,         1}, // @pymeth GetFocus|Retrieves the handle of the keyboard focus window associated with the thread that called the method. 
+	{"GetFocus",            PyGetFocus,         1}, // @pymeth GetFocus|Retrieves the handle of the keyboard focus window associated with the thread that called the method.
 	{"GetFullPathName",     PyGetFullPathName,1},   // @pymeth GetFullPathName|Returns the full path of a (possibly relative) path
 	{"GetHandleInformation",     PyGetHandleInformation,1},   // @pymeth GetHandleInformation|Retrieves a handle's flags.
-	{"GetKeyboardLayout",   PyGetKeyboardLayout, 1}, // @pymeth GetKeyboardLayout|Retrieves the active input locale identifier 
+	{"GetKeyboardLayout",   PyGetKeyboardLayout, 1}, // @pymeth GetKeyboardLayout|Retrieves the active input locale identifier
 	{"GetKeyboardLayoutList", PyGetKeyboardLayoutList, 1}, // @pymeth GetKeyboardLayoutList|Returns a sequence of all locale ids in the system
-	{"GetKeyboardLayoutName", PyGetKeyboardLayoutName, 1}, // @pymeth GetKeyboardLayoutName|Retrieves the name of the active input locale identifier (formerly called the keyboard layout). 
+	{"GetKeyboardLayoutName", PyGetKeyboardLayoutName, 1}, // @pymeth GetKeyboardLayoutName|Retrieves the name of the active input locale identifier (formerly called the keyboard layout).
 	{"GetKeyboardState", PyGetKeyboardState, 1}, // @pymeth GetKeyboardState|Retrieves the status of the 256 virtual keys on the keyboard.
 	{"GetKeyState",			PyGetKeyState,      1}, // @pymeth GetKeyState|Retrives the last known key state for a key.
 	{"GetLastError",		PyGetLastError,     1}, // @pymeth GetLastError|Retrieves the last error code known by the system.
@@ -6450,18 +6450,18 @@ static struct PyMethodDef win32api_functions[] = {
 	{"GetLocalTime",         PyGetLocalTime,      1},  // @pymeth GetLocalTime|Returns the current local time.
 	// @pymeth GetLongPathName|Converts the specified path to its long form.
 #ifdef UNICODE
-	{"GetLongPathName",     PyGetLongPathNameW, 1}, 
+	{"GetLongPathName",     PyGetLongPathNameW, 1},
 #else
-	{"GetLongPathName",     PyGetLongPathNameA, 1}, 
+	{"GetLongPathName",     PyGetLongPathNameA, 1},
 #endif
 	{"GetLongPathNameW",    PyGetLongPathNameW, 1}, // @pymeth GetLongPathNameW|Converts the specified path to its long form.
 	{"GetLogicalDrives",	PyGetLogicalDrives,     1}, // @pymeth GetLogicalDrives|Returns a bitmask representing the currently available disk drives.
 	{"GetLogicalDriveStrings",	PyGetLogicalDriveStrings,     1}, // @pymeth GetLogicalDriveStrings|Returns a list of strings for all the drives.
 	// @pymeth GetModuleFileName|Retrieves the filename of the specified module.
 #ifdef UNICODE
-	{"GetModuleFileName",	PyGetModuleFileNameW,1}, 
+	{"GetModuleFileName",	PyGetModuleFileNameW,1},
 #else
-	{"GetModuleFileName",	PyGetModuleFileName,1}, 
+	{"GetModuleFileName",	PyGetModuleFileName,1},
 #endif
 	{"GetModuleFileNameW",	PyGetModuleFileNameW,1}, // @pymeth GetModuleFileNameW|Retrieves the unicode filename of the specified module.
 	{"GetModuleHandle",     PyGetModuleHandle,1},   // @pymeth GetModuleHandle|Returns the handle of an already loaded DLL.
@@ -6472,8 +6472,8 @@ static struct PyMethodDef win32api_functions[] = {
 	{"GetShortPathName",	PyGetShortPathName, 1}, // @pymeth GetShortPathName|Returns the 8.3 version of a pathname.
 	{"GetStdHandle",	PyGetStdHandle,	1}, // @pymeth GetStdHandle|Returns a handle for the standard input, standard output, or standard error device
 	{"GetSysColor",			PyGetSysColor,      1}, // @pymeth GetSysColor|Returns the system colors.
-	{"GetSystemDefaultLangID",PyGetSystemDefaultLangID,1}, // @pymeth GetSystemDefaultLangID|Retrieves the system default language identifier. 
-	{"GetSystemDefaultLCID",PyGetSystemDefaultLCID,1}, // @pymeth GetSystemDefaultLCID|Retrieves the system default locale identifier. 
+	{"GetSystemDefaultLangID",PyGetSystemDefaultLangID,1}, // @pymeth GetSystemDefaultLangID|Retrieves the system default language identifier.
+	{"GetSystemDefaultLCID",PyGetSystemDefaultLCID,1}, // @pymeth GetSystemDefaultLCID|Retrieves the system default locale identifier.
 	{"GetSystemDirectory",	PyGetSystemDirectory,1}, // @pymeth GetSystemDirectory|Returns the Windows system directory.
 	{"GetSystemFileCacheSize", PyGetSystemFileCacheSize,METH_NOARGS},	// @pymeth GetSystemFileCacheSize|Returns the amount of memory reserved for file cache
 	{"SetSystemFileCacheSize", (PyCFunction)PySetSystemFileCacheSize, METH_KEYWORDS|METH_VARARGS},	// @pymeth SetSystemFileCacheSize|Sets the amount of memory reserved for file cache
@@ -6492,7 +6492,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"GetVolumeInformation",PyGetVolumeInformation,1}, // @pymeth GetVolumeInformation|Returns information about a volume and file system attached to the system.
 	{"GetWindowsDirectory", PyGetWindowsDirectory,1}, // @pymeth GetWindowsDirectory|Returns the windows directory.
 	{"GetWindowLong",       PyGetWindowLong,1}, // @pymeth GetWindowLong|Retrieves a long value at the specified offset into the extra window memory of the given window.
-	{"GetUserDefaultLangID",PyGetUserDefaultLangID,1}, // @pymeth GetUserDefaultLangID|Retrieves the user default language identifier. 
+	{"GetUserDefaultLangID",PyGetUserDefaultLangID,1}, // @pymeth GetUserDefaultLangID|Retrieves the user default language identifier.
 	{"GetUserDefaultLCID",  PyGetUserDefaultLCID,1}, // @pymeth GetUserDefaultLCID|Retrieves the user default locale identifier.
 	{"GlobalMemoryStatus",  PyGlobalMemoryStatus,	METH_NOARGS}, // @pymeth GlobalMemoryStatus|Returns systemwide memory usage
 	{"GlobalMemoryStatusEx",  PyGlobalMemoryStatusEx,	METH_NOARGS}, // @pymeth GlobalMemoryStatusEx|Returns physical and virtual memory usage
@@ -6504,7 +6504,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"LoadLibraryEx",	    PyLoadLibraryEx,1}, // @pymeth LoadLibraryEx|Loads the specified DLL, and returns the handle.
 	{"LoadResource",	    PyLoadResource,1}, // @pymeth LoadResource|Finds and loads a resource from a PE file.
 	{"LoadString",	        PyLoadString,1}, // @pymeth LoadString|Loads a string from a resource file.
-	{"MapVirtualKey",       PyMapVirtualKey,1}, // @pymeth MapVirtualKeyEx|Translates (maps) a virtual-key code into a scan code or character value, or translates a scan code into a virtual-key code. 
+	{"MapVirtualKey",       PyMapVirtualKey,1}, // @pymeth MapVirtualKeyEx|Translates (maps) a virtual-key code into a scan code or character value, or translates a scan code into a virtual-key code.
 	{"MessageBeep",         PyMessageBeep,1}, // @pymeth MessageBeep|Plays a predefined waveform sound.
 	{"MessageBoxEx",        PyMessageBox, 1},
 	{"MessageBox",          PyMessageBox, 1}, // @pymeth MessageBox|Display a message box.
@@ -6530,9 +6530,9 @@ static struct PyMethodDef win32api_functions[] = {
 	{"RegEnumKey",          PyRegEnumKey, 1}, // @pymeth RegEnumKey|Enumerates subkeys of the specified open registry key.
 	// @pymeth RegEnumKeyEx|Enumerates subkeys of the specified open registry key.
 #ifdef UNICODE
-	{"RegEnumKeyEx",        PyRegEnumKeyExW, 1}, 
+	{"RegEnumKeyEx",        PyRegEnumKeyExW, 1},
 #else
-	{"RegEnumKeyEx",        PyRegEnumKeyEx, 1}, 
+	{"RegEnumKeyEx",        PyRegEnumKeyEx, 1},
 #endif
 	{"RegEnumKeyExW",       PyRegEnumKeyExW, 1}, // @pymeth RegEnumKeyExW|Unicode version of RegEnumKeyEx
 	{"RegEnumValue",        PyRegEnumValue, 1}, // @pymeth RegEnumValue|Enumerates values of the specified open registry key.
@@ -6545,7 +6545,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"RegOpenKeyTransacted",(PyCFunction)PyRegOpenKeyTransacted, METH_KEYWORDS|METH_VARARGS}, // @pymeth RegOpenKeyTransacted|Opens a registry key as part of a transaction.
 	{"RegOverridePredefKey",(PyCFunction)PyRegOverridePredefKey, METH_KEYWORDS|METH_VARARGS}, // @pymeth RegOverridePredefKey|Redirects one of the predefined keys to different key.
 	{"RegQueryValue",       PyRegQueryValue, 1}, // @pymeth RegQueryValue|Retrieves the value associated with the unnamed value for a specified key in the registry.
-	{"RegQueryValueEx",		PyRegQueryValueEx, 1}, // @pymeth RegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key. 
+	{"RegQueryValueEx",		PyRegQueryValueEx, 1}, // @pymeth RegQueryValueEx|Retrieves the type and data for a specified value name associated with an open registry key.
 	{"RegQueryInfoKey",		PyRegQueryInfoKey, 1}, // @pymeth RegQueryInfoKey|Returns information about the specified key.
 	{"RegQueryInfoKeyW",	PyRegQueryInfoKeyW, 1}, // @pymeth RegQueryInfoKeyW|Returns information about an open registry key
 	{"RegRestoreKey",		(PyCFunction)PyRegRestoreKey, METH_KEYWORDS|METH_VARARGS}, // @pymeth RegRestoreKey|Restores a key and subkeys from a saved registry file
@@ -6568,7 +6568,7 @@ static struct PyMethodDef win32api_functions[] = {
 	{"SetLastError",        PySetLastError,     1}, // @pymeth SetLastError|Sets the last error code known for the current thread.
 	{"SetSysColors",		PySetSysColors,      1}, // @pymeth SetSysColors|Changes color of various window elements
 	{"SetLocalTime",		PySetLocalTime,	1},	// @pymeth SetLocalTime|Changes the system's local time.
-	{"SetSystemTime",		PySetSystemTime,	1},	// @pymeth SetSystemTime|Sets the system time.	
+	{"SetSystemTime",		PySetSystemTime,	1},	// @pymeth SetSystemTime|Sets the system time.
 	{"SetClassLong",       PySetClassLong,1}, // @pymeth SetClassLong|Replaces the specified 32-bit (long) value at the specified offset into the extra class memory for the window.
 	{"SetClassWord",       PySetClassWord,1}, // @pymeth SetClassWord|Replaces the specified 32-bit (long) value at the specified offset into the extra class memory for the window.
 	{"SetClassWord",       PySetWindowWord,1}, // @pymeth SetWindowWord|
@@ -6587,15 +6587,15 @@ static struct PyMethodDef win32api_functions[] = {
 	{"SetTimeZoneInformation",PySetTimeZoneInformation,1}, // @pymeth SetTimeZoneInformation|Sets the system time-zone information.
 	{"SetWindowLong",       PySetWindowLong,1}, // @pymeth SetWindowLong|Places a long value at the specified offset into the extra window memory of the given window.
 	{"ShellExecute",		PyShellExecute,		1}, // @pymeth ShellExecute|Executes an application.
-	{"ShowCursor",			PyShowCursor,		1}, // @pymeth ShowCursor|The ShowCursor method displays or hides the cursor. 
-	{"Sleep",				PySleep,			1}, 
+	{"ShowCursor",			PyShowCursor,		1}, // @pymeth ShowCursor|The ShowCursor method displays or hides the cursor.
+	{"Sleep",				PySleep,			1},
 	{"SleepEx",				PySleep,			1}, // @pymeth Sleep|Suspends current application execution
 	{"TerminateProcess",	PyTerminateProcess,	1}, // @pymeth TerminateProcess|Terminates a process.
 	{"ToAsciiEx",		PyToAsciiEx,              1},	// @pymeth ToAsciiEx|Translates the specified virtual-key code and keyboard state to the corresponding character or characters.
 	{"Unicode",             PyWin_NewUnicode,         1},	// @pymeth Unicode|Creates a new <o PyUnicode> object
 	{"UpdateResource",     PyUpdateResource, 1 },  // @pymeth UpdateResource|Updates a resource in a PE file.
-	{"VkKeyScan",           PyVkKeyScan,     1}, // @pymeth VkKeyScan|Translates a character to the corresponding virtual-key code and shift state. 
-	{"VkKeyScanEx",         PyVkKeyScanEx,   1}, // @pymeth VkKeyScan|Translates a character to the corresponding virtual-key code and shift state. 
+	{"VkKeyScan",           PyVkKeyScan,     1}, // @pymeth VkKeyScan|Translates a character to the corresponding virtual-key code and shift state.
+	{"VkKeyScanEx",         PyVkKeyScanEx,   1}, // @pymeth VkKeyScan|Translates a character to the corresponding virtual-key code and shift state.
 	{"WinExec",             PyWinExec,  		1}, // @pymeth WinExec|Execute a program.
 	{"WinHelp",             PyWinHelp,  		1}, // @pymeth WinHelp|Invokes the Windows Help engine.
 	{"WriteProfileSection",	PyWriteProfileSection,  1}, // @pymeth WriteProfileSection|Writes a complete section to an INI file or registry.

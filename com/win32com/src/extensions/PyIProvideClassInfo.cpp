@@ -44,7 +44,7 @@ PyObject *PyIProvideClassInfo::GetClassInfo(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIProvideClassInfo_methods[] =
 {
 	{"GetClassInfo",         PyIProvideClassInfo::GetClassInfo,  1}, // @pymeth GetClassInfo|Gets information about the CO_CLASS.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIProvideClassInfo::type("PyIProvideClassInfo",
@@ -96,7 +96,7 @@ PyObject *PyIProvideClassInfo2::GetGUID(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIProvideClassInfo2_methods[] =
 {
 	{"GetGUID",PyIProvideClassInfo2::GetGUID,  1}, // @pymeth GetGUID|Gets the default event sink IID for the object (if any).
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIProvideClassInfo2::type("PyIProvideClassInfo2",

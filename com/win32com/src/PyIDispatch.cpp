@@ -232,10 +232,10 @@ PyObject * PyIDispatch::Invoke(PyObject *self, PyObject *args)
 	LCID lcid = PyInt_AsLong(PyTuple_GET_ITEM(args, 1));
 	// @pyparm int|flags||The flags for the call.  The following flags can be used.
 	// @flagh Flag|Description
-	// @flag DISPATCH_METHOD|The member is invoked as a method. If a property has the same name, both this and the DISPATCH_PROPERTYGET flag may be set. 
+	// @flag DISPATCH_METHOD|The member is invoked as a method. If a property has the same name, both this and the DISPATCH_PROPERTYGET flag may be set.
 	// @flag DISPATCH_PROPERTYGET|The member is retrieved as a property or data member.
-	// @flag DISPATCH_PROPERTYPUT|The member is changed as a property or data member. 
-	// @flag DISPATCH_PROPERTYPUTREF|The member is changed by a reference assignment, rather than a value assignment. This flag is valid only when the property accepts a reference to an object. 
+	// @flag DISPATCH_PROPERTYPUT|The member is changed as a property or data member.
+	// @flag DISPATCH_PROPERTYPUTREF|The member is changed by a reference assignment, rather than a value assignment. This flag is valid only when the property accepts a reference to an object.
 	UINT wFlags = PyInt_AsLong(PyTuple_GET_ITEM(args, 2));
 	// @pyparm int|bResultWanted||Indicates if the result of the call should be requested.
 	// @pyparm object, ...|params, ...||The parameters to pass.
@@ -338,7 +338,7 @@ PyObject * PyIDispatch::InvokeTypes(PyObject *self, PyObject *args)
 	// arg is not specified by the user, then we _do_ present the arg to
 	// COM.  If the arg does not exist, and it is not byref, then we do
 	// not present it _at_all - ie, the arg count does _not_ include it.
-	// So - first we must loop over the arg types, using this info to 
+	// So - first we must loop over the arg types, using this info to
 	// decide how big the arg array is!
 
 	// If we have type info for an arg but not specified by the user, we will still process
@@ -472,10 +472,10 @@ PyObject * PyIDispatch::InvokeTypes(PyObject *self, PyObject *args)
 	}
 	delete [] ArgHelpers;
 	return result;
-// @comm The Microsoft documentation for IDispatch should be used for all 
-// params except 'resultTypeDesc' and 'typeDescs'. 'resultTypeDesc' describes 
+// @comm The Microsoft documentation for IDispatch should be used for all
+// params except 'resultTypeDesc' and 'typeDescs'. 'resultTypeDesc' describes
 // the return value of the function, and is a tuple of (type_id, flags).
-// 'typeDescs' describes the type of each parameters, and is a list of the 
+// 'typeDescs' describes the type of each parameters, and is a list of the
 // same (type_id, flags) tuple.
 // @flagh item|Description
 // @flag type_id|A valid "variant type" constant (eg, VT_I4 \| VT_ARRAY, VT_DATE, etc - see VARIANT at MSDN).
@@ -490,7 +490,7 @@ PyObject * PyIDispatch::InvokeTypes(PyObject *self, PyObject *args)
 // @ex The interesting bits are|
 // resultTypeDesc: (24, 0) - (VT_VOID, <no flags>)
 // typeDescs: ((4, 1), (3, 1)) - ((VT_R4, PARAMFLAG_FIN), (VT_I4, PARAMFLAG_FIN))
-// @ex So, in this example, the function returns no value and takes 2 "in" 
+// @ex So, in this example, the function returns no value and takes 2 "in"
 // params - ColumnWidth is a float, and RulerStule is an int.|
 }
 
@@ -541,7 +541,7 @@ static struct PyMethodDef PyIDispatch_methods[] =
 	{"GetIDsOfNames",  PyIDispatch::GetIDsOfNames,  1}, // @pymeth GetIDsOfNames|Get the DISPID for the passed names.
 	{"GetTypeInfo",    PyIDispatch::GetTypeInfo,  1}, // @pymeth GetTypeInfo|Get type information for the object.
 	{"GetTypeInfoCount",PyIDispatch::GetTypeInfoCount,  1}, // @pymeth GetTypeInfoCount|Retrieves the number of <o PyITypeInfo>s the object provides.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIDispatch::type("PyIDispatch",
@@ -593,7 +593,7 @@ PyObject *PyIDispatchEx::GetDispID(PyObject *self, PyObject *args)
 	return PyInt_FromLong(dispid);
 }
 
-// @pymethod object|PyIDispatchEx|InvokeEx|Provides access to properties and methods exposed by a <o PyIDispatchEx> object. 
+// @pymethod object|PyIDispatchEx|InvokeEx|Provides access to properties and methods exposed by a <o PyIDispatchEx> object.
 PyObject *PyIDispatchEx::InvokeEx(PyObject *self, PyObject *args)
 {
 	long dispid;
@@ -680,7 +680,7 @@ PyObject *PyIDispatchEx::DeleteMemberByName(PyObject *self, PyObject *args)
 	PyObject *obName;
 	if (!PyArg_ParseTuple(args, "Ol:DeleteMemberByName",
 		&obName, // @pyparm <o PyUnicode>|name||Passed in name to be mapped
-		&fdex)) // @pyparm int|fdex||Determines the options 
+		&fdex)) // @pyparm int|fdex||Determines the options
 		return NULL;
 	PyWin_AutoFreeBstr name;
 	if (!PyWinObject_AsAutoFreeBstr(obName, &name))
@@ -753,7 +753,7 @@ PyObject *PyIDispatchEx::GetNextDispID(PyObject *self, PyObject *args)
 	long dispid;
 	if (!PyArg_ParseTuple(args, "ll:GetNextDispID",
 		&fdex, // @pyparm int|fdex||Determines the options
-		&dispid)) // @pyparm int|dispid||Current member, or DISPID_STARTENUM to begin enumeration. GetNextDispID will retrieve the item in the enumeration after this one. 
+		&dispid)) // @pyparm int|dispid||Current member, or DISPID_STARTENUM to begin enumeration. GetNextDispID will retrieve the item in the enumeration after this one.
 		return NULL;
 	IDispatchEx *pMyDispatchEx = GetI(self);
 	if (pMyDispatchEx==NULL) return NULL;
@@ -769,13 +769,13 @@ PyObject *PyIDispatchEx::GetNextDispID(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIDispatchEx_methods[] =
 {
 	{"GetDispID",           PyIDispatchEx::GetDispID, 1 }, // @pymeth GetDispID|
-	{"InvokeEx",            PyIDispatchEx::InvokeEx, 1 }, // @pymeth InvokeEx|Provides access to properties and methods exposed by a <o PyIDispatchEx> object. 
+	{"InvokeEx",            PyIDispatchEx::InvokeEx, 1 }, // @pymeth InvokeEx|Provides access to properties and methods exposed by a <o PyIDispatchEx> object.
 	{"DeleteMemberByName",  PyIDispatchEx::DeleteMemberByName, 1 }, // @pymeth DeleteMemberByName|
 	{"DeleteMemberByDispID",PyIDispatchEx::DeleteMemberByDispID, 1 }, // @pymeth DeleteMemberByDispID|
 	{"GetMemberProperties", PyIDispatchEx::GetMemberProperties, 1 }, // @pymeth GetMemberProperties|
 	{"GetMemberName",       PyIDispatchEx::GetMemberName, 1 }, // @pymeth GetMemberName|Returns the name associated with a member id
 	{"GetNextDispID",       PyIDispatchEx::GetNextDispID, 1 }, // @pymeth GetNextDispID|Enumerates member ids.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIDispatchEx::type("PyIDispatchEx",

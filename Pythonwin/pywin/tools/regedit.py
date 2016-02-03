@@ -153,7 +153,7 @@ class RegistryValueView(docview.ListView):
 	def OnInitialUpdate(self):
 		hwnd = self._obj_.GetSafeHwnd()
 		style = win32api.GetWindowLong(hwnd, win32con.GWL_STYLE);
-		win32api.SetWindowLong(hwnd, win32con.GWL_STYLE, (style & ~commctrl.LVS_TYPEMASK) | commctrl.LVS_REPORT); 
+		win32api.SetWindowLong(hwnd, win32con.GWL_STYLE, (style & ~commctrl.LVS_TYPEMASK) | commctrl.LVS_REPORT);
 
 		itemDetails = (commctrl.LVCFMT_LEFT, 100, "Name", 0)
 		self.InsertColumn(0, itemDetails)
@@ -197,7 +197,7 @@ class RegistryValueView(docview.ListView):
 				return dialog.Dialog.OnInitDialog(self)
 			def OnDestroy(self,msg):
 				self.newvalue = self.edit.GetWindowText()
-		
+
 		try:
 			index = self.GetNextItem(-1, commctrl.LVNI_SELECTED)
 		except win32ui.error:
@@ -213,7 +213,7 @@ class RegistryValueView(docview.ListView):
 		except TypeError, details:
 			win32ui.MessageBox(details)
 			return
-		
+
 		d = EditDialog(newVal)
 		if d.DoModal()==win32con.IDOK:
 			try:
@@ -231,7 +231,7 @@ class RegistryValueView(docview.ListView):
 			return val
 		finally:
 			win32api.RegCloseKey(hkey)
-	
+
 	def SetItemsCurrentValue(self, item, valueName, value):
 		# ** Assumes already checked is a string.
 		hkey = win32api.RegOpenKey(item.keyRoot, item.keyName , 0, win32con.KEY_SET_VALUE)
@@ -274,7 +274,7 @@ class RegDocument (docview.Document):
 	def OnOpenDocument (self, name):
 		raise TypeError("This template can not open files")
 		return 0
-		
+
 
 class HLIRegistryKey(hierlist.HierListItem):
 	def __init__( self, keyRoot, keyName, userName ):

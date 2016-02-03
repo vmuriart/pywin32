@@ -81,8 +81,8 @@ PyObject *PyIClassFactory::LockServer(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIClassFactory_methods[] =
 {
 	{"CreateInstance",         PyIClassFactory::CreateInstance,  1}, // @pymeth CreateInstance|Creates an uninitialized object.
-	{"LockServer",		       PyIClassFactory::LockServer,  1}, // @pymeth LockServer|Called by the client of a class object to keep a server open in memory, allowing instances to be created more quickly. 
-	{NULL,  NULL}        
+	{"LockServer",		       PyIClassFactory::LockServer,  1}, // @pymeth LockServer|Called by the client of a class object to keep a server open in memory, allowing instances to be created more quickly.
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIClassFactory::type("PyIClassFactory",

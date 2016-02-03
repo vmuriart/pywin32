@@ -163,7 +163,7 @@ PyComEnumTypeObject PyIEnumResources::type("PyIEnumResources",
 // Gateway Implementation
 
 // Std delegation
-STDMETHODIMP PyGEnumResources::Next( 
+STDMETHODIMP PyGEnumResources::Next(
             /* [in] */ ULONG celt,
             /* [out] */ SHELL_ITEM_RESOURCE *rgVar,
             /* [out] */ ULONG *pCeltFetched)
@@ -210,7 +210,7 @@ STDMETHODIMP PyGEnumResources::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumResources, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumResources::Skip( 
+STDMETHODIMP PyGEnumResources::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -223,7 +223,7 @@ STDMETHODIMP PyGEnumResources::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumResources::Clone( 
+STDMETHODIMP PyGEnumResources::Clone(
             /* [out] */ IEnumResources __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

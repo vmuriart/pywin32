@@ -66,13 +66,13 @@ protected:
 		void);
 
 	STDMETHOD(EnumThreads)(
-		IEnumRemoteDebugApplicationThreads **pperdat); 
+		IEnumRemoteDebugApplicationThreads **pperdat);
 
 	STDMETHOD(GetName)(
 		BSTR __RPC_FAR * pbstrName);
 
 	STDMETHOD(GetRootNode)(
-		IDebugApplicationNode **ppdanRoot); 
+		IDebugApplicationNode **ppdanRoot);
 
     STDMETHOD(EnumGlobalExpressionContexts)(
             /* [out] */ IEnumDebugExpressionContexts __RPC_FAR *__RPC_FAR *ppedec);

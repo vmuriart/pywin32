@@ -21,8 +21,8 @@
 //
 //    Levels:  LOG_NONE = No event log messages ever
 //             LOG_USER = User event log messages (e.g. errors)
-//             LOG_DEBUG = Minimum Debugging 
-//             LOG_VERBOSE = Maximum Debugging 
+//             LOG_DEBUG = Minimum Debugging
+//             LOG_VERBOSE = Maximum Debugging
 
 //#define  LOG_NONE     0
 #define  LOG_USER     1
@@ -32,7 +32,7 @@
 // define macros//
 // Format for event log calls without corresponding insertion strings is:
 //    REPORT_xxx (message_value, message_level)
-//       where:   
+//       where:
 //          xxx is the severity to be displayed in the event log
 //          message_value is the numeric ID from above
 //          message_level is the "filtering" level of error reporting
@@ -40,13 +40,13 @@
 //
 // if the message has a corresponding insertion string whose symbol conforms
 // to the format CONSTANT = numeric value and CONSTANT_S = string constant for
-// that message, then the 
-// 
+// that message, then the
+//
 //    REPORT_xxx_STRING (message_value, message_level)//// macro may be used.
 //
 //
 // REPORT_SUCCESS was intended to show Success in the error log, rather it
-// shows "N/A" so for now it's the same as information, though it could 
+// shows "N/A" so for now it's the same as information, though it could
 // (should) be changed  in the future
 //
 #define REPORT_SUCCESS(i,l) (MESSAGE_LEVEL >= l ? ReportEvent (hEventLog, EVENTLOG_INFORMATION_TYPE, \
@@ -100,7 +100,7 @@ TCHAR szModuleName[MAX_PATH]; // will point into the buffer above.
 // adjust the counter offsets.  However, we must update the offsets each
 // run.
 DWORD dwModuleFirstCounter;
-DWORD dwModuleFirstHelp;    
+DWORD dwModuleFirstHelp;
 
 
 BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
@@ -110,7 +110,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 			hDllHandle = hInstance;
 			GetModuleFileName(hDllHandle, szFullModulePath, sizeof(szFullModulePath)/sizeof(TCHAR));
 			TCHAR *szStart = _tcsrchr(szFullModulePath, _T('\\'));
-			if (szStart==NULL) 
+			if (szStart==NULL)
 				szStart = szFullModulePath;
 			else
 				szStart = szStart + 1; // skip the slash
@@ -138,7 +138,7 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
     pass performance data in. This routine also initializes the data
     structures used to pass data back to the registryArguments:
     Pointer to object ID of each device to be opened (VGA)
-	
+
 	Return Value:    None.
 --*/
 {
@@ -163,9 +163,9 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
     //  order to service remote performance queries, this library
     //  must keep track of how many times it has been opened (i.e.
     //  how many threads have accessed it). the registry routines will
-    //  limit access to the initialization routine to only one thread 
-    //  at a time so synchronization (i.e. reentrancy) should not be 
-    //  a problem    
+    //  limit access to the initialization routine to only one thread
+    //  at a time so synchronization (i.e. reentrancy) should not be
+    //  a problem
 	//
 	if (!dwOpenCount) {        // open Eventlog interface
 		// The memmapped file name is derived from the DLL name.
@@ -176,9 +176,9 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
                                 FALSE,
 						        szFileMapping);
 
-        pCounterBlock = NULL;   
+        pCounterBlock = NULL;
 		// initialize pointer to memory
-        // log error if unsuccessful        
+        // log error if unsuccessful
 		if (hSharedMemory == NULL) {
 	        hEventLog = MonOpenEventLog(szModuleName);
             REPORT_ERROR (PERFDATA_OPEN_FILE_MAPPING_ERROR, LOG_USER);
@@ -197,8 +197,8 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
             REPORT_ERROR (PERFDATA_UNABLE_MAP_VIEW_OF_FILE, LOG_USER);
             // this is fatal, if we can't get data then there's no
             // point in continuing.
-            status = GetLastError(); 
-			// return error 
+            status = GetLastError();
+			// return error
 	        goto OpenExitPoint;
 		}
 		if (pControlData->ControlSize != sizeof(*pControlData)) {
@@ -213,7 +213,7 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
         // get counter and help index base values from registry
         //      Open key to registry entry
         //      read First Counter and First Help values
-        //      update static data structures by adding base to 
+        //      update static data structures by adding base to
         //          offset value in structure.
 		_tcscpy(registryKeyName, _T("SYSTEM\\CurrentControlSet\\Services\\"));
 		_tcscat(registryKeyName, pControlData->ServiceName);
@@ -224,7 +224,7 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
 					0L, KEY_ALL_ACCESS, &hKeyDriverPerf);
 	    if (status != ERROR_SUCCESS) {
             REPORT_ERROR_DATA (PERFDATA_UNABLE_OPEN_DRIVER_KEY, LOG_USER, &status, sizeof(status));
-            // this is fatal, if we can't get the base values of the 
+            // this is fatal, if we can't get the base values of the
             // counter or help names, then the names won't be available
             // to the requesting application  so there's not much
             // point in continuing.
@@ -240,10 +240,10 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
 
         if (status != ERROR_SUCCESS) {
             REPORT_ERROR_DATA (PERFDATA_UNABLE_READ_FIRST_COUNTER, LOG_USER, &status, sizeof(status));
-            // this is fatal, if we can't get the base values of the 
+            // this is fatal, if we can't get the base values of the
             // counter or help names, then the names won't be available
             // to the requesting application  so there's not much
-            // point in continuing.            
+            // point in continuing.
 			goto OpenExitPoint;
 		}
         size = sizeof (DWORD);
@@ -256,21 +256,21 @@ DWORD APIENTRY OpenPerformanceData( LPWSTR lpDeviceNames )
 
         if (status != ERROR_SUCCESS) {
             REPORT_ERROR_DATA (PERFDATA_UNABLE_READ_FIRST_HELP, LOG_USER, &status, sizeof(status));
-            // this is fatal, if we can't get the base values of the 
+            // this is fatal, if we can't get the base values of the
             // counter or help names, then the names won't be available
             // to the requesting application  so there's not much
             // point in continuing.
 			goto OpenExitPoint;
-		} 
+		}
         //        //  NOTE: the initialization program could also retrieve
-        //      LastCounter and LastHelp if they wanted to do 
+        //      LastCounter and LastHelp if they wanted to do
         //      bounds checking on the new number. e.g.        //
         //      counter->CounterNameTitleIndex += dwFirstCounter;
         //      if (counter->CounterNameTitleIndex > dwLastCounter) {
         //          LogErrorToEventLog (INDEX_OUT_OF_BOUNDS);        //      }
 
         RegCloseKey (hKeyDriverPerf); // close key to registry
-        bInitOK = TRUE; // ok to use this function    
+        bInitOK = TRUE; // ok to use this function
 	}
 	dwOpenCount++;  // increment OPEN counter
 	status = ERROR_SUCCESS; // for successful exit
@@ -288,20 +288,20 @@ Routine Description:    This routine will return the data for the VGA counters.
 Arguments:   IN       LPWSTR   lpValueName
          pointer to a wide character string passed by registry.
    IN OUT   LPVOID   *lppData
-         IN: pointer to the address of the buffer to receive the completed 
+         IN: pointer to the address of the buffer to receive the completed
             PerfDataBlock and subordinate structures. This routine will
             append its data to the buffer starting at the point referenced
             by *lppData.
          OUT: points to the first byte after the data structure added by this
             routine. This routine updated the value at lppdata after appending
             its data.   IN OUT   LPDWORD  lpcbTotalBytes
-         IN: the address of the DWORD that tells the size in bytes of the 
+         IN: the address of the DWORD that tells the size in bytes of the
             buffer referenced by the lppData argument
-         OUT: the number of bytes added by this routine is written to the 
+         OUT: the number of bytes added by this routine is written to the
             DWORD pointed to by this argument   IN OUT   LPDWORD  NumObjectTypes
-         IN: the address of the DWORD to receive the number of objects added 
-            by this routine 
-         OUT: the number of objects added by this routine is written to the 
+         IN: the address of the DWORD to receive the number of objects added
+            by this routine
+         OUT: the number of objects added by this routine is written to the
             DWORD pointed to by this argumentReturn Value:
       ERROR_MORE_DATA if buffer passed is too small to hold data
          any error conditions encountered are reported to the event log if
@@ -310,12 +310,12 @@ Arguments:   IN       LPWSTR   lpValueName
          also reported to the event log.
 --*/
 {
-    //  Variables for reformatting the data    
+    //  Variables for reformatting the data
 	ULONG SpaceNeeded;
     // variables used for error logging
-    DWORD		dwQueryType;    
+    DWORD		dwQueryType;
 	//
-    // before doing anything else, see if Open went OK    
+    // before doing anything else, see if Open went OK
 	//
 	if (!bInitOK || pControlData->supplierStatus != SupplierStatusRunning) {
         // unable to continue because open failed,
@@ -325,9 +325,9 @@ Arguments:   IN       LPWSTR   lpValueName
         return ERROR_SUCCESS; // yes, this is a successful exit
 	}
 	//
-    // see if this is a foreign (i.e. non-NT) computer data request     
+    // see if this is a foreign (i.e. non-NT) computer data request
 	//
-    dwQueryType = GetQueryType (lpValueName);    
+    dwQueryType = GetQueryType (lpValueName);
     if (dwQueryType == QUERY_FOREIGN) {
         // this routine does not service requests for data from
         // Non-NT computers
@@ -338,7 +338,7 @@ Arguments:   IN       LPWSTR   lpValueName
 	PERF_OBJECT_TYPE *pPOT = (PERF_OBJECT_TYPE *)(pControlData + 1);
 	PERF_OBJECT_TYPE *pPOTResult = (PERF_OBJECT_TYPE *)(*lppData);
     if (dwQueryType == QUERY_ITEMS) {
-		if ( !(IsNumberInUnicodeList (pPOT->ObjectNameTitleIndex+dwModuleFirstCounter, 
+		if ( !(IsNumberInUnicodeList (pPOT->ObjectNameTitleIndex+dwModuleFirstCounter,
 			                          lpValueName))) {
 			// request received for data object not provided by this routine
             *lpcbTotalBytes = (DWORD) 0;
@@ -354,7 +354,7 @@ Arguments:   IN       LPWSTR   lpValueName
 	}
 	//
     // Copy the Object Type and counter definitions
-    //  to the caller's data buffer 
+    //  to the caller's data buffer
 	//
 	memmove(pPOTResult,
             pPOT,
@@ -372,7 +372,7 @@ Arguments:   IN       LPWSTR   lpValueName
 	// debug !!
 	PERF_COUNTER_BLOCK *pPerfCounterBlock = (PERF_COUNTER_BLOCK *)(((LPBYTE)pPOTResult)+(pPOT->NumCounters*sizeof(PERF_COUNTER_DEFINITION))+sizeof(PERF_OBJECT_TYPE));
 	*lppData = (LPBYTE)(*lppData)+SpaceNeeded;
-	// update arguments fore return    
+	// update arguments fore return
     *lpNumObjectTypes = 1;
     *lpcbTotalBytes = SpaceNeeded;
 
@@ -417,7 +417,7 @@ WCHAR GLOBAL_STRING[] = L"Global";
 WCHAR FOREIGN_STRING[] = L"Foreign";
 WCHAR COSTLY_STRING[] = L"Costly";
 WCHAR NULL_STRING[] = L"\0";
-// pointer to null string 
+// pointer to null string
 // test for delimiter, end of line and non-digit characters
 // used by IsNumberInUnicodeList routine
 //
@@ -430,41 +430,41 @@ WCHAR NULL_STRING[] = L"\0";
      (c < (WCHAR)'0') ? INVALID : \
 	 (c > (WCHAR)'9') ? INVALID : \
      DIGIT)
-	 
+
 HANDLE MonOpenEventLog (const TCHAR *szSourceName)
 /*++Routine Description:
     Reads the level of event logging from the registry and opens the
         channel to the event logger for subsequent event log entries
-		
+
 	Arguments:
       None
-	  
-	Return Value:   
+
+	Return Value:
 	  Handle to the event log for reporting events.
       NULL if open not successful.
 --*/
 {
     HKEY hAppKey;
-    TCHAR LogLevelKeyName[] = _T("SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Perflib");
+    TCHAR LogLevelKeyName[] = _T("SOFTWARE\\Microsoft\\WindowsÂ NT\\CurrentVersion\\Perflib");
 
     TCHAR LogLevelValueName[] = _T("EventLogLevel");
 	LONG lStatus;
     DWORD dwLogLevel;
 	DWORD dwValueType;
-	DWORD dwValueSize;   
-    // if global value of the logging level not initialized or is disabled, 
+	DWORD dwValueSize;
+    // if global value of the logging level not initialized or is disabled,
     //  check the registry to see if it should be updated.
     if (!MESSAGE_LEVEL) {
 		lStatus = RegOpenKeyEx (HKEY_LOCAL_MACHINE,
                                LogLevelKeyName,
-                               0,                         
+                               0,
                                KEY_READ,
                                &hAppKey);
 		dwValueSize = sizeof (dwLogLevel);
 		if (lStatus == ERROR_SUCCESS) {
 			lStatus = RegQueryValueEx (hAppKey,
                                LogLevelValueName,
-                               (LPDWORD)NULL,           
+                               (LPDWORD)NULL,
                                &dwValueType,
                                (LPBYTE)&dwLogLevel,
                                &dwValueSize);
@@ -477,7 +477,7 @@ HANDLE MonOpenEventLog (const TCHAR *szSourceName)
 		} else {
 			MESSAGE_LEVEL = MESSAGE_LEVEL_DEFAULT;
 		}
-	}       
+	}
 	if (hEventLog == NULL){
 		hEventLog = RegisterEventSource (
             (LPTSTR)NULL,            // Use Local Machine
@@ -487,7 +487,7 @@ HANDLE MonOpenEventLog (const TCHAR *szSourceName)
          }
     }
     if (hEventLog != NULL) {
-		dwLogUsers++;           // increment count of perfctr log users    
+		dwLogUsers++;           // increment count of perfctr log users
 	}
 	return (hEventLog);
 }
@@ -495,7 +495,7 @@ HANDLE MonOpenEventLog (const TCHAR *szSourceName)
 VOID MonCloseEventLog ()
 
 /*++Routine Description:
-      Closes the handle to the event logger if this is the last caller      
+      Closes the handle to the event logger if this is the last caller
 Arguments:      None
 
 Return Value:      None
@@ -515,11 +515,11 @@ DWORD GetQueryType (
 /*++GetQueryType
     returns the type of query described in the lpValue string so that
     the appropriate processing method may be used
-	
-	Arguments    
+
+	Arguments
 	IN lpValue
         string passed to PerfRegQuery Value for processing
-		
+
 Return Value
     QUERY_GLOBAL        if lpValue == 0 (null pointer)
            lpValue == pointer to Null string
@@ -533,36 +533,36 @@ Return Value
 	if (lpValue == 0) {
 		return QUERY_GLOBAL;
     } else if (*lpValue == 0) {
-		return QUERY_GLOBAL;    
+		return QUERY_GLOBAL;
 	}
     // check for "Global" request
 	pwcArgChar = lpValue;
     pwcTypeChar = GLOBAL_STRING;
     bFound = TRUE;  // assume found until contradicted
-    // check to the length of the shortest string    
+    // check to the length of the shortest string
     while ((*pwcArgChar != 0) && (*pwcTypeChar != 0)) {
         if (*pwcArgChar++ != *pwcTypeChar++) {
             bFound = FALSE; // no match
             break;          // bail out now
 		}
 	}
-    if (bFound) return QUERY_GLOBAL;    // check for "Foreign" request    
+    if (bFound) return QUERY_GLOBAL;    // check for "Foreign" request
     pwcArgChar = lpValue;
 	pwcTypeChar = FOREIGN_STRING;
     bFound = TRUE;  // assume found until contradicted
-    // check to the length of the shortest string    
+    // check to the length of the shortest string
     while ((*pwcArgChar != 0) && (*pwcTypeChar != 0)) {
 		if (*pwcArgChar++ != *pwcTypeChar++) {
             bFound = FALSE; // no match
-            break;          // bail out now        
+            break;          // bail out now
 		}
 	}
-    if (bFound) return QUERY_FOREIGN;    // check for "Costly" request    
+    if (bFound) return QUERY_FOREIGN;    // check for "Costly" request
 
     pwcArgChar = lpValue;
 	pwcTypeChar = COSTLY_STRING;
     bFound = TRUE;  // assume found until contradicted
-    // check to the length of the shortest string    
+    // check to the length of the shortest string
     while ((*pwcArgChar != 0) && (*pwcTypeChar != 0)) {
         if (*pwcArgChar++ != *pwcTypeChar++) {
             bFound = FALSE; // no match
@@ -571,63 +571,63 @@ Return Value
 	}
     if (bFound) return QUERY_COSTLY;
 
-    // if not Global and not Foreign and not Costly, 
+    // if not Global and not Foreign and not Costly,
     // then it must be an item list
 	return QUERY_ITEMS;
 }
 
-BOOL IsNumberInUnicodeList (    
+BOOL IsNumberInUnicodeList (
 	IN DWORD   dwNumber,
 	IN LPWSTR  lpwszUnicodeList)
 /*++
 IsNumberInUnicodeList
-Arguments:            
+Arguments:
 	IN dwNumber
         DWORD number to find in list    IN lpwszUnicodeList
         Null terminated, Space delimited list of decimal numbers
-		
+
 Return Value:
     TRUE:            dwNumber was found in the list of unicode number strings
     FALSE:            dwNumber was not found in the list.
 --*/
 {
-    DWORD   dwThisNumber;    
-	WCHAR   *pwcThisChar;    
+    DWORD   dwThisNumber;
+	WCHAR   *pwcThisChar;
 	BOOL    bValidNumber;
-    BOOL    bNewItem;    
-    WCHAR   wcDelimiter;    
+    BOOL    bNewItem;
+    WCHAR   wcDelimiter;
 // could be an argument to be more flexible
     if (lpwszUnicodeList == 0) return FALSE;    // null pointer, # not found
     pwcThisChar = lpwszUnicodeList;
 	dwThisNumber = 0;
     wcDelimiter = (WCHAR)' ';
 	bValidNumber = FALSE;
-	bNewItem = TRUE;    
+	bNewItem = TRUE;
     while (TRUE) {
 		switch (EvalThisChar (*pwcThisChar, wcDelimiter)) {
             case DIGIT:
-                // if this is the first digit after a delimiter, then 
+                // if this is the first digit after a delimiter, then
                 // set flags to start computing the new number
-                if (bNewItem) {                    
+                if (bNewItem) {
 					bNewItem = FALSE;
                     bValidNumber = TRUE;
 				}
                 if (bValidNumber) {
 					dwThisNumber *= 10;
 					dwThisNumber += (*pwcThisChar - (WCHAR)'0');
-                }                
+                }
 				break;
 			case DELIMITER:
-                // a delimiter is either the delimiter character or the 
+                // a delimiter is either the delimiter character or the
                 // end of the string ('\0') if when the delimiter has been
                 // reached a valid number was found, then compare it to the
                 // number from the argument list. if this is the end of the
                 // string and no match was found, then return.                //
                 if (bValidNumber) {
                     if (dwThisNumber == dwNumber) return TRUE;
-                    bValidNumber = FALSE;                
+                    bValidNumber = FALSE;
 				}
-                if (*pwcThisChar == 0) {                    
+                if (*pwcThisChar == 0) {
 					return FALSE;
                 } else {
 					bNewItem = TRUE;
@@ -643,6 +643,6 @@ Return Value:
 			default:
                 break;
 		}
-		pwcThisChar++;    
+		pwcThisChar++;
 	}
 }   // IsNumberInUnicodeList

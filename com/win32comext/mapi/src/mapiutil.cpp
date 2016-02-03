@@ -57,7 +57,7 @@ PyObject *PyObject_FromMAPIERROR(MAPIERROR *e, BOOL bIsUnicode, BOOL free_buffer
 	if (e->lpszError)
 		obError = bIsUnicode ? PyWinObject_FromWCHAR((const WCHAR *)e->lpszError) :
 					PyString_FromString((const char *)e->lpszError);
-		
+
 	else {
 		obError = Py_None;
 		Py_INCREF(Py_None);
@@ -71,7 +71,7 @@ PyObject *PyObject_FromMAPIERROR(MAPIERROR *e, BOOL bIsUnicode, BOOL free_buffer
 		Py_INCREF(Py_None);
 	}
 
-	PyObject *ret = Py_BuildValue("lOOll", 
+	PyObject *ret = Py_BuildValue("lOOll",
 		e->ulVersion,
 		obError,
 		obComp,
@@ -196,7 +196,7 @@ BOOL PyMAPIObject_AsSPropValue(PyObject *Valob, SPropValue *pv, void *pAllocMore
 			MAKEB_MV(FILETIME, pAllocMoreLinkBlock, pv->Value.MVft.lpft, pv->Value.MVft.cValues, PyWinObject_AsFILETIME)
 
 		// @flag PT_STRING8|A string or <o PyUnicode>
-		case PT_STRING8: 
+		case PT_STRING8:
 			{ // Copy into new MAPI memory block
 			DWORD bufLen;
 			char *str;
@@ -218,7 +218,7 @@ BOOL PyMAPIObject_AsSPropValue(PyObject *Valob, SPropValue *pv, void *pAllocMore
 			}
 
 		// @flag PT_STRING8|A sequence of string or <o PyUnicode> objects.
-		case PT_MV_STRING8: 
+		case PT_MV_STRING8:
 			ok = AllocMVBuffer( ob, sizeof(char *), pAllocMoreLinkBlock, (void **)&pv->Value.MVszA.lppszA, &pv->Value.MVszA.cValues);
 			if (!ok) break;
 			for (i=0;ok && !PyErr_Occurred() && i<pv->Value.MVszA.cValues;i++) {
@@ -314,7 +314,7 @@ BOOL PyMAPIObject_AsSPropValue(PyObject *Valob, SPropValue *pv, void *pAllocMore
 				pv->Value.MVbin.lpbin[i].cb = PyString_Size(obmv);
 				Py_DECREF(obmv);
 			}
-			break; 
+			break;
 
 		// @flag PT_CLSID|A <o PyIID>
 		case PT_CLSID:
@@ -451,8 +451,8 @@ PyObject *PyMAPIObject_FromSPropValue(SPropValue *pv)
 			break;
 /*
 		case PT_MV_CURRENCY:
-			MVcur 
-			SCurrencyArray 
+			MVcur
+			SCurrencyArray
 */
 
   		case PT_MV_APPTIME :
@@ -493,11 +493,11 @@ PyObject *PyMAPIObject_FromSPropValue(SPropValue *pv)
 			break;
 /*
 		case PT_MV_CLSID:
-			MVguid 
-			SGuidArray 
+			MVguid
+			SGuidArray
 		case PT_MV_I8:
-			MVli 
-			SLargeIntegerArray 
+			MVli
+			SLargeIntegerArray
 */
 		case PT_OBJECT:
 			val = PyInt_FromLong(pv->Value.x);
@@ -909,7 +909,7 @@ PyObject *PyMAPIObject_FromMAPINAMEIDArray(MAPINAMEID **pp, ULONG numEntries)
 			value = Py_None; Py_INCREF(Py_None);
 			guid = Py_None; Py_INCREF(Py_None);
 		} else {
-			value = pLook->ulKind==MNID_STRING ? 
+			value = pLook->ulKind==MNID_STRING ?
 				PyWinObject_FromOLECHAR(pLook->Kind.lpwstrName) :
 				PyInt_FromLong(pLook->Kind.lID);
 			guid = PyWinObject_FromIID(*pLook->lpguid);
@@ -1142,10 +1142,10 @@ void PyMAPIObject_FreeSRestriction(SRestriction *pRest)
 // Sort stuff.
 
 // @object PySSortOrderItem|An item in a SortOrderSet.
-BOOL PyMAPIObject_BuildSSortOrderSet(PyObject *obSorts, SSortOrderSet *psos) 
+BOOL PyMAPIObject_BuildSSortOrderSet(PyObject *obSorts, SSortOrderSet *psos)
 {
 	// @pyparm int|propTag||A property tag.
-	// @pyparm int|order||The order in which the data is to be sorted. Possible values are: 
+	// @pyparm int|order||The order in which the data is to be sorted. Possible values are:
 	// mapi.TABLE_SORT_ASCEND, mapi.TABLE_SORT_COMBINE and mapi.TABLE_SORT_DESCEND
 	BOOL ok = TRUE;
 	for (ULONG i=0;ok && i<psos->cSorts;i++) {
@@ -1164,7 +1164,7 @@ BOOL PyMAPIObject_BuildSSortOrderSet(PyObject *obSorts, SSortOrderSet *psos)
 // @pyparm ( <o PySSortOrderItem>, ...)|sortItems||The items to sort by
 // @pyparm int|cCategories|0|
 // @pyparm int|cExpanded|0|
-BOOL PyMAPIObject_AsSSortOrderSet(PyObject *obsos, SSortOrderSet **ppsos, BOOL bNoneOK /*= TRUE */) 
+BOOL PyMAPIObject_AsSSortOrderSet(PyObject *obsos, SSortOrderSet **ppsos, BOOL bNoneOK /*= TRUE */)
 {
 	if (obsos==Py_None) {
 		if (bNoneOK) {
@@ -1202,7 +1202,7 @@ BOOL PyMAPIObject_AsSSortOrderSet(PyObject *obsos, SSortOrderSet **ppsos, BOOL b
 	}
 }
 
-void PyMAPIObject_FreeSSortOrderSet(SSortOrderSet *ppsos) 
+void PyMAPIObject_FreeSSortOrderSet(SSortOrderSet *ppsos)
 {
 	MAPIFreeBuffer(ppsos);
 }

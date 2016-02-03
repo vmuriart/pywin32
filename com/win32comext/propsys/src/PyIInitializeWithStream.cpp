@@ -32,7 +32,7 @@ PyObject *PyIInitializeWithStream::Initialize(PyObject *self, PyObject *args)
 	if ( pIIWS == NULL )
 		return NULL;
 	// @pyparm <o PyIStream>|Stream||Stream containing the contents from which to extract properties
-	// @pyparm int|Mode||Indicates if stream is writable, STGM_READ or STGM_READWRITE 
+	// @pyparm int|Mode||Indicates if stream is writable, STGM_READ or STGM_READWRITE
 	PyObject *obstream;
 	IStream *pstream;
 	DWORD grfMode;

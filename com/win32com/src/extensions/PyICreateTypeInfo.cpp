@@ -361,7 +361,7 @@ PyObject *PyICreateTypeInfo::SetFuncAndParamNames(PyObject *self, PyObject *args
 	UINT i;
 	for (i=0;bPythonIsHappy && i<cNames;i++) {
 		PyObject *item = PySequence_GetItem(obrgszNames, i);
-		if (item==NULL) 
+		if (item==NULL)
 			bPythonIsHappy = FALSE;
 		else
 			bPythonIsHappy = PyWinObject_AsBstr(item, pNames+i);

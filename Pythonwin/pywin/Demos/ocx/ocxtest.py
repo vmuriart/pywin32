@@ -24,7 +24,7 @@ def MakeDlgTemplate():
 	dlg.append([128, "About", win32con.IDOK, (124, 5, 50, 14), s | win32con.BS_DEFPUSHBUTTON])
 	s = win32con.BS_PUSHBUTTON | s
 	dlg.append([128, "Close", win32con.IDCANCEL, (124, 22, 50, 14), s])
-	
+
 	return dlg
 
 ####################################
@@ -42,7 +42,7 @@ def GetTestCalendarClass():
 
 	class TestCalDialog(dialog.Dialog):
 		def OnInitDialog(self):
-		
+
 			class MyCal(activex.Control, calendarParentModule.Calendar):
 				def OnAfterUpdate(self):
 					print "OnAfterUpdate"
@@ -75,9 +75,9 @@ def GetTestCalendarClass():
 			return rc
 		def OnOK(self):
 			self.olectl.AboutBox()
-			
+
 	return TestCalDialog
-		
+
 
 ####################################
 #
@@ -131,11 +131,11 @@ class OCXFrame(window.MDIChildWnd):
 		self._obj_ = win32ui.CreateMDIChild()
 		self._obj_.AttachObject(self)
 		self._obj_.CreateWindow(None, title, style, rect, parent)
-		
+
 		rect = self.GetClientRect()
 		rect = (0,0,rect[2]-rect[0], rect[3]-rect[1])
 		self.ocx = controlClass()
-		self.ocx.CreateControl("", win32con.WS_VISIBLE | win32con.WS_CHILD, rect, self, 1000)		
+		self.ocx.CreateControl("", win32con.WS_VISIBLE | win32con.WS_CHILD, rect, self, 1000)
 
 def MDITest():
 	calendarParentModule = gencache.EnsureModule("{8E27C92E-1264-101C-8A2F-040224009C02}", 0, 7, 0)
@@ -144,7 +144,7 @@ def MDITest():
 			print "OnAfterUpdate"
 		def OnClick(self):
 			print "OnClick"
-	
+
 	f = OCXFrame()
 	f.Create(MyCal, "Calendar Test")
 

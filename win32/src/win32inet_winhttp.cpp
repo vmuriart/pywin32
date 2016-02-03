@@ -33,7 +33,7 @@ static funcWinHttpCloseHandle pfnWinHttpCloseHandle=NULL;
 
 #define LOAD_PFN(name) \
     pfn##name=(func##name)loadwinhttpfunc(#name, hmod)
-    
+
 static FARPROC loadwinhttpfunc(char *funcname, HMODULE hmodule)
 {
 	if (hmodule==NULL)

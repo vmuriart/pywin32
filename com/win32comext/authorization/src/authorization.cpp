@@ -12,7 +12,7 @@ static PyObject *PyEditSecurity(PyObject *self, PyObject *args, PyObject *kwargs
 	PyObject *obhwnd, *obisi, *ret=NULL;
 	BOOL bsuccess;
 	static char *keywords[]={"hwndOwner", "psi", NULL};
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EditSecurity", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "OO:EditSecurity", keywords,
 		&obhwnd,	// @pyparm <o PyHANDLE>|hwndOwner||Handle to window that owns dialog, can be None
 		&obisi))	// @pyparm <o PyGSecurityInformation>|psi||Class instance that implements the ISecurityInformation interface
 		return NULL;

@@ -43,12 +43,12 @@
         Note that ISAPI itself is a narrow-character based API.  As a result,
         functions such as
         <a href="EXTENSION_CONTROL_BLOCK__GetServerVariable_meth.html">GetServerVariable()</a>
-        etc all return bytes objects - it is up to the application to 
-        interpret those bytes.  pywin32 detects server variables starting 
-        with UNICODE_ and does return unicode objects in that case - see 
+        etc all return bytes objects - it is up to the application to
+        interpret those bytes.  pywin32 detects server variables starting
+        with UNICODE_ and does return unicode objects in that case - see
         the IIS documentation for more details.
     </p>
-    <p>If you pass a unicode object to the ISAPI functions, it will be 
+    <p>If you pass a unicode object to the ISAPI functions, it will be
        automatically encoded using the default encoding rather than the
        'mbcs' encoding used by the rest of pywin32.  In general this should
        be avoided as IIS doesn't define an encoding.
@@ -57,7 +57,7 @@
     <h1>datetime objects</h1>
     <p>
         Python 3.x builds use a subclass of datetime.datetime objects as the
-        "native" datetime object; a subclass is used to provive a backwards 
+        "native" datetime object; a subclass is used to provive a backwards
         compatible <a href="PyDateTime__Format_meth.html">PyDateTime.Format</a>
         method, but otherwise the datetime object is identical to the base
         class. All time objects returned by pywin32 will have a UTC timezone

@@ -236,7 +236,7 @@ void PyNotifyParseExtraTuple( NMHDR *ptr, PyObject *args,  char *fmt)
 
 ///////////////////////////////////////////////////////
 // General notify handler for Python.
-BOOL 
+BOOL
 Python_OnNotify (CWnd *pFrom, WPARAM, LPARAM lParam, LRESULT *pResult)
 {
 	NMHDR *pHdr = (NMHDR *)lParam;
@@ -250,7 +250,7 @@ Python_OnNotify (CWnd *pFrom, WPARAM, LPARAM lParam, LRESULT *pResult)
 	if (!pPyWnd->is_uiobject (&PyCWnd::type)) return FALSE; // unexpected object type.
 	PyObject *method;
 
-	if (!pPyWnd->pNotifyHookList || 
+	if (!pPyWnd->pNotifyHookList ||
 		!pPyWnd->pNotifyHookList->Lookup (code, (void *&)method)) {
 		Py_DECREF(pPyWnd);
 		return FALSE; // no hook installed.
@@ -278,23 +278,23 @@ Python_OnNotify (CWnd *pFrom, WPARAM, LPARAM lParam, LRESULT *pResult)
 		RECT rcButton;} NMTOOLBAR
 
 	typedef struct _TBBUTTON {
-		int         iBitmap; 
-		int         idCommand; 
-		BYTE     fsState; 
-		BYTE     fsStyle; 
+		int         iBitmap;
+		int         idCommand;
+		BYTE     fsState;
+		BYTE     fsStyle;
 		#ifdef _WIN64
 			BYTE     bReserved[6]     // padding for alignment
 		#elif defined(_WIN32)
 			BYTE     bReserved[2]     // padding for alignment
 		#endif
-		DWORD_PTR   dwData; 
+		DWORD_PTR   dwData;
 		INT_PTR          iString;} TBBUTTON
 	*/
 
 	PyObject *ob2=Py_None;	// Use None so we can catch NULL for error.
 	if (code >= UDN_LAST && code <= UDN_FIRST)
 		fmt = "ii";		// NMUPDOWN
-	else if (code == TBN_GETBUTTONINFOW) 
+	else if (code == TBN_GETBUTTONINFOW)
 		fmt = "iiibbiiiZ";		// NMTOOLBAR
 	else if (code == TBN_QUERYDELETE || code == TBN_QUERYINSERT || (code >= TBN_ENDDRAG && code <= TBN_FIRST ))
 		fmt = "iiibbiiiz";
@@ -341,7 +341,7 @@ Python_OnNotify (CWnd *pFrom, WPARAM, LPARAM lParam, LRESULT *pResult)
 		fmt = "iiiiiPV";		// NMLISTVIEW - Last item is an LPARAM
 	else
 		fmt = NULL;
-	
+
 	if (ob2==Py_None){
 		if (fmt==NULL)
 			ob2 = PyWinLong_FromVoidPtr(pHdr + 1);

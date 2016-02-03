@@ -22,7 +22,7 @@ void DSCArrayTest::FinalRelease()
 
 STDMETHODIMP DSCArrayTest::InterfaceSupportsErrorInfo(REFIID riid)
 {
-	static const IID* arr[] = 
+	static const IID* arr[] =
 	{
 		&IID_IArrayTest
 	};
@@ -42,11 +42,11 @@ HRESULT  CreateVector(long lArraySize, VARIANT& rVarout)
     pSafeArray = SafeArrayCreateVector(VT_VARIANT, 0, lArraySize);
 
     for(lIndex = 0; lIndex < lArraySize; lIndex++)
-    {    
+    {
         VariantInit(&varElement);
         varElement.vt = VT_R8;
         varElement.dblVal = double(lIndex);
-        SafeArrayPutElement(pSafeArray, &lIndex, (void*)&varElement);    
+        SafeArrayPutElement(pSafeArray, &lIndex, (void*)&varElement);
         VariantClear(&varElement);
     }
     VariantInit(&rVarout);
@@ -73,16 +73,16 @@ HRESULT CreateMatrix(long lXSize,long lYSize, VARIANT& rVarout)
     ArrayBounds[0].lLbound   = 0;
     ArrayBounds[1].cElements = lYSize;
     ArrayBounds[1].lLbound   = 0;
-    
+
     // Create the two dimensional array
     pSafeArray = SafeArrayCreate(VT_VARIANT, lDimensions, ArrayBounds);
-    
+
     for(lYIndex = 0; lYIndex < lYSize; lYIndex++)
-    {    
-        for(lXIndex = 0; lXIndex < lXSize; lXIndex++)    
-        {        
-            VariantInit(&varElement);        
-            lIndexArray[0] = lXIndex;        
+    {
+        for(lXIndex = 0; lXIndex < lXSize; lXIndex++)
+        {
+            VariantInit(&varElement);
+            lIndexArray[0] = lXIndex;
             lIndexArray[1] = lYIndex;
             varElement.vt = VT_R8;
             varElement.dblVal = double(lXIndex * 100 + lYIndex);
@@ -93,14 +93,14 @@ HRESULT CreateMatrix(long lXSize,long lYSize, VARIANT& rVarout)
     VariantInit(&rVarout);
     rVarout.vt     = VT_ARRAY | VT_VARIANT;
     rVarout.parray = pSafeArray;
-    return S_OK;    
+    return S_OK;
 }
 
 
 STDMETHODIMP DSCArrayTest::get_Array(VARIANT *pVal)
 {
     HRESULT hr = E_POINTER;
-    if (NULL != pVal) 
+    if (NULL != pVal)
     {
         hr = ::VariantCopy(pVal, &m_spvarcArray);
     }
@@ -122,7 +122,7 @@ STDMETHODIMP DSCArrayTest::ReturnSampleArray(VARIANT *pVal)
     VARIANT    varXAxis;
     VARIANT    varYAxis;
     VARIANT    varZValue;
-    
+
     pSafeArray = SafeArrayCreateVector(VT_VARIANT, 0, 3);
     VariantInit(&varXAxis);
     VariantInit(&varYAxis);
@@ -142,9 +142,9 @@ STDMETHODIMP DSCArrayTest::ReturnSampleArray(VARIANT *pVal)
     VariantClear(&varYAxis);
     VariantClear(&varZValue);
     VariantInit(pVal);
-    
+
 
     pVal->vt     = VT_ARRAY | VT_VARIANT;
-    pVal->parray = pSafeArray;	
+    pVal->parray = pSafeArray;
 	return S_OK;
 }

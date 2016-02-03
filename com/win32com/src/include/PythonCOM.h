@@ -35,7 +35,7 @@
  Before doing anything related to Python, gateways MUST acquire the
  Python lock, and must release it before returning.
 
- This is normally achieved with PY_GATEWAY_METHOD at the top of a 
+ This is normally achieved with PY_GATEWAY_METHOD at the top of a
  gateway method.  This macro resolves to a class, which automatically does
  the right thing.
 
@@ -43,15 +43,15 @@
  --------
  As mentioned above for Interfaces, EVERY call to Release() must be done
  with the Python lock released.  This is expanded here.
- 
- This is very important, but an error may not be noticed.  The problem will 
+
+ This is very important, but an error may not be noticed.  The problem will
  only be seen when the Release() is on a Python object and the Release() is the
- final one for the object.  In this case, the Python object will attempt to 
+ final one for the object.  In this case, the Python object will attempt to
  acquire the Python lock before destroying itself, and Python will raise a
  fatal error.
 
  In many many cases, you will not notice this error, but someday, someone will
- implement the other side in Python, and suddenly FatalErrors will start 
+ implement the other side in Python, and suddenly FatalErrors will start
  appearing.  Make sure you get this right.
 
  Eg, this code is correct:
@@ -142,13 +142,13 @@
 class PyIUnknown;
 // To make life interesting/complicated, I use C++ classes for
 // all Python objects.  The main advantage is that I can derive
-// a PyIDispatch object from a PyIUnknown, etc.  This provides a 
+// a PyIDispatch object from a PyIUnknown, etc.  This provides a
 // clean C++ interface, and "automatically" provides all base
 // Python methods to "derived" Python types.
 //
 // Main disadvantage is that any extension DLLs will need to include
 // these headers, and link with this .lib
-// 
+//
 // Base class for (most of) the type objects.
 
 class PYCOM_EXPORT PyComTypeObject : public PyTypeObject {
@@ -164,14 +164,14 @@ public:
 };
 
 // A type used for interfaces that can automatically provide enumerators
-// (ie, they themselves aren't enumerable, but do have a suitable default 
+// (ie, they themselves aren't enumerable, but do have a suitable default
 // method that returns a PyIEnum object
 class PYCOM_EXPORT PyComEnumProviderTypeObject : public PyComTypeObject {
 public:
-	PyComEnumProviderTypeObject( const char *name, 
-	                             PyComTypeObject *pBaseType, 
-	                             int typeSize, 
-	                             struct PyMethodDef* methodList, 
+	PyComEnumProviderTypeObject( const char *name,
+	                             PyComTypeObject *pBaseType,
+	                             int typeSize,
+	                             struct PyMethodDef* methodList,
 	                             PyIUnknown* (* thector)(IUnknown *),
 	                             const char *enum_method_name);
 	static PyObject *iter(PyObject *self);
@@ -188,8 +188,8 @@ public:
 
 // Very very base class - not COM specific - Should exist in the
 // Python core somewhere, IMO.
-class PYCOM_EXPORT PyIBase : 
-		public PyObject 
+class PYCOM_EXPORT PyIBase :
+		public PyObject
 {
 public:
 	// virtuals for Python support
@@ -588,7 +588,7 @@ public:
 	MAKE_PYCOM_CTOR(PyITypeInfo);
 	static PyComTypeObject type;
 	static ITypeInfo *GetI(PyObject *self);
-	
+
 	PyObject *GetContainingTypeLib();
 	PyObject *GetDocumentation(MEMBERID);
 	PyObject *GetRefTypeInfo(HREFTYPE href);
@@ -614,7 +614,7 @@ public:
 	MAKE_PYCOM_CTOR(PyITypeComp);
 	static PyComTypeObject type;
 	static ITypeComp *GetI(PyObject *self);
-	
+
 	PyObject *Bind(OLECHAR* szName, unsigned short wflags);
 	PyObject *BindType(OLECHAR* szName);
 
@@ -688,7 +688,7 @@ protected:
 // class PythonOleArgHelper
 //
 // A PythonOleArgHelper is used primarily to help out Python helpers
-// which need to convert from a Python object when the specific OLE 
+// which need to convert from a Python object when the specific OLE
 // type is known - eg, when a TypeInfo is available.
 //
 // The type of conversion determines who owns what buffers etc.  I wish BYREF didnt exist :-)
@@ -697,10 +697,10 @@ typedef enum {
 	POAH_CONVERT_UNKNOWN,
 	// A PyObject is given, we convert to a VARIANT, make the COM call, then BYREFs back to a PyObject
 	// ie, this is typically a "normal" COM call, where Python initiates the call
-	POAH_CONVERT_FROM_PYOBJECT, 
+	POAH_CONVERT_FROM_PYOBJECT,
 	// A VARIANT is given, we convert to a PyObject, make the Python call, then BYREFs back to a VARIANT.
 	// ie, this is typically handling a COM event, where COM itself initiates the call.
-	POAH_CONVERT_FROM_VARIANT, 
+	POAH_CONVERT_FROM_VARIANT,
 } POAH_CONVERT_DIRECTION;
 
 class PYCOM_EXPORT PythonOleArgHelper
@@ -710,7 +710,7 @@ public:
 	~PythonOleArgHelper();
 	BOOL ParseTypeInformation(PyObject *reqdObjectTuple);
 
-	// Using this call with reqdObject != NULL will check the existing 
+	// Using this call with reqdObject != NULL will check the existing
 	// VT_ of the variant.  If not VT_EMPTY, then the result will be coerced to
 	// that type.  This contrasts with PyCom_PyObjectToVariant which just
 	// uses the Python type to determine the variant type.
@@ -742,7 +742,7 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 // global functions and variables
-PYCOM_EXPORT BOOL MakePythonArgumentTuples(PyObject **pArgs, PythonOleArgHelper **ppHelpers, 
+PYCOM_EXPORT BOOL MakePythonArgumentTuples(PyObject **pArgs, PythonOleArgHelper **ppHelpers,
                      PyObject **pNamedArgs, PythonOleArgHelper **ppNamedHelpers,
                      DISPPARAMS FAR* params);
 

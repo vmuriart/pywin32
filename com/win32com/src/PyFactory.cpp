@@ -83,8 +83,8 @@ STDMETHODIMP CPyFactory::CreateInstance(
 		if ( FAILED(hr) )
 		{
 			PyCom_LoggerException(NULL, "CPyFactory::CreateInstance failed to create instance. (%lx)", hr);
-		} 
-		else 
+		}
+		else
 		{
 		   // CreateInstance now returns an object already all wrapped
 		   // up (giving more flexibility to the Python programmer.
@@ -109,7 +109,7 @@ STDMETHODIMP CPyFactory::LockServer(BOOL fLock)
 	return S_OK;
 }
 
-// NOTE NOTE: CreateNewPythonInstance assumes that you have the Python thread lock 
+// NOTE NOTE: CreateNewPythonInstance assumes that you have the Python thread lock
 // already acquired.
 STDMETHODIMP CPyFactory::CreateNewPythonInstance(REFCLSID rclsid, REFCLSID rReqiid, PyObject **ppNewInstance)
 {

@@ -128,7 +128,7 @@ class test_adodbapi(dbapi20.DatabaseAPI20Test):
                 pass
             con.commit()
         dbapi20.DatabaseAPI20Test.tearDown(self)
-        
+
 
     def help_nextset_setUp(self,cur):
         'Should create a procedure called deleteme '
@@ -151,7 +151,7 @@ class test_adodbapi(dbapi20.DatabaseAPI20Test):
 
     def test_nextset(self):
         con = self._connect()
-        try:            
+        try:
             cur = con.cursor()
 
             stmts=[self.ddl1] + self._populate()
@@ -167,13 +167,13 @@ class test_adodbapi(dbapi20.DatabaseAPI20Test):
             names=cur.fetchall()
             assert len(names) == len(self.samples)
             s=cur.nextset()
-            assert s == None,'No more return sets, should return None'           
+            assert s == None,'No more return sets, should return None'
         finally:
             try:
                 self.help_nextset_tearDown(cur)
             finally:
                 con.close()
-        
+
     def test_setoutputsize(self): pass
 
 if __name__ == '__main__':

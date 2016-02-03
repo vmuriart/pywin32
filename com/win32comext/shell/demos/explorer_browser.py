@@ -9,7 +9,7 @@ import win32gui, win32con, win32api
 from win32com.server.util import wrap, unwrap
 
 # event handler for the browser.
-IExplorerBrowserEvents_Methods = """OnNavigationComplete OnNavigationFailed 
+IExplorerBrowserEvents_Methods = """OnNavigationComplete OnNavigationFailed
                                     OnNavigationPending OnViewCreated""".split()
 class EventHandler:
     _com_interfaces_ = [shell.IID_IExplorerBrowserEvents]
@@ -89,8 +89,8 @@ class MainWindow:
             # set it to selected.
             tree.SetItemState(si, shellcon.NSTCIS_SELECTED, shellcon.NSTCIS_SELECTED)
 
-        #eb.FillFromObject(None, shellcon.EBF_NODROPTARGET); 
-        #eb.SetEmptyText("No known folders yet...");  
+        #eb.FillFromObject(None, shellcon.EBF_NODROPTARGET);
+        #eb.SetEmptyText("No known folders yet...");
         self.eb = eb
 
     def OnCommand(self, hwnd, msg, wparam, lparam):

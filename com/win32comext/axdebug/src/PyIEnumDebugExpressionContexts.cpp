@@ -160,7 +160,7 @@ PyComTypeObject PyIEnumDebugExpressionContexts::type("PyIEnumDebugExpressionCont
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumDebugExpressionContexts::Next( 
+STDMETHODIMP PyGEnumDebugExpressionContexts::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IDebugExpressionContext __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -207,7 +207,7 @@ STDMETHODIMP PyGEnumDebugExpressionContexts::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumDebugExpressionContexts, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumDebugExpressionContexts::Skip( 
+STDMETHODIMP PyGEnumDebugExpressionContexts::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -220,7 +220,7 @@ STDMETHODIMP PyGEnumDebugExpressionContexts::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumDebugExpressionContexts::Clone( 
+STDMETHODIMP PyGEnumDebugExpressionContexts::Clone(
             /* [out] */ IEnumDebugExpressionContexts __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

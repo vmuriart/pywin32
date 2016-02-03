@@ -7,7 +7,7 @@
 
  Each argument knows how to use Py_BuildValue or Py_ParseTuple to
  exchange itself with Python.
- 
+
  See the @win32com.makegw@ module for information in building a COM
  interface
 """
@@ -42,7 +42,7 @@ class ArgFormatter:
 		"""Given the indirection level I was declared at (0=Normal, 1=*, 2=**)
 		return a string prefix so I can pass to a function with the
 		required indirection (where the default is the indirection of the method's param.
-		
+
 		eg, assuming my arg has indirection level of 2, if this function was passed 1
 		it would return "&", so that a variable declared with indirection of 1
 		can be prefixed with this to turn it into the indirection level required of 2
@@ -78,17 +78,17 @@ class ArgFormatter:
 		return self.GetIndirectedArgName(self.builtinIndirection, 1)
 	def GetInterfaceCppObjectInfo(self):
 		"""Provide information about the C++ object used.
-				
+
 		Simple variables (such as integers) can declare their type (eg an integer)
 		and use it as the target of both PyArg_ParseTuple and the COM function itself.
-		
+
 		More complex types require a PyObject * declared as the target of PyArg_ParseTuple,
 		then some conversion routine to the C++ object which is actually passed to COM.
-		
-		This method provides the name, and optionally the type of that C++ variable.  
+
+		This method provides the name, and optionally the type of that C++ variable.
 		If the type if provided, the caller will likely generate a variable declaration.
 		The name must always be returned.
-		
+
 		Result is a tuple of (variableName, [DeclareType|None|""])
 		"""
 
@@ -119,7 +119,7 @@ class ArgFormatter:
 
 	def GetUnconstType(self):
 		return self.arg.unc_type
-	
+
 	def SetGatewayMode(self):
 		self.gatewayMode = 1
 	def _GetDeclaredIndirection(self):
@@ -201,7 +201,7 @@ class ArgFormatterFloat(ArgFormatter):
 	def GetParsePostCode(self):
 		s = "\t"
 		if self.gatewayMode:
-			s = s + self._IndirectPrefix( 
+			s = s + self._IndirectPrefix(
 				self._GetDeclaredIndirection(),
 				0)
 		s = s + self.arg.name
@@ -231,7 +231,7 @@ class ArgFormatterShort(ArgFormatter):
 	def GetParsePostCode(self):
 		s = "\t"
 		if self.gatewayMode:
-			s = s + self._IndirectPrefix( 
+			s = s + self._IndirectPrefix(
 				self._GetDeclaredIndirection(),
 				0)
 		s = s + self.arg.name
@@ -457,10 +457,10 @@ class ArgFormatterInterface(ArgFormatterPythonCOM):
 		# vs. in params for interface mode.
 			sArg = self.GetIndirectedArgName(1, 2)
 		return "\tif (bPythonIsHappy && !PyCom_InterfaceFromPyInstanceOrObject(ob%s, IID_%s, (void **)%s, TRUE /* bNoneOK */))\n\t\t bPythonIsHappy = FALSE;\n" % (self.arg.name, self.arg.type, sArg)
-	
+
 	def GetBuildForInterfacePreCode(self):
 		return "\tob%s = PyCom_PyObjectFromIUnknown(%s, IID_%s, FALSE);\n" % (self.arg.name, self.arg.name, self.arg.type)
-	
+
 	def GetBuildForGatewayPreCode(self):
 		sPrefix = self._IndirectPrefix(self._GetDeclaredIndirection(), 1)
 		return "\tob%s = PyCom_PyObjectFromIUnknown(%s%s, IID_%s, TRUE);\n" % (self.arg.name, sPrefix, self.arg.name, self.arg.type)
@@ -592,7 +592,7 @@ def make_arg_converter(arg):
 # The instances that represent the args, methods and interface
 class Argument:
 	"""A representation of an argument to a COM method
-	
+
 	This class contains information about a specific argument to a method.
 	In addition, methods exist so that an argument knows how to convert itself
 	to/from Python arguments.
@@ -607,7 +607,7 @@ class Argument:
 		self.arrayDecl = 0
 	def BuildFromFile(self, file):
 		"""Parse and build my data from a file
-		
+
 		Reads the next line in the file, and matches it as an argument
 		description.  If not a valid argument line, an error_not_found exception
 		is raised.
@@ -643,13 +643,13 @@ class Argument:
 			self.unc_type = self.type[6:]
 		else:
 			self.unc_type = self.type
-		
+
 		if VERBOSE:
 			print "	   Arg %s of type %s%s (%s)" % (self.name, self.type, "*" * self.indirectionLevel, self.inout)
 
 	def HasAttribute(self, typ):
 		"""Determines if the argument has the specific attribute.
-		
+
 		Argument attributes are specified in the header file, such as
 		"[in][out][retval]" etc.  You can pass a specific string (eg "out")
 		to find if this attribute was specified for the argument
@@ -664,8 +664,8 @@ class Argument:
 
 class Method:
 	"""A representation of a C++ method on a COM interface
-	
-	This class contains information about a specific method, as well as 
+
+	This class contains information about a specific method, as well as
 	a list of all @Argument@s
 	"""
 #										 options	 ret type callconv	 name
@@ -677,7 +677,7 @@ class Method:
 		self.args = []
 	def BuildFromFile(self, file):
 		"""Parse and build my data from a file
-		
+
 		Reads the next line in the file, and matches it as a method
 		description.  If not a valid method line, an error_not_found exception
 		is raised.
@@ -705,8 +705,8 @@ class Method:
 
 class Interface:
 	"""A representation of a C++ COM Interface
-	
-	This class contains information about a specific interface, as well as 
+
+	This class contains information about a specific interface, as well as
 	a list of all @Method@s
 	"""
 #									  name				 base
@@ -733,10 +733,10 @@ class Interface:
 
 def find_interface(interfaceName, file):
 	"""Find and return an interface in a file
-	
+
 	Given an interface name and file, search for the specified interface.
-	
-	Upon return, the interface itself has been built, 
+
+	Upon return, the interface itself has been built,
 	but not the methods.
 	"""
 	interface = None
@@ -758,9 +758,9 @@ def find_interface(interfaceName, file):
 
 def parse_interface_info(interfaceName, file):
 	"""Find, parse and return an interface in a file
-	
+
 	Given an interface name and file, search for the specified interface.
-	
+
 	Upon return, the interface itself is fully built,
 	"""
 	try:

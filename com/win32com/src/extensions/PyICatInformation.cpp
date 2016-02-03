@@ -145,7 +145,7 @@ static struct PyMethodDef PyICatInformation_methods[] =
 	{"EnumCategories",       PyICatInformation::EnumCategories,  1}, // @pymeth EnumCategories|Returns an enumerator for the component categories registered on the system.
 	{"GetCategoryDesc",       PyICatInformation::GetCategoryDesc,  1}, // @pymeth GetCategoryDesc|Retrieves the localized description string for a specific category ID.
 	{"EnumClassesOfCategories", PyICatInformation::EnumClassesOfCategories,  1}, // @pymeth EnumClassesOfCategories|Returns an enumerator over the classes that implement one or more interfaces.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyICatInformation::type("PyICatInformation",

@@ -19,8 +19,8 @@ class PyHandleTestCase(unittest.TestCase):
             if invalidate:
                 win32api.CloseHandle(int(h))
             1/0
-            # If we invalidated, then the object destruction code will attempt 
-            # to close an invalid handle.  We don't wan't an exception in 
+            # If we invalidated, then the object destruction code will attempt
+            # to close an invalid handle.  We don't wan't an exception in
             # this case
 
         def f2(invalidate):
@@ -37,7 +37,7 @@ class PyHandleTestCase(unittest.TestCase):
 
     def testCleanup2(self):
         # Cause an exception during object destruction.
-        # The worst this does is cause an ".XXX undetected error (why=3)" 
+        # The worst this does is cause an ".XXX undetected error (why=3)"
         # So avoiding that is the goal
         import win32event
         h = win32event.CreateEvent(None, 0, 0, None)

@@ -139,13 +139,13 @@ PyObject *PyObject_FromBINDINFO(BINDINFO *pPD)
 	PyTuple_SET_ITEM(obRet, 0, PyWinObject_FromWCHAR(pPD->szExtraInfo));
 	Py_INCREF(Py_None);
 	PyTuple_SET_ITEM(obRet, 1, Py_None); // STGMEDUIM not yet supported.
-	PyTuple_SET_ITEM(obRet, 2, PyInt_FromLong(pPD->grfBindInfoF)); 
-	PyTuple_SET_ITEM(obRet, 3, PyInt_FromLong(pPD->dwBindVerb)); 
-	PyTuple_SET_ITEM(obRet, 4, PyWinObject_FromWCHAR(pPD->szCustomVerb)); 
+	PyTuple_SET_ITEM(obRet, 2, PyInt_FromLong(pPD->grfBindInfoF));
+	PyTuple_SET_ITEM(obRet, 3, PyInt_FromLong(pPD->dwBindVerb));
+	PyTuple_SET_ITEM(obRet, 4, PyWinObject_FromWCHAR(pPD->szCustomVerb));
 	if (bNewFormat) {
-		PyTuple_SET_ITEM(obRet, 5, PyInt_FromLong(pPD->dwOptions)); 
-		PyTuple_SET_ITEM(obRet, 6, PyInt_FromLong(pPD->dwOptionsFlags)); 
-		PyTuple_SET_ITEM(obRet, 7, PyInt_FromLong(pPD->dwCodePage)); 
+		PyTuple_SET_ITEM(obRet, 5, PyInt_FromLong(pPD->dwOptions));
+		PyTuple_SET_ITEM(obRet, 6, PyInt_FromLong(pPD->dwOptionsFlags));
+		PyTuple_SET_ITEM(obRet, 7, PyInt_FromLong(pPD->dwCodePage));
 		PyTuple_SET_ITEM(obRet, 8, PyWinObject_FromSECURITY_ATTRIBUTES(pPD->securityAttributes));
 		PyTuple_SET_ITEM(obRet, 9, PyWinObject_FromIID(pPD->iid));
 		PyTuple_SET_ITEM(obRet, 10, PyCom_PyObjectFromIUnknown(pPD->pUnk, pPD->iid, /*bAddRef = */TRUE));
@@ -215,7 +215,7 @@ static PyObject *PyCoInternetCreateSecurityManager(PyObject *self, PyObject *arg
 	if (FAILED(hr))
 		return PyCom_BuildPyException(hr);
 	return PyCom_PyObjectFromIUnknown(sm, IID_IInternetSecurityManager, FALSE);
-	
+
 }
 
 /* List of module functions */

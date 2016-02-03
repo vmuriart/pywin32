@@ -249,7 +249,7 @@ PyObject *pythoncom_StgOpenStorage(PyObject *self, PyObject *args)
 PyObject *pythoncom_StgOpenStorageEx(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 #ifndef NO_PYCOM_STGOPENSTORAGEEX
-	typedef HRESULT (WINAPI *PFNStgOpenStorageEx)(WCHAR *, DWORD, DWORD, DWORD, 
+	typedef HRESULT (WINAPI *PFNStgOpenStorageEx)(WCHAR *, DWORD, DWORD, DWORD,
 						STGOPTIONS *, void *, REFIID, void **);;
 	static PFNStgOpenStorageEx myStgOpenStorageEx = NULL;
 	if (myStgOpenStorageEx==NULL) { // Haven't tried to fetch it yet.
@@ -297,7 +297,7 @@ PyObject *pythoncom_StgOpenStorageEx(PyObject *self, PyObject *args, PyObject *k
 	return PyCom_PyObjectFromIUnknown((IUnknown *)ret, riid, FALSE);
 #else
 	return PyErr_Format(PyExc_NotImplementedError,"StgOpenStorageEx not supported by this version of Windows");
-#endif // NO_PYCOM_STGOPENSTORAGEEX	
+#endif // NO_PYCOM_STGOPENSTORAGEEX
 }
 
 // @pymethod <o PyIStorage>|pythoncom|StgCreateStorageEx|Creates a new structured storage file or property set

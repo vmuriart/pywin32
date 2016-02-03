@@ -125,7 +125,7 @@ dll_object::repr()
 
   CString csFileName;
   buf = csFileName.GetBuffer(MAX_PATH);
-  if (dll) 
+  if (dll)
   	::GetModuleFileName(dll, buf, MAX_PATH); // @pyseeapi GetModuleFileName
   else
 	_tcscpy(buf, _T("<None>"));
@@ -142,9 +142,9 @@ static struct PyMethodDef dll_methods[] =
   {NULL, 	NULL}
 };
 
-ui_type dll_object::type ("PyDLL", 
-						  &ui_assoc_object::type, 
-						  sizeof(dll_object), 
-						  PYOBJ_OFFSET(dll_object), 
-						  dll_methods, 
+ui_type dll_object::type ("PyDLL",
+						  &ui_assoc_object::type,
+						  sizeof(dll_object),
+						  PYOBJ_OFFSET(dll_object),
+						  dll_methods,
 						  GET_PY_CTOR(dll_object));

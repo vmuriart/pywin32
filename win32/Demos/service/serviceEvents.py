@@ -69,7 +69,7 @@ class EventDemoService(win32serviceutil.ServiceFramework):
                 0xF000, #  generic message
                 (msg, '')
                 )
-    
+
     def SvcStop(self):
         self.ReportServiceStatus(win32service.SERVICE_STOP_PENDING)
         win32event.SetEvent(self.hWaitStop)

@@ -26,9 +26,9 @@ g_sourceSafe = None
 
 def FindVssProjectInfo(fullfname):
 	"""Looks up the file system for an INI file describing the project.
-	
+
 	Looking up the tree is for ni style packages.
-	
+
 	Returns (projectName, pathToFileName) where pathToFileName contains
 	the path from the ini file to the actual file.
 	"""
@@ -51,8 +51,8 @@ def FindVssProjectInfo(fullfname):
 		win32ui.MessageBox("%s\r\n\r\nThis directory is not configured for Python/VSS" % origPath)
 		return
 	return project, "/".join(retPaths), database
-		
-	
+
+
 def CheckoutFile(fileName):
 	global g_sourceSafe
 	import pythoncom

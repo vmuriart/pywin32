@@ -1,8 +1,8 @@
 import os, win32api
 
-ver_strings=('Comments','InternalName','ProductName', 
-    'CompanyName','LegalCopyright','ProductVersion', 
-    'FileDescription','LegalTrademarks','PrivateBuild', 
+ver_strings=('Comments','InternalName','ProductName',
+    'CompanyName','LegalCopyright','ProductVersion',
+    'FileDescription','LegalTrademarks','PrivateBuild',
     'FileVersion','OriginalFilename','SpecialBuild')
 fname = os.environ["comspec"]
 d=win32api.GetFileVersionInfo(fname, '\\')

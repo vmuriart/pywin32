@@ -97,7 +97,7 @@ static struct PyNET_STRUCT_ITEM wki101[] = {
 	WKI101_ENTRY(lanroot, NSI_WSTR, 0), // @prop string/<o PyUnicode>|lanroot|Path to the LANMAN directory
 	{NULL}
 };
- 
+
 #define WKI102_ENTRY(name, t, r) { #name, t, offsetof(WKSTA_INFO_102, wki102_##name), r }
 // @object PyWKSTA_INFO_102|A dictionary holding the infomation in a Win32 WKSTA_INFO_102 structure.
 static struct PyNET_STRUCT_ITEM wki102[] = {
@@ -150,21 +150,21 @@ static struct PyNET_STRUCT_ITEM wki402[] = {
 	WKI402_ENTRY(maximum_collection_count , NSI_DWORD, 0), // @prop string/<o PyUnicode>|maximum_collection_count|Name of the domain to which computer belongs
 	WKI402_ENTRY(keep_conn, NSI_DWORD, 0), // @prop int|keep_conn|Major version number of operating system running on the computer
 	WKI402_ENTRY(keep_search, NSI_DWORD, 0), // @prop int|keep_search|Minor version number of operating system running on the computer
-	WKI402_ENTRY(max_cmds, NSI_DWORD, 0), // @prop int|max_cmds|.. 
+	WKI402_ENTRY(max_cmds, NSI_DWORD, 0), // @prop int|max_cmds|..
 	WKI402_ENTRY(num_work_buf, NSI_DWORD, 0), // @prop int|num_work_buf|Number of users who are logged on to the local computer
 	WKI402_ENTRY(siz_work_buf, NSI_DWORD, 0), // @prop int|siz_work_buf|Number of users who are logged on to the local computer
-	WKI402_ENTRY(max_wrk_cache, NSI_DWORD, 0), // @prop int|max_wrk_cache|.. 
-    WKI402_ENTRY(sess_timeout, NSI_DWORD, 0), // @prop int|sess_timeout|.. 
-    WKI402_ENTRY(siz_error, NSI_DWORD, 0),    // @prop int|siz_error|.. 
-    WKI402_ENTRY(num_alerts, NSI_DWORD, 0),	  // @prop int|num_alerts|.. 
-    WKI402_ENTRY(num_services, NSI_DWORD, 0), // @prop int|num_services|.. 
-    WKI402_ENTRY(errlog_sz, NSI_DWORD, 0), 	  // @prop int|errlog_sz|.. 
-    WKI402_ENTRY(print_buf_time, NSI_DWORD, 0), // @prop int|print_buf_time|.. 
-    WKI402_ENTRY(num_char_buf, NSI_DWORD, 0),  // @prop int|num_char_buf|.. 
+	WKI402_ENTRY(max_wrk_cache, NSI_DWORD, 0), // @prop int|max_wrk_cache|..
+    WKI402_ENTRY(sess_timeout, NSI_DWORD, 0), // @prop int|sess_timeout|..
+    WKI402_ENTRY(siz_error, NSI_DWORD, 0),    // @prop int|siz_error|..
+    WKI402_ENTRY(num_alerts, NSI_DWORD, 0),	  // @prop int|num_alerts|..
+    WKI402_ENTRY(num_services, NSI_DWORD, 0), // @prop int|num_services|..
+    WKI402_ENTRY(errlog_sz, NSI_DWORD, 0), 	  // @prop int|errlog_sz|..
+    WKI402_ENTRY(print_buf_time, NSI_DWORD, 0), // @prop int|print_buf_time|..
+    WKI402_ENTRY(num_char_buf, NSI_DWORD, 0),  // @prop int|num_char_buf|..
     WKI402_ENTRY(siz_char_buf, NSI_DWORD, 0), // @prop int|siz_char_buf|Specifies the maximum size, in bytes, of a character pipe buffer and device buffer.
     WKI402_ENTRY(wrk_heuristics, NSI_WSTR, 0), // @prop string/<o PyUnicode>|siz_char_buf|..
-    WKI402_ENTRY(mailslots, NSI_DWORD, 0), // @prop int|mailslots|.. 
-    WKI402_ENTRY(num_dgram_buf, NSI_DWORD, 0), // @prop int|num_dgram_buf|.. 
+    WKI402_ENTRY(mailslots, NSI_DWORD, 0), // @prop int|mailslots|..
+    WKI402_ENTRY(num_dgram_buf, NSI_DWORD, 0), // @prop int|num_dgram_buf|..
     WKI402_ENTRY(max_threads, NSI_DWORD, 0), // @prop int|max_threads|Number of threads the computer can dedicate to the network
 	{NULL}
 };
@@ -321,7 +321,7 @@ static PyObject *PyNetShareEnum1(WCHAR *szServerName)
 
 				p_nr++;	// next object (its a ++ because it is a typed pointer)
 				dwCount--;
-			} while (dwCount);  
+			} while (dwCount);
 		}; // if dwCount
 		} // if Errno == NERR_Sucess
 		else
@@ -336,7 +336,7 @@ static PyObject *PyNetShareEnum1(WCHAR *szServerName)
 	return pRetlist;
 }
 
-// @pymethod ([dict, ...], total, resumeHandle)|win32net|NetShareEnum|Retrieves information about each shared resource on a server. 
+// @pymethod ([dict, ...], total, resumeHandle)|win32net|NetShareEnum|Retrieves information about each shared resource on a server.
 // @rdesc The result is a list of items read (with each item being a dictionary of format
 // <o PySHARE_INFO_*>, depending on the level parameter),
 // the total available, and a new "resume handle".  The first time you call
@@ -372,7 +372,7 @@ PyNetShareEnum(PyObject *self, PyObject *args)
 }
 
 // @pymethod dict|win32net|NetShareGetInfo|Retrieves information about a particular share on a server.
-PyObject *PyNetShareGetInfo(PyObject *self, PyObject *args) 
+PyObject *PyNetShareGetInfo(PyObject *self, PyObject *args)
 {
 	PFNGETINFO pfn = (PFNGETINFO)&NetShareGetInfo;
 	return PyDoGetInfo(self, args, pfn, "NetShareGetInfo", share_infos);
@@ -397,7 +397,7 @@ PyObject *PyNetShareSetInfo(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetShareAdd|Creates a new share.
-PyObject *PyNetShareAdd(PyObject *self, PyObject *args) 
+PyObject *PyNetShareAdd(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm int|level||The information level contained in the data.  Must be level 2 or 502.
@@ -408,7 +408,7 @@ PyObject *PyNetShareAdd(PyObject *self, PyObject *args)
 }
 
 // @pymethod |win32net|NetShareDel|Deletes a share
-PyObject *PyNetShareDel(PyObject *self, PyObject *args) 
+PyObject *PyNetShareDel(PyObject *self, PyObject *args)
 {
 	// @pyparm string/<o PyUnicode>|server||The name of the server, or None.
 	// @pyparm string/<o PyUnicode>|shareName||The share name
@@ -430,7 +430,7 @@ PyObject *PyNetShareDel(PyObject *self, PyObject *args)
 	err = NetShareDel(szServer, szName, reserved);
 	Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError("NetShareDel",err);	
+		ReturnNetError("NetShareDel",err);
 		goto done;
 	}
 	ret = Py_None;
@@ -741,7 +741,7 @@ done:
 
 // @pymethod dict|win32net|NetServerGetInfo|Retrieves information about a particular server.
 PyObject *
-PyNetServerGetInfo(PyObject *self, PyObject *args) 
+PyNetServerGetInfo(PyObject *self, PyObject *args)
 {
 	WCHAR *szServer = NULL;
 	PyObject *obServer;
@@ -804,7 +804,7 @@ PyNetServerSetInfo(PyObject *self, PyObject *args)
 	err = NetServerSetInfo(szServer, typ, buf, NULL);
 	Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError("NetServerSetInfo",err);	
+		ReturnNetError("NetServerSetInfo",err);
 		goto done;
 	}
 	ret= Py_None;
@@ -949,7 +949,7 @@ PyNetWkstaSetInfo(PyObject *self, PyObject *args)
 	err = NetWkstaSetInfo(szServer, typ, buf, NULL);
 	Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError("NetWkstaSetInfo",err);	
+		ReturnNetError("NetWkstaSetInfo",err);
 		goto done;
 	}
 	ret= Py_None;
@@ -1058,7 +1058,7 @@ PyNetWkstaTransportAdd(PyObject *self, PyObject *args)
 	err = NetWkstaTransportAdd(szServer, typ, buf, NULL);
 	Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError("NetWkstaTransportAdd",err);	
+		ReturnNetError("NetWkstaTransportAdd",err);
 		goto done;
 	}
 	ret= Py_None;
@@ -1094,7 +1094,7 @@ PyNetWkstaTransportDel(PyObject *self, PyObject *args)
 	err = NetWkstaTransportDel(szServer, szTransport, ucond);
 	Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError("NetWkstaTransportDel",err);	
+		ReturnNetError("NetWkstaTransportDel",err);
 		goto done;
 	}
 	ret= Py_None;

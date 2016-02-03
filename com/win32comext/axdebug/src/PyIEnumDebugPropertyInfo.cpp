@@ -183,7 +183,7 @@ PyComTypeObject PyIEnumDebugPropertyInfo::type("PyIEnumDebugPropertyInfo",
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumDebugPropertyInfo::Next( 
+STDMETHODIMP PyGEnumDebugPropertyInfo::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ DebugPropertyInfo __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -230,7 +230,7 @@ STDMETHODIMP PyGEnumDebugPropertyInfo::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumDebugPropertyInfo, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumDebugPropertyInfo::Skip( 
+STDMETHODIMP PyGEnumDebugPropertyInfo::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -243,7 +243,7 @@ STDMETHODIMP PyGEnumDebugPropertyInfo::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumDebugPropertyInfo::Clone( 
+STDMETHODIMP PyGEnumDebugPropertyInfo::Clone(
             /* [out] */ IEnumDebugPropertyInfo __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;
@@ -289,7 +289,7 @@ STDMETHODIMP PyGEnumDebugPropertyInfo::Clone(
 	return PyCom_SetCOMErrorFromSimple(hr, IID_IEnumDebugPropertyInfo, "Python could not convert the result from Next() into the required COM interface");
 }
 
-STDMETHODIMP PyGEnumDebugPropertyInfo::GetCount( 
+STDMETHODIMP PyGEnumDebugPropertyInfo::GetCount(
             /* [out] */ ULONG __RPC_FAR *pcelt)
 {
 	if (pcelt==NULL) return E_POINTER;

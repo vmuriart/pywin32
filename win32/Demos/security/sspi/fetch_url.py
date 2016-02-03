@@ -85,7 +85,7 @@ def open_url(host, url):
             else:
                 print "Could not find scheme '%s' in schemes %r" % (auth_scheme, schemes)
                 break
-        
+
             resp.read()
     print "Final response status is", resp.status, resp.reason
     if resp.status == 200:
@@ -105,7 +105,7 @@ def open_url(host, url):
             print "Second response headers:"
             for name, val in resp.msg.items():
                 print " %s: %s" % (name, val)
-        
+
         resp.read(int(resp.msg.get("content-length", 0)))
     elif resp.status == 500:
         print "Error text"
@@ -117,7 +117,7 @@ def open_url(host, url):
 
 if __name__=='__main__':
     parser = optparse.OptionParser(description=__doc__)
-    
+
     parser.add_option("", "--show-body", action="store_true",
                       help="print the body of each response as it is received")
 
@@ -141,6 +141,6 @@ if __name__=='__main__':
         scheme, netloc, path, params, query, fragment = urlparse.urlparse(url)
         if (scheme != "http") or params or query or fragment:
             parser.error("Scheme must be http, URL must be simple")
-    
+
         print "Opening '%s' from '%s'" % (path, netloc)
         r = open_url(netloc, path)

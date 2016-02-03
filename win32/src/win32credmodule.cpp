@@ -441,12 +441,12 @@ PyObject * PyCredUnmarshalCredential(PyObject *self, PyObject *args, PyObject *k
 	switch(credtype){
 		// @flag CertCredential|Character string containing SHA1 hash of a certificate
 		case CertCredential:
-			ret=Py_BuildValue("kN", credtype, 
+			ret=Py_BuildValue("kN", credtype,
 				PyString_FromStringAndSize((char *)&((PCERT_CREDENTIAL_INFO)credential)->rgbHashOfCert, CERT_HASH_LENGTH));
 			break;
 		// @flag UsernameTargetCredential|Unicode string containing username
 		case UsernameTargetCredential:
-			ret=Py_BuildValue("kN", credtype, 
+			ret=Py_BuildValue("kN", credtype,
 				PyWinObject_FromWCHAR(((PUSERNAME_TARGET_CREDENTIAL_INFO)credential)->UserName));
 			break;
 		default:
@@ -706,7 +706,7 @@ PyObject *PyCredUICmdLinePromptForCredentials(PyObject *self, PyObject *args, Py
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|kOOkk:CredUICmdLinePromptForCredentials", keywords,
 		&obtargetname,	// @pyparm <o PyUnicode>|TargetName||Server or domain against which to authenticate
 		&autherror,		// @pyparm int|AuthError|0|Error code indicating why credentials are required, can be 0
-		&obusername,	// @pyparm <o PyUnicode>|UserName|None|Default username, can be None.  At most CREDUI_MAX_USERNAME_LENGTH chars 
+		&obusername,	// @pyparm <o PyUnicode>|UserName|None|Default username, can be None.  At most CREDUI_MAX_USERNAME_LENGTH chars
 		&obpassword,	// @pyparm <o PyUnicode>|Password|None|Password, can be None.  At most CREDUI_MAX_PASSWORD_LENGTH chars
 		&save,			// @pyparm boolean|Save|True|Specifies default value for Save prompt
 		&flags))		// @pyparm int|Flags|CREDUI_FLAGS_EXCLUDE_CERTIFICATES|Combination of CREDUI_FLAGS_* values
@@ -788,7 +788,7 @@ PyObject *PyCredUIPromptForCredentials(PyObject *self, PyObject *args, PyObject 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|kOOkkO:CredUIPromptForCredentials", keywords,
 		&obtargetname,	// @pyparm <o PyUnicode>|TargetName||Server or domain against which to authenticate
 		&autherror,		// @pyparm int|AuthError|0|Error code indicating why credentials are required, can be 0
-		&obusername,	// @pyparm <o PyUnicode>|UserName|None|Default username, can be None.  At most CREDUI_MAX_USERNAME_LENGTH chars 
+		&obusername,	// @pyparm <o PyUnicode>|UserName|None|Default username, can be None.  At most CREDUI_MAX_USERNAME_LENGTH chars
 		&obpassword,	// @pyparm <o PyUnicode>|Password|None|Password, can be None.  At most CREDUI_MAX_PASSWORD_LENGTH chars
 		&save,			// @pyparm boolean|Save|True|Specifies whether Save checkbox defaults to checked or unchecked
 		&flags,			// @pyparm int|Flags|0|Combination of CREDUI_FLAGS_* values
@@ -999,15 +999,15 @@ PyObject *PyCredUIParseUserName(PyObject *self, PyObject *args, PyObject *kwargs
 // All functions accept keyword arguments.
 static struct PyMethodDef win32cred_functions[] = {
 	// @pymeth CredMarshalCredential|Marshals a credential into a unicode string
-	{"CredMarshalCredential", (PyCFunction)PyCredMarshalCredential, METH_VARARGS|METH_KEYWORDS, "Marshals a credential into a unicode string"},     
+	{"CredMarshalCredential", (PyCFunction)PyCredMarshalCredential, METH_VARARGS|METH_KEYWORDS, "Marshals a credential into a unicode string"},
 	// @pymeth CredUnmarshalCredential|Unmarshals credentials formatted using <om win32cred.CredMarshalCredential>
 	{"CredUnmarshalCredential", (PyCFunction)PyCredUnmarshalCredential, METH_VARARGS|METH_KEYWORDS, "Unmarshals credentials formatted using <om win32cred.CredMarshalCredential>"},
 	// @pymeth CredIsMarshaledCredential|Checks if a string matches the form of a marshaled credential
 	{"CredIsMarshaledCredential", (PyCFunction)PyCredIsMarshaledCredential, METH_VARARGS|METH_KEYWORDS, "Checks if a string matches the form of a marshaled credential"},
 	// @pymeth CredEnumerate|Lists stored credentials for current logon session
-	{"CredEnumerate", (PyCFunction)PyCredEnumerate, METH_VARARGS|METH_KEYWORDS, "Lists stored credentials for current logon session"},	
+	{"CredEnumerate", (PyCFunction)PyCredEnumerate, METH_VARARGS|METH_KEYWORDS, "Lists stored credentials for current logon session"},
 	// @pymeth CredGetTargetInfo|Determines type and location of credential target
-	{"CredGetTargetInfo", (PyCFunction)PyCredGetTargetInfo, METH_VARARGS|METH_KEYWORDS, "Determines type and location of credential target"},	
+	{"CredGetTargetInfo", (PyCFunction)PyCredGetTargetInfo, METH_VARARGS|METH_KEYWORDS, "Determines type and location of credential target"},
 	// @pymeth CredWriteDomainCredentials|Creates or updates credential for a domain or server
 	{"CredWriteDomainCredentials", (PyCFunction)PyCredWriteDomainCredentials, METH_VARARGS|METH_KEYWORDS, "Creates or updates credential for a domain or server"},
 	// @pymeth CredReadDomainCredentials|Retrieves a user's credentials for a domain or server

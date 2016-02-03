@@ -55,7 +55,7 @@ def SendEMAPIMail(Subject="", Message="", SendTo=None, SendCC=None, SendBCC=None
               (mapitags.PR_EMAIL_ADDRESS_A, recipient),
               (mapitags.PR_ADDRTYPE_A, 'SMTP'),
               (mapitags.PR_DISPLAY_NAME_A, recipient))
-    
+
     if SendTo:
       pal.extend([makeentry(recipient, mapi.MAPI_TO) for recipient in SendTo.split(",")])
     if SendCC:

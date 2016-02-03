@@ -108,7 +108,7 @@ PYCOM_EXPORT BOOL PyObject_AsCurrency(PyObject *ob, CURRENCY *pcy)
 	return TRUE;
 }
 
-// If PyCom_PyObjectFromIUnknown is called with bAddRef==FALSE, the 
+// If PyCom_PyObjectFromIUnknown is called with bAddRef==FALSE, the
 // caller is asking us to take ownership of the COM reference.  If we
 // fail to create a Python object, we must release the reference.
 #define POFIU_RELEASE_ON_FAILURE \
@@ -288,10 +288,10 @@ PyObject *PyCom_PyObjectFromSTATSTG(STATSTG *pStat)
 	obctime = PyWinObject_FromFILETIME(pStat->ctime);
 	obatime = PyWinObject_FromFILETIME(pStat->atime);
 	obCLSID = PyWinObject_FromIID(pStat->clsid);
-	
+
 	PyObject *obName = MakeOLECHARToObj(pStat->pwcsName);
 //	char *szName = pStat->pwcsName==NULL ? NULL : OLE2T(pStat->pwcsName);
-	PyObject *result = Py_BuildValue("OiOOOOiiOii", 
+	PyObject *result = Py_BuildValue("OiOOOOiiOii",
 		           obName, // @tupleitem 0|string|name|The name of the storage object
 				   pStat->type, // @tupleitem 1|int|type|Indicates the type of storage object. This is one of the values from the storagecon.STGTY_* values.
 				   obSize, // @tupleitem 2|<o ULARGE_INTEGER>|size|Specifies the size in bytes of the stream or byte array.
@@ -378,9 +378,9 @@ BOOL PyCom_PyObjectAsSTGOPTIONS(PyObject *obstgoptions, STGOPTIONS **ppstgoption
 	(*ppstgoptions)->ulSectorSize=512;
 	(*ppstgoptions)->pwcsTemplateFile=NULL;
 	dummy_tuple=PyTuple_New(0);
-	ret=PyArg_ParseTupleAndKeywords(dummy_tuple, obstgoptions, "|lllu", stgmembers, 
+	ret=PyArg_ParseTupleAndKeywords(dummy_tuple, obstgoptions, "|lllu", stgmembers,
 		&(*ppstgoptions)->usVersion,
-		&(*ppstgoptions)->reserved, 
+		&(*ppstgoptions)->reserved,
 		&(*ppstgoptions)->ulSectorSize,
 		&(*ppstgoptions)->pwcsTemplateFile);
 	Py_DECREF(dummy_tuple);
@@ -394,7 +394,7 @@ BOOL PyCom_PyObjectAsSTGOPTIONS(PyObject *obstgoptions, STGOPTIONS **ppstgoption
 }
 #endif // NO_PYCOM_STGOPTIONS
 
-PyObject *PyCom_PyObjectFromSTATPROPSETSTG(STATPROPSETSTG *pStg) 
+PyObject *PyCom_PyObjectFromSTATPROPSETSTG(STATPROPSETSTG *pStg)
 {
 	if (pStg==NULL) {
 		Py_INCREF(Py_None);
@@ -414,7 +414,7 @@ PyObject *PyCom_PyObjectFromSTATPROPSETSTG(STATPROPSETSTG *pStg)
 	return ret;
 }
 
-BOOL PyCom_PyObjectAsSTATPROPSETSTG(PyObject *obstat, STATPROPSETSTG *pstat) 
+BOOL PyCom_PyObjectAsSTATPROPSETSTG(PyObject *obstat, STATPROPSETSTG *pstat)
 {
 	return PyArg_ParseTuple(obstat, "O&O&kO&O&O&:STATPROPSETSTG",
 			PyWinObject_AsIID, &pstat->fmtid,

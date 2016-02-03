@@ -90,11 +90,11 @@ PyTypeObject PyDSCBUFFERDESCType =
 #define OFF(e) offsetof(PyDSCBUFFERDESC, e)
 
 /*static*/ struct PyMemberDef PyDSCBUFFERDESC::members[] = {
-	{"dwFlags",  T_INT,  OFF(m_dscbd.dwFlags), 0, "Identifies the capabilities to include when creating a new DirectSoundBuffer object"}, 
+	{"dwFlags",  T_INT,  OFF(m_dscbd.dwFlags), 0, "Identifies the capabilities to include when creating a new DirectSoundBuffer object"},
 		// @prop integer|dwFlags|Identifies the capabilities to include when creating a new DirectSoundBuffer object. Can be zero or the following flag:
 		// @flagh Flag|Description
 		// @flag DSCBCAPS_WAVEMAPPED|The Win32 wave mapper will be used for formats not supported by the device.
-	{"dwBufferBytes",  T_INT,  OFF(m_dscbd.dwBufferBytes), 0, "Size of the new buffer, in bytes. This value must be 0 when creating primary buffers. For secondary buffers, the minimum and maximum sizes allowed are specified by DSBSIZE_MIN and DSBSIZE_MAX"}, 
+	{"dwBufferBytes",  T_INT,  OFF(m_dscbd.dwBufferBytes), 0, "Size of the new buffer, in bytes. This value must be 0 when creating primary buffers. For secondary buffers, the minimum and maximum sizes allowed are specified by DSBSIZE_MIN and DSBSIZE_MAX"},
 		// @prop integer|dwBufferBytes|Size of the new buffer, in bytes. This value must be 0 when creating primary buffers. For secondary buffers, the minimum and maximum sizes allowed are specified by DSBSIZE_MIN and DSBSIZE_MAX.
 	{"lpwfxFormat", T_OBJECT, OFF(m_obWFX), 0, "Structure specifying the waveform format for the buffer. This value must be None for primary buffers. The application can use IDirectSoundCaptureBuffer::SetFormat to set the format of the primary buffer."},
 		// @prop WAVEFORMATEX|lpwfxFormat|Structure specifying the waveform format for the buffer. This value must be None for primary buffers. The application can use IDirectSoundBuffer::SetFormat to set the format of the primary buffer.

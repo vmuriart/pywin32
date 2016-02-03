@@ -108,7 +108,7 @@ BOOL CInProcApp::InitInstance()
 }
 
 // Check that we have a valid CWinApp object to use.
-bool CheckGoodWinApp() 
+bool CheckGoodWinApp()
 {
 // Shouldnt need special symbols now that we delay the creation.
 	// If the host exports a special symbol, then
@@ -169,7 +169,7 @@ extern "C" int __stdcall DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID)
 #else
 extern "C" __declspec(dllexport) int __stdcall DllMainwin32ui(HINSTANCE hInstance, DWORD dwReason, LPVOID)
 #endif
-		   
+
 {
 	if (dwReason == DLL_PROCESS_ATTACH) {
 		hWin32uiDll = hInstance;
@@ -186,7 +186,7 @@ extern "C" __declspec(dllexport) int __stdcall DllMainwin32ui(HINSTANCE hInstanc
 #ifdef _DEBUG
 		TRACE("Extension module %s initialising.\n", path);
 #endif
-		// Extension DLL one-time initialization 
+		// Extension DLL one-time initialization
 		if (!AfxInitExtensionModule(extensionDLL, hInstance))
 			return 0;
 		// insert into resource chain.
@@ -240,29 +240,29 @@ HWND GetConsoleHwnd(void)
     HWND hwndFound;         // this is what is returned to the caller
     TCHAR pszNewWindowTitle[MY_BUFSIZE]; // contains fabricated WindowTitle
     TCHAR pszOldWindowTitle[MY_BUFSIZE]; // contains original WindowTitle
- 
+
     // fetch current window title
     if (GetConsoleTitle(pszOldWindowTitle, MY_BUFSIZE)==0)
 		return NULL;
 
- 
+
     // format a "unique" NewWindowTitle
     wsprintf(pszNewWindowTitle, _T("%d/%d"),
                 GetTickCount(),
                 GetCurrentProcessId());
- 
+
     // change current window title
     SetConsoleTitle(pszNewWindowTitle);
- 
+
     // ensure window title has been updated
     Sleep(40);
- 
+
     // look for NewWindowTitle
     hwndFound=FindWindow(NULL, pszNewWindowTitle);
- 
+
     // restore original window title
     SetConsoleTitle(pszOldWindowTitle);
- 
+
     return(hwndFound);
 }
- 
+

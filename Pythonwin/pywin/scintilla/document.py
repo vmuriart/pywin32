@@ -135,7 +135,7 @@ class CScintillaDocument(ParentScintillaDocument):
 
 		view = self.GetFirstView()
 		if view.IsWindow():
-			# Turn off undo collection while loading 
+			# Turn off undo collection while loading
 			view.SendScintilla(scintillacon.SCI_SETUNDOCOLLECTION, 0, 0)
 			# Make sure the control isnt read-only
 			view.SetReadOnly(0)
@@ -161,7 +161,7 @@ class CScintillaDocument(ParentScintillaDocument):
 						source_encoding = match.group(1)
 						self.source_encoding = source_encoding
 						break
-	
+
 			if source_encoding is None:
 				source_encoding = 'latin1'
 

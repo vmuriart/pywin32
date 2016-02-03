@@ -51,12 +51,12 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "i|OOO", &info_lvl, &server_name_obj, &client_name_obj, &user_name_obj))
 		return NULL;
-	if ((info_lvl != 0) && (info_lvl != 1) && (info_lvl !=2) && 
+	if ((info_lvl != 0) && (info_lvl != 1) && (info_lvl !=2) &&
 		(info_lvl != 10) && (info_lvl != 502)){
 		PyErr_SetString(PyExc_ValueError,"Invalid level for NetSessionEnum");
 		return NULL;
 	}
-	
+
 	if (!PyWinObject_AsWCHAR(server_name_obj, &server_name, TRUE))
 		goto done;
 	if (!PyWinObject_AsWCHAR(client_name_obj, &client_name, TRUE))
@@ -72,7 +72,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 			    nStatus = NetSessionEnum(server_name, client_name, user_name, info_lvl,
 			       (LPBYTE*)&pBuf0, buff_len, &dwEntriesRead, &dwTotalEntries, &dwResumeHandle);
 			    Py_END_ALLOW_THREADS
-			
+
 			    if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA)){
 			       if ((pTmpBuf0 = pBuf0) != NULL){
 						for (i = 0; (i < dwEntriesRead); i++){
@@ -83,7 +83,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 							pTmpBuf0++;
 						}
 			       }
-				}	
+				}
 				else{
 					ReturnNetError("NetSessionEnum",nStatus);
 					Py_XDECREF(ret_list);
@@ -100,13 +100,13 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 			break;
 		}
 
-		case 1:{	
+		case 1:{
 			do{
 			     Py_BEGIN_ALLOW_THREADS
 			     nStatus = NetSessionEnum(server_name, client_name, user_name, info_lvl,
 			        (LPBYTE*)&pBuf1, buff_len, &dwEntriesRead, &dwTotalEntries, &dwResumeHandle);
 			     Py_END_ALLOW_THREADS
-			
+
 			     if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA)){
 			        if ((pTmpBuf1 = pBuf1) != NULL){
 						for (i = 0; (i < dwEntriesRead); i++){
@@ -117,14 +117,14 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 							"active_time", pTmpBuf1->sesi1_time,
 							"idle_time", pTmpBuf1->sesi1_idle_time,
 							"user_flags", pTmpBuf1->sesi1_user_flags);
-							
+
 							PyList_Append (ret_list, curr_sess_dict);
 							Py_DECREF(curr_sess_dict);
 							pTmpBuf1++;
 			           }
 			        }
 				}
-			
+
 				else{
 					ReturnNetError("NetSessionEnum",nStatus);
 					Py_XDECREF(ret_list);
@@ -148,7 +148,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 				nStatus = NetSessionEnum(server_name, client_name, user_name, info_lvl,
 				(LPBYTE*)&pBuf2, buff_len, &dwEntriesRead, &dwTotalEntries, &dwResumeHandle);
 				Py_END_ALLOW_THREADS
-				
+
 				if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA)){
 					if ((pTmpBuf2 = pBuf2) != NULL){
 						for (i = 0; (i < dwEntriesRead); i++){
@@ -166,7 +166,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 						}
 					}
 				}
-				
+
 				else{
 					ReturnNetError("NetSessionEnum",nStatus);
 					ret_list=NULL;
@@ -174,7 +174,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 				if (pBuf2 != NULL){
 					NetApiBufferFree(pBuf2);
 					pBuf2 = NULL;
-				}	
+				}
 			}
 			while (nStatus == ERROR_MORE_DATA);
 			if (pBuf2 != NULL)
@@ -182,7 +182,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 
 			break;
 		}
-   
+
 		case 10: {
 			do{
 			Py_BEGIN_ALLOW_THREADS
@@ -203,7 +203,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 						}
 				   }
 				}
-				
+
 				else{
 					ReturnNetError("NetSessionEnum",nStatus);
 					Py_XDECREF(ret_list);
@@ -213,7 +213,7 @@ PyNetSessionEnum(PyObject *self, PyObject *args)
 					NetApiBufferFree(pBuf10);
 					pBuf10 = NULL;
 				}
-				
+
 			}
 			while (nStatus == ERROR_MORE_DATA);
 			if (pBuf10 != NULL)
@@ -463,7 +463,7 @@ PyNetSessionGetInfo(PyObject *self, PyObject *args)
 			if (pTmpBuf502 != NULL){
 				NetApiBufferFree(pTmpBuf502);
 				pTmpBuf502 = NULL;
-			}		
+			}
 		}
 	}
 done:

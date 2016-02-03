@@ -82,12 +82,12 @@ def GetMapiTypeName(propType, rawType=True):
 
 def GetProperties(obj, propList):
 	"""Given a MAPI object and a list of properties, return a list of property values.
-	
+
 	Allows a single property to be passed, and the result is a single object.
-	
-	Each request property can be an integer or a string.  Of a string, it is 
+
+	Each request property can be an integer or a string.  Of a string, it is
 	automatically converted to an integer via the GetIdsFromNames function.
-	
+
 	If the property fetch fails, the result is None.
 	"""
 	bRetList = 1
@@ -102,7 +102,7 @@ def GetProperties(obj, propList):
 			propIds = obj.GetIDsFromNames(props, 0)
 			prop = mapitags.PROP_TAG( mapitags.PT_UNSPECIFIED, mapitags.PROP_ID(propIds[0]))
 		realPropList.append(prop)
-		
+
 	hr, data = obj.GetProps(realPropList,0)
 	if hr != 0:
 		data = None
@@ -156,10 +156,10 @@ def SetPropertyValue(obj, prop, val):
 
 def SetProperties( msg, propDict):
 	""" Given a Python dictionary, set the objects properties.
-	
+
 	If the dictionary key is a string, then a property ID is queried
 	otherwise the ID is assumed native.
-	
+
 	Coded for maximum efficiency wrt server calls - ie, maximum of
 	2 calls made to the object, regardless of the dictionary contents
 	(only 1 if dictionary full of int keys)

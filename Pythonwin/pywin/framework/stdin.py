@@ -35,9 +35,9 @@ class Stdin:
         if self.real_file is None:
             raise AttributeError(name)
         return getattr(self.real_file, name)
-    
+
     def isatty(self):
-        """Return 1 if the file is connected to a tty(-like) device, else 0. 
+        """Return 1 if the file is connected to a tty(-like) device, else 0.
         """
         return 1
 
@@ -69,7 +69,7 @@ class Stdin:
             assert(result_size > 0)
         else:
             result_size = maximum_result_size
-            
+
         return self.__extract_from_buffer(result_size)
 
     def __extract_from_buffer(self, character_count):
@@ -79,7 +79,7 @@ class Stdin:
         result = self.buffer[:character_count]
         self.buffer = self.buffer[character_count:]
         return result
-    
+
     def __get_lines(self, desired_size, done_reading = lambda buffer: False):
         """Keep adding lines to our internal buffer until done_reading(self.buffer)
         is true or EOF has been reached or we have desired_size bytes in the buffer.
@@ -100,7 +100,7 @@ class Stdin:
             return len(self.buffer)
         else:
             return desired_size
-        
+
     def __get_line(self):
         """Grab one line from get_input_line() and append it to the buffer.
         """
@@ -108,7 +108,7 @@ class Stdin:
         print '>>>',line  # echo input to console
         self.buffer = self.buffer + line + '\n'
 
-    def readlines(self, *sizehint): 
+    def readlines(self, *sizehint):
         """Read until EOF using readline() and return a list containing the lines
         thus read. If the optional sizehint argument is present, instead of
         reading up to EOF, whole lines totalling approximately sizehint bytes
@@ -153,11 +153,11 @@ Sell you soul to the devil, baby
         if len(result) == 0 or result[0] == '~':
             raise EOFError()
         return result
-    
+
     get_input_line = fake_raw_input
 
-    # Some completely inadequate tests, just to make sure the code's not totally broken    
-    try:    
+    # Some completely inadequate tests, just to make sure the code's not totally broken
+    try:
         x = Stdin()
         print x.read()
         print x.readline()
@@ -170,4 +170,4 @@ Sell you soul to the devil, baby
 else:
     import sys
     sys.stdin = Stdin()
-    
+

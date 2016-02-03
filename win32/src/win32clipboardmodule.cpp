@@ -50,7 +50,7 @@ py_change_clipboard_chain(PyObject* self, PyObject* args)
   // @pyparm int|hWndNewNext||Integer handle to the window that follows the
   // hWndRemove window in the clipboard viewer chain. (This is the handle
   // returned by SetClipboardViewer, unless the sequence was changed in
-  // response to a WM_CHANGECBCHAIN message.) 
+  // response to a WM_CHANGECBCHAIN message.)
 
   HWND hWndRemove;
   HWND hWndNewNext;
@@ -71,7 +71,7 @@ py_change_clipboard_chain(PyObject* self, PyObject* args)
 
   return (Py_BuildValue("i", (int)rc));
 
-  // @comm The window identified by hWndNewNext replaces the hWndRemove window 
+  // @comm The window identified by hWndNewNext replaces the hWndRemove window
   // in the chain. The SetClipboardViewer function sends a WM_CHANGECBCHAIN
   // message to the first window in the clipboard viewer chain.
 
@@ -183,7 +183,7 @@ py_empty_clipboard(PyObject* self, PyObject* args)
   // @comm Before calling EmptyClipboard, an application must open the
   // clipboard by using the OpenClipboard function. If the application
   // specifies a NULL window handle when opening the clipboard, EmptyClipboard
-  // succeeds but sets the clipboard owner to NULL. 
+  // succeeds but sets the clipboard owner to NULL.
 
   // @pyseeapi EmptyClipboard
 
@@ -209,7 +209,7 @@ py_enum_clipboard_formats(PyObject* self, PyObject* args)
   // To start an enumeration of clipboard formats, set format to zero. When
   // format is zero, the function retrieves the first available clipboard
   // format. For subsequent calls during an enumeration, set format to the
-  // result of the previous EnumClipboardFormat call. 
+  // result of the previous EnumClipboardFormat call.
 
   int format = 0;
   if (!PyArg_ParseTuple(args, "|i:EnumClipboardFormats",
@@ -249,8 +249,8 @@ py_enum_clipboard_formats(PyObject* self, PyObject* args)
   // The system provides automatic type conversions for certain clipboard
   // formats. In the case of such a format, this function enumerates the
   // specified format, then enumerates the formats to which it can be
-  // converted.  For more information, see Standard Clipboard Formats and 
-  // Synthesized Clipboard Formats. 
+  // converted.  For more information, see Standard Clipboard Formats and
+  // Synthesized Clipboard Formats.
 
   // @pyseeapi EnumClipboardFormats
 
@@ -267,7 +267,7 @@ py_enum_clipboard_formats(PyObject* self, PyObject* args)
 
 //*****************************************************************************
 //
-// @pymethod int|win32clipboard|GetClipboardDataHandle|Retrieves data from the 
+// @pymethod int|win32clipboard|GetClipboardDataHandle|Retrieves data from the
 // clipboard in a specified format, and returns an integer handle to the data.
 //  To get the data bytes, use the  <om win32clipboard.GetClipboardData> function.
 static PyObject *
@@ -280,7 +280,7 @@ py_get_clipboard_data_handle(PyObject* self, PyObject* args)
     return NULL;
 
   if (!IsClipboardFormatAvailable(format))
-      return PyErr_Format(PyExc_TypeError, 
+      return PyErr_Format(PyExc_TypeError,
                           "The clipboard format %d is not available", format);
   HANDLE handle;
   Py_BEGIN_ALLOW_THREADS;
@@ -297,7 +297,7 @@ py_get_clipboard_data_handle(PyObject* self, PyObject* args)
 // @pymethod string/unicode|win32clipboard|GetClipboardData|The GetClipboardData function
 // retrieves data from the clipboard in a specified format. The clipboard
 // must have been opened previously.  Note that not all data formats are supported,
-// and that the underlying handle can be retrieved with 
+// and that the underlying handle can be retrieved with
 // <om win32clipboard.GetClipboardDataHandle>
 
 static PyObject *
@@ -449,13 +449,13 @@ py_get_clipboard_data(PyObject* self, PyObject* args)
   // For example, if the CF_OEMTEXT format is on the clipboard, a window can
   // retrieve data in the CF_TEXT format. The format on the clipboard is
   // converted to the requested format on demand. For more information, see
-  // Synthesized Clipboard Formats. 
+  // Synthesized Clipboard Formats.
 
   // @pyseeapi GetClipboardData
   // @pyseeapi Standard Clipboard Formats
 
-  // @rdesc If the function fails, the standard win32api.error exception 
-  // is raised.  If the function succeeds, the return value is as 
+  // @rdesc If the function fails, the standard win32api.error exception
+  // is raised.  If the function succeeds, the return value is as
   // described in the following table:
   // @flagh Format|Result type
   // @flag CF_HDROP|A tuple of Unicode filenames.
@@ -465,7 +465,7 @@ py_get_clipboard_data(PyObject* self, PyObject* args)
   // @flag CF_ENHMETAFILE|A string with binary data obtained from GetEnhMetaFileBits
   // @flag CF_METAFILEPICT|A string with binary data obtained from GetMetaFileBitsEx (currently broken)
   // @flag CF_BITMAP|An integer handle to the bitmap.
-  // @flag All other formats|A string with binary data obtained directly from the 
+  // @flag All other formats|A string with binary data obtained directly from the
   // global memory referenced by the handle.
 }
 
@@ -506,7 +506,7 @@ py_get_clipboard_formatName(PyObject* self, PyObject* args)
 {
 
   // @pyparm int|format||Specifies the type of format to be retrieved. This
-  // parameter must not specify any of the predefined clipboard formats. 
+  // parameter must not specify any of the predefined clipboard formats.
 
   int format;
   if (!PyArg_ParseTuple(args, "i:GetClipboardFormatName",
@@ -558,12 +558,12 @@ py_get_clipboard_owner(PyObject* self, PyObject* args)
   // @comm The clipboard can still contain data even if the clipboard is not
   // currently owned.<nl>
   // In general, the clipboard owner is the window that last placed data in
-  // clipboard. The EmptyClipboard function assigns clipboard ownership. 
+  // clipboard. The EmptyClipboard function assigns clipboard ownership.
 
   // @pyseeapi GetClipboardOwner
 
   // @rdesc If the function succeeds, the return value is the handle of the
-  // window that owns the clipboard. 
+  // window that owns the clipboard.
   // If the function fails, win32api.error is raised with the GetLastError
   // info.
 
@@ -612,14 +612,14 @@ py_get_clipboard_sequence_number(PyObject* self, PyObject* args)
 
   // @rdesc The return value is the clipboard sequence number. If you do not
   // have WINSTA_ACCESSCLIPBOARD access to the window station, the function
-  // returns zero. 
+  // returns zero.
 
 }
 
 //*****************************************************************************
 //
 // @pymethod int|win32clipboard|GetClipboardViewer|The GetClipboardViewer function
-// retrieves the handle of the first window in the clipboard viewer chain. 
+// retrieves the handle of the first window in the clipboard viewer chain.
 
 static PyObject *
 py_get_clipboard_viewer(PyObject* self, PyObject* args)
@@ -639,7 +639,7 @@ py_get_clipboard_viewer(PyObject* self, PyObject* args)
   // @pyseeapi GetClipboardViewer
 
   // @rdesc If the function succeeds, the return value is the handle of the
-  // first window in the clipboard viewer chain. 
+  // first window in the clipboard viewer chain.
   // If the function fails, win32api.error is raised with the GetLastError
   // info.
 
@@ -671,12 +671,12 @@ py_get_open_clipboard_window(PyObject* self, PyObject* args)
   // @comm If an application or dynamic-link library (DLL) specifies a NULL
   // window handle when calling the OpenClipboard function, the clipboard is
   // opened but is not associated with a window. In such a case,
-  // GetOpenClipboardWindow returns NULL. 
+  // GetOpenClipboardWindow returns NULL.
 
   // @pyseeapi GetOpenClipboardWindow
 
   // @rdesc If the function succeeds, the return value is the handle of the
-  // window that has the clipboard open. 
+  // window that has the clipboard open.
   // If the function fails, win32api.error is raised with the GetLastError
   // info.
 
@@ -692,10 +692,10 @@ py_getPriority_clipboard_format(PyObject* self, PyObject* args)
 
   // @pyparm sequence|formats||Sequence of integers identifying clipboard formats,
   // in priority order. For a description of the standard clipboard formats,
-  // see Standard Clipboard Formats. 
+  // see Standard Clipboard Formats.
 
   PyObject *formats;
-  if (!PyArg_ParseTuple (args,"O:GetPriorityClipboardFormat", 
+  if (!PyArg_ParseTuple (args,"O:GetPriorityClipboardFormat",
                          &formats)) {
     return NULL;
   }
@@ -744,7 +744,7 @@ py_is_clipboard_format_available(PyObject* self, PyObject* args)
 
   BOOL rc;
   Py_BEGIN_ALLOW_THREADS;
-  rc = IsClipboardFormatAvailable((UINT)format); 
+  rc = IsClipboardFormatAvailable((UINT)format);
   Py_END_ALLOW_THREADS;
 
   return (Py_BuildValue("i", (int)rc));
@@ -754,7 +754,7 @@ py_is_clipboard_format_available(PyObject* self, PyObject* args)
   // WM_INITMENUPOPUP message. The application would then enable or disable
   // the Paste menu item, depending on the return value. Applications that
   // recognize more than one clipboard format should use the
-  // GetPriorityClipboardFormat function for this purpose. 
+  // GetPriorityClipboardFormat function for this purpose.
 
   // @pyseeapi IsClipboardFormatAvailable
   // @pyseeapi Standard Clipboard Formats
@@ -776,7 +776,7 @@ py_open_clipboard(PyObject* self, PyObject* args)
 
   // @pyparm <o PyHANDLE>|hWnd|None|Integer handle to the window to be associated with the
   // open clipboard. If this parameter is None, the open clipboard is associated
-  // with the current task. 
+  // with the current task.
 
   HWND hWnd;
   PyObject *obhWnd=Py_None;
@@ -795,13 +795,13 @@ py_open_clipboard(PyObject* self, PyObject* args)
     return ReturnAPIError("OpenClipboard");
   }
 
-  RETURN_NONE;  
+  RETURN_NONE;
 
   // @comm OpenClipboard fails if another window has the clipboard open.<nl>
   // An application should call the CloseClipboard function after every
   // successful call to OpenClipboard.<nl>
   // The window identified by the hWnd parameter does not become the
-  // clipboard owner unless the EmptyClipboard function is called. 
+  // clipboard owner unless the EmptyClipboard function is called.
 
   // @pyseeapi OpenClipboard
 
@@ -843,7 +843,7 @@ py_register_clipboard_format(PyObject* self, PyObject* args)
   // using the same registered clipboard format. Note that the format name
   // comparison is case-insensitive.<nl>
   // Registered clipboard formats are identified by values in the range 0xC000
-  // through 0xFFFF. 
+  // through 0xFFFF.
 
   // @pyseeapi RegisterClipboardFormat
 
@@ -858,8 +858,8 @@ py_register_clipboard_format(PyObject* self, PyObject* args)
 //*****************************************************************************
 //
 // @pymethod int|win32clipboard|SetClipboardData|The SetClipboardData function
-// places data on the clipboard in a specified clipboard format. The window 
-// must be the current clipboard owner, and the application must have called 
+// places data on the clipboard in a specified clipboard format. The window
+// must be the current clipboard owner, and the application must have called
 // the OpenClipboard function. (When responding to the WM_RENDERFORMAT and
 // WM_RENDERALLFORMATS messages, the clipboard owner must not call
 // OpenClipboard before calling SetClipboardData.)
@@ -881,7 +881,7 @@ py_set_clipboard_data(PyObject* self, PyObject* args)
 	// by the hMem parameter. The application can read the data, but must not
 	// free the handle or leave it locked. If the hMem parameter identifies a
 	// memory object, the object must have been allocated using the GlobalAlloc
-	// function with the GMEM_MOVEABLE and GMEM_DDESHARE flags. 
+	// function with the GMEM_MOVEABLE and GMEM_DDESHARE flags.
 	int format;
 	HANDLE handle;
 	PyObject *obhandle;
@@ -931,7 +931,7 @@ py_set_clipboard_data(PyObject* self, PyObject* args)
 	// For example, if the CF_OEMTEXT format is on the clipboard, a window can
 	// retrieve data in the CF_TEXT format. The format on the clipboard is
 	// converted to the requested format on demand. For more information, see
-	// Synthesized Clipboard Formats. 
+	// Synthesized Clipboard Formats.
 
 	// @pyseeapi SetClipboardData
 
@@ -1055,7 +1055,7 @@ py_set_clipboard_viewer(PyObject* self, PyObject* args)
   // clipboard viewer chain.<nl>
   // A clipboard viewer window must eventually remove itself from the clipboard
   // viewer chain by calling the ChangeClipboardChain function -- for example,
-  // in response to theWM_DESTROY message. 
+  // in response to theWM_DESTROY message.
 
   // @pyseeapi SetClipboardViewer
 
@@ -1073,10 +1073,10 @@ py_set_clipboard_viewer(PyObject* self, PyObject* args)
 static struct PyMethodDef clipboard_functions[] = {
 
   // @pymeth ChangeClipboardChain|Removes a specified window from the chain
-  // of clipboard viewers. 
+  // of clipboard viewers.
   {"ChangeClipboardChain", py_change_clipboard_chain, 1},
 
-  // @pymeth CloseClipboard|Closes the clipboard. 
+  // @pymeth CloseClipboard|Closes the clipboard.
   {"CloseClipboard", py_close_clipboard, 1},
 
   // @pymeth CountClipboardFormats|Retrieves the number of different data
@@ -1084,7 +1084,7 @@ static struct PyMethodDef clipboard_functions[] = {
   {"CountClipboardFormats", py_count_clipboard_formats, 1},
 
   // @pymeth EmptyClipboard|Empties the clipboard and frees handles to data
-  // in the clipboard. 
+  // in the clipboard.
   {"EmptyClipboard", py_empty_clipboard, 1},
 
   // @pymeth EnumClipboardFormats|Lets you enumerate the data formats that
@@ -1092,7 +1092,7 @@ static struct PyMethodDef clipboard_functions[] = {
   {"EnumClipboardFormats", py_enum_clipboard_formats, 1},
 
   // @pymeth GetClipboardData|Retrieves data from the clipboard in a
-  // specified format. 
+  // specified format.
   {"GetClipboardData", py_get_clipboard_data, 1},
 
     // @pymeth GetClipboardDataHandle|Retrieves data from the clipboard in a
@@ -1100,31 +1100,31 @@ static struct PyMethodDef clipboard_functions[] = {
   {"GetClipboardDataHandle", py_get_clipboard_data_handle, 1},
 
   // @pymeth GetClipboardFormatName|Retrieves from the clipboard the name
-  // of the specified registered format. 
+  // of the specified registered format.
   {"GetClipboardFormatName", py_get_clipboard_formatName, 1},
 
   // @pymeth GetClipboardOwner|Retrieves the window handle of the current
-  // owner of the clipboard. 
+  // owner of the clipboard.
   {"GetClipboardOwner", py_get_clipboard_owner, 1},
 
   // @pymeth GetClipboardSequenceNumber|Returns the clipboard sequence number
-  // for the current window station. 
+  // for the current window station.
   {"GetClipboardSequenceNumber", py_get_clipboard_sequence_number, 1},
 
   // @pymeth GetClipboardViewer|Retrieves the handle of the first window in
-  // the clipboard viewer chain. 
+  // the clipboard viewer chain.
   {"GetClipboardViewer", py_get_clipboard_viewer, 1},
 
-  // @pymeth GetGlobalMemory|Returns the contents of the specified global 
+  // @pymeth GetGlobalMemory|Returns the contents of the specified global
   // memory object.
   {"GetGlobalMemory", py_get_global_memory, 1},
 
   // @pymeth GetOpenClipboardWindow|Retrieves the handle of the window that
-  // currently has the clipboard open. 
+  // currently has the clipboard open.
   {"GetOpenClipboardWindow", py_get_open_clipboard_window, 1},
 
   // @pymeth GetPriorityClipboardFormat|Returns the first available clipboard
-  // format in the specified list. 
+  // format in the specified list.
   {"GetPriorityClipboardFormat", py_getPriority_clipboard_format, 1},
 
   // @pymeth IsClipboardFormatAvailable|Determines whether the clipboard
@@ -1138,10 +1138,10 @@ static struct PyMethodDef clipboard_functions[] = {
   {"RegisterClipboardFormat", py_register_clipboard_format, 1},
 
   // @pymeth SetClipboardData|Places data on the clipboard in a specified
-  // clipboard format. 
+  // clipboard format.
   {"SetClipboardData", py_set_clipboard_data, 1},
 
-  // @pymeth SetClipboardText|Places text on the clipboard . 
+  // @pymeth SetClipboardText|Places text on the clipboard .
   {"SetClipboardText", py_set_clipboard_text, 1},
 
   // @pymeth SetClipboardViewer|Adds the specified window to the chain of

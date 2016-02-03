@@ -5,7 +5,7 @@
 #include "PythonCOMServer.h"
 
 /////////////////////////////////////////////////////////////////////////////
-// class 
+// class
 
 class PYCOM_EXPORT PyIStream : public PyIUnknown
 {

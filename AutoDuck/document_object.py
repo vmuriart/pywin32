@@ -41,7 +41,7 @@ class Document:
         self.important = []
     def __iter__(self):
         return iter(self.categories)
-    
+
 class Category:
     def __init__(self, attrs):
         self.__dict__.update(attrs)
@@ -70,7 +70,7 @@ if __name__=='__main__':
     print("Important Notes")
     for link in doc.important:
         print(" ", link.name, link.href)
-    
+
     print("Doc links")
     for link in doc.links:
         print(" ", link.name, link.href)

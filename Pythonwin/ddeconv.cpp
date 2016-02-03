@@ -126,10 +126,10 @@ static struct PyMethodDef PyDDEConv_methods[] = {
 
 
 
-ui_type_CObject PyDDEConv::type("PyDDEConv", 
-							   &ui_assoc_CObject::type, 
-							   RUNTIME_CLASS(CDDEConv), 
-							   sizeof(PyDDEConv), 
-							   PYOBJ_OFFSET(PyDDEConv), 
+ui_type_CObject PyDDEConv::type("PyDDEConv",
+							   &ui_assoc_CObject::type,
+							   RUNTIME_CLASS(CDDEConv),
+							   sizeof(PyDDEConv),
+							   PYOBJ_OFFSET(PyDDEConv),
 							   PyDDEConv_methods,
    							   GET_PY_CTOR(PyDDEConv));

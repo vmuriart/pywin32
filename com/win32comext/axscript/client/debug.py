@@ -23,13 +23,13 @@ def trace(*args):
 	"""A function used instead of "print" for debugging output.
 	"""
 	if not debuggingTrace:
-		return 
+		return
 	print win32api.GetCurrentThreadId(),
 	for arg in args:
 		print arg,
 	print
 
-# Note that the DebugManager is not a COM gateway class for the 
+# Note that the DebugManager is not a COM gateway class for the
 # debugger - but it does create and manage them.
 class DebugManager:
 	_debugger_interfaces_ = [axdebug.IID_IActiveScriptDebug]
@@ -55,7 +55,7 @@ class DebugManager:
 				self.rootNode = self.scriptSiteDebug.GetRootApplicationNode()
 			except pythoncom.com_error:
 				self.debugApplication = None
-				
+
 		if self.debugApplication is None:
 			# Try to get/create the default one
 			# NOTE - Dont catch exceptions here - let the parent do it,
@@ -63,7 +63,7 @@ class DebugManager:
 			pdm=pythoncom.CoCreateInstance(axdebug.CLSID_ProcessDebugManager,None,pythoncom.CLSCTX_ALL, axdebug.IID_IProcessDebugManager)
 			self.debugApplication = pdm.GetDefaultApplication()
 			self.rootNode = self.debugApplication.GetRootNode()
-			
+
 		assert self.debugApplication is not None, "Need to have a DebugApplication object by now!"
 		self.activeScriptDebug = None
 
@@ -100,7 +100,7 @@ class DebugManager:
 	def HandleRuntimeError( self ):
 		"""Called by the engine when a runtime error occurs.  If we have a debugger,
 		we let it know.
-		
+
 		The result is a boolean which indicates if the error handler should call
 		IActiveScriptSite::OnScriptError()
 		"""
@@ -118,8 +118,8 @@ class DebugManager:
 			return self.activeScriptDebug
 		trace("DebugManager QI - unknown IID", iid)
 		return 0
-		
-		
+
+
 	def OnEnterScript(self):
 		trace("OnEnterScript")
 		try:

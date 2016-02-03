@@ -32,7 +32,7 @@ PyObject *PyIClientSecurity::QueryBlanket(PyObject *self, PyObject *args)
 	IClientSecurity *pICS = GetI(self);
 	if ( pICS == NULL )
 		return NULL;
-	// @pyparm <o PyIUnknown>|Proxy||An interface created through a proxy 
+	// @pyparm <o PyIUnknown>|Proxy||An interface created through a proxy
 	void *pAuthInfo;
 	PyObject *obProxy;
 	IUnknown * pProxy;
@@ -105,7 +105,7 @@ PyObject *PyIClientSecurity::SetBlanket(PyObject *self, PyObject *args)
 		return NULL;
 		}
 	// ??? Server principal name can also be special value COLE_DEFAULT_PRINCIPAL
-	// which is -1 cast as WCHAR, need to figure out how to accept that as input ??? 
+	// which is -1 cast as WCHAR, need to figure out how to accept that as input ???
 	if (!PyWinObject_AsWCHAR(obServerPrincName, &pServerPrincName, TRUE))
 		return NULL;
 

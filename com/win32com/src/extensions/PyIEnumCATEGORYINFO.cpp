@@ -76,7 +76,7 @@ PyObject *PyIEnumCATEGORYINFO::Next(PyObject *self, PyObject *args)
 	}
 	delete [] rgVar;
 	return result;
-	// @rdesc The result is a tuple of (IID object, LCID, string description) tuples, 
+	// @rdesc The result is a tuple of (IID object, LCID, string description) tuples,
 	// one for each element returned.
 }
 // @pymethod |PyIEnumCATEGORYINFO|Skip|Skips over the next specified elementes.
@@ -141,7 +141,7 @@ static struct PyMethodDef PyIEnumCATEGORYINFO_methods[] =
 	{"Skip",          PyIEnumCATEGORYINFO::Skip,  1}, // @pymeth Skip|Skips over the next specified elementes.
 	{"Reset",          PyIEnumCATEGORYINFO::Reset,  1}, // @pymeth Reset|Resets the enumeration sequence to the beginning.
 	{"Clone",          PyIEnumCATEGORYINFO::Clone,  1}, // @pymeth Clone|Creates another enumerator that contains the same enumeration state as the current one.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComEnumTypeObject PyIEnumCATEGORYINFO::type("PyIEnumCATEGORYINFO",

@@ -2,10 +2,10 @@
 
 Copyright (c) 1992 Microsoft Corporation
 
-Module Name:    perfutil.h  
+Module Name:    perfutil.h
 
 Abstract:
-    This file supports routines used to parse and create Performance Monitor Data 
+    This file supports routines used to parse and create Performance Monitor Data
     Structures. It actually supports Performance Object types with multiple instances
 
 Revision History:
@@ -19,7 +19,7 @@ Revision History:
 #endif
 
 //
-//  Utility macro.  This is used to reserve a DWORD multiple of bytes for Unicode strings 
+//  Utility macro.  This is used to reserve a DWORD multiple of bytes for Unicode strings
 //  embedded in the definitional data, viz., object instance names.
 //
 #define DWORD_MULTIPLE(x) (((x+sizeof(DWORD)-1)/sizeof(DWORD))*sizeof(DWORD))
@@ -36,7 +36,7 @@ extern WCHAR  NULL_STRING[];
 #define QUERY_FOREIGN   3
 #define QUERY_COSTLY    4
 //
-// The definition of the only routine of perfutil.c, It builds part of a performance data 
+// The definition of the only routine of perfutil.c, It builds part of a performance data
 // instance (PERF_INSTANCE_DEFINITION) as described in winperf.h
 //
 HANDLE MonOpenEventLog (const TCHAR *szSourceName);
@@ -46,7 +46,7 @@ DWORD GetQueryType (IN LPWSTR);
 BOOL IsNumberInUnicodeList (DWORD, LPWSTR);
 
 typedef struct _LOCAL_HEAP_INFO_BLOCK
-{    
+{
 	DWORD   AllocatedEntries;
 	DWORD   AllocatedBytes;
 	DWORD   FreeEntries;

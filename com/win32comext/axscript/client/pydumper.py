@@ -52,10 +52,10 @@ def Register():
 
 	languageName = "PyDump"
 	verProgId = "Python.Dumper.1"
-	RegisterServer(clsid = clsid, pythonInstString = "win32com.axscript.client.pyscript.PyDumper", 
+	RegisterServer(clsid = clsid, pythonInstString = "win32com.axscript.client.pyscript.PyDumper",
                        className = "Python Debugging/Dumping ActiveX Scripting Engine",
 	                   progID = languageName, verProgID = verProgId,
-                       catids = categories, 
+                       catids = categories,
                        policy=policy, dispatcher = dispatcher)
 
 	CreateRegKey(languageName + "\\OLEScript")
@@ -63,7 +63,7 @@ def Register():
 	win32com.server.register._set_string(".pysDump", "pysDumpFile")
 	win32com.server.register._set_string("pysDumpFile\\ScriptEngine", languageName)
 	print "Dumping Server registered."
-	
+
 if __name__=='__main__':
 	Register()
 

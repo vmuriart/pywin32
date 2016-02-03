@@ -11,8 +11,8 @@ from win32con import CLR_INVALID
 
 ######################################################
 # Property Page for syntax formatting options
-    
-# The standard 16 color VGA palette should always be possible    
+
+# The standard 16 color VGA palette should always be possible
 paletteVGA = (
 	("Black", win32api.RGB(0,0,0)),
 	("Navy", win32api.RGB(0,0,128)),
@@ -21,11 +21,11 @@ paletteVGA = (
 	("Maroon", win32api.RGB(128,0,0)),
 	("Purple", win32api.RGB(128,0,128)),
 	("Olive", win32api.RGB(128,128,0)),
-	("Gray", win32api.RGB(128,128,128)), 
+	("Gray", win32api.RGB(128,128,128)),
 	("Silver", win32api.RGB(192,192,192)),
 	("Blue", win32api.RGB(0,0,255)),
 	("Lime", win32api.RGB(0,255,0)),
-	("Aqua", win32api.RGB(0,255,255)), 
+	("Aqua", win32api.RGB(0,255,255)),
 	("Red", win32api.RGB(255,0,0)),
 	("Fuchsia", win32api.RGB(255,0,255)),
 	("Yellow", win32api.RGB(255,255,0)),
@@ -227,7 +227,7 @@ class ScintillaFormatPropertyPage(dialog.PropertyPage):
 
 		self.butIsDefaultBackground.SetCheck(style.background == style.default_background)
 		self.GetDlgItem(win32ui.IDC_BUTTON4).EnableWindow(style.background != style.default_background)
-		
+
 		bold = format[1] & win32con.CFE_BOLD != 0; italic = format[1] & win32con.CFE_ITALIC != 0
 		self.cboBoldItalic.SetCurSel( bold*2 + italic )
 

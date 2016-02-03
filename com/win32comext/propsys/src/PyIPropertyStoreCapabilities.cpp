@@ -41,7 +41,7 @@ PyObject *PyIPropertyStoreCapabilities::IsPropertyWritable(PyObject *self, PyObj
 	return PyBool_FromLong(hr == S_OK);
 }
 
-// @object PyIPropertyStoreCapabilities|Property providers use this interface to indicate whether properties are writeable. 
+// @object PyIPropertyStoreCapabilities|Property providers use this interface to indicate whether properties are writeable.
 static struct PyMethodDef PyIPropertyStoreCapabilities_methods[] =
 {
 	{ "IsPropertyWritable", PyIPropertyStoreCapabilities::IsPropertyWritable, 1 }, // @pymeth IsPropertyWritable|Asks provider if a property can be editted.

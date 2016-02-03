@@ -6,7 +6,7 @@
 
 /////////////////////////////////////////////////////////
 //
-//	
+//
 class PyCPropertySheet : public PyCWnd {
 public:
 	static PyObject *create( PyObject *self, PyObject *args );

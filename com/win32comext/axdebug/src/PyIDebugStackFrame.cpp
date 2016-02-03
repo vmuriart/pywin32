@@ -49,7 +49,7 @@ PyObject *PyIDebugStackFrame::GetDescriptionString(PyObject *self, PyObject *arg
 		return NULL;
 	BSTR pbstrDescription;
 	BOOL flong;
-	// @pyparm int|fLong||If false, provide only the name of the function associated with the stack frame. When true it may also provide the parameter(s) to the function or whatever else is relevant.  
+	// @pyparm int|fLong||If false, provide only the name of the function associated with the stack frame. When true it may also provide the parameter(s) to the function or whatever else is relevant.
 	if ( !PyArg_ParseTuple(args, "i:GetDescriptionString", &flong) )
 		return NULL;
 	PY_INTERFACE_PRECALL;

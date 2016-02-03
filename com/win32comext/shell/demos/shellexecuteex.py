@@ -6,8 +6,8 @@ def ExplorePIDL():
     print "The desktop is at", shell.SHGetPathFromIDList(pidl)
     shell.ShellExecuteEx(fMask=shellcon.SEE_MASK_NOCLOSEPROCESS,
                          nShow=win32con.SW_NORMAL,
-                         lpClass="folder", 
-                         lpVerb="explore", 
+                         lpClass="folder",
+                         lpVerb="explore",
                          lpIDList=pidl)
     print "Done!"
 

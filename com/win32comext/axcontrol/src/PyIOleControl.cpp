@@ -55,7 +55,7 @@ PyObject *PyIOleControl::OnMnemonic(PyObject *self, PyObject *args)
 	MSG msg;
 	memset(&msg, 0, sizeof(msg));
 	// @pyparm iiiii(ii)|msg||A tuple representing a MSG structure.
-	if ( !PyArg_ParseTuple(args, "((iiiii(ii))):OnMnemonic", 
+	if ( !PyArg_ParseTuple(args, "((iiiii(ii))):OnMnemonic",
 		&msg.hwnd,&msg.message,&msg.wParam,&msg.lParam,&msg.time,&msg.pt.x,&msg.pt.y) )
 		return NULL;
 	HRESULT hr;

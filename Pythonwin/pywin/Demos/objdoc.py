@@ -39,7 +39,7 @@ class object_view (docview.EditView):
 		self.ReplaceSel("Object is %s" % repr(self.GetDocument().object))
 
 def demo ():
-	t = object_template()		
+	t = object_template()
 	d = t.OpenObject(win32ui)
 	return (t, d)
 

@@ -1,6 +1,6 @@
 // Connect.cpp : Implementation of DLL Exports.
 
-// You will need the NT SUR Beta 2 SDK or VC 4.2 in order to build this 
+// You will need the NT SUR Beta 2 SDK or VC 4.2 in order to build this
 // project.  This is because you will need MIDL 3.00.15 or higher and new
 // headers and libs.  If you have VC 4.2 installed, then everything should
 // already be configured correctly.

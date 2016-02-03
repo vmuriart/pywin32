@@ -54,7 +54,7 @@ programmers who forget to use the new names. */
 
 #include "win32uiExt.h"
 
-#include "pythonframe.h" 
+#include "pythonframe.h"
 #include "pythonview.h" // App: Edit View.
 #include "pythondoc.h"
 

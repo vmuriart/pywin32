@@ -74,7 +74,7 @@ class TestConnectServer(connect.ConnectableServer):
 	# (ie, as a normal COM server, this exposes just this single method.
 	def __init__(self, object):
 		self.object = object
-		
+
 	def Broadcast(self,arg):
 		# Simply broadcast a notification.
 		self._BroadcastNotify(self.NotifyDoneIt, (arg,))
@@ -88,7 +88,7 @@ prop = "Property Value"
 sub hello(arg1)
    test.echo arg1
 end sub
-  
+
 sub testcollection
    if test.collection.Item(0) <> 1 then
      test.fail("Index 0 was wrong")
@@ -113,7 +113,7 @@ PyScript = u"""\
 prop = "Property Value"
 def hello(arg1):
    test.echo(arg1)
-   
+
 def testcollection():
 #   test.collection[1] = "New one"
    got = []
@@ -179,11 +179,11 @@ class EngineTester(win32com.test.util.TestCase):
           self.fail("Could not find %r in %r" % (expected_exc, site.exception_seen[2]))
         return
       self.assertEqual(echoer.last, "Goober")
-  
+
       self.assertEqual(str(ob.prop), "Property Value")
       ob.testcollection()
       self.failUnless(not echoer.fail_called, "Fail should not have been called")
-  
+
       # Now make sure my engines can evaluate stuff.
       result = engine.eParse.ParseScriptText("1+1", None, None, None, 0, 0, axscript.SCRIPTTEXT_ISEXPRESSION)
       self.assertEqual(result, 2)
@@ -192,7 +192,7 @@ class EngineTester(win32com.test.util.TestCase):
       _CheckEngineState(site, engineName, axscript.SCRIPTSTATE_INITIALIZED)
       engine.Start()
       _CheckEngineState(site, engineName, axscript.SCRIPTSTATE_STARTED)
-      
+
       # Transition back to initialized, then through connected too.
       engine.SetScriptState(axscript.SCRIPTSTATE_INITIALIZED)
       _CheckEngineState(site, engineName, axscript.SCRIPTSTATE_INITIALIZED)
@@ -200,7 +200,7 @@ class EngineTester(win32com.test.util.TestCase):
       _CheckEngineState(site, engineName, axscript.SCRIPTSTATE_CONNECTED)
       engine.SetScriptState(axscript.SCRIPTSTATE_INITIALIZED)
       _CheckEngineState(site, engineName, axscript.SCRIPTSTATE_INITIALIZED)
-    
+
       engine.SetScriptState(axscript.SCRIPTSTATE_CONNECTED)
       _CheckEngineState(site, engineName, axscript.SCRIPTSTATE_CONNECTED)
       engine.SetScriptState(axscript.SCRIPTSTATE_DISCONNECTED)

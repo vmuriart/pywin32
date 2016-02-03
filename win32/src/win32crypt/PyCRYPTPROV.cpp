@@ -6,9 +6,9 @@ struct PyMethodDef PyCRYPTPROV::methods[] = {
 	// @pymeth CryptReleaseContext|Releases the CSP handle
 	{"CryptReleaseContext", (PyCFunction)PyCRYPTPROV::PyCryptReleaseContext, METH_KEYWORDS|METH_VARARGS},
 	// @pymeth CryptGenKey|Generates a key pair or a session key
-	{"CryptGenKey", (PyCFunction)PyCRYPTPROV::PyCryptGenKey, METH_KEYWORDS|METH_VARARGS}, 
+	{"CryptGenKey", (PyCFunction)PyCRYPTPROV::PyCryptGenKey, METH_KEYWORDS|METH_VARARGS},
 	// @pymeth CryptGetProvParam|Retrieves specified attribute of provider
-	{"CryptGetProvParam", (PyCFunction)PyCRYPTPROV::PyCryptGetProvParam, METH_KEYWORDS|METH_VARARGS}, 
+	{"CryptGetProvParam", (PyCFunction)PyCRYPTPROV::PyCryptGetProvParam, METH_KEYWORDS|METH_VARARGS},
 	// @pymeth CryptGetUserKey|Returns a handle to one of user's key pairs
 	{"CryptGetUserKey", (PyCFunction)PyCRYPTPROV::PyCryptGetUserKey, METH_KEYWORDS|METH_VARARGS},
 	// @pymeth CryptGenRandom|Generates random data of specified length
@@ -130,8 +130,8 @@ PyObject *PyCRYPTPROV::PyCryptGenKey(PyObject *self, PyObject *args, PyObject *k
 	ALG_ID alg_id;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Ik|k:CryptGenKey", keywords,
-		&alg_id,	// @pyparm int|Algid||Algorithm identifier, one of the CALG_* values, or AT_KEYEXCHANGE/AT_SIGNATURE 
-		&dwFlags,	// @pyparm int|Flags||Combination of CRYPT_CREATE_SALT,CRYPT_EXPORTABLE,CRYPT_NO_SALT,CRYPT_PREGEN,CRYPT_USER_PROTECTED,CRYPT_ARCHIVABLE 
+		&alg_id,	// @pyparm int|Algid||Algorithm identifier, one of the CALG_* values, or AT_KEYEXCHANGE/AT_SIGNATURE
+		&dwFlags,	// @pyparm int|Flags||Combination of CRYPT_CREATE_SALT,CRYPT_EXPORTABLE,CRYPT_NO_SALT,CRYPT_PREGEN,CRYPT_USER_PROTECTED,CRYPT_ARCHIVABLE
 		&dwkeylen))	// @pyparm int|KeyLen|0|Length of key to generate, can be 0 to use provider's default key length
 		return NULL;
 	// uppermost 16 bits of flags are actually the length
@@ -153,7 +153,7 @@ PyObject *PyCRYPTPROV::PyCryptGetProvParam(PyObject *self, PyObject *args, PyObj
 	DWORD dwFlags=0, dwParam=0, dwDataLen=0;
 	DWORD err=0;
 	BYTE *pbData = NULL;
-	
+
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "k|k:CryptGetProvParam", keywords,
 		&dwParam,	// @pyparm int|Param||One of the PP_* values
 		&dwFlags))	// @pyparm int|Flags|0|If param if PP_KEYSET_SEC_DESCR, can be a combination of OWNER_SECURITY_INFORMATION,GROUP_SECURITY_INFORMATION,DACL_SECURITY_INFORMATION,SACL_SECURITY_INFORMATION
@@ -161,7 +161,7 @@ PyObject *PyCRYPTPROV::PyCryptGetProvParam(PyObject *self, PyObject *args, PyObj
 
 	switch (dwParam){
 		case PP_USE_HARDWARE_RNG:
-			// for PP_USE_HARDWARE_RNG, flags must be zero and only return value is boolean result of function 
+			// for PP_USE_HARDWARE_RNG, flags must be zero and only return value is boolean result of function
 			ret=PyBool_FromLong(CryptGetProvParam(hc, dwParam, NULL, 0 ,0));
 			break;
 		case PP_ENUMCONTAINERS:{
@@ -303,7 +303,7 @@ PyObject *PyCRYPTPROV::PyCryptGetProvParam(PyObject *self, PyObject *args, PyObj
 				case PP_VERSION: // return as string or tuple of 2 numbers ???????
 				default:{
 					PyErr_SetString(PyExc_NotImplementedError, "The provider parameter specified is not yet implemented");
-					break;		
+					break;
 					}
 				}
 			}
@@ -382,7 +382,7 @@ PyObject *PyCRYPTPROV::PyCryptCreateHash(PyObject *self, PyObject *args, PyObjec
 	if (CryptCreateHash(hcryptprov, alg_id, hcryptkey, dwFlags, &hcrypthash))
 		ret = new PyCRYPTHASH(hcrypthash);
 	else
-		PyWin_SetAPIError("PyCRYPTPROV::CryptCreateHash"); 
+		PyWin_SetAPIError("PyCRYPTPROV::CryptCreateHash");
 	return ret;
 }
 
@@ -396,10 +396,10 @@ PyObject *PyCRYPTPROV::PyCryptImportKey(PyObject *self, PyObject *args, PyObject
 	PyObject *obpubkey=Py_None, *obbuf;
 	HCRYPTPROV hcryptprov=((PyCRYPTPROV *)self)->GetHCRYPTPROV();
 
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|Ok", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|Ok", keywords,
 		&obbuf,		// @pyparm buffer|Data||The key blob to be imported
 		&obpubkey,	// @pyparm <o PyCRYPTKEY>|PubKey|None|Key to be used to decrypt the blob, not used for importing public keys
-		&flags))	// @pyparm int|Flags|0|Combination of CRYPT_EXPORTABLE, CRYPT_OAEP, CRYPT_NO_SALT, CRYPT_USER_PROTECTED 
+		&flags))	// @pyparm int|Flags|0|Combination of CRYPT_EXPORTABLE, CRYPT_OAEP, CRYPT_NO_SALT, CRYPT_USER_PROTECTED
 		return NULL;
 	if (!PyWinObject_AsHCRYPTKEY(obpubkey, &pubkey, TRUE))
 		return NULL;
@@ -411,7 +411,7 @@ PyObject *PyCRYPTPROV::PyCryptImportKey(PyObject *self, PyObject *args, PyObject
 }
 
 // @pymethod <o PyCERT_PUBLIC_KEY_INFO>|PyCRYPTPROV|CryptExportPublicKeyInfo|Exports a public key to send to other users
-// Returned dict can be serialized for sending to another python application using pickle.dump 
+// Returned dict can be serialized for sending to another python application using pickle.dump
 PyObject *PyCRYPTPROV::PyCryptExportPublicKeyInfo(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 	static char *keywords[]={"KeySpec", "CertEncodingType", NULL};

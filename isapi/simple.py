@@ -15,7 +15,7 @@ class SimpleExtension:
 
     def GetExtensionVersion(self, vi):
         """Called by the ISAPI framework to get the extension version
-        
+
         The default implementation uses the classes docstring to
         set the extension description."""
         # nod to our reload capability - vi is None when we are reloaded.
@@ -24,7 +24,7 @@ class SimpleExtension:
 
     def HttpExtensionProc(self, control_block):
         """Called by the ISAPI framework for each extension request.
-        
+
         sub-classes must provide an implementation for this method.
         """
         raise NotImplementedError("sub-classes should override HttpExtensionProc")
@@ -42,7 +42,7 @@ class SimpleFilter:
 
     def GetFilterVersion(self, fv):
         """Called by the ISAPI framework to get the extension version
-        
+
         The default implementation uses the classes docstring to
         set the extension description, and uses the classes
         filter_flags attribute to set the ISAPI filter flags - you
@@ -57,7 +57,7 @@ class SimpleFilter:
 
     def HttpFilterProc(self, fc):
         """Called by the ISAPI framework for each filter request.
-        
+
         sub-classes must provide an implementation for this method.
         """
         raise NotImplementedError("sub-classes should override HttpExtensionProc")

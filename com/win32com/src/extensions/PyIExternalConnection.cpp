@@ -41,7 +41,7 @@ PyObject *PyIExternalConnection::AddConnection(PyObject *self, PyObject *args)
 	PY_INTERFACE_PRECALL;
 	DWORD rc = pIEC->AddConnection( extconn, reserved );
 	PY_INTERFACE_POSTCALL;
-	// @rdesc The result is the number of reference counts on the object; used for debugging purposes only. 
+	// @rdesc The result is the number of reference counts on the object; used for debugging purposes only.
 	return PyInt_FromLong(rc);
 }
 
@@ -62,7 +62,7 @@ PyObject *PyIExternalConnection::ReleaseConnection(PyObject *self, PyObject *arg
 	PY_INTERFACE_PRECALL;
 	DWORD rc = pIEC->ReleaseConnection( extconn, reserved, fLastReleaseCloses );
 	PY_INTERFACE_POSTCALL;
-	// @rdesc The result is the number of reference counts on the object; used for debugging purposes only. 
+	// @rdesc The result is the number of reference counts on the object; used for debugging purposes only.
 	return PyInt_FromLong(rc);
 }
 

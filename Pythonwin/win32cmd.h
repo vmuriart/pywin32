@@ -4,7 +4,7 @@
 
 
 //
-// Command target 
+// Command target
 //
 class PYW_EXPORT PyCCmdTarget : public ui_assoc_CObject{
 friend CVirtualHelper::CVirtualHelper(const char *iname, void *iassoc, EnumVirtualErrorHandling veh);

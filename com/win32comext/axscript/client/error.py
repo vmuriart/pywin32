@@ -2,7 +2,7 @@
 
  This contains the core exceptions that the implementations should raise
  as well as the IActiveScriptError interface code.
- 
+
 """
 
 import sys, traceback
@@ -29,7 +29,7 @@ def AddCR(text):
 
 class IActiveScriptError:
 	"""An implementation of IActiveScriptError
-	
+
 	The ActiveX Scripting host calls this client whenever we report
 	an exception to it.  This interface provides the exception details
 	for the host to report to the user.
@@ -52,8 +52,8 @@ class IActiveScriptError:
 
 class AXScriptException(win32com.server.exception.COMException):
 	"""A class used as a COM exception.
-	
-	Note this has attributes which conform to the standard attributes 
+
+	Note this has attributes which conform to the standard attributes
 	for COM exceptions, plus a few others specific to our IActiveScriptError
 	object.
 	"""
@@ -64,7 +64,7 @@ class AXScriptException(win32com.server.exception.COMException):
 			scode = winerror.DISP_E_EXCEPTION, \
 			source = "Python ActiveX Scripting Engine",
 			)
-			
+
 		# And my other values...
 		if codeBlock is None:
 			self.sourceContext = 0
@@ -153,7 +153,7 @@ class AXScriptException(win32com.server.exception.COMException):
 		else:
 			depth = None
 			tb_top = tb
-			
+
 		bits = ['Traceback (most recent call last):\n']
 		bits.extend(traceback.format_list(format_items))
 		if exc_type==pythoncom.com_error:
@@ -199,9 +199,9 @@ class AXScriptException(win32com.server.exception.COMException):
 			if codeBlock:
 				# Note: 'line' will now be unicode.
 				line = codeBlock.GetLineNo(lineno)
-		if line: 
+		if line:
 			line = line.strip()
-		else: 
+		else:
 			line = None
 		return filename, lineno, name, line
 	def __repr__(self):
@@ -209,7 +209,7 @@ class AXScriptException(win32com.server.exception.COMException):
 
 def ProcessAXScriptException(scriptingSite, debugManager, exceptionInstance):
 	"""General function to handle any exception in AX code
-	
+
 	This function creates an instance of our IActiveScriptError interface, and
 	gives it to the host, along with out exception class.  The host will
 	likely call back on the IActiveScriptError interface to get the source text
@@ -223,7 +223,7 @@ def ProcessAXScriptException(scriptingSite, debugManager, exceptionInstance):
 		fCallOnError = debugManager.HandleRuntimeError()
 		if not fCallOnError:
 			return None
-		
+
 	try:
 		result = scriptingSite.OnScriptError(gateway)
 	except pythoncom.com_error, details:
@@ -233,11 +233,11 @@ def ProcessAXScriptException(scriptingSite, debugManager, exceptionInstance):
 		result = winerror.S_FALSE
 
 	if result==winerror.S_OK:
-		# If the above  returns NOERROR, it is assumed the error has been 
+		# If the above  returns NOERROR, it is assumed the error has been
 		# correctly registered and the value SCRIPT_E_REPORTED is returned.
 		ret = win32com.server.exception.COMException(scode=axscript.SCRIPT_E_REPORTED)
 		return ret
 	else:
-		# The error is taken to be unreported and is propagated up the call stack 
-		# via the IDispatch::Invoke's EXCEPINFO parameter (hr returned is DISP_E_EXCEPTION. 
+		# The error is taken to be unreported and is propagated up the call stack
+		# via the IDispatch::Invoke's EXCEPINFO parameter (hr returned is DISP_E_EXCEPTION.
 		return exceptionInstance

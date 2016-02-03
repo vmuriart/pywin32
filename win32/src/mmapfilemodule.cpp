@@ -130,7 +130,7 @@ mmapfile_read_method (mmapfile_object * self,
 
 	PyObject * result = PyString_FromStringAndSize(self->data+self->pos, num_bytes);
 	if (result)
-		self->pos += num_bytes;  
+		self->pos += num_bytes;
 	return (result);
 }
 
@@ -321,7 +321,7 @@ mmapfile_flush_method (mmapfile_object * self, PyObject * args)
 	size_t offset	= 0;
 	size_t size	= 0;
 	CHECK_VALID;
-	if (!PyArg_ParseTuple (args, "|OO", 
+	if (!PyArg_ParseTuple (args, "|OO",
 		&oboffset,	// @pyparm int|offset|0|Position in buffer at which to flush
 		&obsize))	// @pyparm int|size|0|Number of bytes to flush, 0 to flush remainder of buffer past the offset
 		return NULL;
@@ -361,7 +361,7 @@ mmapfile_seek_method (mmapfile_object * self, PyObject * args)
 	PyObject *obdist;
 	int how=0;
 	CHECK_VALID;
-	if (!PyArg_ParseTuple (args, "O|i", 
+	if (!PyArg_ParseTuple (args, "O|i",
 		&obdist,	// @pyparm int|dist||Distance to seek
 		&how))		// @pyparm int|how|0|Pos from which to seek
 		return(NULL);
@@ -405,7 +405,7 @@ mmapfile_move_method (mmapfile_object * self, PyObject * args)
 	size_t dest, src, count;
 	PyObject *obdest, *obsrc, *obcount;
 	CHECK_VALID;
-	if (!PyArg_ParseTuple (args, "OOO", 
+	if (!PyArg_ParseTuple (args, "OOO",
 		&obdest,	// @pyparm int|dest||Destination position in buffer
 		&obsrc,		// @pyparm int|src||Source position in buffer
 		&obcount))	// @pyparm int|count||Number of bytes to move
@@ -549,7 +549,7 @@ new_mmapfile_object (PyObject * self, PyObject * args, PyObject *kwargs)
 		Py_DECREF(m_obj);
 		return NULL;
 		}
- 
+
 	if (!PyWinObject_AsTCHAR(obtagname, &m_obj->tagname, TRUE)){
 		Py_DECREF(m_obj);
 		return NULL;
@@ -587,7 +587,7 @@ new_mmapfile_object (PyObject * self, PyObject * args, PyObject *kwargs)
 			if (err != NO_ERROR){
 				Py_DECREF(m_obj);
 				return PyWin_SetAPIError("GetFileSize", err);
-				}	
+				}
 			}
 		// Must specify either mapping size or a non-empty file
 		if (!m_obj->mapping_size.QuadPart){
@@ -648,7 +648,7 @@ new_mmapfile_object (PyObject * self, PyObject * args, PyObject *kwargs)
 // @module mmapfile|Compiled extension module that provides access to the memory mapped file API
 static struct PyMethodDef mmapfile_functions[] = {
 	// @pymeth mmapfile|Creates or opens a file mapping, and maps a view into memory
-	{"mmapfile",	(PyCFunction) new_mmapfile_object, METH_KEYWORDS|METH_VARARGS, 
+	{"mmapfile",	(PyCFunction) new_mmapfile_object, METH_KEYWORDS|METH_VARARGS,
 		"Pymmapfile=mmapfile(File,Name,MaximumSize=0,FileOffset=0,NumberOfBytesToMap=0)  Creates a memory mapped file view"},
 	{NULL,			NULL}		 // Sentinel
 };

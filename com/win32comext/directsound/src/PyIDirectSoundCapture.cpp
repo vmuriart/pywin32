@@ -45,10 +45,10 @@ PyIDirectSoundCapture::~PyIDirectSoundCapture()
 	// Special treatment for PyIDirectSoundNotify
 
 	// This is a workaround for a reference counting bug in IDirectSound:
-	// If IDirectSound::Release() is called before IDirectSoundCapture::Release() 
+	// If IDirectSound::Release() is called before IDirectSoundCapture::Release()
 	// or IDirectSoundNotify::Release(), we will get an Access Violation
 
-	// We work around this by manipulating the reference count on the Python objects 
+	// We work around this by manipulating the reference count on the Python objects
 	// that encapsulate them
 	if (PyIBase::is_object(rc, &PyIDirectSoundNotify::type))
 	{
@@ -92,7 +92,7 @@ PyObject *PyIDirectSoundCapture::Initialize(PyObject *self, PyObject *args)
 		PyWin_SetAPIError("Initialize", hr);
 		return NULL;
 	}
-	
+
 	Py_INCREF(Py_None);
 	return Py_None;
 
@@ -109,7 +109,7 @@ PyObject *PyIDirectSoundCapture::CreateCaptureBuffer(PyObject *self, PyObject *a
 	IDirectSoundCapture *pIDSC = GetI(self);
 	if ( pIDSC == NULL )
 		return NULL;
-	if ( !PyArg_ParseTuple(args, "O|O:CreateCaptureBuffer", 
+	if ( !PyArg_ParseTuple(args, "O|O:CreateCaptureBuffer",
 		&obDSCBD, // @pyparm <o PyDSCBUFFERDESC>|lpDSCBufferDesc||a DSCBUFFERDESC structure containing values for the capture buffer being created.
 		&obUnk) ) // @pyparm <o PyIUknown>|unk|None|The IUnknown for COM aggregation.
 		return NULL;
@@ -122,7 +122,7 @@ PyObject *PyIDirectSoundCapture::CreateCaptureBuffer(PyObject *self, PyObject *a
 	if (obUnk && !PyCom_InterfaceFromPyInstanceOrObject(obUnk, IID_IUnknown, (void **)&pUnkIn, TRUE)) {
 		return NULL;
 	}
-	
+
 
 	DSCBUFFERDESC *pdscbd = &((PyDSCBUFFERDESC*)obDSCBD)->m_dscbd;
 	HRESULT hr;

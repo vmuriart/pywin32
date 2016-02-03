@@ -12,7 +12,7 @@ states = dict([(val, (name[13:]))
                for name, val in vars(bits).iteritems()
                if name.startswith('BG_JOB_STATE_')])
 
-bcm = pythoncom.CoCreateInstance(bits.CLSID_BackgroundCopyManager, 
+bcm = pythoncom.CoCreateInstance(bits.CLSID_BackgroundCopyManager,
                                  None,
                                  pythoncom.CLSCTX_LOCAL_SERVER,
                                  bits.IID_IBackgroundCopyManager)
@@ -20,7 +20,7 @@ bcm = pythoncom.CoCreateInstance(bits.CLSID_BackgroundCopyManager,
 class BackgroundJobCallback:
     _com_interfaces_ = [bits.IID_IBackgroundCopyCallback]
     _public_methods_ = ["JobTransferred", "JobError", "JobModification"]
-    
+
     def JobTransferred(self, job):
         print 'Job Transferred', job
         job.Complete()
@@ -92,7 +92,7 @@ job.Resume()
 
 while True:
     rc = win32event.MsgWaitForMultipleObjects(
-        (StopEvent,), 
+        (StopEvent,),
         0,
         TIMEOUT,
         win32event.QS_ALLEVENTS)

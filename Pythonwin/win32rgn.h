@@ -3,7 +3,7 @@
 
 #include "win32gdi.h"
 
-class PyCRgn : public PyCGdiObject 
+class PyCRgn : public PyCGdiObject
 	{
 	public:
 	static ui_type_CObject type;

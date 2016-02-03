@@ -222,7 +222,7 @@ static struct PyMethodDef PyIActiveScriptSite_methods[] =
 	{"OnLeaveScript",PyIActiveScriptSite::OnLeaveScript,  1}, // @pymeth OnLeaveScript|
 	{"OnScriptError",PyIActiveScriptSite::OnScriptError,  1}, // @pymeth OnScriptError|
 	{"OnScriptTerminate",PyIActiveScriptSite::OnScriptTerminate,  1}, // @pymeth OnScriptTerminate|
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIActiveScriptSite::type("PyIActiveScriptSite",

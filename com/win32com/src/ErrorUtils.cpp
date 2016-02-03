@@ -207,7 +207,7 @@ BOOL PyCom_ExcepInfoFromPyObject(PyObject *v, EXCEPINFO *pExcepInfo, HRESULT *ph
 		PyErr_Format(PyExc_TypeError, "Must be a COM exception object (not '%s')", v->ob_type->tp_name);
 		return FALSE;
 	}
-	
+
 	// It is a COM exception, but may be a server or client instance.
 	// Explicit check for client.
 	// Note that with class based exceptions, a simple pointer check fails.
@@ -290,7 +290,7 @@ BOOL PyCom_SetCOMErrorFromExcepInfo(const EXCEPINFO *pexcepinfo, REFIID riid)
 			SetErrorInfo(0, pIEI);
 			pIEI->Release();
 		}
-		pICEI->Release();			
+		pICEI->Release();
 	}
 	return SUCCEEDED(hr);
 }
@@ -423,7 +423,7 @@ BOOL VLogF_Logger(PyObject *logger, const char *log_method,
 	// a logger from that package)
 	PyObject *kw = PyDict_New();
 	if (kw && exc_typ) {
-		PyObject *exc_info = Py_BuildValue("OOO", exc_typ, 
+		PyObject *exc_info = Py_BuildValue("OOO", exc_typ,
 		                                   exc_val ? exc_val : Py_None,
 		                                   exc_tb ? exc_tb : Py_None);
 		PyDict_SetItemString(kw, "exc_info", exc_info);
@@ -555,7 +555,7 @@ PYCOM_EXPORT void PyCom_LoggerWarning(PyObject *logProvider, const char *fmt, ..
 	_DoLogger(logProvider, "warning", fmt, marker);
 }
 
-PYCOM_EXPORT 
+PYCOM_EXPORT
 void PyCom_LoggerNonServerException(PyObject *logProvider, const char *fmt, ...)
 {
 	if (IsServerErrorCurrent())

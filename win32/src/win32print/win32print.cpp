@@ -49,7 +49,7 @@ static SetDefaultPrinterfunc pfnSetDefaultPrinter=NULL;
 
 static PyObject *dummy_tuple=NULL;
 
-// To be used in PyArg_ParseTuple with O& format 
+// To be used in PyArg_ParseTuple with O& format
 BOOL PyWinObject_AsPrinterHANDLE(PyObject *obhprinter, HANDLE *phprinter){
 	return PyWinObject_AsHANDLE(obhprinter, phprinter);
 }
@@ -89,8 +89,8 @@ void PyWinObject_FreePRINTER_DEFAULTS(PPRINTER_DEFAULTS pdefaults)
 
 // @object PRINTER_DEFAULTS|A dictionary representing a PRINTER_DEFAULTS structure
 // @prop string|pDatatype|Data type to be used for print jobs, see <om win32print.EnumPrintProcessorDatatypes>, optional, can be None
-// @prop <o PyDEVMODE>|pDevMode|A PyDEVMODE that specifies default printer parameters, optional, can be None 
-// @prop int|DesiredAccess|An ACCESS_MASK specifying what level of access is needed, eg PRINTER_ACCESS_ADMINISTER, PRINTER_ACCESS_USE 
+// @prop <o PyDEVMODE>|pDevMode|A PyDEVMODE that specifies default printer parameters, optional, can be None
+// @prop int|DesiredAccess|An ACCESS_MASK specifying what level of access is needed, eg PRINTER_ACCESS_ADMINISTER, PRINTER_ACCESS_USE
 BOOL PyWinObject_AsPRINTER_DEFAULTS(PyObject *obdefaults, PPRINTER_DEFAULTS pdefaults)
 {
 	static char *printer_default_keys[]={"DesiredAccess","pDataType","pDevMode",NULL};
@@ -167,7 +167,7 @@ static PyObject *PyClosePrinter(PyObject *self, PyObject *args)
 	HANDLE hprinter;
 	if (!PyWinObject_AsPrinterHANDLE(obhprinter, &hprinter))
 		return NULL;
-	
+
 	if (!ClosePrinter(hprinter))
 		return PyWin_SetAPIError("ClosePrinter");
 	Py_INCREF(Py_None);
@@ -195,7 +195,7 @@ static PyObject *PyWinObject_FromPRINTER_INFO(LPBYTE printer_info, DWORD level)
 				"pPortName",PyWinObject_FromTCHAR(pi2->pPortName),
 				"pDriverName",PyWinObject_FromTCHAR(pi2->pDriverName),
 				"pComment",PyWinObject_FromTCHAR(pi2->pComment),
-				"pLocation",PyWinObject_FromTCHAR(pi2->pLocation), 
+				"pLocation",PyWinObject_FromTCHAR(pi2->pLocation),
 				"pDevMode",PyWinObject_FromDEVMODE(pi2->pDevMode),
 				"pSepFile", PyWinObject_FromTCHAR(pi2->pSepFile),
 				"pPrintProcessor",PyWinObject_FromTCHAR(pi2->pPrintProcessor),
@@ -215,7 +215,7 @@ static PyObject *PyWinObject_FromPRINTER_INFO(LPBYTE printer_info, DWORD level)
 			pi4=(PRINTER_INFO_4 *)printer_info;
 			return Py_BuildValue("{s:N,s:N,s:k}",
 				"pPrinterName",PyWinObject_FromTCHAR(pi4->pPrinterName),
-				"pServerName",PyWinObject_FromTCHAR(pi4->pServerName), 
+				"pServerName",PyWinObject_FromTCHAR(pi4->pServerName),
 				"Attributes",pi4->Attributes);
 		case 5:
 			PRINTER_INFO_5 *pi5;
@@ -258,14 +258,14 @@ static PyObject *PyGetPrinter(PyObject *self, PyObject *args)
 	PRINTER_INFO_2 *pi2;
 	// @comm Original implementation used level 2 only and returned a tuple
 	// Pass single arg as indicator to use old behaviour for backward compatibility
-	if (PyArg_ParseTuple(args, "O&:GetPrinter", 
+	if (PyArg_ParseTuple(args, "O&:GetPrinter",
 		PyWinObject_AsPrinterHANDLE, &hprinter)){ // @pyparm <o PyPrinterHANDLE>|hPrinter||handle to printer object as returned by <om win32print.OpenPrinter>
 		backward_compat=TRUE;
 		level=2;
 		}
 	else{
 		PyErr_Clear();
-		if (!PyArg_ParseTuple(args, "O&k:GetPrinter", 
+		if (!PyArg_ParseTuple(args, "O&k:GetPrinter",
 			PyWinObject_AsPrinterHANDLE, &hprinter,
 			&level)) // @pyparm int|Level|2|Level of data returned (1,2,3,4,5,7,8,9)
 			return NULL;
@@ -308,7 +308,7 @@ static PyObject *PyGetPrinter(PyObject *self, PyObject *args)
 }
 
 void PyWinObject_FreePRINTER_INFO(DWORD level, LPBYTE pbuf)
-{	
+{
 	if ((level==0) || (pbuf==NULL))
 		return;
 	switch(level){
@@ -351,7 +351,7 @@ void PyWinObject_FreePRINTER_INFO(DWORD level, LPBYTE pbuf)
 }
 
 BOOL PyWinObject_AsPRINTER_INFO(DWORD level, PyObject *obinfo, LPBYTE *pbuf)
-{	
+{
 	BOOL ret=FALSE;
 	size_t bufsize;
 
@@ -529,8 +529,8 @@ static PyObject *PySetPrinter(PyObject *self, PyObject *args)
 	// @pyparm dict|pPrinter||PRINTER_INFO_* dict as returned by <om win32print.GetPrinter>, can be None if level is 0
 	// @pyparm int|Command||Command to send to printer - one of the PRINTER_CONTROL_* constants, or 0
 	// @comm If Level is 0 and Command is PRINTER_CONTROL_SET_STATUS, pPrinter should be an integer,
-	// and is interpreted as the new printer status to set (one of the PRINTER_STATUS_* constants). 
-	if (!PyArg_ParseTuple(args, "O&kOk:SetPrinter", 
+	// and is interpreted as the new printer status to set (one of the PRINTER_STATUS_* constants).
+	if (!PyArg_ParseTuple(args, "O&kOk:SetPrinter",
 		PyWinObject_AsPrinterHANDLE, &hprinter, &level, &obinfo, &command))
 		return NULL;
 	if (!PyWinObject_AsPRINTER_INFO(level, obinfo, &buf))
@@ -550,7 +550,7 @@ static PyObject *PyAddPrinterConnection(PyObject *self, PyObject *args)
 {
 	TCHAR *printer;
 	PyObject *obprinter;
-	if (!PyArg_ParseTuple(args, "O:AddPrinterConnection", 
+	if (!PyArg_ParseTuple(args, "O:AddPrinterConnection",
 	          &obprinter)) // @pyparm string|printer||printer to connect to (eg: \\server\printer).
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obprinter, &printer, FALSE))
@@ -569,7 +569,7 @@ static PyObject *PyDeletePrinterConnection(PyObject *self, PyObject *args)
 {
 	TCHAR *printer;
 	PyObject *obprinter;
-	if (!PyArg_ParseTuple(args, "O:DeletePrinterConnection", 
+	if (!PyArg_ParseTuple(args, "O:DeletePrinterConnection",
 	          &obprinter)) // @pyparm string|printer||printer to disconnect from (eg: \\server\printer).
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obprinter, &printer, FALSE))
@@ -648,7 +648,7 @@ static PyObject *PyGetDefaultPrinterW(PyObject *self, PyObject *args)
 }
 
 // @pymethod None|win32print|SetDefaultPrinter|Sets the default printer.
-// @comm This function uses the pre-win2k method of WriteProfileString rather than the SetDefaultPrinter API function 
+// @comm This function uses the pre-win2k method of WriteProfileString rather than the SetDefaultPrinter API function
 static PyObject *PySetDefaultPrinter(PyObject *self, PyObject *args)
 {
 	TCHAR *printer=NULL, *info=NULL, *dprinter=NULL;
@@ -656,7 +656,7 @@ static PyObject *PySetDefaultPrinter(PyObject *self, PyObject *args)
 	PyObject *obprinter;
 	/* Windows < 2000 does not have a SetDefaultPrinter so the default printer
 	   must be set in the registry */
-	if (!PyArg_ParseTuple(args, "O:SetDefaultPrinter", 
+	if (!PyArg_ParseTuple(args, "O:SetDefaultPrinter",
 	        &obprinter)) // @pyparm string|printer||printer to set as default
 		return NULL;
 	if (!PyWinObject_AsTCHAR(obprinter, &printer, FALSE))
@@ -727,7 +727,7 @@ static PyObject *PyEnumPrinters(PyObject *self, PyObject *args)
 		sizeof(PRINTER_INFO_4),sizeof(PRINTER_INFO_5),sizeof(PRINTER_INFO_6),
 		sizeof(PRINTER_INFO_7),sizeof(PRINTER_INFO_8),sizeof(PRINTER_INFO_9)
 		};
-	if (!PyArg_ParseTuple(args, "k|Ok:EnumPrinters", 
+	if (!PyArg_ParseTuple(args, "k|Ok:EnumPrinters",
 					&flags,   // @pyparm int|flags||types of printer objects to enumerate (combination of PRINTER_ENUM_* constants).
 					&obname,    // @pyparm string|name|None|name of printer object.
 					&level))  // @pyparm int|level|1|type of printer info structure (Levels 1,2,4,5 supported)
@@ -812,10 +812,10 @@ static PyObject *PyStartDocPrinter(PyObject *self, PyObject *args)
 	// @comm For level 1, the tuple is:
 	// @tupleitem 0|string|docName|Specifies the name of the document.
 	// @tupleitem 1|string|outputFile|Specifies the name of an output file. To print to a printer, set this to None.
-	// @tupleitem 2|string|dataType|Identifies the type of data used to record the document, such 
+	// @tupleitem 2|string|dataType|Identifies the type of data used to record the document, such
 	// as "raw" or "emf", used to record the print job. This member can be None. If it is not None,
-	// the StartDoc function passes it to the printer driver. Note that the printer driver might 
-	// ignore the requested data type. 
+	// the StartDoc function passes it to the printer driver. Note that the printer driver might
+	// ignore the requested data type.
 	if (PyWinObject_AsTCHAR(obDocName, &pDocName, FALSE)
 		&&PyWinObject_AsTCHAR(obOutputFile, &pOutputFile, TRUE)
 		&&PyWinObject_AsTCHAR(obDatatype, &pDatatype, TRUE)){
@@ -1017,7 +1017,7 @@ static PyObject *PyWritePrinter(PyObject *self, PyObject *args)
 	PyObject *obbuf;
 	if (!PyArg_ParseTuple(args, "O&O:WritePrinter",
 		PyWinObject_AsPrinterHANDLE, &hprinter,  // @pyparm <o PyPrinterHANDLE>|hprinter||Handle to printer as returned by <om win32print.OpenPrinter>.
-		&obbuf))       // @pyparm string|buf||String or buffer containing data to send to printer. Embedded NULL bytes are allowed.  
+		&obbuf))       // @pyparm string|buf||String or buffer containing data to send to printer. Embedded NULL bytes are allowed.
 		return NULL;
 	if (!PyWinObject_AsReadBuffer(obbuf, &buf, &buf_size, FALSE))
 		return NULL;
@@ -1335,8 +1335,8 @@ static PyObject *PyDocumentProperties(PyObject *self, PyObject *args)
 	// @pyparm <o PyDEVMODE>|DevModeOutput||PyDEVMODE object that receives modified info, can be None if DM_OUT_BUFFER not specified
 	// @pyparm <o PyDEVMODE>|DevModeInput||PyDEVMODE that specifies initial configuration, can be None if DM_IN_BUFFER not specified
 	// @pyparm int|Mode||A combination of DM_IN_BUFFER, DM_OUT_BUFFER, and DM_IN_PROMPT - pass 0 to retrieve driver data size
-	if (!PyArg_ParseTuple(args,"OO&OOOk:DocumentProperties", &obhwnd, 
-		PyWinObject_AsPrinterHANDLE, &hprinter, 
+	if (!PyArg_ParseTuple(args,"OO&OOOk:DocumentProperties", &obhwnd,
+		PyWinObject_AsPrinterHANDLE, &hprinter,
 		&obdevicename, &obdmoutput, &obdminput, &mode))
 		return NULL;
 	if (PyWinObject_AsTCHAR(obdevicename, &devicename, FALSE)
@@ -1470,7 +1470,7 @@ done:
 		free(buf);
 	return ret;
 }
-		
+
 // @pymethod (dict,...)|win32print|EnumPrinterDrivers|Lists installed printer drivers
 static PyObject *PyEnumPrinterDrivers(PyObject *self, PyObject *args)
 {
@@ -1674,9 +1674,9 @@ PyObject *PyWin_Object_FromFORM_INFO_1(FORM_INFO_1W *fi1)
 	return Py_BuildValue("{s:k,s:u,s:{s:l,s:l},s:{s:l,s:l,s:l,s:l}}",
 		"Flags", fi1->Flags,
 		"Name", fi1->pName,
-		"Size", 
+		"Size",
 			"cx", fi1->Size.cx, "cy", fi1->Size.cy,
-		"ImageableArea", 
+		"ImageableArea",
 			"left", fi1->ImageableArea.left, "top", fi1->ImageableArea.top,
 			"right", fi1->ImageableArea.right, "bottom", fi1->ImageableArea.bottom);
 }
@@ -1778,7 +1778,7 @@ BOOL PyWinObject_AsFORM_INFO_1(PyObject *obform, FORM_INFO_1W *fi1)
 		PyErr_SetString(PyExc_TypeError,err_msg);
 		return FALSE;
 		}
-	return PyArg_ParseTupleAndKeywords(dummy_tuple, obform, "kuO&O&:FORM_INFO_1", form_keys, &fi1->Flags, &fi1->pName, 
+	return PyArg_ParseTupleAndKeywords(dummy_tuple, obform, "kuO&O&:FORM_INFO_1", form_keys, &fi1->Flags, &fi1->pName,
 		PyWinObject_AsSIZEL, &fi1->Size, PyWinObject_AsRECTL, &fi1->ImageableArea);
 }
 
@@ -1792,8 +1792,8 @@ static PyObject *PyAddForm(PyObject *self, PyObject *args)
 	HANDLE hprinter;
 	CHECK_PFN(AddForm);
 
-	if (!PyArg_ParseTuple(args, "O&O&:AddForm", 
-		PyWinObject_AsPrinterHANDLE, &hprinter, 
+	if (!PyArg_ParseTuple(args, "O&O&:AddForm",
+		PyWinObject_AsPrinterHANDLE, &hprinter,
 		PyWinObject_AsFORM_INFO_1, &fi1))
 		return NULL;
 	if (!(*pfnAddForm)(hprinter, 1, (LPBYTE)&fi1))
@@ -1865,8 +1865,8 @@ static PyObject *PySetForm(PyObject *self, PyObject *args)
 	CHECK_PFN(SetForm);
 
 	if (!PyArg_ParseTuple(args, "O&uO&:SetForm",
-		PyWinObject_AsPrinterHANDLE, &hprinter, 
-		&formname, 
+		PyWinObject_AsPrinterHANDLE, &hprinter,
+		&formname,
 		PyWinObject_AsFORM_INFO_1, &fi1))
 		return NULL;
 	if (!(*pfnSetForm)(hprinter, formname, 1, (LPBYTE)&fi1))
@@ -1993,7 +1993,7 @@ static PyObject *PyDeviceCapabilities(PyObject *self, PyObject *args)
 			ret=Py_BuildValue("{s:h,s:h}","Width",LOWORD(result),"Length",HIWORD(result));
 			break;
 		// @flag DC_ENUMRESOLUTIONS|Sequence of dictionaries containing x and y resolutions in DPI
-		case DC_ENUMRESOLUTIONS:{	
+		case DC_ENUMRESOLUTIONS:{
 			// output is pairs of LONGs, result indicates number of pairs
 			PLONG presolutions;
 			LONG xres, yres;
@@ -2057,7 +2057,7 @@ static PyObject *PyDeviceCapabilities(PyObject *self, PyObject *args)
 		// @flag DC_NUP|Sequence of ints containing supported logical page per physical page settings
 		case DC_NUP:
 		// @flag DC_MEDIATYPES|Sequence of ints, DMMEDIA_* constants
-		case DC_MEDIATYPES:{ 
+		case DC_MEDIATYPES:{
 			DWORD *pdword;
 			retsize=sizeof(DWORD);
 			bufsize=result*retsize;
@@ -2572,7 +2572,7 @@ static PyObject *PyFlushPrinter(PyObject *self, PyObject *args)
 		return NULL;
 	if (PyString_AsStringAndSize(obbuf, (char **)&buf, &bufsize)==-1)
 		return NULL;
-	if (!(*pfnFlushPrinter)(hprinter, buf, 
+	if (!(*pfnFlushPrinter)(hprinter, buf,
 	                        PyWin_SAFE_DOWNCAST(bufsize, Py_ssize_t, DWORD),
 	                        &bytes_written, sleep_ms))
 		return PyWin_SetAPIError("FlushPrinter");

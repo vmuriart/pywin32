@@ -13,7 +13,7 @@ def testSHFileOperation(file_cnt):
     shell.SHFileOperation((0, shellcon.FO_MOVE, pFrom, pTo, shellcon.FOF_MULTIDESTFILES|shellcon.FOF_NOCONFIRMATION))
     for fname in orig_fnames:
         assert not os.path.isfile(fname)
-        
+
     for fname in new_fnames:
         assert os.path.isfile(fname)
         shell.SHFileOperation((0, shellcon.FO_DELETE, fname, None, shellcon.FOF_NOCONFIRMATION|shellcon.FOF_NOERRORUI))

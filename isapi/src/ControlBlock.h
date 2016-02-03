@@ -40,7 +40,7 @@ public:
 
 	DWORD WriteStream(char *buffer, const int buffLen, const int reserved=0)
 	{
-		DWORD dwBufLen = buffLen;	
+		DWORD dwBufLen = buffLen;
 		m_pECB->WriteClient(m_pECB->ConnID, (void *) buffer, &dwBufLen, reserved);
 		return dwBufLen;
 	}
@@ -58,7 +58,7 @@ public:
 	{
 
 		// Let IIS know that this worker thread is done with this request.  This will allow
-		// IIS to recycle the EXTENSION_CONTROL_BLOCK.  
+		// IIS to recycle the EXTENSION_CONTROL_BLOCK.
 		m_pECB->ServerSupportFunction(m_pECB->ConnID, HSE_REQ_DONE_WITH_SESSION, &dwState, NULL, 0);
 	}
 

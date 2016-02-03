@@ -95,14 +95,14 @@ typedef struct {
 
 // Globals
 // Will be set to one of SERVICE_WIN32_OWN_PROCESS etc flags.
-DWORD g_serviceProcessFlags = 0; 
+DWORD g_serviceProcessFlags = 0;
 
 // The global SCM dispatch table.  A trailing NULL indicates to the SCM
 // how many are used, so we allocate one extra for this sentinal
-static SERVICE_TABLE_ENTRY   DispatchTable[MAX_SERVICES+1] = 
-{ 
-    { NULL,              NULL         } 
-}; 
+static SERVICE_TABLE_ENTRY   DispatchTable[MAX_SERVICES+1] =
+{
+    { NULL,              NULL         }
+};
 // A parallel array of Python information for the service.
 static PY_SERVICE_TABLE_ENTRY PythonServiceTable[MAX_SERVICES];
 
@@ -130,36 +130,36 @@ SERVICE_STATUS neverStartedStatus = {
 	SERVICE_WIN32_OWN_PROCESS,
 	SERVICE_STOPPED,
     0, // dwControlsAccepted,
-    ERROR_SERVICE_SPECIFIC_ERROR, // dwWin32ExitCode; 
-    1, // dwServiceSpecificExitCode; 
-    0, // dwCheckPoint; 
+    ERROR_SERVICE_SPECIFIC_ERROR, // dwWin32ExitCode;
+    1, // dwServiceSpecificExitCode;
+    0, // dwCheckPoint;
     0 };
 
 SERVICE_STATUS errorStatus = {
 	SERVICE_WIN32_OWN_PROCESS,
 	SERVICE_STOP_PENDING,
     0, // dwControlsAccepted,
-    ERROR_SERVICE_SPECIFIC_ERROR, // dwWin32ExitCode; 
-    1, // dwServiceSpecificExitCode; 
-    0, // dwCheckPoint; 
+    ERROR_SERVICE_SPECIFIC_ERROR, // dwWin32ExitCode;
+    1, // dwServiceSpecificExitCode;
+    0, // dwCheckPoint;
     5000 };
 
 SERVICE_STATUS startingStatus = {
 	SERVICE_WIN32_OWN_PROCESS,
 	SERVICE_START_PENDING,
     0, // dwControlsAccepted,
-    0, // dwWin32ExitCode; 
-    0, // dwServiceSpecificExitCode; 
-    0, // dwCheckPoint; 
+    0, // dwWin32ExitCode;
+    0, // dwServiceSpecificExitCode;
+    0, // dwCheckPoint;
     5000 };
 
 SERVICE_STATUS stoppedStatus = {
 	SERVICE_WIN32_OWN_PROCESS,
 	SERVICE_STOPPED,
     0, // dwControlsAccepted,
-    0, // dwWin32ExitCode; 
-    0, // dwServiceSpecificExitCode; 
-    0, // dwCheckPoint; 
+    0, // dwWin32ExitCode;
+    0, // dwServiceSpecificExitCode;
+    0, // dwCheckPoint;
     0 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -416,7 +416,7 @@ static PyObject *PyPumpWaitingMessages(PyObject *self, PyObject *args)
 {
     MSG msg;
 	long result = 0;
-	// Read all of the messages in this next loop, 
+	// Read all of the messages in this next loop,
 	// removing each message as we read it.
 	Py_BEGIN_ALLOW_THREADS
 	while (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
@@ -426,7 +426,7 @@ static PyObject *PyPumpWaitingMessages(PyObject *self, PyObject *args)
 			break;
 		}
 		// Otherwise, dispatch the message.
-		DispatchMessage(&msg); 
+		DispatchMessage(&msg);
 	} // End of PeekMessage while loop
 	Py_END_ALLOW_THREADS
 	return PyInt_FromLong(result);
@@ -713,7 +713,7 @@ void PythonService_Finalize()
 //            name that Windows starts us with
 //
 //  RETURN VALUE:
-//    FALSE if we have exceeded the maximum number of services in this executable, 
+//    FALSE if we have exceeded the maximum number of services in this executable,
 //    or if this service name has already been prepared.
 //
 //  COMMENTS:
@@ -746,8 +746,8 @@ BOOL PythonService_PrepareToHostSingle(PyObject *klass)
 //    klass - The Python class which implements this service.
 //
 //  RETURN VALUE:
-//    FALSE if we have exceeded the maximum number of services in this executable, 
-//    if the exe is already setup to host an "own process" service, or if this 
+//    FALSE if we have exceeded the maximum number of services in this executable,
+//    if the exe is already setup to host an "own process" service, or if this
 //    service name has already been prepared.
 //
 //  COMMENTS:
@@ -784,7 +784,7 @@ BOOL PythonService_PrepareToHostMultiple(const TCHAR *service_name, PyObject *kl
 //  FUNCTION: PythonService_StartServiceCtrlDispatcher
 //
 //  PURPOSE: Calls the Windows StartServiceCtrlDispatcher with
-//           the DispatchTable setup by previous calls to PrepareToHost 
+//           the DispatchTable setup by previous calls to PrepareToHost
 //           functions.
 //
 //  RETURN VALUE:
@@ -834,7 +834,7 @@ PY_SERVICE_TABLE_ENTRY *FindPythonServiceEntry(LPCTSTR svcName)
 //    none
 //
 //  COMMENTS:
-//    This routine is called by the Service Control Manager.  It loads 
+//    This routine is called by the Service Control Manager.  It loads
 //    the "SvcRun" function from the class instance and calls it.
 void WINAPI service_main(DWORD dwArgc, LPTSTR *lpszArgv)
 {
@@ -874,17 +874,17 @@ void WINAPI service_main(DWORD dwArgc, LPTSTR *lpszArgv)
 	if (pe->klass) // avoid an extra redundant log message.
 		instance = LoadPythonServiceInstance(pe->klass, dwArgc, lpszArgv);
 	// If Python has not yet registered the service control handler, then
-	// we are in serious trouble - it is likely the service will enter a 
-	// zombie state, where it wont do anything, but you can not start 
-	// another.  Therefore, we still create register the handler, thereby 
-	// getting a handle, so we can immediately tell Windows the service 
+	// we are in serious trouble - it is likely the service will enter a
+	// zombie state, where it wont do anything, but you can not start
+	// another.  Therefore, we still create register the handler, thereby
+	// getting a handle, so we can immediately tell Windows the service
 	// is rooted (that is a technical term!)
 	if (!bServiceDebug && pe->sshStatusHandle==0) {
 		// If we don't have a pe->sshStatusHandle(), then the Python code
 		// failed to register itself with the SCM.
 		// If we have an instance, it means that instance simply neglected
 		// to do the right thing - report that as an error.
-		if (instance) 
+		if (instance)
 			ReportPythonError(E_PYS_NOT_CONTROL_HANDLER);
 		// else no instance - an error has already been reported.
 		if (!bServiceDebug)
@@ -1022,7 +1022,7 @@ VOID WINAPI service_ctrl(
 }
 
 
-// When debugging, a console event handler that simulates a service 
+// When debugging, a console event handler that simulates a service
 // stop control.
 BOOL WINAPI DebugControlHandler ( DWORD dwCtrlType )
 {
@@ -1060,7 +1060,7 @@ BOOL WINAPI DebugControlHandler ( DWORD dwCtrlType )
 //
 //  FUNCTION: PythonService_main
 //
-//  PURPOSE: entrypoint for our generic PythonService host 
+//  PURPOSE: entrypoint for our generic PythonService host
 //
 //  PARAMETERS:
 //    argc - number of command line arguments
@@ -1311,7 +1311,7 @@ BOOL LocatePythonServiceClassString( TCHAR *svcName, TCHAR *buf, int cchBuf)
 	BOOL bOptimize;
 	DWORD readSize = sizeof(bOptimize);
 	if (key) {
-		if ((RegQueryValueExA(key, "Optimize", 0, &dataType, (LPBYTE)&bOptimize, &readSize)!=ERROR_SUCCESS) || 
+		if ((RegQueryValueExA(key, "Optimize", 0, &dataType, (LPBYTE)&bOptimize, &readSize)!=ERROR_SUCCESS) ||
 			(dataType != REG_DWORD)) {
 			bOptimize = FALSE;
 		}
@@ -1351,7 +1351,7 @@ static BOOL RegisterPythonServiceExe(void)
 	wsprintf(keyBuf, _T("Software\\Python\\PythonService\\%hs"), szVerString);
 	DWORD rc;
 	if ((rc=RegSetValue(HKEY_LOCAL_MACHINE,
-	                keyBuf, REG_SZ, 
+	                keyBuf, REG_SZ,
 					fnameBuf, _tcslen(fnameBuf)))!=ERROR_SUCCESS) {
 		printf("Registration failed due to RegSetValue() of service EXE - error %d\n", rc);
 		return FALSE;
@@ -1447,24 +1447,24 @@ static void CheckRegisterEventSourceFile()
 
 	HKEY hkey;
 	TCHAR keyName[MAX_PATH];
-	
+
 	_tcscpy(keyName, _T("SYSTEM\\CurrentControlSet\\Services\\EventLog\\Application\\"));
 	_tcscat(keyName, g_szEventSourceName );
 
 	BOOL rc = FALSE;
-	if (RegCreateKeyEx(HKEY_LOCAL_MACHINE, 
-		               keyName, 
-		               0, 
-		               NULL, 
-		               REG_OPTION_NON_VOLATILE, 
-		               KEY_WRITE, NULL, 
-		               &hkey, 
+	if (RegCreateKeyEx(HKEY_LOCAL_MACHINE,
+		               keyName,
+		               0,
+		               NULL,
+		               REG_OPTION_NON_VOLATILE,
+		               KEY_WRITE, NULL,
+		               &hkey,
 		               NULL) == ERROR_SUCCESS) {
-		RegSetValueEx(hkey, TEXT("EventMessageFile"), 0, REG_SZ, 
+		RegSetValueEx(hkey, TEXT("EventMessageFile"), 0, REG_SZ,
 			          (const BYTE *)g_szEventSourceFileName,
 					  (_tcslen(g_szEventSourceFileName)+1)*sizeof(TCHAR));
 		DWORD types = EVENTLOG_ERROR_TYPE | EVENTLOG_WARNING_TYPE | EVENTLOG_INFORMATION_TYPE;
-		RegSetValueEx(hkey, TEXT("TypesSupported"), 0, REG_DWORD, 
+		RegSetValueEx(hkey, TEXT("TypesSupported"), 0, REG_DWORD,
 			          (const BYTE *)&types, sizeof(types));
 		RegCloseKey(hkey);
 	}

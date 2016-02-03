@@ -127,7 +127,7 @@ class InteractiveFormatter(FormatterParent):
 		while i < lengthDoc:
 			ch = chNext
 			chNext = cdoc[i+1:i+2].decode('latin-1')
-			
+
 #			trace("ch=%r, i=%d, next=%r, state=%s" % (ch, i, chNext, state))
 			if state == STYLE_INTERACTIVE_EOL:
 				if ch not in '\r\n':
@@ -357,7 +357,7 @@ class InteractiveCore:
 		else:
 			# Just add a new line.
 			self.write('\n')
-		
+
 	def _GetSubConfigNames(self):
 		return ["interactive"] # Allow [Keys:Interactive] sections to be specific
 
@@ -458,7 +458,7 @@ class InteractiveCore:
 			self.SCIAutoCComplete()
 			self.SCICancel()
 			return
-		
+
 		self.SCICancel()
 		# First, check for an error message
 		haveGrabbedOutput = 0
@@ -632,7 +632,7 @@ class InteractiveView(InteractiveCore, winout.WindowOutputView):
 		InteractiveCore.__init__(self)
 		winout.WindowOutputView.__init__(self, doc)
 		self.encoding = pywin.default_scintilla_encoding
-		
+
 	def _MakeColorizer(self):
 		return InteractiveFormatter(self)
 	def OnInitialUpdate(self):
@@ -669,9 +669,9 @@ class InteractiveFrame(winout.WindowOutputFrame):
 			self.lastActive = wndDeactive
 
 ######################################################################
-## 
+##
 ## Dockable Window Support
-## 
+##
 ######################################################################
 ID_DOCKED_INTERACTIVE_CONTROLBAR = 0xe802
 
@@ -770,9 +770,9 @@ def CreateDockedInteractiveWindow():
 	win32ui.GetMainFrame().DockControlBar(bar, afxres.AFX_IDW_DOCKBAR_BOTTOM)
 
 ######################################################################
-# 
+#
 # The public interface to this module.
-# 
+#
 ######################################################################
 # No extra functionality now, but maybe later, so
 # publicize these names.

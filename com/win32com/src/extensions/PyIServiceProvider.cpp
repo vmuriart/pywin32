@@ -53,7 +53,7 @@ PyObject *PyIServiceProvider::QueryService(PyObject *self, PyObject *args)
 static struct PyMethodDef PyIServiceProvider_methods[] =
 {
 	{"QueryService",         PyIServiceProvider::QueryService,  1}, // @pymeth QueryService|Creates or accesses the specified service and returns an interface object to the specified interface for the service.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIServiceProvider::type("PyIServiceProvider",

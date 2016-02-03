@@ -227,7 +227,7 @@ PyObject *PyIKnownFolder::GetFolderDefinition(PyObject *self, PyObject *args)
 }
 
 // @object PyIKnownFolder|Interface representing a known folder that serves
-// as a replacement for the numeric CSIDL definitions and API functions. 
+// as a replacement for the numeric CSIDL definitions and API functions.
 // Requires Vista or later.
 static struct PyMethodDef PyIKnownFolder_methods[] =
 {

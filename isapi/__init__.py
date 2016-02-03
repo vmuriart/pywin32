@@ -17,10 +17,10 @@ class ISAPIError(Exception):
                 self.strerror = "no error message is available"
         # str() looks like a win32api error.
         return str( (self.errno, self.strerror, self.funcname) )
-        
+
 class FilterError(ISAPIError):
     pass
-    
+
 class ExtensionError(ISAPIError):
     pass
 

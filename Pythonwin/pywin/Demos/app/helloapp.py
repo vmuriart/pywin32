@@ -32,7 +32,7 @@ class HelloWindow(window.Wnd):
             'Hello World!', win32con.WS_OVERLAPPEDWINDOW, \
             (100, 100, 400, 300), None, 0, None)
 
-# The application object itself.       
+# The application object itself.
 class HelloApp(WinApp):
 
     def InitInstance(self):
@@ -40,6 +40,6 @@ class HelloApp(WinApp):
         self.frame.ShowWindow(win32con.SW_SHOWNORMAL)
         # We need to tell MFC what our main frame is.
         self.SetMainFrame(self.frame)
-        
-# Now create the application object itself!   
+
+# Now create the application object itself!
 app = HelloApp()

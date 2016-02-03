@@ -76,7 +76,7 @@ PyObject *PyITransferDestination::Unadvise(PyObject *self, PyObject *args)
 
 // @pymethod (int, interface, interface)|PyITransferDestination|CreateItem|Requests that a new item be created
 // @rdesc Returns the HRESULT and requested interfaces.  Interfaces may be None if
-//	function returns one of the informational codes (shellcon.COPYENGINE_S_*) 
+//	function returns one of the informational codes (shellcon.COPYENGINE_S_*)
 PyObject *PyITransferDestination::CreateItem(PyObject *self, PyObject *args)
 {
 	ITransferDestination *pITD = GetI(self);
@@ -96,7 +96,7 @@ PyObject *PyITransferDestination::CreateItem(PyObject *self, PyObject *args)
 	DWORD Attributes;
 	IID riidItem = IID_IShellItem;
 	IID riidResources = IID_IShellItemResources;
-	if ( !PyArg_ParseTuple(args, "OkKi|O&O&:CreateItem", &obName, &Attributes, &Size, &Flags, 
+	if ( !PyArg_ParseTuple(args, "OkKi|O&O&:CreateItem", &obName, &Attributes, &Size, &Flags,
 		PyWinObject_AsIID, &riidItem, PyWinObject_AsIID, &riidResources))
 		return NULL;
 	if (!PyWinObject_AsWCHAR(obName, &Name))

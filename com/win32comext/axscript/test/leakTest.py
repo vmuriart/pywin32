@@ -55,7 +55,7 @@ class TestConnectServer(connect.ConnectableServer):
 	# (ie, as a normal COM server, this exposes just this single method.
 	def __init__(self, object):
 		self.object = object
-		
+
 	def Broadcast(self,arg):
 		# Simply broadcast a notification.
 		self._BroadcastNotify(self.NotifyDoneIt, (arg,))
@@ -69,7 +69,7 @@ prop = "Property Value"
 sub hello(arg1)
    test.echo arg1
 end sub
-  
+
 sub testcollection
    test.verbose = 1
    for each item in test.collection
@@ -86,7 +86,7 @@ prop = "Property Value"
 def hello(arg1):
    test.echo(arg1)
    pass
-   
+
 def testcollection():
    test.verbose = 1
 #   test.collection[1] = "New one"
@@ -124,7 +124,7 @@ def TestEngine(engineName, code, bShouldWork = 1):
   # all done!
   engine.Close()
 
-def doTestEngine(engine, echoer):    
+def doTestEngine(engine, echoer):
   # Now call into the scripts IDispatch
   from win32com.client.dynamic import Dispatch
   ob = Dispatch(engine.GetScriptDispatch())
@@ -135,7 +135,7 @@ def doTestEngine(engine, echoer):
     return
   if echoer.last != "Goober":
     print "***** Function call didnt set value correctly", repr(echoer.last)
-    
+
   if str(ob.prop) != "Property Value":
     print "***** Property Value not correct - ", repr(ob.prop)
 
@@ -155,7 +155,7 @@ def dotestall():
 ##    TestEngine("Python", ErrScript, 0)
 ##  except pythoncom.com_error:
 ##    pass
-   
+
 
 def testall():
   dotestall()

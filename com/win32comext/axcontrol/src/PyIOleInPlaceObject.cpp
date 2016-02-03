@@ -73,8 +73,8 @@ PyObject *PyIOleInPlaceObject::SetObjectRects(PyObject *self, PyObject *args)
 		return NULL;
 	RECT PosRect;
 	RECT ClipRect;
-	if ( !PyArg_ParseTuple(args, "(llll)(llll):SetObjectRects", 
-		&PosRect.left, &PosRect.top, &PosRect.right, &PosRect.bottom, 
+	if ( !PyArg_ParseTuple(args, "(llll)(llll):SetObjectRects",
+		&PosRect.left, &PosRect.top, &PosRect.right, &PosRect.bottom,
 		&ClipRect.left, &ClipRect.top, &ClipRect.right, &ClipRect.bottom))
 		return NULL;
 	HRESULT hr;
@@ -151,8 +151,8 @@ STDMETHODIMP PyGOleInPlaceObject::SetObjectRects(
 		/* [in] */ LPCRECT lprcClipRect)
 {
 	PY_GATEWAY_METHOD;
-	return InvokeViaPolicy("SetObjectRects", NULL, "(llll)(llll)", 
-		lprcPosRect->left, lprcPosRect->top, lprcPosRect->right, lprcPosRect->bottom, 
+	return InvokeViaPolicy("SetObjectRects", NULL, "(llll)(llll)",
+		lprcPosRect->left, lprcPosRect->top, lprcPosRect->right, lprcPosRect->bottom,
 		lprcClipRect->left, lprcClipRect->top, lprcClipRect->right, lprcClipRect->bottom);
 }
 

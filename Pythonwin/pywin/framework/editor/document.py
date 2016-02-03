@@ -193,14 +193,14 @@ class EditorDocumentBase(ParentEditorDocument):
 		import pywin.debugger
 		if pywin.debugger.currentDebugger is not None:
 			pywin.debugger.currentDebugger.UpdateDocumentLineStates(self)
-			
+
 	# Read-only document support - make it obvious to the user
 	# that the file is read-only.
 	def _IsReadOnly(self):
 		return self.fileStat is not None and (self.fileStat[0] & 128)==0
 
 	def _UpdateUIForState(self):
-		"""Change the title to reflect the state of the document - 
+		"""Change the title to reflect the state of the document -
 		eg ReadOnly, Dirty, etc
 		"""
 		filename = self.GetPathName()
@@ -227,7 +227,7 @@ class EditorDocumentBase(ParentEditorDocument):
 		# We have source control support - check if the user wants to use it.
 		msg = "Would you like to check this file out?"
 		defButton = win32con.MB_YESNO
-		if self.IsModified(): 
+		if self.IsModified():
 			msg = msg + "\r\n\r\nALL CHANGES IN THE EDITOR WILL BE LOST"
 			defButton = win32con.MB_YESNO
 		if win32ui.MessageBox(msg, None, defButton)!=win32con.IDYES:
@@ -238,7 +238,7 @@ class EditorDocumentBase(ParentEditorDocument):
 			win32api.SetFileAttributes(self.GetPathName(), win32con.FILE_ATTRIBUTE_NORMAL)
 			self.ReloadDocument()
 			return 1
-			
+
 		# Now call on the module to do it.
 		if self.scModule is None:
 			try:
@@ -249,7 +249,7 @@ class EditorDocumentBase(ParentEditorDocument):
 				traceback.print_exc()
 				print "Error loading source control module."
 				return 0
-		
+
 		if self.scModule.CheckoutFile(self.GetPathName()):
 			self.ReloadDocument()
 			return 1

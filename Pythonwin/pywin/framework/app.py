@@ -22,8 +22,8 @@ import scriptutils
 ## Whoever wants the generic "Application" should get it via win32iu.GetApp()
 
 # These are "legacy"
-AppBuilder = None 
-App = None	# default - if used, must end up a CApp derived class. 
+AppBuilder = None
+App = None	# default - if used, must end up a CApp derived class.
 
 # Helpers that should one day be removed!
 def AddIdleHandler(handler):
@@ -37,8 +37,8 @@ def DeleteIdleHandler(handler):
 def SaveWindowSize(section,rect,state=""):
 	""" Writes a rectangle to an INI file
 	Args: section = section name in the applications INI file
-	      rect = a rectangle in a (cy, cx, y, x) tuple 
-	             (same format as CREATESTRUCT position tuples)."""	
+	      rect = a rectangle in a (cy, cx, y, x) tuple
+	             (same format as CREATESTRUCT position tuples)."""
 	left, top, right, bottom = rect
 	if state: state = state + " "
 	win32ui.WriteProfileVal(section,state+"left",left)
@@ -121,7 +121,7 @@ class CApp(WinApp):
 		self.oldCallbackCaller = None
 		WinApp.__init__(self, win32ui.GetApp() )
 		self.idleHandlers = []
-		
+
 	def InitInstance(self):
 		" Called to crank up the app "
 		HookInput()
@@ -214,7 +214,7 @@ class CApp(WinApp):
 			t, v, tb = sys.exc_info()
 			win32ui.MessageBox("Internal error in help file processing\r\n%s: %s" % (t,v))
 			tb = None # Prevent a cycle
-	
+
 	def DoLoadModules(self, modules):
 		# XXX - this should go, but the debugger uses it :-(
 		# dont do much checking!
@@ -247,7 +247,7 @@ class CApp(WinApp):
 				if len(path)>0:
 					new_path.append(win32ui.FullPath(path))
 		sys.path = new_path + sys.path
-		
+
 	def OnRClick(self,params):
 		" Handle right click message "
 		# put up the entire FILE menu!

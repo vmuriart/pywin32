@@ -411,12 +411,12 @@ static struct PyMethodDef PyCWinApp_methods[] = {
 	{"IsInproc",    			ui_app_isinproc, 1}, // @pymeth IsInproc|Returns a flag to indicate if the created CWinApp was in the DLL, or an external EXE.
 	{NULL,			NULL}
 };
-ui_type_CObject PyCWinApp::type("PyCWinApp", 
+ui_type_CObject PyCWinApp::type("PyCWinApp",
 								&PyCWinThread::type,
-								RUNTIME_CLASS(CWinApp), 
-								sizeof(PyCWinApp), 
-								PYOBJ_OFFSET(PyCWinApp), 
-								PyCWinApp_methods, 
+								RUNTIME_CLASS(CWinApp),
+								sizeof(PyCWinApp),
+								PYOBJ_OFFSET(PyCWinApp),
+								PyCWinApp_methods,
 								GET_PY_CTOR(PyCWinApp) );
 
 void PyCWinApp::cleanup()

@@ -80,7 +80,7 @@ THE_PROXY_HOST = '25.44.77.176' if node != SQL_HOST_NODE or not onWindows else '
 try: #If mx extensions are installed, use mxDateTime
     import mx.DateTime
     doMxDateTimeTest=True
-except: 
+except:
     doMxDateTimeTest=False #Requires eGenixMXExtensions
 
 doTimeTest = True # obsolete python time format

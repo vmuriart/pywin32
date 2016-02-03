@@ -169,7 +169,7 @@ PyComEnumTypeObject PyIEnumShellItems::type("PyIEnumShellItems",
 // ---------------------------------------------------
 //
 // Gateway Implementation
-STDMETHODIMP PyGEnumShellItems::Next( 
+STDMETHODIMP PyGEnumShellItems::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IShellItem __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -216,7 +216,7 @@ STDMETHODIMP PyGEnumShellItems::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumShellItems, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumShellItems::Skip( 
+STDMETHODIMP PyGEnumShellItems::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -229,7 +229,7 @@ STDMETHODIMP PyGEnumShellItems::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumShellItems::Clone( 
+STDMETHODIMP PyGEnumShellItems::Clone(
             /* [out] */ IEnumShellItems __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

@@ -9,20 +9,20 @@
 // String names for standard Windows Clipboard formats
 //
 
-#define SZCF_TEXT           "TEXT"        
-#define SZCF_BITMAP         "BITMAP"      
+#define SZCF_TEXT           "TEXT"
+#define SZCF_BITMAP         "BITMAP"
 #define SZCF_METAFILEPICT   "METAFILEPICT"
-#define SZCF_SYLK           "SYLK"        
-#define SZCF_DIF            "DIF"         
-#define SZCF_TIFF           "TIFF"        
-#define SZCF_OEMTEXT        "OEMTEXT"     
-#define SZCF_DIB            "DIB"         
-#define SZCF_PALETTE        "PALETTE"     
-#define SZCF_PENDATA        "PENDATA"     
-#define SZCF_RIFF           "RIFF"     
-#define SZCF_WAVE           "WAVE"     
-#define SZCF_UNICODETEXT    "UNICODETEXT" 
-#define SZCF_ENHMETAFILE    "ENHMETAFILE" 
+#define SZCF_SYLK           "SYLK"
+#define SZCF_DIF            "DIF"
+#define SZCF_TIFF           "TIFF"
+#define SZCF_OEMTEXT        "OEMTEXT"
+#define SZCF_DIB            "DIB"
+#define SZCF_PALETTE        "PALETTE"
+#define SZCF_PENDATA        "PENDATA"
+#define SZCF_RIFF           "RIFF"
+#define SZCF_WAVE           "WAVE"
+#define SZCF_UNICODETEXT    "UNICODETEXT"
+#define SZCF_ENHMETAFILE    "ENHMETAFILE"
 
 //
 // String names for some standard DDE strings not
@@ -88,7 +88,7 @@ public:
 private:
     int m_iRefCount;
 };
-    
+
 //
 // String handle class
 //
@@ -279,7 +279,7 @@ public:
     CDDEConv* GetNext(POSITION& rPosition) const
         {return (CDDEConv*)CObList::GetNext(rPosition);}
 
-    
+
 protected:
 
 };
@@ -405,7 +405,7 @@ private:
                                             DWORD dwData1,
                                             DWORD dwData2);
 
-	/* 
+	/*
 		this is the prototype for the new callback
 		with an extra parameter to hold the server.
 		This parameter is stuffed in by a hairy trick
@@ -428,14 +428,14 @@ private:
 	byte DynamicCallback[20] ;
 	// this builds a ring of servers
 	CDDEServer *pServers ;
-//CT END 
+//CT END
 
     CDDEServerSystemTopic* m_pSystemTopic;
     CDDESystemItem_TopicList m_SystemItemTopics;
     CDDESystemItem_ItemList m_SystemItemSysItems;
     CDDESystemItem_ItemList m_SystemItemItems;
     CDDESystemItem_FormatList m_SystemItemFormats;
-};          
+};
 
 #ifdef UNICODE
 #define DDE_STRING_CODEPAGE CP_WINUNICODE

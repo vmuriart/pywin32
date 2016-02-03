@@ -6,7 +6,7 @@ struct PyMethodDef PyCRYPTKEY::methods[] = {
 	// @pymeth CryptDestroyKey|Releases the handle to the key
 	{"CryptDestroyKey", PyCRYPTKEY::PyCryptDestroyKey, METH_NOARGS},
 	// @pymeth CryptExportKey|Securely exports key or key pair
-	{"CryptExportKey", (PyCFunction)PyCRYPTKEY::PyCryptExportKey, METH_KEYWORDS|METH_VARARGS}, 
+	{"CryptExportKey", (PyCFunction)PyCRYPTKEY::PyCryptExportKey, METH_KEYWORDS|METH_VARARGS},
 	// @pymeth CryptGetKeyParam|Retrieves key parameters
 	{"CryptGetKeyParam", (PyCFunction)PyCRYPTKEY::PyCryptGetKeyParam, METH_KEYWORDS|METH_VARARGS},
 	// @pymeth CryptDuplicateKey|Creates an independent copy of the key
@@ -118,7 +118,7 @@ PyCRYPTKEY::PyCRYPTKEY(HCRYPTKEY h, PyObject *obcryptprov)
 
 // @pymethod |PyCRYPTKEY|CryptDestroyKey|Releases the handle to the key (does not delete permanent keys)
 PyObject *PyCRYPTKEY::PyCryptDestroyKey(PyObject *self, PyObject *args)
-{	
+{
 	HCRYPTKEY hcryptkey=((PyCRYPTKEY *)self)->GetHCRYPTKEY();
 	if(!CryptDestroyKey(hcryptkey))
 		return PyWin_SetAPIError("CryptDestroyKey");
@@ -139,7 +139,7 @@ PyObject *PyCRYPTKEY::PyCryptExportKey(PyObject *self, PyObject *args, PyObject 
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Ok|k:CryptExportKey", keywords,
 		&obhcryptkeyexp,	// @pyparm <o PyCRYPTKEY>|ExpKey||Public key or session key of destination user.  Use None if exporting a PUBLICKEYBLOB
-		&dwBlobType,		// @pyparm int|BlobType||One of OPAQUEKEYBLOB,PRIVATEKEYBLOB,PUBLICKEYBLOB,SIMPLEBLOB,PLAINTEXTKEYBLOB,SYMMETRICWRAPKEYBLOB 
+		&dwBlobType,		// @pyparm int|BlobType||One of OPAQUEKEYBLOB,PRIVATEKEYBLOB,PUBLICKEYBLOB,SIMPLEBLOB,PLAINTEXTKEYBLOB,SYMMETRICWRAPKEYBLOB
 		&dwFlags))			// @pyparm int|Flags|0|Combination of CRYPT_DESTROYKEY,CRYPT_SSL2_FALLBACK,CRYPT_OAEP or 0
 		return NULL;
 	if (!PyWinObject_AsHCRYPTKEY(obhcryptkeyexp, &hcryptkeyexp, TRUE))
@@ -247,7 +247,7 @@ PyObject *PyCRYPTKEY::PyCryptEncrypt(PyObject *self, PyObject *args, PyObject *k
 	HCRYPTKEY hcryptkey=((PyCRYPTKEY *)self)->GetHCRYPTKEY();
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "lO|Ok:CryptEncrypt", keywords,
-		&Final,			// @pyparm int|Final||Boolean, use True if this is final encryption operation		
+		&Final,			// @pyparm int|Final||Boolean, use True if this is final encryption operation
 		&obdata,		// @pyparm buffer|Data||Data to be encrypted
 		&obcrypthash,	// @pyparm <o PyCRYPTHASH>|Hash|None|Hash to be updated with data passed in, can be None
 		&dwFlags))		// @pyparm int|Flags|0|Reserved, use 0 if passed in
@@ -275,7 +275,7 @@ PyObject *PyCRYPTKEY::PyCryptEncrypt(PyObject *self, PyObject *args, PyObject *k
 	free(pbData);
 	return ret;
 }
-		
+
 // @pymethod str|PyCRYPTKEY|CryptDecrypt|Decrypts data
 PyObject *PyCRYPTKEY::PyCryptDecrypt(PyObject *self, PyObject *args, PyObject *kwargs)
 {

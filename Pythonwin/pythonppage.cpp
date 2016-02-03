@@ -24,13 +24,13 @@ static char BASED_CODE THIS_FILE[] = __FILE__;
 IMPLEMENT_DYNAMIC(CPythonPropertyPage, CPropertyPage)
 
 
-CPythonPropertyPage::CPythonPropertyPage(UINT id, UINT caption) : 
+CPythonPropertyPage::CPythonPropertyPage(UINT id, UINT caption) :
 	CPythonPropertyPageFramework<CPropertyPage>(id, caption)
 {
 	CommonConstruct();
 }
 
-CPythonPropertyPage::CPythonPropertyPage(LPCTSTR id, UINT caption) : 
+CPythonPropertyPage::CPythonPropertyPage(LPCTSTR id, UINT caption) :
 	CPythonPropertyPageFramework<CPropertyPage>(id, caption)
 {
 	CommonConstruct();

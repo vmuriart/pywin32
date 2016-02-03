@@ -97,7 +97,7 @@ static struct PyMethodDef PyIProvideMultipleClassInfo_methods[] =
 {
 	{"GetMultiTypeInfoCount",PyIProvideMultipleClassInfo::GetMultiTypeInfoCount,  1}, // @pymeth GetMultiTypeInfoCount|
 	{"GetInfoOfIndex",PyIProvideMultipleClassInfo::GetInfoOfIndex,  1}, // @pymeth GetInfoOfIndex|
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIProvideMultipleClassInfo::type("PyIProvideMultipleClassInfo",

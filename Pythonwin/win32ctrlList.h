@@ -1,6 +1,6 @@
 /* win32ctrllist : header
 
-	List control object.  
+	List control object.
 
 	Created May 1996, Mark Hammond (MHammond@skippinet.com.au)
 

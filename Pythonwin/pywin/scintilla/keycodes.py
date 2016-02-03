@@ -50,8 +50,8 @@ def get_vk(chardesc):
     return key_name_to_vk.get(chardesc.lower()), 0
 
 modifiers = {
-    "alt" : win32con.LEFT_ALT_PRESSED | win32con.RIGHT_ALT_PRESSED, 
-    "lalt" : win32con.LEFT_ALT_PRESSED, 
+    "alt" : win32con.LEFT_ALT_PRESSED | win32con.RIGHT_ALT_PRESSED,
+    "lalt" : win32con.LEFT_ALT_PRESSED,
     "ralt" : win32con.RIGHT_ALT_PRESSED,
     "ctrl" : win32con.LEFT_CTRL_PRESSED | win32con.RIGHT_CTRL_PRESSED,
     "ctl" : win32con.LEFT_CTRL_PRESSED | win32con.RIGHT_CTRL_PRESSED,

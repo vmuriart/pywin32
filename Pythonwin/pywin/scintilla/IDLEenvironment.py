@@ -230,7 +230,7 @@ def TkIndexToOffset(bm, edit, marks):
 					if pos==-1: pos = edit.GetTextLength()
 					pos = pos + int(col)
 		except (ValueError, IndexError):
-			raise ValueError("Unexpected literal in '%s'" % base) 
+			raise ValueError("Unexpected literal in '%s'" % base)
 	elif base == 'insert':
 		pos = edit.GetSel()[0]
 	elif base=='end':
@@ -446,9 +446,9 @@ class TkText:
 		self.edit.SCIEndUndoAction()
 
 ######################################################################
-# 
+#
 # Test related code.
-# 
+#
 ######################################################################
 def TestCheck(index, edit, expected=None):
 	rc = TkIndexToOffset(index, edit, {})
@@ -525,4 +525,4 @@ def IDLETest(extension):
 
 if __name__=='__main__':
 	test()
- 	  	 
+

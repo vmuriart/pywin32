@@ -5,10 +5,10 @@ import pythoncom, pywintypes
 import struct, traceback
 
 stream_types={
-    win32con.BACKUP_DATA:"Standard data", 
-    win32con.BACKUP_EA_DATA:"Extended attribute data", 
-    win32con.BACKUP_SECURITY_DATA:"Security descriptor data", 
-    win32con.BACKUP_ALTERNATE_DATA:"Alternative data streams", 
+    win32con.BACKUP_DATA:"Standard data",
+    win32con.BACKUP_EA_DATA:"Extended attribute data",
+    win32con.BACKUP_SECURITY_DATA:"Security descriptor data",
+    win32con.BACKUP_ALTERNATE_DATA:"Alternative data streams",
     win32con.BACKUP_LINK:"Hard link information",
     win32con.BACKUP_PROPERTY_DATA:"Property data",
     win32con.BACKUP_OBJECT_ID:"Objects identifiers",

@@ -170,7 +170,7 @@ STDMETHODIMP PyGEnumExplorerCommand::GetTypeInfo(UINT itinfo, LCID lcid, ITypeIn
 STDMETHODIMP PyGEnumExplorerCommand::GetIDsOfNames(REFIID refiid, OLECHAR FAR* FAR* rgszNames, UINT cNames, LCID lcid, DISPID FAR* rgdispid) {return PyGatewayBase::GetIDsOfNames( refiid, rgszNames, cNames, lcid, rgdispid);}
 STDMETHODIMP PyGEnumExplorerCommand::Invoke(DISPID dispid, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS FAR* params, VARIANT FAR* pVarResult, EXCEPINFO FAR* pexcepinfo, UINT FAR* puArgErr) {return PyGatewayBase::Invoke( dispid, riid, lcid, wFlags, params, pVarResult, pexcepinfo, puArgErr);}
  */
-STDMETHODIMP PyGEnumExplorerCommand::Next( 
+STDMETHODIMP PyGEnumExplorerCommand::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IExplorerCommand __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -212,7 +212,7 @@ STDMETHODIMP PyGEnumExplorerCommand::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumExplorerCommand, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumExplorerCommand::Skip( 
+STDMETHODIMP PyGEnumExplorerCommand::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -225,7 +225,7 @@ STDMETHODIMP PyGEnumExplorerCommand::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumExplorerCommand::Clone( 
+STDMETHODIMP PyGEnumExplorerCommand::Clone(
             /* [out] */ IEnumExplorerCommand __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

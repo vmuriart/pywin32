@@ -81,7 +81,7 @@ PyObject *PyIContext::RemoveProperty(PyObject *self, PyObject *args)
 }
 
 // @pymethod (int, <o PyIUnknown>)|PyIContext|GetProperty|Retrieves a context property
-// @rdesc Returns flags (CPFLAGS is reserved, no defined values) and the IUnknown interface set for the property 
+// @rdesc Returns flags (CPFLAGS is reserved, no defined values) and the IUnknown interface set for the property
 PyObject *PyIContext::GetProperty(PyObject *self, PyObject *args)
 {
 	IContext *pIC = GetI(self);

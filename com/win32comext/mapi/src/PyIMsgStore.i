@@ -31,7 +31,7 @@ PyIMsgStore::~PyIMsgStore()
 %native(OpenEntry) OpenEntry;
 %{
 // @pyswig <o PyIInterface>|OpenEntry|Opens a folder or message and returns an interface object for further access.
-PyObject *PyIMsgStore::OpenEntry(PyObject *self, PyObject *args) 
+PyObject *PyIMsgStore::OpenEntry(PyObject *self, PyObject *args)
 {
     HRESULT  _result;
     char * entryString;
@@ -49,7 +49,7 @@ PyObject *PyIMsgStore::OpenEntry(PyObject *self, PyObject *args)
 	// @pyparm string|entryId||The entryID of the object
 	// @pyparm <o PyIID>|iid||The IID of the object to return, or None for the default IID
 	// @pyparm int|flags||Bitmask of flags that controls how the object is opened.
-    if(!PyArg_ParseTuple(args,"OOl:OpenEntry",&obEntry, &objIID,&flags)) 
+    if(!PyArg_ParseTuple(args,"OOl:OpenEntry",&obEntry, &objIID,&flags))
         return NULL;
 	if (obEntry==Py_None) {
 		entryString = NULL;
@@ -82,7 +82,7 @@ PyObject *PyIMsgStore::OpenEntry(PyObject *self, PyObject *args)
 %native(GetReceiveFolder) GetReceiveFolder;
 %{
 // @pyswig <o PyIID>, string|GetReceiveFolder|Obtains the folder that was established as the destination for incoming messages of a specified message class or the default receive folder for the message store.
-PyObject *PyIMsgStore::GetReceiveFolder(PyObject *self, PyObject *args) 
+PyObject *PyIMsgStore::GetReceiveFolder(PyObject *self, PyObject *args)
 {
 	HRESULT  _result;
 	unsigned long  flags;
@@ -95,7 +95,7 @@ PyObject *PyIMsgStore::GetReceiveFolder(PyObject *self, PyObject *args)
 
 	IMsgStore *_swig_self;
 	if ((_swig_self=GetI(self))==NULL) return NULL;
-	// @pyparm string|||Message class that is associated with a receive folder. If thid parameter is set to None or an empty string, GetReceiveFolder returns the default receive folder for the message store. 
+	// @pyparm string|||Message class that is associated with a receive folder. If thid parameter is set to None or an empty string, GetReceiveFolder returns the default receive folder for the message store.
 	// @pyparm int|flags||
 	if(!PyArg_ParseTuple(args,"Ol:OpenEntry",&obClass, &flags))
 		goto done;
@@ -125,12 +125,12 @@ done:
 // @pyswig <o PyIMAPITable>|GetReceiveFolderTable|provides access to the receive folder table, a table that includes information about all of the receive folders for the message store.
 HRESULT GetReceiveFolderTable(
     unsigned long ulFlags, // @pyparm int|flags||Bitmask of flags that controls table access
-    IMAPITable **OUTPUT 
+    IMAPITable **OUTPUT
 );
 
 
 // @pyswig int|CompareEntryIDs|Compares two entry identifiers belonging to a particular address book provider to determine if they refer to the same address book object
-// @rdesc The result is set to TRUE if the two entry identifiers refer to the same object, and FALSE otherwise. 
+// @rdesc The result is set to TRUE if the two entry identifiers refer to the same object, and FALSE otherwise.
 %native(CompareEntryIDs) CompareEntryIDs;
 %{
 PyObject *PyIMsgStore::CompareEntryIDs(PyObject *self, PyObject *args)
@@ -144,7 +144,7 @@ PyObject *PyIMsgStore::CompareEntryIDs(PyObject *self, PyObject *args)
 	IMsgStore *_swig_self;
 	PyObject *obE1, *obE2;
 	if ((_swig_self=GetI(self))==NULL) return NULL;
-    if(!PyArg_ParseTuple(args,"OO|i:CompareEntryIDs", 
+    if(!PyArg_ParseTuple(args,"OO|i:CompareEntryIDs",
 		&obE1, // @pyparm string|entryId||The first entry ID to be compared
 		&obE2, // @pyparm string|entryId||The second entry ID to be compared
 		&flags)) // @pyparm int|flags|0|Reserved - must be zero.
@@ -188,7 +188,7 @@ PyObject *PyIMsgStore::AbortSubmit(PyObject *self, PyObject *args)
 	IMsgStore *_swig_self;
 	PyObject *obE;
 	if ((_swig_self=GetI(self))==NULL) return NULL;
-	if(!PyArg_ParseTuple(args,"O|i:AbortSubmit", 
+	if(!PyArg_ParseTuple(args,"O|i:AbortSubmit",
 		&obE, // @pyparm string|entryId||The entry ID of the item to be aborted.
 		&flags)) // @pyparm int|flags|0|Reserved - must be zero.
 		goto done;

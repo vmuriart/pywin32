@@ -16,8 +16,8 @@ STDMETHODIMP PyGActiveScriptParse::InitNew(void)
 	PY_GATEWAY_METHOD;
 	return InvokeViaPolicy(	"InitNew", NULL, NULL);
 }
-        
-STDMETHODIMP PyGActiveScriptParse::AddScriptlet( 
+
+STDMETHODIMP PyGActiveScriptParse::AddScriptlet(
             /* [in] */ LPCOLESTR pstrDefaultName,
             /* [in] */ LPCOLESTR pstrCode,
             /* [in] */ LPCOLESTR pstrItemName,
@@ -55,7 +55,7 @@ STDMETHODIMP PyGActiveScriptParse::AddScriptlet(
 	return PyCom_HandlePythonFailureToCOM(/*pexcepinfo*/);
 }
 
-STDMETHODIMP PyGActiveScriptParse::ParseScriptText( 
+STDMETHODIMP PyGActiveScriptParse::ParseScriptText(
             /* [in] */ LPCOLESTR pstrCode,
             /* [in] */ LPCOLESTR pstrItemName,
             /* [in] */ IUnknown __RPC_FAR *punkContext,

@@ -29,7 +29,7 @@ BOOL PyWinObject_AsBIND_OPTS(PyObject *obbind_opts, BIND_OPTS *pbind_opts)
 	if (dummy_args==NULL)
 		return FALSE;
 	BOOL bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obbind_opts, "kkk|k:BIND_OPTS", BIND_OPTS_keywords,
-		&pbind_opts->grfFlags,				// @prop int|Flags|Value from BIND_FLAGS enum: BIND_MAYBOTHERUSER, BIND_JUSTTESTEXISTENCE or 0 
+		&pbind_opts->grfFlags,				// @prop int|Flags|Value from BIND_FLAGS enum: BIND_MAYBOTHERUSER, BIND_JUSTTESTEXISTENCE or 0
 		&pbind_opts->grfMode,				// @prop int|Mode|Combination of storagecon.STGM_* values
 		&pbind_opts->dwTickCountDeadline,	// @prop int|TickCountDeadline|Operation timeout in milliseconds
 		&pbind_opts->cbStruct);				// @prop int|cbStruct|Size of struct, ignored on input
@@ -100,7 +100,7 @@ PyObject *PyIBindCtx::SetBindOptions(PyObject *self, PyObject *args)
 	ZeroMemory(&bind_opts, sizeof(bind_opts));
 	bind_opts.cbStruct=sizeof(bind_opts);
 
-	if (!PyArg_ParseTuple(args, "O:SetBindOptions", 
+	if (!PyArg_ParseTuple(args, "O:SetBindOptions",
 		&obbind_opts))	// @pyparm dict|bindopts||<o PyBIND_OPTS> dictionary containing the binding options
 		return NULL;
 	if (!PyWinObject_AsBIND_OPTS(obbind_opts, &bind_opts))
@@ -231,7 +231,7 @@ static struct PyMethodDef PyIBindCtx_methods[] =
 	{"GetObjectParam",			PyIBindCtx::GetObjectParam,			METH_VARARGS, "Retrieves one of the context's string-keyed objects"},
 	// @pymeth EnumObjectParam|Creates an enumerator to list context's string keys
 	{"EnumObjectParam",			PyIBindCtx::EnumObjectParam,		METH_VARARGS, "Creates an enumerator to list context's string keys"},
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyIBindCtx::type("PyIBindCtx",

@@ -33,7 +33,7 @@ def decode_flags(flags):
 				else:
 					flag_txt = k
 		return flag_txt
-		
+
 class TransferAdviseSink(DesignatedWrapPolicy):
 	_com_interfaces_ = [shell.IID_ITransferAdviseSink]
 	_public_methods_ = [
@@ -60,13 +60,13 @@ class TransferAdviseSink(DesignatedWrapPolicy):
 
 	def	ConfirmEncryptionLoss(self, Source):
 		print ('ConfirmEncryptionLoss:', Source.GetDisplayName(shellcon.SHGDN_FORPARSING))
-		
+
 	def	FileFailure(self, Item, ItemName , Error):
 		print ('FileFailure:', Item.GetDisplayName(shellcon.SHGDN_FORPARSING), ItemName)
-		
+
 	def	SubStreamFailure(self, Item, StreamName , Error):
 		print ('SubStreamFailure:\n')
-		
+
 	def	PropertyFailure(self, Item, key , Error):
 		print ('PropertyFailure:\n')
 

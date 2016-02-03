@@ -102,7 +102,7 @@ void CProtectedWinThread::PumpMessages()
 	MSG &msgCur = pState->m_msgCur;
 #else
 	MSG &msgCur = m_msgCur;
-#endif /* _MFC_VER_ */	
+#endif /* _MFC_VER_ */
 
 	// acquire and dispatch messages until a WM_QUIT message is received.
 	for (;;)
@@ -326,11 +326,11 @@ static struct PyMethodDef PyCWinThread_methods[] = {
 	{"SetThreadPriority",       ui_thread_set_thread_priority, 1}, // @pymeth SetThreadPriority|Sets the threads priority
 	{NULL,			NULL}
 };
-ui_type_CObject PyCWinThread::type("PyCWinThread", 
+ui_type_CObject PyCWinThread::type("PyCWinThread",
 								&PyCCmdTarget::type,
-								RUNTIME_CLASS(CWinThread), 
-								sizeof(PyCWinThread), 
-								PYOBJ_OFFSET(PyCWinThread), 
-								PyCWinThread_methods, 
+								RUNTIME_CLASS(CWinThread),
+								sizeof(PyCWinThread),
+								PYOBJ_OFFSET(PyCWinThread),
+								PyCWinThread_methods,
 								GET_PY_CTOR(PyCWinThread) );
 

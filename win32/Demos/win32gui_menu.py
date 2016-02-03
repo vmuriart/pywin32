@@ -73,7 +73,7 @@ class MainWindow:
         # A map we use to stash away data we need for ownerdraw.  Keyed
         # by integer ID - that ID will be set in dwTypeData of the menu item.
         self.menu_item_map = {}
-        
+
         # Finally, create the menu
         self.createMenu()
 
@@ -106,12 +106,12 @@ class MainWindow:
                                         hbmpItem=hbmp,
                                         wID=1002)
         InsertMenuItem(menu, 0, 1, item)
-        
+
         # Owner-draw menus mainly from:
         # http://windowssdk.msdn.microsoft.com/en-us/library/ms647558.aspx
         # and:
         # http://www.codeguru.com/cpp/controls/menu/bitmappedmenus/article.php/c165
-        
+
         # Create one with an icon - this is *lots* more work - we do it
         # owner-draw!  The primary reason is to handle transparency better -
         # converting to a bitmap causes the background to be incorrect when
@@ -285,15 +285,15 @@ class MainWindow:
             cx, cy = GetTextExtentPoint32(dc, text)
             SelectObject(dc, oldFont)
             ReleaseDC(hwnd, dc)
-    
+
             cx += GetSystemMetrics(win32con.SM_CXMENUCHECK)
             cx += self.menu_icon_width + self.icon_x_pad
-    
+
             cy = GetSystemMetrics(win32con.SM_CYMENU)
-            
+
         new_data = struct.pack(fmt, ctlType, ctlID, itemID, cx, cy, itemData)
         PySetMemory(lparam, new_data)
-        return True 
+        return True
 
     def OnDrawItem(self, hwnd, msg, wparam, lparam):
         ## lparam is a DRAWITEMSTRUCT
@@ -311,32 +311,32 @@ class MainWindow:
             DrawIconEx(hDC, left, top, hicon, right-left, bot-top,
                        0, 0, win32con.DI_NORMAL)
         else:
-            # If the user has selected the item, use the selected 
+            # If the user has selected the item, use the selected
             # text and background colors to display the item.
             selected = itemState & win32con.ODS_SELECTED
             if selected:
                 crText = SetTextColor(hDC, GetSysColor(win32con.COLOR_HIGHLIGHTTEXT))
                 crBkgnd = SetBkColor(hDC, GetSysColor(win32con.COLOR_HIGHLIGHT))
-    
+
             each_pad = self.icon_x_pad // 2
             x_icon = left + GetSystemMetrics(win32con.SM_CXMENUCHECK) + each_pad
             x_text = x_icon + self.menu_icon_width + each_pad
-    
+
             # Draw text first, specifying a complete rect to fill - this sets
             # up the background (but overwrites anything else already there!)
             # Select the font, draw it, and restore the previous font.
             hfontOld = SelectObject(hDC, self.font_menu)
             ExtTextOut(hDC, x_text, top+2, win32con.ETO_OPAQUE, rect, text)
             SelectObject(hDC, hfontOld)
-    
+
             # Icon image next.  Icons are transparent - no need to handle
             # selection specially.
             DrawIconEx(hDC, x_icon, top+2, hicon,
                        self.menu_icon_width, self.menu_icon_height,
                        0, 0, win32con.DI_NORMAL)
-     
-            # Return the text and background colors to their 
-            # normal state (not selected). 
+
+            # Return the text and background colors to their
+            # normal state (not selected).
             if selected:
                 SetTextColor(hDC, crText)
                 SetBkColor(hDC, crBkgnd)

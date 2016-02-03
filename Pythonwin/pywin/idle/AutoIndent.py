@@ -12,7 +12,7 @@ else:
     # token_generator is the 'undocumented b/w compat' function that
     # theoretically works with str objects - but actually seems to fail)
     token_generator = tokenize.tokenize
-    
+
 class AutoIndent:
 
     menudefs = [
@@ -508,7 +508,7 @@ class IndentSearcher:
         OPENERS=('class', 'def', 'for', 'if', 'try', 'while')
         INDENT=tokenize.INDENT
         NAME=tokenize.NAME
-                   
+
         save_tabsize = tokenize.tabsize
         tokenize.tabsize = self.tabwidth
         try:

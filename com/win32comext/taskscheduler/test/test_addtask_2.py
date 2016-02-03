@@ -9,7 +9,7 @@ for task in tasks:
 if task_name in tasks:
     print 'Deleting existing task '+task_name
     ts.Delete(task_name)
-    
+
 t=ts.NewWorkItem(task_name)
 t.SetComment('Test a task running as local system acct')
 t.SetApplicationName('c:\\python23\\python.exe')

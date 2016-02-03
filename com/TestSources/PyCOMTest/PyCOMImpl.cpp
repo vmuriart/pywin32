@@ -481,7 +481,7 @@ HRESULT CPyCOMTest::Fire(long nID)
 				_ASSERTE(out_result1==nID+3);
 				_ASSERTE(out_result2==nID+4);
 			}
-			// Now with various combinations of named args.  Like Python, this 
+			// Now with various combinations of named args.  Like Python, this
 			// assumes that param DISPIDs start with zero, are sequential and
 			// in the same order as the IDL signature.
 			if (SUCCEEDED(hr)) {
@@ -581,7 +581,7 @@ HRESULT CPyCOMTest::FireWithNamedParams(long nID, VARIANT_BOOL b, int *outVal1, 
 	return S_OK;
 }
 
-HRESULT CPyCOMTest::TestOptionals(BSTR strArg, short sarg, long larg, double darg, SAFEARRAY **pRet) 
+HRESULT CPyCOMTest::TestOptionals(BSTR strArg, short sarg, long larg, double darg, SAFEARRAY **pRet)
 {
 	HRESULT hr = S_OK;
 	SAFEARRAY *psa;

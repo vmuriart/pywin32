@@ -43,9 +43,9 @@ PyObject *PyIApplicationDebugger::QueryAlive(PyObject *self, PyObject *args)
 PyObject *PyIApplicationDebugger::CreateInstanceAtDebugger(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm Provides a mechanism for the debugger IDE, running out-of-process to the  
-	// application, to create objects in the application process.  
-	// This method simply delegates to CoCreateInstance.  
+	// @comm Provides a mechanism for the debugger IDE, running out-of-process to the
+	// application, to create objects in the application process.
+	// This method simply delegates to CoCreateInstance.
 	IApplicationDebugger *pIAD = GetI(self);
 	if ( pIAD == NULL )
 		return NULL;
@@ -85,7 +85,7 @@ PyObject *PyIApplicationDebugger::CreateInstanceAtDebugger(PyObject *self, PyObj
 PyObject *PyIApplicationDebugger::onDebugOutput(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm The debugger can use this to display the string in an output window. 
+	// @comm The debugger can use this to display the string in an output window.
 	IApplicationDebugger *pIAD = GetI(self);
 	if ( pIAD == NULL )
 		return NULL;
@@ -112,7 +112,7 @@ PyObject *PyIApplicationDebugger::onDebugOutput(PyObject *self, PyObject *args)
 PyObject *PyIApplicationDebugger::onHandleBreakPoint(PyObject *self, PyObject *args)
 {
 	PY_INTERFACE_METHOD;
-	// @comm The application will remain  
+	// @comm The application will remain
 	// suspended until the debugger IDE calls <om PyIDebugApplication.ResumeFromBreakPoint>.
 	IApplicationDebugger *pIAD = GetI(self);
 	if ( pIAD == NULL )

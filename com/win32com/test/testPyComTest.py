@@ -32,7 +32,7 @@ except pythoncom.com_error:
     print importMsg
     raise RuntimeError(importMsg)
 
-# We had a bg where RegisterInterfaces would fail if gencache had 
+# We had a bg where RegisterInterfaces would fail if gencache had
 # already been run - exercise that here
 from win32com import universal
 universal.RegisterInterfaces('{6BCDCB60-5605-11D0-AE5F-CADD4C000000}', 0, 1, 1)
@@ -79,7 +79,7 @@ def TestApplyResult(fn, args, result):
         raise error("%s failed - result not %r but %r" % (pref, result, rc))
 
 def TestConstant(constName, pyConst):
-    try: 
+    try:
         comConst = getattr(constants, constName)
     except:
         raise error("Constant %s missing" % (constName,))
@@ -233,7 +233,7 @@ def TestCommon(o, is_generated):
     TestConstant("UCharTest", 255)
     TestConstant("CharTest", -1)
     # 'Hello Loraine', but the 'r' is the "Registered" sign (\xae)
-    TestConstant("StringTest", u"Hello Lo\xaeaine") 
+    TestConstant("StringTest", u"Hello Lo\xaeaine")
 
     progress("Checking dates and times")
     if issubclass(pywintypes.TimeType, datetime.datetime):
@@ -623,7 +623,7 @@ def TestVTableMI():
     ob.QueryInterface(pythoncom.IID_IStorage)
     # IDispatch should always work
     ob.QueryInterface(pythoncom.IID_IDispatch)
-    
+
     iid = pythoncom.InterfaceNames["IPyCOMTest"]
     try:
         ob.QueryInterface(iid)
@@ -687,5 +687,5 @@ if __name__=='__main__':
     thread.start_new( NullThreadFunc, () )
 
     if "-v" in sys.argv: verbose = 1
-    
+
     win32com.test.util.testmain()

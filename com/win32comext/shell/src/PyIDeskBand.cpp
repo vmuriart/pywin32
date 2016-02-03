@@ -29,8 +29,8 @@ STDMETHODIMP PyGDeskBand::ResizeBorderDW(
 }
 
 STDMETHODIMP PyGDeskBand::GetBandInfo(
-	DWORD dwBandID, 
-	DWORD dwViewMode, 
+	DWORD dwBandID,
+	DWORD dwViewMode,
 	DESKBANDINFO* pdbi)
 {
 	PY_GATEWAY_METHOD;

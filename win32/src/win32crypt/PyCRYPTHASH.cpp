@@ -101,7 +101,7 @@ PyCRYPTHASH::PyCRYPTHASH(HCRYPTHASH hcrypthash)
 
 // @pymethod |PyCRYPTHASH|CryptDestroyHash|Frees the hash object
 PyObject *PyCRYPTHASH::PyCryptDestroyHash(PyObject *self, PyObject *args)
-{	
+{
 	// METH_NOARGS
 	PyObject *ret=NULL;
 	HCRYPTHASH hcrypthash=((PyCRYPTHASH *)self)->GetHCRYPTHASH();
@@ -141,9 +141,9 @@ PyObject *PyCRYPTHASH::PyCryptHashData(PyObject *self, PyObject *args, PyObject 
 	BYTE *pbData=NULL;
 	HCRYPTHASH hcrypthash=((PyCRYPTHASH *)self)->GetHCRYPTHASH();
 	PyObject *obdata;
-	// @comm If Flags is CRYPT_USERDATA, provider is expected to prompt user to 
+	// @comm If Flags is CRYPT_USERDATA, provider is expected to prompt user to
 	//   enter data.  MSDN says that MS CSPs ignore this flag
-	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|k:CryptHashData", keywords, 
+	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|k:CryptHashData", keywords,
 		&obdata,	// @pyparm string|Data||Data to be hashed
 		&dwFlags))	// @pyparm int|Flags|0|CRYPT_USERDATA or 0
 		return NULL;
@@ -156,7 +156,7 @@ PyObject *PyCRYPTHASH::PyCryptHashData(PyObject *self, PyObject *args, PyObject 
 		return Py_None;
 		}
 	return PyWin_SetAPIError("CryptHashData");
-}	
+}
 
 // @pymethod |PyCRYPTHASH|CryptHashSessionKey|Hashes a session key
 PyObject *PyCRYPTHASH::PyCryptHashSessionKey(PyObject *self, PyObject *args, PyObject *kwargs)

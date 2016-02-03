@@ -8,7 +8,7 @@
  its documentation for any purpose and without fee is hereby
  granted, provided that the above copyright notice appear in all
  copies and that both that copyright notice and this permission
- notice appear in supporting documentation, and that the name of 
+ notice appear in supporting documentation, and that the name of
  Blackdog Software not be used in advertising or publicity pertaining to
  distribution of the software without specific, written prior
  permission.
@@ -231,9 +231,9 @@ void PyVERSION_INFO::deallocFunc(PyObject *ob)
 // EXTENSION_CONTROL_BLOCK.
 struct PyMemberDef PyECB::members[] = {
 	{"Version",			T_INT,	   ECBOFF(m_version), READONLY},
-	{"TotalBytes",		T_INT,	   ECBOFF(m_totalBytes), READONLY}, 
-	{"AvailableBytes",	T_INT,	   ECBOFF(m_available), READONLY}, 
-	{"HttpStatusCode",	T_INT,  ECBOFF(m_HttpStatusCode)},  
+	{"TotalBytes",		T_INT,	   ECBOFF(m_totalBytes), READONLY},
+	{"AvailableBytes",	T_INT,	   ECBOFF(m_available), READONLY},
+	{"HttpStatusCode",	T_INT,  ECBOFF(m_HttpStatusCode)},
 	{NULL}
 };
 
@@ -246,12 +246,12 @@ static struct PyMethodDef PyECB_methods[] = {
 	{"SetFlushFlag",	    PyECB::SetFlushFlag, 1},  // @pymeth SetFlushFlag|
 	{"TransmitFile",	    PyECB::TransmitFile, 1},  // @pymeth TransmitFile|
 	{"MapURLToPath",	    PyECB::MapURLToPath, 1},  // @pymeth MapURLToPath|
-	
+
 	{"DoneWithSession",	        PyECB::DoneWithSession, 1},      // @pymeth DoneWithSession|
 	{"close",                   PyECB::DoneWithSession, 1},      // @pymeth close|A synonym for DoneWithSession.
 	{"Redirect",				PyECB::Redirect,1},              // @pymeth Redirect|
 	{"IsKeepAlive",				PyECB::IsKeepAlive,1},           // @pymeth IsKeepAlive|
-	{"GetAnonymousToken",       PyECB::GetAnonymousToken, 1}, // @pymeth GetAnonymousToken|Calls ServerSupportFunction with HSE_REQ_GET_ANONYMOUS_TOKEN or HSE_REQ_GET_UNICODE_ANONYMOUS_TOKEN 
+	{"GetAnonymousToken",       PyECB::GetAnonymousToken, 1}, // @pymeth GetAnonymousToken|Calls ServerSupportFunction with HSE_REQ_GET_ANONYMOUS_TOKEN or HSE_REQ_GET_UNICODE_ANONYMOUS_TOKEN
 	{"GetImpersonationToken",   PyECB::GetImpersonationToken, 1}, // @pymeth GetImpersonationToken|
 	{"IsKeepConn",              PyECB::IsKeepConn, 1}, // @pymeth IsKeepConn|Calls ServerSupportFunction with HSE_REQ_IS_KEEP_CONN
 	{"ExecURL",                 PyECB::ExecURL, 1}, // @pymeth ExecURL|Calls ServerSupportFunction with HSE_REQ_EXEC_URL
@@ -332,8 +332,8 @@ PyECB::PyECB(CControlBlock * pcb):
 	m_version = pecb->dwVersion;
 	// load up the simple integers etc into members so we can use normal
 	// python structmember T_ macros.
-	m_HttpStatusCode = pecb->dwHttpStatusCode; 
-	m_totalBytes	 = pecb->cbTotalBytes; 
+	m_HttpStatusCode = pecb->dwHttpStatusCode;
+	m_totalBytes	 = pecb->cbTotalBytes;
 	m_available		 = pecb->cbAvailable;
 }
 
@@ -341,7 +341,7 @@ PyECB::~PyECB()
 {
 	if (m_pcb)
 		delete m_pcb;
-}	
+}
 
 
 PyObject *PyECB::getattro(PyObject *self, PyObject *obname)
@@ -354,19 +354,19 @@ PyObject *PyECB::getattro(PyObject *self, PyObject *obname)
 	EXTENSION_CONTROL_BLOCK * pecb = ((PyECB *)self)->m_pcb->GetECB();
 
 	if (_tcscmp(name, _T("Method"))==0)
-		return PyString_FromString(pecb->lpszMethod); 
+		return PyString_FromString(pecb->lpszMethod);
 
 	if (_tcscmp(name, _T("QueryString"))==0)
-		return PyString_FromString(pecb->lpszQueryString); 
+		return PyString_FromString(pecb->lpszQueryString);
 
 	if (_tcscmp(name, _T("PathInfo"))==0)
-		return PyString_FromString(pecb->lpszPathInfo); 
+		return PyString_FromString(pecb->lpszPathInfo);
 
 	if (_tcscmp(name, _T("PathTranslated"))==0)
-		return PyString_FromString(pecb->lpszPathTranslated); 
+		return PyString_FromString(pecb->lpszPathTranslated);
 
 	if (_tcscmp(name, _T("AvailableData"))==0)
-		return PyString_FromStringAndSize((const char *) pecb->lpbData, pecb->cbAvailable); 
+		return PyString_FromStringAndSize((const char *) pecb->lpbData, pecb->cbAvailable);
 
 	if (_tcscmp(name, _T("ContentType"))==0)
 		return PyString_FromString(pecb->lpszContentType);
@@ -561,7 +561,7 @@ PyObject * PyECB::ReadClient(PyObject *self, PyObject *args)
 }
 
 // The following are wrappers for the various ServerSupportFunction
-// @pymethod |EXTENSION_CONTROL_BLOCK|SendResponseHeaders|Calls ServerSupportFunction with HSE_REQ_SEND_RESPONSE_HEADER_EX 
+// @pymethod |EXTENSION_CONTROL_BLOCK|SendResponseHeaders|Calls ServerSupportFunction with HSE_REQ_SEND_RESPONSE_HEADER_EX
 PyObject * PyECB::SendResponseHeaders(PyObject *self, PyObject * args)
 {
 	BOOL bRes = FALSE;
@@ -634,7 +634,7 @@ PyObject * PyECB::SetFlushFlag(PyObject *self, PyObject * args)
 	return Py_None;
 }
 
-// @pymethod |EXTENSION_CONTROL_BLOCK|Redirect|Calls ServerSupportFunction with HSE_REQ_SEND_URL_REDIRECT_RESP 
+// @pymethod |EXTENSION_CONTROL_BLOCK|Redirect|Calls ServerSupportFunction with HSE_REQ_SEND_URL_REDIRECT_RESP
 PyObject * PyECB::Redirect(PyObject *self, PyObject * args)
 {
 	BOOL bRes = FALSE;
@@ -659,7 +659,7 @@ PyObject * PyECB::Redirect(PyObject *self, PyObject * args)
 	return Py_None;
 }
 
-// @pymethod int|EXTENSION_CONTROL_BLOCK|GetImpersonationToken|Calls ServerSupportFunction with HSE_REQ_GET_IMPERSONATION_TOKEN 
+// @pymethod int|EXTENSION_CONTROL_BLOCK|GetImpersonationToken|Calls ServerSupportFunction with HSE_REQ_GET_IMPERSONATION_TOKEN
 PyObject * PyECB::GetImpersonationToken(PyObject *self, PyObject *args)
 {
 	if (!PyArg_ParseTuple(args, ":GetImpersonationToken"))
@@ -988,7 +988,7 @@ PyObject * PyECB::MapURLToPath(PyObject *self, PyObject * args)
 	return PyString_FromString(buffer);
 }
 
-// @pymethod |EXTENSION_CONTROL_BLOCK|DoneWithSession|Calls ServerSupportFunction with HSE_REQ_DONE_WITH_SESSION 
+// @pymethod |EXTENSION_CONTROL_BLOCK|DoneWithSession|Calls ServerSupportFunction with HSE_REQ_DONE_WITH_SESSION
 PyObject * PyECB::DoneWithSession(PyObject *self, PyObject * args)
 {
 	DWORD status = HSE_STATUS_SUCCESS;

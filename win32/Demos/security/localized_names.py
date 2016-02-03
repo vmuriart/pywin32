@@ -26,9 +26,9 @@ def LookupUserGroupFromRid(TargetComputer, Rid):
     # account domain, only need to call this once.
     umi2 = NetUserModalsGet(TargetComputer, 2)
     domain_sid = umi2['domain_id']
-    
+
     SubAuthorityCount = domain_sid.GetSubAuthorityCount()
-    
+
     # create and init new sid with acct domain Sid + acct Rid
     sid = pywintypes.SID()
     sid.Initialize(domain_sid.GetSidIdentifierAuthority(),

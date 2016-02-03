@@ -50,7 +50,7 @@ static PyObject *PyWTSOpenServer(PyObject *self, PyObject *args, PyObject *kwarg
 	HANDLE h;
 	WCHAR *ServerName=NULL;
 	PyObject *obServerName;
-	
+
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O:WTSOpenServer", keywords,
 		&obServerName))	// @pyparm <o PyUnicode>|ServerName||Name ot terminal server to be opened
 		return NULL;
@@ -152,7 +152,7 @@ static PyObject *PyWTSSetUserConfig(PyObject *self, PyObject *args, PyObject *kw
 		&obServerName,	// @pyparm <o PyUnicode>|ServerName||Name ot terminal server
 		&obUserName,	// @pyparm <o PyUnicode>|UserName||Name of user
 		&WTSConfigClass,// @pyparm int|ConfigClass||Type of information to be set, win32ts.WTSUserConfig*
-		&obBuffer))	
+		&obBuffer))
 		return NULL;
 	if (!PyWinObject_AsWCHAR(obServerName, &ServerName, TRUE))
 		goto cleanup;
@@ -424,8 +424,8 @@ static PyObject *PyWTSQuerySessionInformation(PyObject *self, PyObject *args, Py
 			}
 		default:
 			PyErr_Format(PyExc_NotImplementedError, "InfoClass %d not yet supported", WTSInfoClass);
-		} 
-		
+		}
+
 	cleanup:
 	if (buf)
 		WTSFreeMemory(buf);
@@ -563,7 +563,7 @@ static PyObject *PyWTSRegisterSessionNotification(PyObject *self, PyObject *args
 	DWORD flags;
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "Ok:WTSRegisterSessionNotification", keywords,
 		&obhwnd,	// @pyparm <o PyHANDLE>|Wnd||Window handle to receive terminal service messages
-		&flags))	// @pyparm int|Flags||NOTIFY_FOR_THIS_SESSION or NOTIFY_FOR_ALL_SESSIONS 
+		&flags))	// @pyparm int|Flags||NOTIFY_FOR_THIS_SESSION or NOTIFY_FOR_ALL_SESSIONS
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhwnd, (HANDLE *)&hwnd))
 		return NULL;
@@ -612,7 +612,7 @@ static PyObject *PyWTSWaitSystemEvent(PyObject *self, PyObject *args, PyObject *
 }
 
 // @pymethod int|win32ts|WTSSendMessage|Sends a popup message to a terminal services session
-// @rdesc Returns one of IDABORT,IDCANCEL,IDIGNORE,IDNO,IDOK,IDRETRY,IDYES,IDASYNC,IDTIMEOUT, 
+// @rdesc Returns one of IDABORT,IDCANCEL,IDIGNORE,IDNO,IDOK,IDRETRY,IDYES,IDASYNC,IDTIMEOUT,
 static PyObject *PyWTSSendMessage(PyObject *self, PyObject *args, PyObject *kwargs)
 {
 	static char *keywords[]={"Server","SessionId","Title","Message","Style","Timeout","Wait", NULL};

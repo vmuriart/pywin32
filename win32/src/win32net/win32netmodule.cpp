@@ -21,7 +21,7 @@ conversion is required.
 				PyNetMessageBufferSend - didn't touch
 
   November, 98	Cleaned up return Lists (removed Integer count as redundant)
-				
+
 ******************************************************************/
 // @doc
 
@@ -146,7 +146,7 @@ BOOL PyObject_AsNET_STRUCT( PyObject *ob, PyNET_STRUCT *pI, BYTE **ppRet )
 						Py_DECREF(subob);
 						goto done;
 					}
-					
+
 					break;
 				case NSI_HOURS:
 					if (subob != Py_None) {
@@ -187,7 +187,7 @@ BOOL PyObject_AsNET_STRUCT( PyObject *ob, PyNET_STRUCT *pI, BYTE **ppRet )
 						}
 					}
 					break;
-				
+
 				default:
 					PyErr_SetString(PyExc_RuntimeError, "invalid internal data type");
 					Py_DECREF(subob);
@@ -256,7 +256,7 @@ PyObject *PyObject_FromNET_STRUCT(PyNET_STRUCT *pI, BYTE *buf)
 	return ret;
 }
 
-PyObject *PyDoSimpleEnum(PyObject *self, PyObject *args, PFNSIMPLEENUM pfn, char *fnname, PyNET_STRUCT *pInfos) 
+PyObject *PyDoSimpleEnum(PyObject *self, PyObject *args, PFNSIMPLEENUM pfn, char *fnname, PyNET_STRUCT *pInfos)
 {
 	WCHAR *szServer = NULL;
 	PyObject *obServer;
@@ -315,7 +315,7 @@ done:
 	return ret;
 }
 
-PyObject *PyDoNamedEnum(PyObject *self, PyObject *args, PFNNAMEDENUM pfn, char *fnname, PyNET_STRUCT *pInfos) 
+PyObject *PyDoNamedEnum(PyObject *self, PyObject *args, PFNNAMEDENUM pfn, char *fnname, PyNET_STRUCT *pInfos)
 {
 	WCHAR *szServer = NULL, *szGroup = NULL;
 	PyObject *obServer, *obGroup;
@@ -375,7 +375,7 @@ done:
 }
 
 PyObject *
-PyDoGroupSet(PyObject *self, PyObject *args, PFNGROUPSET pfn, char *fnname, PyNET_STRUCT *pInfos) 
+PyDoGroupSet(PyObject *self, PyObject *args, PFNGROUPSET pfn, char *fnname, PyNET_STRUCT *pInfos)
 {
 	WCHAR *szServer = NULL;
 	WCHAR *szGroup = NULL;
@@ -442,7 +442,7 @@ done:
 	return ret;
 }
 
-PyObject *PyDoGetInfo(PyObject *self, PyObject *args, PFNGETINFO pfn, char *fnname, PyNET_STRUCT *pInfos) 
+PyObject *PyDoGetInfo(PyObject *self, PyObject *args, PFNGETINFO pfn, char *fnname, PyNET_STRUCT *pInfos)
 {
 	WCHAR *szServer = NULL;
 	WCHAR *szName = NULL;
@@ -475,7 +475,7 @@ done:
 	return ret;
 }
 
-PyObject *PyDoGetModalsInfo(PyObject *self, PyObject *args, PFNGETMODALSINFO pfn, char *fnname, PyNET_STRUCT *pInfos) 
+PyObject *PyDoGetModalsInfo(PyObject *self, PyObject *args, PFNGETMODALSINFO pfn, char *fnname, PyNET_STRUCT *pInfos)
 {
 	WCHAR *szServer = NULL;
 	PyObject *obServer;
@@ -521,7 +521,7 @@ PyNetMessageBufferSend( PyObject *self, PyObject *args)
 	PyObject *obServerName, *obMsgName, *obFromName, *obMessage;
 	PyObject *ret = NULL;
 	DWORD msgLen;
-	if (!PyArg_ParseTuple(args, "OOOO:NetMessageBufferSend", 
+	if (!PyArg_ParseTuple(args, "OOOO:NetMessageBufferSend",
 	          &obServerName,  // @pyparm string|domain||Specifies the name of the remote server on which the function is to execute. None or empty string the local computer.
 	          &obMsgName, // @pyparm string|userName||Specifies the message name to which the message buffer should be sent.
 	          &obFromName, // @pyparm string|fromName||The user the message is to come from, or None for the current user.
@@ -705,7 +705,7 @@ PyObject *PyDoSetInfo(PyObject *self, PyObject *args, PFNSETINFO pfn, char *fnna
 	err = (*pfn)(szServer, szName, typ, buf, NULL);
     Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError(fnname,err);	
+		ReturnNetError(fnname,err);
 		goto done;
 	}
 	ret= Py_None;
@@ -719,7 +719,7 @@ done:
 
 PyObject *PyDoSetModalsInfo(PyObject *self, PyObject *args, PFNSETMODALSINFO pfn, char *fnname, PyNET_STRUCT *pInfos)
 {
-	WCHAR *szServer = NULL;	
+	WCHAR *szServer = NULL;
 	PyObject *obServer, *obData;
 	PyNET_STRUCT *pInfo;
 	BYTE *buf = NULL;
@@ -741,14 +741,14 @@ PyObject *PyDoSetModalsInfo(PyObject *self, PyObject *args, PFNSETMODALSINFO pfn
 	err = (*pfn)(szServer, typ, buf, NULL);
     Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError(fnname,err);	
+		ReturnNetError(fnname,err);
 		goto done;
 	}
 	ret= Py_None;
 	Py_INCREF(ret);
 done:
 	if (buf) PyObject_FreeNET_STRUCT(pInfo, buf);
-	PyWinObject_FreeWCHAR(szServer);	
+	PyWinObject_FreeWCHAR(szServer);
 	return ret;
 }
 
@@ -776,7 +776,7 @@ PyObject *PyDoAdd(PyObject *self, PyObject *args, PFNADD pfn, char *fnname, PyNE
 	err = (*pfn)(szServer, typ, buf, NULL);
     Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError(fnname,err);	
+		ReturnNetError(fnname,err);
 		goto done;
 	}
 	ret= Py_None;
@@ -805,7 +805,7 @@ PyObject *PyDoDel(PyObject *self, PyObject *args, PFNDEL pfn, char *fnname)
 	err = (*pfn)(szServer, szName);
     Py_END_ALLOW_THREADS
 	if (err) {
-		ReturnNetError(fnname,err);	
+		ReturnNetError(fnname,err);
 		goto done;
 	}
 	ret = Py_None;
@@ -974,7 +974,7 @@ static PyObject *PyNetGetJoinInformation(PyObject *self, PyObject *args)
 done:
 	PyWinObject_FreeWCHAR(server);
 	NetApiBufferFree(result);
-	return ret;	
+	return ret;
 }
 #endif // WINVER
 
@@ -1091,7 +1091,7 @@ static struct PyMethodDef win32net_functions[] = {
 	{"NetShareAdd",             PyNetShareAdd,              1}, // @pymeth NetShareAdd|Creates a new share.
 	{"NetShareDel",             PyNetShareDel,              1}, // @pymeth NetShareDel|Deletes a share
 	{"NetShareCheck",           PyNetShareCheck,            1}, // @pymeth NetShareCheck|Checks if server is sharing a device
-	{"NetShareEnum",			PyNetShareEnum,				1,	"Obsolete Function,Level 1 call"},	// @pymeth NetShareEnum|Retrieves information about each shared resource on a server. 
+	{"NetShareEnum",			PyNetShareEnum,				1,	"Obsolete Function,Level 1 call"},	// @pymeth NetShareEnum|Retrieves information about each shared resource on a server.
 	{"NetShareGetInfo",         PyNetShareGetInfo,          1}, // @pymeth NetShareGetInfo|Retrieves information about a particular share on a server.
 	{"NetShareSetInfo",         PyNetShareSetInfo,          1}, // @pymeth NetShareSetInfo|Sets information about a particular share on a server.
 
@@ -1114,7 +1114,7 @@ static struct PyMethodDef win32net_functions[] = {
     {"NetWkstaTransportAdd",    PyNetWkstaTransportAdd,    1}, // @pymeth NetWkstaTransportAdd|binds the redirector to a transport.
     {"NetWkstaTransportDel",    PyNetWkstaTransportDel,    1}, // @pymeth NetWkstaTransportDel|unbinds transport protocol from the redirector.
     {"NetServerDiskEnum",       PyNetServerDiskEnum,       1}, // @pymeth NetServerDiskEnum|Retrieves the list of disk drives on a server.
-    
+
     {"NetUseAdd",               PyNetUseAdd,               1}, // @pymeth NetUseAdd|Establishes connection between local or NULL device name and a shared resource through redirector.
     {"NetUseDel",               PyNetUseDel,               1}, // @pymeth NetUseDel|Ends connection to a shared resource.
     {"NetUseEnum",              PyNetUseEnum,               1}, // @pymeth NetUseEnum|Enumerates connection between local machine and shared resources on remote computers.

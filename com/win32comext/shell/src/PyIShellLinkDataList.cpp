@@ -28,7 +28,7 @@ BOOL PyObject_AsColorTable(PyObject *obColorTable, COLORREF *ColorTable)
 		PyErr_SetString(PyExc_TypeError,"ColorTable object must be a sequence of 16 ints");
 		ret=FALSE;
 		}
-	else 
+	else
 		ret=PyArg_ParseTuple(tpColorTable, "kkkkkkkkkkkkkkkk",
 			&ColorTable[0], &ColorTable[1], &ColorTable[2], &ColorTable[3],
 			&ColorTable[4], &ColorTable[5], &ColorTable[6], &ColorTable[7],
@@ -93,7 +93,7 @@ void * PyObject_AsDATABLOCK(PyObject *obdb)
 			ZeroMemory(buf, bufsize);
 			ret=(void *)buf;
 			// @object NT_CONSOLE_PROPS|Dictionary containing information for a NT_CONSOLE_PROPS struct
-			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb, 
+			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb,
 				"kHHO&O&O&kkO&kkOkllllkklO|k", NT_CONSOLE_PROPS_keywords,
 				&buf->dbh.dwSignature,	// @prop int|Signature|The type of data block, one of shellcon.*_SIG values
 				&buf->wFillAttribute,	// @prop int|FillAttribute|Character attributes for fill operations
@@ -135,7 +135,7 @@ void * PyObject_AsDATABLOCK(PyObject *obdb)
 			ZeroMemory(buf, bufsize);
 			ret=(void *)buf;
 			// @object NT_FE_CONSOLE_PROPS|Dictionary containing information for a NT_FE_CONSOLE_PROPS struct
-			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb, 
+			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb,
 				"kk|k", NT_FE_CONSOLE_PROPS_keywords,
 				&buf->dbh.dwSignature,	// @prop int|Signature|The type of data block, one of shellcon.*_SIG values
 				&buf->uCodePage,	// @prop int|CodePage|The codepage to be used for console text
@@ -154,10 +154,10 @@ void * PyObject_AsDATABLOCK(PyObject *obdb)
 			ZeroMemory(buf, bufsize);
 			ret=(void *)buf;
 			// @object EXP_SPECIAL_FOLDER|Dictionary containing information for a EXP_SPECIAL_FOLDER struct
-			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb, 
+			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb,
 				"kkk|k", EXP_SPECIAL_FOLDER_keywords,
 				&buf->dwSignature,	// @prop int|Signature|The type of data block, one of shellcon.*_SIG values
-				&buf->idSpecialFolder, // @prop int|idSpecialFolder|The special folder id of the target (shellcon.CSIDL_*) 
+				&buf->idSpecialFolder, // @prop int|idSpecialFolder|The special folder id of the target (shellcon.CSIDL_*)
 				&buf->cbOffset,		// @prop int|Offset|Offset into the link's PIDL
 				&buf->cbSize);	// @prop int|Size|Size of structure, ignored on input
 			buf->cbSize=bufsize;
@@ -176,7 +176,7 @@ void * PyObject_AsDATABLOCK(PyObject *obdb)
 			CHAR *DarwinID;
 			WCHAR *wDarwinID=NULL;
 			// @object EXP_DARWIN_LINK|Dictionary containing information for a EXP_DARWIN_LINK struct
-			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb, 
+			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb,
 				"ksO|k", EXP_DARWIN_LINK_keywords,
 				&buf->dbh.dwSignature, // @prop int|Signature|The type of data block, one of shellcon.*_SIG values
 				&DarwinID,	// @prop str|DarwinID|The Windows Installer id for the link
@@ -205,7 +205,7 @@ void * PyObject_AsDATABLOCK(PyObject *obdb)
 			CHAR *Target;
 			WCHAR *wTarget=NULL;
 			// @object EXP_SZ_LINK|Dictionary containing information for an EXP_SZ_LINK or EXP_SZ_ICON struct
-			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb, 
+			bsuccess=PyArg_ParseTupleAndKeywords(dummy_args, obdb,
 				"ksO|k", EXP_SZ_ICON_keywords,
 				&buf->dwSignature,	// @prop int|Signature|The type of data block, one of shellcon.*_SIG values
 				&Target,	// @prop str|Target|The link's target or icon location
@@ -349,7 +349,7 @@ PyObject *PyIShellLinkDataList::CopyDataBlock(PyObject *self, PyObject *args)
 	PY_INTERFACE_PRECALL;
 	hr = pISL->CopyDataBlock(sig, &buf);
 	PY_INTERFACE_POSTCALL;
-	
+
 	if ( FAILED(hr) )
 		return PyCom_BuildPyException(hr, pISL, IID_IShellLinkDataList);
 	PyObject *ret=PyObject_FromDATABLOCK(buf);
@@ -418,7 +418,7 @@ PyObject *PyIShellLinkDataList::SetFlags(PyObject *self, PyObject *args)
 
 
 // @object PyIShellLinkDataList|Interface to a link's extra data blocks. Can be obtained from <o PyIShellLink>
-//	by calling QueryInterface with IID_IShellLinkDataList 
+//	by calling QueryInterface with IID_IShellLinkDataList
 static struct PyMethodDef PyIShellLinkDataList_methods[] =
 {
 	// @pymeth AddDataBlock|Inserts a data block into the link

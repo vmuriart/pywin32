@@ -39,7 +39,7 @@ class WorkerThread(threading.Thread):
             dispatcher = self.extension.dispatch_map.get(key)
             if dispatcher is None:
                 raise RuntimeError("Bad request '%s'" % (key,))
-            
+
             dispatcher(errCode, bytes, key, overlapped)
 
     def call_handler(self, cblock):
@@ -57,7 +57,7 @@ class ThreadPoolExtension(isapi.simple.SimpleExtension):
         self.workers = []
         # extensible dispatch map, for sub-classes that need to post their
         # own requests to the completion port.
-        # Each of these functions is called with the result of 
+        # Each of these functions is called with the result of
         # GetQueuedCompletionStatus for our port.
         self.dispatch_map = {
             ISAPI_REQUEST: self.DispatchConnection,
@@ -119,23 +119,23 @@ class ThreadPoolExtension(isapi.simple.SimpleExtension):
 
     def Dispatch(self, ecb):
         """Overridden by the sub-class to handle connection requests.
-        
+
         This class creates a thread-pool using a Windows completion port,
         and dispatches requests via this port.  Sub-classes can generally
         implement each connection request using blocking reads and writes, and
         the thread-pool will still provide decent response to the end user.
-        
+
         The sub-class can set a max_workers attribute (default is 20).  Note
         that this generally does *not* mean 20 threads will all be concurrently
         running, via the magic of Windows completion ports.
-        
+
         There is no default implementation - sub-classes must implement this.
         """
         raise NotImplementedError("sub-classes should override Dispatch")
 
     def HandleDispatchError(self, ecb):
         """Handles errors in the Dispatch method.
-        
+
         When a Dispatch method call fails, this method is called to handle
         the exception.  The default implementation formats the traceback
         in the browser.
@@ -147,7 +147,7 @@ class ThreadPoolExtension(isapi.simple.SimpleExtension):
         try:
             try:
                 import cgi
-                ecb.SendResponseHeaders("200 OK", "Content-type: text/html\r\n\r\n", 
+                ecb.SendResponseHeaders("200 OK", "Content-type: text/html\r\n\r\n",
                                         False)
                 print >> ecb
                 print >> ecb, "<H3>Traceback (most recent call last):</H3>"
@@ -165,7 +165,7 @@ class ThreadPoolExtension(isapi.simple.SimpleExtension):
                 print "ORIGINAL extension error:"
                 traceback.print_exception(exc_typ, exc_val, exc_tb)
         finally:
-            # holding tracebacks in a local of a frame that may itself be 
+            # holding tracebacks in a local of a frame that may itself be
             # part of a traceback used to be evil and cause leaks!
             exc_tb = None
             ecb.DoneWithSession()

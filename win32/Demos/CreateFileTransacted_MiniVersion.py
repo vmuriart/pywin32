@@ -13,7 +13,7 @@ from pywin32_testutil import str2bytes # py3k-friendly helper
 """
 Definition of buffer used with FSCTL_TXFS_CREATE_MINIVERSION:
 typedef struct _TXFS_CREATE_MINIVERSION_INFO{
-	USHORT StructureVersion;  
+	USHORT StructureVersion;
 	USHORT StructureLength;
 	ULONG BaseVersion;
 	USHORT MiniVersion;}

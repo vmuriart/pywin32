@@ -31,7 +31,7 @@ class ReloadWatcherThread(threading.Thread):
         last_time = os.stat(self.filename)[stat.ST_MTIME]
         while 1:
             try:
-                rc = win32event.WaitForSingleObject(self.handle, 
+                rc = win32event.WaitForSingleObject(self.handle,
                                                     win32event.INFINITE)
                 win32file.FindNextChangeNotification(self.handle)
             except win32event.error, details:
@@ -44,14 +44,14 @@ class ReloadWatcherThread(threading.Thread):
                 print "Detected file change - flagging for reload."
                 self.change_detected = True
                 last_time = this_time
-    
+
     def stop(self):
         win32file.FindCloseChangeNotification(self.handle)
 
 def TransmitFileCallback(ecb, hFile, cbIO, errCode):
     print "Transmit complete!"
     ecb.close()
-    
+
 # The ISAPI extension - handles requests in our virtual dir, and sends the
 # response to the client.
 class Extension(SimpleExtension):
@@ -95,7 +95,7 @@ class Extension(SimpleExtension):
             print >> ecb, "</BODY></HTML>"
             ecb.close()
         return isapicon.HSE_STATUS_SUCCESS
-    
+
     def TerminateExtension(self, status):
         self.reload_watcher.stop()
 
@@ -149,6 +149,6 @@ if __name__=='__main__':
     parser.add_option("", "--description",
                       action="store",
                       help="custom description to use for the virtual directory")
-    
-    HandleCommandLine(params, opt_parser=parser, 
+
+    HandleCommandLine(params, opt_parser=parser,
                               custom_arg_handlers = custom_arg_handlers)

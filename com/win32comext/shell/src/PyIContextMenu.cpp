@@ -67,7 +67,7 @@ PyObject *PyIContextMenu::InvokeCommand(PyObject *self, PyObject *args)
 	if ( !PyArg_ParseTuple(args, "O:InvokeCommand", &oblpici) )
 		return NULL;
 
-	if (!PyObject_AsCMINVOKECOMMANDINFO( oblpici, 
+	if (!PyObject_AsCMINVOKECOMMANDINFO( oblpici,
 		&ci ))	// @pyparm <o PyCMINVOKECOMMANDINFO>|pici||Tuple of parameters representing a CMINVOKECOMMANDINFO struct
 		return NULL;
 	HRESULT hr;

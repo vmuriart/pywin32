@@ -1,5 +1,5 @@
 // stddde.cpp
-// From KB Article ID: Q92829 
+// From KB Article ID: Q92829
 
 // See pywin32 bug [ 1414160 ] DDE sets off DEP (in demos and pythonwin too)
 // _CALLHACK_ appears to be the cause :(
@@ -36,18 +36,18 @@ typedef struct _CFTAGNAME {
 //
 
 CFTAGNAME CFNames[] = {
-    CF_TEXT,        SZCF_TEXT,       
-    CF_BITMAP,      SZCF_BITMAP,     
+    CF_TEXT,        SZCF_TEXT,
+    CF_BITMAP,      SZCF_BITMAP,
     CF_METAFILEPICT,SZCF_METAFILEPICT,
-    CF_SYLK,        SZCF_SYLK,       
-    CF_DIF,         SZCF_DIF,        
-    CF_TIFF,        SZCF_TIFF,       
-    CF_OEMTEXT,     SZCF_OEMTEXT,    
-    CF_DIB,         SZCF_DIB,        
-    CF_PALETTE,     SZCF_PALETTE,    
-    CF_PENDATA,     SZCF_PENDATA,    
-    CF_RIFF,        SZCF_RIFF,       
-    CF_WAVE,        SZCF_WAVE,       
+    CF_SYLK,        SZCF_SYLK,
+    CF_DIF,         SZCF_DIF,
+    CF_TIFF,        SZCF_TIFF,
+    CF_OEMTEXT,     SZCF_OEMTEXT,
+    CF_DIB,         SZCF_DIB,
+    CF_PALETTE,     SZCF_PALETTE,
+    CF_PENDATA,     SZCF_PENDATA,
+    CF_RIFF,        SZCF_RIFF,
+    CF_WAVE,        SZCF_WAVE,
     NULL,           NULL
     };
 
@@ -135,7 +135,7 @@ void CHSZ::Create(CDDEServer* pServer, const TCHAR* szName)
 {
     if (m_hsz) {
         ::DdeFreeStringHandle(pServer->m_dwDDEInstance, m_hsz);
-    }    
+    }
     m_dwDDEInstance = pServer->m_dwDDEInstance;
     m_hsz = ::DdeCreateStringHandle(m_dwDDEInstance,
                                     szName,
@@ -298,7 +298,7 @@ BOOL CDDETopic::AddItem(CDDEItem* pNewItem)
 {
     ASSERT(pNewItem);
 
-    // 
+    //
     // See if we already have this item
     //
 
@@ -691,7 +691,7 @@ IMPLEMENT_DYNCREATE(CDDESystemItem_TopicList, CDDESystemItem);
 
 BOOL CDDESystemItem_TopicList::Request(UINT wFmt, CDDEAllocator &allocr)
 {
-    // 
+    //
     // Return the list of topics for this service
     //
 
@@ -703,7 +703,7 @@ BOOL CDDESystemItem_TopicList::Request(UINT wFmt, CDDEAllocator &allocr)
     POSITION pos = pServer->m_TopicList.GetHeadPosition();
     int items = 0;
     while (pos) {
-        
+
         CDDETopic* pTopic = pServer->m_TopicList.GetNext(pos);
 
         //
@@ -720,7 +720,7 @@ BOOL CDDESystemItem_TopicList::Request(UINT wFmt, CDDEAllocator &allocr)
 
         items++;
     }
-    
+
     //
     // Set up the return info
     //
@@ -731,7 +731,7 @@ IMPLEMENT_DYNCREATE(CDDESystemItem_ItemList, CDDESystemItem);
 
 BOOL CDDESystemItem_ItemList::Request(UINT wFmt, CDDEAllocator &allocr)
 {
-    // 
+    //
     // Return the list of items in this topic
     //
 
@@ -741,7 +741,7 @@ BOOL CDDESystemItem_ItemList::Request(UINT wFmt, CDDEAllocator &allocr)
     POSITION pos = m_pTopic->m_ItemList.GetHeadPosition();
     int items = 0;
     while (pos) {
-        
+
         CDDEItem* pItem = m_pTopic->m_ItemList.GetNext(pos);
 
         //
@@ -758,7 +758,7 @@ BOOL CDDESystemItem_ItemList::Request(UINT wFmt, CDDEAllocator &allocr)
 
         items++;
     }
-    
+
     //
     // Set up the return info
     //
@@ -769,7 +769,7 @@ IMPLEMENT_DYNCREATE(CDDESystemItem_FormatList, CDDESystemItem);
 
 BOOL CDDESystemItem_FormatList::Request(UINT wFmt, CDDEAllocator &allocr)
 {
-    // 
+    //
     // Return the list of formats in this topic
     //
 
@@ -780,7 +780,7 @@ BOOL CDDESystemItem_FormatList::Request(UINT wFmt, CDDEAllocator &allocr)
     int iFormats = 0;
     WORD wFmtList[100];
     while (pos) {
-        
+
         CDDEItem* pItem = m_pTopic->m_ItemList.GetNext(pos);
 
         //
@@ -891,7 +891,7 @@ void CDDEServer::Shutdown()
         // Unregister the service name
         //
 
-        ::DdeNameService(m_dwDDEInstance, 
+        ::DdeNameService(m_dwDDEInstance,
                          m_hszServiceName,
                          NULL,
                          DNS_UNREGISTER);
@@ -1062,11 +1062,11 @@ BOOL CDDEServer::Create(const TCHAR* pszServiceName,
 #endif _CALLHACK_
 //CT END
     //
-    // Make sure the application hasn't requested any filter options 
+    // Make sure the application hasn't requested any filter options
     // which will prevent us from working correctly.
     //
 /* Not for Python tho!
-    dwFilterFlags &= !(CBF_FAIL_CONNECTIONS 
+    dwFilterFlags &= !(CBF_FAIL_CONNECTIONS
                       |CBF_SKIP_CONNECT_CONFIRMS
                       | CBF_SKIP_DISCONNECTS
 					  | CBF_FAIL_SELFCONNECTIONS);
@@ -1096,12 +1096,12 @@ BOOL CDDEServer::Create(const TCHAR* pszServiceName,
     if (uiResult != DMLERR_NO_ERROR) return FALSE;
 
 	// MH - Added from DDEINST.C sample.
-	// Start a critical section. This fixes a problem where the DDEML 
-	// Can hang under threaded conditions.  
-    CRITICAL_SECTION lpCritical; 
-    InitializeCriticalSection (&lpCritical); 
-    EnterCriticalSection (&lpCritical); 
-   
+	// Start a critical section. This fixes a problem where the DDEML
+	// Can hang under threaded conditions.
+    CRITICAL_SECTION lpCritical;
+    InitializeCriticalSection (&lpCritical);
+    EnterCriticalSection (&lpCritical);
+
     //
     // Return the DDE instance id if it was requested
     //
@@ -1151,7 +1151,7 @@ BOOL CDDEServer::Create(const TCHAR* pszServiceName,
     // Register the name of our service
     //
 
-    ::DdeNameService(m_dwDDEInstance, 
+    ::DdeNameService(m_dwDDEInstance,
                      m_hszServiceName,
                      NULL,
                      DNS_REGISTER);
@@ -1166,7 +1166,7 @@ BOOL CDDEServer::Create(const TCHAR* pszServiceName,
 }
 
 //
-// Callback function 
+// Callback function
 // Note: this is a static
 //
 
@@ -1308,18 +1308,18 @@ HDDEDATA CALLBACK CDDEServer::DynDDECallback(
 
     default:
 
-        return pServ->CustomCallback(wType,  
-                                      wFmt, 
-                                      hConv, 
-                                      hsz1, 
-                                      hsz2, 
+        return pServ->CustomCallback(wType,
+                                      wFmt,
+                                      hConv,
+                                      hsz1,
+                                      hsz2,
                                       hData,
-                                      dwData1, 
+                                      dwData1,
                                       dwData2);
     }
 
     return (HDDEDATA) NULL;
-}                                                                            
+}
 
 
 CDDEConv* CDDEServer::AddConversation(HCONV hConv, HSZ hszTopic)
@@ -1535,7 +1535,7 @@ BOOL CDDEServer::DoCallback(WORD wType,
         void* pData = ::DdeAccessData(hData, &dwLength);
         BOOL b = Exec(strTopic, pData, dwLength);
         ::DdeUnaccessData(hData);
-        
+
         if (b) {
 
             *phReturnData = (HDDEDATA) DDE_FACK;
@@ -1602,7 +1602,7 @@ BOOL CDDEServer::DoCallback(WORD wType,
     case XTYP_POKE:
 
         //
-        // Some data for one of our items. 
+        // Some data for one of our items.
         //
 
         pData = ::DdeAccessData(hData, &dwLength);
@@ -1616,7 +1616,7 @@ BOOL CDDEServer::DoCallback(WORD wType,
             // Maybe its not a supported item or format
             //
 
-            Status(_T("Poke %s|%s failed"), (const TCHAR*)strTopic, (const TCHAR*)strItem); 
+            Status(_T("Poke %s|%s failed"), (const TCHAR*)strTopic, (const TCHAR*)strItem);
             return FALSE;
 
         }
@@ -1664,7 +1664,7 @@ BOOL CDDEServer::DoCallback(WORD wType,
             // Maybe its not of interrest
             //
 
-            Status(_T("AdviseData %s|%s failed"), (const TCHAR*)strTopic, (const TCHAR*)strItem); 
+            Status(_T("AdviseData %s|%s failed"), (const TCHAR*)strTopic, (const TCHAR*)strItem);
             *phReturnData = (HDDEDATA) DDE_FNOTPROCESSED;
 
         } else {
@@ -1684,15 +1684,15 @@ BOOL CDDEServer::DoCallback(WORD wType,
         { // scope for locals.
 
         CDDEAllocator allocr(m_dwDDEInstance, hszItem, wFmt, phReturnData);
-        Status(_T("Request %s|%s"), (const TCHAR*)strTopic, (const TCHAR*)strItem); 
+        Status(_T("Request %s|%s"), (const TCHAR*)strTopic, (const TCHAR*)strItem);
         dwLength = 0;
         if (!Request(wFmt, strTopic, strItem, allocr)) {
-            // 
+            //
             // Nobody accepted the request
             // Maybe unsupported topic/item or bad format
             //
 
-            Status(_T("Request %s|%s failed"), (LPCTSTR)strTopic, (LPCTSTR)strItem); 
+            Status(_T("Request %s|%s failed"), (LPCTSTR)strTopic, (LPCTSTR)strItem);
             *phReturnData = NULL;
             return FALSE;
 
@@ -1718,7 +1718,7 @@ BOOL CDDEServer::AddTopic(CDDETopic* pNewTopic)
 {
     ASSERT(pNewTopic);
 
-    // 
+    //
     // See if we already have this topic
     //
 

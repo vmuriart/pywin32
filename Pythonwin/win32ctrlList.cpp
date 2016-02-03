@@ -1,6 +1,6 @@
 /* win32ctllist : implementation file
 
-	List control object.  
+	List control object.
 
 	Created May 1996, Mark Hammond (MHammond@skippinet.com.au)
 
@@ -221,7 +221,7 @@ PyObject *PyCListCtrl_InsertColumn( PyObject *self, PyObject *args )
 	CListCtrl *pList;
 	int iColNo;
 	PyObject *obLVCol;
-	
+
 	if (!(pList=GetListCtrl(self)))
 		return NULL;
 
@@ -247,7 +247,7 @@ PyObject *PyCListCtrl_SetColumn( PyObject *self, PyObject *args )
 	CListCtrl *pList;
 	int iColNo;
 	PyObject *obLVCol;
-	
+
 	if (!(pList=GetListCtrl(self)))
 		return NULL;
 
@@ -279,7 +279,7 @@ PyObject *PyCListCtrl_InsertItem( PyObject *self, PyObject *args )
 	if (!(pList=GetListCtrl(self)))
 		return NULL;
 
-	if (PyArg_ParseTuple(args, "iOi:InsertItem", 
+	if (PyArg_ParseTuple(args, "iOi:InsertItem",
 			&item,		// @pyparmalt1 int|item||The index of the item.
 			&obtext,	// @pyparmalt1 string|text||The text of the item.
 			&image)		// @pyparmalt1 int|image||The index of the image to use.
@@ -290,7 +290,7 @@ PyObject *PyCListCtrl_InsertItem( PyObject *self, PyObject *args )
 
 	} else {
 		PyErr_Clear();
-		if (PyArg_ParseTuple(args, "iO:InsertItem", 
+		if (PyArg_ParseTuple(args, "iO:InsertItem",
 				&item,		// @pyparmalt2 int|item||The index of the item.
 				&obtext)	// @pyparmalt2 string|text||The text of the item.
 			&& PyWinObject_AsTCHAR(obtext, &text, FALSE)){
@@ -350,7 +350,7 @@ PyObject *PyCListCtrl_SetImageList( PyObject *self, PyObject *args )
 	int imageType;
 	if (!(pList=GetListCtrl(self)))
 		return NULL;
-	if (!PyArg_ParseTuple(args, "Oi:SetImageList", 
+	if (!PyArg_ParseTuple(args, "Oi:SetImageList",
 		                  &obList, // @pyparm <o PyCImageList>|imageList||The Image List to use.
 						  &imageType )) // @pyparm int|imageType||Type of image list. It can be one of (COMMCTRL.) LVSIL_NORMAL, LVSIL_SMALL or LVSIL_STATE
 		return NULL;
@@ -368,7 +368,7 @@ PyObject *PyCListCtrl_SetImageList( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_GetColumn( PyObject *self, PyObject *args )
 {
 	int col;
-	if (!PyArg_ParseTuple( args, "i:GetColumn", 
+	if (!PyArg_ParseTuple( args, "i:GetColumn",
 	                   &col)) // @pyparm int|column||The index of the column whose attributes are to be retrieved.
 		return NULL;
 	CListCtrl *pList = GetListCtrl(self);
@@ -390,7 +390,7 @@ PyObject *PyCListCtrl_GetColumn( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_DeleteColumn( PyObject *self, PyObject *args )
 {
 	int col;
-	if (!PyArg_ParseTuple( args, "i:DeleteColumn", 
+	if (!PyArg_ParseTuple( args, "i:DeleteColumn",
 	                   &col)) // @pyparm int|first||Index of the column to be removed.
 		return NULL;
 	CListCtrl *pList = GetListCtrl(self);
@@ -407,7 +407,7 @@ PyObject *PyCListCtrl_DeleteColumn( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_SetColumnWidth( PyObject *self, PyObject *args )
 {
 	int col, width;
-	if (!PyArg_ParseTuple( args, "ii:SetColumnWidth", 
+	if (!PyArg_ParseTuple( args, "ii:SetColumnWidth",
 	                   &col, // @pyparm int|first||Index of the column to be changed.
 					   &width)) // @pyparm int|first||New width of the column.
 		return NULL;
@@ -425,7 +425,7 @@ PyObject *PyCListCtrl_SetColumnWidth( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_GetColumnWidth( PyObject *self, PyObject *args )
 {
 	int col;
-	if (!PyArg_ParseTuple( args, "i:GetColumnWidth", 
+	if (!PyArg_ParseTuple( args, "i:GetColumnWidth",
 	                   &col)) // @pyparm int|first||Index of the column whose width is to be retrieved.
 		return NULL;
 	CListCtrl *pList = GetListCtrl(self);
@@ -441,7 +441,7 @@ PyObject *PyCListCtrl_GetStringWidth( PyObject *self, PyObject *args )
 {
 	TCHAR *text;
 	PyObject *obtext;
-	if (!PyArg_ParseTuple( args, "O:GetStringWidth", 
+	if (!PyArg_ParseTuple( args, "O:GetStringWidth",
 	                   &obtext)) // @pyparm int|first||String that contains the text whose width is to be determined.
 		return NULL;
 	CListCtrl *pList = GetListCtrl(self);
@@ -460,7 +460,7 @@ PyObject *PyCListCtrl_GetStringWidth( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_GetItem( PyObject *self, PyObject *args )
 {
 	int item, sub = 0;
-	if (!PyArg_ParseTuple( args, "i|i:GetItem", 
+	if (!PyArg_ParseTuple( args, "i|i:GetItem",
 	                   &item, // @pyparm int|item||The index of the item whose attributes are to be retrieved.
 					   &sub)) // @pyparm int|sub||Specifies the subitem whose text is to be retrieved.
 		return NULL;
@@ -487,7 +487,7 @@ PyObject *PyCListCtrl_GetItemText( PyObject *self, PyObject *args )
 {
 	int item, sub;
 	// TCHAR buf[256];
-	if (!PyArg_ParseTuple( args, "ii:GetItemText", 
+	if (!PyArg_ParseTuple( args, "ii:GetItemText",
 	                   &item, // @pyparm int|item||The index of the item whose text is to be retrieved.
 					   &sub)) // @pyparm int|sub||Specifies the subitem whose text is to be retrieved.
 		return NULL;
@@ -508,7 +508,7 @@ PyObject *PyCListCtrl_SetItemText( PyObject *self, PyObject *args )
 	int item, sub;
 	TCHAR *text;
 	PyObject *obtext;
-	if (!PyArg_ParseTuple( args, "iiO:SetItemText", 
+	if (!PyArg_ParseTuple( args, "iiO:SetItemText",
 		                   &item, // @pyparm int|item||Index of the item whose text is to be set.
 						   &sub, // @pyparm int|sub||Index of the subitem, or zero to set the item label.
 						   &obtext)) // @pyparm string|text||String that contains the new item text.
@@ -529,7 +529,7 @@ PyObject *PyCListCtrl_SetItemText( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_GetItemState( PyObject *self, PyObject *args )
 {
 	int item, mask;
-	if (!PyArg_ParseTuple( args, "ii:GetItemState", 
+	if (!PyArg_ParseTuple( args, "ii:GetItemState",
 	                   &item, // @pyparm int|item||The index of the item whose position is to be retrieved.
 					   &mask)) // @pyparm int|mask||Mask specifying which of the item's state flags to return.
 
@@ -547,7 +547,7 @@ PyObject *PyCListCtrl_SetItemState( PyObject *self, PyObject *args )
 	CListCtrl *pList = GetListCtrl(self);
 	if (!pList) return NULL;
 	int item, state, mask;
-	if (!PyArg_ParseTuple( args, "iii:SetItemState", 
+	if (!PyArg_ParseTuple( args, "iii:SetItemState",
 		                   &item, // @pyparm int|item||Index of the item whose state is to be set.
 						   &state, // @pyparm int|state||New values for the state bits.
 						   &mask)) // @pyparm int|mask||Mask specifying which state bits to change.
@@ -563,7 +563,7 @@ PyObject *PyCListCtrl_SetItemState( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_GetItemData( PyObject *self, PyObject *args )
 {
 	int item;
-	if (!PyArg_ParseTuple( args, "i:GetItemData", 
+	if (!PyArg_ParseTuple( args, "i:GetItemData",
 	                   &item)) // @pyparm int|item||The index of the item whose data is to be retrieved.
 
 		return NULL;
@@ -584,7 +584,7 @@ PyObject *PyCListCtrl_SetItemData( PyObject *self, PyObject *args )
 	if (!pList) return NULL;
 	int item;
 	PyObject *data;
-	if (!PyArg_ParseTuple( args, "iO:SetItemData", 
+	if (!PyArg_ParseTuple( args, "iO:SetItemData",
 		                   &item, // @pyparm int|item||Index of the item whose Data is to be set.
 						   &data)) // @pyparm object|Data||New value for the data.
 		return NULL;
@@ -603,9 +603,9 @@ PyObject *PyCListCtrl_SetItemData( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_GetNextItem( PyObject *self, PyObject *args )
 {
 	int item, flags;
-	if (!PyArg_ParseTuple( args, "ii:GetNextItem", 
+	if (!PyArg_ParseTuple( args, "ii:GetNextItem",
 	                   &item, // @pyparm int|item||Index of the item to begin the searching with, or -1 to find the first item that matches the specified flags. The specified item itself is excluded from the search.
-					   &flags)) // @pyparm int|flags||Geometric relation of the requested item to the specified item, 
+					   &flags)) // @pyparm int|flags||Geometric relation of the requested item to the specified item,
 					            // and the state of the requested item. The geometric relation can be one of these values:
 								// <nl>LVNI_ABOVE<nl>LVNI_ALL<nl>LVNI_BELOW<nl>LVNI_TOLEFT<nl>LVNI_TORIGHT<nl>
 								// The state can be zero, or it can be one or more of these values:
@@ -627,7 +627,7 @@ PyObject *PyCListCtrl_GetNextItem( PyObject *self, PyObject *args )
 PyObject *PyCListCtrl_RedrawItems( PyObject *self, PyObject *args )
 {
 	int first, last;
-	if (!PyArg_ParseTuple( args, "ii:RedrawItems", 
+	if (!PyArg_ParseTuple( args, "ii:RedrawItems",
 	                   &first, // @pyparm int|first||Index of the first item to be repainted.
 					   &last)) // @pyparm int|first||Index of the last item to be repainted.
 		return NULL;
@@ -651,7 +651,7 @@ PyObject *PyCListCtrl_GetItemRect( PyObject *self, PyObject *args )
 	int item;
 	RECT rect;
 	BOOL bTextOnly;
-	if (!PyArg_ParseTuple( args, "ii:GetItemRect", 
+	if (!PyArg_ParseTuple( args, "ii:GetItemRect",
 		                   &item, // @pyparm int|item||Index of the item whose Data is to be set.
 						   &bTextOnly)) // @pyparm int|bTextOnly||f this parameter is nonzero, the bounding rectangle includes only the text of the item. Otherwise it includes the entire line that the item occupies in the list view control.
 		return NULL;
@@ -750,14 +750,14 @@ PyObject *PyCListCtrl_HitTest( PyObject *self, PyObject *args )
 	// @rdesc The result is a tuple of (flags, item, subItem).
 	// flags may be a combination of the following values:
 	// @flagh Value|Description
-	// @flag commctrl.LVHT_ABOVE|The position is above the control's client area. 
-	// @flag commctrl.LVHT_BELOW|The position is below the control's client area. 
-	// @flag commctrl.LVHT_NOWHERE|The position is inside the list view control's client window, but it is not over a list item. 
-	// @flag commctrl.LVHT_ONITEMICON|The position is over a list view item's icon. 
-	// @flag commctrl.LVHT_ONITEMLABEL|The position is over a list view item's text. 
-	// @flag commctrl.LVHT_ONITEMSTATEICON|The position is over the state image of a list view item. 
-	// @flag commctrl.LVHT_TOLEFT|The position is to the left of the list view control's client area. 
-	// @flag commctrl.LVHT_TORIGHT|The position is to the right of the list view control's client area. 
+	// @flag commctrl.LVHT_ABOVE|The position is above the control's client area.
+	// @flag commctrl.LVHT_BELOW|The position is below the control's client area.
+	// @flag commctrl.LVHT_NOWHERE|The position is inside the list view control's client window, but it is not over a list item.
+	// @flag commctrl.LVHT_ONITEMICON|The position is over a list view item's icon.
+	// @flag commctrl.LVHT_ONITEMLABEL|The position is over a list view item's text.
+	// @flag commctrl.LVHT_ONITEMSTATEICON|The position is over the state image of a list view item.
+	// @flag commctrl.LVHT_TOLEFT|The position is to the left of the list view control's client area.
+	// @flag commctrl.LVHT_TORIGHT|The position is to the right of the list view control's client area.
 }
 
 // @pymethod (int, int)|PyCListCtrl|GetItemPosition|Determines the position of the specified item.
@@ -829,10 +829,10 @@ static struct PyMethodDef PyCListCtrl_methods[] = {
 };
 
 
-ui_type_CObject PyCListCtrl::type("PyCListCtrl", 
-									 &PyCWnd::type, 
-									 RUNTIME_CLASS(CListCtrl), 
-									 sizeof(PyCListCtrl), 
-									 PYOBJ_OFFSET(PyCListCtrl), 
-									 PyCListCtrl_methods, 
+ui_type_CObject PyCListCtrl::type("PyCListCtrl",
+									 &PyCWnd::type,
+									 RUNTIME_CLASS(CListCtrl),
+									 sizeof(PyCListCtrl),
+									 PYOBJ_OFFSET(PyCListCtrl),
+									 PyCListCtrl_methods,
 									 GET_PY_CTOR(PyCListCtrl));

@@ -167,7 +167,7 @@ FIND_NAME_BUFFER_ITEMS = [
     (UCHAR,   "access_control"),
     (UCHAR,   "frame_control"),
     ("6s",   "destination_addr"),
-    ("6s", "source_addr"), 
+    ("6s", "source_addr"),
     ("18s", "routing_info"),
 ]
 
@@ -176,7 +176,7 @@ ACTION_HEADER_ITEMS = [
     (USHORT,  "action_code"),
     (USHORT,  "reserved"),
 ]
-    
+
 del UCHAR, WORD, DWORD, USHORT, ULONG
 
 NCB = win32wnet.NCB
@@ -190,7 +190,7 @@ def Netbios(ncb):
     finally:
         if is_ours:
             ob._unpack()
-        
+
 class NCBStruct:
     def __init__(self, items):
         self._format = "".join([item[0] for item in items])
@@ -215,7 +215,7 @@ class NCBStruct:
                 vals.append(self.__dict__[name])
             except KeyError:
                 vals.append(None)
-        
+
         self._buffer_[:] = struct.pack(*(self._format,) + tuple(vals))
 
     def _unpack(self):
@@ -266,7 +266,7 @@ def byte_to_int(b):
 
 if __name__=='__main__':
     # code ported from "HOWTO: Get the MAC Address for an Ethernet Adapter"
-    # MS KB ID: Q118623 
+    # MS KB ID: Q118623
     ncb = NCB()
     ncb.Command = NCBENUM
     la_enum = LANA_ENUM()

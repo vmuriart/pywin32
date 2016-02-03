@@ -96,7 +96,7 @@ PyObject *PyIShellBrowser::RemoveMenusSB(PyObject *self, PyObject *args)
 		return NULL;
 	PyObject *obhmenuShared;
 	HMENU hmenuShared;
-	if (!PyArg_ParseTuple(args, "O:RemoveMenusSB", 
+	if (!PyArg_ParseTuple(args, "O:RemoveMenusSB",
 		&obhmenuShared))	// @pyparm <o PyHANDLE>|hmenuShared||Handle to the composite menu
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhmenuShared, (HANDLE *)&hmenuShared))
@@ -146,7 +146,7 @@ PyObject *PyIShellBrowser::EnableModelessSB(PyObject *self, PyObject *args)
 	if ( pISB == NULL )
 		return NULL;
 	BOOL fEnable;
-	if (!PyArg_ParseTuple(args, "i:EnableModelessSB", 
+	if (!PyArg_ParseTuple(args, "i:EnableModelessSB",
 		&fEnable))	// @pyparm boolean|fEnable||Use True to enable or False to disable modeless dialog boxes
 		return NULL;
 	HRESULT hr;
@@ -276,7 +276,7 @@ PyObject *PyIShellBrowser::SendControlMsg(PyObject *self, PyObject *args)
 	// WPARAM and LPARAM are defined as UINT_PTR and LONG_PTR, so they can't be used interchangeably without a cast
 	if (!PyWinObject_AsPARAM(oblparam, (WPARAM *)&lParam))
 		return NULL;
-	
+
 	HRESULT hr;
 	LRESULT ret;
 	PY_INTERFACE_PRECALL;
@@ -339,8 +339,8 @@ PyObject *PyIShellBrowser::SetToolbarItems(PyObject *self, PyObject *args)
 		return NULL;
 	LPTBBUTTONSB lpButtons;
 	PyObject *oblpButtons;
-	
-	
+
+
 	UINT nButtons;
 	UINT uFlags;
 	if (!PyArg_ParseTuple(args, "OI:SetToolbarItems",
@@ -414,7 +414,7 @@ STDMETHODIMP PyGShellBrowser::SetMenuSB(
 		/* [in] */ HWND hwndActiveObject)
 {
 	PY_GATEWAY_METHOD;
-	HRESULT hr=InvokeViaPolicy("SetMenuSB", NULL, "NNN", PyWinLong_FromHANDLE(hmenuShared), 
+	HRESULT hr=InvokeViaPolicy("SetMenuSB", NULL, "NNN", PyWinLong_FromHANDLE(hmenuShared),
 		PyWinLong_FromHANDLE(holemenuRes), PyWinLong_FromHANDLE(hwndActiveObject));
 	return hr;
 }

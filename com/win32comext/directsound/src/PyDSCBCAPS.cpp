@@ -86,9 +86,9 @@ PyTypeObject PyDSCBCAPSType =
 #define OFF(e) offsetof(PyDSCBCAPS, e)
 
 /*static*/ struct PyMemberDef PyDSCBCAPS::members[] = {
-	{"dwFlags",  T_INT,  OFF(m_caps.dwFlags), 0, "Specifies device capabilities. Can be 0 or DSCBCAPS_EMULDRIVER (indicates that no DirectSoundCapture device is available and standard wave audio functions are being used)"}, 
+	{"dwFlags",  T_INT,  OFF(m_caps.dwFlags), 0, "Specifies device capabilities. Can be 0 or DSCBCAPS_EMULDRIVER (indicates that no DirectSoundCapture device is available and standard wave audio functions are being used)"},
 	// @prop integer|dwFlags|Specifies device capabilities. Can be 0 or DSCBCAPS_EMULDRIVER (indicates that no DirectSound Device is available and standard wave audio functions are being used).
-	{"dwBufferBytes",  T_INT,  OFF(m_caps.dwBufferBytes), 0, "The size, in bytes, of the capture buffer."}, 
+	{"dwBufferBytes",  T_INT,  OFF(m_caps.dwBufferBytes), 0, "The size, in bytes, of the capture buffer."},
 	// @prop integer|dwBufferBytes|The size, in bytes, of the capture buffer.
 	{NULL}
 };

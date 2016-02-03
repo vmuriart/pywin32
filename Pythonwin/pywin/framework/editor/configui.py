@@ -7,10 +7,10 @@ import win32api
 from pywin.framework.editor import GetEditorOption, SetEditorOption, DeleteEditorOption, GetEditorFontOption, SetEditorFontOption, defaultCharacterFormat, editorTemplate
 import pywin.scintilla.config
 
-# The standard 16 color VGA palette should always be possible    
-paletteVGA = ( ("Black",0,0,0), ("Navy",0,0,128), ("Green",0,128,0), ("Cyan",0,128,128), 
-	("Maroon",128,0,0), ("Purple",128,0,128), ("Olive",128,128,0), ("Gray",128,128,128), 
-	("Silver",192,192,192), ("Blue",0,0,255), ("Lime",0,255,0), ("Aqua",0,255,255), 
+# The standard 16 color VGA palette should always be possible
+paletteVGA = ( ("Black",0,0,0), ("Navy",0,0,128), ("Green",0,128,0), ("Cyan",0,128,128),
+	("Maroon",128,0,0), ("Purple",128,0,128), ("Olive",128,128,0), ("Gray",128,128,128),
+	("Silver",192,192,192), ("Blue",0,0,255), ("Lime",0,255,0), ("Aqua",0,255,255),
 	("Red",255,0,0), ("Fuchsia",255,0,255), ("Yellow",255,255,0), ("White",255,255,255) )
 
 ######################################################
@@ -30,7 +30,7 @@ class EditorPropertyPage(dialog.PropertyPage):
 		self._AddEditorOption(win32ui.IDC_MARGIN_MARKER, "i", "Marker Margin Width", None)
 		self["Marker Margin Width"] = GetEditorOption("Marker Margin Width", 16)
 
-		# Folding		
+		# Folding
 		self._AddEditorOption(win32ui.IDC_MARGIN_FOLD, "i", "Fold Margin Width", 12)
 		self._AddEditorOption(win32ui.IDC_FOLD_ENABLE, "i", "Enable Folding", 1)
 		self._AddEditorOption(win32ui.IDC_FOLD_ON_OPEN, "i", "Fold On Open", 0)
@@ -40,7 +40,7 @@ class EditorPropertyPage(dialog.PropertyPage):
 		self._AddEditorOption(win32ui.IDC_RIGHTEDGE_ENABLE, "i", "Right Edge Enabled", 0)
 		self._AddEditorOption(win32ui.IDC_RIGHTEDGE_COLUMN, "i", "Right Edge Column", 75)
 
-		# Source control, etc		
+		# Source control, etc
 		self.AddDDX(win32ui.IDC_VSS_INTEGRATE, "bVSS")
 		self.AddDDX(win32ui.IDC_KEYBOARD_CONFIG, "Configs", "l")
 		self["Configs"] = pywin.scintilla.config.find_config_files()
@@ -117,7 +117,7 @@ class EditorPropertyPage(dialog.PropertyPage):
 			if d.DoModal() == win32con.IDOK:
 				self.edgeColor = d.GetColor()
 				self.UpdateUIForState()
-				
+
 	def UpdateUIForState(self):
 		folding = self.GetDlgItem(win32ui.IDC_FOLD_ENABLE).GetCheck()
 		self.GetDlgItem(win32ui.IDC_FOLD_ON_OPEN).EnableWindow(folding)

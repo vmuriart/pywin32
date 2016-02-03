@@ -3,7 +3,7 @@
 
 // Interfaces that support the ActiveX Control interfaces.
 // First interfaces (and inspiration to actually create this module)
-// by Ryan Hughes 
+// by Ryan Hughes
 
 /***
 Note that this source file contains embedded documentation.
@@ -78,7 +78,7 @@ PyObject *PyObject_FromLOGPALETTE( LOGPALETTE *pLP)
 {
 	PyObject *entries = PyTuple_New(pLP->palNumEntries);
 	for (int i=0;i<pLP->palNumEntries;i++) {
-		PyTuple_SET_ITEM(entries, i, Py_BuildValue("bbbb", 
+		PyTuple_SET_ITEM(entries, i, Py_BuildValue("bbbb",
 			pLP->palPalEntry[i].peRed,
 			pLP->palPalEntry[i].peGreen,
 			pLP->palPalEntry[i].peBlue,
@@ -200,12 +200,12 @@ static PyObject *axcontrol_OleCreate(PyObject *self, PyObject *args)
 	//REFCLSID rclsid = &clsid;
 	if (!PyWinObject_AsIID(obCLSID, &clsid))
 		return NULL;
-	
+
 	IID iid;
 	//REFIID riid = &iid;
 	if (!PyWinObject_AsIID(obIID, &iid))
 		return NULL;
-	
+
 	IOleClientSite *pIOleClientSite;
 	if (!PyCom_InterfaceFromPyObject(obOleClientSite, IID_IOleClientSite, (void **)&pIOleClientSite, FALSE))
 		return NULL;
@@ -231,7 +231,7 @@ static PyObject *axcontrol_OleLoadPicture(PyObject *, PyObject *args)
 	PyObject *obStream, *obIIDAPI, *obIIDRet = NULL;
 	LONG size;
 	BOOL runMode;
-	if (!PyArg_ParseTuple(args, "OiiO|O", 
+	if (!PyArg_ParseTuple(args, "OiiO|O",
 		&obStream, // @pyparm <o PyIStream>|stream||The stream that contains picture's data.
 		&size,  // @pyparm int|size||Number of bytes read from the stream
 		&runMode, // @pyparm int|runMode||The opposite of the initial value of the KeepOriginalFormat property. If TRUE, KeepOriginalFormat is set to FALSE and vice-versa.
@@ -276,11 +276,11 @@ static PyObject *axcontrol_OleLoadPicturePath(PyObject *, PyObject *args)
 	WCHAR *szPath = NULL;
 	PyObject *obPath, *obUnk, *obIIDAPI, *obIIDRet = NULL;
 	int reserved, clr;
-	if (!PyArg_ParseTuple(args, "OOiiO|O", 
+	if (!PyArg_ParseTuple(args, "OOiiO|O",
 		&obPath, // @pyparm string/unicode|url_or_path||The path or url to the file you want to open.
 		&obUnk,  // @pyparm <o PyIUknown>|unk||The IUnknown for COM aggregation.
 		&reserved, // @pyparm int|reserved||reserved
-		&clr, // @pyparm int|clr||The color you want to reserve to be transparent. 
+		&clr, // @pyparm int|clr||The color you want to reserve to be transparent.
 		&obIIDAPI, // @pyparm <o PyIID>||iid|The identifier of the interface describing the type of interface pointer to return
 		&obIIDRet)) {// @pyparm <o PyIID>||iidRet|The IID to use for the return object - use only if pythoncom does not support the native interface requested.
 		return NULL;
@@ -433,8 +433,8 @@ PYWIN_MODULE_INIT_FUNC(axcontrol)
 	// Register all of our interfaces, gateways and IIDs.
 	PyCom_RegisterExtensionSupport(dict, g_interfaceSupportData, sizeof(g_interfaceSupportData)/sizeof(PyCom_InterfaceSupportInfo));
 
-	ADD_CONSTANT(OLECLOSE_SAVEIFDIRTY); // @const axcontrol|OLECLOSE_SAVEIFDIRTY|The object should be saved if it is dirty. 
-	ADD_CONSTANT(OLECLOSE_NOSAVE); // @const axcontrol|OLECLOSE_NOSAVE|The object should not be saved, even if it is dirty. This flag is typically used when an object is being deleted. 
+	ADD_CONSTANT(OLECLOSE_SAVEIFDIRTY); // @const axcontrol|OLECLOSE_SAVEIFDIRTY|The object should be saved if it is dirty.
+	ADD_CONSTANT(OLECLOSE_NOSAVE); // @const axcontrol|OLECLOSE_NOSAVE|The object should not be saved, even if it is dirty. This flag is typically used when an object is being deleted.
 	ADD_CONSTANT(OLECLOSE_PROMPTSAVE); // @const axcontrol|OLECLOSE_PROMPTSAVE|If the object is dirty, the <om PyIOleObject.Close> implementation should display a dialog box to let the end user determine whether to save the object. However, if the object is in the running state but its user interface is invisible, the end user should not be prompted, and the close should be handled as if OLECLOSE_SAVEIFDIRTY had been specified.
 
 	ADD_CONSTANT(OLECMDTEXTF_NONE); // @const axcontrol|OLECMDTEXTF_NONE|

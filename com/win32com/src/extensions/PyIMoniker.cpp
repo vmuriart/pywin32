@@ -69,7 +69,7 @@ PyObject *PyIEnumMoniker::Next(PyObject *self, PyObject *args)
 	for ( i = celtFetched; i--; ) PYCOM_RELEASE(rgVar[i]);
 	delete [] rgVar;
 	return result;
-	// @rdesc The result is a tuple of <o PyIID> objects, 
+	// @rdesc The result is a tuple of <o PyIID> objects,
 	// one for each element returned.  Note that if zero elements are returned, it is not considered
 	// an error condition - an empty tuple is simply returned.
 }
@@ -135,7 +135,7 @@ static struct PyMethodDef PyIEnumMoniker_methods[] =
 	{"Skip",          PyIEnumMoniker::Skip,  1}, // @pymeth Skip|Skips over the next specified elementes.
 	{"Reset",          PyIEnumMoniker::Reset,  1}, // @pymeth Reset|Resets the enumeration sequence to the beginning.
 	{"Clone",          PyIEnumMoniker::Clone,  1}, // @pymeth Clone|Creates another enumerator that contains the same enumeration state as the current one.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComEnumTypeObject PyIEnumMoniker::type("PyIEnumMoniker",
@@ -179,7 +179,7 @@ PyObject *PyIMoniker::BindToObject(PyObject *self, PyObject *args)
 	IBindCtx *pBindCtx;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obBindCtx, IID_IBindCtx, (void **)&pBindCtx, FALSE))
 		return NULL;
-	
+
 	IMoniker *pMonLeft = NULL;
 	if (obMoniker!=Py_None) {
 		if (!PyCom_InterfaceFromPyInstanceOrObject(obMoniker, IID_IMoniker, (void **)&pMonLeft, FALSE)) {
@@ -227,7 +227,7 @@ PyObject *PyIMoniker::BindToStorage(PyObject *self, PyObject *args)
 	IBindCtx *pBindCtx;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obBindCtx, IID_IBindCtx, (void **)&pBindCtx, FALSE))
 		return NULL;
-	
+
 	IMoniker *pMonLeft = NULL;
 	if (obMoniker!=Py_None) {
 		if (!PyCom_InterfaceFromPyInstanceOrObject(obMoniker, IID_IMoniker, (void **)&pMonLeft, FALSE)) {
@@ -274,7 +274,7 @@ PyObject *PyIMoniker::GetDisplayName(PyObject *self, PyObject *args)
 	IBindCtx *pBindCtx;
 	if (!PyCom_InterfaceFromPyInstanceOrObject(obBindCtx, IID_IBindCtx, (void **)&pBindCtx, FALSE))
 		return NULL;
-	
+
 	IMoniker *pMonLeft = NULL;
 	if (obMoniker!=Py_None) {
 		if (!PyCom_InterfaceFromPyInstanceOrObject(obMoniker, IID_IMoniker, (void **)&pMonLeft, FALSE)) {
@@ -342,7 +342,7 @@ PyObject *PyIMoniker::Enum(PyObject *self, PyObject *args)
 	return PyCom_PyObjectFromIUnknown(pResult, IID_IEnumMoniker, FALSE );
 }
 
-// @pymethod int|PyIMoniker|IsEqual|Compares this moniker with a specified moniker and indicates whether they are identical. 
+// @pymethod int|PyIMoniker|IsEqual|Compares this moniker with a specified moniker and indicates whether they are identical.
 PyObject *PyIMoniker::IsEqual(PyObject *self, PyObject *args)
 {
 	PyObject *obOther;
@@ -384,7 +384,7 @@ PyObject *PyIMoniker::IsSystemMoniker(PyObject *self, PyObject *args)
 	return PyInt_FromLong(mksys);
 }
 
-// @pymethod int|PyIMoniker|Hash|Calculates a 32-bit integer using the internal state of the moniker. 
+// @pymethod int|PyIMoniker|Hash|Calculates a 32-bit integer using the internal state of the moniker.
 PyObject *PyIMoniker::Hash(PyObject *self, PyObject *args)
 {
 	if (!PyArg_ParseTuple(args, ":Hash" ))
@@ -409,10 +409,10 @@ static struct PyMethodDef PyIMoniker_methods[] =
 	{"GetDisplayName",    PyIMoniker::GetDisplayName,  1}, // @pymeth GetDisplayName|Gets the display name , which is a user-readable representation of this moniker.
 	{"ComposeWith",    PyIMoniker::ComposeWith,  1}, // @pymeth ComposeWith|Combines the current moniker with another moniker, creating a new composite moniker.
 	{"Enum",           PyIMoniker::Enum,  1}, // @pymeth Enum|Supplies an enumerator that can enumerate the components of a composite moniker.
-	{"IsEqual",        PyIMoniker::IsEqual,  1}, // @pymeth IsEqual|Compares this moniker with a specified moniker and indicates whether they are identical. 
+	{"IsEqual",        PyIMoniker::IsEqual,  1}, // @pymeth IsEqual|Compares this moniker with a specified moniker and indicates whether they are identical.
 	{"IsSystemMoniker",PyIMoniker::IsSystemMoniker,  1}, // @pymeth IsSystemMoniker|Indicates whether this moniker is of one of the system-supplied moniker classes.
-	{"Hash",        PyIMoniker::Hash,  1}, // @pymeth Hash|Calculates a 32-bit integer using the internal state of the moniker. 
-	{NULL,  NULL}        
+	{"Hash",        PyIMoniker::Hash,  1}, // @pymeth Hash|Calculates a 32-bit integer using the internal state of the moniker.
+	{NULL,  NULL}
 };
 
 PyComEnumProviderTypeObject PyIMoniker::type("PyIMoniker",

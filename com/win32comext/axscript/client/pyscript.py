@@ -117,7 +117,7 @@ class NamedScriptAttribute:
 	def _Close_(self):
 		self.__dict__['_scriptItem_'] = None
 
-	
+
 class ScriptItem(framework.ScriptItem):
 	def __init__(self, parentItem, name, dispatch, flags):
 		framework.ScriptItem.__init__(self, parentItem, name, dispatch, flags)
@@ -161,7 +161,7 @@ class ScriptItem(framework.ScriptItem):
 #		framework.ScriptItem.Connect(self)
 #	def Disconnect(self):
 #		framework.ScriptItem.Disconnect(self)
-		
+
 class PyScript(framework.COMScript):
 	# Setup the auto-registration stuff...
 	_reg_verprogid_ = "Python.AXScript.2"
@@ -173,7 +173,7 @@ class PyScript(framework.COMScript):
 	_reg_class_spec_ = "win32com.axscript.client.pyscript.PyScript"
 	_reg_remove_keys_ = [(".pys",), ("pysFile",)]
 	_reg_threading_ = "both"
-	
+
 	def __init__(self):
 		framework.COMScript.__init__(self)
 		self.globalNameSpaceModule = None
@@ -186,7 +186,7 @@ class PyScript(framework.COMScript):
 		self.scriptDispatch = None
 		self.globalNameSpaceModule = imp.new_module("__ax_main__")
 		self.globalNameSpaceModule.__dict__['ax'] = AXScriptAttribute(self)
-		
+
 		self.codeBlocks = []
 		self.persistedCodeBlocks = []
 		self.mapKnownCOMTypes = {} # Map of known CLSID to typereprs
@@ -211,7 +211,7 @@ class PyScript(framework.COMScript):
 	def _GetNextCodeBlockNumber(self):
 		self.codeBlockCounter = self.codeBlockCounter + 1
 		return self.codeBlockCounter
-		
+
 	def RegisterNamedItem(self, item):
 		wasReg = item.isRegistered
 		framework.COMScript.RegisterNamedItem(self, item)
@@ -238,7 +238,7 @@ class PyScript(framework.COMScript):
 						self.ExecInScriptedSection(codeBlock, globs)
 		finally:
 			pass
-	
+
 	def DoRun(self):
 		pass
 
@@ -267,7 +267,7 @@ class PyScript(framework.COMScript):
 		else:
 			subItem = item.GetCreateSubItem(item, subItemName, None, None)
 		funcName = self.MakeEventMethodName(subItemName, eventName)
-		
+
 		codeBlock = AXScriptCodeBlock("Script Event %s" %funcName, code, sourceContextCookie, startLineNumber, 0)
 		self._AddScriptCodeBlock(codeBlock)
 		subItem.scriptlets[funcName] = codeBlock
@@ -332,7 +332,7 @@ class PyScript(framework.COMScript):
 					return self.EvalInScriptedSection(codeBlock, globs)
 				else:
 					return self.ExecInScriptedSection(codeBlock, globs)
-				
+
 			# else compile failed, but user chose to keep running...
 		else:
 			if flags & SCRIPTTEXT_FORCEEXECUTION:
@@ -364,7 +364,7 @@ def DllRegisterServer():
 
 def Register(klass=PyScript):
 	import sys
-	ret = win32com.server.register.UseCommandLine(klass, 
+	ret = win32com.server.register.UseCommandLine(klass,
 	                     finalize_register=DllRegisterServer)
 	return ret
 

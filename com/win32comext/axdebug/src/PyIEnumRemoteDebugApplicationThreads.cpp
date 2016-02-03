@@ -162,7 +162,7 @@ PyComTypeObject PyIEnumRemoteDebugApplicationThreads::type("PyIEnumRemoteDebugAp
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Next( 
+STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IRemoteDebugApplicationThread __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -211,7 +211,7 @@ STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumRemoteDebugApplicationThreads);
 }
 
-STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Skip( 
+STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -224,7 +224,7 @@ STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Clone( 
+STDMETHODIMP PyGEnumRemoteDebugApplicationThreads::Clone(
             /* [out] */ IEnumRemoteDebugApplicationThreads __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

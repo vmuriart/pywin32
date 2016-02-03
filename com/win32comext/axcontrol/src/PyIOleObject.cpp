@@ -399,7 +399,7 @@ PyObject *PyIOleObject::SetExtent(PyObject *self, PyObject *args)
 	if ( pIOO == NULL )
 		return NULL;
 	// @pyparm int|dwDrawAspect||Description for dwDrawAspect
-	// @pyparm (int, int)|size||Size limit for the object. 
+	// @pyparm (int, int)|size||Size limit for the object.
 	DWORD dwDrawAspect;
 	SIZEL sizel;
 	if ( !PyArg_ParseTuple(args, "i(ll):SetExtent", &dwDrawAspect, &sizel.cx, &sizel.cy) )
@@ -424,7 +424,7 @@ PyObject *PyIOleObject::GetExtent(PyObject *self, PyObject *args)
 	if ( pIOO == NULL )
 		return NULL;
 	// @pyparm int|dwDrawAspect||Description for dwDrawAspect
-	// @pyparm (int, int)|size||Size limit for the object. 
+	// @pyparm (int, int)|size||Size limit for the object.
 	DWORD dwDrawAspect;
 	if ( !PyArg_ParseTuple(args, "i:GetExtent", &dwDrawAspect) )
 		return NULL;

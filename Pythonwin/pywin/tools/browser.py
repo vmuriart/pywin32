@@ -172,7 +172,7 @@ class HLICode(HLIPythonObject):
 		ret.append( MakeHLI( self.myobject.co_filename, "Filename (co_filename)" ))
 		ret.append( MakeHLI( self.myobject.co_argcount, "Number of args (co_argcount)"))
 		ret.append( MakeHLI( self.myobject.co_varnames, "Param names (co_varnames)"))
-		
+
 		return ret
 
 class HLIInstance(HLIPythonObject):
@@ -263,7 +263,7 @@ class HLIString(HLIPythonObject):
     def IsExpandable(self):
         return 0
 
-TypeMap = { type : HLIClass, 
+TypeMap = { type : HLIClass,
             types.FunctionType: HLIFunction,
             tuple: HLITuple,
             dict: HLIDict,
@@ -316,7 +316,7 @@ class DialogShowObject(dialog.Dialog):
 			tb = None
 		strval = re.sub('\n','\r\n', strval)
 		self.edit.ReplaceSel(strval)
-		
+
 def ShowObject(object, title):
 	dlg = DialogShowObject(object, title)
 	dlg.DoModal()
@@ -373,7 +373,7 @@ def Browse (ob=__main__):
     root = MakeHLI (ob, 'root')
     if not root.IsExpandable():
         raise TypeError("Browse() argument must have __dict__ attribute, or be a Browser supported type")
-        
+
     dlg = dynamic_browser (root)
     dlg.CreateWindow()
 
@@ -431,6 +431,6 @@ def BrowseMDI(ob=__main__):
 	root = MakeHLI(ob, repr(ob))
 	if not root.IsExpandable():
 		raise TypeError("Browse() argument must have __dict__ attribute, or be a Browser supported type")
-		
+
 	template.OpenObject(root)
 

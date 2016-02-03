@@ -155,7 +155,7 @@ PyObject *PyIShellFolder::BindToStorage(PyObject *self, PyObject *args)
 		return NULL;
 	// @pyparm <o PyIDL>|pidl||Relative pidl for the folder item, must be a single item id
 	// @pyparm <o PyIBindCtx>|pbc||Bind context that affects how binding is performed, can be None
-	// @pyparm <o PyIID>|riid||IID of the desired interface, one of IID_IStream, IID_IStorage, IID_IPropertySetStorage 
+	// @pyparm <o PyIID>|riid||IID of the desired interface, one of IID_IStream, IID_IStorage, IID_IPropertySetStorage
 	PyObject *obpidl;
 	PyObject *obpbcReserved;
 	PyObject *obriid;
@@ -194,7 +194,7 @@ PyObject *PyIShellFolder::CompareIDs(PyObject *self, PyObject *args)
 		return NULL;
 	// @pyparm int|lparam||Lower 16 bits specify folder-dependent sorting rules, 0 means to sort by display name.
 	// System folder view uses these as a column number.<nl>
-	// Upper sixteen bits is used for flags SHCIDS_ALLFIELDS or SHCIDS_CANONICALONLY 
+	// Upper sixteen bits is used for flags SHCIDS_ALLFIELDS or SHCIDS_CANONICALONLY
 	// @pyparm <o PyIDL>|pidl1||Item id list that idenfies an object relative to the folder
 	// @pyparm <o PyIDL>|pidl2||Item id list that idenfies an object relative to the folder
 	PyObject *obpidl1;
@@ -222,10 +222,10 @@ PyObject *PyIShellFolder::CompareIDs(PyObject *self, PyObject *args)
 			if ((short)HRESULT_CODE(hr) < 0)
 				/* pidl1 comes first */
 				ret=PyInt_FromLong(-1);
-			else if ((short)HRESULT_CODE(hr) > 0) 
+			else if ((short)HRESULT_CODE(hr) > 0)
 				/* pidl2 comes first */
 				ret=PyInt_FromLong(1);
-			else 
+			else
 			/* the two pidls are equal */
 				ret=PyInt_FromLong(0);
 		}
@@ -304,7 +304,7 @@ PyObject *PyIShellFolder::GetUIObjectOf(PyObject *self, PyObject *args)
 		return NULL;
 	// @pyparm <o PyHANDLE>|hwndOwner||Specifies a window in which to display any required dialogs or errors, can be 0
 	// @pyparm (<o PyIDL>,...)|pidl||A sequence of single-level pidls identifying items in the folder
-	// @pyparm <o PyIID>|riid||The interface to create, one of IID_IContextMenu, IID_IContextMenu2, IID_IDataObject, IID_IDropTarget, IID_IExtractIcon, IID_IQueryInfo 
+	// @pyparm <o PyIID>|riid||The interface to create, one of IID_IContextMenu, IID_IContextMenu2, IID_IDataObject, IID_IDropTarget, IID_IExtractIcon, IID_IQueryInfo
 	// @pyparm int|Reserved|0|Reserved, use 0 if passed in
 	// @pyparm <o PyIID>|iidout|riid|The interface to return.  Can be used in the case where there is not a
 	//  python wrapper for the desired interface.  You must make certain that the interface identified by riid
@@ -466,7 +466,7 @@ STDMETHODIMP PyGShellFolder::ParseDisplayName(
 	ULONG chEaten, dwAttributes;
 	BOOL bPythonIsHappy = TRUE;
 	if (!PyTuple_Check(result)) {
-		PyErr_Format(PyExc_TypeError, 
+		PyErr_Format(PyExc_TypeError,
 				"ParseDisplayName must return a tuple of (int, pidl, attr) - got '%s'",
 				result->ob_type->tp_name);
 		bPythonIsHappy = FALSE;

@@ -30,7 +30,7 @@ def MakeProgressDlgTemplate(caption, staticText = ""):
 	   ]
 
     s = win32con.WS_TABSTOP | cs
-    
+
     dlg.append([130, staticText, 1000, (7, 7, w-7, h-32), cs | win32con.SS_LEFT])
 
 #    dlg.append([128,
@@ -48,7 +48,7 @@ class CStatusProgressDialog(dialog.Dialog):
 		self.maxticks = maxticks
 		self.tickincr = tickincr
 		self.pbar = None
-		
+
 	def OnInitDialog(self):
 		rc = dialog.Dialog.OnInitDialog(self)
 		self.static = self.GetDlgItem(1000)
@@ -62,7 +62,7 @@ class CStatusProgressDialog(dialog.Dialog):
 		self.progress = 0
 		self.pincr = 5
 		return rc
-	
+
 	def Close(self):
 		self.EndDialog(0)
 

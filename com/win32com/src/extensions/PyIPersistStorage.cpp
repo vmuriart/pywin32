@@ -36,8 +36,8 @@ PyObject *PyIPersistStorage::IsDirty(PyObject *self, PyObject *args)
 	if ( FAILED(hr) )
 		return PyCom_BuildPyException(hr, pIPS, IID_IPersistStorage);
 	return PyInt_FromLong(hr);
-	// @rvalue S_OK (ie, 0)|The object has changed since it was last saved. 
-	// @rvalue S_FALSE (ie, 1)|The object has not changed since the last save. 
+	// @rvalue S_OK (ie, 0)|The object has changed since it was last saved.
+	// @rvalue S_FALSE (ie, 1)|The object has not changed since the last save.
 }
 // @pymethod |PyIPersistStorage|InitNew|Initializes a new object, providing a storage object to be used for the object.
 PyObject *PyIPersistStorage::InitNew(PyObject *self, PyObject *args)
@@ -94,7 +94,7 @@ PyObject *PyIPersistStorage::Save(PyObject *self, PyObject *args)
 	// @pyparm <o PyIStorage>|PyIStorage||Storage for the object
 	// @pyparm fSameAsLoad|int||Indicates whether the specified storage object is the current one.<nl>
 	// This parameter is set to FALSE when performing a Save As or Save A Copy To operation or when performing a full save. In the latter case, this method saves to a temporary file, deletes the original file, and renames the temporary file.<nl>
-	// This parameter is set to TRUE to perform a full save in a low-memory situation or to perform a fast incremental save in which only the dirty components are saved. 
+	// This parameter is set to TRUE to perform a full save in a low-memory situation or to perform a fast incremental save in which only the dirty components are saved.
 	PyObject * obIStorage;
 	BOOL fSameAsLoad;
 	if ( !PyArg_ParseTuple(args, "Oi:Save", &obIStorage, &fSameAsLoad) )

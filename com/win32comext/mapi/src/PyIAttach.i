@@ -31,6 +31,6 @@ PyIAttach::~PyIAttach()
 %}
 
 
-// GetLastError|Returns a MAPIERROR structure containing information about the previous error on the table. 
+// GetLastError|Returns a MAPIERROR structure containing information about the previous error on the table.
 HRESULT GetLastError(HRESULT hr, unsigned long flags, MAPIERROR **OUTPUT);
 

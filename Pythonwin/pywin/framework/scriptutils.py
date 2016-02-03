@@ -61,7 +61,7 @@ class DlgRunScript(dialog.Dialog):
 
 def GetDebugger():
 	"""Get the default Python debugger.  Returns the debugger, or None.
-	
+
 	It is assumed the debugger has a standard "pdb" defined interface.
 	Currently always returns the 'pywin.debugger' debugger, or None
 	(pdb is _not_ returned as it is not effective in this GUI environment)
@@ -110,7 +110,7 @@ def GetPackageModuleName(fileName):
 			# Not found - look a level higher
 		else:
 			newPathReturn = origPath
-		
+
 	return fname, newPathReturn
 
 def GetActiveView():
@@ -150,7 +150,7 @@ def GetActiveEditorDocument():
 
 def GetActiveFileName(bAutoSave = 1):
 	"""Gets the file name for the active frame, saving it if necessary.
-	
+
 	Returns None if it cant be found, or raises KeyboardInterrupt.
 	"""
 	pathName = None
@@ -169,7 +169,7 @@ def GetActiveFileName(bAutoSave = 1):
 				try:
 					doc.OnSaveDocument(pathName)
 					pathName = doc.GetPathName()
-					
+
 					# clear the linecache buffer
 					linecache.clearcache()
 
@@ -388,7 +388,7 @@ def ImportFile():
 			return 0
 
 		pathName = dlg.GetPathName()
-		
+
 	# If already imported, dont look for package
 	path, modName = os.path.split(pathName)
 	modName, modExt = os.path.splitext(modName)
@@ -417,7 +417,7 @@ def ImportFile():
 	else:
 		what = "import"
 		bNeedReload = 0
-	
+
 	win32ui.SetStatusText(what.capitalize()+'ing module...',1)
 	win32ui.DoWaitCursor(1)
 #	win32ui.GetMainFrame().BeginWaitCursor()
@@ -455,7 +455,7 @@ def CheckFile():
 	except KeyboardInterrupt:
 		return
 
-	what = "check"	
+	what = "check"
 	win32ui.SetStatusText(what.capitalize()+'ing module...',1)
 	win32ui.DoWaitCursor(1)
 	try:
@@ -484,7 +484,7 @@ def RunTabNanny(filename):
 	if tabnanny is None:
 		win32ui.MessageBox("The TabNanny is not around, so the children can run amok!" )
 		return
-		
+
 	# Capture the tab-nanny output
 	newout = io.StringIO()
 	old_out = sys.stderr, sys.stdout
@@ -559,7 +559,7 @@ def _HandlePythonFailure(what, syntaxErrorPathName = None):
 		except (TypeError, ValueError):
 			msg = str(details)
 		win32ui.SetStatusText('Failed to ' + what + ' - syntax error - %s' % msg)
-	else:	
+	else:
 		traceback.print_exc()
 		win32ui.SetStatusText('Failed to ' + what + ' - ' + str(details) )
 	tb = None # Clean up a cycle.
@@ -594,7 +594,7 @@ def FindTabNanny():
 	finally:
 		# remove the tab-nanny from the path
 		del sys.path[0]
-		
+
 def LocatePythonFile( fileName, bBrowseIfDir = 1 ):
 	" Given a file name, return a fully qualified file name, or None "
 	# first look for the exact file as specified

@@ -157,8 +157,8 @@ STDMETHODIMP PyGSecurityInformation::SetSecurity(
 // @tupleitem 1|int|mask|Bitmask of permissions
 // @tupleitem 2|<o PyUNICODE>|Name|Description to be displayed for the permissions
 // @tupleitem 3|int|Flags|Indicates which pages will display the permissions, and how they may be inherited. Combination of
-//  SI_ACCESS_SPECIFIC, SI_ACCESS_GENERAL, SI_ACCESS_CONTAINER, SI_ACCESS_PROPERTY, 
-//  CONTAINER_INHERIT_ACE, INHERIT_ONLY_ACE, OBJECT_INHERIT_ACE 
+//  SI_ACCESS_SPECIFIC, SI_ACCESS_GENERAL, SI_ACCESS_CONTAINER, SI_ACCESS_PROPERTY,
+//  CONTAINER_INHERIT_ACE, INHERIT_ONLY_ACE, OBJECT_INHERIT_ACE
 
 // @pymethod ((<o SI_ACCESS>,...)  int)|PyGSecurityInformation|GetAccessRights|Retrieves permission that can be set
 // @pyparm <o PyIID>|ObjectType||GUID representing type of object, may be None
@@ -167,7 +167,7 @@ STDMETHODIMP PyGSecurityInformation::SetSecurity(
 //  and a zero-based index indicating which of them is the default
 STDMETHODIMP PyGSecurityInformation::GetAccessRights(
 	const GUID* pguidObjectType, // in
-	DWORD dwFlags, // in - SI_ADVANCED, SI_EDIT_AUDITS, SI_EDIT_PROPERTIES 
+	DWORD dwFlags, // in - SI_ADVANCED, SI_EDIT_AUDITS, SI_EDIT_PROPERTIES
 	PSI_ACCESS * ppAccess, // out
 	ULONG* pcAccesses, // out
 	ULONG* piDefaultAccess) // out
@@ -237,7 +237,7 @@ STDMETHODIMP PyGSecurityInformation::GetAccessRights(
 				else
 					if (!PyWinObject_AsIID(si_access_guid, (GUID *)AccessRights[tuple_ind].pguid))
 						hr=MAKE_PYCOM_GATEWAY_FAILURE_CODE("GetAccessRights");
-				}			
+				}
 		Py_XDECREF(tpAccess);
 		if (FAILED(hr))
 			break;
@@ -283,7 +283,7 @@ STDMETHODIMP PyGSecurityInformation::MapGeneric(
 		if (!FAILED(hr)){
 			*pMask=PyInt_AsUnsignedLongMask(result);
 			if ((*pMask==-1) && PyErr_Occurred())
-				hr=MAKE_PYCOM_GATEWAY_FAILURE_CODE("MapGeneric");	
+				hr=MAKE_PYCOM_GATEWAY_FAILURE_CODE("MapGeneric");
 			else
 				hr=S_OK;
 			}
@@ -341,7 +341,7 @@ STDMETHODIMP PyGSecurityInformation::GetInheritTypes(
 				else
 					if (!PyWinObject_AsIID(obguid, (GUID *)InheritTypes[tuple_ind].pguid))
 						hr=MAKE_PYCOM_GATEWAY_FAILURE_CODE("GetInheritTypes");
-				}			
+				}
 		Py_XDECREF(tpInheritType);
 		if (FAILED(hr))
 			break;

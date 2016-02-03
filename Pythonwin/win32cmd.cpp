@@ -19,11 +19,11 @@ CCmdTarget *GetCCmdTargetPtr(PyObject *self)
 //
 //////////////////////////////////////////////////////////////////////
 // @pymethod |PyCCmdTarget|BeginWaitCursor|
-// Displays the cursor as an hourglass.  This can be used when you expect a 
-// command to take a noticeable time to execute (eg, when a document 
+// Displays the cursor as an hourglass.  This can be used when you expect a
+// command to take a noticeable time to execute (eg, when a document
 // loads or saves itself to a file.).
-// <nl>The actions of BeginWaitCursor are not always effective outside of a single 
-// message handler as other actions, such as OnSetCursor handling, could change 
+// <nl>The actions of BeginWaitCursor are not always effective outside of a single
+// message handler as other actions, such as OnSetCursor handling, could change
 // the cursor.
 // <nl>Call EndWaitCursor to restore the previous cursor.
 static PyObject *
@@ -89,7 +89,7 @@ PyCCmdTarget_hook_command(PyObject *self, PyObject *args)
 	// <nl>If the handler returns TRUE, then the command will be passed on to the
 	// default handler, otherwise the message will be consumed.
 	// <nl>This method is best suited to handling messages from user interface
-	// elements, such as menus, toolbars, etc.  To handle notification messages from a control, 
+	// elements, such as menus, toolbars, etc.  To handle notification messages from a control,
 	// you should use <om PyCCmdTarget.HookNotify>
 
 	// @pyparm object|obHandler||The handler for the command message.  This must be a callable object.
@@ -102,14 +102,14 @@ PyCCmdTarget_hook_command(PyObject *self, PyObject *args)
 static PyObject *
 PyCCmdTarget_hook_command_update(PyObject *self, PyObject *args)
 {
-	// @comm The handler object passed will be called as 
+	// @comm The handler object passed will be called as
 	// the application updates user interface elements
 	// with the specified ID.
 	// See <om PyCCmdTarget.HookCommand> for a description
 	// of the rules used to determine command routing and updating.
 
 	// @pyparm object|obHandler||The handler for the command message.  This must be a callable object.
-	// @pyparm int|id||The ID of the command to be handled. 
+	// @pyparm int|id||The ID of the command to be handled.
 	PyCCmdTarget *s = (PyCCmdTarget *)self;
 	// @rdesc The return value is the previous handler, or None.
 	return add_hook_list(s, args,&s->pCommandUpdateHookList);
@@ -129,7 +129,7 @@ PyCCmdTarget_hook_notify(PyObject *self, PyObject *args)
 	// * A tuple describing extra notification params, or an integer containing the address of the first byte of the extended information.<nl>
 	// If the handler returns TRUE, then the command will be passed on to the
 	// default handler, otherwise the message will be consumed.
-	// 
+	//
 	// Certain notification codes are recognised internally, and these are converted to a Python tuple.
 	// If the extra information is not recognised, the address is passed.  These addresses could be
 	// extracted using <om win32ui.GetBytes> and the struct module, or using
@@ -156,12 +156,12 @@ static struct PyMethodDef PyCCmdTarget_methods[] = {
 	{NULL, NULL }
 };
 
-ui_type_CObject PyCCmdTarget::type("PyCCmdTarget", 
-								   &ui_assoc_CObject::type, 
-								   RUNTIME_CLASS(CCmdTarget), 
-								   sizeof(PyCCmdTarget), 
-								   PYOBJ_OFFSET(PyCCmdTarget), 
-								   PyCCmdTarget_methods, 
+ui_type_CObject PyCCmdTarget::type("PyCCmdTarget",
+								   &ui_assoc_CObject::type,
+								   RUNTIME_CLASS(CCmdTarget),
+								   sizeof(PyCCmdTarget),
+								   PYOBJ_OFFSET(PyCCmdTarget),
+								   PyCCmdTarget_methods,
 								   NULL);
 PyCCmdTarget::PyCCmdTarget()
 {

@@ -74,32 +74,32 @@ TOKEN_ELEVATION_TYPE = Enum(
     'TokenElevationTypeLimited')
 
 POLICY_AUDIT_EVENT_TYPE = Enum(
-    'AuditCategorySystem', 
-    'AuditCategoryLogon', 
-    'AuditCategoryObjectAccess', 
-    'AuditCategoryPrivilegeUse', 
-    'AuditCategoryDetailedTracking', 
-    'AuditCategoryPolicyChange', 
-    'AuditCategoryAccountManagement', 
-    'AuditCategoryDirectoryServiceAccess', 
+    'AuditCategorySystem',
+    'AuditCategoryLogon',
+    'AuditCategoryObjectAccess',
+    'AuditCategoryPrivilegeUse',
+    'AuditCategoryDetailedTracking',
+    'AuditCategoryPolicyChange',
+    'AuditCategoryAccountManagement',
+    'AuditCategoryDirectoryServiceAccess',
     'AuditCategoryAccountLogon')
 
 POLICY_INFORMATION_CLASS = Enum(
-    'PolicyAuditLogInformation', 
-    'PolicyAuditEventsInformation', 
+    'PolicyAuditLogInformation',
+    'PolicyAuditEventsInformation',
     'PolicyPrimaryDomainInformation',
-    'PolicyPdAccountInformation', 
-    'PolicyAccountDomainInformation', 
-    'PolicyLsaServerRoleInformation', 
-    'PolicyReplicaSourceInformation', 
-    'PolicyDefaultQuotaInformation', 
-    'PolicyModificationInformation', 
-    'PolicyAuditFullSetInformation', 
-    'PolicyAuditFullQueryInformation', 
+    'PolicyPdAccountInformation',
+    'PolicyAccountDomainInformation',
+    'PolicyLsaServerRoleInformation',
+    'PolicyReplicaSourceInformation',
+    'PolicyDefaultQuotaInformation',
+    'PolicyModificationInformation',
+    'PolicyAuditFullSetInformation',
+    'PolicyAuditFullQueryInformation',
     'PolicyDnsDomainInformation')
 
 POLICY_LSA_SERVER_ROLE = Enum(
-    'PolicyServerRoleBackup', 
+    'PolicyServerRoleBackup',
     'PolicyServerRolePrimary')
 
 ## access modes for opening a policy handle - this is not a real enum
@@ -174,12 +174,12 @@ ACE_FLAGS = Enum(
 
 # used in SetEntriesInAcl - very similar to ACE_TYPE
 ACCESS_MODE = Enum(
-    'NOT_USED_ACCESS', 
-    'GRANT_ACCESS', 
-    'SET_ACCESS', 
-    'DENY_ACCESS', 
-    'REVOKE_ACCESS', 
-    'SET_AUDIT_SUCCESS', 
+    'NOT_USED_ACCESS',
+    'GRANT_ACCESS',
+    'SET_ACCESS',
+    'DENY_ACCESS',
+    'REVOKE_ACCESS',
+    'SET_AUDIT_SUCCESS',
     'SET_AUDIT_FAILURE')
 
 # Bit flags in PSECURITY_DESCRIPTOR->Control - not a real enum
@@ -188,24 +188,24 @@ SECURITY_DESCRIPTOR_CONTROL_FLAGS = Enum(
     'SE_SACL_AUTO_INHERITED',        ## win2k and up
     'SE_DACL_PROTECTED',             ## win2k and up
     'SE_SACL_PROTECTED',             ## win2k and up
-    'SE_DACL_DEFAULTED',       
-    'SE_DACL_PRESENT',       
-    'SE_GROUP_DEFAULTED',       
-    'SE_OWNER_DEFAULTED',       
-    'SE_SACL_PRESENT',       
-    'SE_SELF_RELATIVE',       
+    'SE_DACL_DEFAULTED',
+    'SE_DACL_PRESENT',
+    'SE_GROUP_DEFAULTED',
+    'SE_OWNER_DEFAULTED',
+    'SE_SACL_PRESENT',
+    'SE_SELF_RELATIVE',
     'SE_SACL_DEFAULTED')
 
 # types of SID
 SID_NAME_USE = Enum(
     'SidTypeUser',
-    'SidTypeGroup', 
-    'SidTypeDomain', 
-    'SidTypeAlias', 
-    'SidTypeWellKnownGroup', 
-    'SidTypeDeletedAccount', 
-    'SidTypeInvalid', 
-    'SidTypeUnknown', 
+    'SidTypeGroup',
+    'SidTypeDomain',
+    'SidTypeAlias',
+    'SidTypeWellKnownGroup',
+    'SidTypeDeletedAccount',
+    'SidTypeInvalid',
+    'SidTypeUnknown',
     'SidTypeComputer',
     'SidTypeLabel')
 
@@ -223,7 +223,7 @@ TOKEN_ACCESS_PRIVILEGES = Enum(
     'TOKEN_QUERY_SOURCE',
     'TOKEN_READ',
     'TOKEN_WRITE')
- 
+
 SECURITY_IMPERSONATION_LEVEL = Enum(
     'SecurityAnonymous',
     'SecurityIdentification',
@@ -258,21 +258,21 @@ TRUSTED_INFORMATION_CLASS = Enum(
     'TrustedDomainFullInformation2Internal')
 
 TRUSTEE_FORM = Enum(
-    'TRUSTEE_IS_SID', 
-    'TRUSTEE_IS_NAME', 
-    'TRUSTEE_BAD_FORM', 
-    'TRUSTEE_IS_OBJECTS_AND_SID', 
+    'TRUSTEE_IS_SID',
+    'TRUSTEE_IS_NAME',
+    'TRUSTEE_BAD_FORM',
+    'TRUSTEE_IS_OBJECTS_AND_SID',
     'TRUSTEE_IS_OBJECTS_AND_NAME')
 
 TRUSTEE_TYPE = Enum(
-    'TRUSTEE_IS_UNKNOWN', 
-    'TRUSTEE_IS_USER', 
-    'TRUSTEE_IS_GROUP', 
-    'TRUSTEE_IS_DOMAIN', 
-    'TRUSTEE_IS_ALIAS', 
-    'TRUSTEE_IS_WELL_KNOWN_GROUP', 
-    'TRUSTEE_IS_DELETED', 
-    'TRUSTEE_IS_INVALID', 
+    'TRUSTEE_IS_UNKNOWN',
+    'TRUSTEE_IS_USER',
+    'TRUSTEE_IS_GROUP',
+    'TRUSTEE_IS_DOMAIN',
+    'TRUSTEE_IS_ALIAS',
+    'TRUSTEE_IS_WELL_KNOWN_GROUP',
+    'TRUSTEE_IS_DELETED',
+    'TRUSTEE_IS_INVALID',
     'TRUSTEE_IS_COMPUTER')
 
 ## SE_OBJECT_TYPE - securable objects

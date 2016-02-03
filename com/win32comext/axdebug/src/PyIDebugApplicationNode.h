@@ -34,9 +34,9 @@ protected:
 	PYGATEWAY_MAKE_SUPPORT2(PyGDebugApplicationNode, IDebugApplicationNode, IID_IDebugApplicationNode,PyGDebugDocumentProvider)
 
 	// IDebugDocumentInfo
-	STDMETHOD(GetName)(  
-		DOCUMENTNAMETYPE dnt,  
-		BSTR *pbstrName);  
+	STDMETHOD(GetName)(
+		DOCUMENTNAMETYPE dnt,
+		BSTR *pbstrName);
 	STDMETHOD(GetDocumentClassId)(
 		CLSID *pclsidDocument);
 

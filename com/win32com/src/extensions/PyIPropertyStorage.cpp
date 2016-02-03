@@ -321,7 +321,7 @@ PyObject *PyObject_FromPROPVARIANT( PROPVARIANT *pVar )
 /*
 // Want to get VT_CF and VT_BLOB working with a test case first!
 		case VT_CF: { // special "clipboard format"
-			// cbSize is the size of the buffer pointed to 
+			// cbSize is the size of the buffer pointed to
 			// by pClipData, plus sizeof(ulClipFmt)
 			// XXX - in that case, shouldn't we pass
 			// pClipData + sizeof(DWORD) to Py_BuildValue??
@@ -407,7 +407,7 @@ BOOL PyObject_AsPROPVARIANT(PyObject *ob, PROPVARIANT *pVar)
 }
 
 void PyObject_FreePROPVARIANTs(PROPVARIANT *pVars, ULONG cVars)
-{	
+{
 	if (pVars){
 		for (ULONG i=0;i<cVars;i++)
 			PropVariantClear(pVars+i);
@@ -564,7 +564,7 @@ PyObject *PyIPropertyStorage::WriteMultiple(PyObject *self, PyObject *args)
 	// @pyparm int|propidNameFirst|2|Minimum property id to be assigned to new properties specified by name
 	if ( !PyArg_ParseTuple(args, "OO|l:WriteMultiple", &obProps, &obValues, &minId))
 		return NULL;
-	
+
 	if (!PyWinObject_AsPROPSPECs( obProps, &pProps, &cProps))
 		goto cleanup;
 	if (!PyObject_AsPROPVARIANTs( obValues, &pVals, &cVals ))
@@ -1146,7 +1146,7 @@ STDMETHODIMP PyGPropertyStorage::SetTimes(
 	else{
 		Py_INCREF(Py_None);
 		obmtime = Py_None;
-		}	
+		}
 	hr =InvokeViaPolicy("SetTimes", NULL, "OOO", obctime, obatime, obmtime);
 	}
 	return hr;
@@ -1173,7 +1173,7 @@ STDMETHODIMP PyGPropertyStorage::Stat(
 		return hr;
 	if (!PyCom_PyObjectAsSTATPROPSETSTG(result, pstatpsstg))
 		hr = MAKE_PYCOM_GATEWAY_FAILURE_CODE("Stat");
-		
+
 	Py_DECREF(result);
 	return hr;
 }

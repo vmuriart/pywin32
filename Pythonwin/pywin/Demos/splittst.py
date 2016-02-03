@@ -5,7 +5,7 @@ from pywin.mfc import window, docview
 import commctrl
 
 # derive from CMDIChild.  This does much work for us.
-		
+
 class SplitterFrame(window.MDIChildWnd):
 	def __init__(self):
 		# call base CreateFrame
@@ -60,12 +60,12 @@ class SampleTemplate(docview.DocTemplate):
 #		print "doc is ", doc, doc._obj_
 		self._obj_.InitialUpdateFrame(frame, doc, makeVisible) # call default handler.
 		frame.InitialUpdateFrame(doc, makeVisible)
-		
+
 def demo():
 	template = SampleTemplate()
 	doc=template.OpenDocumentFile(None)
 	doc.SetTitle("Splitter Demo")
-	
+
 if __name__=='__main__':
 	import demoutils
 	if demoutils.NeedGoodGUI():

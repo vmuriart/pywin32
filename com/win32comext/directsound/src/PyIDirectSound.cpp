@@ -33,8 +33,8 @@ PyObject *PyIDirectSound::Initialize(PyObject *self, PyObject *args)
 	IDirectSound *pIDS = GetI(self);
 	if ( pIDS == NULL )
 		return NULL;
-	if ( !PyArg_ParseTuple(args, "|O:Initialize", 
-		&obGUID) )  // @pyparm <o PyIID>|guid||Globally unique identifier (GUID) specifying the sound driver to which this DirectSound object binds. Pass None to select the primary sound driver. 
+	if ( !PyArg_ParseTuple(args, "|O:Initialize",
+		&obGUID) )  // @pyparm <o PyIID>|guid||Globally unique identifier (GUID) specifying the sound driver to which this DirectSound object binds. Pass None to select the primary sound driver.
 
 		return NULL;
 
@@ -57,7 +57,7 @@ PyObject *PyIDirectSound::Initialize(PyObject *self, PyObject *args)
 		PyWin_SetAPIError("Initialize", hr);
 		return NULL;
 	}
-	
+
 	Py_INCREF(Py_None);
 	return Py_None;
 
@@ -73,14 +73,14 @@ PyObject *PyIDirectSound::SetCooperativeLevel(PyObject *self, PyObject *args)
 	IDirectSound *pIDS = GetI(self);
 	if ( pIDS == NULL )
 		return NULL;
-	if ( !PyArg_ParseTuple(args, "Oi:SetCooperativeLevel", 
+	if ( !PyArg_ParseTuple(args, "Oi:SetCooperativeLevel",
 		&obHWND, // @pyparm int|hwnd||Window handle to the application or None.
 		&level) ) // @pyparm int|level||Requested priority level. Specify one of the following values:
 		// @flagh Level|Description
 		// @flag DSSCL_NORMAL|Sets the application to a fully cooperative status. Most applications should use this level, because it has the smoothest multitasking and resource-sharing behavior.
-		// @flag DSSCL_PRIORITY|Sets the application to the priority level. Applications with this cooperative level can call the DirectSoundBuffer.setFormat and DirectSound.compact methods. 
-		// @flag DSSCL_EXCLUSIVE|Sets the application to the exclusive level. When it has the input focus, the application will be the only one audible (sounds from applications with the DSBCAPS_GLOBALFOCUS flag set will be muted). With this level, it also has all the privileges of the DSSCL_PRIORITY level. DirectSound will restore the hardware format, as specified by the most recent call to the DirectSoundBuffer.setFormat method, once the application gains the input focus. (Note that DirectSound will always restore the wave format, no matter what priority level is set.) 
-		// @flag DSSCL_WRITEPRIMARY|This is the highest priority level. The application has write access to the primary sound buffers. No secondary sound buffers in any application can be played. 
+		// @flag DSSCL_PRIORITY|Sets the application to the priority level. Applications with this cooperative level can call the DirectSoundBuffer.setFormat and DirectSound.compact methods.
+		// @flag DSSCL_EXCLUSIVE|Sets the application to the exclusive level. When it has the input focus, the application will be the only one audible (sounds from applications with the DSBCAPS_GLOBALFOCUS flag set will be muted). With this level, it also has all the privileges of the DSSCL_PRIORITY level. DirectSound will restore the hardware format, as specified by the most recent call to the DirectSoundBuffer.setFormat method, once the application gains the input focus. (Note that DirectSound will always restore the wave format, no matter what priority level is set.)
+		// @flag DSSCL_WRITEPRIMARY|This is the highest priority level. The application has write access to the primary sound buffers. No secondary sound buffers in any application can be played.
 
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obHWND, (HANDLE *)&hwnd))
@@ -103,7 +103,7 @@ PyObject *PyIDirectSound::SetCooperativeLevel(PyObject *self, PyObject *args)
 		PyWin_SetAPIError("SetCooperativeLevel", hr);
 		return NULL;
 	}
-	
+
 	Py_INCREF(Py_None);
 	return Py_None;
 
@@ -119,7 +119,7 @@ PyObject *PyIDirectSound::CreateSoundBuffer(PyObject *self, PyObject *args)
 	IDirectSound *pIDS = GetI(self);
 	if ( pIDS == NULL )
 		return NULL;
-	if ( !PyArg_ParseTuple(args, "O|O:CreateSoundBuffer", 
+	if ( !PyArg_ParseTuple(args, "O|O:CreateSoundBuffer",
 		&obDSBD,  // @pyparm <o PyDSCBUFFERDESC>|lpDSCBufferDesc||a DSBUFFERDESC structure containing values for the sound buffer being created.
 		&obUnk) ) // @pyparm <o PyIUknown>|unk|None|The IUnknown for COM aggregation.
 		return NULL;
@@ -132,7 +132,7 @@ PyObject *PyIDirectSound::CreateSoundBuffer(PyObject *self, PyObject *args)
 	if (obUnk && !PyCom_InterfaceFromPyInstanceOrObject(obUnk, IID_IUnknown, (void **)&pUnkIn, TRUE)) {
 		return NULL;
 	}
-	
+
 
 	DSBUFFERDESC *pdsbd = &((PyDSBUFFERDESC*)obDSBD)->m_dsbd;
 	HRESULT hr;
@@ -235,7 +235,7 @@ PyObject *PyIDirectSound::SetSpeakerConfig(PyObject *self, PyObject *args)
 	IDirectSound *pIDS = GetI(self);
 	if ( pIDS == NULL )
 		return NULL;
-	if ( !PyArg_ParseTuple(args, "i:SetSpeakerConfig", 
+	if ( !PyArg_ParseTuple(args, "i:SetSpeakerConfig",
 		&config) ) // @pyparm int|dwSpeakerConfig||Speaker configuration of the specified DirectSound object. See the DSSPEAKER constants.
 		return NULL;
 

@@ -23,7 +23,7 @@ BOOL PyIBase::is_object(PyComTypeObject *which)
 PyIBase::getattro(PyObject *self, PyObject *name)
 {
 	// Using PyObject_GenericGetAttr allows some special type magic
-	// (ie, 
+	// (ie,
 	return PyObject_GenericGetAttr(self, name);
 }
 

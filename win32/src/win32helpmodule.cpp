@@ -43,7 +43,7 @@ static PyObject *PyWinHelp(PyObject *self, PyObject *args)
 	// @pyparm int|hwnd||The handle of the window requesting help.
 	// @pyparm string|hlpFile||The name of the help file.
 	// @pyparm int|cmd||The type of help.  See the api for full details.
-	// @pyparm None/int/string|data|None|Additional data specific to the help call. Can be a buffer or pointer-sized int.      
+	// @pyparm None/int/string|data|None|Additional data specific to the help call. Can be a buffer or pointer-sized int.
 	HWND hwnd;
 	TCHAR *hlpFile=NULL;
 	PyObject *obhlpFile;
@@ -76,9 +76,9 @@ static PyObject *PyWinHelp(PyObject *self, PyObject *args)
 		return ReturnAPIError("WinHelp");
 	Py_INCREF(Py_None);
 	return Py_None;
-  
+
 	// @pyseeapi WinHelp
-	// @rdesc The method raises an exception if an error occurs.  
+	// @rdesc The method raises an exception if an error occurs.
 }
 
 
@@ -183,9 +183,9 @@ PyTypeObject PyHH_AKLINKType = {
 
 /*static*/ struct PyMemberDef PyHH_AKLINK::members[] = {
 
-  // BOOL       fIndexOnFail; 
+  // BOOL       fIndexOnFail;
   // @prop int|indexOnFail|Specifies whether to display the keyword in the
-  //Index tab of the HTML Help Viewer if the lookup fails. The value of 
+  //Index tab of the HTML Help Viewer if the lookup fails. The value of
   //window specifies the Help Viewer.
   {"indexOnFail", T_INT,  OFF(m_HH_AKLINK.fIndexOnFail)},
 
@@ -196,19 +196,19 @@ PyTypeObject PyHH_AKLINKType = {
 
   // LPCTSTR       pszKeywords;
   // @prop string|keywords|Specifies one or more ALink names or KLink
-  //keywords to look up. Multiple entries are delimited by a semicolon. 
+  //keywords to look up. Multiple entries are delimited by a semicolon.
   {"keywords", T_OBJECT,  OFF(m_pszKeywords)},
 
   // LPCTSTR       pszUrl;
   // @prop string|url|Specifies the topic file to navigate to if the lookup
   //fails. url refers to a valid topic within the specified compiled help
   //(.chm) file and does not support Internet protocols that point to an
-  //HTML file. 
+  //HTML file.
   {"url", T_OBJECT,  OFF(m_pszUrl)},
 
   // LPCTSTR       pszMsgText;
   // @prop string|msgText|Specifies the text to display in a message box if
-  //the lookup fails and indexOnFail is FALSE and url is NULL. 
+  //the lookup fails and indexOnFail is FALSE and url is NULL.
   {"msgText", T_OBJECT,  OFF(m_pszMsgText)},
 
   // LPCTSTR       pszMsgTitle;
@@ -220,11 +220,11 @@ PyTypeObject PyHH_AKLINKType = {
   // @prop string|window|Specifies the name of the window type in which to
   //display one of the following:<nl>
   //<nl>
-  //The selected topic, if the lookup yields one or more matching topics. 
+  //The selected topic, if the lookup yields one or more matching topics.
   //The topic specified in url, if the lookup fails and a topic is specified
   //in url.<nl>
   //<nl>
-  //The Index tab, if the lookup fails and indexOnFail is specified as TRUE. 
+  //The Index tab, if the lookup fails and indexOnFail is specified as TRUE.
   {"window", T_OBJECT,  OFF(m_pszWindow)},
   //**************************************************************************
   //**************************************************************************
@@ -239,8 +239,8 @@ PyHH_AKLINK::PyHH_AKLINK()
   memset(&m_HH_AKLINK, 0, sizeof(m_HH_AKLINK));
 
   m_HH_AKLINK.cbStruct = sizeof(m_HH_AKLINK);
-  m_pszKeywords = m_pszUrl = m_pszMsgText = NULL; 
-  m_pszMsgTitle = m_pszWindow = NULL; 
+  m_pszKeywords = m_pszUrl = m_pszMsgText = NULL;
+  m_pszMsgTitle = m_pszWindow = NULL;
 }
 
 /* This is not necessary, as HH_AKLINK is not used as output
@@ -253,20 +253,20 @@ PyHH_AKLINK::PyHH_AKLINK(const HH_AKLINK *pAKLINK)
   memcpy(&m_HH_AKLINK, pAKLINK, sizeof(m_HH_AKLINK));
 
   m_pszKeywords = pAKLINK->pszKeywords
-    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszKeywords) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszKeywords)
+    : NULL;
   m_pszUrl = pAKLINK->pszUrl
-    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszUrl) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszUrl)
+    : NULL;
   m_pszMsgText = pAKLINK->pszMsgText
-    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszMsgText) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszMsgText)
+    : NULL;
   m_pszMsgTitle = pAKLINK->pszMsgTitle
-    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszMsgTitle) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszMsgTitle)
+    : NULL;
   m_pszWindow = pAKLINK->pszWindow
-    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszWindow) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pAKLINK->pszWindow)
+    : NULL;
 }
 */
 
@@ -333,7 +333,7 @@ int PyHH_AKLINK::setattro(PyObject *self, PyObject *obname, PyObject *v)
   }
   return PyObject_GenericSetAttr(self, obname, v);
 }
-  
+
 /*static*/ void PyHH_AKLINK::deallocFunc(PyObject *ob)
 {
   delete (PyHH_AKLINK *)ob;
@@ -345,7 +345,7 @@ BOOL PyWinObject_AsHH_AKLINK(PyObject *ob, HH_AKLINK **ppAKLINK, BOOL bNoneOK)
   if (bNoneOK && ob==Py_None) {
     *ppAKLINK = NULL;
   } else if (!PyHH_AKLINK_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyHH_AKLINK object");
     return FALSE;
   } else {
@@ -407,7 +407,7 @@ protected:
   HH_FTS_QUERY m_HH_FTS_QUERY;
   PyObject *m_pszSearchQuery;       // LPCTSTR       pszSearchQuery;
 };
-     
+
 #define PyHH_FTS_QUERY_Check(ob) ((ob)->ob_type == &PyHH_FTS_QUERYType)
 
 // @object PyHH_FTS_QUERY|A Python object, representing an HH_FTS_QUERY
@@ -464,7 +464,7 @@ PyTypeObject PyHH_FTS_QUERYType = {
 #define OFF(e) offsetof(PyHH_FTS_QUERY, e)
 
 /*static*/ struct PyMemberDef PyHH_FTS_QUERY::members[] = {
-    
+
   // BOOL     fUniCodeStrings;
   // @prop int|uniCodeStrings|TRUE if all strings are Unicode.
   {"uniCodeStrings", T_INT,  OFF(m_HH_FTS_QUERY.fUniCodeStrings)},
@@ -506,7 +506,7 @@ PyHH_FTS_QUERY::PyHH_FTS_QUERY()
   memset(&m_HH_FTS_QUERY, 0, sizeof(m_HH_FTS_QUERY));
 
   m_HH_FTS_QUERY.cbStruct = sizeof(m_HH_FTS_QUERY);
-  m_pszSearchQuery = NULL; 
+  m_pszSearchQuery = NULL;
 }
 
 PyHH_FTS_QUERY::PyHH_FTS_QUERY(const HH_FTS_QUERY *pFTS_QUERY)
@@ -516,8 +516,8 @@ PyHH_FTS_QUERY::PyHH_FTS_QUERY(const HH_FTS_QUERY *pFTS_QUERY)
   memcpy(&m_HH_FTS_QUERY, pFTS_QUERY, sizeof(m_HH_FTS_QUERY));
 
   m_pszSearchQuery = pFTS_QUERY->pszSearchQuery
-    ? PyWinObject_FromTCHAR((TCHAR*)pFTS_QUERY->pszSearchQuery) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pFTS_QUERY->pszSearchQuery)
+    : NULL;
 }
 
 PyHH_FTS_QUERY::~PyHH_FTS_QUERY(void)
@@ -544,7 +544,7 @@ PyObject *PyHH_FTS_QUERY::getattro(PyObject *self, PyObject *obname)
 int PyHH_FTS_QUERY::setattro(PyObject *self, PyObject *obname, PyObject *v)
 {
   if (v == NULL) {
-    PyErr_SetString(PyExc_AttributeError, 
+    PyErr_SetString(PyExc_AttributeError,
                     "can't delete HH_FTS_QUERY attributes");
     return -1;
   }
@@ -565,20 +565,20 @@ int PyHH_FTS_QUERY::setattro(PyObject *self, PyObject *obname, PyObject *v)
   }
   return PyObject_GenericSetAttr(self, obname, v);
 }
-  
+
 /*static*/ void PyHH_FTS_QUERY::deallocFunc(PyObject *ob)
 {
   delete (PyHH_FTS_QUERY *)ob;
 }
 
 // A converter.
-BOOL PyWinObject_AsHH_FTS_QUERY(PyObject *ob, HH_FTS_QUERY **ppFTS_QUERY, 
+BOOL PyWinObject_AsHH_FTS_QUERY(PyObject *ob, HH_FTS_QUERY **ppFTS_QUERY,
                                 BOOL bNoneOK)
 {
   if (bNoneOK && ob==Py_None) {
     *ppFTS_QUERY = NULL;
   } else if (!PyHH_FTS_QUERY_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyHH_FTS_QUERY object");
     return FALSE;
   } else {
@@ -704,23 +704,23 @@ PyTypeObject PyHH_POPUPType = {
 
 /*static*/ struct PyMemberDef PyHH_POPUP::members[] = {
 
-  // HINSTANCE   hinst;  
+  // HINSTANCE   hinst;
   // @prop long|hinst|Instance handle of the program or DLL to retrieve the
   //string resource from. Ignored if idString is zero.
   {"hinst", T_LONG,  OFF(m_HH_POPUP.hinst)},
 
-  // UINT idString;      
+  // UINT idString;
   // @prop unsigned int|idString|Specifies zero, or a resource ID in the
   //program or DLL specified in hinst.
   {"idString", T_UINT,  OFF(m_HH_POPUP.idString)},
 
-  // COLORREF    clrForeground; 
+  // COLORREF    clrForeground;
   // @prop int|clrForeground|Specifies the RGB value to use for the
   //foreground color of the pop-up window. To use the system color for the
   //window text, specify -1.
   {"clrForeground", T_INT,  OFF(m_HH_POPUP.clrForeground)},
 
-  // COLORREF    clrBackground; 
+  // COLORREF    clrBackground;
   // @prop int|clrBackground|Specifies the RGB value to use for the
   //background color of the pop-up window. To use the system color for the
   //window background, specify -1.
@@ -769,7 +769,7 @@ PyHH_POPUP::PyHH_POPUP()
   memset(&m_HH_POPUP, 0, sizeof(m_HH_POPUP));
 
   m_HH_POPUP.cbStruct = sizeof(m_HH_POPUP);
-  m_pszText = m_pt = m_rcMargins = m_pszFont = NULL; 
+  m_pszText = m_pt = m_rcMargins = m_pszFont = NULL;
 }
 
 PyHH_POPUP::PyHH_POPUP(const HH_POPUP *pPOPUP)
@@ -779,10 +779,10 @@ PyHH_POPUP::PyHH_POPUP(const HH_POPUP *pPOPUP)
   memcpy(&m_HH_POPUP, pPOPUP, sizeof(m_HH_POPUP));
 
   m_pszText = pPOPUP->pszText
-    ? PyWinObject_FromTCHAR((TCHAR*)pPOPUP->pszText) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pPOPUP->pszText)
+    : NULL;
   m_pszFont = pPOPUP->pszFont
-    ? PyWinObject_FromTCHAR((TCHAR*)pPOPUP->pszFont) 
+    ? PyWinObject_FromTCHAR((TCHAR*)pPOPUP->pszFont)
     : NULL;
 
   m_pt = PyTuple_New(2);
@@ -839,7 +839,7 @@ PyObject *PyHH_POPUP::getattro(PyObject *self, PyObject *obname)
 int PyHH_POPUP::setattro(PyObject *self, PyObject *obname, PyObject *v)
 {
   if (v == NULL) {
-    PyErr_SetString(PyExc_AttributeError, 
+    PyErr_SetString(PyExc_AttributeError,
                     "can't delete HH_POPUP attributes");
     return -1;
   }
@@ -908,7 +908,7 @@ BOOL PyWinObject_AsHH_POPUP(PyObject *ob, HH_POPUP **ppPOPUP, BOOL bNoneOK)
   if (bNoneOK && ob==Py_None) {
     *ppPOPUP = NULL;
   } else if (!PyHH_POPUP_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyHH_POPUP object");
     return FALSE;
   } else {
@@ -916,7 +916,7 @@ BOOL PyWinObject_AsHH_POPUP(PyObject *ob, HH_POPUP **ppPOPUP, BOOL bNoneOK)
   }
   return TRUE;
 }
-  
+
 PyObject *PyWinObject_FromHH_POPUP(const HH_POPUP *pPOPUP)
 {
   if (pPOPUP==NULL) {
@@ -974,7 +974,7 @@ protected:
 //The object can then be passed to any function which takes an HH_WINTYPE
 //object.<nl>
 //<nl>
-//Use this structure to specify or modify the attributes of a window type. 
+//Use this structure to specify or modify the attributes of a window type.
 //Window types can be defined by an author in a project (.hhp) file, or they
 //can be defined programmatically using the HTML Help API.<nl>
 //When a HH_WINTYPE structure is passed to HtmlHelp() using the
@@ -1034,79 +1034,79 @@ PyTypeObject PyHH_WINTYPEType =	{
 
 /*static*/ struct PyMemberDef PyHH_WINTYPE::members[] = {
 
-  // BOOL   fUniCodeStrings; 
+  // BOOL   fUniCodeStrings;
   // @prop int|uniCodeStrings|Specifies whether the strings used in this
   //structure are UNICODE.
   {"uniCodeStrings", T_INT,  OFF(m_HH_WINTYPE.fUniCodeStrings)},
 
-  // DWORD  fsValidMembers;  
+  // DWORD  fsValidMembers;
   // @prop int|validMembers|Specifies which members in the structure are valid.
   {"validMembers", T_ULONG,  OFF(m_HH_WINTYPE.fsValidMembers)},
 
-  // DWORD  fsWinProperties; 
+  // DWORD  fsWinProperties;
   // @prop int|winProperties|Specifies the properties of the window, such as
   //whether it is the standard HTML Help Viewer or whether it includes a
   //Search tab.
   {"winProperties", T_ULONG,  OFF(m_HH_WINTYPE.fsWinProperties)},
 
-  // DWORD  dwStyles;       
+  // DWORD  dwStyles;
   // @prop int|styles|Specifies the styles used to create the window. These
   //styles can be ignored, combined with extended styles, or used exclusively
   //depending on the value of the validMembers and winProperties parameters.
   {"styles", T_ULONG,  OFF(m_HH_WINTYPE.dwStyles)},
 
-  // DWORD  dwExStyles;     
+  // DWORD  dwExStyles;
   // @prop int|exStyles|Specifies the extended styles used to create the
   //window. These styles can be ignored, combined with default styles, or used
   //exclusively depending on the value of the validMembers and winProperties
   //parameters.
   {"exStyles", T_ULONG,  OFF(m_HH_WINTYPE.dwExStyles)},
 
-  // int    nShowState;     
+  // int    nShowState;
   // @prop int|showState|Specifies the initial display state of the window.
   //Valid values are the same as those for the Win32 API ShowWindow function.
   {"showState", T_INT,  OFF(m_HH_WINTYPE.nShowState)},
 
   // These params handled below...
-  // HWND   hwndHelp;     
+  // HWND   hwndHelp;
   // @prop int|hwndHelp|Specifies the handle of the window if the window has
   //been created.
 
-  // HWND   hwndCaller;    
+  // HWND   hwndCaller;
   // @prop int|hwndCaller|Specifies the window that will receive HTML Help
   //notification messages. Notification messages are sent via Windows
   //WM_NOTIFY messages.
 
-  // HWND   hwndToolBar;      
+  // HWND   hwndToolBar;
   // @prop int|hwndToolBar|Specifies the handle of the toolbar.
 
-  // HWND   hwndNavigation;   
+  // HWND   hwndNavigation;
   // @prop int|hwndNavigation|Specifies the handle of the Navigation pane.
 
-  // HWND   hwndHTML;  
+  // HWND   hwndHTML;
   // @prop int|hwndHTML|Specifies the handle of the Topic pane, which hosts
   //Shdocvw.dll.
 
-  // int    iNavWidth; 
+  // int    iNavWidth;
   // @prop int|navWidth|Specifies the width of the Navigation pane when the
   //Help Viewer is expanded.
   {"navWidth", T_INT,  OFF(m_HH_WINTYPE.iNavWidth)},
 
-  // DWORD  fsToolBarFlags; 
+  // DWORD  fsToolBarFlags;
   // @prop int|toolBarFlags|Specifies which buttons to include on the toolbar.
   {"toolBarFlags", T_ULONG,  OFF(m_HH_WINTYPE.fsToolBarFlags)},
 
-  // BOOL   fNotExpanded; 
+  // BOOL   fNotExpanded;
   // @prop int|notExpanded|Specifies that the Help Viewer open with the
   //Navigation pane closed.
   {"notExpanded", T_INT,  OFF(m_HH_WINTYPE.fNotExpanded)},
 
-  // int    curNavType;    
+  // int    curNavType;
   // @prop int|curNavType|Specifies the default tab to display on the
   //Navigation pane.
   {"curNavType", T_INT,  OFF(m_HH_WINTYPE.curNavType)},
 
-  // int    idNotify;  
+  // int    idNotify;
   // @prop int|idNotify|Specifies a non-zero ID for enabling HTML Help
   //notification messages. This ID is passed as the wParam value of Windows
   //WM_NOTIFY messages.
@@ -1129,7 +1129,7 @@ PyTypeObject PyHH_WINTYPEType =	{
 
   // RECT   rcWindowPos;
   // @prop tuple|windowPos|(left,top,right,bottom). Specifies the coordinates
-  //of the window in pixels. 
+  //of the window in pixels.
   {"windowPos", T_STRING,  OFF(m_HH_WINTYPE.rcWindowPos)},
 
   // RECT   rcHTML;
@@ -1234,7 +1234,7 @@ PyHH_WINTYPE::~PyHH_WINTYPE(void)
 	PyWinObject_FreeTCHAR((TCHAR *)m_HH_WINTYPE.pszUrlJump1);
 	PyWinObject_FreeTCHAR((TCHAR *)m_HH_WINTYPE.pszUrlJump2);
 }
-  
+
 PyObject *PyHH_WINTYPE::getattro(PyObject *self, PyObject *obname)
 {
 	char *name=PYWIN_ATTR_CONVERT(obname);
@@ -1401,20 +1401,20 @@ int PyHH_WINTYPE::setattro(PyObject *self, PyObject *obname, PyObject *v)
 		}
 	return PyObject_GenericSetAttr(self, obname, v);
 }
-  
+
 /*static*/ void PyHH_WINTYPE::deallocFunc(PyObject *ob)
 {
   delete (PyHH_WINTYPE *)ob;
 }
 
 // A converter.
-BOOL PyWinObject_AsHH_WINTYPE(PyObject *ob, HH_WINTYPE **ppWINTYPE, 
+BOOL PyWinObject_AsHH_WINTYPE(PyObject *ob, HH_WINTYPE **ppWINTYPE,
                               BOOL bNoneOK)
 {
   if (bNoneOK && ob==Py_None) {
     *ppWINTYPE = NULL;
   } else if (!PyHH_WINTYPE_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyHH_WINTYPE object");
     return FALSE;
   } else {
@@ -1422,7 +1422,7 @@ BOOL PyWinObject_AsHH_WINTYPE(PyObject *ob, HH_WINTYPE **ppWINTYPE,
   }
   return TRUE;
 }
-  
+
 PyObject *PyWinObject_FromHH_WINTYPE(const HH_WINTYPE *pWINTYPE)
 {
   if (pWINTYPE==NULL) {
@@ -1469,7 +1469,7 @@ public:
 protected:
   NMHDR m_NMHDR;
 };
-     
+
 #define PyNMHDR_Check(ob) ((ob)->ob_type == &PyNMHDRType)
 
 // @object PyNMHDR|A Python object, representing an NMHDR
@@ -1527,19 +1527,19 @@ PyTypeObject PyNMHDRType = {
 
 /*static*/ struct PyMemberDef PyNMHDR::members[] = {
 
-  // HWND hwndFrom; 
+  // HWND hwndFrom;
   // @prop int|hwndFrom|Window handle to the control sending a message.
   // ??? 64-bit problem here ???
   {"hwndFrom", T_INT,  OFF(m_NMHDR.hwndFrom)},
 
-  // UINT idFrom; 
+  // UINT idFrom;
   // @prop unsigned int|idFrom|Identifier of the control sending a message.
   {"idFrom", T_INT,  OFF(m_NMHDR.idFrom)},
 
-  // UINT code; 
+  // UINT code;
   // @prop unsigned int|code|Notification code. This member can be a
   //control-specific notification code or it can be one of the common
-  //notification codes. 
+  //notification codes.
   {"code", T_INT,  OFF(m_NMHDR.code)},
 
   //**************************************************************************
@@ -1569,7 +1569,7 @@ PyNMHDR::PyNMHDR(const NMHDR *pNMHDR)
 
 PyNMHDR::~PyNMHDR(void)
 {};
-  
+
 /*static*/ void PyNMHDR::deallocFunc(PyObject *ob)
 {
   delete (PyNMHDR *)ob;
@@ -1581,7 +1581,7 @@ BOOL PyWinObject_AsNMHDR(PyObject *ob, NMHDR **ppNMHDR, BOOL bNoneOK)
   if (bNoneOK && ob==Py_None) {
     *ppNMHDR = NULL;
   } else if (!PyNMHDR_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyNMHDR object");
     return FALSE;
   } else {
@@ -1589,7 +1589,7 @@ BOOL PyWinObject_AsNMHDR(PyObject *ob, NMHDR **ppNMHDR, BOOL bNoneOK)
   }
   return TRUE;
 }
-  
+
 PyObject *PyWinObject_FromNMHDR(const NMHDR *pNMHDR)
 {
   if (pNMHDR==NULL) {
@@ -1703,7 +1703,7 @@ PyTypeObject PyHHN_NOTIFYType = {
 #define OFF(e) offsetof(PyHHN_NOTIFY, e)
 
 /*static*/ struct PyMemberDef PyHHN_NOTIFY::members[] = {
-    
+
   //**************************************************************************
   //**************************************************************************
   // The following are added _ONLY_ so that they show up in a
@@ -1715,7 +1715,7 @@ PyTypeObject PyHHN_NOTIFYType = {
 
   // PCSTR  pszUrl;
   // @prop string|url|A multi-byte, zero-terminated string that specifies
-  //the topic navigated to, or the name of the help window being created. 
+  //the topic navigated to, or the name of the help window being created.
   {"url", T_STRING,  OFF(m_HHN_NOTIFY.pszUrl)},
   //**************************************************************************
   //**************************************************************************
@@ -1729,7 +1729,7 @@ PyHHN_NOTIFY::PyHHN_NOTIFY()
   _Py_NewReference(this);
   memset(&m_HHN_NOTIFY, 0, sizeof(m_HHN_NOTIFY));
 
-  m_hdr = m_pszUrl = NULL; 
+  m_hdr = m_pszUrl = NULL;
 }
 
 PyHHN_NOTIFY::PyHHN_NOTIFY(const HHN_NOTIFY *pN_NOTIFY)
@@ -1741,8 +1741,8 @@ PyHHN_NOTIFY::PyHHN_NOTIFY(const HHN_NOTIFY *pN_NOTIFY)
   m_hdr = new PyNMHDR(&pN_NOTIFY->hdr);
   // ??? This doesn't copy the string into the new struct ???
   m_pszUrl = pN_NOTIFY->pszUrl
-    ? PyWinObject_FromTCHAR((TCHAR*)pN_NOTIFY->pszUrl) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pN_NOTIFY->pszUrl)
+    : NULL;
 }
 
 PyHHN_NOTIFY::~PyHHN_NOTIFY(void)
@@ -1750,14 +1750,14 @@ PyHHN_NOTIFY::~PyHHN_NOTIFY(void)
   Py_XDECREF(m_hdr);
   Py_XDECREF(m_pszUrl);
 }
-  
+
 PyObject *PyHHN_NOTIFY::getattro(PyObject *self, PyObject *obname)
 {
 	char *name=PYWIN_ATTR_CONVERT(obname);
 	if (name==NULL)
 		return NULL;
   PyHHN_NOTIFY *pO = (PyHHN_NOTIFY *)self;
-      
+
   if (strcmp("hdr", name)==0) {
     PyObject *rc = pO->m_hdr ? pO->m_hdr : Py_None;
     Py_INCREF(rc);
@@ -1775,7 +1775,7 @@ PyObject *PyHHN_NOTIFY::getattro(PyObject *self, PyObject *obname)
 int PyHHN_NOTIFY::setattro(PyObject *self, PyObject *obname, PyObject *v)
 {
   if (v == NULL) {
-    PyErr_SetString(PyExc_AttributeError, 
+    PyErr_SetString(PyExc_AttributeError,
                     "can't delete HHN_NOTIFY attributes");
     return -1;
   }
@@ -1812,13 +1812,13 @@ int PyHHN_NOTIFY::setattro(PyObject *self, PyObject *obname, PyObject *v)
 }
 
 // A converter.
-BOOL PyWinObject_AsHHN_NOTIFY(PyObject *ob, HHN_NOTIFY **ppN_NOTIFY, 
+BOOL PyWinObject_AsHHN_NOTIFY(PyObject *ob, HHN_NOTIFY **ppN_NOTIFY,
                                 BOOL bNoneOK)
 {
   if (bNoneOK && ob==Py_None) {
     *ppN_NOTIFY = NULL;
   } else if (!PyHHN_NOTIFY_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyHHN_NOTIFY object");
     return FALSE;
   } else {
@@ -1826,7 +1826,7 @@ BOOL PyWinObject_AsHHN_NOTIFY(PyObject *ob, HHN_NOTIFY **ppN_NOTIFY,
   }
   return TRUE;
 }
-  
+
 PyObject *PyWinObject_FromHHN_NOTIFY(const HHN_NOTIFY *pN_NOTIFY)
 {
   if (pN_NOTIFY==NULL) {
@@ -1940,10 +1940,10 @@ PyTypeObject PyHHNTRACKType = {
 #define OFF(e) offsetof(PyHHNTRACK, e)
 
 /*static*/ struct PyMemberDef PyHHNTRACK::members[] = {
- 
+
   // int         idAction;
   // @prop int|action|Specifies the action the user is about to take. This
-  //is an HHACT_ constant. 
+  //is an HHACT_ constant.
   {"action", T_INT,  OFF(m_HHNTRACK.idAction)},
 
   //**************************************************************************
@@ -1957,7 +1957,7 @@ PyTypeObject PyHHNTRACKType = {
 
   // PCSTR  pszCurUrl;
   // @prop string|curUrl|A multi-byte, zero-terminated string that specifies
-  //the topic navigated to, or the name of the help window being created. 
+  //the topic navigated to, or the name of the help window being created.
   {"curUrl", T_STRING,  OFF(m_HHNTRACK.pszCurUrl)},
 
   // HH_WINTYPE* phhWinType;
@@ -1977,7 +1977,7 @@ PyHHNTRACK::PyHHNTRACK()
   _Py_NewReference(this);
   memset(&m_HHNTRACK, 0, sizeof(m_HHNTRACK));
 
-  m_hdr = m_pszCurUrl = m_phhWinType = NULL; 
+  m_hdr = m_pszCurUrl = m_phhWinType = NULL;
 }
 
 PyHHNTRACK::PyHHNTRACK(const HHNTRACK *pTRACK)
@@ -1989,8 +1989,8 @@ PyHHNTRACK::PyHHNTRACK(const HHNTRACK *pTRACK)
   m_hdr = new PyNMHDR(&pTRACK->hdr);
 
   m_pszCurUrl = pTRACK->pszCurUrl
-    ? PyWinObject_FromTCHAR((TCHAR*)pTRACK->pszCurUrl) 
-    : NULL; 
+    ? PyWinObject_FromTCHAR((TCHAR*)pTRACK->pszCurUrl)
+    : NULL;
 
   m_phhWinType = new PyHH_WINTYPE(pTRACK->phhWinType);
 }
@@ -2001,7 +2001,7 @@ PyHHNTRACK::~PyHHNTRACK(void)
   Py_XDECREF(m_pszCurUrl);
   Py_XDECREF(m_phhWinType);
 }
-  
+
 PyObject *PyHHNTRACK::getattro(PyObject *self, PyObject *obname)
 {
 	char *name=PYWIN_ATTR_CONVERT(obname);
@@ -2031,7 +2031,7 @@ PyObject *PyHHNTRACK::getattro(PyObject *self, PyObject *obname)
 int PyHHNTRACK::setattro(PyObject *self, PyObject *obname, PyObject *v)
 {
   if (v == NULL) {
-    PyErr_SetString(PyExc_AttributeError, 
+    PyErr_SetString(PyExc_AttributeError,
                     "can't delete HHNTRACK attributes");
     return -1;
   }
@@ -2077,13 +2077,13 @@ int PyHHNTRACK::setattro(PyObject *self, PyObject *obname, PyObject *v)
 }
 
 // A converter.
-BOOL PyWinObject_AsHHNTRACK(PyObject *ob, HHNTRACK **ppTRACK, 
+BOOL PyWinObject_AsHHNTRACK(PyObject *ob, HHNTRACK **ppTRACK,
                                 BOOL bNoneOK)
 {
   if (bNoneOK && ob==Py_None) {
     *ppTRACK = NULL;
   } else if (!PyHHNTRACK_Check(ob)) {
-    PyErr_SetString(PyExc_TypeError, 
+    PyErr_SetString(PyExc_TypeError,
                     "The object is not a PyHHNTRACK object");
     return FALSE;
   } else {
@@ -2091,7 +2091,7 @@ BOOL PyWinObject_AsHHNTRACK(PyObject *ob, HHNTRACK **ppTRACK,
   }
   return TRUE;
 }
-  
+
 PyObject *PyWinObject_FromHHNTRACK(const HHNTRACK *pTRACK)
 {
   if (pTRACK==NULL) {
@@ -2541,7 +2541,7 @@ in the Html Help engine yet.");
       item = PyTuple_GetItem(dataOb, i);
       if (!PyInt_Check(item))
         error = TRUE;
-      else 
+      else
         ctlIDs[i] = PyInt_AsLong(item);
     }
     if (error) {
@@ -2603,7 +2603,7 @@ data tuple items must be integers");
   return ret;
 
   // @pyseeapi HtmlHelp
-      
+
   // @rdesc Depending on the specified cmd and the result:<nl>
   //<nl>
   //<c HH_GET_WIN_TYPE>:<nl>
@@ -2618,11 +2618,11 @@ data tuple items must be integers");
   //<nl>
   //<nl>
   //<c All other commands>:<nl>
-  //<nl> 
+  //<nl>
   //HtmlHelp() returns one or both of the following:<nl>
   //The handle (hwnd) of the help window.<nl>
   //NULL. In some cases, NULL indicates failure; in other cases, NULL
-  //indicates that the help window has not yet been created. 
+  //indicates that the help window has not yet been created.
 
 }
 
@@ -2640,142 +2640,142 @@ int AddConstants(PyObject *module)
   int debug = 0;
 #endif
 
-  ADD_CONSTANT(debug); 
+  ADD_CONSTANT(debug);
   // @const win32help|debug|1 if we are current using a _DEBUG build of
   // win32help, else 0.
 
-  ADD_CONSTANT(HH_DISPLAY_TOPIC); 
+  ADD_CONSTANT(HH_DISPLAY_TOPIC);
   // @const win32help|HH_DISPLAY_TOPIC|
 
-  ADD_CONSTANT(HH_HELP_FINDER); 
+  ADD_CONSTANT(HH_HELP_FINDER);
   // @const win32help|HH_HELP_FINDER|WinHelp equivalent
 
-  ADD_CONSTANT(HH_DISPLAY_TOC); 
+  ADD_CONSTANT(HH_DISPLAY_TOC);
   // @const win32help|HH_DISPLAY_TOC|not currently implemented
 
-  ADD_CONSTANT(HH_DISPLAY_INDEX); 
+  ADD_CONSTANT(HH_DISPLAY_INDEX);
   // @const win32help|HH_DISPLAY_INDEX|not currently implemented
 
-  ADD_CONSTANT(HH_DISPLAY_SEARCH); 
+  ADD_CONSTANT(HH_DISPLAY_SEARCH);
   // @const win32help|HH_DISPLAY_SEARCH|not currently implemented
 
-  ADD_CONSTANT(HH_SET_WIN_TYPE); 
+  ADD_CONSTANT(HH_SET_WIN_TYPE);
   // @const win32help|HH_SET_WIN_TYPE|
 
-  ADD_CONSTANT(HH_GET_WIN_TYPE); 
+  ADD_CONSTANT(HH_GET_WIN_TYPE);
   // @const win32help|HH_GET_WIN_TYPE|
 
-  ADD_CONSTANT(HH_GET_WIN_HANDLE); 
+  ADD_CONSTANT(HH_GET_WIN_HANDLE);
   // @const win32help|HH_GET_WIN_HANDLE|
 
-  ADD_CONSTANT(HH_ENUM_INFO_TYPE); 
+  ADD_CONSTANT(HH_ENUM_INFO_TYPE);
   // @const win32help|HH_ENUM_INFO_TYPE|Get Info type name, call
   // repeatedly to enumerate, -1 at end
 
-  ADD_CONSTANT(HH_SET_INFO_TYPE); 
+  ADD_CONSTANT(HH_SET_INFO_TYPE);
   // @const win32help|HH_SET_INFO_TYPE|Add Info type to filter.
 
-  ADD_CONSTANT(HH_SYNC); 
+  ADD_CONSTANT(HH_SYNC);
   // @const win32help|HH_SYNC|
 
-  ADD_CONSTANT(HH_RESERVED1); 
+  ADD_CONSTANT(HH_RESERVED1);
   // @const win32help|HH_RESERVED1|
 
-  ADD_CONSTANT(HH_RESERVED2); 
+  ADD_CONSTANT(HH_RESERVED2);
   // @const win32help|HH_RESERVED2|
 
-  ADD_CONSTANT(HH_RESERVED3); 
+  ADD_CONSTANT(HH_RESERVED3);
   // @const win32help|HH_RESERVED3|
 
-  ADD_CONSTANT(HH_KEYWORD_LOOKUP); 
+  ADD_CONSTANT(HH_KEYWORD_LOOKUP);
   // @const win32help|HH_KEYWORD_LOOKUP|
 
-  ADD_CONSTANT(HH_DISPLAY_TEXT_POPUP); 
+  ADD_CONSTANT(HH_DISPLAY_TEXT_POPUP);
   // @const win32help|HH_DISPLAY_TEXT_POPUP|display string resource id
   //or text in a popup window
 
-  ADD_CONSTANT(HH_HELP_CONTEXT); 
+  ADD_CONSTANT(HH_HELP_CONTEXT);
   // @const win32help|HH_HELP_CONTEXT|display mapped numeric value in
   //dwData
 
-  ADD_CONSTANT(HH_TP_HELP_CONTEXTMENU); 
+  ADD_CONSTANT(HH_TP_HELP_CONTEXTMENU);
   // @const win32help|HH_TP_HELP_CONTEXTMENU|text popup help, same as
   //WinHelp HELP_CONTEXTMENU
 
-  ADD_CONSTANT(HH_TP_HELP_WM_HELP); 
+  ADD_CONSTANT(HH_TP_HELP_WM_HELP);
   // @const win32help|HH_TP_HELP_WM_HELP|text popup help, same as
   //WinHelp HELP_WM_HELP
 
-  ADD_CONSTANT(HH_CLOSE_ALL); 
+  ADD_CONSTANT(HH_CLOSE_ALL);
   // @const win32help|HH_CLOSE_ALL|close all windows opened directly or
   //indirectly by the caller
 
   ADD_CONSTANT(HH_ALINK_LOOKUP);
   // @const win32help|HH_ALINK_LOOKUP|ALink version of HH_KEYWORD_LOOKUP
 
-  ADD_CONSTANT(HH_GET_LAST_ERROR); 
-  // @const win32help|HH_GET_LAST_ERROR|not currently implemented 
+  ADD_CONSTANT(HH_GET_LAST_ERROR);
+  // @const win32help|HH_GET_LAST_ERROR|not currently implemented
   //See HHERROR.h
 
-  ADD_CONSTANT(HH_ENUM_CATEGORY); 
+  ADD_CONSTANT(HH_ENUM_CATEGORY);
   // @const win32help|HH_ENUM_CATEGORY|Get category name, call
   //repeatedly to enumerate, -1 at end
 
-  ADD_CONSTANT(HH_ENUM_CATEGORY_IT); 
+  ADD_CONSTANT(HH_ENUM_CATEGORY_IT);
   // @const win32help|HH_ENUM_CATEGORY_IT|Get category info type members,
   //call repeatedly to enumerate, -1 at end
 
-  ADD_CONSTANT(HH_RESET_IT_FILTER); 
+  ADD_CONSTANT(HH_RESET_IT_FILTER);
   // @const win32help|HH_RESET_IT_FILTER|Clear the info type filter of
   //all info types.
 
-  ADD_CONSTANT(HH_SET_INCLUSIVE_FILTER); 
+  ADD_CONSTANT(HH_SET_INCLUSIVE_FILTER);
   // @const win32help|HH_SET_INCLUSIVE_FILTER|set inclusive filtering
   //method for untyped topics to be included in display
 
-  ADD_CONSTANT(HH_SET_EXCLUSIVE_FILTER); 
+  ADD_CONSTANT(HH_SET_EXCLUSIVE_FILTER);
   // @const win32help|HH_SET_EXCLUSIVE_FILTER|set exclusive filtering
   //method for untyped topics to be excluded from display
 
-  ADD_CONSTANT(HH_INITIALIZE); 
+  ADD_CONSTANT(HH_INITIALIZE);
   // @const win32help|HH_INITIALIZE|Initializes the help system.
 
-  ADD_CONSTANT(HH_UNINITIALIZE); 
+  ADD_CONSTANT(HH_UNINITIALIZE);
   // @const win32help|HH_UNINITIALIZE|Uninitializes the help system.
 
-  ADD_CONSTANT(HH_PRETRANSLATEMESSAGE); 
+  ADD_CONSTANT(HH_PRETRANSLATEMESSAGE);
   // @const win32help|HH_PRETRANSLATEMESSAGE|Pumps messages.
   //(NULL, NULL, MSG*).
 
-  ADD_CONSTANT(HH_SET_GLOBAL_PROPERTY); 
+  ADD_CONSTANT(HH_SET_GLOBAL_PROPERTY);
   // @const win32help|HH_SET_GLOBAL_PROPERTY|Set a global property.
   //(NULL, NULL, HH_GPROP).
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_AUTOHIDESHOW); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_AUTOHIDESHOW);
   // @const win32help|HHWIN_PROP_TAB_AUTOHIDESHOW|Automatically hide/show
   //tri-pane window
 
-  ADD_CONSTANT(HHWIN_PROP_ONTOP); 
+  ADD_CONSTANT(HHWIN_PROP_ONTOP);
   // @const win32help|HHWIN_PROP_ONTOP|Top-most window
 
-  ADD_CONSTANT(HHWIN_PROP_NOTITLEBAR); 
+  ADD_CONSTANT(HHWIN_PROP_NOTITLEBAR);
   // @const win32help|HHWIN_PROP_NOTITLEBAR|no title bar
 
-  ADD_CONSTANT(HHWIN_PROP_NODEF_STYLES); 
+  ADD_CONSTANT(HHWIN_PROP_NODEF_STYLES);
   // @const win32help|HHWIN_PROP_NODEF_STYLES|no default window styles
   //(only HH_WINTYPE.styles)
 
-  ADD_CONSTANT(HHWIN_PROP_NODEF_EXSTYLES); 
+  ADD_CONSTANT(HHWIN_PROP_NODEF_EXSTYLES);
   // @const win32help|HHWIN_PROP_NODEF_EXSTYLES|no default extended
   //window styles (only HH_WINTYPE.exStyles)
 
-  ADD_CONSTANT(HHWIN_PROP_TRI_PANE); 
+  ADD_CONSTANT(HHWIN_PROP_TRI_PANE);
   // @const win32help|HHWIN_PROP_TRI_PANE|use a tri-pane window
 
-  ADD_CONSTANT(HHWIN_PROP_NOTB_TEXT); 
+  ADD_CONSTANT(HHWIN_PROP_NOTB_TEXT);
   // @const win32help|HHWIN_PROP_NOTB_TEXT|no text on toolbar buttons
 
-  ADD_CONSTANT(HHWIN_PROP_POST_QUIT); 
+  ADD_CONSTANT(HHWIN_PROP_POST_QUIT);
   // @const win32help|HHWIN_PROP_POST_QUIT|post WM_QUIT message when
   //window closes
 
@@ -2783,137 +2783,137 @@ int AddConstants(PyObject *module)
   // @const win32help|HHWIN_PROP_AUTO_SYNC|automatically ssync contents
   //and index
 
-  ADD_CONSTANT(HHWIN_PROP_TRACKING); 
+  ADD_CONSTANT(HHWIN_PROP_TRACKING);
   // @const win32help|HHWIN_PROP_TRACKING|send tracking notification
   //messages
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_SEARCH); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_SEARCH);
   // @const win32help|HHWIN_PROP_TAB_SEARCH|include search tab in
   //navigation pane
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_HISTORY); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_HISTORY);
   // @const win32help|HHWIN_PROP_TAB_HISTORY|include history tab in
   //navigation pane
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_FAVORITES); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_FAVORITES);
   // @const win32help|HHWIN_PROP_TAB_FAVORITES|include favorites tab in
   //navigation pane
 
-  ADD_CONSTANT(HHWIN_PROP_CHANGE_TITLE); 
+  ADD_CONSTANT(HHWIN_PROP_CHANGE_TITLE);
   // @const win32help|HHWIN_PROP_CHANGE_TITLE|Put current HTML title in
   //title bar
 
-  ADD_CONSTANT(HHWIN_PROP_NAV_ONLY_WIN); 
+  ADD_CONSTANT(HHWIN_PROP_NAV_ONLY_WIN);
   // @const win32help|HHWIN_PROP_NAV_ONLY_WIN|Only display the navigation
   //window
 
-  ADD_CONSTANT(HHWIN_PROP_NO_TOOLBAR); 
+  ADD_CONSTANT(HHWIN_PROP_NO_TOOLBAR);
   // @const win32help|HHWIN_PROP_NO_TOOLBAR|Don't display a toolbar
 
-  ADD_CONSTANT(HHWIN_PROP_MENU); 
+  ADD_CONSTANT(HHWIN_PROP_MENU);
   // @const win32help|HHWIN_PROP_MENU|Menu
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_ADVSEARCH); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_ADVSEARCH);
   // @const win32help|HHWIN_PROP_TAB_ADVSEARCH|Advanced FTS UI.
 
-  ADD_CONSTANT(HHWIN_PROP_USER_POS); 
+  ADD_CONSTANT(HHWIN_PROP_USER_POS);
   // @const win32help|HHWIN_PROP_USER_POS|After initial creation, user
   //controls window size/position
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM1); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM1);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM1|Use custom tab #1
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM2); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM2);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM2|Use custom tab #2
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM3); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM3);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM3|Use custom tab #3
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM4); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM4);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM4|Use custom tab #4
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM5); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM5);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM5|Use custom tab #5
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM6); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM6);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM6|Use custom tab #6
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM7); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM7);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM7|Use custom tab #7
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM8); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM8);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM8|Use custom tab #8
 
-  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM9); 
+  ADD_CONSTANT(HHWIN_PROP_TAB_CUSTOM9);
   // @const win32help|HHWIN_PROP_TAB_CUSTOM9|Use custom tab #9
 
-  ADD_CONSTANT(HHWIN_TB_MARGIN); 
+  ADD_CONSTANT(HHWIN_TB_MARGIN);
   // @const win32help|HHWIN_TB_MARGIN|the window type has a margin
 
-  ADD_CONSTANT(HHWIN_PARAM_PROPERTIES); 
+  ADD_CONSTANT(HHWIN_PARAM_PROPERTIES);
   // @const win32help|HHWIN_PARAM_PROPERTIES|valid winProperties
 
-  ADD_CONSTANT(HHWIN_PARAM_STYLES); 
+  ADD_CONSTANT(HHWIN_PARAM_STYLES);
   // @const win32help|HHWIN_PARAM_STYLES|valid styles
 
-  ADD_CONSTANT(HHWIN_PARAM_EXSTYLES); 
+  ADD_CONSTANT(HHWIN_PARAM_EXSTYLES);
   // @const win32help|HHWIN_PARAM_EXSTYLES|valid exStyles
 
-  ADD_CONSTANT(HHWIN_PARAM_RECT); 
+  ADD_CONSTANT(HHWIN_PARAM_RECT);
   // @const win32help|HHWIN_PARAM_RECT|valid windowPos
 
-  ADD_CONSTANT(HHWIN_PARAM_NAV_WIDTH); 
+  ADD_CONSTANT(HHWIN_PARAM_NAV_WIDTH);
   // @const win32help|HHWIN_PARAM_NAV_WIDTH|valid navWidth
 
-  ADD_CONSTANT(HHWIN_PARAM_SHOWSTATE); 
+  ADD_CONSTANT(HHWIN_PARAM_SHOWSTATE);
   // @const win32help|HHWIN_PARAM_SHOWSTATE|valid showState
 
-  ADD_CONSTANT(HHWIN_PARAM_INFOTYPES); 
+  ADD_CONSTANT(HHWIN_PARAM_INFOTYPES);
   // @const win32help|HHWIN_PARAM_INFOTYPES|valid apInfoTypes
 
-  ADD_CONSTANT(HHWIN_PARAM_TB_FLAGS); 
+  ADD_CONSTANT(HHWIN_PARAM_TB_FLAGS);
   // @const win32help|HHWIN_PARAM_TB_FLAGS|valid toolBarFlags
 
-  ADD_CONSTANT(HHWIN_PARAM_EXPANSION); 
+  ADD_CONSTANT(HHWIN_PARAM_EXPANSION);
   // @const win32help|HHWIN_PARAM_EXPANSION|valid notExpanded
 
-  ADD_CONSTANT(HHWIN_PARAM_TABPOS); 
+  ADD_CONSTANT(HHWIN_PARAM_TABPOS);
   // @const win32help|HHWIN_PARAM_TABPOS|valid tabpos
 
-  ADD_CONSTANT(HHWIN_PARAM_TABORDER); 
+  ADD_CONSTANT(HHWIN_PARAM_TABORDER);
   // @const win32help|HHWIN_PARAM_TABORDER|valid taborder
 
-  ADD_CONSTANT(HHWIN_PARAM_HISTORY_COUNT); 
+  ADD_CONSTANT(HHWIN_PARAM_HISTORY_COUNT);
   // @const win32help|HHWIN_PARAM_HISTORY_COUNT|valid cHistory
 
-  ADD_CONSTANT(HHWIN_PARAM_CUR_TAB); 
+  ADD_CONSTANT(HHWIN_PARAM_CUR_TAB);
   // @const win32help|HHWIN_PARAM_CUR_TAB|valid curNavType
 
-  ADD_CONSTANT(HHWIN_BUTTON_EXPAND); 
+  ADD_CONSTANT(HHWIN_BUTTON_EXPAND);
   // @const win32help|HHWIN_BUTTON_EXPAND|Expand/contract button
 
-  ADD_CONSTANT(HHWIN_BUTTON_BACK); 
+  ADD_CONSTANT(HHWIN_BUTTON_BACK);
   // @const win32help|HHWIN_BUTTON_BACK|Back button
 
-  ADD_CONSTANT(HHWIN_BUTTON_FORWARD); 
+  ADD_CONSTANT(HHWIN_BUTTON_FORWARD);
   // @const win32help|HHWIN_BUTTON_FORWARD|Forward button
 
-  ADD_CONSTANT(HHWIN_BUTTON_STOP); 
+  ADD_CONSTANT(HHWIN_BUTTON_STOP);
   // @const win32help|HHWIN_BUTTON_STOP|Stop button
 
-  ADD_CONSTANT(HHWIN_BUTTON_REFRESH); 
+  ADD_CONSTANT(HHWIN_BUTTON_REFRESH);
   // @const win32help|HHWIN_BUTTON_REFRESH|Refresh button
 
-  ADD_CONSTANT(HHWIN_BUTTON_HOME); 
+  ADD_CONSTANT(HHWIN_BUTTON_HOME);
   // @const win32help|HHWIN_BUTTON_HOME|Home button
 
-  ADD_CONSTANT(HHWIN_BUTTON_BROWSE_FWD); 
+  ADD_CONSTANT(HHWIN_BUTTON_BROWSE_FWD);
   // @const win32help|HHWIN_BUTTON_BROWSE_FWD|not implemented
 
-  ADD_CONSTANT(HHWIN_BUTTON_BROWSE_BCK); 
+  ADD_CONSTANT(HHWIN_BUTTON_BROWSE_BCK);
   // @const win32help|HHWIN_BUTTON_BROWSE_BCK|not implemented
 
-  ADD_CONSTANT(HHWIN_BUTTON_NOTES); 
+  ADD_CONSTANT(HHWIN_BUTTON_NOTES);
   // @const win32help|HHWIN_BUTTON_NOTES|not implemented
 
   ADD_CONSTANT(HHWIN_BUTTON_CONTENTS);
@@ -2934,10 +2934,10 @@ int AddConstants(PyObject *module)
   ADD_CONSTANT(HHWIN_BUTTON_SEARCH);
   // @const win32help|HHWIN_BUTTON_SEARCH|not implemented
 
-  ADD_CONSTANT(HHWIN_BUTTON_HISTORY); 
+  ADD_CONSTANT(HHWIN_BUTTON_HISTORY);
   // @const win32help|HHWIN_BUTTON_HISTORY|not implemented
 
-  ADD_CONSTANT(HHWIN_BUTTON_FAVORITES); 
+  ADD_CONSTANT(HHWIN_BUTTON_FAVORITES);
   // @const win32help|HHWIN_BUTTON_FAVORITES|not implemented
 
   ADD_CONSTANT(HHWIN_BUTTON_JUMP1);
@@ -2969,17 +2969,17 @@ int AddConstants(PyObject *module)
 
   ADD_CONSTANT(IDTB_REFRESH);
   // @const win32help|IDTB_REFRESH|
-      
+
   ADD_CONSTANT(IDTB_BACK);
   // @const win32help|IDTB_BACK|
 
-  ADD_CONSTANT(IDTB_HOME); 
+  ADD_CONSTANT(IDTB_HOME);
   // @const win32help|IDTB_HOME|
 
   ADD_CONSTANT(IDTB_SYNC);
   // @const win32help|IDTB_SYNC|
 
-  ADD_CONSTANT(IDTB_PRINT); 
+  ADD_CONSTANT(IDTB_PRINT);
   // @const win32help|IDTB_PRINT|
 
   ADD_CONSTANT(IDTB_OPTIONS);
@@ -2988,7 +2988,7 @@ int AddConstants(PyObject *module)
   ADD_CONSTANT(IDTB_FORWARD);
   // @const win32help|IDTB_FORWARD|
 
-  ADD_CONSTANT(IDTB_NOTES); 
+  ADD_CONSTANT(IDTB_NOTES);
   // @const win32help|IDTB_NOTES|not implemented
 
   ADD_CONSTANT(IDTB_BROWSE_FWD);
@@ -2997,13 +2997,13 @@ int AddConstants(PyObject *module)
   ADD_CONSTANT(IDTB_BROWSE_BACK);
   // @const win32help|IDTB_BROWSE_BACK|
 
-  ADD_CONSTANT(IDTB_CONTENTS); 
+  ADD_CONSTANT(IDTB_CONTENTS);
   // @const win32help|IDTB_CONTENTS|not implemented
 
   ADD_CONSTANT(IDTB_INDEX);
   // @const win32help|IDTB_INDEX|not implemented
 
-  ADD_CONSTANT(IDTB_SEARCH); 
+  ADD_CONSTANT(IDTB_SEARCH);
   // @const win32help|IDTB_SEARCH|not implemented
 
   ADD_CONSTANT(IDTB_HISTORY);

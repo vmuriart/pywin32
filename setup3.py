@@ -4,7 +4,7 @@ import os
 from lib2to3.refactor import RefactoringTool, get_fixers_from_package
 
 fixers = ['lib2to3.fixes.fix_print', 'lib2to3.fixes.fix_except']
-options = dict(doctests_only=False, fix=[], list_fixes=[], 
+options = dict(doctests_only=False, fix=[], list_fixes=[],
                print_function=False, verbose=False,
                write=True)
 r = RefactoringTool(fixers, options)

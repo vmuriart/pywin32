@@ -162,7 +162,7 @@ PyComTypeObject PyIEnumRemoteDebugApplications::type("PyIEnumRemoteDebugApplicat
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumRemoteDebugApplications::Next( 
+STDMETHODIMP PyGEnumRemoteDebugApplications::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ IRemoteDebugApplication __RPC_FAR * __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -211,7 +211,7 @@ STDMETHODIMP PyGEnumRemoteDebugApplications::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnumRemoteDebugApplications, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnumRemoteDebugApplications::Skip( 
+STDMETHODIMP PyGEnumRemoteDebugApplications::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -224,7 +224,7 @@ STDMETHODIMP PyGEnumRemoteDebugApplications::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumRemoteDebugApplications::Clone( 
+STDMETHODIMP PyGEnumRemoteDebugApplications::Clone(
             /* [out] */ IEnumRemoteDebugApplications __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

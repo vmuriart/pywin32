@@ -167,7 +167,7 @@ typedef Py_ssize_t Py_hash_t;
 
 
 // *** NOTE *** FREEZE_PYWINTYPES is deprecated.  It used to be used
-// by the 'freeze' tool, but now py2exe etc do a far better job, and 
+// by the 'freeze' tool, but now py2exe etc do a far better job, and
 // don't require a custom built pywintypes DLL.
 #ifdef FREEZE_PYWINTYPES
 	/* The pywintypes module is being included in a frozen .EXE/.DLL */
@@ -256,7 +256,7 @@ inline void PyWinObject_FreeWCHAR(unsigned short *pResult)
 #endif
 
 // Given a PyObject (string, Unicode, etc) create a "char *" with the value
-// if pResultLen != NULL, it will be set to the result size NOT INCLUDING 
+// if pResultLen != NULL, it will be set to the result size NOT INCLUDING
 // TERMINATOR (to be in line with SysStringLen, PyString_*, etc)
 PYWINTYPES_EXPORT BOOL PyWinObject_AsString(PyObject *stringObject, char **pResult, BOOL bNoneOK = FALSE, DWORD *pResultLen = NULL);
 // And free it when finished.
@@ -339,9 +339,9 @@ PYWINTYPES_EXPORT PyObject *PyWinObject_FromOLECHAR(const OLECHAR * str);
 PYWINTYPES_EXPORT PyObject *PyWinObject_FromOLECHAR(const OLECHAR * str, int numChars);
 
 // String support for buffers allocated via a function of your choice.
-PYWINTYPES_EXPORT BOOL PyWinObject_AsPfnAllocatedWCHAR(PyObject *stringObject, 
-                                                  void *(*pfnAllocator)(ULONG), 
-                                                  WCHAR **ppResult, 
+PYWINTYPES_EXPORT BOOL PyWinObject_AsPfnAllocatedWCHAR(PyObject *stringObject,
+                                                  void *(*pfnAllocator)(ULONG),
+                                                  WCHAR **ppResult,
                                                   BOOL bNoneOK = FALSE,
                                                   DWORD *pResultLen = NULL);
 
@@ -620,7 +620,7 @@ PYWINTYPES_EXPORT BOOL PyWinObject_AsHANDLE(PyObject *ob, HANDLE *pRes);
 // For handles that use PyHANDLE.
 PYWINTYPES_EXPORT PyObject *PyWinObject_FromHANDLE(HANDLE h);
 // For handles that aren't returned as PyHANDLE or a subclass thereof (HDC, HWND, etc).
-// Return as python ints or longs 
+// Return as python ints or longs
 PYWINTYPES_EXPORT PyObject *PyWinLong_FromHANDLE(HANDLE h);
 
 // A global function that can work as a module method for making a HANDLE object.
@@ -707,7 +707,7 @@ inline BOOL PyWinObject_AsAutoFreeBstr(PyObject *stringObject, PyWin_AutoFreeBst
 // 2 threads may _ever_ call _any_ Python code (including INCREF/DECREF) without
 // first having this thread lock.
 //
-// The second type of lock is a "global framework lock".  This lock is simply a 
+// The second type of lock is a "global framework lock".  This lock is simply a
 // critical section, and used whenever 2 threads of C code need access to global
 // data.  This is different than the Python lock - this lock is used when no Python
 // code can ever be called by the threads, but the C code still needs thread-safety.
@@ -721,7 +721,7 @@ PYWINTYPES_EXPORT void PyWin_ReleaseGlobalLock(void);
 // Helper class for the DLL global lock.
 //
 // This class magically waits for the Win32/COM framework global lock, and releases it
-// when finished.  
+// when finished.
 // NEVER new one of these objects - only use on the stack!
 class CEnterLeaveFramework {
 public:
@@ -746,7 +746,7 @@ public:
 // Helper class for Enter/Leave Python
 //
 // This class magically waits for the Python global lock, and releases it
-// when finished.  
+// when finished.
 
 // Nested invocations will deadlock, so be careful.
 

@@ -37,11 +37,11 @@ protected:
 		IDebugCodeContext __RPC_FAR *__RPC_FAR * ppcc);
 
 	STDMETHOD(GetDescriptionString)(
-		BOOL fLong,  
+		BOOL fLong,
 		BSTR __RPC_FAR * pbstrDescription);
 
 	STDMETHOD(GetLanguageString)(
-		BOOL fLong,  
+		BOOL fLong,
 		BSTR __RPC_FAR * pbstrLanguage);
 
 	STDMETHOD(GetThread)(

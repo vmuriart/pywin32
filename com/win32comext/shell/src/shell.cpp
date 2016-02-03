@@ -592,8 +592,8 @@ BOOL PyObject_AsCMINVOKECOMMANDINFO(PyObject *ob, CMINVOKECOMMANDINFO *pci)
 	PyObject *obVerb, *obhwnd, *obhIcon;
 	ZeroMemory(pci, sizeof(CMINVOKECOMMANDINFO));
 	pci->cbSize=sizeof(CMINVOKECOMMANDINFO);
-	if (!PyArg_ParseTuple(ob, "iOOzziiO:CMINVOKECOMMANDINFO tuple", &pci->fMask, &obhwnd, 
-	                                 &obVerb, &pci->lpParameters, &pci->lpDirectory, 
+	if (!PyArg_ParseTuple(ob, "iOOzziiO:CMINVOKECOMMANDINFO tuple", &pci->fMask, &obhwnd,
+	                                 &obVerb, &pci->lpParameters, &pci->lpDirectory,
 	                                 &pci->nShow, &pci->dwHotKey, &obhIcon))
 		return FALSE;
 	if (!PyWinObject_AsHANDLE(obhwnd, (HANDLE *)&pci->hwnd))
@@ -636,8 +636,8 @@ PyObject *PyObject_FromCMINVOKECOMMANDINFO(const CMINVOKECOMMANDINFO *pci)
 		Py_DECREF(obParams);
 		return NULL;
 	}
-	return Py_BuildValue("iNNNNiiN", pci->fMask, PyWinLong_FromHANDLE(pci->hwnd), 
-	                                 obVerb, obParams, obDir, 
+	return Py_BuildValue("iNNNNiiN", pci->fMask, PyWinLong_FromHANDLE(pci->hwnd),
+	                                 obVerb, obParams, obDir,
 	                                 pci->nShow, pci->dwHotKey, PyWinLong_FromHANDLE(pci->hIcon));
 }
 
@@ -801,7 +801,7 @@ PyObject *PyObject_FromSHCOLUMNINFO(LPCSHCOLUMNINFO p)
 	if (!obTitle) goto done;
 	obDescription = PyWinObject_FromWCHAR(p->wszDescription);
 	if (!obDescription) goto done;
-	rc = Py_BuildValue("OiiiiOO", obID, p->vt, p->fmt, p->cChars, 
+	rc = Py_BuildValue("OiiiiOO", obID, p->vt, p->fmt, p->cChars,
 	                   p->csFlags, obTitle, obDescription);
 done:
 	Py_XDECREF(obID);
@@ -855,7 +855,7 @@ PyObject *PyObject_FromSHFILEINFO(SHFILEINFO *p)
 	PyObject *obhIcon = PyWinLong_FromHANDLE(p->hIcon);
 	PyObject *obDisplayName = PyWinObject_FromTCHAR(p->szDisplayName);
 	PyObject *obTypeName = PyWinObject_FromTCHAR(p->szTypeName);
-	return Py_BuildValue("NikNN", obhIcon, p->iIcon, p->dwAttributes, 
+	return Py_BuildValue("NikNN", obhIcon, p->iIcon, p->dwAttributes,
 	                              obDisplayName, obTypeName);
 }
 
@@ -1062,9 +1062,9 @@ struct PyCallback {
 
 
 static int CALLBACK PyBrowseCallbackProc(
-    HWND hwnd, 
-    UINT uMsg, 
-    LPARAM lParam, 
+    HWND hwnd,
+    UINT uMsg,
+    LPARAM lParam,
     LPARAM lpData
     )
 {
@@ -1251,7 +1251,7 @@ static PyObject *PySHGetPathFromIDListW(PyObject *self, PyObject *args)
 	return rc;
 }
 
-// @pymethod <o PyUnicode>|shell|SHGetSpecialFolderPath|Retrieves the path of a special folder. 
+// @pymethod <o PyUnicode>|shell|SHGetSpecialFolderPath|Retrieves the path of a special folder.
 static PyObject *PySHGetSpecialFolderPath(PyObject *self, PyObject *args)
 {
 	HWND hwndOwner;
@@ -1265,9 +1265,9 @@ static PyObject *PySHGetSpecialFolderPath(PyObject *self, PyObject *args)
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhwndOwner, (HANDLE *)&hwndOwner))
 		return NULL;
-	// @comm This method is only available in shell version 4.71.  If the 
-	// function is not available, a COM Exception with HRESULT=E_NOTIMPL 
-	// will be raised.  If the function fails, a COM Exception with 
+	// @comm This method is only available in shell version 4.71.  If the
+	// function is not available, a COM Exception with HRESULT=E_NOTIMPL
+	// will be raised.  If the function fails, a COM Exception with
 	// HRESULT=E_FAIL will be raised.
 	if (pfnSHGetSpecialFolderPath==NULL)
 		return OleSetOleError(E_NOTIMPL);
@@ -1314,18 +1314,18 @@ static PyObject *PySHGetFileInfo(PyObject *self, PyObject *args)
 	UINT flags;
 	DWORD attr, info_attrs=0;
 	BOOL ok;
-	if (!PyArg_ParseTuple(args, "OkI|k", 
-			&obName, // @pyparm string/<o PyIDL>|name||The path and file name. Both absolute 
+	if (!PyArg_ParseTuple(args, "OkI|k",
+			&obName, // @pyparm string/<o PyIDL>|name||The path and file name. Both absolute
 					 // and relative paths are valid.
-					 // <nl>If the uFlags parameter includes the SHGFI_PIDL flag, this parameter 
-					 // must be a valid <o PyIDL> object that uniquely identifies the file within 
-					 // the shell's namespace. The PIDL must be a fully qualified PIDL. 
+					 // <nl>If the uFlags parameter includes the SHGFI_PIDL flag, this parameter
+					 // must be a valid <o PyIDL> object that uniquely identifies the file within
+					 // the shell's namespace. The PIDL must be a fully qualified PIDL.
 					 // Relative PIDLs are not allowed.
-					 // <nl>If the uFlags parameter includes the SHGFI_USEFILEATTRIBUTES flag, this parameter does not have to be a valid file name. 
-					 // The function will proceed as if the file exists with the specified name 
-					 // and with the file attributes passed in the dwFileAttributes parameter. 
-					 // This allows you to obtain information about a file type by passing 
-					 // just the extension for pszPath and passing FILE_ATTRIBUTE_NORMAL 
+					 // <nl>If the uFlags parameter includes the SHGFI_USEFILEATTRIBUTES flag, this parameter does not have to be a valid file name.
+					 // The function will proceed as if the file exists with the specified name
+					 // and with the file attributes passed in the dwFileAttributes parameter.
+					 // This allows you to obtain information about a file type by passing
+					 // just the extension for pszPath and passing FILE_ATTRIBUTE_NORMAL
 					 // in dwFileAttributes.
 					 // <nl>This string can use either short (the 8.3 form) or long file names.
 			&attr, // @pyparm int|dwFileAttributes||Combination of one or more file attribute flags (FILE_ATTRIBUTE_ values). If uFlags does not include the SHGFI_USEFILEATTRIBUTES flag, this parameter is ignored.
@@ -1353,7 +1353,7 @@ static PyObject *PySHGetFileInfo(PyObject *self, PyObject *args)
 	return ret;
 }
 
-// @pymethod string/<o PyUnicode>|shell|SHGetFolderPath|Retrieves the path of a folder. 
+// @pymethod string/<o PyUnicode>|shell|SHGetFolderPath|Retrieves the path of a folder.
 static PyObject *PySHGetFolderPath(PyObject *self, PyObject *args)
 {
 	HWND hwndOwner;
@@ -1391,7 +1391,7 @@ static PyObject *PySHGetFolderPath(PyObject *self, PyObject *args)
 // @pymethod |shell|SHSetFolderPath|Sets the location of one of the special folders
 // @comm This function is only available on Windows 2000 or later
 static PyObject *PySHSetFolderPath(PyObject *self, PyObject *args)
-{	
+{
 	int csidl;
 	HANDLE hToken;
 	DWORD Flags=0;	// Flags is reserved
@@ -1403,7 +1403,7 @@ static PyObject *PySHSetFolderPath(PyObject *self, PyObject *args)
 	if(!PyArg_ParseTuple(args, "lO|O:SHSetFolderPath",
 		&csidl,		// @pyparm int|csidl||One of the shellcon.CSIDL_* values
 		&obPath,	// @pyparm str/unicode|Path||The full path to be set
-		&obToken))	// @pyparm <o PyHANDLE>|hToken|None|Handle to an access token, can be None 
+		&obToken))	// @pyparm <o PyHANDLE>|hToken|None|Handle to an access token, can be None
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obToken, &hToken))
 		return NULL;
@@ -1717,7 +1717,7 @@ static PyObject *PySHFileOperation(PyObject *self, PyObject *args)
 
 }
 
-// @pymethod <o PyIShellFolder>|shell|SHGetDesktopFolder|Retrieves the <o PyIShellFolder> interface for the desktop folder, which is the root of the shell's namespace. 
+// @pymethod <o PyIShellFolder>|shell|SHGetDesktopFolder|Retrieves the <o PyIShellFolder> interface for the desktop folder, which is the root of the shell's namespace.
 static PyObject *PySHGetDesktopFolder(PyObject *self, PyObject *args)
 {
 	if (!PyArg_ParseTuple(args, ":SHGetDesktopFolder"))
@@ -1737,7 +1737,7 @@ static PyObject *PySHUpdateImage(PyObject *self, PyObject *args)
 	PyObject *obHash;
 	UINT flags;
 	int index, imageIndex;
-	if(!PyArg_ParseTuple(args, "Oiii:SHUpdateImage", 
+	if(!PyArg_ParseTuple(args, "Oiii:SHUpdateImage",
 			&obHash,		// @pyparm string|HashItem||Full path of file containing the icon as returned by <om PyIExtractIcon.GetIconLocation>
 			&index,			// @pyparm int|Index||Index of the icon in the above file
 			&flags,			// @pyparm int|Flags||GIL_NOTFILENAME or GIL_SIMULATEDOC
@@ -1755,13 +1755,13 @@ static PyObject *PySHUpdateImage(PyObject *self, PyObject *args)
 	return Py_None;
 }
 
-// @pymethod |shell|SHChangeNotify|Notifies the system of an event that an application has performed. An application should use this function if it performs an action that may affect the shell. 
+// @pymethod |shell|SHChangeNotify|Notifies the system of an event that an application has performed. An application should use this function if it performs an action that may affect the shell.
 static PyObject *PySHChangeNotify(PyObject *self, PyObject *args)
 {
 	LONG wEventID;
 	UINT flags, datatype;
 	PyObject *ob1, *ob2 = Py_None, *ret=NULL;
-	if(!PyArg_ParseTuple(args, "iiO|O:SHChangeNotify", 
+	if(!PyArg_ParseTuple(args, "iiO|O:SHChangeNotify",
 			&wEventID,	// @pyparm int|EventId||Combination of shellcon.SHCNE_* constants
 			&flags,		// @pyparm int|Flags||Combination of shellcon.SHCNF_* constants that specify type of last 2 parameters
 						// Only one of the type flags may be specified, combined with one of the SHCNF_FLUSH* flags
@@ -1775,7 +1775,7 @@ static PyObject *PySHChangeNotify(PyObject *self, PyObject *args)
 	switch (datatype){
 		case SHCNF_IDLIST:
 			// SHCNE_ASSOCCHANGED wants both to be NULL!
-			bsuccess=PyObject_AsPIDL(ob1, (ITEMIDLIST **)&p1, TRUE) 
+			bsuccess=PyObject_AsPIDL(ob1, (ITEMIDLIST **)&p1, TRUE)
 				  && PyObject_AsPIDL(ob2, (ITEMIDLIST **)&p2, TRUE);
 			break;
 		case SHCNF_DWORD:
@@ -1799,7 +1799,7 @@ static PyObject *PySHChangeNotify(PyObject *self, PyObject *args)
 			break;
 		case SHCNF_PATHW:
 		case SHCNF_PRINTERW:
-			bsuccess=PyWinObject_AsWCHAR(ob1, (WCHAR **)&p1, FALSE) 
+			bsuccess=PyWinObject_AsWCHAR(ob1, (WCHAR **)&p1, FALSE)
 				  && PyWinObject_AsWCHAR(ob2, (WCHAR **)&p2, TRUE);
 			break;
 		default:
@@ -1909,7 +1909,7 @@ static PyObject *PyDragQueryFile(PyObject *self, PyObject *args)
 	HDROP hglobal;
 	PyObject *obhglobal;
 	UINT index;
-	if(!PyArg_ParseTuple(args, "Oi:DragQueryFile", 
+	if(!PyArg_ParseTuple(args, "Oi:DragQueryFile",
 			&obhglobal, // @pyparm <o PyHANDLE>|hglobal||The HGLOBAL object - generally obtained via the 'data_handle' property of a <o PySTGMEDIUM> object.
 			&index)) // @pyparm int|index||The index to retrieve.  If -1, the result if an integer representing the valid index values.
 		return NULL;
@@ -1935,7 +1935,7 @@ static PyObject *PyDragQueryFileW(PyObject *self, PyObject *args)
 	HDROP hglobal;
 	PyObject *obhglobal;
 	UINT index;
-	if(!PyArg_ParseTuple(args, "Oi:DragQueryFileW", 
+	if(!PyArg_ParseTuple(args, "Oi:DragQueryFileW",
 			&obhglobal, // @pyparm <o PyHANDLE>|hglobal||The HGLOBAL object - generally obtained via the 'data_handle' property of a <o PySTGMEDIUM> object.
 			&index)) // @pyparm int|index||The index to retrieve.  If -1, the result if an integer representing the valid index values.
 		return NULL;
@@ -1962,7 +1962,7 @@ static PyObject *PyDragQueryPoint(PyObject *self, PyObject *args)
 {
 	HDROP hglobal;
 	PyObject *obhglobal;
-	if(!PyArg_ParseTuple(args, "O:DragQueryFile", 
+	if(!PyArg_ParseTuple(args, "O:DragQueryFile",
 			&obhglobal)) // @pyparm <o PyHANDLE>|hglobal||The HGLOBAL object - generally obtained the 'data_handle' property of a <o PySTGMEDIUM>
 		return NULL;
 	if (!PyWinObject_AsHANDLE(obhglobal, (HANDLE *)&hglobal))
@@ -1982,13 +1982,13 @@ static PyObject *PySHGetInstanceExplorer(PyObject *self, PyObject *args)
 	if (FAILED(hr))
 		return OleSetOleError(hr);
 	return PyCom_PyObjectFromIUnknown(pUnk, IID_IUnknown, FALSE);
-	// @comm SHGetInstanceExplorer succeeds only if it is called from within 
-	// an Explorer.exe or Iexplorer.exe process. It is typically used by 
-	// components that run in the context of the Web browser (Iexplore.exe). 
-	// However, it is also useful when Explorer.exe has been configured to 
-	// run all folders in a second process. SHGetInstanceExplorer fails if 
-	// the component is running in the default Explorer.exe process. There 
-	// is no need to hold a reference to this process, as it is shut down 
+	// @comm SHGetInstanceExplorer succeeds only if it is called from within
+	// an Explorer.exe or Iexplorer.exe process. It is typically used by
+	// components that run in the context of the Web browser (Iexplore.exe).
+	// However, it is also useful when Explorer.exe has been configured to
+	// run all folders in a second process. SHGetInstanceExplorer fails if
+	// the component is running in the default Explorer.exe process. There
+	// is no need to hold a reference to this process, as it is shut down
 	// only when the user logs out.
 }
 
@@ -2017,7 +2017,7 @@ static PyObject *PyStringAsPIDL(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "s#:StringAsPIDL", &szPIDL, &pidllen))
 		return NULL;
 	return PyObject_FromPIDL((LPCITEMIDLIST)szPIDL, FALSE);
-}	
+}
 
 // @pymethod <o PyIDL>|shell|AddressAsPIDL|Given the address of a PIDL in memory, return a PIDL object (ie, a list of strings)
 static PyObject *PyAddressAsPIDL(PyObject *self, PyObject *args)
@@ -2066,8 +2066,8 @@ static PyObject *PySHGetSettings(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "|l:SHGetSettings", &mask))
 		return NULL;
 
-	// @comm This method is only available in shell version 4.71.  If the 
-	// function is not available, a COM Exception with HRESULT=E_NOTIMPL 
+	// @comm This method is only available in shell version 4.71.  If the
+	// function is not available, a COM Exception with HRESULT=E_NOTIMPL
 	// will be raised.
 	if (pfnSHGetSettings==NULL)
 		return OleSetOleError(E_NOTIMPL);
@@ -2079,7 +2079,7 @@ static PyObject *PySHGetSettings(PyObject *self, PyObject *args)
 
 	PyObject *ret = PyDict_New();
 	CHECK_SET_VAL(SSF_DESKTOPHTML, mask, fDesktopHTML);
-	
+
 	CHECK_SET_VAL(SSF_DONTPRETTYPATH, mask, fDontPrettyPath);
 	CHECK_SET_VAL(SSF_DOUBLECLICKINWEBVIEW, mask, fDoubleClickInWebView);
 	CHECK_SET_VAL(SSF_HIDEICONS, mask, fHideIcons);
@@ -2170,7 +2170,7 @@ static PyObject *PyFILEGROUPDESCRIPTORAsString(PyObject *self, PyObject *args)
 						 sub->ob_type->tp_name);
 			goto loop_failed;
 		}
-		
+
 		attr = PyMapping_GetItemString(sub, "dwFlags");
 		if (attr==NULL) PyErr_Clear();
 		if (attr && attr != Py_None) {
@@ -2179,7 +2179,7 @@ static PyObject *PyFILEGROUPDESCRIPTORAsString(PyObject *self, PyObject *args)
 		}
 		Py_XDECREF(attr);
 		if (!ok) goto loop_failed;
-		
+
 		attr = PyMapping_GetItemString(sub, "clsid");
 		if (attr==NULL) PyErr_Clear();
 		if (attr && attr != Py_None) {
@@ -2362,7 +2362,7 @@ static PyObject *PyStringAsFILEGROUPDESCRIPTOR(PyObject *self, PyObject *args)
 		val = PyInt_FromLong(fd->dwFlags);
 		if (val) PyDict_SetItemString(sub, "dwFlags", val);
 		Py_XDECREF(val);
-		
+
 		if (fd->dwFlags & FD_CLSID) {
 			val = PyWinObject_FromIID(fd->clsid);
 			if (val) PyDict_SetItemString(sub, "clsid", val);
@@ -2449,7 +2449,7 @@ static PyObject *PyShellExecuteEx(PyObject *self, PyObject *args, PyObject *kw)
 	// @pyparm int|fMask|0|The default mask for the structure.  Other
 	// masks may be added based on what paramaters are supplied.
 	if (!PyArg_ParseTupleAndKeywords(args, kw, "|lOOOOOlOOOOOO", kw_items,
-									&info.fMask, 
+									&info.fMask,
 									 &obhwnd, // @pyparm <o PyHANDLE>|hwnd|0|
 									 &obVerb, // @pyparm string|lpVerb||
 									 &obFile, // @pyparm string|lpFile||
@@ -2523,7 +2523,7 @@ static PyObject *PyShellExecuteEx(PyObject *self, PyObject *args, PyObject *kw)
 		// in the structure.  Currently this is "hInstApp" and "hProcess"
 	} else
 		PyWin_SetAPIError("ShellExecuteEx");
-	
+
 done:
 	PyWinObject_FreeString((char *)info.lpVerb);
 	PyWinObject_FreeString((char *)info.lpFile);
@@ -2641,7 +2641,7 @@ static PyObject *PySHILCreateFromPath(PyObject *self, PyObject *args)
 
 	if (pfnSHILCreateFromPath==NULL)
 		return OleSetOleError(E_NOTIMPL);
-	if (!PyArg_ParseTuple(args, "Ok:SHILCreateFromPath", 
+	if (!PyArg_ParseTuple(args, "Ok:SHILCreateFromPath",
 		&obpath,		// @pyparm <o PyUnicode>|Path||The path whose PIDL will be returned
 		&flags))		// @pyparm int|Flags||A combination of SFGAO_* constants as used with GetAttributesOf
 		return NULL;
@@ -3540,7 +3540,7 @@ static struct PyMethodDef shell_methods[]=
     { "SHChangeNotify", PySHChangeNotify, 1 }, // @pymeth SHChangeNotify|Notifies the system of an event that an application has performed. An application should use this function if it performs an action that may affect the shell.
     { "SHEmptyRecycleBin", PySHEmptyRecycleBin, 1 }, // @pymeth SHEmptyRecycleBin|Empties the recycle bin on the specified drive.
 	{ "SHQueryRecycleBin", PySHQueryRecycleBin, 1}, // @pymeth SHQueryRecycleBin|Returns the number of items and total size of recycle bin
-	{ "SHGetDesktopFolder", PySHGetDesktopFolder, 1}, // @pymeth SHGetDesktopFolder|Retrieves the <o PyIShellFolder> interface for the desktop folder, which is the root of the shell's namespace. 
+	{ "SHGetDesktopFolder", PySHGetDesktopFolder, 1}, // @pymeth SHGetDesktopFolder|Retrieves the <o PyIShellFolder> interface for the desktop folder, which is the root of the shell's namespace.
     { "SHUpdateImage", PySHUpdateImage, 1}, // @pymeth SHUpdateImage|Notifies the shell that an image in the system image list has changed.
     { "SHChangeNotify", PySHChangeNotify, 1}, // @pymeth SHChangeNotify|Notifies the system of an event that an application has performed.
 	{ "SHChangeNotifyRegister", PySHChangeNotifyRegister, 1}, // @pymeth SHChangeNotifyRegister|Registers a window that receives notifications from the file system or shell.
@@ -3551,7 +3551,7 @@ static struct PyMethodDef shell_methods[]=
 	{ "SHCreateItemInKnownFolder", PySHCreateItemInKnownFolder, 1}, // @pymeth SHCreateItemInKnownFolder|Creates a Shell item object for a single file that exists inside a known folder.
 	{ "SHCreateItemWithParent", PySHCreateItemWithParent, 1}, // @pymeth SHCreateItemWithParent|Create a Shell item, given a parent folder and a child item ID.
 	{ "SHGetIDListFromObject", PySHGetIDListFromObject, 1}, // @pymeth SHGetIDListFromObject|Retrieves the PIDL of an object.
-	{ "SHGetInstanceExplorer", PySHGetInstanceExplorer, 1}, // @pymeth SHGetInstanceExplorer|Allows components that run in a Web browser (Iexplore.exe) or a nondefault Windows® Explorer (Explorer.exe) process to hold a reference to the process. The components can use the reference to prevent the process from closing prematurely.
+	{ "SHGetInstanceExplorer", PySHGetInstanceExplorer, 1}, // @pymeth SHGetInstanceExplorer|Allows components that run in a Web browser (Iexplore.exe) or a nondefault WindowsÂ® Explorer (Explorer.exe) process to hold a reference to the process. The components can use the reference to prevent the process from closing prematurely.
 	{ "SHFileOperation", PySHFileOperation, 1}, // @pymeth SHFileOperation|Copies, moves, renames, or deletes a file system object.
 	{ "StringAsCIDA", PyStringAsCIDA, 1}, // @pymeth StringAsCIDA|Given a CIDA as a raw string, return pidl_folder, [pidl_children, ...]
 	{ "CIDAAsString", PyCIDAAsString, 1}, // @pymeth CIDAAsString|Given a (pidl, child_pidls) object, return a CIDA as a string
@@ -3793,7 +3793,7 @@ PYWIN_MODULE_INIT_FUNC(shell)
 	ADD_IID(CLSID_Printers);
 	ADD_IID(CLSID_MyDocuments);
 	ADD_IID(CLSID_DragDropHelper);
-	
+
 	ADD_IID(FMTID_Intshcut);
 	ADD_IID(FMTID_InternetSite);
 
@@ -3872,7 +3872,7 @@ PYWIN_MODULE_INIT_FUNC(shell)
 
 	ADD_IID(BHID_SFObject);
 	ADD_IID(BHID_SFUIObject);
-	ADD_IID(BHID_SFViewObject);	
+	ADD_IID(BHID_SFViewObject);
 	ADD_IID(BHID_Storage);
 	ADD_IID(BHID_Stream);
 	ADD_IID(BHID_LinkTargetItem);
@@ -3992,7 +3992,7 @@ PYWIN_MODULE_INIT_FUNC(shell)
 	ADD_IID(FOLDERID_UserProgramFilesCommon);
 	ADD_IID(FOLDERID_UsersLibraries);
 	ADD_IID(FOLDERID_VideosLibrary);
-#endif // WINVER	
+#endif // WINVER
 
 	// Known folder types
 	ADD_IID(FOLDERTYPEID_Invalid);

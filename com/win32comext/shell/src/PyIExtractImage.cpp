@@ -22,7 +22,7 @@ BOOL PyWinObject_AsSIZE(PyObject *obsize, SIZE *psize)
 		PyErr_SetString(PyExc_TypeError, "SIZE must be a tuple of 2 ints (x,y)");
 		return FALSE;
 		}
-	return PyArg_ParseTuple(obsize, "ll;SIZE must be a tuple of 2 ints (x,y)", 
+	return PyArg_ParseTuple(obsize, "ll;SIZE must be a tuple of 2 ints (x,y)",
 		&psize->cx, &psize->cy);
 }
 
@@ -103,7 +103,7 @@ PyObject *PyIExtractImage::Extract(PyObject *self, PyObject *args)
 
 	if ( FAILED(hr) )
 		return PyCom_BuildPyException(hr, pIEI, IID_IExtractImage );
-	
+
 	return PyWinObject_FromHANDLE((HANDLE)hBmpThumbnail);
 	//return Py_BuildValue("i", hBmpThumbnail);
 	//return PyLong_FromVoidPtr((void*)hBmpThumbnail);

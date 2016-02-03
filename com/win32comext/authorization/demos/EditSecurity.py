@@ -77,14 +77,14 @@ class SecurityInformation(win32com.server.policy.DesignatedWrapPolicy):
             ## Should not be true for file objects.  Usually only used with DS objects that support security for
             ## their properties
             raise NotImplementedError("Object type is not supported")
-        
+
         if os.path.isdir(self.FileName):
             file_append_data_desc='Create subfolders'
             file_write_data_desc='Create Files'
         else:
             file_append_data_desc='Append data'
             file_write_data_desc='Write data'
-            
+
         accessrights=[(IID_NULL, FILE_GENERIC_READ, 'Generic read', SI_ACCESS_GENERAL|SI_ACCESS_SPECIFIC|OBJECT_INHERIT_ACE|CONTAINER_INHERIT_ACE),
                       (IID_NULL, FILE_GENERIC_WRITE, 'Generic write', SI_ACCESS_GENERAL|SI_ACCESS_SPECIFIC|OBJECT_INHERIT_ACE|CONTAINER_INHERIT_ACE),
                       (IID_NULL, win32con.DELETE, 'Delete', SI_ACCESS_SPECIFIC|OBJECT_INHERIT_ACE|CONTAINER_INHERIT_ACE),
@@ -124,7 +124,7 @@ class SecurityInformation(win32com.server.policy.DesignatedWrapPolicy):
         """Creates an ACL editor dialog based on parameters returned by interface methods"""
         isi=pythoncom.WrapObject(self, authorization.IID_ISecurityInformation, pythoncom.IID_IUnknown)
         authorization.EditSecurity(owner_hwnd, isi)
-        
+
 ## folder permissions
 temp_dir=win32api.GetTempPath()
 dir_name=win32api.GetTempFileName(temp_dir,'isi')[0]

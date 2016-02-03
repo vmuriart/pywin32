@@ -74,7 +74,7 @@ class TestSSPI(unittest.TestCase):
 
     def testEncryptNTLM(self):
         self._doTestEncrypt("NTLM")
-    
+
     def testEncryptKerberos(self):
         applyHandlingSkips(self._doTestEncrypt, "Kerberos")
 
@@ -84,7 +84,7 @@ class TestSSPI(unittest.TestCase):
 
         pkg_size_info=sspiclient.ctxt.QueryContextAttributes(sspicon.SECPKG_ATTR_SIZES)
         msg=str2bytes('some data to be encrypted ......')
-        
+
         sigsize=pkg_size_info['MaxSignature']
         sigbuf=win32security.PySecBufferDescType()
         sigbuf.append(win32security.PySecBufferType(len(msg), sspicon.SECBUFFER_DATA))
@@ -111,7 +111,7 @@ class TestSSPI(unittest.TestCase):
 
     def testSignNTLM(self):
         self._doTestSign("NTLM")
-    
+
     def testSignKerberos(self):
         applyHandlingSkips(self._doTestSign, "Kerberos")
 

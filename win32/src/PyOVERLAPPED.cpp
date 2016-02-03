@@ -106,13 +106,13 @@ PYWINTYPES_EXPORT PyTypeObject PyOVERLAPPEDType =
 #define OFF(e) offsetof(PyOVERLAPPED, e)
 
 /*static*/ struct PYWINTYPES_EXPORT PyMemberDef PyOVERLAPPED::members[] = {
-	{"Offset",		T_ULONG,	OFF(m_overlapped.Offset)},		// @prop integer|Offset|Specifies a file position at which to start the transfer. The file position is a byte offset from the start of the file. The calling process sets this member before calling the ReadFile or WriteFile function. This member is ignored when reading from or writing to named pipes and communications devices.
+	{"Offset",		T_ULONG,	OFF(m_overlapped.Offset)},		// @prop integer|Offset|Specifies a file position at which to start the transfer. The file position is a byte offset from the start of the file. The calling process sets this member before calling the ReadFileÂ or WriteFile function. This member is ignored when reading from or writing to named pipes and communications devices.
 	{"OffsetHigh",	T_ULONG,	OFF(m_overlapped.OffsetHigh)},	// @prop integer|OffsetHigh|Specifies the high word of the byte offset at which to start the transfer.
 	{"object",		T_OBJECT,	OFF(m_overlapped.obState)},		// @prop object|object|Any python object that you want to attach to your overlapped I/O request.
 	{"dword",		T_ULONG,	OFF(m_overlapped.dwValue)},		// @prop int|dword|An integer buffer that may be used by overlapped functions (eg, <om win32file.WaitCommEvent>)
 
 	// These are handled by PyOVERLAPPED::getattro, included here so they show up as attributes
-	{"hEvent",		T_OBJECT,	OFF(obDummy)},					// @prop <o PyHANDLE>|hEvent|Identifies an event set to the signaled state when the transfer has been completed. The calling process sets this member before calling the <om win32file.ReadFile>, <om win32file.WriteFile>, <om win32pipe.ConnectNamedPipe>, or <om win32pipe.TransactNamedPipe> function.
+	{"hEvent",		T_OBJECT,	OFF(obDummy)},					// @prop <o PyHANDLE>|hEvent|Identifies an event set to the signaled state when the transfer has been completed. The calling process sets this member before calling the <om win32file.ReadFile>, <om win32file.WriteFile>, <om win32pipe.ConnectNamedPipe>, or <om win32pipe.TransactNamedPipe>Â function.
 	{"Internal",	T_OBJECT,	OFF(obDummy)},					// @prop integer|Internal|Reserved for operating system use. (pointer-sized value)
 	{"InternalHigh",T_OBJECT,	OFF(obDummy)},					// @prop integer|InternalHigh|Reserved for operating system use. (pointer-sized value)
 	{NULL}
@@ -203,7 +203,7 @@ int PyOVERLAPPED::setattro(PyObject *self, PyObject *obname, PyObject *v)
 	if (strcmp("hEvent", name)==0) {
 		PyOVERLAPPED *pO = (PyOVERLAPPED *)self;
 		// Use an intermediate so the original isn't lost if conversion fails
-		HANDLE htmp;	
+		HANDLE htmp;
 		if (!PyWinObject_AsHANDLE(v, &htmp))
 			return -1;
 		pO->m_overlapped.hEvent=htmp;

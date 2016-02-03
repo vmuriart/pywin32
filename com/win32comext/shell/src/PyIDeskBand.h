@@ -29,7 +29,7 @@ protected:
 
 	// IDeskBand
 	STDMETHOD(GetBandInfo)(
-		DWORD dwBandID, 
-		DWORD dwViewMode, 
+		DWORD dwBandID,
+		DWORD dwViewMode,
 		DESKBANDINFO* pdbi);
 };

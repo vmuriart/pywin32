@@ -25,7 +25,7 @@ class AXEngine:
     return self.eScript.GetScriptDispatch(name)
   def AddNamedItem(self, item, flags):
     return self.eScript.AddNamedItem(item, flags)
-  # Some helpers.  
+  # Some helpers.
   def AddCode(self, code, flags=0):
     self.eParse.ParseScriptText(code, None, None, None, 0, 0, flags)
   def EvalCode(self, code):
@@ -33,7 +33,7 @@ class AXEngine:
   def Start(self):
     # Should maybe check state?
     # Do I need to transition through?
-    self.eScript.SetScriptState(axscript.SCRIPTSTATE_STARTED) 
+    self.eScript.SetScriptState(axscript.SCRIPTSTATE_STARTED)
 #    self.eScript.SetScriptState(axscript.SCRIPTSTATE_CONNECTED)
 
   def Close(self):
@@ -117,7 +117,7 @@ class AXSite:
     pass
 
   def OnScriptError(self, errorInterface):
-    return winerror.S_FALSE  
+    return winerror.S_FALSE
 
   def OnEnterScript(self):
     pass

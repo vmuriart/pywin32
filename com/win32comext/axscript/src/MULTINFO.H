@@ -17,9 +17,9 @@
 
 #ifdef __cplusplus
 extern "C"{
-#endif 
+#endif
 
-/* Forward Declarations */ 
+/* Forward Declarations */
 
 #ifndef __IProvideClassInfo_FWD_DEFINED__
 #define __IProvideClassInfo_FWD_DEFINED__
@@ -43,14 +43,14 @@ typedef interface IProvideMultipleClassInfo IProvideMultipleClassInfo;
 #include "oaidl.h"
 
 void __RPC_FAR * __RPC_USER MIDL_user_allocate(size_t);
-void __RPC_USER MIDL_user_free( void __RPC_FAR * ); 
+void __RPC_USER MIDL_user_free( void __RPC_FAR * );
 
 /****************************************
  * Generated header for interface: __MIDL__intf_0000
  * at Fri Mar 29 16:59:57 1996
  * using MIDL 2.00.0102
  ****************************************/
-/* [local] */ 
+/* [local] */
 
 
 #ifndef _OLECTL_H_
@@ -70,42 +70,42 @@ extern RPC_IF_HANDLE __MIDL__intf_0000_v0_0_s_ifspec;
  * at Fri Mar 29 16:59:57 1996
  * using MIDL 2.00.0102
  ****************************************/
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 
 EXTERN_C const IID IID_IProvideClassInfo;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     interface IProvideClassInfo : public IUnknown
     {
     public:
-        virtual HRESULT __stdcall GetClassInfo( 
+        virtual HRESULT __stdcall GetClassInfo(
             /* [out] */ LPTYPEINFO __RPC_FAR *ppTI) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IProvideClassInfoVtbl
     {
-        
-        HRESULT ( __stdcall __RPC_FAR *QueryInterface )( 
+
+        HRESULT ( __stdcall __RPC_FAR *QueryInterface )(
             IProvideClassInfo __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
-        
-        ULONG ( __stdcall __RPC_FAR *AddRef )( 
+
+        ULONG ( __stdcall __RPC_FAR *AddRef )(
             IProvideClassInfo __RPC_FAR * This);
-        
-        ULONG ( __stdcall __RPC_FAR *Release )( 
+
+        ULONG ( __stdcall __RPC_FAR *Release )(
             IProvideClassInfo __RPC_FAR * This);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetClassInfo )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetClassInfo )(
             IProvideClassInfo __RPC_FAR * This,
             /* [out] */ LPTYPEINFO __RPC_FAR *ppTI);
-        
+
     } IProvideClassInfoVtbl;
 
     interface IProvideClassInfo
@@ -113,7 +113,7 @@ EXTERN_C const IID IID_IProvideClassInfo;
         CONST_VTBL struct IProvideClassInfoVtbl __RPC_FAR *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -138,7 +138,7 @@ EXTERN_C const IID IID_IProvideClassInfo;
 
 
 
-HRESULT __stdcall IProvideClassInfo_GetClassInfo_Proxy( 
+HRESULT __stdcall IProvideClassInfo_GetClassInfo_Proxy(
     IProvideClassInfo __RPC_FAR * This,
     /* [out] */ LPTYPEINFO __RPC_FAR *ppTI);
 
@@ -162,48 +162,48 @@ void __RPC_STUB IProvideClassInfo_GetClassInfo_Stub(
  * at Fri Mar 29 16:59:57 1996
  * using MIDL 2.00.0102
  ****************************************/
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 
 EXTERN_C const IID IID_IProvideClassInfo2;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     interface IProvideClassInfo2 : public IProvideClassInfo
     {
     public:
-        virtual HRESULT __stdcall GetGUID( 
+        virtual HRESULT __stdcall GetGUID(
             /* [in] */ DWORD dwGuidKind,
             /* [out] */ GUID __RPC_FAR *pGUID) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IProvideClassInfo2Vtbl
     {
-        
-        HRESULT ( __stdcall __RPC_FAR *QueryInterface )( 
+
+        HRESULT ( __stdcall __RPC_FAR *QueryInterface )(
             IProvideClassInfo2 __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
-        
-        ULONG ( __stdcall __RPC_FAR *AddRef )( 
+
+        ULONG ( __stdcall __RPC_FAR *AddRef )(
             IProvideClassInfo2 __RPC_FAR * This);
-        
-        ULONG ( __stdcall __RPC_FAR *Release )( 
+
+        ULONG ( __stdcall __RPC_FAR *Release )(
             IProvideClassInfo2 __RPC_FAR * This);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetClassInfo )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetClassInfo )(
             IProvideClassInfo2 __RPC_FAR * This,
             /* [out] */ LPTYPEINFO __RPC_FAR *ppTI);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetGUID )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetGUID )(
             IProvideClassInfo2 __RPC_FAR * This,
             /* [in] */ DWORD dwGuidKind,
             /* [out] */ GUID __RPC_FAR *pGUID);
-        
+
     } IProvideClassInfo2Vtbl;
 
     interface IProvideClassInfo2
@@ -211,7 +211,7 @@ EXTERN_C const IID IID_IProvideClassInfo2;
         CONST_VTBL struct IProvideClassInfo2Vtbl __RPC_FAR *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -240,7 +240,7 @@ EXTERN_C const IID IID_IProvideClassInfo2;
 
 
 
-HRESULT __stdcall IProvideClassInfo2_GetGUID_Proxy( 
+HRESULT __stdcall IProvideClassInfo2_GetGUID_Proxy(
     IProvideClassInfo2 __RPC_FAR * This,
     /* [in] */ DWORD dwGuidKind,
     /* [out] */ GUID __RPC_FAR *pGUID);
@@ -262,7 +262,7 @@ void __RPC_STUB IProvideClassInfo2_GetGUID_Stub(
  * at Fri Mar 29 16:59:57 1996
  * using MIDL 2.00.0102
  ****************************************/
-/* [local] */ 
+/* [local] */
 
 
 #endif // 0
@@ -282,7 +282,7 @@ extern RPC_IF_HANDLE __MIDL__intf_0053_v0_0_s_ifspec;
  * at Fri Mar 29 16:59:57 1996
  * using MIDL 2.00.0102
  ****************************************/
-/* [unique][uuid][object] */ 
+/* [unique][uuid][object] */
 
 
 #define MULTICLASSINFO_GETTYPEINFO           0x00000001
@@ -294,14 +294,14 @@ extern RPC_IF_HANDLE __MIDL__intf_0053_v0_0_s_ifspec;
 EXTERN_C const IID IID_IProvideMultipleClassInfo;
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-    
+
     interface IProvideMultipleClassInfo : public IProvideClassInfo2
     {
     public:
-        virtual HRESULT __stdcall GetMultiTypeInfoCount( 
+        virtual HRESULT __stdcall GetMultiTypeInfoCount(
             /* [out] */ ULONG __RPC_FAR *pcti) = 0;
-        
-        virtual HRESULT __stdcall GetInfoOfIndex( 
+
+        virtual HRESULT __stdcall GetInfoOfIndex(
             /* [in] */ ULONG iti,
             /* [in] */ DWORD dwFlags,
             /* [out] */ ITypeInfo __RPC_FAR *__RPC_FAR *pptiCoClass,
@@ -309,39 +309,39 @@ EXTERN_C const IID IID_IProvideMultipleClassInfo;
             /* [out] */ ULONG __RPC_FAR *pcdispidReserved,
             /* [out] */ IID __RPC_FAR *piidPrimary,
             /* [out] */ IID __RPC_FAR *piidSource) = 0;
-        
+
     };
-    
+
 #else 	/* C style interface */
 
     typedef struct IProvideMultipleClassInfoVtbl
     {
-        
-        HRESULT ( __stdcall __RPC_FAR *QueryInterface )( 
+
+        HRESULT ( __stdcall __RPC_FAR *QueryInterface )(
             IProvideMultipleClassInfo __RPC_FAR * This,
             /* [in] */ REFIID riid,
             /* [out] */ void __RPC_FAR *__RPC_FAR *ppvObject);
-        
-        ULONG ( __stdcall __RPC_FAR *AddRef )( 
+
+        ULONG ( __stdcall __RPC_FAR *AddRef )(
             IProvideMultipleClassInfo __RPC_FAR * This);
-        
-        ULONG ( __stdcall __RPC_FAR *Release )( 
+
+        ULONG ( __stdcall __RPC_FAR *Release )(
             IProvideMultipleClassInfo __RPC_FAR * This);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetClassInfo )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetClassInfo )(
             IProvideMultipleClassInfo __RPC_FAR * This,
             /* [out] */ LPTYPEINFO __RPC_FAR *ppTI);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetGUID )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetGUID )(
             IProvideMultipleClassInfo __RPC_FAR * This,
             /* [in] */ DWORD dwGuidKind,
             /* [out] */ GUID __RPC_FAR *pGUID);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetMultiTypeInfoCount )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetMultiTypeInfoCount )(
             IProvideMultipleClassInfo __RPC_FAR * This,
             /* [out] */ ULONG __RPC_FAR *pcti);
-        
-        HRESULT ( __stdcall __RPC_FAR *GetInfoOfIndex )( 
+
+        HRESULT ( __stdcall __RPC_FAR *GetInfoOfIndex )(
             IProvideMultipleClassInfo __RPC_FAR * This,
             /* [in] */ ULONG iti,
             /* [in] */ DWORD dwFlags,
@@ -350,7 +350,7 @@ EXTERN_C const IID IID_IProvideMultipleClassInfo;
             /* [out] */ ULONG __RPC_FAR *pcdispidReserved,
             /* [out] */ IID __RPC_FAR *piidPrimary,
             /* [out] */ IID __RPC_FAR *piidSource);
-        
+
     } IProvideMultipleClassInfoVtbl;
 
     interface IProvideMultipleClassInfo
@@ -358,7 +358,7 @@ EXTERN_C const IID IID_IProvideMultipleClassInfo;
         CONST_VTBL struct IProvideMultipleClassInfoVtbl __RPC_FAR *lpVtbl;
     };
 
-    
+
 
 #ifdef COBJMACROS
 
@@ -394,7 +394,7 @@ EXTERN_C const IID IID_IProvideMultipleClassInfo;
 
 
 
-HRESULT __stdcall IProvideMultipleClassInfo_GetMultiTypeInfoCount_Proxy( 
+HRESULT __stdcall IProvideMultipleClassInfo_GetMultiTypeInfoCount_Proxy(
     IProvideMultipleClassInfo __RPC_FAR * This,
     /* [out] */ ULONG __RPC_FAR *pcti);
 
@@ -406,7 +406,7 @@ void __RPC_STUB IProvideMultipleClassInfo_GetMultiTypeInfoCount_Stub(
     DWORD *_pdwStubPhase);
 
 
-HRESULT __stdcall IProvideMultipleClassInfo_GetInfoOfIndex_Proxy( 
+HRESULT __stdcall IProvideMultipleClassInfo_GetInfoOfIndex_Proxy(
     IProvideMultipleClassInfo __RPC_FAR * This,
     /* [in] */ ULONG iti,
     /* [in] */ DWORD dwFlags,

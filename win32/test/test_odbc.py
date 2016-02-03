@@ -23,7 +23,7 @@ class TestStuff(unittest.TestCase):
         except KeyError:
             # Create a local MSAccess DB for testing.
             self.db_filename = tempfile.NamedTemporaryFile().name + '.mdb'
-    
+
             # Create a brand-new database - what is the story with these?
             for suffix in (".36", ".35", ".30"):
                 try:
@@ -33,15 +33,15 @@ class TestStuff(unittest.TestCase):
                     pass
             else:
                 raise TestSkipped("Can't find a DB engine")
-    
+
             workspace = dbe.Workspaces(0)
-    
-            newdb = workspace.CreateDatabase(self.db_filename, 
+
+            newdb = workspace.CreateDatabase(self.db_filename,
                                              constants.dbLangGeneral,
                                              constants.dbEncrypt)
-    
+
             newdb.Close()
-    
+
             conn_str = "Driver={Microsoft Access Driver (*.mdb)};dbq=%s;Uid=;Pwd=;" \
                        % (self.db_filename,)
         ## print 'Connection string:', conn_str
@@ -134,7 +134,7 @@ class TestStuff(unittest.TestCase):
         except AttributeError:
             big = sys.maxint
         self._test_val('intfield', big)
-        
+
     def testFloat(self):
         self._test_val('floatfield', 1.01)
         self._test_val('floatfield', 0)

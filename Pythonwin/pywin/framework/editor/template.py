@@ -29,7 +29,7 @@ class EditorTemplateBase(ParentEditorTemplate):
 	def InitialUpdateFrame(self, frame, doc, makeVisible=1):
 		self._obj_.InitialUpdateFrame(frame, doc, makeVisible) # call default handler.
 		doc._UpdateUIForState()
-		
+
 	def GetPythonPropertyPages(self):
 		"""Returns a list of property pages
 		"""

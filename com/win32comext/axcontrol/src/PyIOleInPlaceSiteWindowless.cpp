@@ -188,7 +188,7 @@ PyObject *PyIOleInPlaceSiteWindowless::InvalidateRect(PyObject *self, PyObject *
 	// @pyparm (int, int, int, int)|rect||
 	// @pyparm int|fErase||Description for fErase
 	BOOL fErase;
-	if ( !PyArg_ParseTuple(args, "(llll)i:InvalidateRect", 
+	if ( !PyArg_ParseTuple(args, "(llll)i:InvalidateRect",
 		&r.left, &r.top, &r.right, &r.bottom, &fErase) )
 		return NULL;
 	HRESULT hr;
@@ -239,7 +239,7 @@ PyObject *PyIOleInPlaceSiteWindowless::ScrollRect(PyObject *self, PyObject *args
 	RECT rectClip;
 	INT dx;
 	INT dy;
-	if ( !PyArg_ParseTuple(args, "ii(llll)(llll):ScrollRect", &dx, &dy, 
+	if ( !PyArg_ParseTuple(args, "ii(llll)(llll):ScrollRect", &dx, &dy,
 		&rectScroll.left, &rectScroll.top, &rectScroll.right, &rectScroll.bottom,
 		&rectClip.left, &rectClip.top, &rectClip.right, &rectClip.bottom))
 		return NULL;
@@ -417,7 +417,7 @@ STDMETHODIMP PyGOleInPlaceSiteWindowless::ScrollRect(
 		/* [in] */ LPCRECT pRectClip)
 {
 	PY_GATEWAY_METHOD;
-	HRESULT hr=InvokeViaPolicy("ScrollRect", NULL, "ii(llll)(llll)", dx, dy, 
+	HRESULT hr=InvokeViaPolicy("ScrollRect", NULL, "ii(llll)(llll)", dx, dy,
 		pRectScroll->left, pRectScroll->top, pRectScroll->right, pRectScroll->bottom,
 		pRectClip->left, pRectClip->top, pRectClip->right, pRectClip->bottom);
 	return hr;

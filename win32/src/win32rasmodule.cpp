@@ -90,7 +90,7 @@ BOOL myPyWinObject_AsRASEAPUSERIDENTITY( PyObject *ob, RASEAPUSERIDENTITY **pp)
 			PyErr_SetString(PyExc_RuntimeError, "Can not locate the 'win2kras' module - has it been imported?");
 			return FALSE;
 		}
-		pfnPyWinObject_AsRASEAPUSERIDENTITY = 
+		pfnPyWinObject_AsRASEAPUSERIDENTITY =
 			(PFNPyWinObject_AsRASEAPUSERIDENTITY)GetProcAddress(hmod, "PyWinObject_AsRASEAPUSERIDENTITY");
 	}
 	if (pfnPyWinObject_AsRASEAPUSERIDENTITY==NULL) {
@@ -418,7 +418,7 @@ PyRasCreatePhonebookEntry( PyObject *self, PyObject *args )
 	DWORD rc;
 	LPTSTR fileName = NULL;
 	PyObject *obhwnd;
-	if (!PyArg_ParseTuple(args, "O|s:CreatePhoneBookEntry", 
+	if (!PyArg_ParseTuple(args, "O|s:CreatePhoneBookEntry",
 	          &obhwnd,  // @pyparm int|hWnd||Handle to the parent window of the dialog box.
 	          &fileName )) // @pyparm string|fileName|None|Specifies the filename of the phonebook entry.  Currently this is ignored.
 		return NULL;
@@ -446,7 +446,7 @@ PyRasDial( PyObject *self, PyObject *args )
 	LPTSTR fileName;
 	HRASCONN hRas = (HRASCONN)0;
 
-	if (!PyArg_ParseTuple(args, "OzOO:Dial", 
+	if (!PyArg_ParseTuple(args, "OzOO:Dial",
 	          &obExtensions,  // @pyparm <o PyRASDIALEXTENSIONS>|dialExtensions||An object providing the RASDIALEXTENSIONS information, or None
 	          &fileName, // @pyparm string|fileName||Specifies the filename of the phonebook entry, or None.  Ignored on Win95.
 	          &obParams,  // @pyparm <o RASDIALPARAMS>|RasDialParams||A tuple describing a RASDIALPARAMS structure.
@@ -512,7 +512,7 @@ PyRasEditPhonebookEntry( PyObject *self, PyObject *args )
 	LPTSTR fileName;
 	LPTSTR entryName;
 	PyObject *obhwnd;
-	if (!PyArg_ParseTuple(args, "Ozs:EditPhoneBookEntry", 
+	if (!PyArg_ParseTuple(args, "Ozs:EditPhoneBookEntry",
 	          &obhwnd,  // @pyparm int|hWnd||Handle to the parent window of the dialog box.
 	          &fileName, // @pyparm string|fileName||Specifies the filename of the phonebook entry, or None.  Currently this is ignored.
 	          &entryName )) // @pyparm string|entryName|None|Specifies the name of the phonebook entry to edit
@@ -659,7 +659,7 @@ PyRasGetConnectStatus( PyObject *self, PyObject *args )
 {
 	DWORD rc;
 	PyObject *obras;
-	if (!PyArg_ParseTuple(args, "O:GetConnectStatus", 
+	if (!PyArg_ParseTuple(args, "O:GetConnectStatus",
 	          &obras ))  // @pyparm int|hrasconn||Handle to the RAS session.
 		return NULL;
 	HRASCONN hras;
@@ -681,7 +681,7 @@ PyRasGetEntryDialParams( PyObject *self, PyObject *args )
 	TCHAR *entryName=NULL;
 	PyObject *obfileName, *obentryName, *ret=NULL;
 	DWORD rc;
-	if (!PyArg_ParseTuple(args, "OO:GetEntryDialParams", 
+	if (!PyArg_ParseTuple(args, "OO:GetEntryDialParams",
 	          &obfileName, // @pyparm string|fileName||The filename of the phonebook, or None.
 			  &obentryName))  // @pyparm string|entryName||The name of the entry to retrieve the params for.
 		return NULL;
@@ -701,7 +701,7 @@ PyRasGetEntryDialParams( PyObject *self, PyObject *args )
 				PyWinObject_FromTCHAR(dp.szEntryName),
 				PyWinObject_FromTCHAR(dp.szPhoneNumber),
 				PyWinObject_FromTCHAR(dp.szCallbackNumber),
-				PyWinObject_FromTCHAR(dp.szUserName), 
+				PyWinObject_FromTCHAR(dp.szUserName),
 				PyWinObject_FromTCHAR(dp.szPassword),
 				PyWinObject_FromTCHAR(dp.szDomain),
 				PyBool_FromLong(bPass));
@@ -719,7 +719,7 @@ PyRasGetErrorString( PyObject *self, PyObject *args )
 {
 	DWORD error;
 	DWORD rc;
-	if (!PyArg_ParseTuple(args, "i:GetErrorString", 
+	if (!PyArg_ParseTuple(args, "i:GetErrorString",
 	          &error)) // @pyparm int|error||The error value being queried.
 		return NULL;
 
@@ -736,7 +736,7 @@ PyRasHangUp( PyObject *self, PyObject *args )
 {
 	DWORD rc;
 	HRASCONN hras;
-	if (!PyArg_ParseTuple(args, "O&:HangUp", 
+	if (!PyArg_ParseTuple(args, "O&:HangUp",
 	          PyWinObject_AsHANDLE, &hras)) // @pyparm int|hras||The handle to the RAS connection to be terminated.
 		return NULL;
 
@@ -753,7 +753,7 @@ static PyObject *
 PyRasIsHandleValid( PyObject *self, PyObject *args )
 {
 	HRASCONN hras;
-	if (!PyArg_ParseTuple(args, "O&:IsHandleValid", 
+	if (!PyArg_ParseTuple(args, "O&:IsHandleValid",
 	          PyWinObject_AsHANDLE, &hras)) // @pyparm int|hras||The handle to the RAS connection being checked.
 		return NULL;
 	BOOL bRet = (hras>=0);
@@ -770,7 +770,7 @@ PyRasSetEntryDialParams( PyObject *self, PyObject *args )
 	RASDIALPARAMS dialParams;
 	DWORD rc;
 	BOOL bRemPass;
-	if (!PyArg_ParseTuple(args, "OOi:SetEntryDialParams", 
+	if (!PyArg_ParseTuple(args, "OOi:SetEntryDialParams",
 	          &obfileName, // @pyparm string|fileName||The filename of the phonebook, or None.
 			  &obParams,// @pyparm (tuple)|RasDialParams||A tuple describing a RASDIALPARAMS structure.
 			  &bRemPass)) // @pyparm int|bSavePassword||Indicates whether to remove password from entry's parameters.

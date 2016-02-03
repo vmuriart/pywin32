@@ -261,7 +261,7 @@ PyObject* PyIADs_getattro(PyObject *ob, PyObject *obname)
 	if (!name) return NULL;
 
 	IADs *p = PyIADs::GetI(ob);
-	
+
 	// These are all BSTR values
 	BSTR ret = NULL;
 	HRESULT hr;

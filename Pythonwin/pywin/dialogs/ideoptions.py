@@ -24,12 +24,12 @@ class OptionsPropPage(dialog.PropertyPage):
 		format = eval(win32ui.GetProfileVal(interact.sectionProfile, interact.STYLE_INTERACTIVE_PROMPT, str(interact.formatInput)))
 		edit.SetDefaultCharFormat(format)
 		edit.SetWindowText("Input Text")
-		
+
 		edit = self.GetDlgItem(win32ui.IDC_EDIT2)
 		format = eval(win32ui.GetProfileVal(interact.sectionProfile, interact.STYLE_INTERACTIVE_OUTPUT, str(interact.formatOutput)))
 		edit.SetDefaultCharFormat(format)
 		edit.SetWindowText("Output Text")
-		
+
 		edit = self.GetDlgItem(win32ui.IDC_EDIT3)
 		format = eval(win32ui.GetProfileVal(interact.sectionProfile, interact.STYLE_INTERACTIVE_ERROR, str(interact.formatOutputError)))
 		edit.SetDefaultCharFormat(format)
@@ -83,7 +83,7 @@ class OptionsPropPage(dialog.PropertyPage):
 
 		# And the other options.
 		win32ui.WriteProfileVal("Settings","Recent File List Size", self['MRUSize'])
-		
+
 		return 1
 	def ChangeFormat(self, fmtAttribute, fmt):
 		dlg = win32ui.CreateFontDialog(fmt)

@@ -42,7 +42,7 @@ PyNetFileEnum(PyObject *self, PyObject *args)
 
     if (!PyArg_ParseTuple(args, "i|OOO", &info_lvl, &server_name_obj, &base_path_obj, &user_name_obj))
 		return NULL;
-    if ((info_lvl != 2) && (info_lvl != 3)){ 
+    if ((info_lvl != 2) && (info_lvl != 3)){
 		PyErr_SetString(PyExc_ValueError,"Invalid level for NetFileEnum");
 		return NULL;
 		}
@@ -53,7 +53,7 @@ PyNetFileEnum(PyObject *self, PyObject *args)
 		goto done;
 	if (!PyWinObject_AsWCHAR(user_name_obj, &user_name, TRUE))
 		goto done;
-	
+
 	ret_list = PyList_New(0);
 
 	switch (info_lvl){
@@ -63,7 +63,7 @@ PyNetFileEnum(PyObject *self, PyObject *args)
 			    nStatus = NetFileEnum(server_name, base_path, user_name, info_lvl,
 			       (LPBYTE*)&pBuf2, buff_len, &dwEntriesRead, &dwTotalEntries, &resumeHandle);
 			    Py_END_ALLOW_THREADS
-			
+
 			    if ((nStatus == NERR_Success) || (nStatus == ERROR_MORE_DATA)){
 			       if ((pTmpBuf2 = pBuf2) != NULL){
 						for (i = 0; (i < dwEntriesRead); i++){
@@ -73,7 +73,7 @@ PyNetFileEnum(PyObject *self, PyObject *args)
 							pTmpBuf2++;
 						}
 			       }
-				}	
+				}
 				else{
 					ReturnNetError("NetFileEnum",nStatus);
 					Py_XDECREF(ret_list);
@@ -125,7 +125,7 @@ PyNetFileEnum(PyObject *self, PyObject *args)
 			while (nStatus == ERROR_MORE_DATA);
 			if (pBuf3 != NULL)
 				NetApiBufferFree(pBuf3);
-				
+
 		}
 	}
 done:
@@ -189,7 +189,7 @@ PyNetFileGetInfo(PyObject *self, PyObject *args)
 
 	if (!PyArg_ParseTuple(args, "iOi", &info_lvl, &server_name_obj, &file_id))
 		return NULL;
-	if ((info_lvl != 2) && (info_lvl != 3)){ 
+	if ((info_lvl != 2) && (info_lvl != 3)){
 		PyErr_SetString(PyExc_ValueError,"Invalid level for NetFileGetInfo");
 		return NULL;
 		}
@@ -202,9 +202,9 @@ PyNetFileGetInfo(PyObject *self, PyObject *args)
 			nStatus = NetFileGetInfo(server_name, file_id, info_lvl,
 			       (LPBYTE*)&pTmpBuf2);
 			Py_END_ALLOW_THREADS
-			
+
 			if (nStatus == NERR_Success)
-				ret_dict = Py_BuildValue("{s:i}","id",pTmpBuf2->fi2_id);	
+				ret_dict = Py_BuildValue("{s:i}","id",pTmpBuf2->fi2_id);
 			else{
 				ReturnNetError("NetFileEnum",nStatus);
 				ret_dict=NULL;
@@ -218,7 +218,7 @@ PyNetFileGetInfo(PyObject *self, PyObject *args)
 			nStatus = NetFileGetInfo(server_name, file_id, info_lvl,
 			       (LPBYTE*)&pTmpBuf3);
 			Py_END_ALLOW_THREADS
-			
+
 			if (nStatus == NERR_Success)
 				ret_dict = Py_BuildValue("{s:i,s:i,s:i,s:N,s:N}",
 					"id", pTmpBuf3->fi3_id,

@@ -49,7 +49,7 @@ CPropertySheet *GetPropSheet(PyObject *self)
 }
 CPythonPropertySheet *GetPythonPropSheet(PyObject *self)
 {
-	CPythonPropertySheet *ret = 
+	CPythonPropertySheet *ret =
 		(CPythonPropertySheet *)PyCWnd::GetPythonGenericWnd(self, &PyCPropertySheet::type);
 	if (!ret->IsKindOf(RUNTIME_CLASS(CPythonPropertySheet)))
 		RETURN_TYPE_ERR("Object is not of the correct type");
@@ -113,7 +113,7 @@ PyObject *PyCPropertySheet::create( PyObject *self, PyObject *args )
 	TCHAR *Caption;
 	CWnd *pParent = NULL;
 	int iSelect = 0;
-	if (!PyArg_ParseTuple(args,"O|Oi", 
+	if (!PyArg_ParseTuple(args,"O|Oi",
 	          &obCaption, // @pyparm <o PyResourceId>|caption||The caption for the property sheet, or id of the caption
 	          &obParent,  // @pyparm <o PyCWnd>|parent|None|The parent window of the property sheet.
 	          &iSelect))  // @pyparm int|select|0|The index of the first page to be selected.
@@ -146,7 +146,7 @@ PyObject *PyCPropertySheet::create( PyObject *self, PyObject *args )
 //
 // PropSheet Methods
 //
-// @pymethod |PyCPropertySheet|AddPage|Adds the supplied page with the rightmost tab in the property sheet. 
+// @pymethod |PyCPropertySheet|AddPage|Adds the supplied page with the rightmost tab in the property sheet.
 PyObject *ui_propsheet_add_page( PyObject *self, PyObject *args )
 {
 	PyObject *obPage;
@@ -181,7 +181,7 @@ PyObject *ui_propsheet_get_active_index( PyObject *self, PyObject *args )
 	int rc = pPS->GetActiveIndex();
 	GUI_END_SAVE;
 
-	return Py_BuildValue("i", rc); 
+	return Py_BuildValue("i", rc);
 }
 
 // @pymethod int|PyCPropertySheet|GetPageIndex|Retrieves the index of the specified page of the property sheet.
@@ -394,7 +394,7 @@ PyObject *ui_propsheet_remove_page( PyObject *self, PyObject *args )
 		GUI_BGN_SAVE;
 		pPS->RemovePage(id);
 		GUI_END_SAVE;
-	} 
+	}
 	else if (ui_base_class::is_uiobject(ob, &PyCPropertyPage::type)) {
   		CPythonPropertyPage * pPage = GetPropPage(ob);
 		if (!pPage)
@@ -501,7 +501,7 @@ PyObject *ui_propsheet_set_pshbit( PyObject *self, PyObject *args )
 	if (!pPS) return NULL;
 	DWORD bitMask = 0;
     BOOL bitValue = 0;
-	
+
 	if (!PyArg_ParseTuple( args, "ii",
               &bitMask,   // @pyparm int|bitMask||The PSH_* bit mask constant
               &bitValue)) // @pyparm int|bitValue||1 to set, 0 to clear
@@ -540,7 +540,7 @@ static PyObject *ui_propsheet_on_init_dialog( PyObject *self, PyObject *args )
 ///////////////////////////////////////
 // @object PyCPropertySheet|A class which encapsulates an MFC CPropertySheet object.  Derived from a <o PyCWnd> object.
 static struct PyMethodDef ui_propsheet_methods[] = {
-	{"AddPage",			ui_propsheet_add_page,			1}, // @pymeth AddPage|Adds the supplied page with the rightmost tab in the property sheet. 
+	{"AddPage",			ui_propsheet_add_page,			1}, // @pymeth AddPage|Adds the supplied page with the rightmost tab in the property sheet.
 	{"CreateWindow",	ui_propsheet_create_window, 	1}, // @pymeth CreateWindow|Displays the property sheet as a modeless dialog.
 	{"DoModal",			ui_propsheet_do_modal,			1}, // @pymeth DoModal|Displays the property sheet as a modal dialog.
 	{"EnableStackedTabs",ui_propsheet_enable_stacked_tabs,1}, // @pymeth EnableStackedTabs|Enables or disables stacked tabs.
@@ -563,12 +563,12 @@ static struct PyMethodDef ui_propsheet_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject PyCPropertySheet::type("PyCPropertySheet", 
-										  &PyCWnd::type, 
-										  RUNTIME_CLASS(CPropertySheet), 
-										  sizeof(PyCPropertySheet), 
-										  PYOBJ_OFFSET(PyCPropertySheet), 
-										  ui_propsheet_methods, 
+ui_type_CObject PyCPropertySheet::type("PyCPropertySheet",
+										  &PyCWnd::type,
+										  RUNTIME_CLASS(CPropertySheet),
+										  sizeof(PyCPropertySheet),
+										  PYOBJ_OFFSET(PyCPropertySheet),
+										  ui_propsheet_methods,
 										  GET_PY_CTOR(PyCPropertySheet));
 
 /////////////////////////////////////////////////////////////////////
@@ -591,7 +591,7 @@ PyObject *PyCPropertyPage::create( PyObject *self, PyObject *args )
 	TCHAR *Template=NULL;
 	PyObject *obTemplate = NULL;
 	int idCaption = 0;
-	if (!PyArg_ParseTuple(args,"O|i", 
+	if (!PyArg_ParseTuple(args,"O|i",
 		&obTemplate, // @pyparm <o PyResourceId>|resource||String template name or inteter resource ID to use for the page.
 		&idCaption)) // @pyparm int|caption|0|The ID if the string resource to use for the caption.
 		return NULL;
@@ -674,7 +674,7 @@ PyObject *ui_proppage_set_pspbit( PyObject *self, PyObject *args )
 		return NULL;
 	DWORD bitMask = 0;
     BOOL bitValue = 0;
-	
+
 	if (!PyArg_ParseTuple( args, "ii",
               &bitMask,   // @pyparm int|bitMask||The PSP_* bit mask constant
               &bitValue)) // @pyparm int|bitValue||1 to set, 0 to clear
@@ -845,12 +845,12 @@ static struct PyMethodDef ui_proppage_methods[] = {
 	{NULL,			NULL}
 };
 // derived from dialog.
-ui_type_CObject PyCPropertyPage::type("PyCPropertyPage", 
-										 &PyCDialog::type, 
-										 RUNTIME_CLASS(CPropertyPage), 
-										 sizeof(PyCPropertyPage), 
-										 PYOBJ_OFFSET(PyCPropertyPage), 
-										 ui_proppage_methods, 
+ui_type_CObject PyCPropertyPage::type("PyCPropertyPage",
+										 &PyCDialog::type,
+										 RUNTIME_CLASS(CPropertyPage),
+										 sizeof(PyCPropertyPage),
+										 PYOBJ_OFFSET(PyCPropertyPage),
+										 ui_proppage_methods,
 										 GET_PY_CTOR(PyCPropertyPage));
 
 /////////////////////////////////////////////////////////////////////
@@ -922,10 +922,10 @@ static struct PyMethodDef ui_tabctrl_methods[] = {
 	{NULL,			NULL}
 };
 
-ui_type_CObject ui_tabctrl_object::type("PyCTabCtrl", 
-										&PyCWnd::type, 
-										RUNTIME_CLASS(CTabCtrl), 
-										sizeof(ui_tabctrl_object), 
-										PYOBJ_OFFSET(ui_tabctrl_object), 
-										ui_tabctrl_methods, 
+ui_type_CObject ui_tabctrl_object::type("PyCTabCtrl",
+										&PyCWnd::type,
+										RUNTIME_CLASS(CTabCtrl),
+										sizeof(ui_tabctrl_object),
+										PYOBJ_OFFSET(ui_tabctrl_object),
+										ui_tabctrl_methods,
 										GET_PY_CTOR(ui_tabctrl_object));

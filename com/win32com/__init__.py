@@ -32,7 +32,7 @@ def SetupEnvironment():
 		key = win32api.RegOpenKey(HKEY_LOCAL_MACHINE , keyName, 0, KEY_QUERY_VALUE)
 	except (win32api.error, AttributeError):
 		key = None
-		
+
 	try:
 		found = 0
 		if key is not None:
@@ -48,7 +48,7 @@ def SetupEnvironment():
 			except win32api.error:
 				# Give up in disgust!
 				pass
-	
+
 		# For the sake of developers, we also look up a "BuildPath" key
 		# If extension modules add support, we can load their .pyd's from a completely
 		# different directory (see the comments below)
@@ -93,13 +93,13 @@ if not __gen_path__:
 		__gen_path__ = iter(sys.modules["win32com.gen_py"].__path__).next()
 	except ImportError:
 		# If a win32com\gen_py directory already exists, then we use it
-		# (gencache doesn't insist it have an __init__, but our __import__ 
+		# (gencache doesn't insist it have an __init__, but our __import__
 		# above does!
 		__gen_path__ = os.path.abspath(os.path.join(__path__[0], "gen_py"))
 		if not os.path.isdir(__gen_path__):
 			# We used to dynamically create a directory under win32com -
-			# but this sucks.  If the dir doesn't already exist, we we 
-			# create a version specific directory under the user temp 
+			# but this sucks.  If the dir doesn't already exist, we we
+			# create a version specific directory under the user temp
 			# directory.
 			__gen_path__ = os.path.join(
 								win32api.GetTempPath(), "gen_py",

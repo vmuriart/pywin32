@@ -164,7 +164,7 @@ extern PyObject *PyDsGetSpn(PyObject *self, PyObject *args)
 		}
 
 	Py_BEGIN_ALLOW_THREADS
-	err=(*pfnDsGetSpn)(ServiceType, ServiceClass, ServiceName, 
+	err=(*pfnDsGetSpn)(ServiceType, ServiceClass, ServiceName,
 		InstancePort, cInstanceNames, (LPCWSTR *)InstanceNames,
 		InstancePorts, &cSpns, &Spns);
 	Py_END_ALLOW_THREADS
@@ -432,7 +432,7 @@ PyObject *PyDsListSites(PyObject *self, PyObject *args)
 	HANDLE dshandle;
 	PyObject *ret=NULL, *obhandle;
 	PDS_NAME_RESULT dsresult = NULL;
-	
+
 	CHECK_PFN(DsListSites);
 	CHECK_PFN(DsFreeNameResult);
 	// @pyparm int|hds||
@@ -458,7 +458,7 @@ PyObject *PyDsListRoles(PyObject *self, PyObject *args)
 	HANDLE dshandle;
 	PyObject *ret=NULL, *obhandle;
 	PDS_NAME_RESULT dsresult = NULL;
-	
+
 	CHECK_PFN(DsListRoles);
 	CHECK_PFN(DsFreeNameResult);
 	// @pyparm int|hds||
@@ -486,7 +486,7 @@ PyObject *PyDsListDomainsInSite(PyObject *self, PyObject *args)
 	PyObject *ret=NULL, *obhandle;
 	PDS_NAME_RESULT dsresult = NULL;
 	WCHAR *name = NULL;
-	
+
 	CHECK_PFN(DsListDomainsInSite);
 	CHECK_PFN(DsFreeNameResult);
 	// @pyparm int|hds||

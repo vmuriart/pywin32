@@ -153,14 +153,14 @@ PyRasGetEapUserIdentity( PyObject *self, PyObject *args )
 	int flags;
 	HWND hwnd=NULL;
 	PyObject *ret=NULL;
-	if (!PyArg_ParseTuple(args, "OOi|O&:GetEapUserIdentity", 
+	if (!PyArg_ParseTuple(args, "OOi|O&:GetEapUserIdentity",
 			  &obphoneBook, // @pyparm string|phoneBook||string containing the full path of the phone-book (PBK) file. If this parameter is None, the function will use the system phone book.
 			  &obentry,// @pyparm string|entry||string containing an existing entry name.
 			  &flags,  // @pyparm int|flags||Specifies zero or more of the following flags that qualify the authentication process.
-						// @flagh Flag|Description 
-						// @flag RASEAPF_NonInteractive|Specifies that the authentication protocol should not bring up a graphical user-interface. If this flag is not present, it is okay for the protocol to display a user interface. 
-						// @flag RASEAPF_Logon|Specifies that the user data is obtained from Winlogon. 
-						// @flag RASEAPF_Preview|Specifies that the user should be prompted for identity information before dialing. 
+						// @flagh Flag|Description
+						// @flag RASEAPF_NonInteractive|Specifies that the authentication protocol should not bring up a graphical user-interface. If this flag is not present, it is okay for the protocol to display a user interface.
+						// @flag RASEAPF_Logon|Specifies that the user data is obtained from Winlogon.
+						// @flag RASEAPF_Preview|Specifies that the user should be prompted for identity information before dialing.
 			  PyWinObject_AsHANDLE, &hwnd))   // @pyparm <o PyHANDLE>|hwnd|None|Handle to the parent window for the UI dialog.
 		return NULL;
 

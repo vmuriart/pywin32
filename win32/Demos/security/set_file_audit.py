@@ -51,7 +51,7 @@ file_sacl.AddAuditAccessAce(file_dacl.GetAclRevision(),win32con.GENERIC_ALL,my_s
 win32security.SetNamedSecurityInfo(fname, SE_FILE_OBJECT,
     DACL_SECURITY_INFORMATION|SACL_SECURITY_INFORMATION,
     None, None, file_dacl, file_sacl)
-    
+
 win32security.AdjustTokenPrivileges(th, 0, modified_privs)
 
 

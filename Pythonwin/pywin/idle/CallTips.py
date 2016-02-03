@@ -46,7 +46,7 @@ class CallTips:
         if self.calltip:
             self.calltip.hidetip()
             self.calltip = None
-        
+
     def paren_open_event(self, event):
         self._remove_calltip_window()
         arg_text = get_arg_text(self.get_object_at_cursor())

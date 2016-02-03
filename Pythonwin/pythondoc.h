@@ -7,7 +7,7 @@
 
 ////////////////////////
 
-template <class P> class CPythonDocTemp : public P 
+template <class P> class CPythonDocTemp : public P
 {
 public:
 	CPythonDocTemp();

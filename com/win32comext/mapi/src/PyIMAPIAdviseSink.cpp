@@ -50,7 +50,7 @@ PyObject *PyObject_FromNOTIFICATION(NOTIFICATION *n)
 		case fnevObjectCopied:
 		case fnevObjectCreated:
 		case fnevObjectDeleted:
-		case fnevObjectModified: 
+		case fnevObjectModified:
 		case fnevObjectMoved:
 		case fnevSearchComplete: {
 			OBJECT_NOTIFICATION &obj = n->info.obj;

@@ -21,7 +21,7 @@ def dllFromDll(dllid):
 		except AttributeError:
 			raise TypeError("DLL parameter must be None, a filename or a dll object")
 		return dllid
-	
+
 class Dialog(window.Wnd):
 	" Base class for a dialog"
 	def __init__( self, id, dllid=None ):
@@ -36,10 +36,10 @@ class Dialog(window.Wnd):
 		window.Wnd.__init__(self, dlg)
 		self.HookCommands()
 		self.bHaveInit = None
-		
+
 	def HookCommands(self):
 		pass
-		
+
 	def OnAttachedObjectDeath(self):
 		self.data = self._obj_.data
 		window.Wnd.OnAttachedObjectDeath(self)
@@ -127,7 +127,7 @@ class PrintDialog(Dialog):
 		'''DoModal has finished. Can now access the users choices'''
 		self._obj_.OnOK()
 		pInfo = self.pInfo
-	   # user values 
+	   # user values
 		flags = pInfo.GetFlags()
 		self['toFile'] = (flags&win32ui.PD_PRINTTOFILE != 0)
 		self['direct'] = pInfo.GetDirect()
@@ -183,7 +183,7 @@ class PropertySheet(window.Wnd):
 
 	def OnInitDialog(self):
 		return self._obj_.OnInitDialog()
-					
+
 	def DoModal(self):
 		if self.dll:
 			oldRes = win32ui.SetResource(self.dll)
@@ -191,11 +191,11 @@ class PropertySheet(window.Wnd):
 		if self.dll:
 			win32ui.SetResource(oldRes)
 		return rc
-		
+
 	def AddPage(self, pages):
 		if self.dll:
 			oldRes = win32ui.SetResource(self.dll)
-		try:	# try list style access		
+		try:	# try list style access
 			pages[0]
 			isSeq = 1
 		except (TypeError,KeyError):
@@ -207,14 +207,14 @@ class PropertySheet(window.Wnd):
 			self.DoAddSinglePage(pages)
 		if self.dll:
 			win32ui.SetResource(oldRes)
-		
+
 	def DoAddSinglePage(self, page):
 		"Page may be page, or int ID. Assumes DLL setup "
 		if type(page)==type(0):
 			self.sheet.AddPage(win32ui.CreatePropertyPage(page))
 		else:
 			self.sheet.AddPage(page)
-		
+
 # define some app utility functions.
 def GetSimpleInput(prompt, defValue='', title=None ):
 	""" displays a dialog, and returns a string, or None if cancelled.
@@ -234,7 +234,7 @@ def GetSimpleInput(prompt, defValue='', title=None ):
 		def OnInitDialog(self):
 			self.SetWindowText(self.title)
 			return DlgBaseClass.OnInitDialog(self)
-			
+
 	dlg=DlgSimpleInput( prompt, defValue, title)
 	if dlg.DoModal() != win32con.IDOK:
 		return None

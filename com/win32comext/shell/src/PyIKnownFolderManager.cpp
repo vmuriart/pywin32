@@ -234,7 +234,7 @@ PyObject *PyIKnownFolderManager::FindFolderFromPath(PyObject *self, PyObject *ar
 	if ( pIKFM == NULL )
 		return NULL;
 	// @pyparm str|Path||Path of a folder
-	// @pyparm int|Mode||FFFP_EXACTMATCH or FFFP_NEARESTPARENTMATCH	
+	// @pyparm int|Mode||FFFP_EXACTMATCH or FFFP_NEARESTPARENTMATCH
 	TmpWCHAR path;
 	PyObject *obpath;
 	FFFP_MODE mode;

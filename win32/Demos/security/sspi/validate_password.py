@@ -11,7 +11,7 @@ def validate(username, password, domain = ""):
     auth_info = username, domain, password
     ca = ClientAuth("NTLM", auth_info = auth_info)
     sa = ServerAuth("NTLM")
-      
+
     data = err = None
     while err != 0:
         err, data = ca.authorize(data)

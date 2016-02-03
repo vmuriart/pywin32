@@ -20,7 +20,7 @@ def processFile(input, out, extLinksHTML, extTopicHTML, importantHTML):
     line = line.replace("<!--index:extopics-->", extTopicHTML)
     line = line.replace("<!--index:eximportant-->", importantHTML)
     out.write(line + "\n")
-    
+
 def genHTML(doc):
   s = ""
   for cat in doc:

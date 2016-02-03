@@ -122,7 +122,7 @@ class TestCase(unittest.TestCase):
     def iterConnectableShares(self):
         nr = win32wnet.NETRESOURCE()
         nr.dwScope = RESOURCE_GLOBALNET
-        nr.dwUsage = RESOURCEUSAGE_CONTAINER 
+        nr.dwUsage = RESOURCEUSAGE_CONTAINER
         nr.lpRemoteName = "\\\\" + win32api.GetComputerName()
 
         handle = win32wnet.WNetOpenEnum(RESOURCE_GLOBALNET, RESOURCETYPE_ANY,

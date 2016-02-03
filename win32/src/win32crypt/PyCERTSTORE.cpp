@@ -320,7 +320,7 @@ PyObject *PyCERTSTORE::PyCertAddEncodedCertificateToStore(PyObject *self, PyObje
 	PyObject *obbuf;
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "kOk:CertAddEncodedCertificateToStore", keywords,
-		&dwCertEncodingType,	// @pyparm int|CertEncodingType||Usually X509_ASN_ENCODING combined with PKCS_7_ASN_ENCODING 
+		&dwCertEncodingType,	// @pyparm int|CertEncodingType||Usually X509_ASN_ENCODING combined with PKCS_7_ASN_ENCODING
 		&obbuf,					// @pyparm buffer|CertEncoded||Data containing a serialized certificate
 		&dwAddDisposition))		// @pyparm int|AddDisposition||Combination of CERT_STORE_ADD_* flags
 		return NULL;
@@ -328,7 +328,7 @@ PyObject *PyCERTSTORE::PyCertAddEncodedCertificateToStore(PyObject *self, PyObje
 		return NULL;
 	BOOL bsuccess;
 	Py_BEGIN_ALLOW_THREADS
-	bsuccess = CertAddEncodedCertificateToStore(hcertstore, dwCertEncodingType, pbCertEncoded, 
+	bsuccess = CertAddEncodedCertificateToStore(hcertstore, dwCertEncodingType, pbCertEncoded,
 		   cbCertEncoded, dwAddDisposition, (const struct _CERT_CONTEXT **)&newcert_context);
 	Py_END_ALLOW_THREADS
 	if (!bsuccess)
@@ -444,7 +444,7 @@ PyObject *PyCERTSTORE::PyCertAddStoreToCollection(PyObject *self, PyObject *args
 
 	if (!PyArg_ParseTupleAndKeywords(args, kwargs, "O|kk:CertAddStoreToCollection", keywords,
 		&obsibling,	// @pyparm <o PyCERTSTORE>|SiblingStore||Store to be added to the collection
-		&flags,		// @pyparm int|UpdateFlag|0|Can be CERT_PHYSICAL_STORE_ADD_ENABLE_FLAG to enable changes to persist  
+		&flags,		// @pyparm int|UpdateFlag|0|Can be CERT_PHYSICAL_STORE_ADD_ENABLE_FLAG to enable changes to persist
 		&priority))	// @pyparm int|Priority|0|Determines order in which store are searched and updated
 		return NULL;
 	if (!PyWinObject_AsCERTSTORE(obsibling, &sibling, TRUE))

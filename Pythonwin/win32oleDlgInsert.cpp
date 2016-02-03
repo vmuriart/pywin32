@@ -154,12 +154,12 @@ PyObject *PyCOleInsertDialog::create( PyObject * /*self*/, PyObject *args )
 	COleInsertDialog *pDlg = new COleInsertDialog();
 	if (!pDlg)
 		RETURN_ERR("Creating COleInsertDialog failed"); // pyseemfc COleInsertDialog|COleInsertDialog
-	PyCOleInsertDialog *newObj = 
+	PyCOleInsertDialog *newObj =
 		(PyCOleInsertDialog *)ui_assoc_object::make( PyCOleInsertDialog::type, pDlg);
 	return newObj;
 }
 
-COleInsertDialog *GetOleInsertDialog(PyObject *self) 
+COleInsertDialog *GetOleInsertDialog(PyObject *self)
 {
 	return (COleInsertDialog *)PyCWnd::GetPythonGenericWnd(self, &PyCOleInsertDialog::type);
 }
@@ -212,11 +212,11 @@ static struct PyMethodDef PyCOleInsertDialog_methods[] = {
 	{ NULL, NULL }
 };
 
-ui_type_CObject PyCOleInsertDialog::type("PyCOleInsertDialog", 
-							 &PyCOleDialog::type, 
-							 RUNTIME_CLASS(COleInsertDialog), 
-							 sizeof(PyCOleInsertDialog), 
-							 PYOBJ_OFFSET(PyCOleInsertDialog), 
-							 PyCOleInsertDialog_methods, 
+ui_type_CObject PyCOleInsertDialog::type("PyCOleInsertDialog",
+							 &PyCOleDialog::type,
+							 RUNTIME_CLASS(COleInsertDialog),
+							 sizeof(PyCOleInsertDialog),
+							 PYOBJ_OFFSET(PyCOleInsertDialog),
+							 PyCOleInsertDialog_methods,
 							 GET_PY_CTOR(PyCOleInsertDialog) );
 

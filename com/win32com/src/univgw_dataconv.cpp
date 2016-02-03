@@ -168,7 +168,7 @@ static inline bool SizeOfVT(VARTYPE vt, int *pitem_size, int *pstack_size)
 	if (pitem_size) *pitem_size = item_size;
 	if (pstack_size) *pstack_size = stack_size;
 	return TRUE;
-}	
+}
 
 PyObject *dataconv_SizeOfVT(PyObject *self, PyObject *args)
 {
@@ -203,7 +203,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 	Py_ssize_t cArgs;
 	UINT uiIndirectionLevel = 0;
 	Py_ssize_t i;
-	
+
 	if (!PyArg_ParseTuple(args, "OOO:WriteFromOutTuple", &obRetValues, &obArgTypes, &obPtr))
 		return NULL;
 
@@ -231,7 +231,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 		PyErr_Format(PyExc_TypeError, "Expecting a tuple of length %d or None.", cArgs);
 		return NULL;
 	}
-	
+
 	for(i = 0 ; i < cArgs; i++)
 	{
 		obArgType = PyTuple_GET_ITEM(PyTuple_GET_ITEM(obArgTypes, i), 0);
@@ -252,7 +252,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 		// Find the start of the argument.
 		pbArg = pbArgs + PyInt_AS_LONG(PyTuple_GET_ITEM(PyTuple_GET_ITEM(obArgTypes, i), 1));
 		obOutValue = PyTuple_GET_ITEM(obRetValues, i);
-	
+
 		if (vtArgType & VT_ARRAY)
 		{
 			VARENUM rawVT = (VARENUM)(vtArgType & VT_TYPEMASK);
@@ -283,7 +283,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 					PyExc_TypeError,
 					"Inplace SAFEARRAY mucking isn't allowed, doh!");
 				goto Error;
-				
+
 				SAFEARRAY *psa = *(SAFEARRAY **)pbArg;
 				// Here we're updating an existing SafeArray.
 				// so we need to handle it very carefully....
@@ -292,7 +292,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 					return NULL;
 			}
 		}
-			
+
 		// All done with safe array handling.
 
 		PyObject *obUse = NULL;
@@ -339,7 +339,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 					goto Error;
 				}
 			}
-			
+
 			if (SysStringLen(bstrT) > cch)
 			{
 				PyErr_Format(
@@ -350,7 +350,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 					cch);
 				goto Error;
 			}
-				
+
 			// Ok, now we know theres enough room in the source BSTR to
 			// modify the sucker in place.
 			wcscpy(bstr, bstrT);
@@ -366,7 +366,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 			SysFreeString(*pbstr);
 
 			*pbstr = NULL;
-			
+
 			if ( PyString_Check(obOutValue) || PyUnicode_Check(obOutValue) )
 			{
 				if ( !PyWinObject_AsBstr(obOutValue, &bstrT) )
@@ -608,7 +608,7 @@ PyObject * dataconv_WriteFromOutTuple(PyObject *self, PyObject *args)
 			             vtArgType);
 			goto Error;
 		}
-		
+
 		Py_XDECREF(obUse);
 	}
 
@@ -633,11 +633,11 @@ PyObject * dataconv_ReadFromInTuple(PyObject *self, PyObject *args)
 	UINT cb;
 	VARIANT var;
 	BOOL bIsByRef;
-	
+
 
 	if (!PyArg_ParseTuple(args, "OO:ReadFromInTuple", &obArgTypes, &obPtr))
 		return NULL;
-	
+
 	pbArg = (BYTE *)PyLong_AsVoidPtr(obPtr);
 	assert(pbArg);
 	if (!pbArg)
@@ -650,7 +650,7 @@ PyObject * dataconv_ReadFromInTuple(PyObject *self, PyObject *args)
 		PyErr_SetString(PyExc_TypeError, "OLE type description - expecting a tuple");
 		return NULL;
 	}
-	
+
 	cArgs = PyTuple_Size(obArgTypes);
 	obArgs = PyTuple_New(cArgs);
 	if (!obArgs)
@@ -664,7 +664,7 @@ PyObject * dataconv_ReadFromInTuple(PyObject *self, PyObject *args)
 			PyErr_SetString(PyExc_TypeError, "OLE type description - expecting an arg desc tuple of size 3");
 			goto Error;
 		}
-		
+
 		obArgType = PyTuple_GET_ITEM(PyTuple_GET_ITEM(obArgTypes, i), 0);
 
 		// Position pb to point to the current argument.
@@ -691,7 +691,7 @@ PyObject * dataconv_ReadFromInTuple(PyObject *self, PyObject *args)
 				if (psa==NULL) { // A NULL array
 					Py_INCREF(Py_None);
 					obArg = Py_None;
-				} else 
+				} else
 					obArg = PyCom_PyObjectFromSAFEARRAY(psa, (VARENUM)vtConversionType);
 			}
 		} else {
@@ -723,7 +723,7 @@ PyObject * dataconv_ReadFromInTuple(PyObject *self, PyObject *args)
 					// Preserve VT_BYREF or VT_ARRAY
 					vtArgType = VT_I4 | (vtArgType & VT_TYPEMASK);
 				}
-				if (vtArgType == VT_UINT) 
+				if (vtArgType == VT_UINT)
 				{
 					// Preserve VT_BYREF or VT_ARRAY
 					vtArgType = VT_UI4 | (vtArgType & VT_TYPEMASK);
@@ -796,7 +796,7 @@ PyObject * dataconv_ReadFromInTuple(PyObject *self, PyObject *args)
 	}
 
 	return obArgs;
-	
+
 Error:
 	Py_XDECREF(obArgs);
 	return NULL;

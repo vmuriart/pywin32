@@ -78,12 +78,12 @@ static struct PyMethodDef PyCRichEditDoc_methods[] = {
 	{NULL, NULL}
 };
 
-ui_type_CObject PyCRichEditDoc::type("PyCRichEditDoc", 
-									 &PyCDocument::type, 
+ui_type_CObject PyCRichEditDoc::type("PyCRichEditDoc",
+									 &PyCDocument::type,
 									 RUNTIME_CLASS(CRichEditDoc),
-									 sizeof(PyCRichEditDoc), 
-									 PYOBJ_OFFSET(PyCRichEditDoc), 
-									 PyCRichEditDoc_methods, 
+									 sizeof(PyCRichEditDoc),
+									 PYOBJ_OFFSET(PyCRichEditDoc),
+									 PyCRichEditDoc_methods,
 									 GET_PY_CTOR(PyCRichEditDoc) );
 
 /////////////////////////////////////////////////////////////////////

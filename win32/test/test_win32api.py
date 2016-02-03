@@ -164,7 +164,7 @@ class FileNames(unittest.TestCase):
             except win32api.error, details:
                 if details.winerror != winerror.ERROR_FILENAME_EXCED_RANGE:
                     raise
-        
+
             attr = win32api.GetFileAttributes(unicode(fname))
             self.failUnless(attr & win32con.FILE_ATTRIBUTE_DIRECTORY, attr)
 

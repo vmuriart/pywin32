@@ -20,10 +20,10 @@ MIDL_INTERFACE("10DF43C8-1DBE-11d3-8B34-006097DF5BD4")
 IBrowserFrameOptions : public IUnknown
 {
 public:
-    virtual HRESULT STDMETHODCALLTYPE GetFrameOptions( 
+    virtual HRESULT STDMETHODCALLTYPE GetFrameOptions(
         /* [in] */ BROWSERFRAMEOPTIONS dwMask,
         /* [out] */ BROWSERFRAMEOPTIONS *pdwOptions) = 0;
-    
+
 };
 #endif /* __IBrowserFrameOptions_INTERFACE_DEFINED__ */
 

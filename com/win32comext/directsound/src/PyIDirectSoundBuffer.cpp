@@ -44,10 +44,10 @@ PyIDirectSoundBuffer::~PyIDirectSoundBuffer()
 	// Special treatment for PyIDirectSoundNotify
 
 	// This is a workaround for a reference counting bug in IDirectSound:
-	// If IDirectSound::Release() is called before IDirectSoundBuffer::Release() 
+	// If IDirectSound::Release() is called before IDirectSoundBuffer::Release()
 	// or IDirectSoundNotify::Release(), we will get an Access Violation
 
-	// We work around this by manipulating the reference count on the Python objects 
+	// We work around this by manipulating the reference count on the Python objects
 	// that encapsulate them
 	if (PyIBase::is_object(rc, &PyIDirectSoundNotify::type))
 	{
@@ -107,7 +107,7 @@ PyObject *PyIDirectSoundBuffer::GetFormat(PyObject *self, PyObject *args)
 		PyWin_SetAPIError("GetFormat", hr);
 		return NULL;
 	}
-	
+
 	Py_INCREF(wfx);
 	return wfx;
 
@@ -140,7 +140,7 @@ PyObject *PyIDirectSoundBuffer::GetStatus(PyObject *self, PyObject *args)
 // @pymethod |PyIDirectSoundBuffer|SetFormat|Sets the format of the primary sound buffer for the application. Whenever this application has the input focus, DirectSound will set the primary buffer to the specified format.
 PyObject *PyIDirectSoundBuffer::SetFormat(PyObject *self, PyObject *args)
 {
-	// @pyparm WAVEFORMATEX|format||A WAVEFORMATEX object that describes the new format for the primary sound buffer. 
+	// @pyparm WAVEFORMATEX|format||A WAVEFORMATEX object that describes the new format for the primary sound buffer.
 
 	PyObject *obWfx;
 	IDirectSoundBuffer *pIDSB = GetI(self);
@@ -356,7 +356,7 @@ PyObject *PyIDirectSoundBuffer::Update(PyObject *self, PyObject *args)
 		return NULL;
 	}
 
-	// The play buffer is circular, so we may get two pointers and have to 
+	// The play buffer is circular, so we may get two pointers and have to
 	// do the wrap-around ourselves.
 
 	// Raise error if assumption isn't met

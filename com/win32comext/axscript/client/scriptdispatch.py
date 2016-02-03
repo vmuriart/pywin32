@@ -74,13 +74,13 @@ class StrictDynamicPolicy(win32com.server.policy.DynamicPolicy):
 		win32com.server.policy.DynamicPolicy._wrap_(self, object)
 		if hasattr(self._obj_, 'scriptNamespace'):
 			for name in dir(self._obj_.scriptNamespace):
-				self._dyn_dispid_to_name_[self._getdispid_(name,0)] = name    
+				self._dyn_dispid_to_name_[self._getdispid_(name,0)] = name
 
 	def _getmembername_(self, dispid):
 		try:
 			return str(self._dyn_dispid_to_name_[dispid])
 		except KeyError:
-			raise COMException(scode=winerror.DISP_E_UNKNOWNNAME, desc="Name not found")	
+			raise COMException(scode=winerror.DISP_E_UNKNOWNNAME, desc="Name not found")
 
 	def _getdispid_(self, name, fdex):
 		try:

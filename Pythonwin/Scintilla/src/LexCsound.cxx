@@ -72,7 +72,7 @@ static void ColouriseCsoundDoc(unsigned int startPos, int length, int initStyle,
 				continue;
 			}
 		}
-              
+
 		// Determine if the current state should terminate.
 		if (sc.state == SCE_CSOUND_OPERATOR) {
 			if (!IsCsoundOperator(static_cast<char>(sc.ch))) {
@@ -119,7 +119,7 @@ static void ColouriseCsoundDoc(unsigned int startPos, int length, int initStyle,
 				sc.SetState(SCE_CSOUND_DEFAULT);
 			}
 		}
-		
+
 		// Determine if a new state should be entered.
 		if (sc.state == SCE_CSOUND_DEFAULT) {
 			if (sc.ch == ';'){
@@ -146,7 +146,7 @@ static void ColouriseCsoundDoc(unsigned int startPos, int length, int initStyle,
 	sc.Complete();
 }
 
-static void FoldCsoundInstruments(unsigned int startPos, int length, int /* initStyle */, WordList *[], 
+static void FoldCsoundInstruments(unsigned int startPos, int length, int /* initStyle */, WordList *[],
 		Accessor &styler) {
 	unsigned int lengthDoc = startPos + length;
 	int visibleChars = 0;

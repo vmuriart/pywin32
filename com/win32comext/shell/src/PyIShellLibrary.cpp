@@ -389,7 +389,7 @@ PyObject *PyIShellLibrary::Save(PyObject *self, PyObject *args)
 	TmpWCHAR LibraryName;
 	PyObject *obLibraryName;
 	LIBRARYSAVEFLAGS Flags;
-	// @pyparm <o PyIShellItem>|FolderToSaveIn||The destination folder, use None to save in current user's Libraries folder 
+	// @pyparm <o PyIShellItem>|FolderToSaveIn||The destination folder, use None to save in current user's Libraries folder
 	// @pyparm str|LibraryName||Filename for the new library, without file extension
 	// @pyparm int|Flags||Determines behaviour if file already exists, shellcon.LSF_*
 	if ( !PyArg_ParseTuple(args, "OOi:Save", &obFolderToSaveIn, &obLibraryName, &Flags))

@@ -23,10 +23,10 @@ PyCFont::create (PyObject *self, PyObject *args)
 {
   // @comm The code for the PyCFont was contributed by Dave Brennan
   // (Last known address is brennan@hal.com, but I hear he is now at Microsoft)
-  // args contains a dict of font properties 
-  PyObject *font_props; 
+  // args contains a dict of font properties
+  PyObject *font_props;
   PyObject *pydc = NULL; // @pyparm dict|properties||A dictionary containing the font
-                  // properties.  Valid dictionary keys are:<nl> 
+                  // properties.  Valid dictionary keys are:<nl>
                   // height<nl>
                   // width<nl>
                   // escapement<nl>
@@ -84,18 +84,18 @@ static PyObject *PyCFont_GetSafeHandle(PyObject *self, PyObject *args)
 }
 
 // @object PyCFont|A windows font object.  Encapsulates an MFC <c CFont> class.
-// Derived from a <o PyCGDIObject>. 
+// Derived from a <o PyCGDIObject>.
 static struct PyMethodDef ui_font_methods[] =
 {
  {"GetSafeHandle", PyCFont_GetSafeHandle, 1}, // @pymeth GetSafeHandle|Retrieves the HFONT for the font as an integer
  {NULL,			NULL}		// sentinel
 };
 
-ui_type_CObject PyCFont::type("PyCFont", 
-         &PyCGdiObject::type, 
-         RUNTIME_CLASS(CFont), 
-         sizeof(PyCFont), 
-         PYOBJ_OFFSET(PyCFont), 
-         ui_font_methods, 
+ui_type_CObject PyCFont::type("PyCFont",
+         &PyCGdiObject::type,
+         RUNTIME_CLASS(CFont),
+         sizeof(PyCFont),
+         PYOBJ_OFFSET(PyCFont),
+         ui_font_methods,
          GET_PY_CTOR(PyCFont));
 

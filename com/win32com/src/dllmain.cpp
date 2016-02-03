@@ -29,7 +29,7 @@ static PyThreadState *ptsGlobal = NULL;
 
 /*
 ** To support servers in .EXE's, PythonCOM allows you to register a threadID.
-** A WM_QUIT message will be posted this thread when the external locks on the 
+** A WM_QUIT message will be posted this thread when the external locks on the
 ** objects hits zero.
 */
 static DWORD dwQuitThreadId = 0;
@@ -45,7 +45,7 @@ void PyCom_DLLAddRef(void)
 	// Must be thread-safe, although cant have the Python lock!
 	CEnterLeaveFramework _celf;
 	LONG cnt = InterlockedIncrement(&g_cLockCount);
-	if (cnt==1) { // First call 
+	if (cnt==1) { // First call
 		// There is a situation where this code falls down.  An IClassFactory destructor
 		// imcrements the DLL ref count, to make up for the decrement done by PyIUnknown
 		// (as we don't want class factories in the count).  This works fine until the last
@@ -316,7 +316,7 @@ HRESULT DoRegisterUnregister(LPCSTR fileName, int argc, char **argv)
 #else
 		PySys_SetArgv(argc, __wargv);
 #endif;
-	
+
 		if (PyRun_SimpleFile(fp, (char *)fileName) != 0) {
 			// Convert the Python error to a HRESULT.
 			hr = PyCom_SetCOMErrorFromPyException();

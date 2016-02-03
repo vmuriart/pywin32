@@ -38,7 +38,7 @@ def CheckPythonPaths(verbose):
 		print problem
 	else:
 		if verbose: print appPath
-	
+
 	key = win32api.RegOpenKey(regutil.GetRootKey(), regutil.BuildDefaultPythonKey() + "\\PythonPath", 0, win32con.KEY_READ)
 	try:
 		keyNo = 0
@@ -70,7 +70,7 @@ def CheckHelpFiles(verbose):
 		if exc.winerror!=winerror.ERROR_FILE_NOT_FOUND:
 			raise
 		return
-		
+
 	try:
 		keyNo = 0
 		while 1:
@@ -110,7 +110,7 @@ def CheckRegistry(verbose=0):
 	if verbose and 'pythonpath' in os.environ:
 		print "Warning - PythonPath in environment - please check it!"
 	# Check out all paths on sys.path
-	
+
 	CheckPythonPaths(verbose)
 	CheckHelpFiles(verbose)
 	CheckRegisteredModules(verbose)

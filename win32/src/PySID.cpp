@@ -25,7 +25,7 @@ PyObject *PyWinMethod_NewSID(PyObject *self, PyObject *args)
 			PyObject *obSubs, *obSubsTuple;
 			unsigned long sub0, sub1, sub2, sub3, sub4, sub5, sub6, sub7;
 
-			if (!PyArg_ParseTuple(args, "(bbbbbb)O:SID", 
+			if (!PyArg_ParseTuple(args, "(bbbbbb)O:SID",
 				&sid_ia.Value[0], &sid_ia.Value[1],&sid_ia.Value[2],
 				&sid_ia.Value[3],&sid_ia.Value[4],&sid_ia.Value[5],
 				&obSubs))
@@ -88,7 +88,7 @@ PyObject *PySID::Initialize(PyObject *self, PyObject *args)
 	// @pyparm <o SID_IDENTIFIER_AUTHORITY>|idAuthority||The identifier authority.
 	// @pyparm int|numSubauthorities||The number of sub authorities to allocate.
 	SID_IDENTIFIER_AUTHORITY sid_ia;
-	if (!PyArg_ParseTuple(args, "(bbbbbb)b:Initialize", 
+	if (!PyArg_ParseTuple(args, "(bbbbbb)b:Initialize",
 		&sid_ia.Value[0], &sid_ia.Value[1],&sid_ia.Value[2],
 		&sid_ia.Value[3],&sid_ia.Value[4],&sid_ia.Value[5],
 		&cnt))
@@ -183,8 +183,8 @@ struct PyMethodDef PySID::methods[] = {
 	{"IsValid",        PySID::IsValid, 1}, 	// @pymeth IsValid|Determines if the SID is valid.
 	{"SetSubAuthority",PySID::SetSubAuthority, 1}, 	// @pymeth SetSubAuthority|Sets a SID SubAuthority
 	{"GetLength",      PySID::GetLength, 1}, // @pymeth GetLength|Return length of sid (GetLengthSid)
-	{"GetSubAuthorityCount",   PySID::GetSubAuthorityCount, 1}, // @pymeth GetSubAuthorityCount|Return nbr of subauthorities from SID	
-	{"GetSubAuthority",PySID::GetSubAuthority, 1}, // @pymeth GetSubAuthority|Return specified subauthory from SID	
+	{"GetSubAuthorityCount",   PySID::GetSubAuthorityCount, 1}, // @pymeth GetSubAuthorityCount|Return nbr of subauthorities from SID
+	{"GetSubAuthority",PySID::GetSubAuthority, 1}, // @pymeth GetSubAuthority|Return specified subauthory from SID
 	{"GetSidIdentifierAuthority",PySID::GetSidIdentifierAuthority, 1}, // @pymeth GetSidIdentifierAuthority|Return identifier for the authority who issued the SID (one of the SID_IDENTIFIER_AUTHORITY constants)
 	{NULL}
 };
@@ -228,7 +228,7 @@ static PyBufferProcs PySID_as_buffer = {
 
 static PyBufferProcs PySID_as_buffer = {
 	PySID::getbufferinfo,
-	NULL,	// Does not have any allocated mem in Py_buffer struct 
+	NULL,	// Does not have any allocated mem in Py_buffer struct
 };
 
 #endif	// PY_VERSION_HEX < 0x03000000
@@ -336,22 +336,22 @@ PyObject *PySID::richcompareFunc(PyObject *ob1, PyObject *ob2, int op)
 }
 
 // NOTE:  This function taken from KB Q131320.
-BOOL GetTextualSid( 
+BOOL GetTextualSid(
 
     PSID pSid,          // binary Sid
     LPTSTR TextualSid,  // buffer for Textual representaion of Sid
     LPDWORD dwBufferLen // required/provided TextualSid buffersize
     )
-{ 
+{
     PSID_IDENTIFIER_AUTHORITY psia;
     DWORD dwSubAuthorities;
     DWORD dwSidRev=SID_REVISION;
     DWORD dwCounter;
     DWORD dwSidSize;
 
-    // 
+    //
     // test if Sid passed in is valid
-    // 
+    //
     if(!IsValidSid(pSid)) return FALSE;
 
     // obtain SidIdentifierAuthority
@@ -360,16 +360,16 @@ BOOL GetTextualSid(
     // obtain sidsubauthority count
     dwSubAuthorities=*GetSidSubAuthorityCount(pSid);
 
-    // 
+    //
     // compute buffer length
     // S-SID_REVISION- + identifierauthority- + subauthorities- + NULL
-    // 
+    //
     dwSidSize=(15 + 12 + (12 * dwSubAuthorities) + 1) * sizeof(TCHAR);
 
-    // 
+    //
     // check provided buffer length.
     // If not large enough, indicate proper size and setlasterror
-    // 
+    //
     if (*dwBufferLen < dwSidSize)
     {
         *dwBufferLen = dwSidSize;
@@ -377,14 +377,14 @@ BOOL GetTextualSid(
         return FALSE;
     }
 
-    // 
+    //
     // prepare S-SID_REVISION-
-    // 
+    //
     dwSidSize=wsprintf(TextualSid, TEXT("S-%lu-"), dwSidRev );
 
-    // 
+    //
     // prepare SidIdentifierAuthority
-    // 
+    //
     if ( (psia->Value[0] != 0) || (psia->Value[1] != 0) )
     {
         dwSidSize+=wsprintf(TextualSid + lstrlen(TextualSid),
@@ -406,9 +406,9 @@ BOOL GetTextualSid(
                     (ULONG)(psia->Value[2] << 24)   );
     }
 
-    // 
+    //
     // loop through SidSubAuthorities
-    // 
+    //
     for (dwCounter=0 ; dwCounter < dwSubAuthorities ; dwCounter++)
     {
         dwSidSize+=wsprintf(TextualSid + dwSidSize, TEXT("-%lu"),
@@ -416,7 +416,7 @@ BOOL GetTextualSid(
     }
 
     return TRUE;
-} 
+}
 
 /* static */ PyObject *PySID::strFunc(PyObject *ob)
 {

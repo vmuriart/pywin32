@@ -28,10 +28,10 @@ class PipeTests(unittest.TestCase):
     def startPipeServer(self, event, wait_time = 0):
         openMode = win32pipe.PIPE_ACCESS_DUPLEX
         pipeMode = win32pipe.PIPE_TYPE_MESSAGE  | win32pipe.PIPE_WAIT
-    
+
         sa = pywintypes.SECURITY_ATTRIBUTES()
         sa.SetSecurityDescriptorDacl ( 1, None, 0 )
-    
+
         pipe_handle = win32pipe.CreateNamedPipe(self.pipename,
                                                 openMode,
                                                 pipeMode,
@@ -41,7 +41,7 @@ class PipeTests(unittest.TestCase):
                                                 2000,
                                                 sa)
 
-    
+
         threading.Thread(target=self._serverThread, args=(pipe_handle, event, wait_time)).start()
 
     def testCallNamedPipe(self):

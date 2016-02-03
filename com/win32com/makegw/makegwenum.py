@@ -211,7 +211,7 @@ STDMETHODIMP PyGEnum%(enumtype)s::GetTypeInfo(UINT itinfo, LCID lcid, ITypeInfo 
 STDMETHODIMP PyGEnum%(enumtype)s::GetIDsOfNames(REFIID refiid, OLECHAR FAR* FAR* rgszNames, UINT cNames, LCID lcid, DISPID FAR* rgdispid) {return PyGatewayBase::GetIDsOfNames( refiid, rgszNames, cNames, lcid, rgdispid);}
 STDMETHODIMP PyGEnum%(enumtype)s::Invoke(DISPID dispid, REFIID riid, LCID lcid, WORD wFlags, DISPPARAMS FAR* params, VARIANT FAR* pVarResult, EXCEPINFO FAR* pexcepinfo, UINT FAR* puArgErr) {return PyGatewayBase::Invoke( dispid, riid, lcid, wFlags, params, pVarResult, pexcepinfo, puArgErr);}
 
-STDMETHODIMP PyGEnum%(enumtype)s::Next( 
+STDMETHODIMP PyGEnum%(enumtype)s::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ %(argdeclare)s,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -258,7 +258,7 @@ STDMETHODIMP PyGEnum%(enumtype)s::Next(
 	return PyCom_SetCOMErrorFromSimple(E_FAIL, IID_IEnum%(enumtype)s, "Next() did not return a sequence of objects");
 }
 
-STDMETHODIMP PyGEnum%(enumtype)s::Skip( 
+STDMETHODIMP PyGEnum%(enumtype)s::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -271,7 +271,7 @@ STDMETHODIMP PyGEnum%(enumtype)s::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnum%(enumtype)s::Clone( 
+STDMETHODIMP PyGEnum%(enumtype)s::Clone(
             /* [out] */ IEnum%(enumtype)s __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

@@ -1,6 +1,6 @@
 /* win32ctllist : implementation file
 
-	List control object.  
+	List control object.
 
 	Created Feb 1997, Mark Hammond (MHammond@skippinet.com.au)
 
@@ -352,7 +352,7 @@ MAKE_BOOL_ITEM_INT_ACTION(PyCTreeCtrl_Select, Select )
 
 // @pymethod (int,int)|PyCTreeCtrl|GetItemImage|Retrieves the index of an items images.
 // @pyparm HTREEITEM|item||The specified item
-PyObject *PyCTreeCtrl_GetItemImage( PyObject *self, PyObject *args ) 
+PyObject *PyCTreeCtrl_GetItemImage( PyObject *self, PyObject *args )
 {
 	HTREEITEM item;
 	if (!PyArg_ParseTuple( args, "i:GetItemImage", &item))
@@ -371,7 +371,7 @@ PyObject *PyCTreeCtrl_GetItemImage( PyObject *self, PyObject *args )
 // @pymethod (int,int)|PyCTreeCtrl|GetItemState|Retrieves the state and mask of an item.
 // @pyparm HTREEITEM|item||The specified item
 // @pyparm int|stateMask||The mask for the result.
-PyObject *PyCTreeCtrl_GetItemState( PyObject *self, PyObject *args ) 
+PyObject *PyCTreeCtrl_GetItemState( PyObject *self, PyObject *args )
 {
 	HTREEITEM item; UINT stateMask;
 	if (!PyArg_ParseTuple( args, "ii:GetItemState", &item, &stateMask))
@@ -421,7 +421,7 @@ PyObject *PyCTreeCtrl_InsertItem( PyObject *self, PyObject *args )
 	if (!(pList=GetTreeCtrl(self)))
 		return NULL;
 
-	if (PyArg_ParseTuple(args, "iOiiiiOOO:InsertItem", 
+	if (PyArg_ParseTuple(args, "iOiiiiOOO:InsertItem",
 						&mask, // @pyparmalt1 int|mask||Integer specifying which attributes to set
 						&obtext, // @pyparmalt1 string|text||The text of the item.
 						&image, // @pyparmalt1 int|image||The index of the image to use.
@@ -446,7 +446,7 @@ PyObject *PyCTreeCtrl_InsertItem( PyObject *self, PyObject *args )
 	PyErr_Clear();
 	hParent = TVI_ROOT;
 	hInsertAfter = TVI_LAST;
-	if (PyArg_ParseTuple(args, "Oii|O&O&:InsertItem", 
+	if (PyArg_ParseTuple(args, "Oii|O&O&:InsertItem",
 			&obtext, // @pyparmalt2 string|text||The text for the item.
 			&image, // @pyparmalt2 int|image||The index of the image to use.
 			&selImage, // @pyparmalt2 int|selectedImage||The index of the items selected image.
@@ -464,11 +464,11 @@ PyObject *PyCTreeCtrl_InsertItem( PyObject *self, PyObject *args )
 	PyErr_Clear();
 	hParent = TVI_ROOT;
 	hInsertAfter = TVI_LAST;
-	if (PyArg_ParseTuple(args, "O|O&O&:InsertItem", 
+	if (PyArg_ParseTuple(args, "O|O&O&:InsertItem",
 			&obtext,	// @pyparmalt3 string|text||The text for the item.
 			PyWinObject_AsHANDLE, &hParent,	// @pyparmalt3 HTREEITEM|parent|commctrl.TVI_ROOT|The parent of the item.
 			PyWinObject_AsHANDLE, &hInsertAfter)	// @pyparmalt3 HTREEITEM|parent|commctrl.TVI_LAST|The parent of the item.
-		&& PyWinObject_AsTCHAR(obtext, &text, FALSE)){	
+		&& PyWinObject_AsTCHAR(obtext, &text, FALSE)){
 		GUI_BGN_SAVE;
 		ret = pList->InsertItem(text, hParent, hInsertAfter);
 		GUI_END_SAVE;
@@ -532,7 +532,7 @@ PyObject *PyCTreeCtrl_SetImageList( PyObject *self, PyObject *args )
 	int imageType;
 	if (!(pList=GetTreeCtrl(self)))
 		return NULL;
-	if (!PyArg_ParseTuple(args, "Oi:SetImageList", 
+	if (!PyArg_ParseTuple(args, "Oi:SetImageList",
 		                  &obList, // @pyparm <o PyCImageList>|imageList||The Image List to use.
 						  &imageType )) // @pyparm int|imageType||Type of image list. It can be one of (COMMCTRL.) LVSIL_NORMAL, LVSIL_SMALL or LVSIL_STATE
 		return NULL;
@@ -550,9 +550,9 @@ PyObject *PyCTreeCtrl_SetImageList( PyObject *self, PyObject *args )
 PyObject *PyCTreeCtrl_GetItem( PyObject *self, PyObject *args )
 {
 	HTREEITEM item;
-	UINT mask = TVIF_CHILDREN | TVIF_HANDLE | TVIF_IMAGE | TVIF_PARAM | TVIF_SELECTEDIMAGE | TVIF_STATE | TVIF_TEXT; 
+	UINT mask = TVIF_CHILDREN | TVIF_HANDLE | TVIF_IMAGE | TVIF_PARAM | TVIF_SELECTEDIMAGE | TVIF_STATE | TVIF_TEXT;
 
-	if (!PyArg_ParseTuple( args, "i|i:GetItem", 
+	if (!PyArg_ParseTuple( args, "i|i:GetItem",
 	                   &item, // @pyparm HTREEITEM|item||The item whose attributes are to be retrieved.
 					   &mask)) // @pyparm int|mask|(all flags set)|The requested attributes.
 		return NULL;
@@ -577,7 +577,7 @@ PyObject *PyCTreeCtrl_GetItem( PyObject *self, PyObject *args )
 PyObject *PyCTreeCtrl_GetItemText( PyObject *self, PyObject *args )
 {
 	HTREEITEM item;
-	if (!PyArg_ParseTuple( args, "i:GetItemText", 
+	if (!PyArg_ParseTuple( args, "i:GetItemText",
 	                   &item)) // @pyparm HTREEITEM|item||The item whose text is to be retrieved.
 		return NULL;
 	CTreeCtrl *pList = GetTreeCtrl(self);
@@ -596,7 +596,7 @@ PyObject *PyCTreeCtrl_SetItemText( PyObject *self, PyObject *args )
 	HTREEITEM item;
 	TCHAR *text;
 	PyObject *obtext;
-	if (!PyArg_ParseTuple( args, "iO:SetItemText", 
+	if (!PyArg_ParseTuple( args, "iO:SetItemText",
 	                   &item, // @pyparm HTREEITEM|item||The item whose text is to be retrieved.
 					   &obtext)) // @pyparm string|text||String that contains the new item text.
 
@@ -616,7 +616,7 @@ PyObject *PyCTreeCtrl_SetItemText( PyObject *self, PyObject *args )
 PyObject *PyCTreeCtrl_GetItemData( PyObject *self, PyObject *args )
 {
 	HTREEITEM item;
-	if (!PyArg_ParseTuple( args, "i:GetItemData", 
+	if (!PyArg_ParseTuple( args, "i:GetItemData",
 	                   &item)) // @pyparm HTREEITEM|item||The index of the item whose data is to be retrieved.
 
 		return NULL;
@@ -635,7 +635,7 @@ PyObject *PyCTreeCtrl_SetItemData( PyObject *self, PyObject *args )
 	if (!pList) return NULL;
 	HTREEITEM item;
 	int data;
-	if (!PyArg_ParseTuple( args, "ii:SetItemData", 
+	if (!PyArg_ParseTuple( args, "ii:SetItemData",
 		                   &item, // @pyparm HTREEITEM|item||The item whose Data is to be set.
 						   &data)) // @pyparm int|Data||New value for the data.
 		return NULL;
@@ -672,7 +672,7 @@ PyObject *PyCTreeCtrl_GetItemRect( PyObject *self, PyObject *args )
 	HTREEITEM item;
 	RECT rect;
 	BOOL bTextOnly;
-	if (!PyArg_ParseTuple( args, "ii:GetItemRect", 
+	if (!PyArg_ParseTuple( args, "ii:GetItemRect",
 		                   &item, // @pyparm HTREEITEM|item||The item whose Data is to be set.
 						   &bTextOnly)) // @pyparm int|bTextOnly||f this parameter is nonzero, the bounding rectangle includes only the text of the item. Otherwise it includes the entire line that the item occupies in the tree view control.
 		return NULL;
@@ -751,7 +751,7 @@ PyObject *PyCTreeCtrl_CreateDragImage( PyObject *self, PyObject *args )
 }
 
 // @pymethod <o PyCToolTopCtrl>|PyCTreeCtrl|GetToolTips|Returns the tooltip control
-PyObject *PyCTreeCtrl_GetToolTips( PyObject *self, PyObject *args ) 
+PyObject *PyCTreeCtrl_GetToolTips( PyObject *self, PyObject *args )
 {
 	CTreeCtrl *pList = GetTreeCtrl(self);
 	if (!pList) return NULL;
@@ -777,18 +777,18 @@ PyObject *PyCTreeCtrl_HitTest( PyObject *self, PyObject *args )
 	// @rdesc The result is a tuple of (flags, hItem).
 	// flags may be a combination of the following values:
 	// @flagh Value|Description
-	// @flag commctrl.TVHT_ABOVE|Above the client area.  
-	// @flag commctrl.TVHT_BELOW|Below the client area.  
-	// @flag commctrl.TVHT_NOWHERE|In the client area, but below the last item.  
-	// @flag commctrl.TVHT_ONITEM|On the bitmap or label associated with an item.  
-	// @flag commctrl.TVHT_ONITEMBUTTON|On the button associated with an item.  
-	// @flag commctrl.TVHT_ONITEMICON|On the bitmap associated with an item.  
-	// @flag commctrl.TVHT_ONITEMINDENT|In the indentation associated with an item.  
-	// @flag commctrl.TVHT_ONITEMLABEL|On the label (string) associated with an item.  
-	// @flag commctrl.TVHT_ONITEMRIGHT|In the area to the right of an item.  
-	// @flag commctrl.TVHT_ONITEMSTATEICON|On the state icon for a tree view item that is in a user-defined state.  
-	// @flag commctrl.TVHT_TOLEFT|To the left of the client area.  
-	// @flag commctrl.TVHT_TORIGHT|To the right of the client area.  
+	// @flag commctrl.TVHT_ABOVE|Above the client area.
+	// @flag commctrl.TVHT_BELOW|Below the client area.
+	// @flag commctrl.TVHT_NOWHERE|In the client area, but below the last item.
+	// @flag commctrl.TVHT_ONITEM|On the bitmap or label associated with an item.
+	// @flag commctrl.TVHT_ONITEMBUTTON|On the button associated with an item.
+	// @flag commctrl.TVHT_ONITEMICON|On the bitmap associated with an item.
+	// @flag commctrl.TVHT_ONITEMINDENT|In the indentation associated with an item.
+	// @flag commctrl.TVHT_ONITEMLABEL|On the label (string) associated with an item.
+	// @flag commctrl.TVHT_ONITEMRIGHT|In the area to the right of an item.
+	// @flag commctrl.TVHT_ONITEMSTATEICON|On the state icon for a tree view item that is in a user-defined state.
+	// @flag commctrl.TVHT_TOLEFT|To the left of the client area.
+	// @flag commctrl.TVHT_TORIGHT|To the right of the client area.
 }
 
 
@@ -852,10 +852,10 @@ static struct PyMethodDef PyCTreeCtrl_methods[] = {
 // with TVE_COLLAPSE.  This is pointed out in the docs for
 // TreeView_Expand(), but not in those for CTreeCtrl::Expand.
 
-ui_type_CObject PyCTreeCtrl::type("PyCTreeCtrl", 
-									 &PyCWnd::type, 
-									 RUNTIME_CLASS(CTreeCtrl), 
-									 sizeof(PyCTreeCtrl), 
-									 PYOBJ_OFFSET(PyCTreeCtrl), 
-									 PyCTreeCtrl_methods, 
+ui_type_CObject PyCTreeCtrl::type("PyCTreeCtrl",
+									 &PyCWnd::type,
+									 RUNTIME_CLASS(CTreeCtrl),
+									 sizeof(PyCTreeCtrl),
+									 PYOBJ_OFFSET(PyCTreeCtrl),
+									 PyCTreeCtrl_methods,
 									 GET_PY_CTOR(PyCTreeCtrl));

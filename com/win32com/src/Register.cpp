@@ -201,7 +201,7 @@ int PyCom_RegisterExtensionSupport( PyObject *dict, const PyCom_InterfaceSupport
 int PyCom_IsGatewayRegistered(REFIID iid)
 {
 	PyObject *keyObject = PyWinObject_FromIID(iid);
-	if (!keyObject) 
+	if (!keyObject)
 	{
 		return 0;
 	}
@@ -210,7 +210,7 @@ int PyCom_IsGatewayRegistered(REFIID iid)
 	return rc;
 }
 
-// @pymethod int|pythoncom|IsGatewayRegistered|Returns true if a gateway has been registered for the given IID 
+// @pymethod int|pythoncom|IsGatewayRegistered|Returns true if a gateway has been registered for the given IID
 PyObject  *pythoncom_IsGatewayRegistered(PyObject *self, PyObject *args)
 {
 	PyObject *obIID;
@@ -304,7 +304,7 @@ static const PyCom_InterfaceSupportInfo g_interfaceSupportData[] =
 	PYCOM_INTERFACE_CLIENT_ONLY( ProvideClassInfo),
 	PYCOM_INTERFACE_CLIENT_ONLY( ProvideClassInfo2),
 #endif // NO_PYCOM_IPROVIDECLASSINFO
-	
+
 	PYCOM_INTERFACE_CLIENT_ONLY( RunningObjectTable),
 	PYCOM_INTERFACE_CLIENT_ONLY( TypeComp),
 	PYCOM_INTERFACE_CLIENT_ONLY( TypeInfo),

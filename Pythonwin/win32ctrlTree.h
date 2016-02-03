@@ -1,6 +1,6 @@
 /* win32ctrltree : header
 
-	Tree control object.  
+	Tree control object.
 
 	Created May 1996, Mark Hammond (MHammond@skippinet.com.au)
 

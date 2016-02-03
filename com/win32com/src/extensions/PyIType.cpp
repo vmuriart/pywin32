@@ -165,7 +165,7 @@ PyObject *PyITypeInfo::GetIDsOfNames(OLECHAR FAR* FAR* names, int count)
 	PyObject *ret = PyTuple_New(count);
 	for (int i = 0; i < count; i++)
 		PyTuple_SetItem(ret, i, PyInt_FromLong(ids[i]));
-	
+
 	delete [] ids;
 	return ret;
 }
@@ -190,7 +190,7 @@ PyObject *PyITypeInfo::GetNames(MEMBERID id)
 		PyTuple_SetItem(ret, i, obString);
 		SysFreeString(names[i]);
 	}
-	
+
 	return ret;
 }
 
@@ -205,7 +205,7 @@ PyObject *PyITypeInfo::GetTypeAttr()
 	if (FAILED(sc))
 		return PyCom_BuildPyException(sc, pMyTypeInfo, IID_ITypeInfo);
 
-/*	
+/*
 	PyObject *obIID = PyWinObject_FromIID(attr->guid);
 	PyObject *obDescAlias;
 	// Some (only a few 16 bit MSOffice only one so far, and even then only occasionally!)
@@ -384,9 +384,9 @@ static PyObject *typeinfo_getreftypeofimpltype(PyObject *self, PyObject *args)
 	if (!PyArg_ParseTuple(args, "i:GetRefTypeOfImplType", &index))
 		return NULL;
 	return ((PyITypeInfo*)self)->GetRefTypeOfImplType(index);
-	// @comm If a type description describes a COM class, it retrieves the type 
-	// description of the implemented interface types. For an interface, 
-	// GetRefTypeOfImplType returns the type information for inherited 
+	// @comm If a type description describes a COM class, it retrieves the type
+	// description of the implemented interface types. For an interface,
+	// GetRefTypeOfImplType returns the type information for inherited
 	// interfaces, if any exist.
 }
 
@@ -505,7 +505,7 @@ static struct PyMethodDef PyITypeInfo_methods[] =
 	{ "GetRefTypeOfImplType",typeinfo_getreftypeofimpltype, 1}, // @pymeth GetRefTypeOfImplType|Retrieves the type description of the implemented interface types.
 	{ "GetVarDesc",       typeinfo_getvardesc, 1 }, // @pymeth GetVarDesc|Retrieves a <o VARDESC> object that describes the specified variable.
 	{ "GetTypeComp",      typeinfo_gettypecomp, 1 }, // @pymeth GetTypeComp|Retrieves a <o ITypeComp> object for Name to VARDESC/FUNCDESC mapping.
-	{NULL,  NULL} 
+	{NULL,  NULL}
 };
 
 PyComTypeObject PyITypeInfo::type("PyITypeInfo",
@@ -832,14 +832,14 @@ done:
 	if (bstrHelpDir) SysFreeString(bstrHelpDir);
 	PYCOM_RELEASE(pLib);
 	return result;
-	// @comm This function can be used during application initialization to register the application's type 
-	// library correctly. When RegisterTypeLib is called to register a type library, 
+	// @comm This function can be used during application initialization to register the application's type
+	// library correctly. When RegisterTypeLib is called to register a type library,
 	// both the minor and major version numbers are registered in hexadecimal.
-	// <nl> In addition to filling in a complete registry entry under the type library key, 
-	// RegisterTypeLib adds entries for each of the dispinterfaces and Automation-compatible 
-	// interfaces, including dual interfaces. This information is required to create 
-	// instances of these interfaces. Coclasses are not registered (that is, 
-	// RegisterTypeLib does not write any values to the CLSID key of the coclass). 
+	// <nl> In addition to filling in a complete registry entry under the type library key,
+	// RegisterTypeLib adds entries for each of the dispinterfaces and Automation-compatible
+	// interfaces, including dual interfaces. This information is required to create
+	// instances of these interfaces. Coclasses are not registered (that is,
+	// RegisterTypeLib does not write any values to the CLSID key of the coclass).
 }
 
 

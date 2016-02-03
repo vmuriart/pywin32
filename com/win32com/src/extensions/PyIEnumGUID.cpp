@@ -70,7 +70,7 @@ PyObject *PyIEnumGUID::Next(PyObject *self, PyObject *args)
 	}
 	delete [] rgVar;
 	return result;
-	// @rdesc The result is a tuple of <o PyIID> objects, 
+	// @rdesc The result is a tuple of <o PyIID> objects,
 	// one for each element returned.  Note that if zero elements are returned, it is not considered
 	// an error condition - an empty tuple is simply returned.
 }
@@ -136,7 +136,7 @@ static struct PyMethodDef PyIEnumGUID_methods[] =
 	{"Skip",          PyIEnumGUID::Skip,  1}, // @pymeth Skip|Skips over the next specified elementes.
 	{"Reset",          PyIEnumGUID::Reset,  1}, // @pymeth Reset|Resets the enumeration sequence to the beginning.
 	{"Clone",          PyIEnumGUID::Clone,  1}, // @pymeth Clone|Creates another enumerator that contains the same enumeration state as the current one.
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComEnumTypeObject PyIEnumGUID::type("PyIEnumGUID",

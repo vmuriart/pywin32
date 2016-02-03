@@ -28,11 +28,11 @@ class OleClientItem(object.CmdTarget):
 		if item is not None and item._obj_ != self._obj_:
 			item.Close()
 		self._obj_.OnActivate()
-		
+
 	def OnChange(self, oleNotification, dwParam):
 		self._obj_.OnChange(oleNotification, dwParam)
 		self.GetDocument().UpdateAllViews(None)
-		
+
 	def OnChangeItemPosition(self, rect):
 		# During in-place activation CEmbed_ExcelCntrItem::OnChangeItemPosition
 		#  is called by the server to change the position of the in-place
@@ -48,7 +48,7 @@ class OleClientItem(object.CmdTarget):
 
 		# TODO: update any cache you may have of the item's rectangle/extent
 		return 1
-		
+
 class OleDocument(object.CmdTarget):
 	def __init__(self, template):
 		object.CmdTarget.__init__(self, win32uiole.CreateOleDocument(template))
@@ -63,14 +63,14 @@ class ExcelView(docview.ScrollView):
 		rc = self._obj_.OnInitialUpdate()
 		self.EmbedExcel()
 		return rc
-		
+
 	def EmbedExcel(self):
 		doc = self.GetDocument()
 		self.clientItem = OleClientItem(doc)
 		self.clientItem.CreateNewItem("Excel.Sheet")
 		self.clientItem.DoVerb(-1, self)
 		doc.UpdateAllViews(None)
-		
+
 	def OnDraw(self, dc):
 		doc = self.GetDocument()
 		pos = doc.GetStartPosition()
@@ -87,13 +87,13 @@ class ExcelView(docview.ScrollView):
 				wnd.SetFocus()
 			return 0 # Dont get the base version called.
 		return 1 # Call the base version.
-	
+
 	def OnSize (self, params):
 		item = self.GetDocument().GetInPlaceActiveItem(self)
 		if item is not None:
 			item.SetItemRects()
 		return 1 # do call the base!
-		 	
+
 class OleTemplate(docview.DocTemplate):
 	def __init__(self, resourceId=None, MakeDocument=None, MakeFrame=None, MakeView=None):
 		if MakeDocument is None: MakeDocument = OleDocument
@@ -108,7 +108,7 @@ class WordFrame(window.MDIChildWnd):
 	def Create(self, title, rect = None, parent = None):
 		style = win32con.WS_CHILD | win32con.WS_VISIBLE | win32con.WS_OVERLAPPEDWINDOW
 		self._obj_.CreateWindow(None, title, style, rect, parent)
-		
+
 		rect = self.GetClientRect()
 		rect = (0,0,rect[2]-rect[0], rect[3]-rect[1])
 		self.ocx = MyWordControl()

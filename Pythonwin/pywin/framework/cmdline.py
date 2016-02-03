@@ -12,7 +12,7 @@ def ParseArgs( str ):
 		try:
 			while str[pos] in string.whitespace: pos = pos+1
 		except IndexError:
-			break 	
+			break
 		if pos>=length:
 			break
 		if str[pos]=='"':

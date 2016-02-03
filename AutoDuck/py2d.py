@@ -17,7 +17,7 @@ else:
     def next(iter):
         # Python3's global next() function
         return iter.next()
-        
+
 class DocInfo:
     def __init__(self, name, ob):
         self.name = name
@@ -153,7 +153,7 @@ def build_module(fp, mod_name):
             Print("// @pymethod |%s|%s|%s" % (ob_name, fi.name, format_desc(fi.desc)), file=fp)
             for ai in BuildArgInfos(fi.ob):
                 Print("// @pyparm |%s|%s|%s" % (ai.name, ai.default, ai.short_desc), file=fp)
-                
+
     for (name, val) in constants:
         desc = "%s = %r" % (name, val)
         if type(val) in (int, long):
@@ -164,6 +164,6 @@ def main(fp, args):
     Print("// @doc", file=fp)
     for arg in args:
         build_module(sys.stdout, arg)
-        
+
 if __name__=='__main__':
     main(sys.stdout, sys.argv[1:])

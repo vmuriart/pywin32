@@ -32,7 +32,7 @@ class ConnectableServer(win32com.server.connect.ConnectableServer):
 
 # Here is the client side of the connection world.
 # Define a COM object which implements the methods defined by the
-# IConnectDemoEvents interface.								
+# IConnectDemoEvents interface.
 class ConnectableClient:
 	# This is another cheat - I _know_ the server defines the "DoneIt" event
 	# as DISPID==1000 - I also know from the implementation details of COM

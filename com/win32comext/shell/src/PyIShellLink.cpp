@@ -37,9 +37,9 @@ PyObject *PyIShellLink::GetPath(PyObject *self, PyObject *args)
 	WIN32_FIND_DATA fd;
 	// @pyparm int|fFlags||One of the following values:
 	// @flagh Value|Description
-	// @flag SLGP_SHORTPATH|Retrieves the standard short (8.3 format) file name.  
-	// @flag SLGP_UNCPRIORITY|Retrieves the Universal Naming Convention (UNC) path name of the file.  
-	// @flag SLGP_RAWPATH|Retrieves the raw path name. A raw path is something that might not exist and may include environment variables that need to be expanded. 
+	// @flag SLGP_SHORTPATH|Retrieves the standard short (8.3 format) file name.
+	// @flag SLGP_UNCPRIORITY|Retrieves the Universal Naming Convention (UNC) path name of the file.
+	// @flag SLGP_RAWPATH|Retrieves the raw path name. A raw path is something that might not exist and may include environment variables that need to be expanded.
 	// @pyparm int|cchMaxPath|_MAX_PATH|Number of characters to allocate for returned filename
 	int cchMaxPath = _MAX_PATH;
 	DWORD fFlags;
@@ -458,22 +458,22 @@ PyObject *PyIShellLink::Resolve(PyObject *self, PyObject *args)
 	// @pyparm HWND|hwnd||The parent window of a dialog which will pop up if resolution fails.
 	// @pyparm int|fFlags||One of the following constants:
 	// @flagh Value|Description
-	// @flag SLR_INVOKE_MSI|Call the Microsoft Windows Installer. 
+	// @flag SLR_INVOKE_MSI|Call the Microsoft Windows Installer.
 	// @flag SLR_NOLINKINFO |Disable distributed link tracking. By default, distributed
 	//			link tracking tracks removable media across multiple devices based on the
 	//			volume name. It also uses the UNC path to track remote file systems whose
-	//			drive letter has changed. Setting SLR_NOLINKINFO disables both types of tracking. 
+	//			drive letter has changed. Setting SLR_NOLINKINFO disables both types of tracking.
 	// @flag SLR_NO_UI|Do not display a dialog box if the link cannot be resolved. When
 	//			SLR_NO_UI is set, the high-order word of fFlags can be set to a time-out value
 	//			that specifies the maximum amount of time to be spent resolving the link. The
 	//			function returns if the link cannot be resolved within the time-out duration.
 	//			If the high-order word is set to zero, the time-out duration will be set to the
 	//			default value of 3,000 milliseconds (3 seconds). To specify a value, set the high
-	//			word of fFlags to the desired time-out duration, in milliseconds. 
-	// @flag SLR_NOUPDATE|Do not update the link information. 
-	// @flag SLR_NOSEARCH|Do not execute the search heuristics. 
-	// @flag SLR_NOTRACK|Do not use distributed link tracking. 
-	// @flag SLR_UPDATE|If the link object has changed, update its path and list of identifiers. If SLR_UPDATE is set, you do not need to call IPersistFile::IsDirty to determine whether or not the link object has changed. 
+	//			word of fFlags to the desired time-out duration, in milliseconds.
+	// @flag SLR_NOUPDATE|Do not update the link information.
+	// @flag SLR_NOSEARCH|Do not execute the search heuristics.
+	// @flag SLR_NOTRACK|Do not use distributed link tracking.
+	// @flag SLR_UPDATE|If the link object has changed, update its path and list of identifiers. If SLR_UPDATE is set, you do not need to call IPersistFile::IsDirty to determine whether or not the link object has changed.
 
 	HWND hwnd;
 	PyObject *obhwnd;

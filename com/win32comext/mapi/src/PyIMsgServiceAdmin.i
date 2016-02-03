@@ -1,5 +1,5 @@
 /* File : PyIMsgServiceAdmin.i */
- 
+
 %module IMsgServiceAdmin // An COM interface to MAPI's IMsgServiceAdmin interface.
 
 %include "typemaps.i"
@@ -32,8 +32,8 @@ PyIMsgServiceAdmin::~PyIMsgServiceAdmin()
 
 HRESULT GetLastError(HRESULT hr, unsigned long flags, MAPIERROR **OUTPUT);
 
-// @pyswig |CreateMsgService|Creates a message service. 
-HRESULT CreateMsgService( 
+// @pyswig |CreateMsgService|Creates a message service.
+HRESULT CreateMsgService(
 	TCHAR *INPUT, // @pyparm string|serviceName||The name of the service.
 	TCHAR *INPUT_NULLOK, // @pyparm string|displayName||Display name of the service, or None
 	unsigned long ulUIParam, // @pyparm int|ulUIParam||Handle of the parent window for the configuration property sheet.
@@ -41,7 +41,7 @@ HRESULT CreateMsgService(
 );
 
 %{
-// @pyswig |ConfigureMsgService|Reconfigures a message service. 
+// @pyswig |ConfigureMsgService|Reconfigures a message service.
 PyObject *PyIMsgServiceAdmin::ConfigureMsgService(PyObject *self, PyObject *args)
 {
 	unsigned long ulUIParam;
@@ -51,7 +51,7 @@ PyObject *PyIMsgServiceAdmin::ConfigureMsgService(PyObject *self, PyObject *args
 	PyObject *obIID;
 	IMsgServiceAdmin *_swig_self;
 	if ((_swig_self=GetI(self))==NULL) return NULL;
-	if (!PyArg_ParseTuple(args, "OiiO:ConfigureMsgService", 
+	if (!PyArg_ParseTuple(args, "OiiO:ConfigureMsgService",
 	                     &obIID, // @pyparm <o PyIID>|iid||The unique identifier for the message service to configure.
 						 &ulUIParam, // @pyparm int|ulUIParam||Handle of the parent window for the configuration property sheet.
 						 &ulFlags, // @pyparm int|ulFlags||Bitmask of flags that controls the display of the property sheet.
@@ -105,7 +105,7 @@ HRESULT RenameMsgService(
 	unsigned long flags, // @pyparm int|flags||
 	TCHAR *newName // @pyparm string|newName||The new name for the service.
 );
- 
+
 // @pyswig <o PyIProfSect>|OpenProfileSection|Opens a profile section
 HRESULT OpenProfileSection(
 	MAPIUID *INPUT, // @pyparm <o PyIID>|uuid||The ID of the service

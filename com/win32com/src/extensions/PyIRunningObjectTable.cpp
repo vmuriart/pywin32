@@ -45,8 +45,8 @@ PyObject *PyIRunningObjectTable::IsRunning(PyObject *self, PyObject *args)
 	if (FAILED(hr))
 		return PyCom_BuildPyException(hr, pMy, IID_IRunningObjectTable);
 	return PyInt_FromLong(hr);
-	// @rvalue S_OK (ie, 0)|The object identified by objectName is running. 
-	// @rvalue S_FALSE (ie, 1)|There is no entry for objectName in the ROT, or that the object it identifies is no longer running (in which case, the entry is revoked). 
+	// @rvalue S_OK (ie, 0)|The object identified by objectName is running.
+	// @rvalue S_FALSE (ie, 1)|There is no entry for objectName in the ROT, or that the object it identifies is no longer running (in which case, the entry is revoked).
 }
 
 // @pymethod <o PyIUnknown>|PyIRunningObjectTable|GetObject|Checks whether an object is running.
@@ -91,7 +91,7 @@ PyObject *PyIRunningObjectTable::EnumRunning(PyObject *self, PyObject *args)
 	return PyCom_PyObjectFromIUnknown(pEnumMoniker, IID_IEnumMoniker, FALSE);
 }
 
-// @pymethod int|PyIRunningObjectTable|Register|Registers an object and its identifying moniker in the Running Object Table (ROT). 
+// @pymethod int|PyIRunningObjectTable|Register|Registers an object and its identifying moniker in the Running Object Table (ROT).
 PyObject *PyIRunningObjectTable::Register(PyObject *self, PyObject *args)
 {
 	PyObject *obUnk, *obMk;
@@ -119,7 +119,7 @@ PyObject *PyIRunningObjectTable::Register(PyObject *self, PyObject *args)
 	PY_INTERFACE_POSTCALL;
 	if (S_OK!=hr) // S_OK only acceptable
 		return PyCom_BuildPyException(hr, pMy, IID_IRunningObjectTable);
-	return PyInt_FromLong(tok);	
+	return PyInt_FromLong(tok);
 }
 
 // @pymethod int|PyIRunningObjectTable|Revoke|Removes from the Running Object Table
@@ -141,7 +141,7 @@ PyObject *PyIRunningObjectTable::Revoke(PyObject *self, PyObject *args)
 	Py_INCREF(Py_None);
 	return Py_None;
 }
-	
+
 // @object PyIRunningObjectTable|A Python interface to IRunningObjectTable
 static struct PyMethodDef PyIRunningObjectTable_methods[] =
 {
@@ -150,7 +150,7 @@ static struct PyMethodDef PyIRunningObjectTable_methods[] =
 	{"IsRunning",         PyIRunningObjectTable::IsRunning,  1}, // @pymeth IsRunning|Checks whether an object is running.
 	{"GetObject",         PyIRunningObjectTable::GetObject,  1}, // @pymeth GetObject|Checks whether an object is running.
 	{"EnumRunning",       PyIRunningObjectTable::EnumRunning,  1}, // @pymeth EnumRunning|Creates an enumerator that can list the monikers of all the objects currently registered in the Running Object Table (ROT).
-	{NULL,  NULL}        
+	{NULL,  NULL}
 };
 
 PyComEnumProviderTypeObject PyIRunningObjectTable::type("PyIRunningObjectTable",

@@ -147,10 +147,10 @@ static struct PyMethodDef PyCOleDocument_methods[] = {
 	{"GetInPlaceActiveItem", PyCOleDocument_GetInPlaceActiveItem, 1}, // @pymeth GetInPlaceActiveItem|Obtains the OLE item that is currently activated in place in the frame window containing the view identified by obWnd.
 	{NULL,			NULL}		/* sentinel */
 };
-ui_type_CObject PyCOleDocument::type("PyCOleDocument", 
-								  &PyCDocument::type, 
-								  RUNTIME_CLASS(COleDocument), 
-								  sizeof(PyCOleDocument), 
-								  PYOBJ_OFFSET(PyCOleDocument), 
-								  PyCOleDocument_methods, 
+ui_type_CObject PyCOleDocument::type("PyCOleDocument",
+								  &PyCDocument::type,
+								  RUNTIME_CLASS(COleDocument),
+								  sizeof(PyCOleDocument),
+								  PYOBJ_OFFSET(PyCOleDocument),
+								  PyCOleDocument_methods,
 								  GET_PY_CTOR(PyCOleDocument) );

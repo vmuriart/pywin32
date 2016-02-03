@@ -56,7 +56,7 @@ class TestGenerated(TestParser):
         finally:
             if os.path.isfile(py_file):
                 os.unlink(py_file)
-            
+
         # poor-man's import :)
         globs = {}
         exec py_source in globs, globs

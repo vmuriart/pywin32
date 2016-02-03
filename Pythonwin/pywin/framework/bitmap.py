@@ -42,7 +42,7 @@ class BitmapView(docview.ScrollView):
 		self.width = self.height = 0
 		# set up message handlers
 		self.HookMessage (self.OnSize, win32con.WM_SIZE)
-		
+
 	def OnInitialUpdate(self):
 		doc = self.GetDocument()
 		if doc.bitmap:
@@ -67,7 +67,7 @@ class BitmapView(docview.ScrollView):
 		else:
 			# non stretch.
 			doc.bitmap.Paint(dc)
-	
+
 class BitmapFrame(window.MDIChildWnd):
 	def OnCreateClient( self, createparams, context ):
 		borderX = win32api.GetSystemMetrics(win32con.SM_CXFRAME)
@@ -114,7 +114,7 @@ try:
 	win32ui.GetApp().RemoveDocTemplate(bitmapTemplate)
 except NameError:
 	pass
-	
+
 bitmapTemplate = BitmapTemplate()
 bitmapTemplate.SetDocStrings('\nBitmap\nBitmap\nBitmap (*.bmp)\n.bmp\nPythonBitmapFileType\nPython Bitmap File')
 win32ui.GetApp().AddDocTemplate(bitmapTemplate)

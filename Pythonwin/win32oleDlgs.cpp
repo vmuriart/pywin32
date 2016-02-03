@@ -12,12 +12,12 @@ static struct PyMethodDef PyCOleDialog_methods[] = {
 	{ NULL, NULL }
 };
 
-ui_type_CObject PyCOleDialog::type("PyCOleDialog", 
-									 &PyCCommonDialog::type, 
-									 RUNTIME_CLASS(COleDialog), 
-									 sizeof(PyCOleDialog), 
-									 PYOBJ_OFFSET(PyCOleDialog), 
-									 PyCOleDialog_methods, 
+ui_type_CObject PyCOleDialog::type("PyCOleDialog",
+									 &PyCCommonDialog::type,
+									 RUNTIME_CLASS(COleDialog),
+									 sizeof(PyCOleDialog),
+									 PYOBJ_OFFSET(PyCOleDialog),
+									 PyCOleDialog_methods,
 									 NULL);
 
 

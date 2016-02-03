@@ -31,7 +31,7 @@ STDMETHODIMP PyGContextMenu2::GetCommandString(
 						pszName, cchMax);
 }
 
-STDMETHODIMP PyGContextMenu2::HandleMenuMsg( 
+STDMETHODIMP PyGContextMenu2::HandleMenuMsg(
                 UINT uMsg,
                 WPARAM wParam,
                 LPARAM lParam)

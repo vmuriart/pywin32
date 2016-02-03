@@ -19,7 +19,7 @@ class PyGatewayBase;
 // Each gateway must be able to be created from a "gateway constructor".  This
 // is simply a function that takes a Python instance as as argument, and returns
 // a gateway object of the correct type.  The MAKE_PYGATEWAY_CTOR is a helper that
-// will embed such a constructor in the class - however, this is not necessary - 
+// will embed such a constructor in the class - however, this is not necessary -
 // _any_ function of the correct signature can be used.
 
 typedef HRESULT (* pfnPyGatewayConstructor)(PyObject *PythonInstance, PyGatewayBase *, void **ppResult, REFIID iid);
@@ -72,7 +72,7 @@ public:
 //
 // Base class for all gateways.
 //
-class PYCOM_EXPORT PyGatewayBase : 
+class PYCOM_EXPORT PyGatewayBase :
 #ifndef NO_PYCOM_IDISPATCHEX
 	public IDispatchEx, // IDispatch comes along for the ride!
 #else

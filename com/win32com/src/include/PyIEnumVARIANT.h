@@ -31,14 +31,14 @@ protected:
 	PYGATEWAY_MAKE_SUPPORT(PyGEnumVARIANT, IEnumVARIANT, IID_IEnumVARIANT)
 
 	// IEnumVARIANT
-	STDMETHOD(Next)( 
+	STDMETHOD(Next)(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ VARIANT __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched);
-	STDMETHOD(Skip)( 
+	STDMETHOD(Skip)(
             /* [in] */ ULONG celt);
 	STDMETHOD(Reset)( void);
-	STDMETHOD(Clone)( 
+	STDMETHOD(Clone)(
             /* [out] */ IEnumVARIANT __RPC_FAR *__RPC_FAR *ppEnum);
 };
 

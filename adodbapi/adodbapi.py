@@ -68,7 +68,7 @@ else: # try pywin32
         import warnings
         warnings.warn("pywin32 package (or IronPython) required for adodbapi.",ImportWarning)
     def getIndexedValue(obj,index):
-        return obj(index) 
+        return obj(index)
 
 try:
     from collections import Mapping
@@ -187,7 +187,7 @@ def _configure_parameter(p, value, adotype, settings_known):
         elif exponent < 0:
             p.NumericScale = -exponent
             if p.Precision < p.NumericScale:
-                p.Precision = p.NumericScale            
+                p.Precision = p.NumericScale
         else:  # exponent > 0:
             p.NumericScale = 0
             p.Precision = digit_count + exponent
@@ -208,7 +208,7 @@ def _configure_parameter(p, value, adotype, settings_known):
     elif adotype == adc.adEmpty: # ADO will not let you specify a null column
         p.Type = adc.adInteger   # so we will fake it to be an integer (just to have something)
         p.Value = None           # and pass in a Null *value*
-    
+
         # For any other type, set the value and let pythoncom do the right thing.
     else:
         p.Value = value
@@ -220,7 +220,7 @@ def counter():
         yield i
         i += 1
 
-# # # # # ----- the Class that defines a connection ----- # # # # # 
+# # # # # ----- the Class that defines a connection ----- # # # # #
 class Connection(object):
     # include connection attributes as class attributes required by api definition.
     Warning = api.Warning
@@ -317,7 +317,7 @@ class Connection(object):
 
         The connection will be unusable from this point forward;
         an Error (or subclass) exception will be raised if any operation is attempted with the connection.
-        The same applies to all cursor objects trying to use the connection. 
+        The same applies to all cursor objects trying to use the connection.
         """
         for crsr in self.cursors.values()[:]:  # copy the list, then close each one
             crsr.close(dont_tell_me=True)
@@ -335,8 +335,8 @@ class Connection(object):
         """Commit any pending transaction to the database.
 
         Note that if the database supports an auto-commit feature,
-        this must be initially off. An interface method may be provided to turn it back on. 
-        Database modules that do not support transactions should implement this method with void functionality. 
+        this must be initially off. An interface method may be provided to turn it back on.
+        Database modules that do not support transactions should implement this method with void functionality.
         """
         self.messages = []
         if not self.supportsTransactions:
@@ -360,14 +360,14 @@ class Connection(object):
         cause an implicit rollback to be performed.
 
         If the database does not support the functionality required by the method, the interface should
-        throw an exception in case the method is used. 
+        throw an exception in case the method is used.
         The preferred approach is to not implement the method and thus have Python generate
         an AttributeError in case the method is requested. This allows the programmer to check for database
-        capabilities using the standard hasattr() function. 
+        capabilities using the standard hasattr() function.
 
         For some dynamically configured interfaces it may not be appropriate to require dynamically making
         the method available. These interfaces should then raise a NotSupportedError to indicate the
-        non-ability to perform the roll back when the method is invoked. 
+        non-ability to perform the roll back when the method is invoked.
         """
         self.messages=[]
         if self.transaction_level:  # trying to roll back with no open transaction causes an error
@@ -421,7 +421,7 @@ class Connection(object):
         i = self.cursor_counter.next()
         self.cursors[i] = crsr
         crsr.id = i
-        
+
     def _i_am_closing(self,crsr):
         "message from a cursor giving connection a chance to clean up"
         try:
@@ -473,7 +473,7 @@ class Connection(object):
             self._rollback()  #automatic rollback on errors
         else:
             self.commit()
-    
+
     def get_table_names(self):
         schema = self.connector.OpenSchema(20) # constant = adSchemaTables
 
@@ -484,7 +484,7 @@ class Connection(object):
             schema.MoveNext()
         del schema
         return tables
-    
+
 # # # # # ----- the Class that defines a cursor ----- # # # # #
 class Cursor(object):
 ## ** api required attributes:
@@ -497,21 +497,21 @@ class Cursor(object):
 ##    The type_code can be interpreted by comparing it to the Type Objects specified in the section below.
 ## rowcount...
 ##    This read-only attribute specifies the number of rows that the last executeXXX() produced
-##    (for DQL statements like select) or affected (for DML statements like update or insert). 
+##    (for DQL statements like select) or affected (for DML statements like update or insert).
 ##    The attribute is -1 in case no executeXXX() has been performed on the cursor or
 ##    the rowcount of the last operation is not determinable by the interface.[7]
 ## arraysize...
 ##    This read/write attribute specifies the number of rows to fetch at a time with fetchmany().
-##    It defaults to 1 meaning to fetch a single row at a time. 
+##    It defaults to 1 meaning to fetch a single row at a time.
 ##    Implementations must observe this value with respect to the fetchmany() method,
 ##    but are free to interact with the database a single row at a time.
-##    It may also be used in the implementation of executemany(). 
+##    It may also be used in the implementation of executemany().
 ## ** extension attributes:
 ## paramstyle...
 ##   allows the programmer to override the connection's default paramstyle
 ## errorhandler...
 ##   allows the programmer to override the connection's default error handler
-    
+
     def __init__(self,connection):
         self.command = None
         self._ado_prepared = False
@@ -705,7 +705,7 @@ class Cursor(object):
         """with some providers, returned parameters and the .return_value are not available until
         after the last recordset has been read.  In that case, you must coll nextset() until it
         returns None, then call this method to get your returned information."""
-        
+
         retLst=[]  # store procedures may return altered parameters, including an added "return value" item
         for p in tuple(self.cmd.Parameters):
             if verbose > 2:
@@ -721,14 +721,14 @@ class Cursor(object):
             else:
                 retLst.append(pyObject)
         return retLst   # return the parameter list to the caller
-        
+
     def callproc(self, procname, parameters=None):
         """Call a stored database procedure with the given name.
         The sequence of parameters must contain one entry for each
         argument that the sproc expects. The result of the
         call is returned as modified copy of the input
         sequence.  Input parameters are left untouched, output and
-        input/output parameters replaced with possibly new values. 
+        input/output parameters replaced with possibly new values.
 
         The sproc may also provide a result set as output,
         which is available through the standard .fetch*() methods.
@@ -834,25 +834,25 @@ class Cursor(object):
 
             Parameters may be provided as sequence or mapping and will be bound to variables in the operation.
             Variables are specified in a database-specific notation
-            (see the module's paramstyle attribute for details). [5] 
+            (see the module's paramstyle attribute for details). [5]
             A reference to the operation will be retained by the cursor.
             If the same operation object is passed in again, then the cursor
             can optimize its behavior. This is most effective for algorithms
-            where the same operation is used, but different parameters are bound to it (many times). 
+            where the same operation is used, but different parameters are bound to it (many times).
 
             For maximum efficiency when reusing an operation, it is best to use
             the setinputsizes() method to specify the parameter types and sizes ahead of time.
             It is legal for a parameter to not match the predefined information;
-            the implementation should compensate, possibly with a loss of efficiency. 
+            the implementation should compensate, possibly with a loss of efficiency.
 
             The parameters may also be specified as list of tuples to e.g. insert multiple rows in
-            a single operation, but this kind of usage is depreciated: executemany() should be used instead. 
+            a single operation, but this kind of usage is depreciated: executemany() should be used instead.
 
             Return value is not defined.
 
             [5] The module will use the __getitem__ method of the parameters object to map either positions
             (integers) or names (strings) to parameter values. This allows for both sequences and mappings
-            to be used as input. 
+            to be used as input.
             The term "bound" refers to the process of binding an input value to a database execution buffer.
             In practical terms, this means that the input value is directly used as a value in the operation.
             The client should not be required to "escape" the value so that it can be used -- the value
@@ -876,7 +876,7 @@ class Cursor(object):
 
             Return values are not defined.
         """
-        self.messages = list()                
+        self.messages = list()
         total_recordcount = 0
 
         self.prepare(operation)
@@ -915,9 +915,9 @@ class Cursor(object):
             or None when no more data is available.
 
             An Error (or subclass) exception is raised if the previous call to executeXXX()
-            did not produce any result set or no call was issued yet. 
+            did not produce any result set or no call was issued yet.
         """
-        self.messages = []                
+        self.messages = []
         result = self._fetch(1)
         if result: # return record (not list of records)
             return result[0]
@@ -930,17 +930,17 @@ class Cursor(object):
         If it is not given, the cursor's arraysize determines the number of rows to be fetched.
         The method should try to fetch as many rows as indicated by the size parameter.
         If this is not possible due to the specified number of rows not being available,
-        fewer rows may be returned. 
+        fewer rows may be returned.
 
         An Error (or subclass) exception is raised if the previous call to executeXXX()
-        did not produce any result set or no call was issued yet. 
+        did not produce any result set or no call was issued yet.
 
         Note there are performance considerations involved with the size parameter.
         For optimal performance, it is usually best to use the arraysize attribute.
         If the size parameter is used, then it is best for it to retain the same value from
-        one fetchmany() call to the next. 
+        one fetchmany() call to the next.
         """
-        self.messages=[]                
+        self.messages=[]
         if size is None:
             size = self.arraysize
         return self._fetch(size)
@@ -949,23 +949,23 @@ class Cursor(object):
         """Fetch all (remaining) rows of a query result, returning them as a sequence of sequences (e.g. a list of tuples).
 
             Note that the cursor's arraysize attribute
-            can affect the performance of this operation. 
+            can affect the performance of this operation.
             An Error (or subclass) exception is raised if the previous call to executeXXX()
-            did not produce any result set or no call was issued yet. 
+            did not produce any result set or no call was issued yet.
         """
-        self.messages=[]                
+        self.messages=[]
         return self._fetch()
 
     def nextset(self):
         """Skip to the next available recordset, discarding any remaining rows from the current recordset.
 
             If there are no more sets, the method returns None. Otherwise, it returns a true
-            value and subsequent calls to the fetch methods will return rows from the next result set. 
+            value and subsequent calls to the fetch methods will return rows from the next result set.
 
             An Error (or subclass) exception is raised if the previous call to executeXXX()
             did not produce any result set or no call was issued yet.
         """
-        self.messages=[]                
+        self.messages=[]
         if self.connection is None or self.rs is None:
             self._raiseCursorError(api.OperationalError, ('nextset() on closed connection or empty query set'))
             return None
@@ -979,7 +979,7 @@ class Cursor(object):
                 self._raiseCursorError(api.NotSupportedError, exc.args)
         else: #pywin32
             try:                                               #[begin 2.1 ekelund]
-                rsTuple=self.rs.NextRecordset()                # 
+                rsTuple=self.rs.NextRecordset()                #
             except pywintypes.com_error, exc:                  # return appropriate error
                 self._raiseCursorError(api.NotSupportedError, exc.args)#[end 2.1 ekelund]
             recordset = rsTuple[0]
@@ -1005,6 +1005,6 @@ class Cursor(object):
         return ret
     query = property(_last_query, None, None,
                          "returns the last query executed")
-    
+
 if __name__ == '__main__':
     raise api.ProgrammingError(version + ' cannot be run as a main program.')

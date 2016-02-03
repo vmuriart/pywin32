@@ -166,7 +166,7 @@ PyComTypeObject PyIEnumDebugStackFrames::type("PyIEnumDebugStackFrames",
 //
 // Gateway Implementation
 
-STDMETHODIMP PyGEnumDebugStackFrames::Next( 
+STDMETHODIMP PyGEnumDebugStackFrames::Next(
             /* [in] */ ULONG celt,
             /* [length_is][size_is][out] */ DebugStackFrameDescriptor __RPC_FAR *rgVar,
             /* [out] */ ULONG __RPC_FAR *pCeltFetched)
@@ -227,7 +227,7 @@ STDMETHODIMP PyGEnumDebugStackFrames::Next(
 	return hr;
 }
 
-STDMETHODIMP PyGEnumDebugStackFrames::Skip( 
+STDMETHODIMP PyGEnumDebugStackFrames::Skip(
             /* [in] */ ULONG celt)
 {
 	PY_GATEWAY_METHOD;
@@ -240,7 +240,7 @@ STDMETHODIMP PyGEnumDebugStackFrames::Reset(void)
 	return InvokeViaPolicy("Reset");
 }
 
-STDMETHODIMP PyGEnumDebugStackFrames::Clone( 
+STDMETHODIMP PyGEnumDebugStackFrames::Clone(
             /* [out] */ IEnumDebugStackFrames __RPC_FAR *__RPC_FAR *ppEnum)
 {
 	PY_GATEWAY_METHOD;

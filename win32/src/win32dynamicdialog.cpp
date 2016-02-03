@@ -9,13 +9,13 @@
  *
  *                       All Rights Reserved
  *
- * Permission to use, copy, modify, and distribute this software and its 
- * documentation for any purpose and without fee is hereby granted, 
+ * Permission to use, copy, modify, and distribute this software and its
+ * documentation for any purpose and without fee is hereby granted,
  * provided that the above copyright notice and the two paragraphs following
  * it appear in all copies, and that the name of Motek Information Systems
  * not be used in advertising or publicity pertaining to distribution of the
  * software without specific, written prior permission.
- * 
+ *
  * MOTEK INFORMATION SYSTEMS DISCLAIMS ALL WARRANTIES WITH REGARD TO
  * THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND
  * FITNESS, IN NO EVENT SHALL MOTEK BE LIABLE FOR ANY SPECIAL, INDIRECT OR
@@ -30,7 +30,7 @@
 // @doc - Autoduck!
 
 #ifdef WIN32GUI	// being compiled from WIN32GUI
-#define	PYW_EXPORT 
+#define	PYW_EXPORT
 #include "python.h"
 #undef PyHANDLE
 #include <windows.h>
@@ -142,7 +142,7 @@ BOOL CPythonDialogTemplate::Add(LPCWSTR wclass, DLGITEMTEMPLATE *tmpl, LPCWSTR t
 		m_h = GlobalReAlloc(m_h, m_alloc, 0);
 		ASSERT(m_h);
 	}
-	
+
 	DLGTEMPLATE *hdr = (DLGTEMPLATE*)GlobalLock(m_h);
 	hdr->cdit++;
 	DLGITEMTEMPLATE *ctrl = (DLGITEMTEMPLATE*)((char*)hdr + m_len);
@@ -189,7 +189,7 @@ BOOL CPythonDialogTemplate::Add(WORD wclass, DLGITEMTEMPLATE *tmpl, LPCWSTR txt)
 		m_h = GlobalReAlloc(m_h, m_alloc, 0);
 		ASSERT(m_h);
 	}
-	
+
 	DLGTEMPLATE *hdr = (DLGTEMPLATE*)GlobalLock(m_h);
 	hdr->cdit++;
 	DLGITEMTEMPLATE *ctrl = (DLGITEMTEMPLATE*)((char*)hdr + m_len);
@@ -284,7 +284,7 @@ static PyObject *MakeResName(WCHAR **val)
 	To distinguish between a standard template and an extended template,
 	check the first 16-bits of a dialog box template.
 	In an extended template, the first WORD is 0xFFFF;
-	any other value indicates a standard template. 
+	any other value indicates a standard template.
 */
 static PyObject *MakeListFromDlgHdr(LPVOID *tplin, int &items)
 {
@@ -361,7 +361,7 @@ static PyObject *MakeListFromDlgHdr(LPVOID *tplin, int &items)
 		return NULL;
 		}
 	PyList_SET_ITEM(ret, 4, obitem);
-	
+
 	DwordAlign((PCHAR*)&ptr);
 	*tplin = ptr;
 	items = tpl->cdit;
@@ -512,7 +512,7 @@ static CPythonDialogTemplate *ParseDlgHdrList(PyObject *tmpl)
 	CPythonDialogTemplate *ret=NULL;
 
 	if (!PyArg_ParseTuple(obhdr, "O(hhhh)k|OOOO:DLGTEMPLATE",
-		&obcaption,		
+		&obcaption,
 		&tpl.x, &tpl.y, &tpl.cx, &tpl.cy,
 		&tpl.style,
 		&obexstyle,
@@ -585,11 +585,11 @@ static BOOL ParseDlgItemList(CPythonDialogTemplate *dlg, PyObject *tmpl)
 	// @flag Tree View|SysTreeView32
 		// The built-in windows controls are:
 	// @flagh Integer Value|Window Type
-	// @flag 0x0080|Button 
-	// @flag 0x0081|Edit 
-	// @flag 0x0082|Static 
-	// @flag 0x0083|List box 
-	// @flag 0x0084|Scroll bar 
+	// @flag 0x0080|Button
+	// @flag 0x0081|Edit
+	// @flag 0x0082|Static
+	// @flag 0x0083|List box
+	// @flag 0x0084|Scroll bar
 	// @flag 0x0085|Combo box
 
 	// @tupleitem 1|<o PyUnicode>|caption|Caption for the control, or None

@@ -2,7 +2,7 @@ from pywin.mfc import dialog
 import win32ui, win32con, commctrl, win32api
 
 class ListDialog (dialog.Dialog):
-	
+
 	def __init__ (self, title, list):
 		dialog.Dialog.__init__ (self, self._maketemplate(title))
 		self.HookMessage (self.on_size, win32con.WM_SIZE)
@@ -23,7 +23,7 @@ class ListDialog (dialog.Dialog):
 			win32con.WS_VISIBLE
 		     )
 		return [ [title, (0, 0, 200, 200), style, None, (8, "MS Sans Serif")],
-			["SysListView32", None, win32ui.IDC_LIST1, (0, 0, 200, 200), ls], 
+			["SysListView32", None, win32ui.IDC_LIST1, (0, 0, 200, 200), ls],
 			[128,	"OK", win32con.IDOK, (10, 0, 50, 14), bs | win32con.BS_DEFPUSHBUTTON],
 			[128,	"Cancel",win32con.IDCANCEL,(0, 0, 50, 14), bs],
 		    ]
@@ -36,12 +36,12 @@ class ListDialog (dialog.Dialog):
 		index = 0
 		for item in self.items:
 			index = self.itemsControl.InsertItem(index+1, str(item), 0)
-	
+
 	def OnListClick(self, id, code):
 		if code==commctrl.NM_DBLCLK:
 			self.EndDialog(win32con.IDOK)
 		return 1
-	
+
 	def OnListItemChange(self,std, extra):
 		(hwndFrom, idFrom, code), (itemNotify, sub, newState, oldState, change, point, lparam) = std, extra
 		oldSel = (oldState & commctrl.LVIS_SELECTED)!=0
@@ -52,26 +52,26 @@ class ListDialog (dialog.Dialog):
 				self.butOK.EnableWindow(1)
 			except win32ui.error:
 				self.selecteditem = None
-	
-	
+
+
 	def OnInitDialog (self):
 		rc = dialog.Dialog.OnInitDialog (self)
 		self.itemsControl = self.GetDlgItem(win32ui.IDC_LIST1)
 		self.butOK = self.GetDlgItem(win32con.IDOK)
 		self.butCancel = self.GetDlgItem(win32con.IDCANCEL)
-		
-		self.FillList()		
-		
+
+		self.FillList()
+
 		size = self.GetWindowRect()
 		self.LayoutControls(size[2]-size[0], size[3]-size[1])
 		self.butOK.EnableWindow(0) # wait for first selection
 		return rc
-		
+
 	def LayoutControls(self, w, h):
 		self.itemsControl.MoveWindow((0,0,w,h-30))
 		self.butCancel.MoveWindow((10, h-24, 60, h-4))
 		self.butOK.MoveWindow((w-60, h-24, w-10, h-4))
-	
+
 	def on_size (self, params):
 		lparam = params[3]
 		w = win32api.LOWORD(lparam)
@@ -99,14 +99,14 @@ class ListsDialog(ListDialog):
 			for itemno in range(1,numCols):
 				item = items[itemno]
 				self.itemsControl.SetItemText(index, itemno, str(item))
-	
+
 def SelectFromList (title, lst):
 	dlg = ListDialog(title, lst)
 	if dlg.DoModal()==win32con.IDOK:
 		return dlg.selecteditem
 	else:
 		return None
-    	
+
 def SelectFromLists (title, lists, headings):
 	dlg = ListsDialog(title, lists, headings)
 	if dlg.DoModal()==win32con.IDOK:
@@ -118,5 +118,5 @@ def test():
 #	print SelectFromList('Single list',  [1,2,3])
 	print SelectFromLists('Multi-List', [ ('1',1, 'a'), ('2',2, 'b'), ('3',3, 'c' )], ['Col 1', 'Col 2'])
 
-if __name__=='__main__':	
+if __name__=='__main__':
 	test()

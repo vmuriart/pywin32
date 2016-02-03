@@ -16,7 +16,7 @@ debugging = 0
 if debugging:
 	# Output must go to another process else the result of
 	# the printing itself will trigger again trigger a trace.
-	import sys, win32traceutil, win32trace 
+	import sys, win32traceutil, win32trace
 	def trace(*args):
 		win32trace.write(' '.join(map(str, args)) + "\n")
 else:
@@ -81,7 +81,7 @@ class FormatterBase:
 			style = self.styles_by_id[self.scintilla.SCIGetStyleAt(pos)]
 		except KeyError:
 			# A style we dont know about - probably not even a .py file - can't be a string
-			return None			
+			return None
 		if style.name in self.string_style_names:
 			return style
 		return None
@@ -120,8 +120,8 @@ class FormatterBase:
 			## always override syntax coloring
 			## clr = style.format[4]
 			## self.scintilla.SendScintilla(scintillacon.SCI_SETSELFORE, clr != CLR_INVALID, clr)
-			return			
-			
+			return
+
 		assert style.stylenum is not None, "Unregistered style."
 		#print "Reformat style", style.name, style.stylenum
 		scintilla=self.scintilla
@@ -150,8 +150,8 @@ class FormatterBase:
 		if bg == CLR_INVALID:
 			bg = win32api.GetSysColor(win32con.COLOR_WINDOW)
 		scintilla.SCIStyleSetBack(stylenum, bg)
-		
-		
+
+
 
 	def GetStyleByNum(self, stylenum):
 		return self.styles_by_id[stylenum]
@@ -197,7 +197,7 @@ class FormatterBase:
 				self.SavePreference(style.name, str(style.format))
 				bg_name = style.name + " background"
 				self.SavePreference(bg_name, style.background)
-					
+
 	def SavePreference(self, name, value):
 		win32ui.WriteProfileVal("Format", name, value)
 

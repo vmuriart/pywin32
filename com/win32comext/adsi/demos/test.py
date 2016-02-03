@@ -16,7 +16,7 @@ def DumpRoot():
 
 	for item in rootdse.Get("SupportedLDAPVersion"):
 		print "%s supports ldap version %s" % (path, item)
-	
+
 	attributes = ["CurrentTime", "defaultNamingContext"]
 	for attr in attributes:
 		val = rootdse.Get(attr)
@@ -29,7 +29,7 @@ def DumpRoot():
 def _DumpClass(child):
 	attrs = "Abstract lDAPDisplayName schemaIDGUID schemaNamingContext attributeSyntax oMSyntax"
 	_DumpTheseAttributes(child, string.split(attrs))
-	
+
 def _DumpAttribute(child):
 	attrs = "lDAPDisplayName schemaIDGUID adminDescription adminDisplayName rDNAttID defaultHidingValue defaultObjectCategory systemOnly defaultSecurityDescriptor"
 	_DumpTheseAttributes(child, string.split(attrs))
@@ -53,7 +53,7 @@ def DumpSchema():
 	path = "LDAP://%srootDSE" % server
 	rootdse = ADsGetObject(path)
 	name = rootdse.Get("schemaNamingContext")
-	
+
 	# Bind to the actual schema container.
 	path= "LDAP://" + server + name
 	print "Binding to", path
@@ -101,13 +101,13 @@ def _DumpObject(ob, level = 0):
 
 	for child in ob:
 		_DumpObject(child, level+1)
-	
+
 def DumpAllObjects():
 	"Recursively dump the entire directory!"
 	path = "LDAP://%srootDSE" % server
 	rootdse = ADsGetObject(path)
 	name = rootdse.Get("defaultNamingContext")
-	
+
 	# Bind to the actual schema container.
 	path= "LDAP://" + server + name
 	print "Binding to", path
@@ -115,7 +115,7 @@ def DumpAllObjects():
 
 	# Enumerate the attribute and class objects in the schema container.
 	_DumpObject(ob)
-	
+
 ##########################################################
 #
 # Code taken from article:

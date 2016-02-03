@@ -4,7 +4,7 @@ import win32gui, win32con, win32api, time, os, glob
 for pname in(
     ## Set actions all take an unsigned int in pvParam
     "SPI_GETMOUSESPEED", "SPI_GETACTIVEWNDTRKTIMEOUT", "SPI_GETCARETWIDTH",
-    "SPI_GETFOREGROUNDFLASHCOUNT", "SPI_GETFOREGROUNDLOCKTIMEOUT", 
+    "SPI_GETFOREGROUNDFLASHCOUNT", "SPI_GETFOREGROUNDLOCKTIMEOUT",
     ## Set actions all take an unsigned int in uiParam
     "SPI_GETWHEELSCROLLLINES", "SPI_GETKEYBOARDDELAY",
     "SPI_GETKEYBOARDSPEED",
