@@ -593,7 +593,9 @@ PyObject *PyTime::getattro(PyObject *self, PyObject *obname)
 	// @prop int|msec|
 	else if ( !strcmp(name, "msec") )
 	{
-		return PyInt_FromLong(st.wMilliseconds);
+		double seconds = This->m_time;
+		size_t milliseconds = int((seconds - int(seconds)) * 1000);
+		return PyFloat_FromDouble(seconds*10);
 	}
 	PyErr_SetString(PyExc_AttributeError, name);
 	return NULL;
