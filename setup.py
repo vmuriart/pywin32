@@ -591,8 +591,8 @@ class WinExt_win32com_axdebug(WinExt_win32com):
     def __init__ (self, name, **kw):
         # Later SDK versions again ship with activdbg.h, but if we attempt
         # to use our own copy of that file with that SDK, we fail to link.
-        if os.path.isfile(os.path.join(sdk_dir, "include", "activdbg.h")):
-            kw.setdefault('extra_compile_args', []).append("/DHAVE_SDK_ACTIVDBG")
+        #if os.path.isfile(os.path.join(sdk_dir, "include", "activdbg.h")):
+        kw.setdefault('extra_compile_args', []).append("/DHAVE_SDK_ACTIVDBG")
         WinExt_win32com.__init__(self, name, **kw)
 
 # A hacky extension class for pywintypesXX.dll and pythoncomXX.dll
@@ -1074,10 +1074,10 @@ class my_build_ext(build_ext):
                 else:
                     plat_dir = "x86"
                 # Find the redist directory.
-                vckey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, product_key,
-                                        0, access)
-                val, val_typ = _winreg.QueryValueEx(vckey, "ProductDir")
-                mfc_dir = os.path.join(val, "redist", plat_dir, mfc_dir)
+                #vckey = _winreg.OpenKey(_winreg.HKEY_LOCAL_MACHINE, product_key,
+                #                        0, access)
+                #val, val_typ = _winreg.QueryValueEx(vckey, "ProductDir")
+                #mfc_dir = os.path.join(val, "redist", plat_dir, mfc_dir)
                 if not os.path.isdir(mfc_dir):
                     raise RuntimeError("Can't find the redist dir at %r" % (mfc_dir))
                 for f in mfc_files:
@@ -1985,81 +1985,81 @@ com_extensions += [
                          sources=("""
                                   %(mapi)s/exchdapi.i         %(mapi)s/exchdapi.cpp
                                   """ % dirs).split()),
-    WinExt_win32com('shell', libraries='shell32', pch_header="shell_pch.h",
-                    windows_h_version = 0x600,
-                    sources=("""
-                        %(shell)s/PyIActiveDesktop.cpp
-                        %(shell)s/PyIApplicationDestinations.cpp
-                        %(shell)s/PyIApplicationDocumentLists.cpp
-                        %(shell)s/PyIAsyncOperation.cpp
-                        %(shell)s/PyIBrowserFrameOptions.cpp
-                        %(shell)s/PyICategorizer.cpp
-                        %(shell)s/PyICategoryProvider.cpp
-                        %(shell)s/PyIColumnProvider.cpp
-                        %(shell)s/PyIContextMenu.cpp
-                        %(shell)s/PyIContextMenu2.cpp
-                        %(shell)s/PyIContextMenu3.cpp
-                        %(shell)s/PyICopyHook.cpp
-                        %(shell)s/PyICurrentItem.cpp
-                        %(shell)s/PyICustomDestinationList.cpp
-                        %(shell)s/PyIDefaultExtractIconInit.cpp
-                        %(shell)s/PyIDeskBand.cpp
-                        %(shell)s/PyIDisplayItem.cpp
-                        %(shell)s/PyIDockingWindow.cpp
-                        %(shell)s/PyIDropTargetHelper.cpp
-                        %(shell)s/PyIEnumExplorerCommand.cpp
-                        %(shell)s/PyIEnumIDList.cpp
-                        %(shell)s/PyIEnumObjects.cpp
-                        %(shell)s/PyIEnumResources.cpp
-                        %(shell)s/PyIEnumShellItems.cpp
-                        %(shell)s/PyIEmptyVolumeCache.cpp
-                        %(shell)s/PyIEmptyVolumeCacheCallBack.cpp
-                        %(shell)s/PyIExplorerBrowser.cpp
-                        %(shell)s/PyIExplorerBrowserEvents.cpp
-                        %(shell)s/PyIExplorerCommand.cpp
-                        %(shell)s/PyIExplorerCommandProvider.cpp
-                        %(shell)s/PyIExplorerPaneVisibility.cpp
-                        %(shell)s/PyIExtractIcon.cpp
-                        %(shell)s/PyIExtractIconW.cpp
-                        %(shell)s/PyIExtractImage.cpp
-                        %(shell)s/PyIFileOperation.cpp
-                        %(shell)s/PyIFileOperationProgressSink.cpp
-                        %(shell)s/PyIIdentityName.cpp
-                        %(shell)s/PyIInputObject.cpp
-                        %(shell)s/PyIKnownFolder.cpp
-                        %(shell)s/PyIKnownFolderManager.cpp
-                        %(shell)s/PyINameSpaceTreeControl.cpp
-                        %(shell)s/PyIObjectArray.cpp
-                        %(shell)s/PyIObjectCollection.cpp
-                        %(shell)s/PyIPersistFolder.cpp
-                        %(shell)s/PyIPersistFolder2.cpp
-                        %(shell)s/PyIQueryAssociations.cpp
-                        %(shell)s/PyIRelatedItem.cpp
-                        %(shell)s/PyIShellBrowser.cpp
-                        %(shell)s/PyIShellExtInit.cpp
-                        %(shell)s/PyIShellFolder.cpp
-                        %(shell)s/PyIShellFolder2.cpp
-                        %(shell)s/PyIShellIcon.cpp
-                        %(shell)s/PyIShellIconOverlay.cpp
-                        %(shell)s/PyIShellIconOverlayIdentifier.cpp
-                        %(shell)s/PyIShellIconOverlayManager.cpp
-                        %(shell)s/PyIShellItem.cpp
-                        %(shell)s/PyIShellItem2.cpp
-                        %(shell)s/PyIShellItemArray.cpp
-                        %(shell)s/PyIShellItemResources.cpp
-                        %(shell)s/PyIShellLibrary.cpp
-                        %(shell)s/PyIShellLink.cpp
-                        %(shell)s/PyIShellLinkDataList.cpp
-                        %(shell)s/PyIShellView.cpp
-                        %(shell)s/PyITaskbarList.cpp
-                        %(shell)s/PyITransferAdviseSink.cpp
-                        %(shell)s/PyITransferDestination.cpp
-                        %(shell)s/PyITransferMediumItem.cpp
-                        %(shell)s/PyITransferSource.cpp
-                        %(shell)s/PyIUniformResourceLocator.cpp
-                        %(shell)s/shell.cpp
+    # WinExt_win32com('shell', libraries='shell32', pch_header="shell_pch.h",
+    #                 windows_h_version = 0x600,
+    #                 sources=("""
+    #                     %(shell)s/PyIActiveDesktop.cpp
+    #                     %(shell)s/PyIApplicationDestinations.cpp
+    #                     %(shell)s/PyIApplicationDocumentLists.cpp
+    #                     %(shell)s/PyIAsyncOperation.cpp
+    #                     %(shell)s/PyIBrowserFrameOptions.cpp
+    #                     %(shell)s/PyICategorizer.cpp
+    #                     %(shell)s/PyICategoryProvider.cpp
+    #                     %(shell)s/PyIColumnProvider.cpp
+    #                     %(shell)s/PyIContextMenu.cpp
+    #                     %(shell)s/PyIContextMenu2.cpp
+    #                     %(shell)s/PyIContextMenu3.cpp
+    #                     %(shell)s/PyICopyHook.cpp
+    #                     %(shell)s/PyICurrentItem.cpp
+    #                     %(shell)s/PyICustomDestinationList.cpp
+    #                     %(shell)s/PyIDefaultExtractIconInit.cpp
+    #                     %(shell)s/PyIDeskBand.cpp
+    #                     %(shell)s/PyIDisplayItem.cpp
+    #                     %(shell)s/PyIDockingWindow.cpp
+    #                     %(shell)s/PyIDropTargetHelper.cpp
+    #                     %(shell)s/PyIEnumExplorerCommand.cpp
+    #                     %(shell)s/PyIEnumIDList.cpp
+    #                     %(shell)s/PyIEnumObjects.cpp
+    #                     %(shell)s/PyIEnumResources.cpp
+    #                     %(shell)s/PyIEnumShellItems.cpp
+    #                     %(shell)s/PyIEmptyVolumeCache.cpp
+    #                     %(shell)s/PyIEmptyVolumeCacheCallBack.cpp
+    #                     %(shell)s/PyIExplorerBrowser.cpp
+    #                     %(shell)s/PyIExplorerBrowserEvents.cpp
+    #                     %(shell)s/PyIExplorerCommand.cpp
+    #                     %(shell)s/PyIExplorerCommandProvider.cpp
+    #                     %(shell)s/PyIExplorerPaneVisibility.cpp
+    #                     %(shell)s/PyIExtractIcon.cpp
+    #                     %(shell)s/PyIExtractIconW.cpp
+    #                     %(shell)s/PyIExtractImage.cpp
+    #                     %(shell)s/PyIFileOperation.cpp
+    #                     %(shell)s/PyIFileOperationProgressSink.cpp
+    #                     %(shell)s/PyIIdentityName.cpp
+    #                     %(shell)s/PyIInputObject.cpp
+    #                     %(shell)s/PyIKnownFolder.cpp
+    #                     %(shell)s/PyIKnownFolderManager.cpp
+    #                     %(shell)s/PyINameSpaceTreeControl.cpp
+    #                     %(shell)s/PyIObjectArray.cpp
+    #                     %(shell)s/PyIObjectCollection.cpp
+    #                     %(shell)s/PyIPersistFolder.cpp
+    #                     %(shell)s/PyIPersistFolder2.cpp
+    #                     %(shell)s/PyIQueryAssociations.cpp
+    #                     %(shell)s/PyIRelatedItem.cpp
+    #                     %(shell)s/PyIShellBrowser.cpp
+    #                     %(shell)s/PyIShellExtInit.cpp
+    #                     %(shell)s/PyIShellFolder.cpp
+    #                     %(shell)s/PyIShellFolder2.cpp
+    #                     %(shell)s/PyIShellIcon.cpp
+    #                     %(shell)s/PyIShellIconOverlay.cpp
+    #                     %(shell)s/PyIShellIconOverlayIdentifier.cpp
+    #                     %(shell)s/PyIShellIconOverlayManager.cpp
+    #                     %(shell)s/PyIShellItem.cpp
+    #                     %(shell)s/PyIShellItem2.cpp
+    #                     %(shell)s/PyIShellItemArray.cpp
+    #                     %(shell)s/PyIShellItemResources.cpp
+    #                     %(shell)s/PyIShellLibrary.cpp
+    #                     %(shell)s/PyIShellLink.cpp
+    #                     %(shell)s/PyIShellLinkDataList.cpp
+    #                     %(shell)s/PyIShellView.cpp
+    #                     %(shell)s/PyITaskbarList.cpp
+    #                     %(shell)s/PyITransferAdviseSink.cpp
+    #                     %(shell)s/PyITransferDestination.cpp
+    #                     %(shell)s/PyITransferMediumItem.cpp
+    #                     %(shell)s/PyITransferSource.cpp
+    #                     %(shell)s/PyIUniformResourceLocator.cpp
+    #                     %(shell)s/shell.cpp
 
-                        """ % dirs).split()),
+    #                     """ % dirs).split()),
 
     WinExt_win32com('propsys', libraries='propsys', delay_load_libraries='shell32',
                     unicode_mode=True,
