@@ -459,7 +459,7 @@ PYWINTYPES_EXPORT PyObject *PyWinMethod_NewIID(PyObject *self, PyObject *args);
 // some transitional period using something like
 // pywintypes.__future_datatime__, but for now this is defined purely at build
 // time.
-#if (PY_VERSION_HEX >= 0x03000000)
+#if (PY_VERSION_HEX >= 0x02040000)
 #   define NO_PYWINTYPES_TIME
 #endif
 
@@ -469,11 +469,6 @@ PYWINTYPES_EXPORT PyObject *PyWinMethod_NewIID(PyObject *self, PyObject *args);
 #   define PYWIN_HAVE_DATETIME_CAPI
 #endif
 
-// XXX - fixme - ack - we don't yet like *both* defines existing - and for now
-// its only enabled in py3k
-#if (PY_VERSION_HEX < 0x03000000)
-#   undef PYWIN_HAVE_DATETIME_CAPI
-#endif
 
 PYWINTYPES_EXPORT PyObject *PyWinObject_FromSYSTEMTIME(const SYSTEMTIME &t);
 PYWINTYPES_EXPORT PyObject *PyWinObject_FromFILETIME(const FILETIME &t);
