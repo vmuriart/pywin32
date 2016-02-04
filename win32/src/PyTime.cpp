@@ -6,9 +6,19 @@
 #include "PyWinObjects.h"
 
 #include "datetime.h" // python's datetime header.
-
 #include "time.h"
 #include "tchar.h"
+
+const double ONETHOUSANDMILLISECONDS = 0.00001157407407407407407407407407;
+
+
+double round(double Value, int Digits) {
+	assert(Digits >= -4 && Digits <= 4);
+	int Idx = Digits + 4;
+	double v[] = { 1e-4, 1e-3, 1e-2, 1e-1, 1, 10, 1e2, 1e3, 1e4 };
+	return floor(Value * v[Idx] + 0.5) / (v[Idx]);
+}
+
 
 PyObject *PyWin_NewTime(PyObject *timeOb);
 
@@ -92,7 +102,7 @@ done:
 }
 
 // @object PyDateTime|A Python object, representing an instant in time.
-// @comm pywin32 builds for Python 3.0 use datetime objects instead of the
+// @comm pywin32 builds for Python 2.4+ use datetime objects instead of the
 // old PyTime object.
 // @comm PyDateTime is a sub-class of the regular datetime.datetime object.
 // It is subclassed so it can provide a somewhat backwards compatible
@@ -160,19 +170,15 @@ BOOL PyWinObject_AsDATE(PyObject *ob, DATE *pDate)
 		return FALSE;
 
 	WORD wMilliSeconds = st.wMilliseconds; // save the ms info
-    st.wMilliseconds = 0; // pass 0 ms to the function and convert
-	double dWithoutms;
+	st.wMilliseconds = 0; // pass 0 ms to the function and convert
 
+	double dWithoutms;
 	if (!SystemTimeToVariantTime(&st, &dWithoutms)) {
 		PyWin_SetAPIError("SystemTimeToVariantTime");
 		return FALSE;
 	}
-	// manually convert the millisecond information into variant
-    // fraction and add it to system converted value
-    double ONETHOUSANDMILLISECONDS = 0.0000115740740740;
-    double OneMilliSecond = ONETHOUSANDMILLISECONDS/1000 ;
-    *pDate = dWithoutms + (OneMilliSecond * wMilliSeconds);
-
+	// convert the millisecond information into variant
+	*pDate = dWithoutms + (wMilliSeconds * ONETHOUSANDMILLISECONDS / 1000);
 	return TRUE;
 }
 
@@ -366,52 +372,24 @@ PyObject *PyWinObject_FromFILETIME(const FILETIME &t)
 
 PyObject *PyWinObject_FromDATE(DATE t)
 {
+	double fraction = t  - (int)t;  // extracts the fraction part
+	double hours = (fraction - (int)fraction) * 24.0;
+	double minutes = (hours - (int)hours) * 60.0;
+	double seconds = round((minutes - (int)minutes) * 60.0, 4);
+	double milliseconds = round((seconds - (int)seconds) * 1000.0, 0);
+	assert(milliseconds >= 0.0 && milliseconds <= 999.0);
+
+	// Strip off the msec part of time
+	double TimeWithoutMsecs = t - (ONETHOUSANDMILLISECONDS / 1000.0 * milliseconds);
+
 	SYSTEMTIME st;
-	double ONETHOUSANDMILLISECONDS = 0.0000115740740740;
-    double halfsecond = ONETHOUSANDMILLISECONDS / 2.0;
+	// Let the OS translate the variant date/time
+	if (!VariantTimeToSystemTime(TimeWithoutMsecs, &st))
+		return PyWin_SetAPIError("VariantTimeToSystemTime");
 
-    // this takes care of rounding problem with
-    // VariantTimetoSystemTime function
-    VariantTimeToSystemTime(t - halfsecond, &st);
+	if (milliseconds > 0.0)
+		st.wMilliseconds = (WORD)milliseconds;
 
-	// extracts the fraction part
-    double fraction = t - (int) t;
-
-    double hours;
-    hours = fraction = (fraction - (int)fraction) * 24;
-
-    double minutes;
-    minutes = (hours - (int)hours) * 60;
-
-    double seconds;
-    seconds = (minutes - (int)minutes) * 60;
-
-    double milliseconds;
-    milliseconds = (seconds - (int)seconds) * 1000;
-
-    milliseconds = milliseconds + 0.5; // rounding off millisecond to the
-                                       // nearest millisecond
-    if (milliseconds < 1.0 || milliseconds > 999.0) //Fractional
-                          // calculations may yield in results like
-        milliseconds = 0; // 0.00001 or 999.9999 which should actually
-                          // be zero (slightly above or below limits
-                          // are actually zero)
-
-    if (milliseconds)
-        st.wMilliseconds = (WORD) milliseconds;
-    else  // if there is 0 milliseconds, then we don't have the problem !!
-        VariantTimeToSystemTime(t, &st); //
-
-
-
-
-
-
-
-
-
-	//if (!VariantTimeToSystemTime(t, &st))
-		//return PyWin_SetAPIError("VariantTimeToSystemTime");
 	return PyWinObject_FromSYSTEMTIME(st);
 }
 
