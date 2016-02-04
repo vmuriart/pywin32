@@ -867,23 +867,7 @@ static int ibindDate(cursorObject*cur, int column, PyObject *item)
 	TIMESTAMP_STRUCT *dt = (TIMESTAMP_STRUCT*)ib->bind_area;
 	ZeroMemory(dt, len);
 	// Accept either a PyTime or datetime object
-#ifndef USE_DATETIME
-	if (PyWinTime_CHECK(item)) {
-		SYSTEMTIME st;
-		if (!((PyTime *)item)->GetTime(&st))
-			return 0;
-		dt->year = st.wYear;
-		dt->month = st.wMonth;
-		dt->day = st.wDay;
-		dt->hour = st.wHour;
-		dt->minute = st.wMinute;
-		dt->second = st.wSecond;
-		// Fraction is in nanoseconds
-		dt->fraction = st.wMilliseconds * 1000000;
-	}
-	else {
-#endif // USE_DATETIME
-		// Python 2.3 doesn't have C Api for datetime
+
 		TmpPyObject timeseq = PyObject_CallMethod(item, "timetuple", NULL);
 		if (timeseq == NULL)
 			return 0;
@@ -908,9 +892,7 @@ static int ibindDate(cursorObject*cur, int column, PyObject *item)
 			// Convert to nanoseconds
 			dt->fraction *= 1000;
 		}
-#ifndef USE_DATETIME
-	}
-#endif // USE_DATETIME
+
 
 	if (unsuccessful(SQLBindParameter(
 		cur->hstmt,

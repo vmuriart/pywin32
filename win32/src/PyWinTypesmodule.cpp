@@ -930,9 +930,6 @@ int PyWinGlobals_Ensure()
 		|| PyType_Ready(&PyDEVMODEAType) == -1
 		|| PyType_Ready(&PyDEVMODEWType) == -1
 		|| PyType_Ready(&PyWAVEFORMATEXType) == -1
-#ifndef USE_DATETIME
-		|| PyType_Ready(&PyTimeType) == -1
-#endif // USE_DATETIME
 #ifndef NO_PYWINTYPES_IID
 		|| PyType_Ready(&PyIIDType) == -1
 #endif // NO_PYWINTYPES_IID

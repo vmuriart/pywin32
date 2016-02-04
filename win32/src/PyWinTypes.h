@@ -490,13 +490,6 @@ PYWINTYPES_EXPORT PyObject *PyWinMethod_NewTime(PyObject *self, PyObject *args);
 PYWINTYPES_EXPORT BOOL PyWinTime_Check(PyObject *ob);
 
 
-#ifndef USE_DATETIME
-
-extern PYWINTYPES_EXPORT PyTypeObject PyTimeType;		// the Type for PyTime
-#define PyWinTime_CHECK(ob)		((ob)->ob_type == &PyTimeType)
-
-#endif // USE_DATETIME
-
 // functions to return WIN32_FIND_DATA tuples, used in shell, win32api, and win32file
 PYWINTYPES_EXPORT PyObject *PyObject_FromWIN32_FIND_DATAA(WIN32_FIND_DATAA *pData);
 PYWINTYPES_EXPORT PyObject *PyObject_FromWIN32_FIND_DATAW(WIN32_FIND_DATAW *pData);
@@ -823,5 +816,3 @@ public:
 };
 
 #endif // __PYWINTYPES_H__
-
-
