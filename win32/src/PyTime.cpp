@@ -367,8 +367,51 @@ PyObject *PyWinObject_FromFILETIME(const FILETIME &t)
 PyObject *PyWinObject_FromDATE(DATE t)
 {
 	SYSTEMTIME st;
-	if (!VariantTimeToSystemTime(t, &st))
-		return PyWin_SetAPIError("VariantTimeToSystemTime");
+	double ONETHOUSANDMILLISECONDS = 0.0000115740740740;
+    double halfsecond = ONETHOUSANDMILLISECONDS / 2.0;
+
+    // this takes care of rounding problem with
+    // VariantTimetoSystemTime function
+    VariantTimeToSystemTime(t - halfsecond, &st);
+
+	// extracts the fraction part
+    double fraction = t - (int) t;
+
+    double hours;
+    hours = fraction = (fraction - (int)fraction) * 24;
+
+    double minutes;
+    minutes = (hours - (int)hours) * 60;
+
+    double seconds;
+    seconds = (minutes - (int)minutes) * 60;
+
+    double milliseconds;
+    milliseconds = (seconds - (int)seconds) * 1000;
+
+    milliseconds = milliseconds + 0.5; // rounding off millisecond to the
+                                       // nearest millisecond
+    if (milliseconds < 1.0 || milliseconds > 999.0) //Fractional
+                          // calculations may yield in results like
+        milliseconds = 0; // 0.00001 or 999.9999 which should actually
+                          // be zero (slightly above or below limits
+                          // are actually zero)
+
+    if (milliseconds)
+        st.wMilliseconds = (WORD) milliseconds;
+    else  // if there is 0 milliseconds, then we don't have the problem !!
+        VariantTimeToSystemTime(t, &st); //
+
+
+
+
+
+
+
+
+
+	//if (!VariantTimeToSystemTime(t, &st))
+		//return PyWin_SetAPIError("VariantTimeToSystemTime");
 	return PyWinObject_FromSYSTEMTIME(st);
 }
 
