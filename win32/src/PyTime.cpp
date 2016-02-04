@@ -5,7 +5,7 @@
 #include "PyWinTypes.h"
 #include "PyWinObjects.h"
 
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 #include "datetime.h" // python's datetime header.
 #endif
 
@@ -17,10 +17,10 @@ PyObject *PyWin_NewTime(PyObject *timeOb);
 BOOL PyWinTime_Check(PyObject *ob)
 {
 	return 0 ||
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		PyWinTime_CHECK(ob) ||
 #endif
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		PyDateTime_Check(ob) ||
 #endif
 		PyObject_HasAttrString(ob, "timetuple");
@@ -69,7 +69,7 @@ PyObject *PyWinMethod_NewTime(PyObject *self, PyObject *args)
 	return PyWin_NewTime(timeOb);
 }
 
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 
 BOOL PyWinObject_AsDATE(PyObject *ob, DATE *pDate)
 {
@@ -678,14 +678,14 @@ PyObject *PyTime::reprFunc(PyObject *ob)
 	return ((PyTime *)ob)->repr();
 }
 
-#endif // NO_PYWINTYPES_TIME
+#endif // USE_DATETIME
 
 ///////////////////////////////////////////////////////////////////////////
 //
 // The pywin32 time API using datetime objects
 //
 ///////////////////////////////////////////////////////////////////////////
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 // @pymethod str|PyDateTime|Format|
 // @comm This method is an alias for the datetime strftime method, using
 // %c as the default value for the format string.
@@ -819,7 +819,7 @@ BOOL PyWinObject_AsSYSTEMTIME(PyObject *ob, SYSTEMTIME *st)
 	return TRUE;
 }
 
-#endif // PYWIN_HAVE_DATETIME_CAPI
+#endif // HAS_DATETIME_CAPI
 
 // a slightly modified version from Python's time module.
 static BOOL
@@ -870,10 +870,10 @@ static WORD SequenceIndexAsWORD(PyObject *seq, int index)
 PyObject *PyWin_NewTime(PyObject *timeOb)
 {
 	// If it already a datetime object, just return it as-is.
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 	if (PyWinTime_CHECK(timeOb)) {
 #endif
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		if (PyDateTime_Check(timeOb)) {
 #endif
 			Py_INCREF(timeOb);
@@ -911,7 +911,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 		else if (PySequence_Check(timeOb))
 		{
 			assert(!PyErr_Occurred()); // should be no stale errors!
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		// convert a timetuple, with optional millisecond extension,
 		// into a datetime object. ie:
 		// >>> datetime.datetime.fromtimestamp(time.mktime(timetuple))
@@ -963,7 +963,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 				st.wMilliseconds = SequenceIndexAsWORD(timeOb, 9);
 			if (!PyErr_Occurred())
 				result = PyWinObject_FromSYSTEMTIME(st);
-#endif // PYWIN_HAVE_DATETIME_CAPI
+#endif // HAS_DATETIME_CAPI
 		}
 		else
 			// result stays NULL.
@@ -975,7 +975,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 
 	PyObject *PyWinObject_FromSYSTEMTIME(const SYSTEMTIME &t)
 	{
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		// SYSTEMTIME structures explicitly use UTC.
 		PyObject *obtz = GetTZUTC();
 		if (!obtz)
@@ -986,16 +986,16 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 			obtz, &PyWinDateTimeType);
 		Py_DECREF(obtz);
 		return ret;
-#endif // PYWIN_HAVE_DATETIME_CAPI
+#endif // HAS_DATETIME_CAPI
 
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		return new PyTime(t);
 #endif
 	}
 
 	PyObject *PyWinObject_FromFILETIME(const FILETIME &t)
 	{
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		// XXX - We should create a datetime object using the localtz here,
 		// but for now we only have a utc tz available, so convert to a
 		// systemtime and go from there.
@@ -1003,29 +1003,29 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 		if (!FileTimeToSystemTime(&t, &st))
 			return PyWin_SetAPIError("FileTimeToSystemTime");
 		return PyWinObject_FromSYSTEMTIME(st);
-#endif // PYWIN_HAVE_DATETIME_CAPI
+#endif // HAS_DATETIME_CAPI
 
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		return new PyTime(t);
 #endif
 	}
 	PyObject *PyWinObject_FromDATE(DATE t)
 	{
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		SYSTEMTIME st;
 		if (!VariantTimeToSystemTime(t, &st))
 			return PyWin_SetAPIError("VariantTimeToSystemTime");
 		return PyWinObject_FromSYSTEMTIME(st);
-#endif // PYWIN_HAVE_DATETIME_CAPI
+#endif // HAS_DATETIME_CAPI
 
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		return new PyTime(t);
 #endif
 	}
 
 	PyObject *PyWinTimeObject_Fromtime_t(time_t t)
 	{
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		PyObject *args = Py_BuildValue("(i)", (int)t);
 		if (!args)
 			return NULL;
@@ -1033,9 +1033,9 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 			(PyObject*)(&PyWinDateTimeType), args, NULL);
 		Py_DECREF(args);
 		return ret;
-#endif // PYWIN_HAVE_DATETIME_CAPI
+#endif // HAS_DATETIME_CAPI
 
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		return new PyTime(t);
 #endif
 	}
@@ -1053,7 +1053,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 	// A couple of public functions used by the module init
 	BOOL _PyWinDateTime_Init()
 	{
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		PyDateTime_IMPORT;
 		if (!PyDateTimeAPI)
 			return NULL;
@@ -1069,13 +1069,13 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 
 	BOOL _PyWinDateTime_PrepareModuleDict(PyObject *dict)
 	{
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		if (PyType_Ready(&PyTimeType) == -1
 			|| PyDict_SetItemString(dict, "TimeType", (PyObject *)&PyTimeType) == -1)
 			return FALSE;
 #endif
 
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		if (PyDict_SetItemString(dict, "TimeType", (PyObject *)&PyWinDateTimeType) == -1)
 			return FALSE;
 #endif

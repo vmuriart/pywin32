@@ -31,7 +31,7 @@ public:
 };
 #endif // NO_PYWINTYPES_IID
 
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 
 class PYWINTYPES_EXPORT PyTime : public PyObject
 {
@@ -78,7 +78,7 @@ public:
 	// Methods
 	static PyObject *Format(PyObject *self, PyObject *args);
 };
-#endif // NO_PYWINTYPES_TIME
+#endif // USE_DATETIME
 
 class PYWINTYPES_EXPORT PyOVERLAPPED : public PyObject
 {

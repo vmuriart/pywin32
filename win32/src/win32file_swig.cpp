@@ -622,7 +622,7 @@ typedef DWORD  DWORDAPI;
 //typedef HANDLE PyHKEY;
 
 
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 #include "datetime.h" // python's datetime header.
 #endif
 
@@ -907,7 +907,7 @@ PyTypeObject FindFileIterator_Type = {
 static BOOL PyWinTime_DateTimeCheck(PyObject *ob)
 {
 	return FALSE
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 		|| (PyDateTimeAPI && PyDateTime_Check(ob))
 #endif
 		;
@@ -8691,7 +8691,7 @@ SWIGEXPORT(PyObject*,  PyInit_win32file)(void) {
 	if (PyDict_SetItemString(d, "INVALID_HANDLE_VALUE", PyWinLong_FromHANDLE(INVALID_HANDLE_VALUE)) == -1)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 
-#ifdef PYWIN_HAVE_DATETIME_CAPI
+#ifdef HAS_DATETIME_CAPI
 	PyDateTime_IMPORT;
 #endif
 

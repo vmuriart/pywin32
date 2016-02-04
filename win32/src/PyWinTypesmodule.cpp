@@ -245,7 +245,7 @@ static PyObject *_GetLockStats(PyObject *, PyObject *)
 #endif
 
 // Support the fact that error messages can come from any number of DLLs.
-// wininet certainly does.  The win32net and MAPI modules could probably 
+// wininet certainly does.  The win32net and MAPI modules could probably
 // also take advantage of this,
 struct error_message_module {
 	DWORD firstError;
@@ -930,9 +930,9 @@ int PyWinGlobals_Ensure()
 		|| PyType_Ready(&PyDEVMODEAType) == -1
 		|| PyType_Ready(&PyDEVMODEWType) == -1
 		|| PyType_Ready(&PyWAVEFORMATEXType) == -1
-#ifndef NO_PYWINTYPES_TIME
+#ifndef USE_DATETIME
 		|| PyType_Ready(&PyTimeType) == -1
-#endif // NO_PYWINTYPES_TIME
+#endif // USE_DATETIME
 #ifndef NO_PYWINTYPES_IID
 		|| PyType_Ready(&PyIIDType) == -1
 #endif // NO_PYWINTYPES_IID
