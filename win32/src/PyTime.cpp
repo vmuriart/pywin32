@@ -158,10 +158,21 @@ BOOL PyWinObject_AsDATE(PyObject *ob, DATE *pDate)
 	SYSTEMTIME st;
 	if (!PyWinObject_AsSYSTEMTIME(ob, &st))
 		return FALSE;
-	if (!SystemTimeToVariantTime(&st, pDate)) {
+
+	WORD wMilliSeconds = st.wMilliseconds; // save the ms info
+    st.wMilliseconds = 0; // pass 0 ms to the function and convert
+	double dWithoutms;
+
+	if (!SystemTimeToVariantTime(&st, &dWithoutms)) {
 		PyWin_SetAPIError("SystemTimeToVariantTime");
 		return FALSE;
 	}
+	// manually convert the millisecond information into variant
+    // fraction and add it to system converted value
+    double ONETHOUSANDMILLISECONDS = 0.0000115740740740;
+    double OneMilliSecond = ONETHOUSANDMILLISECONDS/1000 ;
+    *pDate = dWithoutms + (OneMilliSecond * wMilliSeconds);
+
 	return TRUE;
 }
 
