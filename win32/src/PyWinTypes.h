@@ -449,26 +449,8 @@ PYWINTYPES_EXPORT PyObject *PyWinMethod_NewIID(PyObject *self, PyObject *args);
 
 /*
 ** TIME support
+** Uses DATETIME_CAPI which is included from Python 2.4. No support for 2.4>,
 */
-// We use USE_DATETIME symbol to mean "do we include our old, crap, custom time object?"
-// If not defined, we exclusively support datetime objects via the C API.
-// (Note py2.3 doesn't have a C API, so will not currently build with
-// USE_DATETIME defined.)
-// TODO: If both builtin and datetime objects are enabled, we will enable
-// some transitional period using something like
-// pywintypes.__future_datatime__, but for now this is defined purely at build
-// time.
-#if (PY_VERSION_HEX >= 0x02040000)
-#   define USE_DATETIME
-#endif
-
-// Python 2.3 doesn't have C Api for datetime, so can't have our new funky
-// support.
-#if (PY_VERSION_HEX >= 0x02040000)
-#   define HAS_DATETIME_CAPI
-#endif
-
-
 PYWINTYPES_EXPORT PyObject *PyWinObject_FromSYSTEMTIME(const SYSTEMTIME &t);
 PYWINTYPES_EXPORT PyObject *PyWinObject_FromFILETIME(const FILETIME &t);
 

@@ -5,9 +5,7 @@
 #include "PyWinTypes.h"
 #include "PyWinObjects.h"
 
-#ifdef HAS_DATETIME_CAPI
 #include "datetime.h" // python's datetime header.
-#endif
 
 #include "time.h"
 #include "tchar.h"
@@ -17,10 +15,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb);
 BOOL PyWinTime_Check(PyObject *ob)
 {
 	return 0 ||
-
-#ifdef HAS_DATETIME_CAPI
 		PyDateTime_Check(ob) ||
-#endif
 		PyObject_HasAttrString(ob, "timetuple");
 }
 
@@ -72,7 +67,7 @@ PyObject *PyWinMethod_NewTime(PyObject *self, PyObject *args)
 // The pywin32 time API using datetime objects
 //
 ///////////////////////////////////////////////////////////////////////////
-#ifdef HAS_DATETIME_CAPI
+
 // @pymethod str|PyDateTime|Format|
 // @comm This method is an alias for the datetime strftime method, using
 // %c as the default value for the format string.
@@ -206,7 +201,7 @@ BOOL PyWinObject_AsSYSTEMTIME(PyObject *ob, SYSTEMTIME *st)
 	return TRUE;
 }
 
-#endif // HAS_DATETIME_CAPI
+
 
 // a slightly modified version from Python's time module.
 static BOOL
@@ -258,9 +253,9 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 {
 	// If it already a datetime object, just return it as-is.
 
-#ifdef HAS_DATETIME_CAPI
+
 		if (PyDateTime_Check(timeOb)) {
-#endif
+
 			Py_INCREF(timeOb);
 			return timeOb;
 		}
@@ -296,7 +291,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 		else if (PySequence_Check(timeOb))
 		{
 			assert(!PyErr_Occurred()); // should be no stale errors!
-#ifdef HAS_DATETIME_CAPI
+
 		// convert a timetuple, with optional millisecond extension,
 		// into a datetime object. ie:
 		// >>> datetime.datetime.fromtimestamp(time.mktime(timetuple))
@@ -325,7 +320,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 			result = PyDateTimeAPI->DateTime_FromTimestamp(
 				(PyObject*)(&PyWinDateTimeType), args, NULL);
 			Py_DECREF(args);
-#endif // HAS_DATETIME_CAPI
+
 		}
 		else
 			// result stays NULL.
@@ -337,7 +332,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 
 	PyObject *PyWinObject_FromSYSTEMTIME(const SYSTEMTIME &t)
 	{
-#ifdef HAS_DATETIME_CAPI
+
 		// SYSTEMTIME structures explicitly use UTC.
 		PyObject *obtz = GetTZUTC();
 		if (!obtz)
@@ -348,14 +343,14 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 			obtz, &PyWinDateTimeType);
 		Py_DECREF(obtz);
 		return ret;
-#endif // HAS_DATETIME_CAPI
+
 
 
 	}
 
 	PyObject *PyWinObject_FromFILETIME(const FILETIME &t)
 	{
-#ifdef HAS_DATETIME_CAPI
+
 		// XXX - We should create a datetime object using the localtz here,
 		// but for now we only have a utc tz available, so convert to a
 		// systemtime and go from there.
@@ -363,25 +358,25 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 		if (!FileTimeToSystemTime(&t, &st))
 			return PyWin_SetAPIError("FileTimeToSystemTime");
 		return PyWinObject_FromSYSTEMTIME(st);
-#endif // HAS_DATETIME_CAPI
+
 
 
 	}
 	PyObject *PyWinObject_FromDATE(DATE t)
 	{
-#ifdef HAS_DATETIME_CAPI
+
 		SYSTEMTIME st;
 		if (!VariantTimeToSystemTime(t, &st))
 			return PyWin_SetAPIError("VariantTimeToSystemTime");
 		return PyWinObject_FromSYSTEMTIME(st);
-#endif // HAS_DATETIME_CAPI
+
 
 
 	}
 
 	PyObject *PyWinTimeObject_Fromtime_t(time_t t)
 	{
-#ifdef HAS_DATETIME_CAPI
+
 		PyObject *args = Py_BuildValue("(i)", (int)t);
 		if (!args)
 			return NULL;
@@ -389,7 +384,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 			(PyObject*)(&PyWinDateTimeType), args, NULL);
 		Py_DECREF(args);
 		return ret;
-#endif // HAS_DATETIME_CAPI
+
 
 
 	}
@@ -407,7 +402,7 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 	// A couple of public functions used by the module init
 	BOOL _PyWinDateTime_Init()
 	{
-#ifdef HAS_DATETIME_CAPI
+
 		PyDateTime_IMPORT;
 		if (!PyDateTimeAPI)
 			return NULL;
@@ -417,16 +412,16 @@ PyObject *PyWin_NewTime(PyObject *timeOb)
 		PyWinDateTimeType.tp_dealloc = PyDateTimeAPI->DateTimeType->tp_dealloc;
 		if (PyType_Ready(&PyWinDateTimeType) == -1)
 			return FALSE;
-#endif
+
 		return TRUE;
 	}
 
 	BOOL _PyWinDateTime_PrepareModuleDict(PyObject *dict)
 	{
 
-#ifdef HAS_DATETIME_CAPI
+
 		if (PyDict_SetItemString(dict, "TimeType", (PyObject *)&PyWinDateTimeType) == -1)
 			return FALSE;
-#endif
+
 		return TRUE;
 	}

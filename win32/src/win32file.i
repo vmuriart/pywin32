@@ -56,9 +56,7 @@
 
 %{
 
-#ifdef HAS_DATETIME_CAPI
 #include "datetime.h" // python's datetime header.
-#endif
 
 // older python version's don't get the PyCObject structure definition
 // exposed, and we need it to cleanly zap our handles (see
@@ -706,9 +704,7 @@ BOOLAPI GetFileTime(
 static BOOL PyWinTime_DateTimeCheck(PyObject *ob)
 {
 	return FALSE
-#ifdef HAS_DATETIME_CAPI
 		|| (PyDateTimeAPI && PyDateTime_Check(ob))
-#endif
 		;
 }
 
@@ -5989,9 +5985,7 @@ PyCFunction pfnpy_OpenFileById=(PyCFunction)py_OpenFileById;
 	if (PyDict_SetItemString(d, "INVALID_HANDLE_VALUE", PyWinLong_FromHANDLE(INVALID_HANDLE_VALUE)) == -1)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 
-#ifdef HAS_DATETIME_CAPI
 	PyDateTime_IMPORT;
-#endif
 
 	for (PyMethodDef *pmd = win32fileMethods;pmd->ml_name;pmd++)
 		if   ((strcmp(pmd->ml_name, "CreateFileW")==0)
