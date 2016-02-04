@@ -202,19 +202,14 @@ BOOL PyWinObject_AsSYSTEMTIME(PyObject *ob, SYSTEMTIME *st)
 		             ob->ob_type->tp_name);
 		return NULL;
 	}
-	// convert the date to a UTC date.
-	PyObject *utc = PyObject_CallMethod(ob, "astimezone", "O", GetTZUTC());
-	// likely error is "ValueError: astimezone() cannot be applied to a naive datetime"
-	if (!utc)
-		return NULL;
-	st->wYear = PyDateTime_GET_YEAR(utc);
-	st->wMonth = PyDateTime_GET_MONTH(utc);
-	st->wDay = PyDateTime_GET_DAY(utc);
-	st->wHour = PyDateTime_DATE_GET_HOUR(utc);
-	st->wMinute = PyDateTime_DATE_GET_MINUTE(utc);
-	st->wSecond = PyDateTime_DATE_GET_SECOND(utc);
-	st->wMilliseconds = PyDateTime_DATE_GET_MICROSECOND(utc) / 1000;
-	Py_DECREF(utc);
+
+	st->wYear = PyDateTime_GET_YEAR(ob);
+	st->wMonth = PyDateTime_GET_MONTH(ob);
+	st->wDay = PyDateTime_GET_DAY(ob);
+	st->wHour = PyDateTime_DATE_GET_HOUR(ob);
+	st->wMinute = PyDateTime_DATE_GET_MINUTE(ob);
+	st->wSecond = PyDateTime_DATE_GET_SECOND(ob);
+	st->wMilliseconds = PyDateTime_DATE_GET_MICROSECOND(ob) / 1000;
 	return TRUE;
 }
 
