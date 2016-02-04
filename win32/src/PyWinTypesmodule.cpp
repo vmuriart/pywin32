@@ -28,7 +28,7 @@ extern BOOL _PyWinDateTime_PrepareModuleDict(PyObject *dict);
 #ifdef MS_WINCE
 // Where is this supposed to come from on CE???
 const GUID GUID_NULL \
-= { 0, 0, 0, { 0, 0,  0,  0,  0,  0,  0,  0 } };
+    = { 0, 0, 0, { 0, 0,  0,  0,  0,  0,  0,  0 } };
 #endif
 
 
@@ -87,11 +87,11 @@ BOOL PySocket_AsSOCKET
 //-------------------------------------------------------------------------
 // Helper function for dealing with socket arguments.
 (
-	PyObject *obSocket,
-	// [in] Python object being converted into a SOCKET handle.
-	SOCKET *ps
-	// [out] Returned socket handle
-	)
+    PyObject *obSocket,
+    // [in] Python object being converted into a SOCKET handle.
+    SOCKET *ps
+    // [out] Returned socket handle
+)
 {
 	PyObject *o = NULL;
 	PyObject *out = NULL;
@@ -276,7 +276,7 @@ HINSTANCE PyWin_GetErrorMessageModule(DWORD err)
 	int i;
 	for (i = 0; i < num_message_modules; i++) {
 		if ((DWORD)err >= error_message_modules[i].firstError &&
-			(DWORD)err <= error_message_modules[i].lastError) {
+		        (DWORD)err <= error_message_modules[i].lastError) {
 			return error_message_modules[i].hmodule;
 		}
 	}
@@ -288,7 +288,7 @@ PyObject *PyWin_SetAPIError(char *fnName, long err /*= 0*/)
 {
 	DWORD errorCode = err == 0 ? GetLastError() : err;
 	DWORD flags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER | \
-		FORMAT_MESSAGE_IGNORE_INSERTS;
+	              FORMAT_MESSAGE_IGNORE_INSERTS;
 	// try and find the hmodule providing this error.
 	HMODULE hmodule = PyWin_GetErrorMessageModule(errorCode);
 	if (hmodule)
@@ -305,14 +305,13 @@ PyObject *PyWin_SetAPIError(char *fnName, long err /*= 0*/)
 	size_t end = _tcslen(buf) - 1;
 	if (end > 1 && (buf[end - 1] == _T('\n') || buf[end - 1] == _T('\r')))
 		buf[end - 1] = _T('\0');
-	else
-		if (end > 0 && (buf[end] == _T('\n') || buf[end] == _T('\r')))
-			buf[end] = _T('\0');
+	else if (end > 0 && (buf[end] == _T('\n') || buf[end] == _T('\r')))
+		buf[end] = _T('\0');
 
 	PyObject *v = Py_BuildValue("(iNN)",
-		errorCode,
-		PyWinCoreString_FromString(fnName),
-		PyWinObject_FromTCHAR(buf));
+	                            errorCode,
+	                            PyWinCoreString_FromString(fnName),
+	                            PyWinObject_FromTCHAR(buf));
 	if (free_buf && buf)
 		LocalFree(buf);
 	if (v != NULL) {
@@ -422,31 +421,31 @@ PyObject *PyObject_FromWIN32_FIND_DATAA(WIN32_FIND_DATAA *pData)
 {
 	// @object WIN32_FIND_DATA|A tuple representing a WIN32_FIND_DATA structure.
 	return Py_BuildValue("lNNNNNNNss",
-		pData->dwFileAttributes, // @tupleitem 0|int|attributes|File Attributes.  A combination of the win32com.FILE_ATTRIBUTE_* flags.
-		PyWinObject_FromFILETIME(pData->ftCreationTime), // @tupleitem 1|<o PyTime>|createTime|File creation time.
-		PyWinObject_FromFILETIME(pData->ftLastAccessTime), // @tupleitem 2|<o PyTime>|accessTime|File access time.
-		PyWinObject_FromFILETIME(pData->ftLastWriteTime), // @tupleitem 3|<o PyTime>|writeTime|Time of last file write
-		PyLong_FromUnsignedLong(pData->nFileSizeHigh), // @tupleitem 4|int|nFileSizeHigh|high order DWORD of file size.
-		PyLong_FromUnsignedLong(pData->nFileSizeLow),	// @tupleitem 5|int|nFileSizeLow|low order DWORD of file size.
-		PyLong_FromUnsignedLong(pData->dwReserved0),	// @tupleitem 6|int|reserved0|Contains reparse tag if path is a reparse point
-		PyLong_FromUnsignedLong(pData->dwReserved1),   // @tupleitem 7|int|reserved1|Reserved.
-		pData->cFileName,     // @tupleitem 8|str/unicode|fileName|The name of the file.
-		pData->cAlternateFileName); // @tupleitem 9|str/unicode|alternateFilename|Alternative name of the file, expressed in 8.3 format.
+	                     pData->dwFileAttributes, // @tupleitem 0|int|attributes|File Attributes.  A combination of the win32com.FILE_ATTRIBUTE_* flags.
+	                     PyWinObject_FromFILETIME(pData->ftCreationTime), // @tupleitem 1|<o PyTime>|createTime|File creation time.
+	                     PyWinObject_FromFILETIME(pData->ftLastAccessTime), // @tupleitem 2|<o PyTime>|accessTime|File access time.
+	                     PyWinObject_FromFILETIME(pData->ftLastWriteTime), // @tupleitem 3|<o PyTime>|writeTime|Time of last file write
+	                     PyLong_FromUnsignedLong(pData->nFileSizeHigh), // @tupleitem 4|int|nFileSizeHigh|high order DWORD of file size.
+	                     PyLong_FromUnsignedLong(pData->nFileSizeLow),	// @tupleitem 5|int|nFileSizeLow|low order DWORD of file size.
+	                     PyLong_FromUnsignedLong(pData->dwReserved0),	// @tupleitem 6|int|reserved0|Contains reparse tag if path is a reparse point
+	                     PyLong_FromUnsignedLong(pData->dwReserved1),   // @tupleitem 7|int|reserved1|Reserved.
+	                     pData->cFileName,     // @tupleitem 8|str/unicode|fileName|The name of the file.
+	                     pData->cAlternateFileName); // @tupleitem 9|str/unicode|alternateFilename|Alternative name of the file, expressed in 8.3 format.
 }
 
 PyObject *PyObject_FromWIN32_FIND_DATAW(WIN32_FIND_DATAW *pData)
 {
 	return Py_BuildValue("lNNNNNNNuu",
-		pData->dwFileAttributes,
-		PyWinObject_FromFILETIME(pData->ftCreationTime),
-		PyWinObject_FromFILETIME(pData->ftLastAccessTime),
-		PyWinObject_FromFILETIME(pData->ftLastWriteTime),
-		PyLong_FromUnsignedLong(pData->nFileSizeHigh),
-		PyLong_FromUnsignedLong(pData->nFileSizeLow),
-		PyLong_FromUnsignedLong(pData->dwReserved0),
-		PyLong_FromUnsignedLong(pData->dwReserved1),
-		pData->cFileName,
-		pData->cAlternateFileName);
+	                     pData->dwFileAttributes,
+	                     PyWinObject_FromFILETIME(pData->ftCreationTime),
+	                     PyWinObject_FromFILETIME(pData->ftLastAccessTime),
+	                     PyWinObject_FromFILETIME(pData->ftLastWriteTime),
+	                     PyLong_FromUnsignedLong(pData->nFileSizeHigh),
+	                     PyLong_FromUnsignedLong(pData->nFileSizeLow),
+	                     PyLong_FromUnsignedLong(pData->dwReserved0),
+	                     PyLong_FromUnsignedLong(pData->dwReserved1),
+	                     pData->cFileName,
+	                     pData->cAlternateFileName);
 }
 
 // @object PyPOINT|Tuple of two ints (x,y) representing a POINT struct
@@ -457,19 +456,19 @@ BOOL PyWinObject_AsPOINT(PyObject *obpoint, LPPOINT ppoint)
 		return FALSE;
 	}
 	return PyArg_ParseTuple(obpoint, "ll;POINT must be a tuple of 2 ints (x,y)",
-		&ppoint->x, &ppoint->y);
+	                        &ppoint->x, &ppoint->y);
 }
 
 // Return an IO_COUNTERS structure, used in win32process,i and win32job.i
 PyObject *PyWinObject_FromIO_COUNTERS(PIO_COUNTERS pioc)
 {
 	return Py_BuildValue("{s:N,s:N,s:N,s:N,s:N,s:N}",
-		"ReadOperationCount", PyLong_FromUnsignedLongLong(pioc->ReadOperationCount),
-		"WriteOperationCount", PyLong_FromUnsignedLongLong(pioc->WriteOperationCount),
-		"OtherOperationCount", PyLong_FromUnsignedLongLong(pioc->OtherOperationCount),
-		"ReadTransferCount", PyLong_FromUnsignedLongLong(pioc->ReadTransferCount),
-		"WriteTransferCount", PyLong_FromUnsignedLongLong(pioc->WriteTransferCount),
-		"OtherTransferCount", PyLong_FromUnsignedLongLong(pioc->OtherTransferCount));
+	                     "ReadOperationCount", PyLong_FromUnsignedLongLong(pioc->ReadOperationCount),
+	                     "WriteOperationCount", PyLong_FromUnsignedLongLong(pioc->WriteOperationCount),
+	                     "OtherOperationCount", PyLong_FromUnsignedLongLong(pioc->OtherOperationCount),
+	                     "ReadTransferCount", PyLong_FromUnsignedLongLong(pioc->ReadTransferCount),
+	                     "WriteTransferCount", PyLong_FromUnsignedLongLong(pioc->WriteTransferCount),
+	                     "OtherTransferCount", PyLong_FromUnsignedLongLong(pioc->OtherTransferCount));
 }
 
 // Alocates and populates an array of DWORDS from a sequence of Python ints
@@ -561,10 +560,10 @@ BOOL PyWinLong_AsVoidPtr(PyObject *ob, void **pptr)
 #	define UNSIGNED_CONVERTER PyLong_AsUnsignedLong
 #endif
 	*pptr = (void *)SIGNED_CONVERTER(ob);
-	if (*pptr == (void *)-1 && PyErr_Occurred()) {
+	if (*pptr == (void *) - 1 && PyErr_Occurred()) {
 		PyErr_Clear();
 		*pptr = (void *)UNSIGNED_CONVERTER(ob);
-		if (*pptr == (void *)-1 && PyErr_Occurred()) {
+		if (*pptr == (void *) - 1 && PyErr_Occurred()) {
 			PyErr_Format(PyExc_TypeError, "Unable to convert %s to pointer-sized value", ob->ob_type->tp_name);
 			return FALSE;
 		}
@@ -663,8 +662,8 @@ BOOL PyWinObject_AsPARAM(PyObject *ob, WPARAM *pparam)
 		return TRUE;
 
 	PyErr_Format(PyExc_TypeError,
-		"WPARAM must be a " TCHAR_DESC ", int, or buffer object (got %s)",
-		ob->ob_type->tp_name);
+	             "WPARAM must be a " TCHAR_DESC ", int, or buffer object (got %s)",
+	             ob->ob_type->tp_name);
 	return FALSE;
 }
 
@@ -676,7 +675,7 @@ BOOL PyWinObject_AsRECT(PyObject *obrect, LPRECT prect)
 		return FALSE;
 	}
 	return PyArg_ParseTuple(obrect, "llll;RECT must be a tuple of 4 ints (left, top, right, bottom)",
-		&prect->left, &prect->top, &prect->right, &prect->bottom);
+	                        &prect->left, &prect->top, &prect->right, &prect->bottom);
 }
 
 PyObject *PyWinObject_FromRECT(LPRECT prect)
@@ -686,8 +685,8 @@ PyObject *PyWinObject_FromRECT(LPRECT prect)
 		return Py_None;
 	}
 	return Py_BuildValue("llll",
-		prect->left, prect->top,
-		prect->right, prect->bottom);
+	                     prect->left, prect->top,
+	                     prect->right, prect->bottom);
 }
 
 // Buffer conversion functions that use DWORD for length
@@ -763,29 +762,29 @@ BOOL PyWinObject_AsMSG(PyObject *ob, MSG *pMsg)
 {
 	PyObject *obhwnd, *obwParam, *oblParam;
 	if (!PyArg_ParseTuple(ob, "OiOOi(ii):MSG param",
-		&obhwnd, // @tupleitem 0|<o PyHANDLE>|hwnd|Handle to the window whose window procedure receives the message.
-		&pMsg->message, // @tupleitem 1|int|message|Specifies the message identifier.
-		&obwParam, // @tupleitem 2|int|wParam|Specifies additional information about the message.
-		&oblParam, // @tupleitem 3|int|lParam|Specifies additional information about the message.
-		&pMsg->time, // @tupleitem 4|int|time|Specifies the time at which the message was posted (retrieved via GetTickCount()).
-		&pMsg->pt.x, // @tupleitem 5|(int, int)|point|Specifies the cursor position, in screen coordinates, when the message was posted.
-		&pMsg->pt.y))
+	                      &obhwnd, // @tupleitem 0|<o PyHANDLE>|hwnd|Handle to the window whose window procedure receives the message.
+	                      &pMsg->message, // @tupleitem 1|int|message|Specifies the message identifier.
+	                      &obwParam, // @tupleitem 2|int|wParam|Specifies additional information about the message.
+	                      &oblParam, // @tupleitem 3|int|lParam|Specifies additional information about the message.
+	                      &pMsg->time, // @tupleitem 4|int|time|Specifies the time at which the message was posted (retrieved via GetTickCount()).
+	                      &pMsg->pt.x, // @tupleitem 5|(int, int)|point|Specifies the cursor position, in screen coordinates, when the message was posted.
+	                      &pMsg->pt.y))
 		return FALSE;
 	return PyWinObject_AsHANDLE(obhwnd, (HANDLE *)&pMsg->hwnd)
-		&& PyWinObject_AsPARAM(obwParam, &pMsg->wParam)
-		&& PyWinObject_AsPARAM(oblParam, &pMsg->lParam);
+	       && PyWinObject_AsPARAM(obwParam, &pMsg->wParam)
+	       && PyWinObject_AsPARAM(oblParam, &pMsg->lParam);
 }
 
 PyObject *PyWinObject_FromMSG(const MSG *pMsg)
 {
 	return Py_BuildValue("NiNNi(ii)",
-		PyWinLong_FromHANDLE(pMsg->hwnd),
-		pMsg->message,
-		PyWinObject_FromPARAM(pMsg->wParam),
-		PyWinObject_FromPARAM(pMsg->lParam),
-		pMsg->time,
-		pMsg->pt.x,
-		pMsg->pt.y);
+	                     PyWinLong_FromHANDLE(pMsg->hwnd),
+	                     pMsg->message,
+	                     PyWinObject_FromPARAM(pMsg->wParam),
+	                     PyWinObject_FromPARAM(pMsg->lParam),
+	                     pMsg->time,
+	                     pMsg->pt.x,
+	                     pMsg->pt.y);
 }
 
 
@@ -845,12 +844,12 @@ int PyWinGlobals_Ensure()
 		Py_DECREF(name);
 		PyObject *bimod = PyImport_ImportModule(
 #if PY_VERSION_HEX >= 0x03000000
-			"builtins");
+		                      "builtins");
 #else
-			"__builtin__");
+		                      "__builtin__");
 #endif
 		if ((bimod == NULL)
-			|| PyDict_SetItemString(d, "__builtins__", bimod) == -1) {
+		        || PyDict_SetItemString(d, "__builtins__", bimod) == -1) {
 			Py_XDECREF(bimod);
 			return -1;
 		}
@@ -859,30 +858,30 @@ int PyWinGlobals_Ensure()
 		// Note using 'super()' doesn't work as expected on py23...
 		// Need to be careful to support "insane" args...
 		PyObject *res = PyRun_String(
-			"class error(Exception):\n"
-			"  def __init__(self, *args, **kw):\n"
-			"    nargs = len(args)\n"
-			"    if nargs > 0: self.winerror = args[0]\n"
-			"    else: self.winerror = None\n"
-			"    if nargs > 1: self.funcname = args[1]\n"
-			"    else: self.funcname = None\n"
-			"    if nargs > 2: self.strerror = args[2]\n"
-			"    else: self.strerror = None\n"
-			"    Exception.__init__(self, *args, **kw)\n"
-			"class com_error(Exception):\n"
-			"  def __init__(self, *args, **kw):\n"
-			"    nargs = len(args)\n"
-			"    if nargs > 0: self.hresult = args[0]\n"
-			"    else: self.hresult = None\n"
-			"    if nargs > 1: self.strerror = args[1]\n"
-			"    else: self.strerror = None\n"
-			"    if nargs > 2: self.excepinfo = args[2]\n"
-			"    else: self.excepinfo = None\n"
-			"    if nargs > 3: self.argerror = args[3]\n"
-			"    else: self.argerror = None\n"
-			"    Exception.__init__(self, *args, **kw)\n"
-			,
-			Py_file_input, d, d);
+		                    "class error(Exception):\n"
+		                    "  def __init__(self, *args, **kw):\n"
+		                    "    nargs = len(args)\n"
+		                    "    if nargs > 0: self.winerror = args[0]\n"
+		                    "    else: self.winerror = None\n"
+		                    "    if nargs > 1: self.funcname = args[1]\n"
+		                    "    else: self.funcname = None\n"
+		                    "    if nargs > 2: self.strerror = args[2]\n"
+		                    "    else: self.strerror = None\n"
+		                    "    Exception.__init__(self, *args, **kw)\n"
+		                    "class com_error(Exception):\n"
+		                    "  def __init__(self, *args, **kw):\n"
+		                    "    nargs = len(args)\n"
+		                    "    if nargs > 0: self.hresult = args[0]\n"
+		                    "    else: self.hresult = None\n"
+		                    "    if nargs > 1: self.strerror = args[1]\n"
+		                    "    else: self.strerror = None\n"
+		                    "    if nargs > 2: self.excepinfo = args[2]\n"
+		                    "    else: self.excepinfo = None\n"
+		                    "    if nargs > 3: self.argerror = args[3]\n"
+		                    "    else: self.argerror = None\n"
+		                    "    Exception.__init__(self, *args, **kw)\n"
+		                    ,
+		                    Py_file_input, d, d);
 		if (res == NULL)
 			return -1;
 		Py_DECREF(res);
@@ -926,20 +925,20 @@ int PyWinGlobals_Ensure()
 		??? All extension modules that call this need to be changed to check the exit code ???
 	*/
 	if (PyType_Ready(&PyHANDLEType) == -1
-		|| PyType_Ready(&PyOVERLAPPEDType) == -1
-		|| PyType_Ready(&PyDEVMODEAType) == -1
-		|| PyType_Ready(&PyDEVMODEWType) == -1
-		|| PyType_Ready(&PyWAVEFORMATEXType) == -1
+	        || PyType_Ready(&PyOVERLAPPEDType) == -1
+	        || PyType_Ready(&PyDEVMODEAType) == -1
+	        || PyType_Ready(&PyDEVMODEWType) == -1
+	        || PyType_Ready(&PyWAVEFORMATEXType) == -1
 #ifndef NO_PYWINTYPES_IID
-		|| PyType_Ready(&PyIIDType) == -1
+	        || PyType_Ready(&PyIIDType) == -1
 #endif // NO_PYWINTYPES_IID
 #ifndef NO_PYWINTYPES_SECURITY
-		|| PyType_Ready(&PySECURITY_DESCRIPTORType) == -1
-		|| PyType_Ready(&PySECURITY_ATTRIBUTESType) == -1
-		|| PyType_Ready(&PySIDType) == -1
-		|| PyType_Ready(&PyACLType) == -1
+	        || PyType_Ready(&PySECURITY_DESCRIPTORType) == -1
+	        || PyType_Ready(&PySECURITY_ATTRIBUTESType) == -1
+	        || PyType_Ready(&PySIDType) == -1
+	        || PyType_Ready(&PyACLType) == -1
 #endif
-		)
+	   )
 		return -1;
 
 	if (!_PyWinDateTime_Init())
@@ -990,7 +989,7 @@ void PyWin_ReleaseGlobalLock(void)
 PYWIN_MODULE_INIT_FUNC(pywintypes)
 {
 	PYWIN_MODULE_INIT_PREPARE(pywintypes, pywintypes_functions,
-		"Module containing common objects and functions used by various Pywin32 modules");
+	                          "Module containing common objects and functions used by various Pywin32 modules");
 
 	if (PyWinExc_ApiError == NULL || PyWinExc_COMError == NULL) {
 		PyErr_SetString(PyExc_MemoryError, "Could not initialise the error objects");
@@ -998,9 +997,9 @@ PYWIN_MODULE_INIT_FUNC(pywintypes)
 	}
 
 	if (PyDict_SetItemString(dict, "error", PyWinExc_ApiError) == -1
-		|| PyDict_SetItemString(dict, "com_error", PyWinExc_COMError) == -1
-		|| PyDict_SetItemString(dict, "TRUE", Py_True) == -1
-		|| PyDict_SetItemString(dict, "FALSE", Py_False) == -1)
+	        || PyDict_SetItemString(dict, "com_error", PyWinExc_COMError) == -1
+	        || PyDict_SetItemString(dict, "TRUE", Py_True) == -1
+	        || PyDict_SetItemString(dict, "FALSE", Py_False) == -1)
 		PYWIN_MODULE_INIT_RETURN_ERROR;
 	ADD_CONSTANT(WAVE_FORMAT_PCM);
 
@@ -1174,20 +1173,20 @@ char *GetPythonTraceback(PyObject *exc_type, PyObject *exc_value, PyObject *exc_
 	if (obFuncTB == NULL) GPEM_ERROR("cant find traceback.print_exception");
 	argsTB = Py_BuildValue("OOOOO"
 #if (PY_VERSION_HEX >= 0x03000000)
-		"i"
-		// Py3k has added an undocumented 'chain' argument which defaults to True
-		//	and causes all kinds of exceptions while trying to print a goddam exception
+	                       "i"
+	                       // Py3k has added an undocumented 'chain' argument which defaults to True
+	                       //	and causes all kinds of exceptions while trying to print a goddam exception
 #endif
-		,
-		exc_type ? exc_type : Py_None,
-		exc_value ? exc_value : Py_None,
-		exc_tb ? exc_tb : Py_None,
-		Py_None,	// limit
-		obStringIO
+	                       ,
+	                       exc_type ? exc_type : Py_None,
+	                       exc_value ? exc_value : Py_None,
+	                       exc_tb ? exc_tb : Py_None,
+	                       Py_None,	// limit
+	                       obStringIO
 #if (PY_VERSION_HEX >= 0x03000000)
-		, 0	// Goddam undocumented 'chain' param, which defaults to True
+	                       , 0	// Goddam undocumented 'chain' param, which defaults to True
 #endif
-		);
+	                      );
 	if (argsTB == NULL) GPEM_ERROR("cant make print_exception arguments");
 
 	obResult = PyObject_CallObject(obFuncTB, argsTB);

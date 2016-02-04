@@ -15,8 +15,8 @@ PyObject *PyWin_NewTime(PyObject *timeOb);
 BOOL PyWinTime_Check(PyObject *ob)
 {
 	return 0 ||
-		PyDateTime_Check(ob) ||
-		PyObject_HasAttrString(ob, "timetuple");
+	       PyDateTime_Check(ob) ||
+	       PyObject_HasAttrString(ob, "timetuple");
 }
 
 // Timezone helpers...
@@ -182,7 +182,7 @@ BOOL PyWinObject_AsSYSTEMTIME(PyObject *ob, SYSTEMTIME *st)
 {
 	if (!PyDateTime_Check(ob)) {
 		PyErr_Format(PyExc_TypeError, "must be a pywintypes time object (got %s)",
-			ob->ob_type->tp_name);
+		             ob->ob_type->tp_name);
 		return NULL;
 	}
 	// convert the date to a UTC date.
@@ -202,7 +202,6 @@ BOOL PyWinObject_AsSYSTEMTIME(PyObject *ob, SYSTEMTIME *st)
 }
 
 
-
 // a slightly modified version from Python's time module.
 static BOOL
 gettmarg(PyObject *ob, struct tm *p, int *pmsec)
@@ -211,16 +210,16 @@ gettmarg(PyObject *ob, struct tm *p, int *pmsec)
 	memset((void *)p, '\0', sizeof(struct tm));
 
 	if (!PyArg_ParseTuple(ob, "iiiiiiiii|i",
-		&y,
-		&p->tm_mon,
-		&p->tm_mday,
-		&p->tm_hour,
-		&p->tm_min,
-		&p->tm_sec,
-		&p->tm_wday,
-		&p->tm_yday,
-		&p->tm_isdst,
-		pmsec))
+	                      &y,
+	                      &p->tm_mon,
+	                      &p->tm_mday,
+	                      &p->tm_hour,
+	                      &p->tm_min,
+	                      &p->tm_sec,
+	                      &p->tm_wday,
+	                      &p->tm_yday,
+	                      &p->tm_isdst,
+	                      pmsec))
 		return FALSE;
 	if (y < 1900) {
 		// we always accept 2digit years
@@ -230,7 +229,7 @@ gettmarg(PyObject *ob, struct tm *p, int *pmsec)
 			y += 2000;
 		else {
 			PyErr_SetString(PyExc_ValueError,
-				"year out of range");
+			                "year out of range");
 			return FALSE;
 		}
 	}
@@ -252,176 +251,155 @@ static WORD SequenceIndexAsWORD(PyObject *seq, int index)
 PyObject *PyWin_NewTime(PyObject *timeOb)
 {
 	// If it already a datetime object, just return it as-is.
+	if (PyDateTime_Check(timeOb))
+	{
+		Py_INCREF(timeOb);
+		return timeOb;
+	}
 
+	PyObject *result = NULL;
+	PyObject *cleanupOb = NULL; // must be xdefref'd.
 
-		if (PyDateTime_Check(timeOb)) {
+	// Support other objects with a "timetuple" method.
+	PyObject *method = PyObject_GetAttrString(timeOb, "timetuple");
+	if (method == NULL)
+		PyErr_Clear();
+	else
+	{
+		timeOb = PyEval_CallObject(method, NULL);
+		Py_DECREF(method);
+		if (!timeOb)
+			return NULL;
+		cleanupOb = timeOb; // new reference that must be nuked.
+		// now we should fall into the sequence check!
+	}
 
-			Py_INCREF(timeOb);
-			return timeOb;
-		}
-
-		PyObject *result = NULL;
-		PyObject *cleanupOb = NULL; // must be xdefref'd.
-
-		// Support other objects with a "timetuple" method.
-		PyObject *method = PyObject_GetAttrString(timeOb, "timetuple");
-		if (method == NULL)
-			PyErr_Clear();
-		else {
-			timeOb = PyEval_CallObject(method, NULL);
-			Py_DECREF(method);
-			if (!timeOb)
-				return NULL;
-			cleanupOb = timeOb; // new reference that must be nuked.
-			// now we should fall into the sequence check!
-		}
-		if (PyNumber_Check(timeOb))
+	if (PyNumber_Check(timeOb))
+	{
+		// XXX - should possibly check for long_long, as sizeof(time_t) > sizeof(long)
+		// on x64
+		long t = PyInt_AsLong(timeOb);
+		if (t == -1)
 		{
-			// XXX - should possibly check for long_long, as sizeof(time_t) > sizeof(long)
-			// on x64
-			long t = PyInt_AsLong(timeOb);
-			if (t == -1)
-			{
-				if (!PyErr_Occurred())
-					PyErr_BadArgument();
-			}
-			else
-				result = PyWinTimeObject_Fromtime_t((time_t)t);
+			if (!PyErr_Occurred())
+				PyErr_BadArgument();
 		}
-		else if (PySequence_Check(timeOb))
-		{
-			assert(!PyErr_Occurred()); // should be no stale errors!
+		else
+			result = PyWinTimeObject_Fromtime_t((time_t)t);
+	}
+	else if (PySequence_Check(timeOb))
+	{
+		assert(!PyErr_Occurred()); // should be no stale errors!
 
 		// convert a timetuple, with optional millisecond extension,
 		// into a datetime object. ie:
 		// >>> datetime.datetime.fromtimestamp(time.mktime(timetuple))
 		// but we 'inline' the time.mktime step...
-			struct tm buf;
-			time_t tt;
-			int millisec = 0;
-			// must use a tuple as we use ParseTuple with an optional arg.
-			PyObject *tuple_args = PySequence_Tuple(timeOb);
-			if (!tuple_args)
-				return NULL;
-			BOOL ok = gettmarg(tuple_args, &buf, &millisec);
-			Py_DECREF(tuple_args);
-			if (!ok)
-				return NULL;
-			tt = mktime(&buf);
-			if (tt == (time_t)(-1)) {
-				PyErr_SetString(PyExc_OverflowError,
-					"mktime argument out of range");
-				return NULL;
-			}
-			double dval = (double)tt + (millisec / 1000.0);
-			PyObject *args = Py_BuildValue("(d)", dval);
-			if (!args)
-				return NULL;
-			result = PyDateTimeAPI->DateTime_FromTimestamp(
-				(PyObject*)(&PyWinDateTimeType), args, NULL);
-			Py_DECREF(args);
-
-		}
-		else
-			// result stays NULL.
-			PyErr_Format(PyExc_TypeError, "Objects of type '%s' can not be used as a time object",
-				timeOb->ob_type->tp_name);
-		Py_XDECREF(cleanupOb);
-		return result;
-	}
-
-	PyObject *PyWinObject_FromSYSTEMTIME(const SYSTEMTIME &t)
-	{
-
-		// SYSTEMTIME structures explicitly use UTC.
-		PyObject *obtz = GetTZUTC();
-		if (!obtz)
+		struct tm buf;
+		time_t tt;
+		int millisec = 0;
+		// must use a tuple as we use ParseTuple with an optional arg.
+		PyObject *tuple_args = PySequence_Tuple(timeOb);
+		if (!tuple_args)
 			return NULL;
-		PyObject *ret = PyDateTimeAPI->DateTime_FromDateAndTime(
-			t.wYear, t.wMonth, t.wDay, t.wHour, t.wMinute,
-			t.wSecond, t.wMilliseconds * 1000,
-			obtz, &PyWinDateTimeType);
-		Py_DECREF(obtz);
-		return ret;
-
-
-
-	}
-
-	PyObject *PyWinObject_FromFILETIME(const FILETIME &t)
-	{
-
-		// XXX - We should create a datetime object using the localtz here,
-		// but for now we only have a utc tz available, so convert to a
-		// systemtime and go from there.
-		SYSTEMTIME st;
-		if (!FileTimeToSystemTime(&t, &st))
-			return PyWin_SetAPIError("FileTimeToSystemTime");
-		return PyWinObject_FromSYSTEMTIME(st);
-
-
-
-	}
-	PyObject *PyWinObject_FromDATE(DATE t)
-	{
-
-		SYSTEMTIME st;
-		if (!VariantTimeToSystemTime(t, &st))
-			return PyWin_SetAPIError("VariantTimeToSystemTime");
-		return PyWinObject_FromSYSTEMTIME(st);
-
-
-
-	}
-
-	PyObject *PyWinTimeObject_Fromtime_t(time_t t)
-	{
-
-		PyObject *args = Py_BuildValue("(i)", (int)t);
+		BOOL ok = gettmarg(tuple_args, &buf, &millisec);
+		Py_DECREF(tuple_args);
+		if (!ok)
+			return NULL;
+		tt = mktime(&buf);
+		if (tt == (time_t)(-1)) {
+			PyErr_SetString(PyExc_OverflowError,
+			                "mktime argument out of range");
+			return NULL;
+		}
+		double dval = (double)tt + (millisec / 1000.0);
+		PyObject *args = Py_BuildValue("(d)", dval);
 		if (!args)
 			return NULL;
-		PyObject *ret = PyDateTimeAPI->DateTime_FromTimestamp(
-			(PyObject*)(&PyWinDateTimeType), args, NULL);
+		result = PyDateTimeAPI->DateTime_FromTimestamp(
+		             (PyObject*)(&PyWinDateTimeType), args, NULL);
 		Py_DECREF(args);
-		return ret;
-
-
-
 	}
+	else
+		// result stays NULL.
+		PyErr_Format(PyExc_TypeError, "Objects of type '%s' can not be used as a time object",
+		             timeOb->ob_type->tp_name);
+	Py_XDECREF(cleanupOb);
+	return result;
+}
 
-	// Converts a TimeStamp, which is in 100 nanosecond units like a FILETIME
-	// See comments in pywintypes.h re LARGE_INTEGER vs TimeStamp
-	PyObject *PyWinObject_FromTimeStamp(const LARGE_INTEGER &ts)
-	{
-		FILETIME ft;
-		ft.dwHighDateTime = ts.HighPart;
-		ft.dwLowDateTime = ts.LowPart;
-		return PyWinObject_FromFILETIME(ft);
-	}
+PyObject *PyWinObject_FromSYSTEMTIME(const SYSTEMTIME &t)
+{
+	// SYSTEMTIME structures explicitly use UTC.
+	PyObject *obtz = GetTZUTC();
+	if (!obtz)
+		return NULL;
+	PyObject *ret = PyDateTimeAPI->DateTime_FromDateAndTime(
+	                    t.wYear, t.wMonth, t.wDay, t.wHour, t.wMinute,
+	                    t.wSecond, t.wMilliseconds * 1000,
+	                    obtz, &PyWinDateTimeType);
+	Py_DECREF(obtz);
+	return ret;
+}
 
-	// A couple of public functions used by the module init
-	BOOL _PyWinDateTime_Init()
-	{
+PyObject *PyWinObject_FromFILETIME(const FILETIME &t)
+{
+	// XXX - We should create a datetime object using the localtz here,
+	// but for now we only have a utc tz available, so convert to a
+	// systemtime and go from there.
+	SYSTEMTIME st;
+	if (!FileTimeToSystemTime(&t, &st))
+		return PyWin_SetAPIError("FileTimeToSystemTime");
+	return PyWinObject_FromSYSTEMTIME(st);
+}
 
-		PyDateTime_IMPORT;
-		if (!PyDateTimeAPI)
-			return NULL;
-		PyWinDateTimeType.tp_base = PyDateTimeAPI->DateTimeType;
-		PyWinDateTimeType.tp_basicsize = PyDateTimeAPI->DateTimeType->tp_basicsize;
-		PyWinDateTimeType.tp_new = PyDateTimeAPI->DateTimeType->tp_new;
-		PyWinDateTimeType.tp_dealloc = PyDateTimeAPI->DateTimeType->tp_dealloc;
-		if (PyType_Ready(&PyWinDateTimeType) == -1)
-			return FALSE;
+PyObject *PyWinObject_FromDATE(DATE t)
+{
+	SYSTEMTIME st;
+	if (!VariantTimeToSystemTime(t, &st))
+		return PyWin_SetAPIError("VariantTimeToSystemTime");
+	return PyWinObject_FromSYSTEMTIME(st);
+}
 
-		return TRUE;
-	}
+PyObject *PyWinTimeObject_Fromtime_t(time_t t)
+{
+	PyObject *args = Py_BuildValue("(i)", (int)t);
+	if (!args)
+		return NULL;
+	PyObject *ret = PyDateTimeAPI->DateTime_FromTimestamp(
+	                    (PyObject*)(&PyWinDateTimeType), args, NULL);
+	Py_DECREF(args);
+	return ret;
+}
 
-	BOOL _PyWinDateTime_PrepareModuleDict(PyObject *dict)
-	{
+// Converts a TimeStamp, which is in 100 nanosecond units like a FILETIME
+// See comments in pywintypes.h re LARGE_INTEGER vs TimeStamp
+PyObject *PyWinObject_FromTimeStamp(const LARGE_INTEGER &ts)
+{
+	FILETIME ft;
+	ft.dwHighDateTime = ts.HighPart;
+	ft.dwLowDateTime = ts.LowPart;
+	return PyWinObject_FromFILETIME(ft);
+}
 
+// A couple of public functions used by the module init
+BOOL _PyWinDateTime_Init()
+{
+	PyDateTime_IMPORT;
+	if (!PyDateTimeAPI)
+		return NULL;
+	PyWinDateTimeType.tp_base = PyDateTimeAPI->DateTimeType;
+	PyWinDateTimeType.tp_basicsize = PyDateTimeAPI->DateTimeType->tp_basicsize;
+	PyWinDateTimeType.tp_new = PyDateTimeAPI->DateTimeType->tp_new;
+	PyWinDateTimeType.tp_dealloc = PyDateTimeAPI->DateTimeType->tp_dealloc;
+	if (PyType_Ready(&PyWinDateTimeType) == -1)
+		return FALSE;
+	return TRUE;
+}
 
-		if (PyDict_SetItemString(dict, "TimeType", (PyObject *)&PyWinDateTimeType) == -1)
-			return FALSE;
-
-		return TRUE;
-	}
+BOOL _PyWinDateTime_PrepareModuleDict(PyObject *dict)
+{
+	if (PyDict_SetItemString(dict, "TimeType", (PyObject *)&PyWinDateTimeType) == -1)
+		return FALSE;
+	return TRUE;
+}

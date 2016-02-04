@@ -4,7 +4,7 @@
 
 // If building under a GCC, tweak what we need.
 #if defined(__GNUC__) && defined(_POSIX_C_SOURCE)
-	// python.h complains if _POSIX_C_SOURCE is already defined
+// python.h complains if _POSIX_C_SOURCE is already defined
 #	undef _POSIX_C_SOURCE
 #endif
 
@@ -170,14 +170,14 @@ typedef Py_ssize_t Py_hash_t;
 // by the 'freeze' tool, but now py2exe etc do a far better job, and
 // don't require a custom built pywintypes DLL.
 #ifdef FREEZE_PYWINTYPES
-	/* The pywintypes module is being included in a frozen .EXE/.DLL */
+/* The pywintypes module is being included in a frozen .EXE/.DLL */
 #	define PYWINTYPES_EXPORT
 #else
 #	ifdef BUILD_PYWINTYPES
-		/* We are building pywintypesxx.dll */
+/* We are building pywintypesxx.dll */
 #		define PYWINTYPES_EXPORT __declspec(dllexport)
 #else
-		/* This module uses pywintypesxx.dll */
+/* This module uses pywintypesxx.dll */
 #		define PYWINTYPES_EXPORT __declspec(dllimport)
 #		if defined(_MSC_VER)
 #			if defined(DEBUG) || defined(_DEBUG)
@@ -309,8 +309,8 @@ inline BOOL PyWinObject_AsReadBuffer(PyObject *ob, void **buf, int *buf_len, BOO
 // Python doesn't *insist* the result be this type, consider using a function
 // that always returns a unicode object (ie, most of the "PyWinObject_From*CHAR"
 // functions)
-PYWINTYPES_EXPORT PyObject *PyWinCoreString_FromString(const char *str, Py_ssize_t len = (Py_ssize_t)-1);
-PYWINTYPES_EXPORT PyObject *PyWinCoreString_FromString(const WCHAR *str, Py_ssize_t len = (Py_ssize_t)-1);
+PYWINTYPES_EXPORT PyObject *PyWinCoreString_FromString(const char *str, Py_ssize_t len = (Py_ssize_t) - 1);
+PYWINTYPES_EXPORT PyObject *PyWinCoreString_FromString(const WCHAR *str, Py_ssize_t len = (Py_ssize_t) - 1);
 
 #define PyWinObject_FromWCHAR PyWinObject_FromOLECHAR
 
@@ -340,10 +340,10 @@ PYWINTYPES_EXPORT PyObject *PyWinObject_FromOLECHAR(const OLECHAR * str, int num
 
 // String support for buffers allocated via a function of your choice.
 PYWINTYPES_EXPORT BOOL PyWinObject_AsPfnAllocatedWCHAR(PyObject *stringObject,
-	void *(*pfnAllocator)(ULONG),
-	WCHAR **ppResult,
-	BOOL bNoneOK = FALSE,
-	DWORD *pResultLen = NULL);
+        void *(*pfnAllocator)(ULONG),
+        WCHAR **ppResult,
+        BOOL bNoneOK = FALSE,
+        DWORD *pResultLen = NULL);
 
 #ifdef UNICODE
 // XXX - "AsTCHAR" functions should all die - the type of the Python object
@@ -358,7 +358,7 @@ PYWINTYPES_EXPORT BOOL PyWinObject_AsPfnAllocatedWCHAR(PyObject *stringObject,
 // PyWinObject_FromTCHAR in a non-unicode build still depends on py3k or not:
 // py2x a string object is returned (no conversions).  py3x a unicode object
 // is returned (ie, the string is decoded)
-PYWINTYPES_EXPORT PyObject *PyWinObject_FromTCHAR(const char *str, Py_ssize_t len = (Py_ssize_t)-1);
+PYWINTYPES_EXPORT PyObject *PyWinObject_FromTCHAR(const char *str, Py_ssize_t len = (Py_ssize_t) - 1);
 
 #endif // UNICODE
 
@@ -617,11 +617,11 @@ BOOL PySocket_AsSOCKET
 //-------------------------------------------------------------------------
 // Helper function for dealing with socket arguments.
 (
-	PyObject *obSocket,
-	// [in] Python object being converted into a SOCKET handle.
-	SOCKET *ps
-	// [out] Returned socket handle
-	);
+    PyObject *obSocket,
+    // [in] Python object being converted into a SOCKET handle.
+    SOCKET *ps
+    // [out] Returned socket handle
+);
 
 
 
