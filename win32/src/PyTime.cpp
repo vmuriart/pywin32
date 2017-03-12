@@ -11,8 +11,6 @@
 
 #include "time.h"
 #include "tchar.h"
-#include <iostream>
-#include <iomanip>
 
 PyObject *PyWin_NewTime(PyObject *timeOb);
 
@@ -596,16 +594,8 @@ PyObject *PyTime::getattro(PyObject *self, PyObject *obname)
 	else if ( !strcmp(name, "msec") )
 	{
 		double ss = This->m_time;
-		std::cout << std::setprecision(51) << ss << "\n";
-		std::cout << int(ss) << "\n";
-
-		double seconds = (This->m_time) * SECS_PER_DAY;
-		std::cout << seconds << "\n";
-		std::cout << int(seconds) << "\n";
-		size_t milliseconds = int((seconds - int(seconds)) * 1000);
-		std::cout << milliseconds << "\n";
-		if ( milliseconds < 0 )
-			return PyFloat_FromDouble(0);
+		double seconds = (ss - int(ss)) * SECS_PER_DAY;
+		int milliseconds = int((seconds - int(seconds)) * 1000);
 		return PyFloat_FromDouble(milliseconds);
 	}
 	PyErr_SetString(PyExc_AttributeError, name);
