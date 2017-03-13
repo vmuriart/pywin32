@@ -593,10 +593,10 @@ PyObject *PyTime::getattro(PyObject *self, PyObject *obname)
 	// @prop int|msec|
 	else if ( !strcmp(name, "msec") )
 	{
-		double ss = This->m_time;
-		double seconds = (ss - int(ss)) * SECS_PER_DAY;
+		double vt = This->m_time;
+		double seconds = (vt - int(vt)) * SECS_PER_DAY;
 		int milliseconds = int(round((seconds - int(seconds)) * 1000));
-		return PyFloat_FromDouble(milliseconds);
+		return PyInt_FromLong(milliseconds);
 	}
 	PyErr_SetString(PyExc_AttributeError, name);
 	return NULL;
