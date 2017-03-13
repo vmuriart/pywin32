@@ -595,7 +595,7 @@ PyObject *PyTime::getattro(PyObject *self, PyObject *obname)
 	{
 		double ss = This->m_time;
 		double seconds = (ss - int(ss)) * SECS_PER_DAY;
-		int milliseconds = int((seconds - int(seconds)) * 1000);
+		int milliseconds = int(round((seconds - int(seconds)) * 1000));
 		return PyFloat_FromDouble(milliseconds);
 	}
 	PyErr_SetString(PyExc_AttributeError, name);
